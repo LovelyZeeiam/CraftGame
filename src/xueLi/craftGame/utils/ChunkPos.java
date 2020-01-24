@@ -1,21 +1,16 @@
 package xueLi.craftGame.utils;
 
-public class BlockPos {
+public class ChunkPos {
 
-	private int x, y, z;
+	private int x, z;
 
-	public BlockPos(int x, int y, int z) {
+	public ChunkPos(int x, int z) {
 		this.x = x;
-		this.y = y;
 		this.z = z;
 	}
 
 	public int getX() {
 		return x;
-	}
-
-	public int getY() {
-		return y;
 	}
 
 	public int getZ() {
@@ -24,7 +19,7 @@ public class BlockPos {
 
 	@Override
 	public String toString() {
-		return x + "," + y + "," + z;
+		return x + "," + z;
 	}
 
 }

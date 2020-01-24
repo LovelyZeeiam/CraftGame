@@ -5,8 +5,10 @@ import java.util.Map;
 
 import xueLi.craftGame.block.blocks.BlockGrass;
 import xueLi.craftGame.block.blocks.BlockStone;
+import xueLi.craftGame.utils.BlockPos;
+import xueLi.craftGame.utils.HitBox;
 
-public class Block {
+public abstract class Block {
 
 	public static Map<Integer, Block> blockDefault = new HashMap<Integer, Block>();
 
@@ -24,7 +26,18 @@ public class Block {
 		this.id = id;
 		this.name = name;
 		this.method = method;
+	}
 
+	public HitBox getHitBox(BlockPos pos) {
+		return getHitbox(pos.getX(), pos.getY(), pos.getZ());
+	}
+
+	public abstract HitBox getHitbox(int x, int y, int z);
+
+	private static final HitBox defaultHitbox = new HitBox(0f, 0f, 0f, 1f, 1f, 1f);
+
+	protected HitBox getDefaultBlockHitbox(int x, int y, int z) {
+		return defaultHitbox.move(x, y, z);
 	}
 
 }

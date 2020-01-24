@@ -23,10 +23,11 @@ public class WorldShader extends Shader {
 		loc_viewMatrix = super.getUnifromLocation("viewMatrix");
 
 		super.use();
-		GLHelper.lastTimeProjMatrix = GLHelper.perspecive(DisplayManager.d_width, DisplayManager.d_height, 70.0f, 0.1f, 1000.0f);
+		GLHelper.lastTimeProjMatrix = GLHelper.perspecive(DisplayManager.d_width, DisplayManager.d_height, 70.0f, 0.1f,
+				1000.0f);
 		super.setUniformMatrix(loc_projMatrix, GLHelper.lastTimeProjMatrix);
 		super.setUniformMatrix(loc_transMatrix,
-				GLHelper.createTransformationMatrix(new Vector3f(0,0,0), 0, 0, 0, 1));
+				GLHelper.createTransformationMatrix(new Vector3f(0, 0, 0), 0, 0, 0, 1));
 		super.unbind();
 
 	}

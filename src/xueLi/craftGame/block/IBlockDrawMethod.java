@@ -61,33 +61,33 @@ public interface IBlockDrawMethod {
 		}
 
 	}
-	
-	static void drawDefaultBlockFrame(FloatBuffer buffer, int x,int y,int z) {
+
+	static void drawDefaultBlockFrame(FloatBuffer buffer, int x, int y, int z) {
 		buffer.put(x).put(y).put(z);
 		buffer.put(x).put(y + 1).put(z);
 		buffer.put(x + 1).put(y).put(z);
 		buffer.put(x + 1).put(y + 1).put(z);
-		
+
 		buffer.put(x + 1).put(y).put(z);
 		buffer.put(x + 1).put(y + 1).put(z);
 		buffer.put(x + 1).put(y).put(z + 1);
 		buffer.put(x + 1).put(y + 1).put(z + 1);
-		
+
 		buffer.put(x).put(y).put(z + 1);
 		buffer.put(x).put(y + 1).put(z + 1);
 		buffer.put(x + 1).put(y).put(z + 1);
 		buffer.put(x + 1).put(y + 1).put(z + 1);
-		
+
 		buffer.put(x).put(y).put(z);
 		buffer.put(x).put(y + 1).put(z);
 		buffer.put(x).put(y).put(z + 1);
 		buffer.put(x).put(y + 1).put(z + 1);
-		
+
 		buffer.put(x).put(y + 1).put(z);
 		buffer.put(x + 1).put(y + 1).put(z);
 		buffer.put(x).put(y + 1).put(z + 1);
 		buffer.put(x + 1).put(y + 1).put(z + 1);
-		
+
 		buffer.put(x).put(y).put(z);
 		buffer.put(x + 1).put(y).put(z);
 		buffer.put(x).put(y).put(z + 1);
@@ -109,6 +109,7 @@ public interface IBlockDrawMethod {
 	}
 
 	public void getDrawData(FloatBuffer vertexbuffer, FloatBuffer texbuffer, int x, int y, int z, int face);
-	public void getBlockFrame(FloatBuffer frame,BlockPos pos);
+
+	public void getBlockFrame(FloatBuffer frame, BlockPos pos);
 
 }

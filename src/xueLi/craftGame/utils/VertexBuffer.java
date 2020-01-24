@@ -38,8 +38,8 @@ public class VertexBuffer {
 		vertex_count = Vertexcount;
 		enableTexture = true;
 	}
-	
-	public static void send(FloatBuffer vertices,int Vertexcount,FloatBuffer color) {
+
+	public static void send(FloatBuffer vertices, int Vertexcount, FloatBuffer color) {
 		vao = GL30.glGenVertexArrays();
 		GL30.glBindVertexArray(vao);
 
@@ -48,7 +48,7 @@ public class VertexBuffer {
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, vertices, GL15.GL_DYNAMIC_DRAW);
 		GL20.glVertexAttribPointer(0, 3, GL11.GL_FLOAT, false, 0, 0);
 		GL20.glEnableVertexAttribArray(0);
-		
+
 		cbo = GL15.glGenBuffers();
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, cbo);
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, color, GL15.GL_DYNAMIC_DRAW);
@@ -60,8 +60,8 @@ public class VertexBuffer {
 
 		vertex_count = Vertexcount;
 	}
-	
-	public static void send(FloatBuffer vertices,int Vertexcount) {
+
+	public static void send(FloatBuffer vertices, int Vertexcount) {
 		vao = GL30.glGenVertexArrays();
 		GL30.glBindVertexArray(vao);
 
@@ -81,7 +81,7 @@ public class VertexBuffer {
 		GL30.glBindVertexArray(vao);
 		GL20.glEnableVertexAttribArray(0);
 		GL20.glEnableVertexAttribArray(2);
-		if(enableTexture)
+		if (enableTexture)
 			GL20.glEnableVertexAttribArray(1);
 	}
 
@@ -92,7 +92,7 @@ public class VertexBuffer {
 	public static void unbind() {
 		GL20.glDisableVertexAttribArray(0);
 		GL20.glDisableVertexAttribArray(2);
-		if(enableTexture)
+		if (enableTexture)
 			GL20.glDisableVertexAttribArray(1);
 		GL30.glBindVertexArray(0);
 	}
@@ -101,7 +101,7 @@ public class VertexBuffer {
 		GL30.glDeleteVertexArrays(vao);
 		GL15.glDeleteBuffers(vbo);
 		GL15.glDeleteBuffers(cbo);
-		if(enableTexture)
+		if (enableTexture)
 			GL15.glDeleteBuffers(tbo);
 	}
 

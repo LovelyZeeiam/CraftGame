@@ -17,9 +17,9 @@ import org.newdawn.slick.opengl.TextureLoader;
 import xueLi.craftGame.entity.Player;
 
 public class GLHelper {
-	
-	public static Matrix4f lastTimeProjMatrix,lastTimeViewMatrix;
-	
+
+	public static Matrix4f lastTimeProjMatrix, lastTimeViewMatrix;
+
 	public static void clearColor(float r, float g, float b, float a) {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		GL11.glClearColor(r, g, b, a);
@@ -39,7 +39,7 @@ public class GLHelper {
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_BASE_LEVEL, 0);
-		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_MAX_LEVEL, 4); 
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_MAX_LEVEL, 4);
 		return t.getTextureID();
 	}
 
@@ -88,18 +88,21 @@ public class GLHelper {
 		Matrix4f.scale(new Vector3f(scale, scale, scale), matrix, matrix);
 		return matrix;
 	}
-	
+
 	public static float doubleToFloat(double value) {
 		return new BigDecimal(String.valueOf(value)).floatValue();
 	}
-	
+
 	public static double floatToDouble(float value) {
 		return new BigDecimal(String.valueOf(value)).doubleValue();
 	}
-	
+
 	public static int floatToInt(float value) {
 		return new BigDecimal(String.valueOf(value)).setScale(2, BigDecimal.ROUND_DOWN).intValue();
 	}
-	
+
+	public static long vert2ToLong(int x, int z) {
+		return (long) x & 4294967295L | ((long) z & 4294967295L) << 32;
+	}
 
 }

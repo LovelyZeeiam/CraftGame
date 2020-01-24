@@ -30,7 +30,7 @@ public class DisplayManager {
 			Display.setVSyncEnabled(true);
 			Display.setTitle("CraftGame");
 
-			ContextAttribs attribs = new ContextAttribs(3,2);
+			ContextAttribs attribs = new ContextAttribs(3, 2);
 			attribs.withForwardCompatible(true);
 			attribs.withProfileCore(true);
 
@@ -46,10 +46,10 @@ public class DisplayManager {
 
 		GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		
+
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glDepthFunc(GL11.GL_ONE);
-		
+
 		d_width = width;
 		d_height = height;
 
@@ -82,7 +82,7 @@ public class DisplayManager {
 	public static boolean isKeyDown(int i) {
 		return Keyboard.isKeyDown(i);
 	}
-	
+
 	public static boolean isMouseDown(int i) {
 		return Mouse.isButtonDown(i);
 	}

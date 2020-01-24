@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.util.vector.Vector3f;
 
+import xueLi.craftGame.block.Block;
 import xueLi.craftGame.entity.Player;
 import xueLi.craftGame.shader.WorldShader;
 import xueLi.craftGame.utils.Vector;
@@ -17,9 +18,11 @@ import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.DisplayManager;
 import xueLi.craftGame.utils.FPSTimer;
 import xueLi.craftGame.utils.GLHelper;
+import xueLi.craftGame.utils.HitBox;
 import xueLi.craftGame.utils.MousePicker;
 import xueLi.craftGame.utils.VertexBuffer;
 import xueLi.craftGame.world.Chunk;
+import xueLi.craftGame.world.World;
 
 public class Main {
 
@@ -27,13 +30,13 @@ public class Main {
 
 	private static WorldShader shader;
 
-	private static Player player = new Player(8, 6, 8);
+	private static Player player = new Player(8, 8, 8);
 	private static float resistant = 0.000005f;
 	private static float sensivity = 0.1f;
-	
-	private static BlockPos block_select,last_block_select;
+
+	private static BlockPos block_select, last_block_select;
 	private static long placeTimeCount;
-	
+
 	public static void main(String[] args) throws IOException {
 		DisplayManager.create(width, height);
 		shader = new WorldShader();
@@ -42,19 +45,17 @@ public class Main {
 
 		FloatBuffer vertexBuffer = BufferUtils.createFloatBuffer(16777216);
 		FloatBuffer texBuffer = BufferUtils.createFloatBuffer(16777216);
-		FloatBuffer selectBlockFrameBuffer = BufferUtils.createFloatBuffer(72);
 
-		Chunk chunk = new Chunk();
+		World w = new World(10, 10);
 
 		Vector3f playerSpeed = new Vector3f(0, 0, 0);
 		Mouse.setGrabbed(true);
 		while (DisplayManager.isRunning()) {
 			GLHelper.clearColor(0.5f, 0.8f, 1.0f, 1.0f);
-			
-			int vertCount = chunk.draw(vertexBuffer, texBuffer, player.pos);
+
+			int v = w.draw(player.pos, vertexBuffer, texBuffer);
 
 			vertexBuffer.flip();
-			selectBlockFrameBuffer.flip();
 			texBuffer.flip();
 
 			shader.use();
@@ -66,50 +67,47 @@ public class Main {
 			if (error != 0) {
 				System.out.println(error);
 			}
-			
-			VertexBuffer.send(vertexBuffer, texBuffer, vertCount);
+
+			VertexBuffer.send(vertexBuffer, texBuffer, v);
 			VertexBuffer.bind();
 			GL13.glActiveTexture(GL13.GL_TEXTURE0);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
 			VertexBuffer.draw(GL11.GL_TRIANGLES);
 			VertexBuffer.unbind();
 			VertexBuffer.clear();
-			
-			if(block_select != null) {
-				VertexBuffer.send(selectBlockFrameBuffer, 24);
-				VertexBuffer.bind();
-				VertexBuffer.draw(GL11.GL_LINES);
-				VertexBuffer.unbind();
+
+			if (block_select != null) {
+
 			}
-			
+
 			shader.unbind();
 
-			selectBlockFrameBuffer.clear();
 			vertexBuffer.clear();
 			texBuffer.clear();
 			VertexBuffer.clear();
 
 			DisplayManager.update();
-			
+
 			block_select = null;
 			MousePicker.ray(player.pos);
-			for(float distance = 0;distance < 8;distance += 0.05f) {
+			for (float distance = 0; distance < 8; distance += 0.05f) {
 				BlockPos searching_block_pos = MousePicker.getPointOnRay(distance);
-				if(chunk.hasBlock(searching_block_pos)) {
+				if (w.hasBlock(searching_block_pos)) {
 					block_select = searching_block_pos;
-					chunk.getBlock(block_select).method.getBlockFrame(selectBlockFrameBuffer, block_select);
 					break;
 				}
 				last_block_select = searching_block_pos;
 			}
-			
-			if(DisplayManager.isMouseDown(0) & block_select != null & DisplayManager.currentTime - placeTimeCount > 200) {
-				chunk.setBlock(block_select, 0);
+
+			if (DisplayManager.isMouseDown(0) & block_select != null
+					& DisplayManager.currentTime - placeTimeCount > 200) {
+				w.setBlock(block_select, 0);
 				placeTimeCount = DisplayManager.currentTime;
 			}
-			
-			if(DisplayManager.isMouseDown(1) & block_select != null & DisplayManager.currentTime - placeTimeCount > 200) {
-				chunk.setBlock(last_block_select, 1);
+
+			if (DisplayManager.isMouseDown(1) & block_select != null
+					& DisplayManager.currentTime - placeTimeCount > 200) {
+				w.setBlock(last_block_select, 1);
 				placeTimeCount = DisplayManager.currentTime;
 			}
 
@@ -118,8 +116,8 @@ public class Main {
 			}
 
 			boolean isKeyMovingLRFBPressed = false, isKeyMovingUDPressed = false;
-
 			Vector playerPos = player.pos;
+
 			if (DisplayManager.isKeyDown(Keyboard.KEY_S)) {
 				playerSpeed.x = player.getSpeed() * (float) Math.sin(Math.toRadians(-playerPos.rotY));
 				playerSpeed.z = player.getSpeed() * (float) Math.cos(Math.toRadians(-playerPos.rotY));

@@ -5,6 +5,7 @@ import java.nio.FloatBuffer;
 import xueLi.craftGame.block.Block;
 import xueLi.craftGame.block.IBlockDrawMethod;
 import xueLi.craftGame.utils.BlockPos;
+import xueLi.craftGame.utils.HitBox;
 
 public class BlockGrass extends Block {
 
@@ -17,20 +18,25 @@ public class BlockGrass extends Block {
 		@Override
 		public void getDrawData(FloatBuffer vertexbuffer, FloatBuffer texbuffer, int x, int y, int z, int face) {
 			IBlockDrawMethod.drawDefaultBlockToBuffer(vertexbuffer, x, y, z, face);
-			if(face < 4)
+			if (face < 4)
 				IBlockDrawMethod.bindTextureToBuffer(texbuffer, 1, 0);
-			else if(face == 4)
+			else if (face == 4)
 				IBlockDrawMethod.bindTextureToBuffer(texbuffer, 0, 0);
-			else if(face == 5)
+			else if (face == 5)
 				IBlockDrawMethod.bindTextureToBuffer(texbuffer, 2, 0);
-			
+
 		}
 
 		@Override
 		public void getBlockFrame(FloatBuffer frame, BlockPos pos) {
-			IBlockDrawMethod.drawDefaultBlockFrame(frame, pos.getX(),pos.getY(),pos.getZ());
+			IBlockDrawMethod.drawDefaultBlockFrame(frame, pos.getX(), pos.getY(), pos.getZ());
 		}
 
 	}
-	
+
+	@Override
+	public HitBox getHitbox(int x, int y, int z) {
+		return super.getDefaultBlockHitbox(x, y, z);
+	}
+
 }
