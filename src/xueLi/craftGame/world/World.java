@@ -57,7 +57,7 @@ public class World {
 		ChunkPos cp = getChunkPosFromBlock(x, z);
 		if (isWorldLimited) {
 			if (cp.getX() > this.limit_long - 1 || cp.getZ() > this.limit_width - 1
-					|| cp.getX() < 0 || cp.getZ() < 0)
+					|| cp.getX() < 0 || cp.getZ() < 0 || y > Chunk.height - 1 || y < 0)
 				return;
 
 			int xInChunk = x - cp.getX() * Chunk.size;
@@ -81,7 +81,7 @@ public class World {
 		return false;
 	}
 
-	private int renderDistance = 40;
+	private int renderDistance = 30;
 
 	public int draw(Vector cam, FloatBuffer vertices, FloatBuffer texCoords) {
 		int vertCount = 0;
@@ -92,6 +92,8 @@ public class World {
 				for (int y = 0; y < Chunk.height; y++) {
 					for (int z = camZ - renderDistance; z < camZ + renderDistance; z++) {
 						Block block = this.getBlock(x, y, z);
+						if(!GLHelper.isBlockInFrustum(x, y, z))
+							continue;
 						if (block == null)
 							continue;
 						if (x - 1 < 0 || this.getBlock(x - 1, y, z) == null) {

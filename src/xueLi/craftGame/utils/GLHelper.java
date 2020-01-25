@@ -19,13 +19,14 @@ import xueLi.craftGame.entity.Player;
 public class GLHelper {
 
 	public static Matrix4f lastTimeProjMatrix, lastTimeViewMatrix;
+	public static float[][] frustumPlane = new float[6][4];
 
 	public static void clearColor(float r, float g, float b, float a) {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		GL11.glClearColor(r, g, b, a);
 	}
 
-	public static int bindTexture(String path) {
+	public static int registerTexture(String path) {
 		Texture t = null;
 		try {
 			t = TextureLoader.getTexture("png", new FileInputStream(new File(path)));
@@ -87,6 +88,102 @@ public class GLHelper {
 		Matrix4f.rotate((float) Math.toRadians(rz), new Vector3f(0, 0, 1), matrix, matrix);
 		Matrix4f.scale(new Vector3f(scale, scale, scale), matrix, matrix);
 		return matrix;
+	}
+	
+	public static void calculateFrustumPlane() {
+		Matrix4f matrix = Matrix4f.mul(lastTimeProjMatrix, lastTimeViewMatrix, null);
+		
+		double temp;
+		frustumPlane[0][0] = matrix.m03 - matrix.m00;
+		frustumPlane[0][1] = matrix.m13 - matrix.m10;
+		frustumPlane[0][2] = matrix.m23 - matrix.m20;
+		frustumPlane[0][3] = matrix.m33 - matrix.m30;
+		temp = Math.sqrt(frustumPlane[0][0] * frustumPlane[0][0] + frustumPlane[0][1] * frustumPlane[0][1] + frustumPlane[0][2] * frustumPlane[0][2]);
+		frustumPlane[0][0] /= temp;
+		frustumPlane[0][1] /= temp;
+		frustumPlane[0][2] /= temp;
+		frustumPlane[0][3] /= temp;
+		
+		frustumPlane[1][0] = matrix.m03 + matrix.m00;
+		frustumPlane[1][1] = matrix.m13 + matrix.m10;
+		frustumPlane[1][2] = matrix.m23 + matrix.m20;
+		frustumPlane[1][3] = matrix.m33 + matrix.m30;
+		temp = Math.sqrt(frustumPlane[1][0] * frustumPlane[1][0] + frustumPlane[1][1] * frustumPlane[1][1] + frustumPlane[1][2] * frustumPlane[1][2]);
+		frustumPlane[1][0] /= temp;
+		frustumPlane[1][1] /= temp;
+		frustumPlane[1][2] /= temp;
+		frustumPlane[1][3] /= temp;
+		
+		frustumPlane[2][0] = matrix.m03 + matrix.m01;
+		frustumPlane[2][1] = matrix.m13 + matrix.m11;
+		frustumPlane[2][2] = matrix.m23 + matrix.m21;
+		frustumPlane[2][3] = matrix.m33 + matrix.m31;
+		temp = Math.sqrt(frustumPlane[2][0] * frustumPlane[2][0] + frustumPlane[2][1] * frustumPlane[2][1] + frustumPlane[2][2] * frustumPlane[2][2]);
+		frustumPlane[2][0] /= temp;
+		frustumPlane[2][1] /= temp;
+		frustumPlane[2][2] /= temp;
+		frustumPlane[2][3] /= temp;
+		
+		frustumPlane[3][0] = matrix.m03 - matrix.m01;
+		frustumPlane[3][1] = matrix.m13 - matrix.m11;
+		frustumPlane[3][2] = matrix.m23 - matrix.m21;
+		frustumPlane[3][3] = matrix.m33 - matrix.m31;
+		temp = Math.sqrt(frustumPlane[3][0] * frustumPlane[3][0] + frustumPlane[3][1] * frustumPlane[3][1] + frustumPlane[3][2] * frustumPlane[3][2]);
+		frustumPlane[3][0] /= temp;
+		frustumPlane[3][1] /= temp;
+		frustumPlane[3][2] /= temp;
+		frustumPlane[3][3] /= temp;
+		
+		frustumPlane[4][0] = matrix.m03 - matrix.m02;
+		frustumPlane[4][1] = matrix.m13 - matrix.m12;
+		frustumPlane[4][2] = matrix.m23 - matrix.m22;
+		frustumPlane[4][3] = matrix.m33 - matrix.m32;
+		temp = Math.sqrt(frustumPlane[4][0] * frustumPlane[4][0] + frustumPlane[4][1] * frustumPlane[4][1] + frustumPlane[4][2] * frustumPlane[4][2]);
+		frustumPlane[4][0] /= temp;
+		frustumPlane[4][1] /= temp;
+		frustumPlane[4][2] /= temp;
+		frustumPlane[4][3] /= temp;
+		
+		frustumPlane[5][0] = matrix.m03 + matrix.m02;
+		frustumPlane[5][1] = matrix.m13 + matrix.m12;
+		frustumPlane[5][2] = matrix.m23 + matrix.m22;
+		frustumPlane[5][3] = matrix.m33 + matrix.m32;
+		temp = Math.sqrt(frustumPlane[5][0] * frustumPlane[5][0] + frustumPlane[5][1] * frustumPlane[5][1] + frustumPlane[5][2] * frustumPlane[5][2]);
+		frustumPlane[5][0] /= temp;
+		frustumPlane[5][1] /= temp;
+		frustumPlane[5][2] /= temp;
+		frustumPlane[5][3] /= temp;
+	}
+	
+	public static boolean isPointInFrustum(float x,float y,float z) {
+		for(int p = 0;p < 6;p++) {
+			if(frustumPlane[p][0] * x + frustumPlane[p][1] * y + frustumPlane[p][2] * z + frustumPlane[p][3] <= 0)
+				return false;
+		}
+		return true;
+	}
+	
+	public static boolean isBlockInFrustum(int x,int y,int z) {
+		for(int p = 0;p < 6;p++) {
+			if(frustumPlane[p][0] * x + frustumPlane[p][1] * y + frustumPlane[p][2] * z + frustumPlane[p][3] > 0)
+				continue;
+			if(frustumPlane[p][0] * (x+1) + frustumPlane[p][1] * y + frustumPlane[p][2] * z + frustumPlane[p][3] > 0)
+				continue;
+			if(frustumPlane[p][0] * x + frustumPlane[p][1] * (y+1) + frustumPlane[p][2] * z + frustumPlane[p][3] > 0)
+				continue;
+			if(frustumPlane[p][0] * (x+1) + frustumPlane[p][1] * (y+1) + frustumPlane[p][2] * z + frustumPlane[p][3] > 0)
+				continue;
+			if(frustumPlane[p][0] * x + frustumPlane[p][1] * y + frustumPlane[p][2] * (z+1) + frustumPlane[p][3] > 0)
+				continue;
+			if(frustumPlane[p][0] * (x+1) + frustumPlane[p][1] * y + frustumPlane[p][2] * (z+1) + frustumPlane[p][3] > 0)
+				continue;
+			if(frustumPlane[p][0] * x + frustumPlane[p][1] * (y+1) + frustumPlane[p][2] * (z+1) + frustumPlane[p][3] > 0)
+				continue;
+			if(frustumPlane[p][0] * (x+1) + frustumPlane[p][1] * (y+1) + frustumPlane[p][2] * (z+1) + frustumPlane[p][3] > 0)
+				continue;
+			return false;
+		}
+		return true;
 	}
 
 	public static float doubleToFloat(double value) {

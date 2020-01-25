@@ -8,9 +8,8 @@ import xueLi.craftGame.utils.Vector;
 
 public class Chunk {
 
-	public static final int size = 16, height = 16;
+	public static final int size = 16, height = 32;
 	public Block[][][] blockState = new Block[size][height][size];
-	private int[][] heightMap = new int[size][size];
 
 	private int chunkX, chunkZ;
 

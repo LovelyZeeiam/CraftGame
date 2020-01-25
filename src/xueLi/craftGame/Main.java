@@ -26,7 +26,7 @@ import xueLi.craftGame.world.World;
 
 public class Main {
 
-	private static int width = 800, height = 600;
+	private static int width = 1200, height = 680;
 
 	private static WorldShader shader;
 
@@ -41,7 +41,7 @@ public class Main {
 		DisplayManager.create(width, height);
 		shader = new WorldShader();
 
-		int textureID = GLHelper.bindTexture("res/textures.png");
+		int textureID = GLHelper.registerTexture("res/textures.png");
 
 		FloatBuffer vertexBuffer = BufferUtils.createFloatBuffer(16777216);
 		FloatBuffer texBuffer = BufferUtils.createFloatBuffer(16777216);
@@ -51,54 +51,6 @@ public class Main {
 		Vector3f playerSpeed = new Vector3f(0, 0, 0);
 		Mouse.setGrabbed(true);
 		while (DisplayManager.isRunning()) {
-			GLHelper.clearColor(0.5f, 0.8f, 1.0f, 1.0f);
-
-			int v = w.draw(player.pos, vertexBuffer, texBuffer);
-
-			vertexBuffer.flip();
-			texBuffer.flip();
-
-			shader.use();
-			if (DisplayManager.tickResize())
-				shader.setProjMatrix(DisplayManager.d_width, DisplayManager.d_height, 70.0f);
-			shader.setViewMatrix(player);
-
-			int error = GL11.glGetError();
-			if (error != 0) {
-				System.out.println(error);
-			}
-
-			VertexBuffer.send(vertexBuffer, texBuffer, v);
-			VertexBuffer.bind();
-			GL13.glActiveTexture(GL13.GL_TEXTURE0);
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
-			VertexBuffer.draw(GL11.GL_TRIANGLES);
-			VertexBuffer.unbind();
-			VertexBuffer.clear();
-
-			if (block_select != null) {
-
-			}
-
-			shader.unbind();
-
-			vertexBuffer.clear();
-			texBuffer.clear();
-			VertexBuffer.clear();
-
-			DisplayManager.update();
-
-			block_select = null;
-			MousePicker.ray(player.pos);
-			for (float distance = 0; distance < 8; distance += 0.05f) {
-				BlockPos searching_block_pos = MousePicker.getPointOnRay(distance);
-				if (w.hasBlock(searching_block_pos)) {
-					block_select = searching_block_pos;
-					break;
-				}
-				last_block_select = searching_block_pos;
-			}
-
 			if (DisplayManager.isMouseDown(0) & block_select != null
 					& DisplayManager.currentTime - placeTimeCount > 200) {
 				w.setBlock(block_select, 0);
@@ -118,18 +70,18 @@ public class Main {
 			boolean isKeyMovingLRFBPressed = false, isKeyMovingUDPressed = false;
 			Vector playerPos = player.pos;
 
-			if (DisplayManager.isKeyDown(Keyboard.KEY_S)) {
-				playerSpeed.x = player.getSpeed() * (float) Math.sin(Math.toRadians(-playerPos.rotY));
-				playerSpeed.z = player.getSpeed() * (float) Math.cos(Math.toRadians(-playerPos.rotY));
+			if (DisplayManager.isKeyDown(Keyboard.KEY_W)) {
+				playerSpeed.x = -player.getSpeed() * (float) Math.sin(Math.toRadians(-playerPos.rotY));
+				playerSpeed.z = -player.getSpeed() * (float) Math.cos(Math.toRadians(-playerPos.rotY));
 				player.increasePosition(playerSpeed.x * DisplayManager.deltaTime,
 						0,
 						playerSpeed.z * DisplayManager.deltaTime,
 						0, 0, 0);
 				isKeyMovingLRFBPressed = true;
 			}
-			if (DisplayManager.isKeyDown(Keyboard.KEY_W)) {
-				playerSpeed.x = -player.getSpeed() * (float) Math.sin(Math.toRadians(-playerPos.rotY));
-				playerSpeed.z = -player.getSpeed() * (float) Math.cos(Math.toRadians(-playerPos.rotY));
+			if (DisplayManager.isKeyDown(Keyboard.KEY_S)) {
+				playerSpeed.x = player.getSpeed() * (float) Math.sin(Math.toRadians(-playerPos.rotY));
+				playerSpeed.z = player.getSpeed() * (float) Math.cos(Math.toRadians(-playerPos.rotY));
 				player.increasePosition(playerSpeed.x * DisplayManager.deltaTime,
 						0,
 						playerSpeed.z * DisplayManager.deltaTime,
@@ -219,6 +171,57 @@ public class Main {
 			}
 
 			int fps = FPSTimer.getFPS();
+			
+			GLHelper.clearColor(0.5f, 0.8f, 1.0f, 1.0f);
+
+			int v = w.draw(player.pos, vertexBuffer, texBuffer);
+
+			vertexBuffer.flip();
+			texBuffer.flip();
+
+			shader.use();
+
+			int error = GL11.glGetError();
+			if (error != 0) {
+				System.out.println(error);
+			}
+
+			VertexBuffer.send(vertexBuffer, texBuffer, v);
+			VertexBuffer.bind();
+			GL13.glActiveTexture(GL13.GL_TEXTURE0);
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
+			VertexBuffer.draw(GL11.GL_TRIANGLES);
+			VertexBuffer.unbind();
+			VertexBuffer.clear();
+			
+			if (DisplayManager.tickResize())
+				shader.setProjMatrix(DisplayManager.d_width, DisplayManager.d_height, 90.0f);
+			shader.setViewMatrix(player);
+			GLHelper.calculateFrustumPlane();
+
+			if (block_select != null) {
+
+			}
+
+			shader.unbind();
+
+			vertexBuffer.clear();
+			texBuffer.clear();
+			VertexBuffer.clear();
+
+			DisplayManager.update();
+			
+			block_select = null;
+			MousePicker.ray(player.pos);
+			for (float distance = 0; distance < 8; distance += 0.05f) {
+				BlockPos searching_block_pos = MousePicker.getPointOnRay(distance);
+				if (w.hasBlock(searching_block_pos)) {
+					block_select = searching_block_pos;
+					break;
+				}
+				last_block_select = searching_block_pos;
+			}
+			
 		}
 
 		vertexBuffer.clear();
