@@ -16,15 +16,13 @@ public class BlockGrass extends Block {
 	private static class BlockGrassDrawMethod implements IBlockDrawMethod {
 
 		@Override
-		public void getDrawData(FloatBuffer vertexbuffer, FloatBuffer texbuffer, int x, int y, int z, int face) {
-			IBlockDrawMethod.drawDefaultBlockToBuffer(vertexbuffer, x, y, z, face);
+		public void getDrawData(FloatBuffer buffer, int x, int y, int z, int face) {
 			if (face < 4)
-				IBlockDrawMethod.bindTextureToBuffer(texbuffer, 1, 0);
+				IBlockDrawMethod.bindDefaultToBuffer(buffer, 1, 0,x,y,z,face);
 			else if (face == 4)
-				IBlockDrawMethod.bindTextureToBuffer(texbuffer, 0, 0);
+				IBlockDrawMethod.bindDefaultToBuffer(buffer, 0, 0,x,y,z,face);
 			else if (face == 5)
-				IBlockDrawMethod.bindTextureToBuffer(texbuffer, 2, 0);
-
+				IBlockDrawMethod.bindDefaultToBuffer(buffer, 2, 0,x,y,z,face);
 		}
 
 		@Override

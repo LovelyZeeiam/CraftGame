@@ -83,7 +83,7 @@ public class World {
 
 	private int renderDistance = 30;
 
-	public int draw(Vector cam, FloatBuffer vertices, FloatBuffer texCoords) {
+	public int draw(Vector cam, FloatBuffer buffer) {
 		int vertCount = 0;
 		int camX = (int) cam.x;
 		int camZ = (int) cam.z;
@@ -97,27 +97,27 @@ public class World {
 						if (block == null)
 							continue;
 						if (x - 1 < 0 || this.getBlock(x - 1, y, z) == null) {
-							block.method.getDrawData(vertices, texCoords, x, y, z, 3);
+							block.method.getDrawData(buffer, x, y, z, 3);
 							vertCount += 6;
 						}
 						if (x + 1 >= wlimit_long || this.getBlock(x + 1, y, z) == null) {
-							block.method.getDrawData(vertices, texCoords, x, y, z, 1);
+							block.method.getDrawData(buffer, x, y, z, 1);
 							vertCount += 6;
 						}
 						if (z - 1 < 0 || this.getBlock(x, y, z - 1) == null) {
-							block.method.getDrawData(vertices, texCoords, x, y, z, 0);
+							block.method.getDrawData(buffer, x, y, z, 0);
 							vertCount += 6;
 						}
 						if (z + 1 >= wlimit_width || this.getBlock(x, y, z + 1) == null) {
-							block.method.getDrawData(vertices, texCoords, x, y, z, 2);
+							block.method.getDrawData(buffer, x, y, z, 2);
 							vertCount += 6;
 						}
 						if (y - 1 < 0 || this.getBlock(x, y - 1, z) == null) {
-							block.method.getDrawData(vertices, texCoords, x, y, z, 5);
+							block.method.getDrawData(buffer, x, y, z, 5);
 							vertCount += 6;
 						}
 						if (y + 1 >= Chunk.height || this.getBlock(x, y + 1, z) == null) {
-							block.method.getDrawData(vertices, texCoords, x, y, z, 4);
+							block.method.getDrawData(buffer, x, y, z, 4);
 							vertCount += 6;
 						}
 					}

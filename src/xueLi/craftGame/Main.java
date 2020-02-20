@@ -10,25 +10,19 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.util.vector.Vector3f;
 
-import xueLi.craftGame.block.Block;
 import xueLi.craftGame.entity.Player;
-import xueLi.craftGame.shader.WorldShader;
 import xueLi.craftGame.utils.Vector;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.DisplayManager;
 import xueLi.craftGame.utils.FPSTimer;
 import xueLi.craftGame.utils.GLHelper;
-import xueLi.craftGame.utils.HitBox;
 import xueLi.craftGame.utils.MousePicker;
 import xueLi.craftGame.utils.VertexBuffer;
-import xueLi.craftGame.world.Chunk;
 import xueLi.craftGame.world.World;
 
 public class Main {
 
 	private static int width = 1200, height = 680;
-
-	private static WorldShader shader;
 
 	private static Player player = new Player(8, 8, 8);
 	private static float resistant = 0.000005f;
@@ -39,17 +33,18 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		DisplayManager.create(width, height);
-		shader = new WorldShader();
 
 		int textureID = GLHelper.registerTexture("res/textures.png");
 
-		FloatBuffer vertexBuffer = BufferUtils.createFloatBuffer(16777216);
-		FloatBuffer texBuffer = BufferUtils.createFloatBuffer(16777216);
+		FloatBuffer buffer;
 
 		World w = new World(10, 10);
 
 		Vector3f playerSpeed = new Vector3f(0, 0, 0);
 		Mouse.setGrabbed(true);
+		
+		VertexBuffer.init();
+		
 		while (DisplayManager.isRunning()) {
 			if (DisplayManager.isMouseDown(0) & block_select != null
 					& DisplayManager.currentTime - placeTimeCount > 200) {
@@ -174,40 +169,35 @@ public class Main {
 			
 			GLHelper.clearColor(0.5f, 0.8f, 1.0f, 1.0f);
 
-			int v = w.draw(player.pos, vertexBuffer, texBuffer);
+			buffer = VertexBuffer.map();
+			int v = w.draw(player.pos, buffer);
 
-			vertexBuffer.flip();
-			texBuffer.flip();
+			buffer.flip();
 
-			shader.use();
+			GL11.glMatrixMode(GL11.GL_MODELVIEW);
+			
+			GL13.glActiveTexture(GL13.GL_TEXTURE0);
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
+			VertexBuffer.draw(GL11.GL_TRIANGLES,v);
 
+			buffer.clear();
+			
 			int error = GL11.glGetError();
 			if (error != 0) {
 				System.out.println(error);
 			}
-
-			VertexBuffer.send(vertexBuffer, texBuffer, v);
-			VertexBuffer.bind();
-			GL13.glActiveTexture(GL13.GL_TEXTURE0);
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
-			VertexBuffer.draw(GL11.GL_TRIANGLES);
-			VertexBuffer.unbind();
-			VertexBuffer.clear();
 			
-			if (DisplayManager.tickResize())
-				shader.setProjMatrix(DisplayManager.d_width, DisplayManager.d_height, 90.0f);
-			shader.setViewMatrix(player);
+			if (DisplayManager.tickResize()) {
+				GLHelper.perspecive(DisplayManager.d_width, DisplayManager.d_height, 90.0f,0.1f,1000.0f);
+			}
+			GLHelper.player(player);
 			GLHelper.calculateFrustumPlane();
 
 			if (block_select != null) {
 
 			}
 
-			shader.unbind();
-
-			vertexBuffer.clear();
-			texBuffer.clear();
-			VertexBuffer.clear();
+			buffer.clear();
 
 			DisplayManager.update();
 			
@@ -223,11 +213,8 @@ public class Main {
 			}
 			
 		}
-
-		vertexBuffer.clear();
-		texBuffer.clear();
+		
 		GLHelper.deleteTexture(textureID);
-		shader.release();
 
 		DisplayManager.destroy();
 

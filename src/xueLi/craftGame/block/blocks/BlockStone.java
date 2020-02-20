@@ -16,9 +16,8 @@ public class BlockStone extends Block {
 	private static class BlockStoneDrawMethod implements IBlockDrawMethod {
 
 		@Override
-		public void getDrawData(FloatBuffer vertexbuffer, FloatBuffer texbuffer, int x, int y, int z, int face) {
-			IBlockDrawMethod.drawDefaultBlockToBuffer(vertexbuffer, x, y, z, face);
-			IBlockDrawMethod.bindTextureToBuffer(texbuffer, 3, 0);
+		public void getDrawData(FloatBuffer buffer, int x, int y, int z, int face) {
+			IBlockDrawMethod.bindDefaultToBuffer(buffer, 3, 0,x,y,z,face);
 
 		}
 

@@ -30,11 +30,7 @@ public class DisplayManager {
 			Display.setVSyncEnabled(true);
 			Display.setTitle("CraftGame");
 
-			ContextAttribs attribs = new ContextAttribs(3, 2);
-			attribs.withForwardCompatible(true);
-			attribs.withProfileCore(true);
-
-			Display.create(new PixelFormat(), attribs);
+			Display.create();
 			Display.makeCurrent();
 
 			Keyboard.create();

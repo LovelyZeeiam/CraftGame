@@ -8,7 +8,7 @@ import xueLi.craftGame.utils.Vector;
 
 public class Chunk {
 
-	public static final int size = 16, height = 32;
+	public static final int size = 16, height = 128;
 	public Block[][][] blockState = new Block[size][height][size];
 
 	private int chunkX, chunkZ;
@@ -65,7 +65,7 @@ public class Chunk {
 		return blockState[pos.getX()][pos.getY()][pos.getZ()] != null;
 	}
 
-	public int draw(FloatBuffer vertices, FloatBuffer texCoords, Vector player_pos) {
+	public int draw(FloatBuffer buffer, Vector player_pos) {
 		int vertCount = 0;
 		for (int x = 0; x < size; x++) {
 			for (int y = 0; y < height; y++) {
@@ -74,27 +74,27 @@ public class Chunk {
 					if (block == null)
 						continue;
 					if (x - 1 > 0 && blockState[x - 1][y][z] == null) {
-						block.method.getDrawData(vertices, texCoords, x + chunkX * size, y, z + chunkZ * size, 3);
+						block.method.getDrawData(buffer, x + chunkX * size, y, z + chunkZ * size, 3);
 						vertCount += 6;
 					}
 					if (x + 1 >= size || blockState[x + 1][y][z] == null) {
-						block.method.getDrawData(vertices, texCoords, x + chunkX * size, y, z + chunkZ * size, 1);
+						block.method.getDrawData(buffer, x + chunkX * size, y, z + chunkZ * size, 1);
 						vertCount += 6;
 					}
 					if (z - 1 > 0 && blockState[x][y][z - 1] == null) {
-						block.method.getDrawData(vertices, texCoords, x + chunkX * size, y, z + chunkZ * size, 0);
+						block.method.getDrawData(buffer, x + chunkX * size, y, z + chunkZ * size, 0);
 						vertCount += 6;
 					}
 					if (z + 1 >= size || blockState[x][y][z + 1] == null) {
-						block.method.getDrawData(vertices, texCoords, x + chunkX * size, y, z + chunkZ * size, 2);
+						block.method.getDrawData(buffer, x + chunkX * size, y, z + chunkZ * size, 2);
 						vertCount += 6;
 					}
 					if (y - 1 < 0 || blockState[x][y - 1][z] == null) {
-						block.method.getDrawData(vertices, texCoords, x + chunkX * size, y, z + chunkZ * size, 5);
+						block.method.getDrawData(buffer, x + chunkX * size, y, z + chunkZ * size, 5);
 						vertCount += 6;
 					}
 					if (y + 1 >= height || blockState[x][y + 1][z] == null) {
-						block.method.getDrawData(vertices, texCoords, x + chunkX * size, y, z + chunkZ * size, 4);
+						block.method.getDrawData(buffer, x + chunkX * size, y, z + chunkZ * size, 4);
 						vertCount += 6;
 					}
 
