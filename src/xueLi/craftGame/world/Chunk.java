@@ -9,7 +9,8 @@ import xueLi.craftGame.utils.Vector;
 public class Chunk {
 
 	public static final int size = 16, height = 128;
-	public Block[][][] blockState = new Block[size][height][size];
+	private Block[][][] blockState = new Block[size][height][size];
+	public int[][] heightMap = new int[size][size];
 
 	private int chunkX, chunkZ;
 
@@ -22,13 +23,14 @@ public class Chunk {
 					blockState[x][y][z] = Block.blockDefault.get(1);
 				}
 				blockState[x][4][z] = Block.blockDefault.get(2);
+				heightMap[x][z] = 4;
 			}
 		}
 
 	}
 
 	public void update() {
-
+		
 	}
 
 	public void setBlock(int x, int y, int z, int id) {
@@ -36,9 +38,39 @@ public class Chunk {
 			return;
 		if (id == 0) {
 			blockState[x][y][z] = null;
+			if(y > heightMap[x][z]) {
+				for(int yy = y;;y--) {
+					if(this.getBlock(x, yy, z) != null) {
+						heightMap[x][z] = yy;
+						break;
+					}
+				}
+			}
 			return;
 		}
 		blockState[x][y][z] = Block.blockDefault.get(id);
+		
+		if(y > heightMap[x][z])
+			heightMap[x][z] = y;
+		
+	}
+	
+	public void setBlock(int x, int y, int z, Block block) {
+		if (x < 0 || x >= size || y < 0 || y >= height || z < 0 || z >= size)
+			return;
+		blockState[x][y][z] = block;
+		
+		if(y > heightMap[x][z]) {
+			if(block == null) {
+				for(int yy = y;;y--) {
+					if(this.getBlock(x, yy, z) != null) {
+						heightMap[x][z] = yy;
+						break;
+					}
+				}
+			}else
+				heightMap[x][z] = y;
+		}
 	}
 
 	public void setBlock(BlockPos pos, int id) {

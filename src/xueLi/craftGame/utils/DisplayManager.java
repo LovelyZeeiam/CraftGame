@@ -1,5 +1,8 @@
 package xueLi.craftGame.utils;
 
+import java.nio.FloatBuffer;
+
+import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
@@ -9,6 +12,8 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.PixelFormat;
+
+import xueLi.craftGame.world.World;
 
 public class DisplayManager {
 
@@ -45,7 +50,25 @@ public class DisplayManager {
 
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glDepthFunc(GL11.GL_ONE);
-
+		
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glCullFace(GL11.GL_BACK);
+		
+		FloatBuffer fogColor = BufferUtils.createFloatBuffer(4);
+		float[] fogColour = {
+			0.8f,0.8f,1.0f,1.0f	
+		};
+		fogColor.put(fogColour);
+		fogColor.flip();
+		
+		GL11.glEnable(GL11.GL_FOG);
+		GL11.glFog(GL11.GL_FOG_COLOR, fogColor);
+		GL11.glFogi(GL11.GL_FOG_MODE, GL11.GL_LINEAR);
+		GL11.glFogf(GL11.GL_FOG_DENSITY, 0.03f);
+		GL11.glFogf(GL11.GL_FOG_START, World.renderDistance * 0.87f);
+		GL11.glFogf(GL11.GL_FOG_END, World.renderDistance * 1.42f);
+		GL11.glHint(GL11.GL_FOG_HINT, GL11.GL_DONT_CARE);
+		
 		d_width = width;
 		d_height = height;
 

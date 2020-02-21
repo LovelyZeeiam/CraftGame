@@ -40,7 +40,7 @@ public class World {
 
 			int xInChunk = x - cp.getX() * Chunk.size;
 			int zInChunk = z - cp.getZ() * Chunk.size;
-			return chunks.get(GLHelper.vert2ToLong(cp.getX(), cp.getZ())).blockState[xInChunk][y][zInChunk];
+			return chunks.get(GLHelper.vert2ToLong(cp.getX(), cp.getZ())).getBlock(xInChunk,y,zInChunk);
 		}
 		return null;
 	}
@@ -62,7 +62,7 @@ public class World {
 
 			int xInChunk = x - cp.getX() * Chunk.size;
 			int zInChunk = z - cp.getZ() * Chunk.size;
-			chunks.get(GLHelper.vert2ToLong(cp.getX(), cp.getZ())).blockState[xInChunk][y][zInChunk] = block;
+			chunks.get(GLHelper.vert2ToLong(cp.getX(), cp.getZ())).setBlock(xInChunk,y,zInChunk,block);
 		}
 	}
 
@@ -81,7 +81,7 @@ public class World {
 		return false;
 	}
 
-	private int renderDistance = 30;
+	public static int renderDistance = 48;
 
 	public int draw(Vector cam, FloatBuffer buffer) {
 		int vertCount = 0;
@@ -89,8 +89,15 @@ public class World {
 		int camZ = (int) cam.z;
 		if (isWorldLimited) {
 			for (int x = camX - renderDistance; x < camX + renderDistance; x++) {
-				for (int y = 0; y < Chunk.height; y++) {
-					for (int z = camZ - renderDistance; z < camZ + renderDistance; z++) {
+				for (int z = camZ - renderDistance; z < camZ + renderDistance; z++) {
+					ChunkPos chunkPos = this.getChunkPosFromBlock(x, z);
+					int blockInChunkX = x - (chunkPos.getX() * 16);
+					int blockInChunkZ = z - (chunkPos.getZ() * 16);
+					Chunk chunk = chunks.get(GLHelper.vert2ToLong(chunkPos.getX(), chunkPos.getZ()));
+					if(chunk == null)
+						continue;
+					int yMax = chunk.heightMap[blockInChunkX][blockInChunkZ];
+					for (int y = 0; y <= yMax; y++) {
 						Block block = this.getBlock(x, y, z);
 						if(!GLHelper.isBlockInFrustum(x, y, z))
 							continue;

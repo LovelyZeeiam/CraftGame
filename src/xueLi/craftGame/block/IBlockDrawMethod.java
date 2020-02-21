@@ -111,10 +111,10 @@ public interface IBlockDrawMethod {
 			buffer.put(x + 1).put(y).put(z);
 			buffer.put(u1).put(v1);
 			buffer.put(x).put(y + 1).put(z);
-			buffer.put(u2).put(v2);
-			buffer.put(x + 1).put(y).put(z);
 			buffer.put(u2).put(v1);
 			buffer.put(x + 1).put(y + 1).put(z);
+			buffer.put(u2).put(v2);
+			buffer.put(x + 1).put(y).put(z);
 			break;
 		case 1:
 			buffer.put(u1).put(v2);
@@ -125,18 +125,18 @@ public interface IBlockDrawMethod {
 			buffer.put(x + 1).put(y).put(z + 1);
 			buffer.put(u1).put(v1);
 			buffer.put(x + 1).put(y + 1).put(z);
-			buffer.put(u2).put(v2);
-			buffer.put(x + 1).put(y).put(z + 1);
 			buffer.put(u2).put(v1);
 			buffer.put(x + 1).put(y + 1).put(z + 1);
+			buffer.put(u2).put(v2);
+			buffer.put(x + 1).put(y).put(z + 1);
 			break;
 		case 2:
 			buffer.put(u1).put(v2);
 			buffer.put(x).put(y).put(z + 1);
-			buffer.put(u1).put(v1);
-			buffer.put(x).put(y + 1).put(z + 1);
 			buffer.put(u2).put(v2);
 			buffer.put(x + 1).put(y).put(z + 1);
+			buffer.put(u1).put(v1);
+			buffer.put(x).put(y + 1).put(z + 1);
 			buffer.put(u1).put(v1);
 			buffer.put(x).put(y + 1).put(z + 1);
 			buffer.put(u2).put(v2);
@@ -147,10 +147,10 @@ public interface IBlockDrawMethod {
 		case 3:
 			buffer.put(u1).put(v2);
 			buffer.put(x).put(y).put(z);
-			buffer.put(u1).put(v1);
-			buffer.put(x).put(y + 1).put(z);
 			buffer.put(u2).put(v2);
 			buffer.put(x).put(y).put(z + 1);
+			buffer.put(u1).put(v1);
+			buffer.put(x).put(y + 1).put(z);
 			buffer.put(u1).put(v1);
 			buffer.put(x).put(y + 1).put(z);
 			buffer.put(u2).put(v2);
@@ -161,10 +161,10 @@ public interface IBlockDrawMethod {
 		case 4:
 			buffer.put(u1).put(v2);
 			buffer.put(x).put(y + 1).put(z);
-			buffer.put(u1).put(v1);
-			buffer.put(x + 1).put(y + 1).put(z);
 			buffer.put(u2).put(v2);
 			buffer.put(x).put(y + 1).put(z + 1);
+			buffer.put(u1).put(v1);
+			buffer.put(x + 1).put(y + 1).put(z);
 			buffer.put(u1).put(v1);
 			buffer.put(x + 1).put(y + 1).put(z);
 			buffer.put(u2).put(v2);
@@ -181,10 +181,10 @@ public interface IBlockDrawMethod {
 			buffer.put(x).put(y).put(z + 1);
 			buffer.put(u1).put(v1);
 			buffer.put(x + 1).put(y).put(z);
-			buffer.put(u2).put(v2);
-			buffer.put(x).put(y).put(z + 1);
 			buffer.put(u2).put(v1);
 			buffer.put(x + 1).put(y).put(z + 1);
+			buffer.put(u2).put(v2);
+			buffer.put(x).put(y).put(z + 1);
 			break;
 		}
 		

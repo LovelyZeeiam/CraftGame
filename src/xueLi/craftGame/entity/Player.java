@@ -21,7 +21,7 @@ public class Player extends Entity {
 
 	@Override
 	public float getSpeed() {
-		return 0.003f;
+		return 0.006f;
 	}
 
 	private HitBox hitbox = new HitBox(-0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f);
