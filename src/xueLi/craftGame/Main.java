@@ -22,7 +22,7 @@ import xueLi.craftGame.world.World;
 
 public class Main {
 
-	private static int width = 1200, height = 680;
+	private static int width = 800, height = 600;
 
 	private static Player player = new Player(8, 8, 8);
 	private static float resistant = 0.000005f;
@@ -170,7 +170,7 @@ public class Main {
 			GLHelper.clearColor(0.5f, 0.8f, 1.0f, 1.0f);
 
 			buffer = VertexBuffer.map();
-			int v = w.draw(player.pos, buffer);
+			int v = w.draw(player, buffer);
 
 			buffer.flip();
 

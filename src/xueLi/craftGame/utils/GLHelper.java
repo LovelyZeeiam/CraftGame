@@ -17,6 +17,7 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
 import xueLi.craftGame.entity.Player;
+import xueLi.craftGame.world.Chunk;
 
 public class GLHelper {
 
@@ -201,7 +202,26 @@ public class GLHelper {
 		return true;
 	}
 	
-	public static boolean isChunkInFrustum(int x,int z) {
+	public static boolean isChunkInFrustum(int x,int heightMap,int z) {
+		for(int p = 0;p < 6;p++) {
+			if(frustumPlane[p][0] * x*16 + frustumPlane[p][1] * 0 + frustumPlane[p][2] * z*16 + frustumPlane[p][3] > 0)
+				continue;
+			if(frustumPlane[p][0] * (x+1)*16 + frustumPlane[p][1] * 0 + frustumPlane[p][2] * z*16 + frustumPlane[p][3] > 0)
+				continue;
+			if(frustumPlane[p][0] * x*16 + frustumPlane[p][1] * heightMap + frustumPlane[p][2] * z*16 + frustumPlane[p][3] > 0)
+				continue;
+			if(frustumPlane[p][0] * (x+1)*16 + frustumPlane[p][1] * heightMap + frustumPlane[p][2] * z*16 + frustumPlane[p][3] > 0)
+				continue;
+			if(frustumPlane[p][0] * x*16 + frustumPlane[p][1] * 0 + frustumPlane[p][2] * (z+1)*16 + frustumPlane[p][3] > 0)
+				continue;
+			if(frustumPlane[p][0] * (x+1)*16 + frustumPlane[p][1] * 0 + frustumPlane[p][2] * (z+1)*16 + frustumPlane[p][3] > 0)
+				continue;
+			if(frustumPlane[p][0] * x*16 + frustumPlane[p][1] * heightMap + frustumPlane[p][2] * (z+1)*16 + frustumPlane[p][3] > 0)
+				continue;
+			if(frustumPlane[p][0] * (x+1)*16 + frustumPlane[p][1] * heightMap + frustumPlane[p][2] * (z+1)*16 + frustumPlane[p][3] > 0)
+				continue;
+			return false;
+		}
 		return true;
 	}
 
