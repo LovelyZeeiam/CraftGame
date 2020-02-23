@@ -18,11 +18,11 @@ public class BlockGrass extends Block {
 		@Override
 		public void getDrawData(FloatBuffer buffer, int x, int y, int z, int face) {
 			if (face < 4)
-				IBlockDrawMethod.bindDefaultToBuffer(buffer, 1, 0,x,y,z,face);
+				IBlockDrawMethod.bindDefaultToBuffer(buffer, 1, 0, x, y, z, face);
 			else if (face == 4)
-				IBlockDrawMethod.bindDefaultToBuffer(buffer, 0, 0,x,y,z,face);
+				IBlockDrawMethod.bindDefaultToBuffer(buffer, 0, 0, x, y, z, face);
 			else if (face == 5)
-				IBlockDrawMethod.bindDefaultToBuffer(buffer, 2, 0,x,y,z,face);
+				IBlockDrawMethod.bindDefaultToBuffer(buffer, 2, 0, x, y, z, face);
 		}
 
 		@Override

@@ -49,17 +49,15 @@ public class DisplayManager {
 
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glDepthFunc(GL11.GL_ONE);
-		
+
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glCullFace(GL11.GL_BACK);
-		
+
 		FloatBuffer fogColor = BufferUtils.createFloatBuffer(4);
-		float[] fogColour = {
-			0.8f,0.8f,1.0f,1.0f	
-		};
+		float[] fogColour = { 0.8f, 0.8f, 1.0f, 1.0f };
 		fogColor.put(fogColour);
 		fogColor.flip();
-		
+
 		GL11.glEnable(GL11.GL_FOG);
 		GL11.glFog(GL11.GL_FOG_COLOR, fogColor);
 		GL11.glFogi(GL11.GL_FOG_MODE, GL11.GL_LINEAR);
@@ -67,7 +65,7 @@ public class DisplayManager {
 		GL11.glFogf(GL11.GL_FOG_START, World.chunkRenderDistance * Chunk.size * 0.87f);
 		GL11.glFogf(GL11.GL_FOG_END, World.chunkRenderDistance * Chunk.size * 1.42f);
 		GL11.glHint(GL11.GL_FOG_HINT, GL11.GL_DONT_CARE);
-		
+
 		d_width = width;
 		d_height = height;
 

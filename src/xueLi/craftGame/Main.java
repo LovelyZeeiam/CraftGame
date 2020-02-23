@@ -42,9 +42,9 @@ public class Main {
 
 		Vector3f playerSpeed = new Vector3f(0, 0, 0);
 		Mouse.setGrabbed(true);
-		
+
 		VertexBuffer.init();
-		
+
 		while (DisplayManager.isRunning()) {
 			if (DisplayManager.isMouseDown(0) & block_select != null
 					& DisplayManager.currentTime - placeTimeCount > 200) {
@@ -68,69 +68,50 @@ public class Main {
 			if (DisplayManager.isKeyDown(Keyboard.KEY_W)) {
 				playerSpeed.x = -player.getSpeed() * (float) Math.sin(Math.toRadians(-playerPos.rotY));
 				playerSpeed.z = -player.getSpeed() * (float) Math.cos(Math.toRadians(-playerPos.rotY));
-				player.increasePosition(playerSpeed.x * DisplayManager.deltaTime,
-						0,
-						playerSpeed.z * DisplayManager.deltaTime,
-						0, 0, 0);
+				player.increasePosition(playerSpeed.x * DisplayManager.deltaTime, 0,
+						playerSpeed.z * DisplayManager.deltaTime, 0, 0, 0);
 				isKeyMovingLRFBPressed = true;
 			}
 			if (DisplayManager.isKeyDown(Keyboard.KEY_S)) {
 				playerSpeed.x = player.getSpeed() * (float) Math.sin(Math.toRadians(-playerPos.rotY));
 				playerSpeed.z = player.getSpeed() * (float) Math.cos(Math.toRadians(-playerPos.rotY));
-				player.increasePosition(playerSpeed.x * DisplayManager.deltaTime,
-						0,
-						playerSpeed.z * DisplayManager.deltaTime,
-						0, 0, 0);
+				player.increasePosition(playerSpeed.x * DisplayManager.deltaTime, 0,
+						playerSpeed.z * DisplayManager.deltaTime, 0, 0, 0);
 				isKeyMovingLRFBPressed = true;
 			}
 			if (DisplayManager.isKeyDown(Keyboard.KEY_A)) {
 				playerSpeed.x = -player.getSpeed() * (float) Math.sin(Math.toRadians(-playerPos.rotY + 90));
 				playerSpeed.z = -player.getSpeed() * (float) Math.cos(Math.toRadians(-playerPos.rotY + 90));
-				player.increasePosition(playerSpeed.x * DisplayManager.deltaTime,
-						0,
-						playerSpeed.z * DisplayManager.deltaTime,
-						0, 0, 0);
+				player.increasePosition(playerSpeed.x * DisplayManager.deltaTime, 0,
+						playerSpeed.z * DisplayManager.deltaTime, 0, 0, 0);
 				isKeyMovingLRFBPressed = true;
 			}
 			if (DisplayManager.isKeyDown(Keyboard.KEY_D)) {
 				playerSpeed.x = player.getSpeed() * (float) Math.sin(Math.toRadians(-playerPos.rotY + 90));
 				playerSpeed.z = player.getSpeed() * (float) Math.cos(Math.toRadians(-playerPos.rotY + 90));
-				player.increasePosition(playerSpeed.x * DisplayManager.deltaTime,
-						0,
-						playerSpeed.z * DisplayManager.deltaTime,
-						0, 0, 0);
+				player.increasePosition(playerSpeed.x * DisplayManager.deltaTime, 0,
+						playerSpeed.z * DisplayManager.deltaTime, 0, 0, 0);
 				isKeyMovingLRFBPressed = true;
 			}
 
 			if (DisplayManager.isKeyDown(Keyboard.KEY_SPACE)) {
 				playerSpeed.y = player.getSpeed();
-				player.increasePosition(0,
-						playerSpeed.y * DisplayManager.deltaTime,
-						0,
-						0, 0, 0);
+				player.increasePosition(0, playerSpeed.y * DisplayManager.deltaTime, 0, 0, 0, 0);
 				isKeyMovingUDPressed = true;
 			}
 
 			if (DisplayManager.isKeyDown(Keyboard.KEY_LSHIFT)) {
 				playerSpeed.y = -player.getSpeed();
-				player.increasePosition(0,
-						playerSpeed.y * DisplayManager.deltaTime,
-						0,
-						0, 0, 0);
+				player.increasePosition(0, playerSpeed.y * DisplayManager.deltaTime, 0, 0, 0, 0);
 				isKeyMovingUDPressed = true;
 			}
 
 			if (!isKeyMovingLRFBPressed) {
-				player.increasePosition(playerSpeed.x * DisplayManager.deltaTime,
-						0,
-						playerSpeed.z * DisplayManager.deltaTime,
-						0, 0, 0);
+				player.increasePosition(playerSpeed.x * DisplayManager.deltaTime, 0,
+						playerSpeed.z * DisplayManager.deltaTime, 0, 0, 0);
 			}
 			if (!isKeyMovingUDPressed) {
-				player.increasePosition(0,
-						playerSpeed.y * DisplayManager.deltaTime,
-						0,
-						0, 0, 0);
+				player.increasePosition(0, playerSpeed.y * DisplayManager.deltaTime, 0, 0, 0, 0);
 			}
 
 			player.increasePosition(0, 0, 0, -Mouse.getDY() * sensivity, Mouse.getDX() * sensivity, 0);
@@ -166,7 +147,7 @@ public class Main {
 			}
 
 			int fps = FPSTimer.getFPS();
-			
+
 			GLHelper.clearColor(0.5f, 0.8f, 1.0f, 1.0f);
 
 			buffer = VertexBuffer.map();
@@ -175,20 +156,20 @@ public class Main {
 			buffer.flip();
 
 			GL11.glMatrixMode(GL11.GL_MODELVIEW);
-			
+
 			GL13.glActiveTexture(GL13.GL_TEXTURE0);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
-			VertexBuffer.draw(GL11.GL_TRIANGLES,v);
+			VertexBuffer.draw(GL11.GL_TRIANGLES, v);
 
 			buffer.clear();
-			
+
 			int error = GL11.glGetError();
 			if (error != 0) {
 				System.out.println(error);
 			}
-			
+
 			if (DisplayManager.tickResize()) {
-				GLHelper.perspecive(DisplayManager.d_width, DisplayManager.d_height, 90.0f,0.1f,1000.0f);
+				GLHelper.perspecive(DisplayManager.d_width, DisplayManager.d_height, 90.0f, 0.1f, 1000.0f);
 			}
 			GLHelper.player(player);
 			GLHelper.calculateFrustumPlane();
@@ -200,7 +181,7 @@ public class Main {
 			buffer.clear();
 
 			DisplayManager.update();
-			
+
 			block_select = null;
 			MousePicker.ray(player.pos);
 			for (float distance = 0; distance < 8; distance += 0.05f) {
@@ -211,9 +192,9 @@ public class Main {
 				}
 				last_block_select = searching_block_pos;
 			}
-			
+
 		}
-		
+
 		GLHelper.deleteTexture(textureID);
 
 		DisplayManager.destroy();

@@ -30,7 +30,7 @@ public class Chunk {
 	}
 
 	public void update() {
-		
+
 	}
 
 	public void setBlock(int x, int y, int z, int id) {
@@ -38,9 +38,9 @@ public class Chunk {
 			return;
 		if (id == 0) {
 			blockState[x][y][z] = null;
-			if(y > heightMap[x][z]) {
-				for(int yy = y;;y--) {
-					if(this.getBlock(x, yy, z) != null) {
+			if (y > heightMap[x][z]) {
+				for (int yy = y;; y--) {
+					if (this.getBlock(x, yy, z) != null) {
 						heightMap[x][z] = yy;
 						break;
 					}
@@ -49,26 +49,26 @@ public class Chunk {
 			return;
 		}
 		blockState[x][y][z] = Block.blockDefault.get(id);
-		
-		if(y > heightMap[x][z])
+
+		if (y > heightMap[x][z])
 			heightMap[x][z] = y;
-		
+
 	}
-	
+
 	public void setBlock(int x, int y, int z, Block block) {
 		if (x < 0 || x >= size || y < 0 || y >= height || z < 0 || z >= size)
 			return;
 		blockState[x][y][z] = block;
-		
-		if(y > heightMap[x][z]) {
-			if(block == null) {
-				for(int yy = y;;y--) {
-					if(this.getBlock(x, yy, z) != null) {
+
+		if (y > heightMap[x][z]) {
+			if (block == null) {
+				for (int yy = y;; y--) {
+					if (this.getBlock(x, yy, z) != null) {
 						heightMap[x][z] = yy;
 						break;
 					}
 				}
-			}else
+			} else
 				heightMap[x][z] = y;
 		}
 	}

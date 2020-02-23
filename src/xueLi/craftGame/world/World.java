@@ -86,82 +86,59 @@ public class World {
 		int vertCount = 0;
 		int camX = (int) cam.pos.x;
 		int camZ = (int) cam.pos.z;
-		if (isWorldLimited) {
-			/*
-			 * for (int x = camX - renderDistance; x < camX + renderDistance; x++) { for
-			 * (int z = camZ - renderDistance; z < camZ + renderDistance; z++) { ChunkPos
-			 * chunkPos = this.getChunkPosFromBlock(x, z); int blockInChunkX = x -
-			 * (chunkPos.getX() * 16); int blockInChunkZ = z - (chunkPos.getZ() * 16); Chunk
-			 * chunk = chunks.get(GLHelper.vert2ToLong(chunkPos.getX(), chunkPos.getZ()));
-			 * if(chunk == null) continue; int yMax =
-			 * chunk.heightMap[blockInChunkX][blockInChunkZ];
-			 * if(!GLHelper.isChunkInFrustum(chunkPos.getX(),yMax + 1,chunkPos.getZ()))
-			 * continue; for (int y = 0; y <= yMax; y++) { Block block = this.getBlock(x, y,
-			 * z); if (block == null) continue; if (x - 1 < 0 || this.getBlock(x - 1, y, z)
-			 * == null) { block.method.getDrawData(buffer, x, y, z, 3); vertCount += 6; } if
-			 * (x + 1 >= wlimit_long || this.getBlock(x + 1, y, z) == null) {
-			 * block.method.getDrawData(buffer, x, y, z, 1); vertCount += 6; } if (z - 1 < 0
-			 * || this.getBlock(x, y, z - 1) == null) { block.method.getDrawData(buffer, x,
-			 * y, z, 0); vertCount += 6; } if (z + 1 >= wlimit_width || this.getBlock(x, y,
-			 * z + 1) == null) { block.method.getDrawData(buffer, x, y, z, 2); vertCount +=
-			 * 6; } if (y - 1 < 0 || this.getBlock(x, y - 1, z) == null) {
-			 * block.method.getDrawData(buffer, x, y, z, 5); vertCount += 6; } if (y + 1 >=
-			 * Chunk.height || this.getBlock(x, y + 1, z) == null) {
-			 * block.method.getDrawData(buffer, x, y, z, 4); vertCount += 6; } } } }
-			 */
-			// 获取玩家所在区块然后渲染之
-			ChunkPos chunkPos = this.getChunkPosFromBlock(camX, camZ);
-			Chunk processingChunk = this.chunks.get(GLHelper.vert2ToLong(chunkPos.getX(), chunkPos.getZ()));
-			Chunk tempChunk;
-			if (processingChunk != null) {
-				for (int x = 0; x < Chunk.size; x++) {
-					for (int z = 0; z < Chunk.size; z++) {
-						int yMax = processingChunk.heightMap[x][z] + 1;
-						int xInWorld = x + chunkPos.getX() * 16;
-						int zInWorld = z + chunkPos.getZ() * 16;
-						for (int y = 0; y < yMax; y++) {
-							if (!GLHelper.isBlockInFrustum(xInWorld, y, zInWorld))
-								continue;
-							Block block = processingChunk.getBlock(x, y, z);
+		ChunkPos chunkPos = this.getChunkPosFromBlock(camX, camZ);
+		for (int chunkX = chunkPos.getX() - chunkRenderDistance; chunkX < chunkPos.getX()
+				+ chunkRenderDistance; chunkX++) {
+			for (int chunkZ = chunkPos.getZ() - chunkRenderDistance; chunkZ < chunkPos.getZ()
+					+ chunkRenderDistance; chunkZ++) {
+				if (!GLHelper.isChunkInFrustum(chunkX, Chunk.height, chunkZ))
+					continue;
+				Chunk c = this.chunks.get(GLHelper.vert2ToLong(chunkX, chunkZ));
+				if (c == null)
+					continue;
+				for (int xInChunk = 0; xInChunk < Chunk.size; xInChunk++) {
+					for (int zInChunk = 0; zInChunk < Chunk.size; zInChunk++) {
+						int yMax = c.heightMap[xInChunk][zInChunk];
+						for (int y = 0; y <= yMax; y++) {
+							int x = chunkX * Chunk.size + xInChunk;
+							int z = chunkZ * Chunk.size + zInChunk;
+							Block block = c.getBlock(xInChunk, y, zInChunk);
 							if (block == null)
 								continue;
-							if (processingChunk.getBlock(x, y - 1, z) == null) {
-								block.method.getDrawData(buffer, xInWorld, y, zInWorld, 5);
+							if (c.getBlock(xInChunk, y - 1, zInChunk) == null) {
+								block.method.getDrawData(buffer, x, y, z, 5);
 								vertCount += 6;
 							}
-							if (processingChunk.getBlock(x, y + 1, z) == null) {
-								block.method.getDrawData(buffer, xInWorld, y, zInWorld, 4);
+							if (c.getBlock(xInChunk, y + 1, zInChunk) == null) {
+								block.method.getDrawData(buffer, x, y, z, 4);
 								vertCount += 6;
 							}
-							if (processingChunk.getBlock(x - 1, y, z) == null) {
-								block.method.getDrawData(buffer, xInWorld, y, zInWorld, 3);
+							if (xInChunk - 1 < 0 ? this.getBlock(x - 1, y, z) == null
+									: c.getBlock(xInChunk - 1, y, zInChunk) == null) {
+								block.method.getDrawData(buffer, x, y, z, 3);
 								vertCount += 6;
 							}
-							if (x + 1 < Chunk.size && processingChunk.getBlock(x + 1, y, z) == null) {
-								block.method.getDrawData(buffer, xInWorld, y, zInWorld, 1);
+							if (xInChunk + 1 >= Chunk.size ? this.getBlock(x + 1, y, z) == null
+									: c.getBlock(xInChunk + 1, y, zInChunk) == null) {
+								block.method.getDrawData(buffer, x, y, z, 1);
 								vertCount += 6;
 							}
-							if (processingChunk.getBlock(x, y, z - 1) == null) {
-								block.method.getDrawData(buffer, xInWorld, y, zInWorld, 0);
+							if (zInChunk - 1 < 0 ? this.getBlock(x, y, z - 1) == null
+									: c.getBlock(xInChunk, y, zInChunk - 1) == null) {
+								block.method.getDrawData(buffer, x, y, z, 0);
 								vertCount += 6;
 							}
-							if (z + 1 < Chunk.size && processingChunk.getBlock(x, y, z + 1) == null) {
-								block.method.getDrawData(buffer, xInWorld, y, zInWorld, 2);
+							if (zInChunk + 1 >= Chunk.size ? this.getBlock(x, y, z + 1) == null
+									: c.getBlock(xInChunk, y, zInChunk + 1) == null) {
+								block.method.getDrawData(buffer, x, y, z, 2);
 								vertCount += 6;
 							}
 						}
 					}
 				}
 			}
-			tempChunk = processingChunk;
-			//菱形式渲染区块
-			for(int distance = 1;distance < chunkRenderDistance;distance++) {
-				
-			}
-			
-			
-
 		}
+
 		return vertCount;
 	}
 

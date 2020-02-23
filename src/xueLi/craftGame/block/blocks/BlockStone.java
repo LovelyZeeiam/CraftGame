@@ -17,7 +17,7 @@ public class BlockStone extends Block {
 
 		@Override
 		public void getDrawData(FloatBuffer buffer, int x, int y, int z, int face) {
-			IBlockDrawMethod.bindDefaultToBuffer(buffer, 3, 0,x,y,z,face);
+			IBlockDrawMethod.bindDefaultToBuffer(buffer, 3, 0, x, y, z, face);
 
 		}
 

@@ -15,13 +15,13 @@ public class VertexBuffer {
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, 16777216, GL15.GL_DYNAMIC_DRAW);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 	}
-	
+
 	public static FloatBuffer map() {
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo);
 		return GL15.glMapBuffer(GL15.GL_ARRAY_BUFFER, GL15.GL_WRITE_ONLY, null).asFloatBuffer();
 	}
 
-	public static void draw(int type,int vertex_count) {
+	public static void draw(int type, int vertex_count) {
 		GL15.glUnmapBuffer(GL15.GL_ARRAY_BUFFER);
 		GL11.glInterleavedArrays(GL11.GL_T2F_V3F, 0, 0);
 		GL11.glDrawArrays(type, 0, vertex_count);
