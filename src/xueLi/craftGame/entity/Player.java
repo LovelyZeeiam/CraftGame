@@ -24,11 +24,11 @@ public class Player extends Entity {
 		return 0.006f;
 	}
 
-	private HitBox hitbox = new HitBox(-0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f);
+	private final HitBox hitbox = new HitBox(-0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f);
 
 	@Override
 	public HitBox getOriginHitBox() {
-		return super.getHitBox(this.pos, hitbox);
+		return hitbox;
 	}
 
 }

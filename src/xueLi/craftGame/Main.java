@@ -22,7 +22,7 @@ import xueLi.craftGame.world.World;
 
 public class Main {
 
-	private static int width = 800, height = 600;
+	private static int width = 1200, height = 680;
 
 	private static Player player = new Player(8, 8, 8);
 	private static float resistant = 0.000005f;
@@ -47,13 +47,13 @@ public class Main {
 
 		while (DisplayManager.isRunning()) {
 			if (DisplayManager.isMouseDown(0) & block_select != null
-					& DisplayManager.currentTime - placeTimeCount > 200) {
+					& DisplayManager.currentTime - placeTimeCount > 100) {
 				w.setBlock(block_select, 0);
 				placeTimeCount = DisplayManager.currentTime;
 			}
 
 			if (DisplayManager.isMouseDown(1) & block_select != null
-					& DisplayManager.currentTime - placeTimeCount > 200) {
+					& DisplayManager.currentTime - placeTimeCount > 100) {
 				w.setBlock(last_block_select, 1);
 				placeTimeCount = DisplayManager.currentTime;
 			}
@@ -115,7 +115,8 @@ public class Main {
 			}
 
 			player.increasePosition(0, 0, 0, -Mouse.getDY() * sensivity, Mouse.getDX() * sensivity, 0);
-
+			player.updatePos(w);
+		
 			if (playerSpeed.x > 0) {
 				playerSpeed.x -= resistant * playerSpeed.x * 1000 * DisplayManager.deltaTime;
 				if (playerSpeed.x < 0)

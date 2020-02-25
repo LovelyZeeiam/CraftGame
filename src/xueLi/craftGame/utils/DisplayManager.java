@@ -61,9 +61,9 @@ public class DisplayManager {
 		GL11.glEnable(GL11.GL_FOG);
 		GL11.glFog(GL11.GL_FOG_COLOR, fogColor);
 		GL11.glFogi(GL11.GL_FOG_MODE, GL11.GL_LINEAR);
-		GL11.glFogf(GL11.GL_FOG_DENSITY, 0.03f);
-		GL11.glFogf(GL11.GL_FOG_START, World.chunkRenderDistance * Chunk.size * 0.87f);
-		GL11.glFogf(GL11.GL_FOG_END, World.chunkRenderDistance * Chunk.size * 1.42f);
+		GL11.glFogf(GL11.GL_FOG_DENSITY, 0.003f);
+		GL11.glFogf(GL11.GL_FOG_START, World.chunkRenderDistance * Chunk.size * 0.56f);
+		GL11.glFogf(GL11.GL_FOG_END, World.chunkRenderDistance * Chunk.size * 1.90f);
 		GL11.glHint(GL11.GL_FOG_HINT, GL11.GL_DONT_CARE);
 
 		d_width = width;

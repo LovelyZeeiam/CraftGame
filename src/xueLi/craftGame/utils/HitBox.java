@@ -52,5 +52,10 @@ public class HitBox {
 	public HitBox move(float x, float y, float z) {
 		return new HitBox(x1 + x, y1 + y, z1 + z, x2 + x, y2 + y, z2 + z);
 	}
+	
+	@Override
+	public String toString() {
+		return x1 + "," + y1 + "," + z1 + " " + x2 + "," + y2 + "," + z2;
+	}
 
 }

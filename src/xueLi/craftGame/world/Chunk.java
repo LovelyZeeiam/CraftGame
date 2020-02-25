@@ -12,7 +12,7 @@ public class Chunk {
 	private Block[][][] blockState = new Block[size][height][size];
 	public int[][] heightMap = new int[size][size];
 
-	private int chunkX, chunkZ;
+	public int chunkX, chunkZ;
 
 	public Chunk(int chunkX, int chunkZ) {
 		this.chunkX = chunkX;

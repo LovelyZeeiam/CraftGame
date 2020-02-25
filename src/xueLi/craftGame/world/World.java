@@ -32,6 +32,8 @@ public class World {
 		this.limit_width = limit_width;
 	}
 
+	private static Chunk tempChunk;
+	
 	public Block getBlock(int x, int y, int z) {
 		ChunkPos cp = getChunkPosFromBlock(x, z);
 		if (isWorldLimited) {
@@ -40,7 +42,12 @@ public class World {
 
 			int xInChunk = x - cp.getX() * Chunk.size;
 			int zInChunk = z - cp.getZ() * Chunk.size;
-			return chunks.get(GLHelper.vert2ToLong(cp.getX(), cp.getZ())).getBlock(xInChunk, y, zInChunk);
+			
+			if(tempChunk == null || cp.getX() != tempChunk.chunkX || cp.getZ() != tempChunk.chunkZ)
+				tempChunk = chunks.get(GLHelper.vert2ToLong(cp.getX(), cp.getZ()));
+			if(tempChunk == null)
+				return null;
+			return tempChunk.getBlock(xInChunk, y, zInChunk);
 		}
 		return null;
 	}
@@ -80,7 +87,7 @@ public class World {
 		return false;
 	}
 
-	public static int chunkRenderDistance = 3;
+	public static int chunkRenderDistance = 5;
 
 	public int draw(Player cam, FloatBuffer buffer) {
 		int vertCount = 0;
