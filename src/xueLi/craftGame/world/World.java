@@ -1,7 +1,10 @@
 package xueLi.craftGame.world;
 
+import java.math.BigDecimal;
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import xueLi.craftGame.block.Block;
@@ -9,6 +12,7 @@ import xueLi.craftGame.entity.Player;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.ChunkPos;
 import xueLi.craftGame.utils.GLHelper;
+import xueLi.craftGame.utils.HitBox;
 import xueLi.craftGame.utils.Vector;
 
 public class World {
@@ -16,7 +20,7 @@ public class World {
 	private Map<Long, Chunk> chunks = new HashMap<Long, Chunk>();
 
 	private boolean isWorldLimited = false;
-	private int wlimit_long, wlimit_width;
+	public int wlimit_long, wlimit_width;
 	private int limit_long, limit_width;
 
 	public World(int limit_long, int limit_width) {
@@ -149,6 +153,41 @@ public class World {
 		return vertCount;
 	}
 
+	public ArrayList<HitBox> getHitBoxes(HitBox box,int worldMaxSize){
+		int x1 = new BigDecimal(String.valueOf(box.x1)).setScale(0,BigDecimal.ROUND_DOWN).intValue();
+		int x2 = new BigDecimal(String.valueOf(box.x2 + 1.0f)).setScale(0,BigDecimal.ROUND_HALF_UP).intValue();
+		int y1 = new BigDecimal(String.valueOf(box.y1)).setScale(0,BigDecimal.ROUND_DOWN).intValue();
+		int y2 = new BigDecimal(String.valueOf(box.y2 + 1.0f)).setScale(0,BigDecimal.ROUND_HALF_UP).intValue();
+		int z1 = new BigDecimal(String.valueOf(box.z1)).setScale(0,BigDecimal.ROUND_DOWN).intValue();
+		int z2 = new BigDecimal(String.valueOf(box.z2 + 1.0f)).setScale(0,BigDecimal.ROUND_HALF_UP).intValue();
+		
+		if(x1 < 0)
+			x1 = 0;
+		if(y1 < 0)
+			y1 = 0;
+		if(z1 < 0)
+			z1 = 0;
+		if(x2 > worldMaxSize)
+			x2 = worldMaxSize - 1;
+		if(y2 > Chunk.height)
+			y2 = Chunk.height - 1;
+		if(z2 > worldMaxSize)
+			z1 = worldMaxSize - 1;
+		
+		ArrayList<HitBox> boxes = new ArrayList<HitBox>();
+		for(int x = x1;x < x2;x++) {
+			for(int y = y1;y < y2;y++) {
+				for(int z = z1;z < z2;z++) {
+					Block block = this.getBlock(x, y, z);
+					if(block == null)
+						continue;
+					boxes.add(block.getHitbox(x, y, z));
+				}
+			}
+		}
+		return boxes;
+	}
+	
 	private ChunkPos getChunkPosFromBlock(int x, int z) {
 		int chunkX = x / 16;
 		int chunkZ = z / 16;

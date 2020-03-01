@@ -25,7 +25,7 @@ public class Main {
 	private static int width = 1200, height = 680;
 
 	private static Player player = new Player(8, 8, 8);
-	private static float resistant = 0.000005f;
+	private static float resistant = 0.005f;
 	private static float sensivity = 0.1f;
 
 	private static BlockPos block_select, last_block_select;
@@ -62,92 +62,9 @@ public class Main {
 				DisplayManager.postDestroyMessage();
 			}
 
-			boolean isKeyMovingLRFBPressed = false, isKeyMovingUDPressed = false;
-			Vector playerPos = player.pos;
+			player.tick(w);
 
-			if (DisplayManager.isKeyDown(Keyboard.KEY_W)) {
-				playerSpeed.x = -player.getSpeed() * (float) Math.sin(Math.toRadians(-playerPos.rotY));
-				playerSpeed.z = -player.getSpeed() * (float) Math.cos(Math.toRadians(-playerPos.rotY));
-				player.increasePosition(playerSpeed.x * DisplayManager.deltaTime, 0,
-						playerSpeed.z * DisplayManager.deltaTime, 0, 0, 0);
-				isKeyMovingLRFBPressed = true;
-			}
-			if (DisplayManager.isKeyDown(Keyboard.KEY_S)) {
-				playerSpeed.x = player.getSpeed() * (float) Math.sin(Math.toRadians(-playerPos.rotY));
-				playerSpeed.z = player.getSpeed() * (float) Math.cos(Math.toRadians(-playerPos.rotY));
-				player.increasePosition(playerSpeed.x * DisplayManager.deltaTime, 0,
-						playerSpeed.z * DisplayManager.deltaTime, 0, 0, 0);
-				isKeyMovingLRFBPressed = true;
-			}
-			if (DisplayManager.isKeyDown(Keyboard.KEY_A)) {
-				playerSpeed.x = -player.getSpeed() * (float) Math.sin(Math.toRadians(-playerPos.rotY + 90));
-				playerSpeed.z = -player.getSpeed() * (float) Math.cos(Math.toRadians(-playerPos.rotY + 90));
-				player.increasePosition(playerSpeed.x * DisplayManager.deltaTime, 0,
-						playerSpeed.z * DisplayManager.deltaTime, 0, 0, 0);
-				isKeyMovingLRFBPressed = true;
-			}
-			if (DisplayManager.isKeyDown(Keyboard.KEY_D)) {
-				playerSpeed.x = player.getSpeed() * (float) Math.sin(Math.toRadians(-playerPos.rotY + 90));
-				playerSpeed.z = player.getSpeed() * (float) Math.cos(Math.toRadians(-playerPos.rotY + 90));
-				player.increasePosition(playerSpeed.x * DisplayManager.deltaTime, 0,
-						playerSpeed.z * DisplayManager.deltaTime, 0, 0, 0);
-				isKeyMovingLRFBPressed = true;
-			}
-
-			if (DisplayManager.isKeyDown(Keyboard.KEY_SPACE)) {
-				playerSpeed.y = player.getSpeed();
-				player.increasePosition(0, playerSpeed.y * DisplayManager.deltaTime, 0, 0, 0, 0);
-				isKeyMovingUDPressed = true;
-			}
-
-			if (DisplayManager.isKeyDown(Keyboard.KEY_LSHIFT)) {
-				playerSpeed.y = -player.getSpeed();
-				player.increasePosition(0, playerSpeed.y * DisplayManager.deltaTime, 0, 0, 0, 0);
-				isKeyMovingUDPressed = true;
-			}
-
-			if (!isKeyMovingLRFBPressed) {
-				player.increasePosition(playerSpeed.x * DisplayManager.deltaTime, 0,
-						playerSpeed.z * DisplayManager.deltaTime, 0, 0, 0);
-			}
-			if (!isKeyMovingUDPressed) {
-				player.increasePosition(0, playerSpeed.y * DisplayManager.deltaTime, 0, 0, 0, 0);
-			}
-
-			player.increasePosition(0, 0, 0, -Mouse.getDY() * sensivity, Mouse.getDX() * sensivity, 0);
-			player.updatePos(w);
-		
-			if (playerSpeed.x > 0) {
-				playerSpeed.x -= resistant * playerSpeed.x * 1000 * DisplayManager.deltaTime;
-				if (playerSpeed.x < 0)
-					playerSpeed.x = 0;
-			} else if (playerSpeed.x < 0) {
-				playerSpeed.x -= resistant * playerSpeed.x * 1000 * DisplayManager.deltaTime;
-				if (playerSpeed.x > 0)
-					playerSpeed.x = 0;
-			}
-
-			if (playerSpeed.y > 0) {
-				playerSpeed.y -= resistant * playerSpeed.y * 2000 * DisplayManager.deltaTime;
-				if (playerSpeed.y < 0)
-					playerSpeed.y = 0;
-			} else if (playerSpeed.y < 0) {
-				playerSpeed.y -= resistant * playerSpeed.y * 2000 * DisplayManager.deltaTime;
-				if (playerSpeed.y > 0)
-					playerSpeed.y = 0;
-			}
-
-			if (playerSpeed.z > 0) {
-				playerSpeed.z -= resistant * playerSpeed.z * 1000 * DisplayManager.deltaTime;
-				if (playerSpeed.z < 0)
-					playerSpeed.z = 0;
-			} else if (playerSpeed.z < 0) {
-				playerSpeed.z -= resistant * playerSpeed.z * 1000 * DisplayManager.deltaTime;
-				if (playerSpeed.z > 0)
-					playerSpeed.z = 0;
-			}
-
-			int fps = FPSTimer.getFPS();
+			FPSTimer.getFPS();
 
 			GLHelper.clearColor(0.5f, 0.8f, 1.0f, 1.0f);
 
