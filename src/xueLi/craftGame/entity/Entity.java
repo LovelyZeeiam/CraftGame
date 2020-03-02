@@ -1,5 +1,8 @@
 package xueLi.craftGame.entity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.lwjgl.util.vector.Vector3f;
 
 import xueLi.craftGame.utils.DisplayManager;
@@ -12,7 +15,10 @@ public abstract class Entity {
 	public Vector pos;
 	public boolean isInLiquid = false;
 	
-	public boolean[] collide = new boolean[6];
+	public static Map<Integer,Entity> entityDefault = new HashMap<Integer,Entity>();
+	
+	//For physical engine
+	//public boolean[] collide = new boolean[6];
 
 	public Entity(float x, float y, float z) {
 		pos = new Vector(x, y, z);
@@ -28,6 +34,8 @@ public abstract class Entity {
 	public Vector3f speed = new Vector3f();
 	
 	//this is for real physical engine and I haven't done yet :)
+	//I think maybe I can figure out how to correct the position of an entity by the direction of the speed.
+	//But now one of the most important things is adding entities,so :} I think it will be done much later.
 	public void updatePos(World w) {
 		Vector3f deltaPos = new Vector3f(speed.x * DisplayManager.deltaTime,speed.y * DisplayManager.deltaTime,speed.z * DisplayManager.deltaTime);
 		
@@ -47,7 +55,9 @@ public abstract class Entity {
 		 */
 		if(pos.y < 7) pos.y = 7;
 			
+		//Physical? No no no it will be muuuuuuuuuch later :}
 		force.set(0, 0, 0);
+		//At least moving had become smoother :)
 		
 	}
 

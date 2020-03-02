@@ -4,10 +4,13 @@ import java.math.BigDecimal;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import xueLi.craftGame.block.Block;
+import xueLi.craftGame.entity.Entity;
 import xueLi.craftGame.entity.Player;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.ChunkPos;
@@ -18,6 +21,7 @@ import xueLi.craftGame.utils.Vector;
 public class World {
 
 	private Map<Long, Chunk> chunks = new HashMap<Long, Chunk>();
+	private Set<Entity> entities = new HashSet<Entity>();
 
 	private boolean isWorldLimited = false;
 	public int wlimit_long, wlimit_width;
@@ -193,5 +197,7 @@ public class World {
 		int chunkZ = z / 16;
 		return new ChunkPos(chunkX - (x < 0 ? 1 : 0), chunkZ - (z < 0 ? 1 : 0));
 	}
+	
+	
 
 }
