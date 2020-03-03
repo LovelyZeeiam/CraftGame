@@ -17,6 +17,9 @@ public abstract class Entity {
 	
 	public static Map<Integer,Entity> entityDefault = new HashMap<Integer,Entity>();
 	
+	//For entity bones
+	public Bone[] bones = new Bone[EntityBone.values().length];
+	
 	//For physical engine
 	//public boolean[] collide = new boolean[6];
 

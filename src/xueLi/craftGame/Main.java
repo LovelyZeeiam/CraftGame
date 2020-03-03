@@ -10,7 +10,9 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.util.vector.Vector3f;
 
+import xueLi.craftGame.block.Block;
 import xueLi.craftGame.entity.Player;
+import xueLi.craftGame.entity.renderer.EntityRenderer;
 import xueLi.craftGame.utils.Vector;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.DisplayManager;
@@ -38,13 +40,13 @@ public class Main {
 
 		FloatBuffer buffer;
 
+		Block.init();
 		World w = new World(10, 10);
-
-		Vector3f playerSpeed = new Vector3f(0, 0, 0);
-		Mouse.setGrabbed(true);
-
+		EntityRenderer.bindWorld(w);
+		
 		VertexBuffer.init();
 
+		Mouse.setGrabbed(true);
 		while (DisplayManager.isRunning()) {
 			if (DisplayManager.isMouseDown(0) & block_select != null
 					& DisplayManager.currentTime - placeTimeCount > 100) {

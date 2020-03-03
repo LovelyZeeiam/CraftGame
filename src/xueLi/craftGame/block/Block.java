@@ -12,7 +12,7 @@ public abstract class Block {
 
 	public static Map<Integer, Block> blockDefault = new HashMap<Integer, Block>();
 
-	static {
+	public static void init() {
 		blockDefault.put(1, new BlockStone());
 		blockDefault.put(2, new BlockGrass());
 
