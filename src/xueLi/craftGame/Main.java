@@ -11,6 +11,7 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.util.vector.Vector3f;
 
 import xueLi.craftGame.block.Block;
+import xueLi.craftGame.entity.Entity;
 import xueLi.craftGame.entity.Player;
 import xueLi.craftGame.entity.renderer.EntityRenderer;
 import xueLi.craftGame.utils.Vector;
@@ -30,9 +31,6 @@ public class Main {
 	private static float resistant = 0.005f;
 	private static float sensivity = 0.1f;
 
-	private static BlockPos block_select, last_block_select;
-	private static long placeTimeCount;
-
 	public static void main(String[] args) throws IOException {
 		DisplayManager.create(width, height);
 
@@ -40,26 +38,14 @@ public class Main {
 
 		FloatBuffer buffer;
 
-		Block.init();
 		World w = new World(10, 10);
+		Entity.init();
 		EntityRenderer.bindWorld(w);
 		
 		VertexBuffer.init();
 
 		Mouse.setGrabbed(true);
 		while (DisplayManager.isRunning()) {
-			if (DisplayManager.isMouseDown(0) & block_select != null
-					& DisplayManager.currentTime - placeTimeCount > 100) {
-				w.setBlock(block_select, 0);
-				placeTimeCount = DisplayManager.currentTime;
-			}
-
-			if (DisplayManager.isMouseDown(1) & block_select != null
-					& DisplayManager.currentTime - placeTimeCount > 100) {
-				w.setBlock(last_block_select, 1);
-				placeTimeCount = DisplayManager.currentTime;
-			}
-
 			if (DisplayManager.isKeyDown(Keyboard.KEY_ESCAPE)) {
 				DisplayManager.postDestroyMessage();
 			}
@@ -93,25 +79,12 @@ public class Main {
 			}
 			GLHelper.player(player);
 			GLHelper.calculateFrustumPlane();
-
-			if (block_select != null) {
-
-			}
+			
+			player.pickTick(w);
 
 			buffer.clear();
 
 			DisplayManager.update();
-
-			block_select = null;
-			MousePicker.ray(player.pos);
-			for (float distance = 0; distance < 8; distance += 0.05f) {
-				BlockPos searching_block_pos = MousePicker.getPointOnRay(distance);
-				if (w.hasBlock(searching_block_pos)) {
-					block_select = searching_block_pos;
-					break;
-				}
-				last_block_select = searching_block_pos;
-			}
 
 		}
 

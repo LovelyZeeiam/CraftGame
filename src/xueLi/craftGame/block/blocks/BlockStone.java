@@ -8,7 +8,7 @@ import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.HitBox;
 
 public class BlockStone extends Block {
-
+	
 	public BlockStone() {
 		super(1, "Stone", new BlockStoneDrawMethod());
 	}

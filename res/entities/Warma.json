@@ -1,9 +1,73 @@
 {
 	"name" : "Warma",
-	"type" : 2333,
-	"entity" : {
-		"model" : {
-			
-		}
+	"type" : "EASTEREGG",
+	"model" : {
+		"box" : [-0.4,-0.6,-0.4,0.4,0.3,0.4],
+		"bones" : [
+			{
+				"type" : "head",
+				"data" : [
+					{
+						"type" : "cube",
+						"offset" : [0,0,0],
+						"size" : 0.45
+					}
+				]
+			},
+			{
+				"type" : "body",
+				"data" : [
+					{
+						"type" : "rect",
+						"offset" : [0,-0.355,0],
+						"size" : [0.18,0.26,0.18]
+					}
+				]
+			},
+			{
+				"type" : "lhand",
+				"data" : [
+					{
+						"type" : "rect",
+						"offset" : [-0.12,-0.355,0],
+						"size" : [0.06,0.26,0.06]
+					}
+				],
+				"rotPoint" : [-0.12,-0.225,0]
+			},
+			{
+				"type" : "rhand",
+				"data" : [
+					{
+						"type" : "rect",
+						"offset" : [0.12,-0.355,0],
+						"size" : [0.06,0.26,0.06]
+					}
+				],
+				"rotPoint" : [0.12,-0.225,0]
+			},
+			{
+				"type" : "lleg",
+				"data" : [
+					{
+						"type" : "rect",
+						"offset" : [-0.1,-0.58,0],
+						"size" : [0.08,0.19,0.08]
+					}
+				],
+				"rotPoint" : [-0.1,-0.485,0]
+			},
+			{
+				"type" : "rleg",
+				"data" : [
+					{
+						"type" : "rect",
+						"offset" : [0.1,-0.58,0],
+						"size" : [0.08,0.19,0.08]
+					}
+				],
+				"rotPoint" : [0.1,-0.485,0]
+			}
+		]
 	}
 }

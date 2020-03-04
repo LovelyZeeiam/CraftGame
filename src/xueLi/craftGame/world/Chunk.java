@@ -3,6 +3,8 @@ package xueLi.craftGame.world;
 import java.nio.FloatBuffer;
 
 import xueLi.craftGame.block.Block;
+import xueLi.craftGame.block.blocks.BlockGrass;
+import xueLi.craftGame.block.blocks.BlockStone;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.Vector;
 
@@ -20,9 +22,9 @@ public class Chunk {
 		for (int x = 0; x < size; x++) {
 			for (int z = 0; z < size; z++) {
 				for (int y = 0; y < 4; y++) {
-					blockState[x][y][z] = Block.blockDefault.get(1);
+					blockState[x][y][z] = new BlockStone();
 				}
-				blockState[x][4][z] = Block.blockDefault.get(2);
+				blockState[x][4][z] = new BlockGrass();
 				heightMap[x][z] = 4;
 			}
 		}
@@ -30,28 +32,6 @@ public class Chunk {
 	}
 
 	public void update() {
-
-	}
-
-	public void setBlock(int x, int y, int z, int id) {
-		if (x < 0 || x >= size || y < 0 || y >= height || z < 0 || z >= size)
-			return;
-		if (id == 0) {
-			blockState[x][y][z] = null;
-			if (y > heightMap[x][z]) {
-				for (int yy = y;; y--) {
-					if (this.getBlock(x, yy, z) != null) {
-						heightMap[x][z] = yy;
-						break;
-					}
-				}
-			}
-			return;
-		}
-		blockState[x][y][z] = Block.blockDefault.get(id);
-
-		if (y > heightMap[x][z])
-			heightMap[x][z] = y;
 
 	}
 
@@ -71,10 +51,6 @@ public class Chunk {
 			} else
 				heightMap[x][z] = y;
 		}
-	}
-
-	public void setBlock(BlockPos pos, int id) {
-		setBlock(pos.getX(), pos.getY(), pos.getZ(), id);
 	}
 
 	public Block getBlock(BlockPos pos) {

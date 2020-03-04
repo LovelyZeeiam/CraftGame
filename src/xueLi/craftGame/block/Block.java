@@ -1,22 +1,11 @@
 package xueLi.craftGame.block;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import xueLi.craftGame.block.blocks.BlockGrass;
-import xueLi.craftGame.block.blocks.BlockStone;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.HitBox;
 
 public abstract class Block {
-
-	public static Map<Integer, Block> blockDefault = new HashMap<Integer, Block>();
-
-	public static void init() {
-		blockDefault.put(1, new BlockStone());
-		blockDefault.put(2, new BlockGrass());
-
-	}
+	
+	public int as = 1;
 
 	public final int id;
 	public final String name;

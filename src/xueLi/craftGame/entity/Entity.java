@@ -17,6 +17,10 @@ public abstract class Entity {
 	
 	public static Map<Integer,Entity> entityDefault = new HashMap<Integer,Entity>();
 	
+	public static void init() {
+		
+	}
+	
 	//For entity bones
 	public Bone[] bones = new Bone[EntityBone.values().length];
 	

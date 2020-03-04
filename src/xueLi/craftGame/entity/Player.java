@@ -3,9 +3,11 @@ package xueLi.craftGame.entity;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
+import xueLi.craftGame.block.blocks.BlockStone;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.DisplayManager;
 import xueLi.craftGame.utils.HitBox;
+import xueLi.craftGame.utils.MousePicker;
 import xueLi.craftGame.world.World;
 
 public class Player extends Entity {
@@ -24,6 +26,9 @@ public class Player extends Entity {
 	public Player(float x, float y, float z, float rotX, float rotY, float rotZ) {
 		super(x, y, z, rotX, rotY, rotZ);
 	}
+	
+	private static BlockPos block_select, last_block_select;
+	private static long placeTimeCount;
 
 	@Override
 	public void tick(World world) {
@@ -91,8 +96,32 @@ public class Player extends Entity {
 		pos.rotX -= Mouse.getDY() * sensivity;
 		pos.rotY += Mouse.getDX() * sensivity;
 		
-		
 		super.updatePos(world);
+		
+		if (DisplayManager.isMouseDown(0) & block_select != null
+				& DisplayManager.currentTime - placeTimeCount > 100) {
+			world.setBlock(block_select, null);
+			placeTimeCount = DisplayManager.currentTime;
+		}
+
+		if (DisplayManager.isMouseDown(1) & block_select != null
+				& DisplayManager.currentTime - placeTimeCount > 100) {
+			world.setBlock(last_block_select, new BlockStone());
+			placeTimeCount = DisplayManager.currentTime;
+		}
+	}
+	
+	public void pickTick(World world) {
+		block_select = null;
+		MousePicker.ray(pos);
+		for (float distance = 0; distance < 8; distance += 0.05f) {
+			BlockPos searching_block_pos = MousePicker.getPointOnRay(distance);
+			if (world.hasBlock(searching_block_pos)) {
+				block_select = searching_block_pos;
+				break;
+			}
+			last_block_select = searching_block_pos;
+		}
 	}
 
 	@Override

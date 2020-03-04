@@ -60,14 +60,6 @@ public class World {
 		return null;
 	}
 
-	public void setBlock(BlockPos p, int id) {
-		setBlock(p.getX(), p.getY(), p.getZ(), Block.blockDefault.get(id));
-	}
-
-	public void setBlock(int x, int y, int z, int id) {
-		setBlock(x, y, z, Block.blockDefault.get(id));
-	}
-
 	public void setBlock(int x, int y, int z, Block block) {
 		ChunkPos cp = getChunkPosFromBlock(x, z);
 		if (isWorldLimited) {
@@ -79,6 +71,10 @@ public class World {
 			int zInChunk = z - cp.getZ() * Chunk.size;
 			chunks.get(GLHelper.vert2ToLong(cp.getX(), cp.getZ())).setBlock(xInChunk, y, zInChunk, block);
 		}
+	}
+	
+	public void setBlock(BlockPos p,Block b) {
+		setBlock(p.getX(), p.getY(), p.getZ(),b);
 	}
 
 	public boolean hasBlock(BlockPos p) {
