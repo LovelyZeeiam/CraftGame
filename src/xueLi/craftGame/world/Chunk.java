@@ -3,8 +3,8 @@ package xueLi.craftGame.world;
 import java.nio.FloatBuffer;
 
 import xueLi.craftGame.block.Block;
-import xueLi.craftGame.block.blocks.BlockGrass;
-import xueLi.craftGame.block.blocks.BlockStone;
+import xueLi.craftGame.block.BlockGrass;
+import xueLi.craftGame.block.BlockStone;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.Vector;
 

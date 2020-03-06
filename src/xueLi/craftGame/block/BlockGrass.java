@@ -1,19 +1,19 @@
-package xueLi.craftGame.block.blocks;
+package xueLi.craftGame.block;
 
 import java.nio.FloatBuffer;
 
-import xueLi.craftGame.block.Block;
-import xueLi.craftGame.block.IBlockDrawMethod;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.HitBox;
 
 public class BlockGrass extends Block {
 
+	private static BlockDrawMethod drawMethod = new BlockDrawMethod();
+	
 	public BlockGrass() {
-		super(2, "Grass Block", new BlockGrassDrawMethod());
+		super(2, "Grass Block", drawMethod);
 	}
 
-	private static class BlockGrassDrawMethod implements IBlockDrawMethod {
+	private static class BlockDrawMethod implements IBlockDrawMethod {
 
 		@Override
 		public void getDrawData(FloatBuffer buffer, int x, int y, int z, int face) {

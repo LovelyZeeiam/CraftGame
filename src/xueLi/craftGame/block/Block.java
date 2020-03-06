@@ -4,8 +4,6 @@ import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.HitBox;
 
 public abstract class Block {
-	
-	public int as = 1;
 
 	public final int id;
 	public final String name;

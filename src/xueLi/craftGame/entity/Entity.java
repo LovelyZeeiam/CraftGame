@@ -1,8 +1,5 @@
 package xueLi.craftGame.entity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.lwjgl.util.vector.Vector3f;
 
 import xueLi.craftGame.utils.DisplayManager;
@@ -11,22 +8,24 @@ import xueLi.craftGame.utils.Vector;
 import xueLi.craftGame.world.World;
 
 public abstract class Entity {
-
-	public Vector pos;
-	public boolean isInLiquid = false;
 	
-	public static Map<Integer,Entity> entityDefault = new HashMap<Integer,Entity>();
+	
 	
 	public static void init() {
 		
+		
 	}
 	
-	//For entity bones
-	public Bone[] bones = new Bone[EntityBone.values().length];
+	
+	public Vector pos;
+	public boolean isInLiquid = false;
 	
 	//For physical engine
 	//public boolean[] collide = new boolean[6];
 
+	//For entity bones
+	public Bone[] bones = new Bone[BoneType.values().length];
+	
 	public Entity(float x, float y, float z) {
 		pos = new Vector(x, y, z);
 

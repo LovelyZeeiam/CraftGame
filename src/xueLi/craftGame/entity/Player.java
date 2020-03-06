@@ -3,7 +3,7 @@ package xueLi.craftGame.entity;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import xueLi.craftGame.block.blocks.BlockStone;
+import xueLi.craftGame.block.BlockStone;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.DisplayManager;
 import xueLi.craftGame.utils.HitBox;
