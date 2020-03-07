@@ -17,7 +17,6 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
 import xueLi.craftGame.entity.Player;
-import xueLi.craftGame.world.Chunk;
 
 public class GLHelper {
 

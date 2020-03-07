@@ -7,12 +7,12 @@ public class EntityWarma extends Entity {
 
 	public EntityWarma(float x, float y, float z) {
 		super(x, y, z);
+		this.bones = Bones.boneWarma;
 	}
 
 	@Override
 	public void tick(World world) {
-		
-		
+
 		super.updatePos(world);
 	}
 
@@ -25,7 +25,5 @@ public class EntityWarma extends Entity {
 	public HitBox getOriginHitBox() {
 		return null;
 	}
-	
-	
 
 }

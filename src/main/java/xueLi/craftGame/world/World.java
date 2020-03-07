@@ -5,7 +5,6 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,7 +15,6 @@ import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.ChunkPos;
 import xueLi.craftGame.utils.GLHelper;
 import xueLi.craftGame.utils.HitBox;
-import xueLi.craftGame.utils.Vector;
 
 public class World {
 
@@ -41,7 +39,7 @@ public class World {
 	}
 
 	private static Chunk tempChunk;
-	
+
 	public Block getBlock(int x, int y, int z) {
 		ChunkPos cp = getChunkPosFromBlock(x, z);
 		if (isWorldLimited) {
@@ -50,10 +48,10 @@ public class World {
 
 			int xInChunk = x - cp.getX() * Chunk.size;
 			int zInChunk = z - cp.getZ() * Chunk.size;
-			
-			if(tempChunk == null || cp.getX() != tempChunk.chunkX || cp.getZ() != tempChunk.chunkZ)
+
+			if (tempChunk == null || cp.getX() != tempChunk.chunkX || cp.getZ() != tempChunk.chunkZ)
 				tempChunk = chunks.get(GLHelper.vert2ToLong(cp.getX(), cp.getZ()));
-			if(tempChunk == null)
+			if (tempChunk == null)
 				return null;
 			return tempChunk.getBlock(xInChunk, y, zInChunk);
 		}
@@ -72,9 +70,9 @@ public class World {
 			chunks.get(GLHelper.vert2ToLong(cp.getX(), cp.getZ())).setBlock(xInChunk, y, zInChunk, block);
 		}
 	}
-	
-	public void setBlock(BlockPos p,Block b) {
-		setBlock(p.getX(), p.getY(), p.getZ(),b);
+
+	public void setBlock(BlockPos p, Block b) {
+		setBlock(p.getX(), p.getY(), p.getZ(), b);
 	}
 
 	public boolean hasBlock(BlockPos p) {
@@ -153,33 +151,33 @@ public class World {
 		return vertCount;
 	}
 
-	public ArrayList<HitBox> getHitBoxes(HitBox box,int worldMaxSize){
-		int x1 = new BigDecimal(String.valueOf(box.x1)).setScale(0,BigDecimal.ROUND_DOWN).intValue();
-		int x2 = new BigDecimal(String.valueOf(box.x2 + 1.0f)).setScale(0,BigDecimal.ROUND_HALF_UP).intValue();
-		int y1 = new BigDecimal(String.valueOf(box.y1)).setScale(0,BigDecimal.ROUND_DOWN).intValue();
-		int y2 = new BigDecimal(String.valueOf(box.y2 + 1.0f)).setScale(0,BigDecimal.ROUND_HALF_UP).intValue();
-		int z1 = new BigDecimal(String.valueOf(box.z1)).setScale(0,BigDecimal.ROUND_DOWN).intValue();
-		int z2 = new BigDecimal(String.valueOf(box.z2 + 1.0f)).setScale(0,BigDecimal.ROUND_HALF_UP).intValue();
-		
-		if(x1 < 0)
+	public ArrayList<HitBox> getHitBoxes(HitBox box, int worldMaxSize) {
+		int x1 = new BigDecimal(String.valueOf(box.x1)).setScale(0, BigDecimal.ROUND_DOWN).intValue();
+		int x2 = new BigDecimal(String.valueOf(box.x2 + 1.0f)).setScale(0, BigDecimal.ROUND_HALF_UP).intValue();
+		int y1 = new BigDecimal(String.valueOf(box.y1)).setScale(0, BigDecimal.ROUND_DOWN).intValue();
+		int y2 = new BigDecimal(String.valueOf(box.y2 + 1.0f)).setScale(0, BigDecimal.ROUND_HALF_UP).intValue();
+		int z1 = new BigDecimal(String.valueOf(box.z1)).setScale(0, BigDecimal.ROUND_DOWN).intValue();
+		int z2 = new BigDecimal(String.valueOf(box.z2 + 1.0f)).setScale(0, BigDecimal.ROUND_HALF_UP).intValue();
+
+		if (x1 < 0)
 			x1 = 0;
-		if(y1 < 0)
+		if (y1 < 0)
 			y1 = 0;
-		if(z1 < 0)
+		if (z1 < 0)
 			z1 = 0;
-		if(x2 > worldMaxSize)
+		if (x2 > worldMaxSize)
 			x2 = worldMaxSize - 1;
-		if(y2 > Chunk.height)
+		if (y2 > Chunk.height)
 			y2 = Chunk.height - 1;
-		if(z2 > worldMaxSize)
+		if (z2 > worldMaxSize)
 			z1 = worldMaxSize - 1;
-		
+
 		ArrayList<HitBox> boxes = new ArrayList<HitBox>();
-		for(int x = x1;x < x2;x++) {
-			for(int y = y1;y < y2;y++) {
-				for(int z = z1;z < z2;z++) {
+		for (int x = x1; x < x2; x++) {
+			for (int y = y1; y < y2; y++) {
+				for (int z = z1; z < z2; z++) {
 					Block block = this.getBlock(x, y, z);
-					if(block == null)
+					if (block == null)
 						continue;
 					boxes.add(block.getHitbox(x, y, z));
 				}
@@ -187,13 +185,11 @@ public class World {
 		}
 		return boxes;
 	}
-	
+
 	private ChunkPos getChunkPosFromBlock(int x, int z) {
 		int chunkX = x / 16;
 		int chunkZ = z / 16;
 		return new ChunkPos(chunkX - (x < 0 ? 1 : 0), chunkZ - (z < 0 ? 1 : 0));
 	}
-	
-	
 
 }

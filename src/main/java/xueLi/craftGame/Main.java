@@ -3,23 +3,18 @@ package xueLi.craftGame;
 import java.io.IOException;
 import java.nio.FloatBuffer;
 
-import org.lwjgl.BufferUtils;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
-import org.lwjgl.util.vector.Vector3f;
 
-import xueLi.craftGame.block.Block;
+import xueLi.craftGame.entity.BoneRegister;
 import xueLi.craftGame.entity.Entity;
 import xueLi.craftGame.entity.Player;
 import xueLi.craftGame.entity.renderer.EntityRenderer;
-import xueLi.craftGame.utils.Vector;
-import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.DisplayManager;
 import xueLi.craftGame.utils.FPSTimer;
 import xueLi.craftGame.utils.GLHelper;
-import xueLi.craftGame.utils.MousePicker;
 import xueLi.craftGame.utils.VertexBuffer;
 import xueLi.craftGame.world.World;
 
@@ -27,9 +22,7 @@ public class Main {
 
 	private static int width = 1200, height = 680;
 
-	private static Player player = new Player(8, 8, 8);
-	private static float resistant = 0.005f;
-	private static float sensivity = 0.1f;
+	private static Player player = new Player(8, 8, 8, 0, 135, 0);
 
 	public static void main(String[] args) throws IOException {
 		DisplayManager.create(width, height);
@@ -41,8 +34,10 @@ public class Main {
 		World w = new World(10, 10);
 		Entity.init();
 		EntityRenderer.bindWorld(w);
-		
+
 		VertexBuffer.init();
+		
+		BoneRegister.readJsonToBone("res/entities/Warma.json");
 
 		Mouse.setGrabbed(true);
 		while (DisplayManager.isRunning()) {
@@ -79,7 +74,7 @@ public class Main {
 			}
 			GLHelper.player(player);
 			GLHelper.calculateFrustumPlane();
-			
+
 			player.pickTick(w);
 
 			buffer.clear();

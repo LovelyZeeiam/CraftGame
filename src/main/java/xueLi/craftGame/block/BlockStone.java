@@ -5,24 +5,20 @@ import java.nio.FloatBuffer;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.HitBox;
 
-public class BlockGrass extends Block {
+public class BlockStone extends Block {
 
 	private static BlockDrawMethod drawMethod = new BlockDrawMethod();
-	
-	public BlockGrass() {
-		super(2, "Grass Block", drawMethod);
+
+	public BlockStone() {
+		super(1, "Stone", drawMethod);
 	}
 
 	private static class BlockDrawMethod implements IBlockDrawMethod {
 
 		@Override
 		public void getDrawData(FloatBuffer buffer, int x, int y, int z, int face) {
-			if (face < 4)
-				IBlockDrawMethod.bindDefaultToBuffer(buffer, 1, 0, x, y, z, face);
-			else if (face == 4)
-				IBlockDrawMethod.bindDefaultToBuffer(buffer, 0, 0, x, y, z, face);
-			else if (face == 5)
-				IBlockDrawMethod.bindDefaultToBuffer(buffer, 2, 0, x, y, z, face);
+			IBlockDrawMethod.bindDefaultToBuffer(buffer, 3, 0, x, y, z, face);
+
 		}
 
 		@Override

@@ -4,8 +4,8 @@ public class RenderArgs {
 
 	public int offset;
 	public int vertCount;
-	
-	public float rotX,rotY,rotZ;
+
+	public float rotX, rotY, rotZ;
 
 	public RenderArgs(int offset, int vertCount, float rotX, float rotY, float rotZ) {
 		this.offset = offset;
@@ -14,7 +14,5 @@ public class RenderArgs {
 		this.rotY = rotY;
 		this.rotZ = rotZ;
 	}
-	
-	
-	
+
 }

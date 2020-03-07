@@ -104,27 +104,27 @@ public interface IBlockDrawMethod {
 		switch (face) {
 		case 0:
 			buffer.put(u1).put(v2);
-			//buffer.put(-1).put(-1).put(-1);
+			// buffer.put(-1).put(-1).put(-1);
 			buffer.put(x).put(y).put(z);
 			buffer.put(u1).put(v1);
-			//buffer.put(-1).put(1).put(-1);
+			// buffer.put(-1).put(1).put(-1);
 			buffer.put(x).put(y + 1).put(z);
 			buffer.put(u2).put(v2);
-			//buffer.put(1).put(-1).put(-1);
+			// buffer.put(1).put(-1).put(-1);
 			buffer.put(x + 1).put(y).put(z);
 			buffer.put(u1).put(v1);
-			//buffer.put(-1).put(1).put(-1);
+			// buffer.put(-1).put(1).put(-1);
 			buffer.put(x).put(y + 1).put(z);
 			buffer.put(u2).put(v1);
-			//buffer.put(1).put(1).put(-1);
+			// buffer.put(1).put(1).put(-1);
 			buffer.put(x + 1).put(y + 1).put(z);
 			buffer.put(u2).put(v2);
-			//buffer.put(1).put(-1).put(-1);
+			// buffer.put(1).put(-1).put(-1);
 			buffer.put(x + 1).put(y).put(z);
 			break;
 		case 1:
 			buffer.put(u1).put(v2);
-			//buffer.put(1).put(-1).put(-1);
+			// buffer.put(1).put(-1).put(-1);
 			buffer.put(x + 1).put(y).put(z);
 			buffer.put(u1).put(v1);
 			buffer.put(x + 1).put(y + 1).put(z);

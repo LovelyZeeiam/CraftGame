@@ -21,7 +21,7 @@ public abstract class Block {
 
 	public abstract HitBox getHitbox(int x, int y, int z);
 
-	private static final HitBox defaultHitbox = new HitBox(0f, 0f, 0f, 1f,1f,1f);
+	private static final HitBox defaultHitbox = new HitBox(0f, 0f, 0f, 1f, 1f, 1f);
 
 	protected HitBox getDefaultBlockHitbox(int x, int y, int z) {
 		return defaultHitbox.move(x, y, z);
