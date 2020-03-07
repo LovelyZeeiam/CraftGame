@@ -4,21 +4,24 @@ The game is in beta now. So if you have some suggestion, just leave in the comme
 ****
 
 #### How to build and run
-** Windows **
+
+* Windows
+
 To build, just type
->> gradlew.bat build
+> gradlew.bat build
 
 then
->> gradlew.bat run
+> gradlew.bat run
 
 There you go!
 
-** Linux && MacOS **
+* Linux && MacOS
+
 Pretty easy too! Just type
->> ./gradlew build
+> ./gradlew build
 
 and then
->> ./gradlew run
+> ./gradlew run
 
 There you go!
 
