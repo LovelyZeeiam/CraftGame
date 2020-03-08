@@ -47,7 +47,7 @@
 			},
 			{
 				"type" : "lleg",
-				"parent" : "body",
+				"parent" : null,
 				"data" : [
 					{
 						"offset" : [-0.1,-0.225,0],
@@ -57,7 +57,7 @@
 			},
 			{
 				"type" : "rleg",
-				"parent" : "body",
+				"parent" : null,
 				"data" : [
 					{
 						"offset" : [0.1,-0.58,0],

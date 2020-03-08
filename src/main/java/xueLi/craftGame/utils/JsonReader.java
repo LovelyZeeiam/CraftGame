@@ -51,10 +51,11 @@ public class JsonReader {
 			TBoneData[] rawDatas = rawBone.data;
 			// One data 8 vertices,one vertex 3 floats
 			bone.vertices = new float[rawDatas.length * 8 * 3];
-			bone.vertCount = rawDatas.length * 8;
+			bone.rawData = rawDatas;
+			
+			//在这里写关于rawOffset的
 			for (int z = 0; z < rawDatas.length; z++) {
 				TBoneData rawData = rawDatas[z];
-				bone.rawOffset = rawData.offset;
 
 				bone.vertices[z * 8 * 3 + 0] = rawData.offset[0] - rawData.size[0] / 2;
 				bone.vertices[z * 8 * 3 + 1] = rawData.offset[1] - rawData.size[1] / 2;
@@ -87,16 +88,17 @@ public class JsonReader {
 				bone.vertices[z * 8 * 3 + 21] = rawData.offset[0] + rawData.size[0] / 2;
 				bone.vertices[z * 8 * 3 + 22] = rawData.offset[1] - rawData.size[1] / 2;
 				bone.vertices[z * 8 * 3 + 23] = rawData.offset[2] + rawData.size[2] / 2;
+
 			}
 		}
 
 		return attrib;
 	}
-	
+
 	public static long getBilibiliUpperFollower(long uuid) throws IOException {
-		URL url = new URL("http://api.bilibili.com/x/relation/stat?vmid="+uuid);
+		URL url = new URL("http://api.bilibili.com/x/relation/stat?vmid=" + uuid);
 		InputStream in = url.openStream();
-		TUpperRelation r = gson.fromJson(new InputStreamReader(in),TUpperRelation.class);
+		TUpperRelation r = gson.fromJson(new InputStreamReader(in), TUpperRelation.class);
 		in.close();
 		return r.data.follower;
 	}

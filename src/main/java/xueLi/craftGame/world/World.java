@@ -100,12 +100,13 @@ public class World {
 				+ chunkRenderDistance; chunkX++) {
 			for (int chunkZ = chunkPos.getZ() - chunkRenderDistance; chunkZ < chunkPos.getZ()
 					+ chunkRenderDistance; chunkZ++) {
-				if (!GLHelper.isChunkInFrustum(chunkX, Chunk.height, chunkZ))
-					continue;
 				Chunk c = this.chunks.get(GLHelper.vert2ToLong(chunkX, chunkZ));
 				if (c == null)
 					continue;
 				c.update();
+				if (!GLHelper.isChunkInFrustum(chunkX, Chunk.height, chunkZ))
+					continue;
+				EntityRenderer.buildMesh(c);
 				for (int xInChunk = 0; xInChunk < Chunk.size; xInChunk++) {
 					for (int zInChunk = 0; zInChunk < Chunk.size; zInChunk++) {
 						int yMax = c.heightMap[xInChunk][zInChunk];
@@ -155,10 +156,6 @@ public class World {
 	public void addEntity(Entity entity) {
 		ChunkPos chunkPos = getChunkPosFromBlock(entity.pos.x,entity.pos.z);
 		chunks.get(GLHelper.vert2ToLong(chunkPos.getX(), chunkPos.getZ())).entities.add(entity);
-	}
-	
-	public void entity() {
-		EntityRenderer.render();
 	}
 
 	public ArrayList<HitBox> getHitBoxes(HitBox box, int worldMaxSize) {

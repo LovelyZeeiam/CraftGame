@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import xueLi.craftGame.entity.renderer.EntityRenderer;
 import xueLi.craftGame.entity.renderer.RenderArgs;
 import xueLi.craftGame.template.entity.AttributeEntity;
 import xueLi.craftGame.utils.DisplayManager;
@@ -63,8 +64,8 @@ public abstract class Entity {
 		/**
 		 * So I can only write a false engine code like this
 		 */
-		if (pos.y < 7)
-			pos.y = 7;
+		if (pos.y + this.getOriginHitBox().y1 < 5)
+			pos.y = 5 - this.getOriginHitBox().y1;
 
 		// Physical? No no no it will be muuuuuuuuuch later :}
 		force.set(0, 0, 0);
@@ -74,12 +75,39 @@ public abstract class Entity {
 	
 	protected List<RenderArgs> defaultRender(FloatBuffer buffer) {
 		List<RenderArgs> args = new ArrayList<RenderArgs>();
-		for(int x = 0;x < BoneType.length;x++) {
-			Bone b = this.attrib.model[x];
+		for(int a = 0;a < BoneType.length;a++) {
+			Bone b = this.attrib.model[a];
 			if(b == null)
 				continue;
+
+			float temp = 0;
+			for(int m = 0;m < b.vertices.length;m++) {
+				if(m % 3 == 1)
+					temp = b.vertices[m] + pos.x;
+				else if(m % 3 == 2)
+					temp = b.vertices[m] + pos.y;
+				else if(m % 3 == 0)
+					temp = b.vertices[m] + pos.z;
+				buffer.put(temp);
+			}
 			
+			int vertCount = b.vertices.length / 3;
+			RenderArgs arg = new RenderArgs(EntityRenderer.offset,vertCount,b.rotX,b.rotY,b.rotZ);
+			if(b.parent != -1) {
+				Bone p = this.attrib.model[b.parent];
+				arg.parentRot[0] = p.rotX;
+				arg.parentRot[1] = p.rotY;
+				arg.parentRot[2] = p.rotZ;
+				//在渲染的时候会先将模型挪到这个地方来
+				arg.rotOffset[0] = b.rawOffset[0];
+				arg.rotOffset[1] = b.rawOffset[1];
+				arg.rotOffset[2] = b.rawOffset[2];
+				//然后手和脚的最上方一点会挪到原点，进行旋转
+			}
+			args.add(arg);
 			
+			//Maybe this is wrong xD
+			EntityRenderer.offset += vertCount;
 		}
 		return args;
 	}

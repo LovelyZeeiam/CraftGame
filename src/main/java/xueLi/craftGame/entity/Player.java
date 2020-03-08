@@ -140,7 +140,6 @@ public class Player extends Entity {
 		this.health -= s.howHardItIs / 100;
 		if(s == Subject.BIOLOGY)
 			this.health -= 2;
-		
 	}
 
 	@Override

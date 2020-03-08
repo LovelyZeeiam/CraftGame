@@ -34,10 +34,10 @@ public class Main {
 		FloatBuffer buffer;
 
 		World w = new World(10, 10);
-		EntityRenderer.bindWorld(w);
 		w.addEntity(new EntityWarma(16, 7, 16));
 
 		VertexBuffer.init();
+		EntityRenderer.init();
 
 		Mouse.setGrabbed(true);
 		while (DisplayManager.isRunning()) {
@@ -74,10 +74,9 @@ public class Main {
 			}
 			GLHelper.player(player);
 			GLHelper.calculateFrustumPlane();
-			
-			
 
 			player.pickTick(w);
+			EntityRenderer.render();
 
 			buffer.clear();
 
