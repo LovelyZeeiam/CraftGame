@@ -11,15 +11,16 @@ import java.util.Set;
 import xueLi.craftGame.block.Block;
 import xueLi.craftGame.entity.Entity;
 import xueLi.craftGame.entity.Player;
+import xueLi.craftGame.entity.renderer.EntityRenderer;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.ChunkPos;
 import xueLi.craftGame.utils.GLHelper;
 import xueLi.craftGame.utils.HitBox;
+import xueLi.craftGame.utils.Vector;
 
 public class World {
 
 	private Map<Long, Chunk> chunks = new HashMap<Long, Chunk>();
-	private Set<Entity> entities = new HashSet<Entity>();
 
 	private boolean isWorldLimited = false;
 	public int wlimit_long, wlimit_width;
@@ -39,7 +40,6 @@ public class World {
 	}
 
 	private static Chunk tempChunk;
-
 	public Block getBlock(int x, int y, int z) {
 		ChunkPos cp = getChunkPosFromBlock(x, z);
 		if (isWorldLimited) {
@@ -105,6 +105,7 @@ public class World {
 				Chunk c = this.chunks.get(GLHelper.vert2ToLong(chunkX, chunkZ));
 				if (c == null)
 					continue;
+				c.update();
 				for (int xInChunk = 0; xInChunk < Chunk.size; xInChunk++) {
 					for (int zInChunk = 0; zInChunk < Chunk.size; zInChunk++) {
 						int yMax = c.heightMap[xInChunk][zInChunk];
@@ -150,6 +151,15 @@ public class World {
 
 		return vertCount;
 	}
+	
+	public void addEntity(Entity entity) {
+		ChunkPos chunkPos = getChunkPosFromBlock(entity.pos.x,entity.pos.z);
+		chunks.get(GLHelper.vert2ToLong(chunkPos.getX(), chunkPos.getZ())).entities.add(entity);
+	}
+	
+	public void entity() {
+		EntityRenderer.render();
+	}
 
 	public ArrayList<HitBox> getHitBoxes(HitBox box, int worldMaxSize) {
 		int x1 = new BigDecimal(String.valueOf(box.x1)).setScale(0, BigDecimal.ROUND_DOWN).intValue();
@@ -189,6 +199,12 @@ public class World {
 	private ChunkPos getChunkPosFromBlock(int x, int z) {
 		int chunkX = x / 16;
 		int chunkZ = z / 16;
+		return new ChunkPos(chunkX - (x < 0 ? 1 : 0), chunkZ - (z < 0 ? 1 : 0));
+	}
+	
+	private ChunkPos getChunkPosFromBlock(float x, float z) {
+		int chunkX = (int) (x / 16);
+		int chunkZ = (int) (z / 16);
 		return new ChunkPos(chunkX - (x < 0 ? 1 : 0), chunkZ - (z < 0 ? 1 : 0));
 	}
 

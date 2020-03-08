@@ -8,10 +8,10 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
-import xueLi.craftGame.entity.BoneRegister;
-import xueLi.craftGame.entity.Entity;
+import xueLi.craftGame.entity.EntityWarma;
 import xueLi.craftGame.entity.Player;
 import xueLi.craftGame.entity.renderer.EntityRenderer;
+import xueLi.craftGame.utils.BilibiliAPI;
 import xueLi.craftGame.utils.DisplayManager;
 import xueLi.craftGame.utils.FPSTimer;
 import xueLi.craftGame.utils.GLHelper;
@@ -22,9 +22,11 @@ public class Main {
 
 	private static int width = 1200, height = 680;
 
-	private static Player player = new Player(8, 8, 8, 0, 135, 0);
+	private static Player player = new Player(16, 7, 18, 0, 0, 0);
 
 	public static void main(String[] args) throws IOException {
+		BilibiliAPI.startThreadOfRealtimeGetFans();
+		
 		DisplayManager.create(width, height);
 
 		int textureID = GLHelper.registerTexture("res/textures.png");
@@ -32,12 +34,10 @@ public class Main {
 		FloatBuffer buffer;
 
 		World w = new World(10, 10);
-		Entity.init();
 		EntityRenderer.bindWorld(w);
+		w.addEntity(new EntityWarma(16, 7, 16));
 
 		VertexBuffer.init();
-		
-		BoneRegister.readJsonToBone("res/entities/Warma.json");
 
 		Mouse.setGrabbed(true);
 		while (DisplayManager.isRunning()) {
@@ -74,17 +74,20 @@ public class Main {
 			}
 			GLHelper.player(player);
 			GLHelper.calculateFrustumPlane();
+			
+			
 
 			player.pickTick(w);
 
 			buffer.clear();
 
 			DisplayManager.update();
-
 		}
 
 		GLHelper.deleteTexture(textureID);
 
+		BilibiliAPI.stopThreadOfRealtimeGetFans();
+		
 		DisplayManager.destroy();
 
 	}

@@ -3,22 +3,23 @@
 	"type" : "EASTEREGG",
 	"model" : {
 		"box" : [-0.4,-0.6,-0.4,0.4,0.3,0.4],
+		//At present the way to draw only support rectangle
 		"bones" : [
 			{
 				"type" : "head",
+				"parent" : null,
 				"data" : [
 					{
-						"type" : "cube",
 						"offset" : [0,0,0],
-						"size" : 0.45
+						"size" : [0.45,0.45,0.45]
 					}
 				]
 			},
 			{
 				"type" : "body",
+				"parent" : null,
 				"data" : [
 					{
-						"type" : "rect",
 						"offset" : [0,-0.355,0],
 						"size" : [0.18,0.26,0.18]
 					}
@@ -29,7 +30,6 @@
 				"parent" : "body",
 				"data" : [
 					{
-						"type" : "rect",
 						"offset" : [-0.12,0,0],
 						"size" : [0.06,0.26,0.06]
 					}
@@ -40,7 +40,6 @@
 				"parent" : "body",
 				"data" : [
 					{
-						"type" : "rect",
 						"offset" : [0.12,0,0],
 						"size" : [0.06,0.26,0.06]
 					}
@@ -51,7 +50,6 @@
 				"parent" : "body",
 				"data" : [
 					{
-						"type" : "rect",
 						"offset" : [-0.1,-0.225,0],
 						"size" : [0.08,0.19,0.08]
 					}
@@ -59,9 +57,9 @@
 			},
 			{
 				"type" : "rleg",
+				"parent" : "body",
 				"data" : [
 					{
-						"type" : "rect",
 						"offset" : [0.1,-0.58,0],
 						"size" : [0.08,0.19,0.08]
 					}

@@ -1,5 +1,10 @@
 package xueLi.craftGame.entity;
 
+import java.nio.FloatBuffer;
+import java.util.List;
+
+import xueLi.craftGame.database.Entities;
+import xueLi.craftGame.entity.renderer.RenderArgs;
 import xueLi.craftGame.utils.HitBox;
 import xueLi.craftGame.world.World;
 
@@ -7,12 +12,12 @@ public class EntityWarma extends Entity {
 
 	public EntityWarma(float x, float y, float z) {
 		super(x, y, z);
-		this.bones = Bones.boneWarma;
+		this.attrib = Entities.mWarma;
 	}
 
 	@Override
 	public void tick(World world) {
-
+		
 		super.updatePos(world);
 	}
 
@@ -24,6 +29,11 @@ public class EntityWarma extends Entity {
 	@Override
 	public HitBox getOriginHitBox() {
 		return null;
+	}
+
+	@Override
+	public List<RenderArgs> render(FloatBuffer buffer) {
+		return super.defaultRender(buffer);
 	}
 
 }

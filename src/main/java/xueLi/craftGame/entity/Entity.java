@@ -1,17 +1,19 @@
 package xueLi.craftGame.entity;
 
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.lwjgl.util.vector.Vector3f;
 
+import xueLi.craftGame.entity.renderer.RenderArgs;
+import xueLi.craftGame.template.entity.AttributeEntity;
 import xueLi.craftGame.utils.DisplayManager;
 import xueLi.craftGame.utils.HitBox;
 import xueLi.craftGame.utils.Vector;
 import xueLi.craftGame.world.World;
 
 public abstract class Entity {
-
-	public static void init() {
-
-	}
 
 	public Vector pos;
 	public boolean isInLiquid = false;
@@ -20,7 +22,7 @@ public abstract class Entity {
 	// public boolean[] collide = new boolean[6];
 
 	// For entity bones
-	public Bone[] bones;
+	public AttributeEntity attrib;
 
 	public Entity(float x, float y, float z) {
 		pos = new Vector(x, y, z);
@@ -69,6 +71,20 @@ public abstract class Entity {
 		// At least moving had become smoother :)
 
 	}
+	
+	protected List<RenderArgs> defaultRender(FloatBuffer buffer) {
+		List<RenderArgs> args = new ArrayList<RenderArgs>();
+		for(int x = 0;x < BoneType.length;x++) {
+			Bone b = this.attrib.model[x];
+			if(b == null)
+				continue;
+			
+			
+		}
+		return args;
+	}
+	
+	public abstract List<RenderArgs> render(FloatBuffer buffer);
 
 	public abstract void tick(World world);
 

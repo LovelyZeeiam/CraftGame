@@ -1,10 +1,13 @@
 package xueLi.craftGame.world;
 
 import java.nio.FloatBuffer;
+import java.util.HashSet;
+import java.util.Set;
 
 import xueLi.craftGame.block.Block;
 import xueLi.craftGame.block.BlockGrass;
 import xueLi.craftGame.block.BlockStone;
+import xueLi.craftGame.entity.Entity;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.Vector;
 
@@ -15,6 +18,9 @@ public class Chunk {
 	public int[][] heightMap = new int[size][size];
 
 	public int chunkX, chunkZ;
+	
+	public Set<Entity> tickEntities = new HashSet<Entity>();
+	public Set<Entity> entities = new HashSet<Entity>();
 
 	public Chunk(int chunkX, int chunkZ) {
 		this.chunkX = chunkX;
@@ -32,7 +38,7 @@ public class Chunk {
 	}
 
 	public void update() {
-
+		
 	}
 
 	public void setBlock(int x, int y, int z, Block block) {

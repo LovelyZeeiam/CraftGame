@@ -66,6 +66,13 @@ public class DisplayManager {
 		GL11.glFogf(GL11.GL_FOG_END, World.chunkRenderDistance * Chunk.size * 1.90f);
 		GL11.glHint(GL11.GL_FOG_HINT, GL11.GL_DONT_CARE);
 
+		//The website says these are the way to anti-aliasing
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GL11.glEnable(GL11.GL_POINT_SMOOTH);
+		GL11.glEnable(GL11.GL_LINE_SMOOTH);
+		GL11.glEnable(GL11.GL_POLYGON_SMOOTH);
+		
 		d_width = width;
 		d_height = height;
 

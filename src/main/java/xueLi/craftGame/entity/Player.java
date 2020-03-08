@@ -1,9 +1,14 @@
 package xueLi.craftGame.entity;
 
+import java.nio.FloatBuffer;
+import java.util.List;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import xueLi.craftGame.block.BlockStone;
+import xueLi.craftGame.entity.renderer.RenderArgs;
+import xueLi.craftGame.nightmare.Subject;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.DisplayManager;
 import xueLi.craftGame.utils.HitBox;
@@ -13,14 +18,18 @@ import xueLi.craftGame.world.World;
 public class Player extends Entity {
 
 	public int gamemode = 1;
+	public int health = 20;
 
 	public BlockPos blockPointed;
 
 	public float resistant = 0.009f;
 	public float sensivity = 0.1f;
-
+	
+	private final HitBox hitbox = new HitBox(-0.2f, -1.8f, -0.2f, 0.2f, 0.2f, 0.2f);
+	
 	public Player(float x, float y, float z) {
 		super(x, y, z);
+		this.attrib.box = hitbox;
 	}
 
 	public Player(float x, float y, float z, float rotX, float rotY, float rotZ) {
@@ -106,6 +115,7 @@ public class Player extends Entity {
 			world.setBlock(last_block_select, new BlockStone());
 			placeTimeCount = DisplayManager.currentTime;
 		}
+		
 	}
 
 	public void pickTick(World world) {
@@ -120,13 +130,23 @@ public class Player extends Entity {
 			last_block_select = searching_block_pos;
 		}
 	}
+	
+	@Override
+	public List<RenderArgs> render(FloatBuffer buffer) {
+		return null;
+	}
+	
+	public void doHomeWork(Subject s) {
+		this.health -= s.howHardItIs / 100;
+		if(s == Subject.BIOLOGY)
+			this.health -= 2;
+		
+	}
 
 	@Override
 	public float getSpeed() {
 		return 0.001f;
 	}
-
-	private final HitBox hitbox = new HitBox(-0.2f, -1.8f, -0.2f, 0.2f, 0.2f, 0.2f);
 
 	@Override
 	public HitBox getOriginHitBox() {
