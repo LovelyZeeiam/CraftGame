@@ -6,13 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import xueLi.craftGame.entity.Bone;
-import xueLi.craftGame.entity.BoneType;
 import xueLi.craftGame.template.bilibili.TUpperRelation;
 import xueLi.craftGame.template.entity.*;
 
@@ -42,54 +43,51 @@ public class JsonReader {
 				rawModel.box[5]);
 
 		TBone[] bones = rawModel.bones;
+
 		for (int s = 0; s < bones.length; s++) {
-			TBone rawBone = bones[s];
-			Bone bone = attrib.model[BoneType.valueOf(rawBone.type).id];
-			if (rawBone.parent != null)
-				bone.parent = BoneType.valueOf(rawBone.parent).id;
-
-			TBoneData[] rawDatas = rawBone.data;
-			// One data 8 vertices,one vertex 3 floats
-			bone.vertices = new float[rawDatas.length * 8 * 3];
-			bone.rawData = rawDatas;
+			TBone rawData = bones[s];
+			Bone bone = new Bone();
 			
-			//在这里写关于rawOffset的
-			for (int z = 0; z < rawDatas.length; z++) {
-				TBoneData rawData = rawDatas[z];
+			bone.id = rawData.id;
+			
+			bone.vertices[0] = rawData.offset[0] - rawData.size[0] / 2;
+			bone.vertices[1] = rawData.offset[1] - rawData.size[1] / 2;
+			bone.vertices[2] = rawData.offset[2] - rawData.size[2] / 2;
 
-				bone.vertices[z * 8 * 3 + 0] = rawData.offset[0] - rawData.size[0] / 2;
-				bone.vertices[z * 8 * 3 + 1] = rawData.offset[1] - rawData.size[1] / 2;
-				bone.vertices[z * 8 * 3 + 2] = rawData.offset[2] - rawData.size[2] / 2;
+			bone.vertices[3] = rawData.offset[0] - rawData.size[0] / 2;
+			bone.vertices[4] = rawData.offset[1] + rawData.size[1] / 2;
+			bone.vertices[5] = rawData.offset[2] - rawData.size[2] / 2;
 
-				bone.vertices[z * 8 * 3 + 3] = rawData.offset[0] - rawData.size[0] / 2;
-				bone.vertices[z * 8 * 3 + 4] = rawData.offset[1] + rawData.size[1] / 2;
-				bone.vertices[z * 8 * 3 + 5] = rawData.offset[2] - rawData.size[2] / 2;
+			bone.vertices[6] = rawData.offset[0] + rawData.size[0] / 2;
+			bone.vertices[7] = rawData.offset[1] + rawData.size[1] / 2;
+			bone.vertices[8] = rawData.offset[2] - rawData.size[2] / 2;
 
-				bone.vertices[z * 8 * 3 + 6] = rawData.offset[0] + rawData.size[0] / 2;
-				bone.vertices[z * 8 * 3 + 7] = rawData.offset[1] + rawData.size[1] / 2;
-				bone.vertices[z * 8 * 3 + 8] = rawData.offset[2] - rawData.size[2] / 2;
+			bone.vertices[9] = rawData.offset[0] + rawData.size[0] / 2;
+			bone.vertices[10] = rawData.offset[1] - rawData.size[1] / 2;
+			bone.vertices[11] = rawData.offset[2] - rawData.size[2] / 2;
 
-				bone.vertices[z * 8 * 3 + 9] = rawData.offset[0] + rawData.size[0] / 2;
-				bone.vertices[z * 8 * 3 + 10] = rawData.offset[1] - rawData.size[1] / 2;
-				bone.vertices[z * 8 * 3 + 11] = rawData.offset[2] - rawData.size[2] / 2;
+			bone.vertices[12] = rawData.offset[0] - rawData.size[0] / 2;
+			bone.vertices[13] = rawData.offset[1] - rawData.size[1] / 2;
+			bone.vertices[14] = rawData.offset[2] + rawData.size[2] / 2;
 
-				bone.vertices[z * 8 * 3 + 12] = rawData.offset[0] - rawData.size[0] / 2;
-				bone.vertices[z * 8 * 3 + 13] = rawData.offset[1] - rawData.size[1] / 2;
-				bone.vertices[z * 8 * 3 + 14] = rawData.offset[2] + rawData.size[2] / 2;
+			bone.vertices[15] = rawData.offset[0] - rawData.size[0] / 2;
+			bone.vertices[16] = rawData.offset[1] + rawData.size[1] / 2;
+			bone.vertices[17] = rawData.offset[2] + rawData.size[2] / 2;
 
-				bone.vertices[z * 8 * 3 + 15] = rawData.offset[0] - rawData.size[0] / 2;
-				bone.vertices[z * 8 * 3 + 16] = rawData.offset[1] + rawData.size[1] / 2;
-				bone.vertices[z * 8 * 3 + 17] = rawData.offset[2] + rawData.size[2] / 2;
+			bone.vertices[18] = rawData.offset[0] + rawData.size[0] / 2;
+			bone.vertices[19] = rawData.offset[1] + rawData.size[1] / 2;
+			bone.vertices[20] = rawData.offset[2] + rawData.size[2] / 2;
 
-				bone.vertices[z * 8 * 3 + 18] = rawData.offset[0] + rawData.size[0] / 2;
-				bone.vertices[z * 8 * 3 + 19] = rawData.offset[1] + rawData.size[1] / 2;
-				bone.vertices[z * 8 * 3 + 20] = rawData.offset[2] + rawData.size[2] / 2;
-
-				bone.vertices[z * 8 * 3 + 21] = rawData.offset[0] + rawData.size[0] / 2;
-				bone.vertices[z * 8 * 3 + 22] = rawData.offset[1] - rawData.size[1] / 2;
-				bone.vertices[z * 8 * 3 + 23] = rawData.offset[2] + rawData.size[2] / 2;
-
+			bone.vertices[21] = rawData.offset[0] + rawData.size[0] / 2;
+			bone.vertices[22] = rawData.offset[1] - rawData.size[1] / 2;
+			bone.vertices[23] = rawData.offset[2] + rawData.size[2] / 2;
+			
+			if (rawData.parent != -1) {
+				attrib.bones.get(rawData.parent).children.add(bone);
+			} else {
+				attrib.bones.add(bone);
 			}
+			
 		}
 
 		return attrib;

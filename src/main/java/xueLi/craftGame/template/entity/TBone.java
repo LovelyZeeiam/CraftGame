@@ -2,8 +2,10 @@ package xueLi.craftGame.template.entity;
 
 public class TBone {
 
-	public String type;
-	public String parent;
-	public TBoneData[] data;
+	public int id;
+	public int parent;
+	public float[] offset;
+	public float[] size;
+	public float[] uv;
 	
 }
