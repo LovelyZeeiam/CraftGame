@@ -5,6 +5,7 @@
  * For more details take a look at the Java Quickstart chapter in the Gradle
  * User Manual available at https://docs.gradle.org/6.0/userguide/tutorial_java_projects.html
  */
+import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
     // Apply the java plugin to add support for Java
@@ -35,6 +36,15 @@ application {
     // Define the main class for the application.
     apply plugin: 'application'
     mainClassName = 'xueLi.craftGame.Main'
-    applicationDefaultJvmArgs = [
-        '-Djava.library.path="libs/natives/"']
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        applicationDefaultJvmArgs = [
+        '-Djava.library.path="libs/lwjgl/natives/windows/"']
+    } else if(Os.isFamily(Os.FAMILY_LINUX)) {
+        applicationDefaultJvmArgs = [
+        '-Djava.library.path="libs/lwjgl/natives/linux/"']
+    } else if(Os.isFamily(Os.FAMILY_LINUX)) {
+        applicationDefaultJvmArgs = [
+        '-Djava.library.path="libs/lwjgl/natives/mac/"']
+    }
+    
 }

@@ -82,6 +82,8 @@ public class JsonReader {
 			bone.vertices[22] = rawData.offset[1] - rawData.size[1] / 2;
 			bone.vertices[23] = rawData.offset[2] + rawData.size[2] / 2;
 			
+			bone.rotPoint = rawData.rotPoint;
+			
 			if (rawData.parent != -1) {
 				attrib.bones.get(rawData.parent).children.add(bone);
 			} else {

@@ -132,7 +132,7 @@ public class Player extends Entity {
 	}
 	
 	@Override
-	public List<RenderArgs> render(FloatBuffer buffer) {
+	public List<RenderArgs> render() {
 		return null;
 	}
 	

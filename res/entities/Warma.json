@@ -2,7 +2,7 @@
 	"name" : "Warma",
 	"type" : "EASTEREGG",
 	"model" : {
-		"box" : [-0.4,-0.6,-0.4,0.4,0.3,0.4],
+		"box" : [-0.4,-1.125,-0.4,0.4,0.225,0.4],
 		//At present the way to draw only supports rectangle xD.
 		//Now Every bone has only one type of data
 		"bones" : [
@@ -12,7 +12,9 @@
 				"parent" : -1,
 				"offset" : [0,-0.355,0],
 				"size" : [0.18,0.26,0.18],
-				"uv" : []
+				"uv" : [],
+				//这个参数所在坐标系的原点是pos
+				"rotPoint" : [0,-0.225,0]
 			},
 			//Head
 			{
@@ -20,7 +22,8 @@
 				"parent" : -1,
 				"offset" : [0,0,0],
 				"size" : [0.45,0.45,0.45],
-				"uv" : []
+				"uv" : [],
+				"rotPoint" : [0,-0.225,0]
 			},
 			//Left Hand
 			{
@@ -28,7 +31,8 @@
 				"parent" : 0,
 				"offset" : [-0.12,0,0],
 				"size" : [0.06,0.26,0.06],
-				"uv" : []
+				"uv" : [],
+				"rotPoint" : [-0.12,-0.225,0]
 			},
 			//Right Hand
 			{
@@ -36,7 +40,8 @@
 				"parent" : 0,
 				"offset" : [0.12,0,0],
 				"size" : [0.06,0.26,0.06],
-				"uv" : []
+				"uv" : [],
+				"rotPoint" : [0.12,-0.225,0]
 			},
 			//Left Leg
 			{
@@ -44,15 +49,17 @@
 				"parent" : 0,
 				"offset" : [-0.1,-0.225,0],
 				"size" : [0.08,0.19,0.08],
-				"uv" : []
+				"uv" : [],
+				"rotPoint" : [-0.1,-0.745,0]
 			},
 			//Right Leg
 			{
 				"id" : 5,
 				"parent" : 0,
-				"offset" : [0.1,-0.58,0],
+				"offset" : [0.1,-0.225,0],
 				"size" : [0.08,0.19,0.08],
-				"uv" : []
+				"uv" : [],
+				"rotPoint" : [0.1,-0.745,0]
 			}
 		]
 	}

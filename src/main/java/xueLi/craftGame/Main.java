@@ -7,6 +7,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
+import org.lwjgl.util.glu.GLU;
 
 import xueLi.craftGame.entity.EntityWarma;
 import xueLi.craftGame.entity.Player;
@@ -57,16 +58,19 @@ public class Main {
 			buffer.flip();
 
 			GL11.glMatrixMode(GL11.GL_MODELVIEW);
-
 			GL13.glActiveTexture(GL13.GL_TEXTURE0);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
+			GL11.glColor3f(1, 1, 1);
 			VertexBuffer.draw(GL11.GL_TRIANGLES, v);
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 
 			buffer.clear();
 
+			EntityRenderer.render();
+			
 			int error = GL11.glGetError();
 			if (error != 0) {
-				System.out.println(error);
+				System.out.println(GLU.gluErrorString(error));
 			}
 
 			if (DisplayManager.tickResize()) {
@@ -76,9 +80,6 @@ public class Main {
 			GLHelper.calculateFrustumPlane();
 
 			player.pickTick(w);
-			EntityRenderer.render();
-
-			buffer.clear();
 
 			DisplayManager.update();
 		}

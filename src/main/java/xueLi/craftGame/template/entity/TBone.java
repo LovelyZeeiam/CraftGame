@@ -7,5 +7,6 @@ public class TBone {
 	public float[] offset;
 	public float[] size;
 	public float[] uv;
+	public float[] rotPoint;
 	
 }

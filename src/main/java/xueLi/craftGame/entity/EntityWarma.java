@@ -32,8 +32,8 @@ public class EntityWarma extends Entity {
 	}
 
 	@Override
-	public List<RenderArgs> render(FloatBuffer buffer) {
-		return super.defaultRender(buffer);
+	public List<RenderArgs> render() {
+		return super.defaultRender();
 	}
 
 }

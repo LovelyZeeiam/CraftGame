@@ -1,6 +1,5 @@
 package xueLi.craftGame.entity;
 
-import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,21 +66,24 @@ public abstract class Entity {
 		if (pos.y + this.getOriginHitBox().y1 < 5)
 			pos.y = 5 - this.getOriginHitBox().y1;
 
-		// Physical? No no no it will be muuuuuuuuuch later :}
+		// Physical? No no no it will be much later :}
 		force.set(0, 0, 0);
 		// At least moving had become smoother :)
 
 	}
 	
-	protected List<RenderArgs> defaultRender(FloatBuffer buffer) {
+	protected List<RenderArgs> defaultRender() {
 		List<RenderArgs> args = new ArrayList<RenderArgs>();
 		
-		
+		for(Bone b:attrib.bones) {
+			b.calculateMatrix(EntityRenderer.identity,pos);
+			args.addAll(b.getDrawArgs(pos));
+		}
 		
 		return args;
 	}
 	
-	public abstract List<RenderArgs> render(FloatBuffer buffer);
+	public abstract List<RenderArgs> render();
 
 	public abstract void tick(World world);
 
