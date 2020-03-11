@@ -23,7 +23,7 @@ public class Main {
 
 	private static int width = 1200, height = 680;
 
-	private static Player player = new Player(16, 7, 18, 0, 0, 0);
+	private static Player player = new Player(0, 1, 0, 0, 0, 0);
 
 	public static void main(String[] args) throws IOException {
 		BilibiliAPI.startThreadOfRealtimeGetFans();
@@ -34,8 +34,8 @@ public class Main {
 
 		FloatBuffer buffer;
 
-		World w = new World(10, 10);
-		w.addEntity(new EntityWarma(16, 7, 16));
+		World w = new World(1, 1);
+		w.addEntity(new EntityWarma(0, 1, 0));
 
 		VertexBuffer.init();
 		EntityRenderer.init();

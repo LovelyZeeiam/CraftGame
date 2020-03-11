@@ -3,9 +3,9 @@ package xueLi.craftGame.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
 
 import xueLi.craftGame.entity.renderer.EntityRenderer;
 import xueLi.craftGame.entity.renderer.RenderArgs;
@@ -16,7 +16,8 @@ public class Bone {
 	public int id;
 	public float[] vertices = new float[24];
 	public float[] rotPoint;
-	
+	public float[] rawOffset;
+		
 	public Matrix4f localMatrix = new Matrix4f();
 	public Matrix4f matrix = new Matrix4f();
 	
@@ -34,13 +35,9 @@ public class Bone {
 		float[] rawVertices = vertices;
 		a.vertices = new float[rawVertices.length];
 		for(int m = 0;m < rawVertices.length;m++) {
-			if(m % 3 == 0)
-				a.vertices[m] = rawVertices[m] + pos.x;
-			if(m % 3 == 1)
-				a.vertices[m] = rawVertices[m] + pos.y;
-			if(m % 3 == 2)
-				a.vertices[m] = rawVertices[m] + pos.z;
+			a.vertices[m] = rawVertices[m];
 		}
+		a.color = new Vector3f(1f / id,1f / id / 2,1f / id / 3);
 		args.add(a);
 		
 		for(Bone c:children) {
@@ -49,25 +46,29 @@ public class Bone {
 		return args;
 	}
 	
-	public void calculateMatrix(Matrix4f parentMatrix,Vector pos) {
+	public void calculateMatrix(Matrix4f parentMatrix) {
 		localMatrix.setIdentity();
-		//TODO: Calculate the bone matrix
-		Vector4f realRotPos = new Vector4f(pos.x + rotPoint[0],pos.y + rotPoint[1],pos.z + rotPoint[2],1f);
 		
-		Vector4f newRotPoss = Matrix4f.transform(parentMatrix, realRotPos, null);
-		Vector3f newRotPos = new Vector3f(newRotPoss.x ,newRotPoss.y,newRotPoss.z);
-		Vector3f negativeNewRotPos = new Vector3f(-newRotPos.x, -newRotPos.y, -newRotPos.z);
+		//Matrix4f transMatrix = new Matrix4f();
+		//transMatrix.translate(new Vector3f(rawOffset[0],rawOffset[1],rawOffset[2]));
 		
-		localMatrix.translate(newRotPos);
-		localMatrix.rotate((float) Math.toRadians(rotX), new Vector3f(1,0,0));
-		rotX += 1f;
-		localMatrix.rotate((float) Math.toRadians(rotY), new Vector3f(0,1,0));
-		localMatrix.rotate((float) Math.toRadians(rotZ), new Vector3f(0,0,1));
-		localMatrix.translate(negativeNewRotPos);
+		Matrix4f rotMatrix = new Matrix4f();
+		rotMatrix.setIdentity();
+		rotX +=1;
+		rotMatrix.rotate((float)Math.toRadians(rotX), new Vector3f(1,0,0));
+		rotMatrix.rotate((float)Math.toRadians(rotY), new Vector3f(0,1,0));
+		rotMatrix.rotate((float)Math.toRadians(rotZ), new Vector3f(0,0,1));
 		
-		matrix = Matrix4f.mul(localMatrix, parentMatrix, matrix);
+		Matrix4f transMatrix = new Matrix4f();
+		transMatrix.setIdentity();
+		transMatrix.translate(new Vector3f(rawOffset[0],rawOffset[1],rawOffset[2]));
+		
+		localMatrix = Matrix4f.mul(transMatrix, rotMatrix , null);
+
+		matrix = Matrix4f.mul(parentMatrix, localMatrix, null);
+		
 		for(Bone c:children)
-			c.calculateMatrix(matrix,pos);
+			c.calculateMatrix(matrix);
 	}
 	
 	

@@ -79,7 +79,7 @@ public class EntityRenderer {
 			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, vertBuffer, GL15.GL_STATIC_DRAW);
 			GL11.glVertexPointer(3, GL11.GL_FLOAT, 0, 0);
 			GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, ebo);
-			GL11.glColor3f(1, 1, 1);
+			GL11.glColor3f(arg.color.x,arg.color.y,arg.color.z);
 			
 			GL11.glPushMatrix();
 			arg.matrix.store(matrixBuffer);

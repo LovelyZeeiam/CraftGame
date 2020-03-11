@@ -3,6 +3,7 @@ package xueLi.craftGame.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 import xueLi.craftGame.entity.renderer.EntityRenderer;
@@ -63,8 +64,8 @@ public abstract class Entity {
 		/**
 		 * So I can only write a false engine code like this
 		 */
-		if (pos.y + this.getOriginHitBox().y1 < 5)
-			pos.y = 5 - this.getOriginHitBox().y1;
+		//if (pos.y + this.getOriginHitBox().y1 < 5)
+		//	pos.y = 5 - this.getOriginHitBox().y1;
 
 		// Physical? No no no it will be much later :}
 		force.set(0, 0, 0);
@@ -75,10 +76,15 @@ public abstract class Entity {
 	protected List<RenderArgs> defaultRender() {
 		List<RenderArgs> args = new ArrayList<RenderArgs>();
 		
+		Matrix4f posMatrix = EntityRenderer.identity;
+		posMatrix.translate(new Vector3f(pos.x,pos.y,pos.z));
+		
 		for(Bone b:attrib.bones) {
-			b.calculateMatrix(EntityRenderer.identity,pos);
+			b.calculateMatrix(posMatrix);	
 			args.addAll(b.getDrawArgs(pos));
 		}
+		
+		posMatrix.setIdentity();
 		
 		return args;
 	}

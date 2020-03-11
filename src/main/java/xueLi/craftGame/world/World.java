@@ -58,6 +58,7 @@ public class World {
 		return null;
 	}
 
+	
 	public void setBlock(int x, int y, int z, Block block) {
 		ChunkPos cp = getChunkPosFromBlock(x, z);
 		if (isWorldLimited) {
@@ -71,6 +72,7 @@ public class World {
 		}
 	}
 
+	//I accidently found that sometimes the game will throw NullPointerException on World.java:77 and I dont know why
 	public void setBlock(BlockPos p, Block b) {
 		setBlock(p.getX(), p.getY(), p.getZ(), b);
 	}
