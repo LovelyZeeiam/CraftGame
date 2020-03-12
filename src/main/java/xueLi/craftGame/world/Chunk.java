@@ -14,7 +14,7 @@ import xueLi.craftGame.utils.Vector;
 public class Chunk {
 
 	public static final int size = 16, height = 128;
-	private Block[][][] blockState = new Block[size][height][size];
+	Block[][][] blockState = new Block[size][height][size];
 	public int[][] heightMap = new int[size][size];
 
 	public int chunkX, chunkZ;
@@ -25,16 +25,6 @@ public class Chunk {
 	public Chunk(int chunkX, int chunkZ) {
 		this.chunkX = chunkX;
 		this.chunkZ = chunkZ;
-		for (int x = 0; x < size; x++) {
-			for (int z = 0; z < size; z++) {
-				for (int y = 0; y < 4; y++) {
-					blockState[x][y][z] = new BlockStone();
-				}
-				blockState[x][4][z] = new BlockGrass();
-				heightMap[x][z] = 4;
-			}
-		}
-
 	}
 
 	public void update() {

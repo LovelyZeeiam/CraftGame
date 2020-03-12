@@ -29,7 +29,7 @@ public class World {
 	public World(int limit_long, int limit_width) {
 		for (int x = 0; x < limit_long; x++) {
 			for (int z = 0; z < limit_width; z++) {
-				chunks.put(GLHelper.vert2ToLong(x, z), ChunkGenerator.superflat(x, z));
+				chunks.put(GLHelper.vert2ToLong(x, z), ChunkGenerator.gen(x, z));
 			}
 		}
 		isWorldLimited = true;
