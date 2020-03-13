@@ -14,6 +14,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import xueLi.craftGame.entity.Bone;
+import xueLi.craftGame.entity.HitBox;
 import xueLi.craftGame.template.bilibili.TUpperRelation;
 import xueLi.craftGame.template.entity.*;
 

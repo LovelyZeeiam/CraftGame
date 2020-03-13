@@ -10,7 +10,6 @@ import xueLi.craftGame.entity.renderer.EntityRenderer;
 import xueLi.craftGame.entity.renderer.RenderArgs;
 import xueLi.craftGame.template.entity.AttributeEntity;
 import xueLi.craftGame.utils.DisplayManager;
-import xueLi.craftGame.utils.HitBox;
 import xueLi.craftGame.utils.Vector;
 import xueLi.craftGame.world.World;
 

@@ -14,12 +14,12 @@ import java.util.zip.GZIPOutputStream;
 
 import xueLi.craftGame.block.Block;
 import xueLi.craftGame.entity.Entity;
+import xueLi.craftGame.entity.HitBox;
 import xueLi.craftGame.entity.Player;
 import xueLi.craftGame.entity.renderer.EntityRenderer;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.ChunkPos;
 import xueLi.craftGame.utils.GLHelper;
-import xueLi.craftGame.utils.HitBox;
 
 public class World {
 

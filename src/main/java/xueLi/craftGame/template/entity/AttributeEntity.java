@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xueLi.craftGame.entity.Bone;
-import xueLi.craftGame.utils.HitBox;
+import xueLi.craftGame.entity.HitBox;
 
 public class AttributeEntity {
 	

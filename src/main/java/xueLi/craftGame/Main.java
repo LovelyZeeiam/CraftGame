@@ -15,32 +15,20 @@ import xueLi.craftGame.utils.BilibiliAPI;
 import xueLi.craftGame.utils.DisplayManager;
 import xueLi.craftGame.utils.FPSTimer;
 import xueLi.craftGame.utils.GLHelper;
-import xueLi.craftGame.utils.VertexBuffer;
 import xueLi.craftGame.world.ChunkGenerator;
 import xueLi.craftGame.world.World;
+import xueLi.craftGame.world.WorldRenderer;
+import xueLi.craftGame.world.WorldVertexBinder;
 
 public class Main {
 
 	private static int width = 1200, height = 680;
 
-	private static Player player = new Player(8, 8, 8, 0, 0, 0);
-
 	public static void main(String[] args) throws IOException {
 		BilibiliAPI.startThreadOfRealtimeGetFans();
 		
 		DisplayManager.create(width, height);
-
-		int textureID = GLHelper.registerTexture("res/textures.png");
-
-		FloatBuffer buffer;
-
-		ChunkGenerator.setSeed(879711410997L);
-		World w = new World(8,8);
-		w.generate();
-		//w.addEntity(new EntityWarma(0, 1, 0));
-
-		VertexBuffer.init();
-		EntityRenderer.init();
+		WorldRenderer.init();
 
 		Mouse.setGrabbed(true);
 		while (DisplayManager.isRunning()) {
@@ -48,49 +36,18 @@ public class Main {
 				DisplayManager.postDestroyMessage();
 			}
 
-			player.tick(w);
-
 			FPSTimer.getFPS();
 
 			GLHelper.clearColor(0.5f, 0.8f, 1.0f, 1.0f);
-
-			buffer = VertexBuffer.map();
-			int v = w.draw(player, buffer);
-
-			buffer.flip();
-
-			GL11.glMatrixMode(GL11.GL_MODELVIEW);
-			GL13.glActiveTexture(GL13.GL_TEXTURE0);
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
-			GL11.glColor3f(1, 1, 1);
-			VertexBuffer.draw(GL11.GL_TRIANGLES, v);
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
-
-			buffer.clear();
-
-			//EntityRenderer.render();
 			
-			int error = GL11.glGetError();
-			if (error != 0) {
-				System.out.println(GLU.gluErrorString(error));
-			}
-
-			if (DisplayManager.tickResize()) {
-				GLHelper.perspecive(DisplayManager.d_width, DisplayManager.d_height, 90.0f, 0.1f, 1000.0f);
-			}
-			GLHelper.player(player);
-			GLHelper.calculateFrustumPlane();
-
-			player.pickTick(w);
-
+			WorldRenderer.render();
+			
 			DisplayManager.update();
 		}
 
-		GLHelper.deleteTexture(textureID);
-		//w.save();
-
 		BilibiliAPI.stopThreadOfRealtimeGetFans();
 		
+		WorldRenderer.release();
 		DisplayManager.destroy();
 
 	}

@@ -1,11 +1,11 @@
-package xueLi.craftGame.utils;
+package xueLi.craftGame.world;
 
 import java.nio.FloatBuffer;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 
-public class VertexBuffer {
+public class WorldVertexBinder {
 
 	private static int vbo;
 

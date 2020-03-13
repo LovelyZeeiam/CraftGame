@@ -1,4 +1,4 @@
-package xueLi.craftGame.utils;
+package xueLi.craftGame.entity;
 
 import org.lwjgl.util.vector.Vector3f;
 

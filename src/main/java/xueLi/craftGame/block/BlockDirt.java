@@ -2,8 +2,8 @@ package xueLi.craftGame.block;
 
 import java.nio.FloatBuffer;
 
+import xueLi.craftGame.entity.HitBox;
 import xueLi.craftGame.utils.BlockPos;
-import xueLi.craftGame.utils.HitBox;
 
 public class BlockDirt extends Block {
 

@@ -5,7 +5,6 @@ import java.util.List;
 
 import xueLi.craftGame.database.Entities;
 import xueLi.craftGame.entity.renderer.RenderArgs;
-import xueLi.craftGame.utils.HitBox;
 import xueLi.craftGame.world.World;
 
 public class EntityWarma extends Entity {

@@ -1,7 +1,7 @@
 package xueLi.craftGame.block;
 
+import xueLi.craftGame.entity.HitBox;
 import xueLi.craftGame.utils.BlockPos;
-import xueLi.craftGame.utils.HitBox;
 
 public abstract class Block {
 
