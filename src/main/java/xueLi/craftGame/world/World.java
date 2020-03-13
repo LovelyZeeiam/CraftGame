@@ -1,12 +1,16 @@
 package xueLi.craftGame.world;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import xueLi.craftGame.block.Block;
 import xueLi.craftGame.entity.Entity;
@@ -16,27 +20,41 @@ import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.ChunkPos;
 import xueLi.craftGame.utils.GLHelper;
 import xueLi.craftGame.utils.HitBox;
-import xueLi.craftGame.utils.Vector;
 
 public class World {
 
 	private Map<Long, Chunk> chunks = new HashMap<Long, Chunk>();
+	private GZIPOutputStream gos;
+	private GZIPInputStream gis;
 
 	private boolean isWorldLimited = false;
 	public int wlimit_long, wlimit_width;
 	private int limit_long, limit_width;
 
 	public World(int limit_long, int limit_width) {
-		for (int x = 0; x < limit_long; x++) {
-			for (int z = 0; z < limit_width; z++) {
-				chunks.put(GLHelper.vert2ToLong(x, z), ChunkGenerator.gen(x, z));
-			}
-		}
 		isWorldLimited = true;
 		this.wlimit_long = limit_long * Chunk.size;
 		this.wlimit_width = limit_width * Chunk.size;
 		this.limit_long = limit_long;
 		this.limit_width = limit_width;
+		
+		try {
+			gos = new GZIPOutputStream(new FileOutputStream("save.dat"));
+			gis = new GZIPInputStream(new FileInputStream("save.dat"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void generate() {
+		for (int x = 0; x < limit_long; x++) {
+			for (int z = 0; z < limit_width; z++) {
+				chunks.put(GLHelper.vert2ToLong(x, z), ChunkGenerator.gen(x, z));
+			}
+		}
 	}
 
 	private static Chunk tempChunk;
@@ -74,6 +92,8 @@ public class World {
 
 	//I accidently found that sometimes the game will throw NullPointerException on World.java:77 and I dont know why
 	public void setBlock(BlockPos p, Block b) {
+		if(p == null)
+			return;
 		setBlock(p.getX(), p.getY(), p.getZ(), b);
 	}
 

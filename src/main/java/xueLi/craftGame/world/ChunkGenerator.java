@@ -1,7 +1,10 @@
 package xueLi.craftGame.world;
 
+import java.util.Random;
+
 import xueLi.craftGame.block.BlockGrass;
 import xueLi.craftGame.block.BlockStone;
+import xueLi.craftGame.utils.NoiseGenerator;
 
 public class ChunkGenerator {
 
@@ -27,11 +30,13 @@ public class ChunkGenerator {
 	
 	public static Chunk gen(int chunkX,int chunkZ) {
 		Chunk chunk = new Chunk(chunkX,chunkZ);
+		//NoiseGenerator n = new NoiseGenerator(mseed);
 		for (int x = 0; x < Chunk.size; x++) {
 			for (int z = 0; z < Chunk.size; z++) {
-				int height = (int)(Math.sin(mseed * chunkX * x) * 23 + Math.cos(mseed + chunkZ * z) * 23);
-				chunk.heightMap[x][z] = height;
-				chunk.setBlock(x, chunk.heightMap[x][z], z, new BlockGrass());
+				//int height = (int)(n.noise(chunkX * 16 + x, 1, chunkZ * 16 + z));
+				//chunk.heightMap[x][z] = height;
+				int height = 5;
+				chunk.setBlock(x, height, z, new BlockGrass());
 				for(int y = 0;y < height;y++)
 					chunk.setBlock(x, y, z, new BlockStone());
 			}
@@ -39,10 +44,7 @@ public class ChunkGenerator {
 		return chunk;
 	}
 	
-	private static double noise(int x) {
-		x = (x<<13) ^ x;
-		return ( 1.0 - ( (x * (x * x * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0); 
-	}
+
 	
 	
 

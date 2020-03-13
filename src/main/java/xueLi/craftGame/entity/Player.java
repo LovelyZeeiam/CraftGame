@@ -73,8 +73,8 @@ public class Player extends Entity {
 
 		if (DisplayManager.isKeyDown(Keyboard.KEY_W)) {
 			if (DisplayManager.isKeyDown(Keyboard.KEY_R)) {
-				speed.x -= this.getSpeed() * 1.8f * (float) Math.sin(Math.toRadians(-pos.rotY));
-				speed.z -= this.getSpeed() * 1.8f * (float) Math.cos(Math.toRadians(-pos.rotY));
+				speed.x -= this.getSpeed() * 3f * (float) Math.sin(Math.toRadians(-pos.rotY));
+				speed.z -= this.getSpeed() * 3f * (float) Math.cos(Math.toRadians(-pos.rotY));
 			} else {
 				speed.x -= this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY));
 				speed.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY));
@@ -144,7 +144,7 @@ public class Player extends Entity {
 
 	@Override
 	public float getSpeed() {
-		return 0.001f;
+		return 0.005f;
 	}
 
 	@Override

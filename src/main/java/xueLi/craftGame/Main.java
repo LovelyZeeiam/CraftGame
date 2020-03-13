@@ -9,7 +9,6 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.util.glu.GLU;
 
-import xueLi.craftGame.entity.EntityWarma;
 import xueLi.craftGame.entity.Player;
 import xueLi.craftGame.entity.renderer.EntityRenderer;
 import xueLi.craftGame.utils.BilibiliAPI;
@@ -37,6 +36,7 @@ public class Main {
 
 		ChunkGenerator.setSeed(879711410997L);
 		World w = new World(8,8);
+		w.generate();
 		//w.addEntity(new EntityWarma(0, 1, 0));
 
 		VertexBuffer.init();
@@ -87,6 +87,7 @@ public class Main {
 		}
 
 		GLHelper.deleteTexture(textureID);
+		//w.save();
 
 		BilibiliAPI.stopThreadOfRealtimeGetFans();
 		

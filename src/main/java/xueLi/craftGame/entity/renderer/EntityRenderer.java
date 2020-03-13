@@ -3,10 +3,7 @@ package xueLi.craftGame.entity.renderer;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
-
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
@@ -14,7 +11,6 @@ import org.lwjgl.util.vector.Matrix4f;
 
 import xueLi.craftGame.entity.Entity;
 import xueLi.craftGame.world.Chunk;
-import xueLi.craftGame.world.World;
 
 public class EntityRenderer {
 
