@@ -14,18 +14,23 @@ public class WorldRenderer {
 	
 	private static int texture;
 	private static FloatBuffer buffer;
+	
 	private static World w = new World(8,8);
 	
 	private static Player player = new Player(8, 8, 8, 0, 0, 0);
 	
 	public static void init() {
 		texture = GLHelper.registerTexture("res/textures.png");
-		w.generate();
 		WorldVertexBinder.init();
+		
+		//上面那两个函数是跟OpenGL有关的
+		w.generate();
 		
 	}
 	
 	public static void render() {
+		GL11.glClearColor(0.5f, 0.8f, 1.0f, 1.0f);
+		
 		player.tick(w);
 		buffer = WorldVertexBinder.map();
 		int v = w.draw(player, buffer);
@@ -35,7 +40,7 @@ public class WorldRenderer {
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
-		GL11.glColor3f(1, 1, 1);
+		//GL11.glColor3f(1, 1, 1);
 		WorldVertexBinder.draw(GL11.GL_TRIANGLES, v);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 

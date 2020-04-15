@@ -3,11 +3,9 @@ package xueLi.craftGame.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
-import xueLi.craftGame.entity.renderer.EntityRenderer;
 import xueLi.craftGame.entity.renderer.RenderArgs;
 import xueLi.craftGame.utils.Vector;
 

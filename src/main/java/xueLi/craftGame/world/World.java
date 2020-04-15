@@ -1,17 +1,10 @@
 package xueLi.craftGame.world;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
-
 import xueLi.craftGame.block.Block;
 import xueLi.craftGame.entity.Entity;
 import xueLi.craftGame.entity.HitBox;
@@ -24,13 +17,12 @@ import xueLi.craftGame.utils.GLHelper;
 public class World {
 
 	private Map<Long, Chunk> chunks = new HashMap<Long, Chunk>();
-	private GZIPOutputStream gos;
-	private GZIPInputStream gis;
 
 	private boolean isWorldLimited = false;
 	public int wlimit_long, wlimit_width;
 	private int limit_long, limit_width;
 
+	//世界大小 按区块来算
 	public World(int limit_long, int limit_width) {
 		isWorldLimited = true;
 		this.wlimit_long = limit_long * Chunk.size;
@@ -38,21 +30,13 @@ public class World {
 		this.limit_long = limit_long;
 		this.limit_width = limit_width;
 		
-		try {
-			gos = new GZIPOutputStream(new FileOutputStream("save.dat"));
-			gis = new GZIPInputStream(new FileInputStream("save.dat"));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
 	}
 	
+	//世界生成的方法
 	public void generate() {
 		for (int x = 0; x < limit_long; x++) {
 			for (int z = 0; z < limit_width; z++) {
-				chunks.put(GLHelper.vert2ToLong(x, z), ChunkGenerator.gen(x, z));
+				chunks.put(GLHelper.vert2ToLong(x, z), ChunkGenerator.superflat(x, z));
 			}
 		}
 	}
@@ -95,6 +79,12 @@ public class World {
 		if(p == null)
 			return;
 		setBlock(p.getX(), p.getY(), p.getZ(), b);
+	}
+	
+	public void setBlock(BlockPos p, int blockID) {
+		if(p == null)
+			return;
+		setBlock(p.getX(), p.getY(), p.getZ(), new Block(blockID));
 	}
 
 	public boolean hasBlock(BlockPos p) {
@@ -139,33 +129,29 @@ public class World {
 							if (block == null)
 								continue;
 							if (c.getBlock(xInChunk, y - 1, zInChunk) == null) {
-								block.method.getDrawData(buffer, x, y, z, 5);
-								vertCount += 6;
+								vertCount += block.getDrawData(buffer, x, y, z, 5);
 							}
 							if (c.getBlock(xInChunk, y + 1, zInChunk) == null) {
-								block.method.getDrawData(buffer, x, y, z, 4);
-								vertCount += 6;
+								vertCount += block.getDrawData(buffer, x, y, z, 4);
 							}
 							if (xInChunk - 1 < 0 ? this.getBlock(x - 1, y, z) == null
 									: c.getBlock(xInChunk - 1, y, zInChunk) == null) {
-								block.method.getDrawData(buffer, x, y, z, 3);
-								vertCount += 6;
+								vertCount += block.getDrawData(buffer, x, y, z, 3);
 							}
 							if (xInChunk + 1 >= Chunk.size ? this.getBlock(x + 1, y, z) == null
 									: c.getBlock(xInChunk + 1, y, zInChunk) == null) {
-								block.method.getDrawData(buffer, x, y, z, 1);
-								vertCount += 6;
+								vertCount += block.getDrawData(buffer, x, y, z, 1);
 							}
 							if (zInChunk - 1 < 0 ? this.getBlock(x, y, z - 1) == null
 									: c.getBlock(xInChunk, y, zInChunk - 1) == null) {
-								block.method.getDrawData(buffer, x, y, z, 0);
-								vertCount += 6;
+								vertCount += block.getDrawData(buffer, x, y, z, 0);
 							}
 							if (zInChunk + 1 >= Chunk.size ? this.getBlock(x, y, z + 1) == null
 									: c.getBlock(xInChunk, y, zInChunk + 1) == null) {
-								block.method.getDrawData(buffer, x, y, z, 2);
-								vertCount += 6;
+								vertCount += block.getDrawData(buffer, x, y, z, 2);
 							}
+							
+							
 						}
 					}
 				}

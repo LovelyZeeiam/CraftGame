@@ -2,13 +2,15 @@ package xueLi.craftGame.block;
 
 import java.nio.FloatBuffer;
 
-import xueLi.craftGame.utils.BlockPos;
+public class BlockRenderMethod {
+	
+	//ä¸ºæè´¨åŒ…å·¥ä½œ
+	public static float TEXTURES_SIZE = 16;
 
-public interface IBlockDrawMethod {
-
-	public static final float TEXTURES_SIZE = 16; // xy¸÷´æ16¸ö²ÄÖÊ ¼´ÎÆÀíÍ¼Æ¬´óĞ¡Îª256¡Á256
-
-	static void drawDefaultBlockToBuffer(FloatBuffer buffer, int x, int y, int z, int face) {
+	/**
+	 * ä»…ç»˜åˆ¶æ–¹å—å½¢çŠ¶ ä¸ä¸Šæè´¨
+	 */
+	public static void drawDefaultBlockToBuffer(FloatBuffer buffer, int x, int y, int z, int face) {
 		switch (face) {
 		case 0:
 			buffer.put(x).put(y).put(z);
@@ -62,7 +64,8 @@ public interface IBlockDrawMethod {
 
 	}
 
-	static void drawDefaultBlockFrame(FloatBuffer buffer, int x, int y, int z) {
+	//ç»˜åˆ¶æ–¹å—è¾¹æ¡†
+	public static void drawDefaultBlockFrame(FloatBuffer buffer, int x, int y, int z) {
 		buffer.put(x).put(y).put(z);
 		buffer.put(x).put(y + 1).put(z);
 		buffer.put(x + 1).put(y).put(z);
@@ -94,8 +97,8 @@ public interface IBlockDrawMethod {
 		buffer.put(x + 1).put(y).put(z + 1);
 	}
 
-	// ´Ë´¦µÄx£¬yÊÇ´Ó0¿ªÊ¼ÊıµÄ
-	static void bindDefaultToBuffer(FloatBuffer buffer, int xInTexture, int yInTexture, int x, int y, int z, int face) {
+	// æ­¤å¤„çš„xï¼Œyæ˜¯ä»0å¼€å§‹æ•°çš„              ä¸ä¼šæ”¹ï¼ˆç¬‘å“­ï¼‰
+	public static int bindDefaultToBuffer(FloatBuffer buffer, int xInTexture, int yInTexture, int x, int y, int z, int face) {
 		float u1 = (float) xInTexture / TEXTURES_SIZE;
 		float v1 = (float) yInTexture / TEXTURES_SIZE;
 		float u2 = (float) (xInTexture + 1) / TEXTURES_SIZE;
@@ -195,10 +198,7 @@ public interface IBlockDrawMethod {
 			break;
 		}
 
+		return 6;
 	}
-
-	public void getDrawData(FloatBuffer buffer, int x, int y, int z, int face);
-
-	public void getBlockFrame(FloatBuffer frame, BlockPos pos);
 
 }

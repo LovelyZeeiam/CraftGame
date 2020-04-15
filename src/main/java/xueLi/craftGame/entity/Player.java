@@ -1,14 +1,11 @@
 package xueLi.craftGame.entity;
 
-import java.nio.FloatBuffer;
 import java.util.List;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import xueLi.craftGame.block.BlockStone;
 import xueLi.craftGame.entity.renderer.RenderArgs;
-import xueLi.craftGame.nightmare.Subject;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.DisplayManager;
 import xueLi.craftGame.utils.MousePicker;
@@ -111,7 +108,7 @@ public class Player extends Entity {
 		}
 
 		if (DisplayManager.isMouseDown(1) & block_select != null & DisplayManager.currentTime - placeTimeCount > 100) {
-			world.setBlock(last_block_select, new BlockStone());
+			world.setBlock(last_block_select, 1);
 			placeTimeCount = DisplayManager.currentTime;
 		}
 		
@@ -134,16 +131,10 @@ public class Player extends Entity {
 	public List<RenderArgs> render() {
 		return null;
 	}
-	
-	public void doHomeWork(Subject s) {
-		this.health -= s.howHardItIs / 100;
-		if(s == Subject.BIOLOGY)
-			this.health -= 2;
-	}
 
 	@Override
 	public float getSpeed() {
-		return 0.005f;
+		return 0.002f;
 	}
 
 	@Override

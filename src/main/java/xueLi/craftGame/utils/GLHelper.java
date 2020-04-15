@@ -23,12 +23,7 @@ public class GLHelper {
 	public static Matrix4f lastTimeProjMatrix, lastTimeViewMatrix;
 	private static FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
 	public static float[][] frustumPlane = new float[6][4];
-
-	public static void clearColor(float r, float g, float b, float a) {
-		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-		GL11.glClearColor(r, g, b, a);
-	}
-
+	
 	public static int registerTexture(String path) {
 		Texture t = null;
 		try {

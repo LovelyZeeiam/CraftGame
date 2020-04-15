@@ -1,15 +1,11 @@
 package xueLi.craftGame.world;
 
-import java.nio.FloatBuffer;
 import java.util.HashSet;
 import java.util.Set;
 
 import xueLi.craftGame.block.Block;
-import xueLi.craftGame.block.BlockGrass;
-import xueLi.craftGame.block.BlockStone;
 import xueLi.craftGame.entity.Entity;
 import xueLi.craftGame.utils.BlockPos;
-import xueLi.craftGame.utils.Vector;
 
 public class Chunk {
 
@@ -19,7 +15,6 @@ public class Chunk {
 
 	public int chunkX, chunkZ;
 	
-	public Set<Entity> tickEntities = new HashSet<Entity>();
 	public Set<Entity> entities = new HashSet<Entity>();
 
 	public Chunk(int chunkX, int chunkZ) {
@@ -67,45 +62,6 @@ public class Chunk {
 				|| pos.getZ() >= size)
 			return false;
 		return blockState[pos.getX()][pos.getY()][pos.getZ()] != null;
-	}
-
-	public int draw(FloatBuffer buffer, Vector player_pos) {
-		int vertCount = 0;
-		for (int x = 0; x < size; x++) {
-			for (int y = 0; y < height; y++) {
-				for (int z = 0; z < size; z++) {
-					Block block = blockState[x][y][z];
-					if (block == null)
-						continue;
-					if (x - 1 > 0 && blockState[x - 1][y][z] == null) {
-						block.method.getDrawData(buffer, x + chunkX * size, y, z + chunkZ * size, 3);
-						vertCount += 6;
-					}
-					if (x + 1 >= size || blockState[x + 1][y][z] == null) {
-						block.method.getDrawData(buffer, x + chunkX * size, y, z + chunkZ * size, 1);
-						vertCount += 6;
-					}
-					if (z - 1 > 0 && blockState[x][y][z - 1] == null) {
-						block.method.getDrawData(buffer, x + chunkX * size, y, z + chunkZ * size, 0);
-						vertCount += 6;
-					}
-					if (z + 1 >= size || blockState[x][y][z + 1] == null) {
-						block.method.getDrawData(buffer, x + chunkX * size, y, z + chunkZ * size, 2);
-						vertCount += 6;
-					}
-					if (y - 1 < 0 || blockState[x][y - 1][z] == null) {
-						block.method.getDrawData(buffer, x + chunkX * size, y, z + chunkZ * size, 5);
-						vertCount += 6;
-					}
-					if (y + 1 >= height || blockState[x][y + 1][z] == null) {
-						block.method.getDrawData(buffer, x + chunkX * size, y, z + chunkZ * size, 4);
-						vertCount += 6;
-					}
-
-				}
-			}
-		}
-		return vertCount;
 	}
 
 }

@@ -1,30 +1,60 @@
 package xueLi.craftGame.block;
 
+import java.nio.FloatBuffer;
+
+import xueLi.craftGame.block.data.*;
 import xueLi.craftGame.entity.HitBox;
-import xueLi.craftGame.utils.BlockPos;
 
-public abstract class Block {
+import static xueLi.craftGame.block.BlockData.datas;
 
-	public final int id;
-	public final String name;
-	public final IBlockDrawMethod method;
-
-	public Block(int id, String name, IBlockDrawMethod method) {
-		this.id = id;
-		this.name = name;
-		this.method = method;
+public class Block {
+	
+	public static void init() {
+		datas.put(1, new BlockStone());
+		datas.put(2, new BlockGrass());
+		
 	}
 
-	public HitBox getHitBox(BlockPos pos) {
-		return getHitbox(pos.getX(), pos.getY(), pos.getZ());
+	private BlockData data;
+	
+	public int dataValue = 0;
+
+	public Block(int id) {
+		this.data = BlockData.getData(id);
+	}
+	
+	public Block(BlockData data) {
+		this.data = data;
+	}
+	
+	public Block(int id,int dataValue) {
+		this.data = BlockData.getData(id);
+		this.dataValue = dataValue;
+	}
+	
+	public Block(BlockData data,int dataValue) {
+		this.data = data;
+		this.dataValue = dataValue;
+	}
+	
+	public int getDrawData(FloatBuffer buffer,int x,int y,int z,int face) {
+		return this.data.render(buffer, x, y, z, dataValue, face);
+	}
+	
+	public String getName() {
+		return data.getName();
+	}
+	
+	public int getID() {
+		return data.getId();
 	}
 
-	public abstract HitBox getHitbox(int x, int y, int z);
-
-	private static final HitBox defaultHitbox = new HitBox(0f, 0f, 0f, 1f, 1f, 1f);
-
-	protected HitBox getDefaultBlockHitbox(int x, int y, int z) {
-		return defaultHitbox.move(x, y, z);
+	public HitBox getHitbox(int x, int y, int z) {
+		return data.getHitBoxWithPos(x,y,z);
 	}
+	
+	
+	
+	
 
 }
