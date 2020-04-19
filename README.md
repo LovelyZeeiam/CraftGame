@@ -17,12 +17,6 @@ There you go!
 
 * Linux && MacOS
 
-Pretty easy too! Just type
-> ./gradlew build
-
-and then
-> ./gradlew run
-
-There you go!
+Maybe later...
 
 # Have fun!
