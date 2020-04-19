@@ -36,6 +36,7 @@ application {
     apply plugin: 'application'
     mainClassName = 'xueLi.craftGame.Main'
     applicationDefaultJvmArgs = [
-        '-Djava.library.path="libs/lwjgl/natives"']
+        	'-Djava.library.path="libs/lwjgl/natives/"']
 
 }
+

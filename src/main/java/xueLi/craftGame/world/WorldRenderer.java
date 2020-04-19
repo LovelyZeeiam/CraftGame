@@ -15,7 +15,7 @@ public class WorldRenderer {
 	private static int texture;
 	private static FloatBuffer buffer;
 	
-	private static World w = new World(8,8);
+	private static World w = new World(4,4);
 	
 	private static Player player = new Player(8, 8, 8, 0, 0, 0);
 	

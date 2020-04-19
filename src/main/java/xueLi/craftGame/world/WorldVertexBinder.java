@@ -23,7 +23,7 @@ public class WorldVertexBinder {
 
 	public static void draw(int type, int vertex_count) {
 		GL15.glUnmapBuffer(GL15.GL_ARRAY_BUFFER);
-		GL11.glInterleavedArrays(GL11.GL_T2F_V3F, 0, 0);
+		GL11.glInterleavedArrays(GL11.GL_T2F_C3F_V3F, 0, 0);
 		GL11.glDrawArrays(type, 0, vertex_count);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 	}
