@@ -10,7 +10,7 @@ public class BilibiliAPI {
 	private static final Thread realtimeGetFans = new Thread(()-> {
 		while(realtimeGetFansRunning) {
 		try {
-			follower = JsonReader.getBilibiliUpperFollower(157262276);
+			follower = FileIO.getBilibiliUpperFollower(157262276);
 			System.out.println("宁的粉丝数: " + follower);
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {

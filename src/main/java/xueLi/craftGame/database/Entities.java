@@ -6,7 +6,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import xueLi.craftGame.template.entity.AttributeEntity;
-import xueLi.craftGame.utils.JsonReader;
+import xueLi.craftGame.utils.FileIO;
 
 public class Entities {
 
@@ -14,7 +14,7 @@ public class Entities {
 	
 	static {
 		try {
-			mWarma = JsonReader.readToEntityData("res/entities/Warma.json");
+			mWarma = FileIO.readToEntityData("res/entities/Warma.json");
 			
 		} catch (JsonSyntaxException e) {
 			e.printStackTrace();

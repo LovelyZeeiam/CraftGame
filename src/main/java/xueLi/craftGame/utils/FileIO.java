@@ -1,5 +1,6 @@
 package xueLi.craftGame.utils;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,7 +16,7 @@ import xueLi.craftGame.entity.HitBox;
 import xueLi.craftGame.template.bilibili.TUpperRelation;
 import xueLi.craftGame.template.entity.*;
 
-public class JsonReader {
+public class FileIO {
 
 	private static Gson gson = new Gson();
 
@@ -102,6 +103,12 @@ public class JsonReader {
 		return r.data.follower;
 	}
 	
+	public static String readAllToString(String path) throws IOException {
+		FileInputStream s = new FileInputStream(path);
+		byte[] b = new byte[s.available()];
+		s.read(b);
+		return new String(b);
+	}
 	
 
 }

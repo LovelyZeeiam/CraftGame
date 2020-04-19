@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL15;
 public class WorldVertexBinder {
 
 	private static int vbo;
-
+	
 	public static void init() {
 		vbo = GL15.glGenBuffers();
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo);

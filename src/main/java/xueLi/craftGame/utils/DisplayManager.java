@@ -1,15 +1,19 @@
 package xueLi.craftGame.utils;
 
+import java.awt.Canvas;
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.ContextAttribs;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.PixelFormat;
 
 import xueLi.craftGame.world.Chunk;
 import xueLi.craftGame.world.World;
@@ -26,15 +30,18 @@ public class DisplayManager {
 	public static long currentTime;
 	public static long deltaTime;
 
-	public static void create(int width, int height) {
+	public static void create(int width, int height, Canvas canvas) {
 		try {
-			Display.setDisplayMode(new DisplayMode(width, height));
-			Display.setResizable(true);
+			//Display.setDisplayMode(new DisplayMode(width, height));
+			//Display.setResizable(true);
 			Display.setSwapInterval(1);
 			Display.setVSyncEnabled(true);
-			Display.setTitle("CraftGame");
+			Display.setParent(canvas);
+			//Display.setTitle("CraftGame");
 
-			Display.create();
+			ContextAttribs ca = new ContextAttribs(2,1);
+			ca.withForwardCompatible(true);
+			Display.create(new PixelFormat(), ca);
 			Display.makeCurrent();
 
 			Keyboard.create();
@@ -44,7 +51,8 @@ public class DisplayManager {
 		}
 		isRunning = true;
 
-		GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+		GL11.glViewport(0, 0, width, height);
+		
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
@@ -101,7 +109,14 @@ public class DisplayManager {
 
 		deltaTime = getCurrentTime() - currentTime;
 	}
+	
+	private static boolean[] keyboard = new boolean[256];
+	private static ArrayList<Integer> key_pressed_frame = new ArrayList<Integer>();
 
+	public static boolean isKeyDownOnce(int i) {
+		return key_pressed_frame.contains(i);
+	}
+	
 	public static boolean isKeyDown(int i) {
 		return Keyboard.isKeyDown(i);
 	}
@@ -109,9 +124,18 @@ public class DisplayManager {
 	public static boolean isMouseDown(int i) {
 		return Mouse.isButtonDown(i);
 	}
-
-	public static boolean isKeyDown() {
-		return Keyboard.getEventKeyState();
+	
+	public static void keyTest() {
+		key_pressed_frame.clear();
+		while(Keyboard.next()) {
+			int key = Keyboard.getEventKey();
+			if (Keyboard.getEventKeyState()) {
+				keyboard[key] = true;
+				key_pressed_frame.add(key);
+			}
+			else 
+				keyboard[Keyboard.getEventKey()] = false;
+		}
 	}
 
 	public static boolean isRunning() {
