@@ -63,31 +63,31 @@ public abstract class Entity {
 		/**
 		 * So I can only write a false engine code like this
 		 */
-		//if (pos.y + this.getOriginHitBox().y1 < 5)
-		//	pos.y = 5 - this.getOriginHitBox().y1;
+		// if (pos.y + this.getOriginHitBox().y1 < 5)
+		// pos.y = 5 - this.getOriginHitBox().y1;
 
 		// Physical? No no no it will be much later :}
 		force.set(0, 0, 0);
 		// At least moving had become smoother :)
 
 	}
-	
+
 	protected List<RenderArgs> defaultRender() {
 		List<RenderArgs> args = new ArrayList<RenderArgs>();
-		
+
 		Matrix4f posMatrix = EntityRenderer.identity;
-		posMatrix.translate(new Vector3f(pos.x,pos.y,pos.z));
-		
-		for(Bone b:attrib.bones) {
-			b.calculateMatrix(posMatrix);	
+		posMatrix.translate(new Vector3f(pos.x, pos.y, pos.z));
+
+		for (Bone b : attrib.bones) {
+			b.calculateMatrix(posMatrix);
 			args.addAll(b.getDrawArgs(pos));
 		}
-		
+
 		posMatrix.setIdentity();
-		
+
 		return args;
 	}
-	
+
 	public abstract List<RenderArgs> render();
 
 	public abstract void tick(World world);

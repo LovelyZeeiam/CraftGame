@@ -2,8 +2,8 @@ package xueLi.craftGame.entity;
 
 import java.util.List;
 
-import xueLi.craftGame.database.Entities;
 import xueLi.craftGame.entity.renderer.RenderArgs;
+import xueLi.craftGame.initer.Entities;
 import xueLi.craftGame.world.World;
 
 public class EntityWarma extends Entity {
@@ -15,7 +15,7 @@ public class EntityWarma extends Entity {
 
 	@Override
 	public void tick(World world) {
-		
+
 		super.updatePos(world);
 	}
 

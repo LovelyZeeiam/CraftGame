@@ -26,9 +26,9 @@ public class BlockPos {
 	public String toString() {
 		return x + "," + y + "," + z;
 	}
-	
-	public static Vector getBlockPosInChunk(Vector pos,ChunkPos cpos) {
-		return new Vector(pos.x - cpos.getX() * 16,pos.y,pos.z - cpos.getZ() * 16,pos.rotX,pos.rotY,pos.rotZ);
+
+	public static Vector getBlockPosInChunk(Vector pos, ChunkPos cpos) {
+		return new Vector(pos.x - cpos.getX() * 16, pos.y, pos.z - cpos.getZ() * 16, pos.rotX, pos.rotY, pos.rotZ);
 	}
 
 }

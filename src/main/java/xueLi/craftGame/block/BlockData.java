@@ -7,21 +7,21 @@ import xueLi.craftGame.entity.HitBox;
 import xueLi.craftGame.utils.BlockPos;
 
 public abstract class BlockData {
-	
-	public static HashMap<Integer,BlockData> datas = new HashMap<Integer,BlockData>();
-	
+
+	public static HashMap<Integer, BlockData> datas = new HashMap<Integer, BlockData>();
+
 	public static BlockData getData(int id) {
 		return datas.get(id);
 	}
-	
+
 	private int id;
 	private String name;
-	
-	public BlockData(int id,String name) {
+
+	public BlockData(int id, String name) {
 		this.id = id;
 		this.name = name;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -30,11 +30,11 @@ public abstract class BlockData {
 		return name;
 	}
 
-	//这个是碰撞箱用的
+	// 这个是碰撞箱用的
 	public static final HitBox defaultHitbox = new HitBox(0f, 0f, 0f, 1f, 1f, 1f);
-	
+
 	public abstract HitBox getHitbox();
-	
+
 	public HitBox getHitBoxWithPos(BlockPos pos) {
 		HitBox box = getHitbox();
 		box.x1 += pos.getX();
@@ -45,8 +45,8 @@ public abstract class BlockData {
 		box.z2 += pos.getZ();
 		return box;
 	}
-	
-	public HitBox getHitBoxWithPos(int x,int y,int z) {
+
+	public HitBox getHitBoxWithPos(int x, int y, int z) {
 		HitBox box = getHitbox();
 		box.x1 += x;
 		box.x2 += x;
@@ -56,9 +56,8 @@ public abstract class BlockData {
 		box.z2 += z;
 		return box;
 	}
-	
-	//渲染方式 返回顶点数量
-	public abstract int render(FloatBuffer buffer,int x,int y,int z,int dataValue,int face);
-	
+
+	// 渲染方式 返回顶点数量
+	public abstract int render(FloatBuffer buffer, int x, int y, int z, int dataValue, int face);
 
 }

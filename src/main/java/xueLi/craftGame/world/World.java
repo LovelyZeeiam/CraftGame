@@ -22,17 +22,17 @@ public class World {
 	public int wlimit_long, wlimit_width;
 	private int limit_long, limit_width;
 
-	//世界大小 按区块来算
+	// 世界大小 按区块来算
 	public World(int limit_long, int limit_width) {
 		isWorldLimited = true;
 		this.wlimit_long = limit_long * Chunk.size;
 		this.wlimit_width = limit_width * Chunk.size;
 		this.limit_long = limit_long;
 		this.limit_width = limit_width;
-		
+
 	}
-	
-	//世界生成的方法
+
+	// 世界生成的方法
 	public void generate() {
 		for (int x = 0; x < limit_long; x++) {
 			for (int z = 0; z < limit_width; z++) {
@@ -42,6 +42,7 @@ public class World {
 	}
 
 	private static Chunk tempChunk;
+
 	public Block getBlock(int x, int y, int z) {
 		ChunkPos cp = getChunkPosFromBlock(x, z);
 		if (isWorldLimited) {
@@ -60,7 +61,6 @@ public class World {
 		return null;
 	}
 
-	
 	public void setBlock(int x, int y, int z, Block block) {
 		ChunkPos cp = getChunkPosFromBlock(x, z);
 		if (isWorldLimited) {
@@ -74,15 +74,16 @@ public class World {
 		}
 	}
 
-	//I accidently found that sometimes the game will throw NullPointerException on World.java:77 and I dont know why
+	// I accidently found that sometimes the game will throw NullPointerException on
+	// World.java:77 and I dont know why
 	public void setBlock(BlockPos p, Block b) {
-		if(p == null)
+		if (p == null)
 			return;
 		setBlock(p.getX(), p.getY(), p.getZ(), b);
 	}
-	
+
 	public void setBlock(BlockPos p, int blockID) {
-		if(p == null)
+		if (p == null)
 			return;
 		setBlock(p.getX(), p.getY(), p.getZ(), new Block(blockID));
 	}
@@ -122,7 +123,7 @@ public class World {
 				for (int xInChunk = 0; xInChunk < Chunk.size; xInChunk++) {
 					for (int zInChunk = 0; zInChunk < Chunk.size; zInChunk++) {
 						int yMax = c.heightMap[xInChunk][zInChunk];
-						for (int y = 0; y <= yMax; y++) {
+						for (int y = yMax; y >= 0; y--) {
 							int x = chunkX * Chunk.size + xInChunk;
 							int z = chunkZ * Chunk.size + zInChunk;
 							Block block = c.getBlock(xInChunk, y, zInChunk);
@@ -150,8 +151,7 @@ public class World {
 									: c.getBlock(xInChunk, y, zInChunk + 1) == null) {
 								vertCount += block.getDrawData(buffer, x, y, z, 2);
 							}
-							
-							
+
 						}
 					}
 				}
@@ -160,9 +160,9 @@ public class World {
 
 		return vertCount;
 	}
-	
+
 	public void addEntity(Entity entity) {
-		ChunkPos chunkPos = getChunkPosFromBlock(entity.pos.x,entity.pos.z);
+		ChunkPos chunkPos = getChunkPosFromBlock(entity.pos.x, entity.pos.z);
 		chunks.get(GLHelper.vert2ToLong(chunkPos.getX(), chunkPos.getZ())).entities.add(entity);
 	}
 
@@ -206,7 +206,7 @@ public class World {
 		int chunkZ = z / 16;
 		return new ChunkPos(chunkX - (x < 0 ? 1 : 0), chunkZ - (z < 0 ? 1 : 0));
 	}
-	
+
 	private ChunkPos getChunkPosFromBlock(float x, float z) {
 		int chunkX = (int) (x / 16);
 		int chunkZ = (int) (z / 16);

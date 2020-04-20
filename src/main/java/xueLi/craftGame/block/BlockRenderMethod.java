@@ -3,8 +3,8 @@ package xueLi.craftGame.block;
 import java.nio.FloatBuffer;
 
 public class BlockRenderMethod {
-	
-	//为材质包工作
+
+	// 为材质包工作
 	public static float TEXTURES_SIZE = 16;
 
 	/**
@@ -64,7 +64,7 @@ public class BlockRenderMethod {
 
 	}
 
-	//绘制方块边框
+	// 绘制方块边框
 	public static void drawDefaultBlockFrame(FloatBuffer buffer, int x, int y, int z) {
 		buffer.put(x).put(y).put(z);
 		buffer.put(x).put(y + 1).put(z);
@@ -97,8 +97,8 @@ public class BlockRenderMethod {
 		buffer.put(x + 1).put(y).put(z + 1);
 	}
 
-	// 此处的x，y是从0开始数的              不会改（笑哭）
-	public static int bindDefaultToBuffer(FloatBuffer buffer, int xInTexture, int yInTexture, int x, int y, int z, int face) {
+	public static int bindDefaultToBuffer(FloatBuffer buffer, int xInTexture, int yInTexture, int x, int y, int z,
+			int face) {
 		float u1 = (float) xInTexture / TEXTURES_SIZE;
 		float v1 = (float) yInTexture / TEXTURES_SIZE;
 		float u2 = (float) (xInTexture + 1) / TEXTURES_SIZE;

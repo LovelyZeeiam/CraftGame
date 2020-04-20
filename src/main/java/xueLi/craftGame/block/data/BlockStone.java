@@ -9,8 +9,8 @@ import xueLi.craftGame.entity.HitBox;
 public class BlockStone extends BlockData {
 
 	public BlockStone() {
-		super(1,"Stone");
-		
+		super(1, "Stone");
+
 	}
 
 	@Override
@@ -22,7 +22,5 @@ public class BlockStone extends BlockData {
 	public int render(FloatBuffer buffer, int x, int y, int z, int dataValue, int face) {
 		return BlockRenderMethod.bindDefaultToBuffer(buffer, 3, 0, x, y, z, face);
 	}
-	
-	
 
 }

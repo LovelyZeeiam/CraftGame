@@ -1,4 +1,4 @@
-package xueLi.craftGame.database;
+package xueLi.craftGame.initer;
 
 import java.io.FileNotFoundException;
 
@@ -11,11 +11,11 @@ import xueLi.craftGame.utils.FileIO;
 public class Entities {
 
 	public static AttributeEntity mWarma;
-	
+
 	static {
 		try {
 			mWarma = FileIO.readToEntityData("res/entities/Warma.json");
-			
+
 		} catch (JsonSyntaxException e) {
 			e.printStackTrace();
 		} catch (JsonIOException e) {
@@ -23,7 +23,7 @@ public class Entities {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }

@@ -5,9 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.FloatBuffer;
-
-import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL13;
@@ -21,9 +18,8 @@ import xueLi.craftGame.entity.Player;
 public class GLHelper {
 
 	public static Matrix4f lastTimeProjMatrix, lastTimeViewMatrix;
-	private static FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
 	public static float[][] frustumPlane = new float[6][4];
-	
+
 	public static int registerTexture(String path) {
 		Texture t = null;
 		try {
@@ -46,7 +42,7 @@ public class GLHelper {
 		GL11.glDeleteTextures(id);
 	}
 
-	public static void perspecive(float width, float height, float fov, float near, float far) {
+	public static Matrix4f perspecive(float width, float height, float fov, float near, float far) {
 		Matrix4f projectionMatrix = new Matrix4f();
 
 		float ratio = width / height;
@@ -62,16 +58,11 @@ public class GLHelper {
 		projectionMatrix.m32 = -((2 * far * near) / frustum_length);
 		projectionMatrix.m33 = 0;
 
-		GL11.glMatrixMode(GL11.GL_PROJECTION);
-		matrixBuffer.clear();
-		projectionMatrix.store(matrixBuffer);
-		matrixBuffer.flip();
-		GL11.glLoadMatrix(matrixBuffer);
-
 		lastTimeProjMatrix = projectionMatrix;
+		return projectionMatrix;
 	}
 
-	public static void player(Player player) {
+	public static Matrix4f player(Player player) {
 		Vector camera = player.pos;
 		Matrix4f viewMatrix = new Matrix4f();
 		viewMatrix.setIdentity();
@@ -82,11 +73,7 @@ public class GLHelper {
 		Matrix4f.translate(nagativeCamPos, viewMatrix, viewMatrix);
 
 		lastTimeViewMatrix = viewMatrix;
-		matrixBuffer.clear();
-		viewMatrix.store(matrixBuffer);
-		matrixBuffer.flip();
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
-		GL11.glLoadMatrix(matrixBuffer);
+		return viewMatrix;
 	}
 
 	public static Matrix4f createTransformationMatrix(Vector3f translation, float rx, float ry, float rz, float scale) {
@@ -247,6 +234,10 @@ public class GLHelper {
 
 	public static int floatToInt(float value) {
 		return new BigDecimal(String.valueOf(value)).setScale(2, BigDecimal.ROUND_DOWN).intValue();
+	}
+
+	public static int floatToInt2(float value) {
+		return (int) value;
 	}
 
 	public static long vert2ToLong(int x, int z) {

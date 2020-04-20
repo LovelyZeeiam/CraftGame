@@ -5,6 +5,7 @@ import java.util.List;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
+import xueLi.craftGame.Main;
 import xueLi.craftGame.entity.renderer.RenderArgs;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.DisplayManager;
@@ -20,9 +21,9 @@ public class Player extends Entity {
 
 	public float resistant = 0.009f;
 	public float sensivity = 0.1f;
-	
+
 	private final HitBox hitbox = new HitBox(-0.2f, -1.8f, -0.2f, 0.2f, 0.2f, 0.2f);
-	
+
 	public Player(float x, float y, float z) {
 		super(x, y, z);
 		this.attrib.box = hitbox;
@@ -67,51 +68,55 @@ public class Player extends Entity {
 				speed.z = 0;
 		}
 
-		if (DisplayManager.isKeyDown(Keyboard.KEY_W)) {
-			if (DisplayManager.isKeyDown(Keyboard.KEY_R)) {
-				speed.x -= this.getSpeed() * 3f * (float) Math.sin(Math.toRadians(-pos.rotY));
-				speed.z -= this.getSpeed() * 3f * (float) Math.cos(Math.toRadians(-pos.rotY));
-			} else {
-				speed.x -= this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY));
-				speed.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY));
+		if (Main.mouseGrabbed) {
+			if (DisplayManager.isKeyDown(Keyboard.KEY_W)) {
+				if (DisplayManager.isKeyDown(Keyboard.KEY_R)) {
+					speed.x -= this.getSpeed() * 3f * (float) Math.sin(Math.toRadians(-pos.rotY));
+					speed.z -= this.getSpeed() * 3f * (float) Math.cos(Math.toRadians(-pos.rotY));
+				} else {
+					speed.x -= this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY));
+					speed.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY));
+				}
+			}
+			if (DisplayManager.isKeyDown(Keyboard.KEY_S)) {
+				speed.x += this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY));
+				speed.z += this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY));
+			}
+			if (DisplayManager.isKeyDown(Keyboard.KEY_A)) {
+				speed.x -= this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY + 90));
+				speed.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY + 90));
+			}
+			if (DisplayManager.isKeyDown(Keyboard.KEY_D)) {
+				speed.x -= this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY - 90));
+				speed.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY - 90));
+			}
+
+			if (DisplayManager.isKeyDown(Keyboard.KEY_SPACE)) {
+				speed.y += this.getSpeed() * 0.9f;
+			}
+
+			if (DisplayManager.isKeyDown(Keyboard.KEY_LSHIFT)) {
+				speed.y -= this.getSpeed() * 0.9f;
+			}
+
+			pos.rotX -= Mouse.getDY() * sensivity;
+			pos.rotY += Mouse.getDX() * sensivity;
+
+			super.updatePos(world);
+
+			if (DisplayManager.isMouseDown(0) & block_select != null
+					& DisplayManager.currentTime - placeTimeCount > 100) {
+				world.setBlock(block_select, null);
+				placeTimeCount = DisplayManager.currentTime;
+			}
+
+			if (DisplayManager.isMouseDown(1) & block_select != null
+					& DisplayManager.currentTime - placeTimeCount > 100) {
+				world.setBlock(last_block_select, 1);
+				placeTimeCount = DisplayManager.currentTime;
 			}
 		}
-		if (DisplayManager.isKeyDown(Keyboard.KEY_S)) {
-			speed.x += this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY));
-			speed.z += this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY));
-		}
-		if (DisplayManager.isKeyDown(Keyboard.KEY_A)) {
-			speed.x -= this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY + 90));
-			speed.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY + 90));
-		}
-		if (DisplayManager.isKeyDown(Keyboard.KEY_D)) {
-			speed.x -= this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY - 90));
-			speed.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY - 90));
-		}
 
-		if (DisplayManager.isKeyDown(Keyboard.KEY_SPACE)) {
-			speed.y += this.getSpeed() * 0.9f;
-		}
-
-		if (DisplayManager.isKeyDown(Keyboard.KEY_LSHIFT)) {
-			speed.y -= this.getSpeed() * 0.9f;
-		}
-
-		pos.rotX -= Mouse.getDY() * sensivity;
-		pos.rotY += Mouse.getDX() * sensivity;
-
-		super.updatePos(world);
-
-		if (DisplayManager.isMouseDown(0) & block_select != null & DisplayManager.currentTime - placeTimeCount > 100) {
-			world.setBlock(block_select, null);
-			placeTimeCount = DisplayManager.currentTime;
-		}
-
-		if (DisplayManager.isMouseDown(1) & block_select != null & DisplayManager.currentTime - placeTimeCount > 100) {
-			world.setBlock(last_block_select, 1);
-			placeTimeCount = DisplayManager.currentTime;
-		}
-		
 	}
 
 	public void pickTick(World world) {
@@ -126,7 +131,7 @@ public class Player extends Entity {
 			last_block_select = searching_block_pos;
 		}
 	}
-	
+
 	@Override
 	public List<RenderArgs> render() {
 		return null;

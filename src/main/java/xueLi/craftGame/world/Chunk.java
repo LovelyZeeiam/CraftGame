@@ -14,7 +14,7 @@ public class Chunk {
 	public int[][] heightMap = new int[size][size];
 
 	public int chunkX, chunkZ;
-	
+
 	public Set<Entity> entities = new HashSet<Entity>();
 
 	public Chunk(int chunkX, int chunkZ) {
@@ -23,7 +23,7 @@ public class Chunk {
 	}
 
 	public void update() {
-		
+
 	}
 
 	public void setBlock(int x, int y, int z, Block block) {

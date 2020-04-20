@@ -49,37 +49,37 @@ public class FileIO {
 
 			bone.id = rawData.id;
 
-			bone.vertices[0] = rawData.rotPoint[0]-rawData.size[0] / 2;
-			bone.vertices[1] = rawData.rotPoint[1]-rawData.size[1] / 2;
-			bone.vertices[2] = rawData.rotPoint[2]-rawData.size[2] / 2;
+			bone.vertices[0] = rawData.rotPoint[0] - rawData.size[0] / 2;
+			bone.vertices[1] = rawData.rotPoint[1] - rawData.size[1] / 2;
+			bone.vertices[2] = rawData.rotPoint[2] - rawData.size[2] / 2;
 
-			bone.vertices[3] = rawData.rotPoint[0]-rawData.size[0] / 2;
-			bone.vertices[4] = rawData.rotPoint[1]+rawData.size[1] / 2;
-			bone.vertices[5] = rawData.rotPoint[2]-rawData.size[2] / 2;
+			bone.vertices[3] = rawData.rotPoint[0] - rawData.size[0] / 2;
+			bone.vertices[4] = rawData.rotPoint[1] + rawData.size[1] / 2;
+			bone.vertices[5] = rawData.rotPoint[2] - rawData.size[2] / 2;
 
-			bone.vertices[6] = rawData.rotPoint[0]+rawData.size[0] / 2;
-			bone.vertices[7] = rawData.rotPoint[1]+rawData.size[1] / 2;
-			bone.vertices[8] = rawData.rotPoint[2]-rawData.size[2] / 2;
+			bone.vertices[6] = rawData.rotPoint[0] + rawData.size[0] / 2;
+			bone.vertices[7] = rawData.rotPoint[1] + rawData.size[1] / 2;
+			bone.vertices[8] = rawData.rotPoint[2] - rawData.size[2] / 2;
 
-			bone.vertices[9] = rawData.rotPoint[0]+rawData.size[0] / 2;
-			bone.vertices[10] = rawData.rotPoint[1]-rawData.size[1] / 2;
-			bone.vertices[11] = rawData.rotPoint[2]-rawData.size[2] / 2;
+			bone.vertices[9] = rawData.rotPoint[0] + rawData.size[0] / 2;
+			bone.vertices[10] = rawData.rotPoint[1] - rawData.size[1] / 2;
+			bone.vertices[11] = rawData.rotPoint[2] - rawData.size[2] / 2;
 
-			bone.vertices[12] = rawData.rotPoint[0]-rawData.size[0] / 2;
-			bone.vertices[13] = rawData.rotPoint[1]-rawData.size[1] / 2;
-			bone.vertices[14] = rawData.rotPoint[2]+rawData.size[2] / 2;
+			bone.vertices[12] = rawData.rotPoint[0] - rawData.size[0] / 2;
+			bone.vertices[13] = rawData.rotPoint[1] - rawData.size[1] / 2;
+			bone.vertices[14] = rawData.rotPoint[2] + rawData.size[2] / 2;
 
-			bone.vertices[15] = rawData.rotPoint[0]-rawData.size[0] / 2;
-			bone.vertices[16] = rawData.rotPoint[1]+rawData.size[1] / 2;
-			bone.vertices[17] = rawData.rotPoint[2]+rawData.size[2] / 2;
+			bone.vertices[15] = rawData.rotPoint[0] - rawData.size[0] / 2;
+			bone.vertices[16] = rawData.rotPoint[1] + rawData.size[1] / 2;
+			bone.vertices[17] = rawData.rotPoint[2] + rawData.size[2] / 2;
 
-			bone.vertices[18] = rawData.rotPoint[0]+rawData.size[0] / 2;
-			bone.vertices[19] = rawData.rotPoint[1]+rawData.size[1] / 2;
-			bone.vertices[20] = rawData.rotPoint[2]+rawData.size[2] / 2;
+			bone.vertices[18] = rawData.rotPoint[0] + rawData.size[0] / 2;
+			bone.vertices[19] = rawData.rotPoint[1] + rawData.size[1] / 2;
+			bone.vertices[20] = rawData.rotPoint[2] + rawData.size[2] / 2;
 
-			bone.vertices[21] = rawData.rotPoint[0]+rawData.size[0] / 2;
-			bone.vertices[22] = rawData.rotPoint[1]-rawData.size[1] / 2;
-			bone.vertices[23] = rawData.rotPoint[2]+rawData.size[2] / 2;
+			bone.vertices[21] = rawData.rotPoint[0] + rawData.size[0] / 2;
+			bone.vertices[22] = rawData.rotPoint[1] - rawData.size[1] / 2;
+			bone.vertices[23] = rawData.rotPoint[2] + rawData.size[2] / 2;
 
 			bone.rotPoint = rawData.rotPoint;
 			bone.rawOffset = rawData.offset;
@@ -102,13 +102,13 @@ public class FileIO {
 		in.close();
 		return r.data.follower;
 	}
-	
+
 	public static String readAllToString(String path) throws IOException {
 		FileInputStream s = new FileInputStream(path);
 		byte[] b = new byte[s.available()];
 		s.read(b);
+		s.close();
 		return new String(b);
 	}
-	
 
 }

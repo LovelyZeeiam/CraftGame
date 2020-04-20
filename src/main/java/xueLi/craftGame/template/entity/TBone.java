@@ -8,5 +8,5 @@ public class TBone {
 	public float[] size;
 	public float[] uv;
 	public float[] rotPoint;
-	
+
 }
