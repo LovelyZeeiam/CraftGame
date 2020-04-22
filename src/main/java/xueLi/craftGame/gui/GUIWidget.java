@@ -47,7 +47,7 @@ public abstract class GUIWidget {
 	}
 
 	/**
-	 * @return 我该不该刷新Box呢呐呐呐
+	 * @return 我该不该刷新Box呢呐呐呐呐呐呐
 	 */
 	protected boolean tickAnimation() {
 		if (this.animation.started) {
