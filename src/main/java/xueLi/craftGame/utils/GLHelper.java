@@ -223,7 +223,7 @@ public class GLHelper {
 		}
 		return true;
 	}
-
+	
 	public static float doubleToFloat(double value) {
 		return new BigDecimal(String.valueOf(value)).floatValue();
 	}

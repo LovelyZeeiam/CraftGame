@@ -5,8 +5,8 @@ import java.util.List;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import xueLi.craftGame.Main;
 import xueLi.craftGame.entity.renderer.RenderArgs;
+import xueLi.craftGame.gui.GUIRenderer;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.DisplayManager;
 import xueLi.craftGame.utils.MousePicker;
@@ -68,7 +68,7 @@ public class Player extends Entity {
 				speed.z = 0;
 		}
 
-		if (Main.mouseGrabbed) {
+		if (GUIRenderer.mouseGrubbed) {
 			if (DisplayManager.isKeyDown(Keyboard.KEY_W)) {
 				if (DisplayManager.isKeyDown(Keyboard.KEY_R)) {
 					speed.x -= this.getSpeed() * 3f * (float) Math.sin(Math.toRadians(-pos.rotY));
@@ -102,8 +102,6 @@ public class Player extends Entity {
 			pos.rotX -= Mouse.getDY() * sensivity;
 			pos.rotY += Mouse.getDX() * sensivity;
 
-			super.updatePos(world);
-
 			if (DisplayManager.isMouseDown(0) & block_select != null
 					& DisplayManager.currentTime - placeTimeCount > 100) {
 				world.setBlock(block_select, null);
@@ -116,6 +114,8 @@ public class Player extends Entity {
 				placeTimeCount = DisplayManager.currentTime;
 			}
 		}
+		
+		super.updatePos(world);
 
 	}
 

@@ -7,16 +7,14 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import xueLi.craftGame.utils.DisplayManager;
-import xueLi.craftGame.utils.FPSTimer;
 import xueLi.craftGame.world.WorldRenderer;
-
+import xueLi.craftGame.gui.GUIRenderer;
+import xueLi.craftGame.gui.screens.*;
 import xueLi.craftGame.initer.*;
 
 public class Main {
 
 	private static int width = 1200, height = 680;
-
-	public static boolean mouseGrabbed = false;
 
 	//这个是主方法
 	public static void main(String[] args) throws IOException {
@@ -31,24 +29,29 @@ public class Main {
 		// 关于新增方块的教程 在Block的init方法里面
 		WorldRenderer.init();
 
-		mouseGrabbed = true;
 		Mouse.setGrabbed(true);
+		
 		while (DisplayManager.isRunning()) {
 			DisplayManager.keyTest();
 			if (DisplayManager.isKeyDownOnce(Keyboard.KEY_ESCAPE)) {
-				if (mouseGrabbed)
-					Mouse.setGrabbed(false);
-				else
-					Mouse.setGrabbed(true);
-				mouseGrabbed = !mouseGrabbed;
+				if (GUIRenderer.mouseGrubbed) {
+					GUIRenderer.setGUI(new GUIPauseMenu());
+				} else {
+					GUIRenderer.setGUI(null);
+				}
 			}
 
 			// 返回FPS的值 如果处在debug模式则会在控制台里面输出
 			//FPSTimer.getFPS();
+			
+			//清屏搞事情
+			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
 			// 与世界渲染有关
-			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 			WorldRenderer.render();
+			
+			// 渲染GUI
+			GUIRenderer.draw();
 
 			// TODO:这里可以写游戏tick更新之类的 反正就是游戏循环
 

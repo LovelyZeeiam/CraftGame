@@ -24,15 +24,7 @@ public class ChunkGenerator {
 	// 这里是世界生成有关的 但没有使用
 	public static Chunk gen(int chunkX, int chunkZ) {
 		Chunk chunk = new Chunk(chunkX, chunkZ);
-		for (int x = 0; x < Chunk.size; x++) {
-			for (int z = 0; z < Chunk.size; z++) {
-
-				for (int y = 0; y < Chunk.height; y++) {
-
-				}
-
-			}
-		}
+		
 		return chunk;
 	}
 

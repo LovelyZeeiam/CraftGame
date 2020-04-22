@@ -1,6 +1,8 @@
 package xueLi.craftGame.utils;
 
 import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import org.lwjgl.LWJGLException;
@@ -25,6 +27,8 @@ public class DisplayManager {
 	public static long currentTime;
 	public static long deltaTime;
 
+	public static Dimension screenSize;
+	
 	public static void create(int width, int height, Canvas canvas) {
 		try {
 			//这里是lwjgl自带的方法  设置屏幕的宽和高
@@ -38,6 +42,10 @@ public class DisplayManager {
 			Display.setParent(canvas);
 			//没有设置控件（即传入null）就会创造一个新的窗口 这个方法是设置标题
 			Display.setTitle("CraftGame - dev");
+			//获取计算机屏幕宽和高
+			screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+			//窗口居中
+			Display.setLocation((screenSize.width - width) / 2, (screenSize.height - height) / 2);
 
 			//这里是设置OpenGL的版本
 			ContextAttribs ca = new ContextAttribs(3, 2);
