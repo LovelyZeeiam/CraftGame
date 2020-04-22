@@ -12,14 +12,13 @@ public class GUIPauseMenu extends GUIScreen {
 	
 	private GUITextView tv;
 	
-	private Animation2D ani;
-	
 	public GUIPauseMenu() {
 		super(false);
 		GUIRenderer.shader.use();
-		tv = new GUITextView("Game Paused",new Vector2f(0,50),new Vector4f(0,0,0,0));
+		tv = new GUITextView("Game Paused",new Vector2f(0,0),new Vector4f(0,0,0,0));
 		this.add(tv);
 		
+		tv.addAnimation(new Animation2D(new Vector2f(0,0),new Vector2f(0,0),new Vector2f(0,50),new Vector2f(1,1),1000));
 		
 		GUIRenderer.shader.unbind();
 		

@@ -62,6 +62,7 @@ public class Animation2D {
 		this.pos2 = pos2;
 		this.size2 = size2;
 		this.callback = callback;
+		this.length = length;
 		callback.initAnimation(this);
 	}
 	
@@ -70,23 +71,26 @@ public class Animation2D {
 	private Thread animationThread = new Thread(() -> {
 		callback.startAnimation(this);
 		long offset = DisplayManager.currentTime - startTime;
-		while(started | offset < length) {
+		while(started && offset < length) {
 			callback.processAnimation(offset, this);
 			offset = DisplayManager.currentTime - startTime;
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		callback.stopAnimation(this);
 		started = false;
 		pos = null;
 		size = null;
 	});
-	
-	
 
 	public void startAnimation() {
-		startTime = DisplayManager.currentTime;
 		pos = new Vector2f(pos1.x,pos1.y);
 		size = new Vector2f(size1.x,size1.y);
 		started = true;
+		startTime = DisplayManager.currentTime;
 		animationThread.start();
 	}
 

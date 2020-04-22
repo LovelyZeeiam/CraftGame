@@ -72,6 +72,15 @@ public class GUITextView extends GUIWidget {
 		GL30.glBindVertexArray(0);
 	}
 	
+	@Override
+	public void update() {
+		if(this.tickAnimation()) {
+			this.text.position = this.pos;
+			genBuffer();
+		}
+		
+	}
+	
 	public void setText(String text) {
 		this.text.setText(text);
 		genBuffer();
@@ -99,6 +108,8 @@ public class GUITextView extends GUIWidget {
 		GL15.glDeleteBuffers(tbo);
 		GL30.glDeleteVertexArrays(vao);
 	}
+
+	
 	
 
 }

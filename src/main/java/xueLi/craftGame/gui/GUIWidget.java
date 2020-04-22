@@ -18,7 +18,7 @@ public abstract class GUIWidget {
 	public Vector4f backgroundColor;
 
 	// Sorry but now we only support one animation on the same time;
-	private Animation2D animation;
+	Animation2D animation;
 
 	protected GUIWidget(Vector2f pos, Vector2f size, Vector4f backgroundColor) {
 		this.pos = pos;
@@ -33,11 +33,7 @@ public abstract class GUIWidget {
 		box.pos2.y = pos.y + size.y;
 	}
 
-	public void update() {
-		if(this.animation != null && tickAnimation())
-			updateBox();
-		
-	}
+	public abstract void update();
 
 	public abstract void draw();
 
@@ -50,6 +46,8 @@ public abstract class GUIWidget {
 	 * @return 我该不该刷新Box呢呐呐呐呐呐呐
 	 */
 	protected boolean tickAnimation() {
+		if(this.animation == null)
+			return false;
 		if (this.animation.started) {
 			this.pos = this.animation.pos;
 			this.size = this.animation.size;
