@@ -8,20 +8,20 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Vector3f;
 
-import xueLi.craftGame.entity.Player;
 import xueLi.craftGame.utils.DisplayManager;
-import xueLi.craftGame.utils.GLHelper;
 
 public class WorldVertexBinder {
 
 	private static int vao,vbo;
 
-	private static WorldShader shader;
+	public static WorldShader shader;
 
 	public static void init() {
 		shader = new WorldShader();
 		
 		useShader();
+		WorldVertexBinder.shader.setProjMatrix(DisplayManager.d_width, DisplayManager.d_height, 90.0f);
+		
 		vao = GL30.glGenVertexArrays();
 		GL30.glBindVertexArray(vao);
 		
@@ -56,14 +56,6 @@ public class WorldVertexBinder {
 		GL15.glUnmapBuffer(GL15.GL_ARRAY_BUFFER);
 	}
 	
-	public static void processPlayer(Player player) {
-		if (DisplayManager.tickResize()) {
-			shader.setProjMatrix(DisplayManager.d_width, DisplayManager.d_height, 90.0f);
-		}
-		shader.setViewMatrix(player);
-		GLHelper.calculateFrustumPlane();
-	}
-
 	public static void useShader() {
 		shader.use();
 	}

@@ -9,7 +9,6 @@ import xueLi.craftGame.block.Block;
 import xueLi.craftGame.entity.Entity;
 import xueLi.craftGame.entity.HitBox;
 import xueLi.craftGame.entity.Player;
-import xueLi.craftGame.entity.renderer.EntityRenderer;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.ChunkPos;
 import xueLi.craftGame.utils.GLHelper;
@@ -119,7 +118,6 @@ public class World {
 				c.update();
 				if (!GLHelper.isChunkInFrustum(chunkX, Chunk.height, chunkZ))
 					continue;
-				EntityRenderer.buildMesh(c);
 				for (int xInChunk = 0; xInChunk < Chunk.size; xInChunk++) {
 					for (int zInChunk = 0; zInChunk < Chunk.size; zInChunk++) {
 						int yMax = c.heightMap[xInChunk][zInChunk];
@@ -211,6 +209,12 @@ public class World {
 		int chunkX = (int) (x / 16);
 		int chunkZ = (int) (z / 16);
 		return new ChunkPos(chunkX - (x < 0 ? 1 : 0), chunkZ - (z < 0 ? 1 : 0));
+	}
+
+	public static void processPlayer(Player player) {
+		//TODO: 在写了GUI之后会把setProjMatrix这个方法放在GUI的callback嗲
+		WorldVertexBinder.shader.setViewMatrix(player);
+		GLHelper.calculateFrustumPlane();
 	}
 
 }

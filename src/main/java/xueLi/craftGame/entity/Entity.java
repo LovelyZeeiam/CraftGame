@@ -1,14 +1,7 @@
 package xueLi.craftGame.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
-import xueLi.craftGame.entity.renderer.EntityRenderer;
-import xueLi.craftGame.entity.renderer.RenderArgs;
-import xueLi.craftGame.template.entity.AttributeEntity;
 import xueLi.craftGame.utils.DisplayManager;
 import xueLi.craftGame.utils.Vector;
 import xueLi.craftGame.world.World;
@@ -21,8 +14,7 @@ public abstract class Entity {
 	// For physical engine
 	// public boolean[] collide = new boolean[6];
 
-	// For entity bones
-	public AttributeEntity attrib;
+	//TODO: For entity bones
 
 	public Entity(float x, float y, float z) {
 		pos = new Vector(x, y, z);
@@ -71,24 +63,6 @@ public abstract class Entity {
 		// At least moving had become smoother :)
 
 	}
-
-	protected List<RenderArgs> defaultRender() {
-		List<RenderArgs> args = new ArrayList<RenderArgs>();
-
-		Matrix4f posMatrix = EntityRenderer.identity;
-		posMatrix.translate(new Vector3f(pos.x, pos.y, pos.z));
-
-		for (Bone b : attrib.bones) {
-			b.calculateMatrix(posMatrix);
-			args.addAll(b.getDrawArgs(pos));
-		}
-
-		posMatrix.setIdentity();
-
-		return args;
-	}
-
-	public abstract List<RenderArgs> render();
 
 	public abstract void tick(World world);
 

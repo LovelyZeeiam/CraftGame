@@ -1,18 +1,21 @@
 package xueLi.craftGame.utils;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+
+import javax.imageio.ImageIO;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL13;
+import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-
 import xueLi.craftGame.entity.Player;
 
 public class GLHelper {
@@ -21,21 +24,49 @@ public class GLHelper {
 	public static float[][] frustumPlane = new float[6][4];
 
 	public static int registerTexture(String path) {
-		Texture t = null;
+		return registerTexture(new File(path));
+	}
+	
+	public static int registerTexture(File file) {
 		try {
-			t = TextureLoader.getTexture("png", new FileInputStream(new File(path)));
+			return registerTexture(new FileInputStream(file));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
+		}
+		return -1;
+	}
+	
+	public static int registerTexture(InputStream stream) {
+		int[] pixels = null;
+		int width = 0,height = 0;
+		try {
+			BufferedImage image = ImageIO.read(stream);
+			width = image.getWidth();
+			height = image.getHeight();
+			pixels = new int[width * height];
+			image.getRGB(0, 0, width, height, pixels, 0, width);
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
+		int[] data = new int[width * height];
+		for(int i = 0;i < width*height;i++) {
+			int a = (pixels[i] & 0xff000000) >> 24;
+			int r = (pixels[i] & 0xff0000) >> 16;
+			int g = (pixels[i] & 0xff00) >> 8;
+			int b = (pixels[i] & 0xff);
+			data[i] = a << 24 | b << 16 | g << 8 | r;
+		}
+		int id = GL11.glGenTextures();
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL13.GL_CLAMP_TO_BORDER);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL13.GL_CLAMP_TO_BORDER);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_BASE_LEVEL, 0);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_MAX_LEVEL, 4);
-		return t.getTextureID();
+		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, width, height, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, data);
+		GLHelper.printGLError("Texture Register");
+		return id;
 	}
 
 	public static void deleteTexture(int id) {
@@ -242,6 +273,13 @@ public class GLHelper {
 
 	public static long vert2ToLong(int x, int z) {
 		return (long) x & 4294967295L | ((long) z & 4294967295L) << 32;
+	}
+	
+	public static void printGLError(String state) {
+		int error = GL11.glGetError();
+		if (error != 0) {
+			System.out.println("["+state+"] " + GLU.gluErrorString(error));
+		}
 	}
 
 }

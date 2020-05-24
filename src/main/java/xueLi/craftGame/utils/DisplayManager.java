@@ -5,81 +5,150 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 
-import org.lwjgl.LWJGLException;
-import org.lwjgl.Sys;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.ContextAttribs;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.glfw.Callbacks;
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWCursorPosCallback;
+import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWKeyCallback;
+import org.lwjgl.glfw.GLFWWindowSizeCallback;
+import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.PixelFormat;
 
 public class DisplayManager {
 
 	public static boolean isDebug = true;
 
 	private static boolean isRunning = false;
-	private static int fps_cap = 60;
+	//private static int fps_cap = 60;
 
 	public static int d_width, d_height;
 
 	public static long currentTime;
 	public static long deltaTime;
+	
+	private static boolean[] keys = new boolean[65536];
+	private static boolean[] keysOnce = new boolean[65536];
+	private static ArrayList<Integer> keyPressed = new ArrayList<Integer>();
+	private static GLFWKeyCallback keycb = new GLFWKeyCallback() {
+		@Override
+		public void invoke(long window, int key, int scancode, int action, int mods) {
+			keys[key] = action != GLFW.GLFW_RELEASE;
+			
+			keysOnce[key] = action == GLFW.GLFW_PRESS;
+			keyPressed.add(key);
+		}
+	};
+	
+	public static interface SizedCallback {
+		public void sized(int width,int height);
+	}
+	private static SizedCallback szcbb;
+	
+	public static void setSizedCallback(SizedCallback cb) {
+		szcbb = cb;
+	}
+	
+	private static GLFWWindowSizeCallback sizecb = new GLFWWindowSizeCallback() {
+		@Override
+		public void invoke(long window, int width, int height) {
+			d_width = width;
+			d_height = height;
+			GL11.glViewport(0, 0, d_width, d_height);
+			
+			
+			
+			if(szcbb != null)
+				szcbb.sized(width, height);
+		}
+	};
+	
+	private static double lastTimeMouseX = 0, lastTimeMouseY = 0;
+	public static double mouseDX = 0,mouseDY = 0;
+	private static boolean ShouldnotProcessMouseMoveEvent = true;
+	private static GLFWCursorPosCallback cpcb = new GLFWCursorPosCallback() {
+		@Override
+		public void invoke(long window, double xpos, double ypos) {
+			if(ShouldnotProcessMouseMoveEvent) {
+				ShouldnotProcessMouseMoveEvent = false;
+				return;
+			}
+			mouseDX = xpos - lastTimeMouseX;
+			mouseDY = lastTimeMouseY - ypos;
+			
+			lastTimeMouseX = xpos;
+			lastTimeMouseY = ypos;
+			
+		}
+	};
 
 	public static Dimension screenSize;
 	
-	public static void create(int width, int height, Canvas canvas) {
-		try {
-			//这里是lwjgl自带的方法  设置屏幕的宽和高
-			Display.setDisplayMode(new DisplayMode(width, height));
-			//设置窗口是可以被更改大小的
-			Display.setResizable(true);
-			//这个应该是垂直同步之类的
-			Display.setSwapInterval(1);
-			Display.setVSyncEnabled(true);
-			//这个是这个屏幕的附属 可以通过传入一个Canvas来达到投射到一个awt控件的功能
-			Display.setParent(canvas);
-			//没有设置控件（即传入null）就会创造一个新的窗口 这个方法是设置标题
-			Display.setTitle("CraftGame - dev");
-			//获取计算机屏幕宽和高
-			screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-			//窗口居中
-			Display.setLocation((screenSize.width - width) / 2, (screenSize.height - height) / 2);
-
-			//这里是设置OpenGL的版本
-			ContextAttribs ca = new ContextAttribs(3, 2);
-			//可以向前兼容
-			ca.withForwardCompatible(true);
-			//这个不知道嘤嘤嘤
-			ca.withProfileCore(true);
-			//将ContextAttribs传入lwjgl 然后创造一个窗口
-			Display.create(new PixelFormat(), ca);
-			//这个是让这个窗口变成当前的window
-			Display.makeCurrent();
-
-			//创建鼠标和键盘的监听
-			Keyboard.create();
-			Mouse.create();
-		} catch (LWJGLException e) {
-			e.printStackTrace();
+	private static long window;
+	
+	public static boolean create(int width, int height, Canvas canvas) {
+		GLFWErrorCallback.createPrint(System.err).set();
+		
+		if(!GLFW.glfwInit()) {
+			System.err.println("Sorry the glfw can't init xD");
+			return false;
 		}
+		
+		GLFW.glfwDefaultWindowHints();
+		GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE);
+		//窗口可缩放
+		GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
+		//OpenGL版本
+		GLFW.glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MAJOR, 3);
+		GLFW.glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MINOR, 2);
+		GLFW.glfwWindowHint(GLFW.GLFW_OPENGL_PROFILE, GLFW.GLFW_OPENGL_CORE_PROFILE);
+		GLFW.glfwWindowHint(GLFW.GLFW_OPENGL_FORWARD_COMPAT, GLFW.GLFW_TRUE);
+		//创建窗口
+		window = GLFW.glfwCreateWindow(width, height, "CraftGame - Alpha", 0, 0);
+		if(window == 0) {
+			System.err.println("Sorry can't create window xD");
+			return false;
+		}
+		
+		//获取计算机屏幕宽和高
+		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		//窗口居中
+		GLFW.glfwSetWindowPos(window, (screenSize.width - width) / 2, (screenSize.height - height) / 2);
+		
+		GLFW.glfwMakeContextCurrent(window);
+		GL.createCapabilities();
+		
+		GLFW.glfwSetKeyCallback(window, keycb);
+		GLFW.glfwSetWindowSizeCallback(window, sizecb);
+		GLFW.glfwSetCursorPosCallback(window, cpcb);
+		
+		
+		GLFW.glfwShowWindow(window);
+		
+		GLFW.glfwSwapInterval(1);
+		System.out.println(GL11.glGetString(GL11.GL_VERSION));
+		
+		GLHelper.printGLError("Window Creator");
+		
 		//这个地方是游戏循环的时候用到的
 		isRunning = true;
 
 		//设置OpenGL的渲染视窗
 		GL11.glViewport(0, 0, width, height);
+		GLHelper.printGLError("Init - Viewport");
 
 		//启动纹理支持
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		GLHelper.printGLError("Init - Texture Support");
 
 		//启动深度测试 就是有一个前后的物体区分
 		//如果没有这个东西的话就没有前后物体之分了
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glDepthFunc(GL11.GL_ONE);
+		GLHelper.printGLError("Init - Depth Test");
 
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glCullFace(GL11.GL_BACK);
+		GLHelper.printGLError("Init - Cull Face");
 
 		// The website said these are the way to anti-aliasing
 		GL11.glEnable(GL11.GL_BLEND);
@@ -87,61 +156,51 @@ public class DisplayManager {
 		GL11.glEnable(GL11.GL_POINT_SMOOTH);
 		GL11.glEnable(GL11.GL_LINE_SMOOTH);
 		GL11.glEnable(GL11.GL_POLYGON_SMOOTH);
+		GLHelper.printGLError("Init - Anti-aliasing");
 
 		d_width = width;
 		d_height = height;
-
+		
+		return true;
 	}
-
-	public static boolean tickResize() {
-		if (Display.wasResized()) {
-			d_width = Display.getWidth();
-			d_height = Display.getHeight();
-			GL11.glViewport(0, 0, d_width, d_height);
-
-			return true;
-		}
-		return false;
+	
+	public static boolean mouseGrabbed = false;
+	
+	public static void grabMouse() {
+		GLFW.glfwSetInputMode(window, GLFW.GLFW_CURSOR, mouseGrabbed ? GLFW.GLFW_CURSOR_NORMAL : GLFW.GLFW_CURSOR_DISABLED);
+		mouseGrabbed = !mouseGrabbed;
+		ShouldnotProcessMouseMoveEvent = true;
 	}
 
 	private static long getCurrentTime() {
-		return Sys.getTime() * 1000 / Sys.getTimerResolution();
+		return System.currentTimeMillis();
 	}
 
 	public static void update() {
-		if (Display.isCloseRequested())
+		if (GLFW.glfwWindowShouldClose(window))
 			isRunning = false;
-		Display.sync(fps_cap);
-		Display.update();
+		
+		mouseDX = mouseDY = 0;
+		
+		for(int keyID:keyPressed)
+			keysOnce[keyID] = false;
+		
+		GLFW.glfwSwapBuffers(window);
+		GLFW.glfwPollEvents();
 
 		deltaTime = getCurrentTime() - currentTime;
 	}
 
-	private static boolean[] keyboard = new boolean[256];
-	private static ArrayList<Integer> key_pressed_frame = new ArrayList<Integer>();
-
 	public static boolean isKeyDownOnce(int i) {
-		return key_pressed_frame.contains(i);
+		return keysOnce[i];
 	}
 
 	public static boolean isKeyDown(int i) {
-		return Keyboard.isKeyDown(i);
+		return keys[i];
 	}
 
 	public static boolean isMouseDown(int i) {
-		return Mouse.isButtonDown(i);
-	}
-
-	public static void keyTest() {
-		key_pressed_frame.clear();
-		while (Keyboard.next()) {
-			int key = Keyboard.getEventKey();
-			if (Keyboard.getEventKeyState()) {
-				keyboard[key] = true;
-				key_pressed_frame.add(key);
-			} else
-				keyboard[Keyboard.getEventKey()] = false;
-		}
+		return GLFW.glfwGetMouseButton(window, i) == 1;
 	}
 
 	public static boolean isRunning() {
@@ -156,7 +215,13 @@ public class DisplayManager {
 
 	public static void destroy() {
 		isRunning = false;
-		Display.destroy();
+		
+		Callbacks.glfwFreeCallbacks(window);
+		GLFW.glfwDestroyWindow(window);
+		
+		GLFW.glfwTerminate();
+		GLFW.glfwSetErrorCallback(null).free();
+		
 	}
 
 }

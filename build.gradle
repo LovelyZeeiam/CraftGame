@@ -26,6 +26,13 @@ dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:28.0-jre'
     implementation 'com.google.code.gson:gson:2.6.2'
+    
+    compile group: 'org.lwjgl', name: 'lwjgl', version: '3.2.3'
+	compile group: 'org.lwjgl', name: 'lwjgl-opengl', version: '3.2.3'
+    compile group: 'org.lwjgl', name: 'lwjgl-glfw', version: '3.2.3'
+    compile group: 'org.lwjgl', name: 'lwjgl-openal', version: '3.2.3'
+    compile group: 'org.lwjgl', name: 'lwjgl-opengles', version: '3.2.3'
+	compile group: 'slick-util', name: 'slick-util', version: '1.0.0'
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
@@ -36,7 +43,7 @@ application {
     apply plugin: 'application'
     mainClassName = 'xueLi.craftGame.Main'
     applicationDefaultJvmArgs = [
-        	'-Djava.library.path="libs/lwjgl/natives/"']
+        	'-Djava.library.path="natives/"']
 
 }
 
