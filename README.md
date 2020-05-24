@@ -14,9 +14,10 @@ then
 > gradlew.bat run
 
 There you go!
+Now the native library only support x64 [I would rather not say that I was lazy to download x32 dll AwA]
 
 * Linux && MacOS
 
-Maybe later...
+I have no computer running Linux or MacOS so ...
 
 # Have fun!
