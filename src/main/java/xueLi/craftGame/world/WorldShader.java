@@ -22,11 +22,15 @@ public class WorldShader extends Shader {
 		loc_viewMatrix = super.getUnifromLocation("viewMatrix");
 		loc_skyColor = super.getUnifromLocation("skyColor");
 
+		updateProjMatrix();
+
+	}
+	
+	public void updateProjMatrix() {
 		super.use();
 		super.setUniformMatrix(loc_projMatrix,
 				GLHelper.perspecive(Display.d_width, Display.d_height, 70.0f, 0.1f, 1000.0f));
 		super.unbind();
-
 	}
 
 	public void setProjMatrix(float width, float height, float fov) {

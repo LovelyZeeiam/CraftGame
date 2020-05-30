@@ -97,14 +97,12 @@ public class Player extends Entity {
 			pos.rotX -= Display.mouseDY * sensivity;
 			pos.rotY += Display.mouseDX * sensivity;
 
-			if (Display.isMouseDown(0) & block_select != null
-					& Display.currentTime - placeTimeCount > 100) {
+			if (Display.isMouseDown(0) & block_select != null & Display.currentTime - placeTimeCount > 100) {
 				world.setBlock(block_select, null);
 				placeTimeCount = Display.currentTime;
 			}
 
-			if (Display.isMouseDown(1) & block_select != null
-					& Display.currentTime - placeTimeCount > 100) {
+			if (Display.isMouseDown(1) & block_select != null & Display.currentTime - placeTimeCount > 100) {
 				world.setBlock(last_block_select, 1);
 				placeTimeCount = Display.currentTime;
 			}

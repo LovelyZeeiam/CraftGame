@@ -19,7 +19,7 @@ public class WorldVertexBinder {
 	public static void init() {
 		shader = new WorldShader();
 
-		useShader();
+		useShader();	
 		WorldVertexBinder.shader.setProjMatrix(Display.d_width, Display.d_height, 90.0f);
 
 		vao = GL30.glGenVertexArrays();

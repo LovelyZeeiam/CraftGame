@@ -21,9 +21,7 @@ public class Main {
 
 	// 这个是主方法
 	public static void main(String[] args) throws IOException {
-		
-		
-		
+
 		// 创建一个显示区域
 		if (!Display.create(width, height))
 			return;
@@ -35,7 +33,7 @@ public class Main {
 		// 材质放在"res/textures.png"里面,好几个材质组合存储
 		// 关于新增方块的教程 在Block的init方法里面
 		WorldRenderer.init();
-		
+
 		EventManager.startListener();
 
 		Display.grabMouse();

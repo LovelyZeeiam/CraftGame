@@ -19,6 +19,8 @@ import xueLi.craftGame.Constants;
 import xueLi.craftGame.events.EventManager;
 import xueLi.craftGame.events.KeyEvent;
 import xueLi.craftGame.events.MouseButtonEvent;
+import xueLi.craftGame.gui.GUIRenderer;
+import xueLi.craftGame.world.WorldVertexBinder;
 
 public class Display {
 
@@ -36,18 +38,18 @@ public class Display {
 	private static GLFWKeyCallback keycb = new GLFWKeyCallback() {
 		@Override
 		public void invoke(long window, int key, int scancode, int action, int mods) {
-			if(key == -1) {
+			if (key == -1) {
 				System.out.println("What is this key? -1");
 			}
-			
+
 			keys[key] = action != GLFW.GLFW_RELEASE;
 
 			keysOnce[key] = action == GLFW.GLFW_PRESS;
 			keyPressed.add(key);
-			
-			if(!mouseGrabbed)
+
+			if (!mouseGrabbed)
 				EventManager.addKeyEvent(new KeyEvent(key, scancode, action));
-				
+
 		}
 	};
 
@@ -67,6 +69,11 @@ public class Display {
 			d_width = width;
 			d_height = height;
 			GL11.glViewport(0, 0, d_width, d_height);
+			
+			if(WorldVertexBinder.shader != null)
+				WorldVertexBinder.shader.updateProjMatrix();
+			
+			GUIRenderer.updateOrthoMatrix();
 
 			if (szcbb != null)
 				szcbb.sized(width, height);
@@ -75,7 +82,7 @@ public class Display {
 
 	private static double lastTimeMouseX = 0, lastTimeMouseY = 0;
 	public static double mouseDX = 0, mouseDY = 0;
-	public static double mouseX = 0,mouseY = 0;
+	public static double mouseX = 0, mouseY = 0;
 	private static boolean ShouldnotProcessMouseMoveEvent = true;
 	private static GLFWCursorPosCallback cpcb = new GLFWCursorPosCallback() {
 		@Override
@@ -89,19 +96,18 @@ public class Display {
 
 			lastTimeMouseX = xpos;
 			lastTimeMouseY = ypos;
-			
+
 			mouseX = xpos;
 			mouseY = ypos;
-			
 
 		}
 	};
-	
+
 	private static GLFWMouseButtonCallback mbcb = new GLFWMouseButtonCallback() {
 		@Override
 		public void invoke(long window, int button, int action, int mods) {
-			EventManager.addMouseButtonEvent(new MouseButtonEvent(mouseX,mouseY,button, action));
-			
+			EventManager.addMouseButtonEvent(new MouseButtonEvent(mouseX, mouseY, button, action));
+
 		}
 	};
 
@@ -126,9 +132,10 @@ public class Display {
 		GLFW.glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MINOR, 2);
 		GLFW.glfwWindowHint(GLFW.GLFW_OPENGL_PROFILE, GLFW.GLFW_OPENGL_CORE_PROFILE);
 		GLFW.glfwWindowHint(GLFW.GLFW_OPENGL_FORWARD_COMPAT, GLFW.GLFW_TRUE);
-		
+
 		// 创建窗口
-		window = GLFW.glfwCreateWindow(width, height, Constants.GAME_NAME + (Constants.IS_DEBUG ? " - alpha" : ""), 0, 0);
+		window = GLFW.glfwCreateWindow(width, height, Constants.GAME_NAME + (Constants.IS_DEBUG ? " - alpha" : ""), 0,
+				0);
 		if (window == 0) {
 			System.err.println("Sorry can't create window xD");
 			return false;
@@ -167,8 +174,7 @@ public class Display {
 
 		// 启动深度测试 就是有一个前后的物体区分
 		// 如果没有这个东西的话就没有前后物体之分了
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glDepthFunc(GL11.GL_ONE);
+		GLHelper.enableDepthTest();
 		GLHelper.printGLError("Init - Depth Test");
 
 		GL11.glEnable(GL11.GL_CULL_FACE);
@@ -176,8 +182,7 @@ public class Display {
 		GLHelper.printGLError("Init - Cull Face");
 
 		// The website said these are the way to anti-aliasing
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GLHelper.enableBlendAlpha();
 		GL11.glEnable(GL11.GL_POINT_SMOOTH);
 		GL11.glEnable(GL11.GL_LINE_SMOOTH);
 		GL11.glEnable(GL11.GL_POLYGON_SMOOTH);
@@ -234,7 +239,7 @@ public class Display {
 		currentTime = getCurrentTime();
 		return isRunning;
 	}
-	
+
 	public static void setSubtitie(String subtitle) {
 		GLFW.glfwSetWindowTitle(window, Constants.GAME_NAME + (Constants.IS_DEBUG ? " - alpha" : "") + subtitle);
 	}

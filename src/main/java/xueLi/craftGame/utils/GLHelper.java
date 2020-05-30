@@ -10,9 +10,11 @@ import java.math.BigDecimal;
 
 import javax.imageio.ImageIO;
 
+import org.checkerframework.checker.units.qual.m;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL13;
+import org.lwjgl.opengles.NVDepthNonlinear;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
@@ -108,6 +110,22 @@ public class GLHelper {
 		lastTimeViewMatrix = viewMatrix;
 		return viewMatrix;
 	}
+	
+	public static Matrix4f ortho() {
+		float near = 0.0f;
+		float far = 10.0f;
+		
+		Matrix4f matrix = new Matrix4f();
+		matrix.setIdentity();
+		matrix.m00 = 2.0f / (Display.d_width - 0);
+		matrix.m11 = 2.0f / (0 - Display.d_height);
+		matrix.m22 = -2.0f / (far - near);
+		matrix.m30 = -(Display.d_width + 0) / (Display.d_width - 0);
+		matrix.m31 = -(0 + Display.d_height) / (0 - Display.d_height);
+		matrix.m32 = -(far + near) / (far - near);
+		
+		return matrix;
+	}
 
 	public static Matrix4f createTransformationMatrix(Vector3f translation, float rx, float ry, float rz, float scale) {
 		Matrix4f matrix = new Matrix4f();
@@ -189,6 +207,7 @@ public class GLHelper {
 		frustumPlane[5][1] /= temp;
 		frustumPlane[5][2] /= temp;
 		frustumPlane[5][3] /= temp;
+		
 	}
 
 	public static boolean isPointInFrustum(float x, float y, float z) {
@@ -256,10 +275,28 @@ public class GLHelper {
 		}
 		return true;
 	}
-	
-	public static boolean isPointInGUIWidget(double xPos,double yPos,GUIWidget widget) {
+
+	public static boolean isPointInGUIWidget(double xPos, double yPos, GUIWidget widget) {
 		return (widget.x < xPos & (widget.x + widget.width) > xPos)
-			&& (widget.y < yPos & (widget.y + widget.height) > yPos); 
+				&& (widget.y < yPos & (widget.y + widget.height) > yPos);
+	}
+	
+	public static void enableBlendAlpha() {
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+	}
+	
+	public static void disableBlendAlpha() {
+		GL11.glDisable(GL11.GL_BLEND);
+	}
+	
+	public static void enableDepthTest() {
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glDepthFunc(GL11.GL_ONE);
+	}
+	
+	public static void disableDepthTest() {
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
 	}
 
 	public static float doubleToFloat(double value) {

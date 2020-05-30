@@ -10,7 +10,7 @@ public enum WidgetAlignment {
 	NONE(new Processor() {
 		@Override
 		public Vector2f process(GUIWidget widget) {
-			return new Vector2f(widget.x,widget.y);
+			return new Vector2f(widget.x, widget.y);
 		}
 	}),
 	/**
@@ -40,21 +40,22 @@ public enum WidgetAlignment {
 			return new Vector2f(widget.x, (widget.y - widget.height) / 2);
 		}
 	});
-	
+
 	private Processor processor;
+
 	private WidgetAlignment(Processor processor) {
 		this.processor = processor;
 	}
-	
+
 	/**
 	 * @return 处理后的控件位置
 	 */
 	public Vector2f process(GUIWidget widget) {
 		return processor.process(widget);
 	}
-	
+
 	public static interface Processor {
 		public Vector2f process(GUIWidget widget);
 	}
-	
+
 }
