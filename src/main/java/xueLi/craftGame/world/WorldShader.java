@@ -4,7 +4,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 import xueLi.craftGame.entity.Player;
-import xueLi.craftGame.utils.DisplayManager;
+import xueLi.craftGame.utils.Display;
 import xueLi.craftGame.utils.GLHelper;
 import xueLi.craftGame.utils.Shader;
 
@@ -14,7 +14,7 @@ public class WorldShader extends Shader {
 		super("res/shaders/world.vert", "res/shaders/world.frag");
 	}
 
-	private int loc_projMatrix,loc_viewMatrix,loc_skyColor;
+	private int loc_projMatrix, loc_viewMatrix, loc_skyColor;
 
 	@Override
 	public void prepare() {
@@ -24,7 +24,7 @@ public class WorldShader extends Shader {
 
 		super.use();
 		super.setUniformMatrix(loc_projMatrix,
-				GLHelper.perspecive(DisplayManager.d_width, DisplayManager.d_height, 70.0f, 0.1f, 1000.0f));
+				GLHelper.perspecive(Display.d_width, Display.d_height, 70.0f, 0.1f, 1000.0f));
 		super.unbind();
 
 	}

@@ -39,8 +39,7 @@ import java.nio.FloatBuffer;
  * Holds a 2x2 matrix
  *
  * @author cix_foo <cix_foo@users.sourceforge.net>
- * @version $Revision$
- * $Id$
+ * @version $Revision$ $Id$
  */
 
 public class Matrix2f extends Matrix implements Serializable {
@@ -65,6 +64,7 @@ public class Matrix2f extends Matrix implements Serializable {
 
 	/**
 	 * Load from another matrix
+	 * 
 	 * @param src The source matrix
 	 * @return this
 	 */
@@ -74,7 +74,8 @@ public class Matrix2f extends Matrix implements Serializable {
 
 	/**
 	 * Copy the source matrix to the destination matrix.
-	 * @param src The source matrix
+	 * 
+	 * @param src  The source matrix
 	 * @param dest The destination matrix, or null if a new one should be created.
 	 * @return The copied matrix
 	 */
@@ -125,8 +126,9 @@ public class Matrix2f extends Matrix implements Serializable {
 	}
 
 	/**
-	 * Store this matrix in a float buffer. The matrix is stored in column
-	 * major (openGL) order.
+	 * Store this matrix in a float buffer. The matrix is stored in column major
+	 * (openGL) order.
+	 * 
 	 * @param buf The buffer to store this matrix in
 	 */
 	public Matrix store(FloatBuffer buf) {
@@ -138,8 +140,9 @@ public class Matrix2f extends Matrix implements Serializable {
 	}
 
 	/**
-	 * Store this matrix in a float buffer. The matrix is stored in row
-	 * major (maths) order.
+	 * Store this matrix in a float buffer. The matrix is stored in row major
+	 * (maths) order.
+	 * 
 	 * @param buf The buffer to store this matrix in
 	 */
 	public Matrix storeTranspose(FloatBuffer buf) {
@@ -150,13 +153,12 @@ public class Matrix2f extends Matrix implements Serializable {
 		return this;
 	}
 
-
-
 	/**
 	 * Add two matrices together and place the result in a third matrix.
-	 * @param left The left source matrix
+	 * 
+	 * @param left  The left source matrix
 	 * @param right The right source matrix
-	 * @param dest The destination matrix, or null if a new one is to be created
+	 * @param dest  The destination matrix, or null if a new one is to be created
 	 * @return the destination matrix
 	 */
 	public static Matrix2f add(Matrix2f left, Matrix2f right, Matrix2f dest) {
@@ -172,10 +174,12 @@ public class Matrix2f extends Matrix implements Serializable {
 	}
 
 	/**
-	 * Subtract the right matrix from the left and place the result in a third matrix.
-	 * @param left The left source matrix
+	 * Subtract the right matrix from the left and place the result in a third
+	 * matrix.
+	 * 
+	 * @param left  The left source matrix
 	 * @param right The right source matrix
-	 * @param dest The destination matrix, or null if a new one is to be created
+	 * @param dest  The destination matrix, or null if a new one is to be created
 	 * @return the destination matrix
 	 */
 	public static Matrix2f sub(Matrix2f left, Matrix2f right, Matrix2f dest) {
@@ -192,9 +196,10 @@ public class Matrix2f extends Matrix implements Serializable {
 
 	/**
 	 * Multiply the right matrix by the left and place the result in a third matrix.
-	 * @param left The left source matrix
+	 * 
+	 * @param left  The left source matrix
 	 * @param right The right source matrix
-	 * @param dest The destination matrix, or null if a new one is to be created
+	 * @param dest  The destination matrix, or null if a new one is to be created
 	 * @return the destination matrix
 	 */
 	public static Matrix2f mul(Matrix2f left, Matrix2f right, Matrix2f dest) {
@@ -215,11 +220,11 @@ public class Matrix2f extends Matrix implements Serializable {
 	}
 
 	/**
-	 * Transform a Vector by a matrix and return the result in a destination
-	 * vector.
-	 * @param left The left matrix
+	 * Transform a Vector by a matrix and return the result in a destination vector.
+	 * 
+	 * @param left  The left matrix
 	 * @param right The right vector
-	 * @param dest The destination vector, or null if a new one is to be created
+	 * @param dest  The destination vector, or null if a new one is to be created
 	 * @return the destination vector
 	 */
 	public static Vector2f transform(Matrix2f left, Vector2f right, Vector2f dest) {
@@ -237,6 +242,7 @@ public class Matrix2f extends Matrix implements Serializable {
 
 	/**
 	 * Transpose this matrix
+	 * 
 	 * @return this
 	 */
 	public Matrix transpose() {
@@ -245,6 +251,7 @@ public class Matrix2f extends Matrix implements Serializable {
 
 	/**
 	 * Transpose this matrix and place the result in another matrix.
+	 * 
 	 * @param dest The destination matrix or null if a new matrix is to be created
 	 * @return the transposed matrix
 	 */
@@ -254,7 +261,8 @@ public class Matrix2f extends Matrix implements Serializable {
 
 	/**
 	 * Transpose the source matrix and place the result in the destination matrix.
-	 * @param src The source matrix or null if a new matrix is to be created
+	 * 
+	 * @param src  The source matrix or null if a new matrix is to be created
 	 * @param dest The destination matrix or null if a new matrix is to be created
 	 * @return the transposed matrix
 	 */
@@ -273,6 +281,7 @@ public class Matrix2f extends Matrix implements Serializable {
 
 	/**
 	 * Invert this matrix
+	 * 
 	 * @return this if successful, null otherwise
 	 */
 	public Matrix invert() {
@@ -281,24 +290,25 @@ public class Matrix2f extends Matrix implements Serializable {
 
 	/**
 	 * Invert the source matrix and place the result in the destination matrix.
-	 * @param src The source matrix to be inverted
+	 * 
+	 * @param src  The source matrix to be inverted
 	 * @param dest The destination matrix or null if a new matrix is to be created
 	 * @return The inverted matrix, or null if source can't be reverted.
 	 */
 	public static Matrix2f invert(Matrix2f src, Matrix2f dest) {
 		/*
-		 *inv(A) = 1/det(A) * adj(A);
+		 * inv(A) = 1/det(A) * adj(A);
 		 */
 
 		float determinant = src.determinant();
 		if (determinant != 0) {
 			if (dest == null)
 				dest = new Matrix2f();
-			float determinant_inv = 1f/determinant;
-			float t00 =  src.m11*determinant_inv;
-			float t01 = -src.m01*determinant_inv;
-			float t11 =  src.m00*determinant_inv;
-			float t10 = -src.m10*determinant_inv;
+			float determinant_inv = 1f / determinant;
+			float t00 = src.m11 * determinant_inv;
+			float t01 = -src.m01 * determinant_inv;
+			float t11 = src.m00 * determinant_inv;
+			float t10 = -src.m10 * determinant_inv;
 
 			dest.m00 = t00;
 			dest.m01 = t01;
@@ -321,6 +331,7 @@ public class Matrix2f extends Matrix implements Serializable {
 
 	/**
 	 * Negate this matrix
+	 * 
 	 * @return this
 	 */
 	public Matrix negate() {
@@ -329,6 +340,7 @@ public class Matrix2f extends Matrix implements Serializable {
 
 	/**
 	 * Negate this matrix and stash the result in another matrix.
+	 * 
 	 * @param dest The destination matrix, or null if a new matrix is to be created
 	 * @return the negated matrix
 	 */
@@ -338,7 +350,8 @@ public class Matrix2f extends Matrix implements Serializable {
 
 	/**
 	 * Negate the source matrix and stash the result in the destination matrix.
-	 * @param src The source matrix to be negated
+	 * 
+	 * @param src  The source matrix to be negated
 	 * @param dest The destination matrix, or null if a new matrix is to be created
 	 * @return the negated matrix
 	 */
@@ -356,6 +369,7 @@ public class Matrix2f extends Matrix implements Serializable {
 
 	/**
 	 * Set this matrix to be the identity matrix.
+	 * 
 	 * @return this
 	 */
 	public Matrix setIdentity() {
@@ -364,6 +378,7 @@ public class Matrix2f extends Matrix implements Serializable {
 
 	/**
 	 * Set the source matrix to be the identity matrix.
+	 * 
 	 * @param src The matrix to set to the identity.
 	 * @return The source matrix
 	 */
@@ -377,6 +392,7 @@ public class Matrix2f extends Matrix implements Serializable {
 
 	/**
 	 * Set this matrix to 0.
+	 * 
 	 * @return this
 	 */
 	public Matrix setZero() {
@@ -391,10 +407,12 @@ public class Matrix2f extends Matrix implements Serializable {
 		return src;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.lwjgl.vector.Matrix#determinant()
 	 */
 	public float determinant() {
-		return m00 * m11 - m01*m10;
+		return m00 * m11 - m01 * m10;
 	}
 }

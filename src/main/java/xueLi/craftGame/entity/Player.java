@@ -3,7 +3,7 @@ package xueLi.craftGame.entity;
 import org.lwjgl.glfw.GLFW;
 
 import xueLi.craftGame.utils.BlockPos;
-import xueLi.craftGame.utils.DisplayManager;
+import xueLi.craftGame.utils.Display;
 import xueLi.craftGame.utils.MousePicker;
 import xueLi.craftGame.world.World;
 
@@ -14,14 +14,14 @@ public class Player extends Entity {
 
 	public BlockPos blockPointed;
 
-	public float resistant = 0.009f;
+	public float resistant = 0.015f;
 	public float sensivity = 0.05f;
 
 	private final HitBox hitbox = new HitBox(-0.2f, -1.8f, -0.2f, 0.2f, 0.2f, 0.2f);
 
 	public Player(float x, float y, float z) {
 		super(x, y, z);
-		//this.attrib.box = hitbox;
+		// this.attrib.box = hitbox;
 	}
 
 	public Player(float x, float y, float z, float rotX, float rotY, float rotZ) {
@@ -34,38 +34,38 @@ public class Player extends Entity {
 	@Override
 	public void tick(World world) {
 		if (speed.x > 0) {
-			speed.x -= resistant * speed.x * DisplayManager.deltaTime;
+			speed.x -= resistant * speed.x * Display.deltaTime;
 			if (speed.x < 0)
 				speed.x = 0;
 		} else if (speed.x < 0) {
-			speed.x -= resistant * speed.x * DisplayManager.deltaTime;
+			speed.x -= resistant * speed.x * Display.deltaTime;
 			if (speed.x > 0)
 				speed.x = 0;
 		}
 
 		if (speed.y > 0) {
-			speed.y -= resistant * speed.y * 1.2f * DisplayManager.deltaTime;
+			speed.y -= resistant * speed.y * 1.2f * Display.deltaTime;
 			if (speed.y < 0)
 				speed.y = 0;
 		} else if (speed.y < 0) {
-			speed.y -= resistant * speed.y * 1.2f * DisplayManager.deltaTime;
+			speed.y -= resistant * speed.y * 1.2f * Display.deltaTime;
 			if (speed.y > 0)
 				speed.y = 0;
 		}
 
 		if (speed.z > 0) {
-			speed.z -= resistant * speed.z * DisplayManager.deltaTime;
+			speed.z -= resistant * speed.z * Display.deltaTime;
 			if (speed.z < 0)
 				speed.z = 0;
 		} else if (speed.z < 0) {
-			speed.z -= resistant * speed.z * DisplayManager.deltaTime;
+			speed.z -= resistant * speed.z * Display.deltaTime;
 			if (speed.z > 0)
 				speed.z = 0;
 		}
 
-		if (DisplayManager.mouseGrabbed) {
-			if (DisplayManager.isKeyDown(GLFW.GLFW_KEY_W)) {
-				if (DisplayManager.isKeyDown(GLFW.GLFW_KEY_R)) {
+		if (Display.mouseGrabbed) {
+			if (Display.isKeyDown(GLFW.GLFW_KEY_W)) {
+				if (Display.isKeyDown(GLFW.GLFW_KEY_R)) {
 					speed.x -= this.getSpeed() * 3f * (float) Math.sin(Math.toRadians(-pos.rotY));
 					speed.z -= this.getSpeed() * 3f * (float) Math.cos(Math.toRadians(-pos.rotY));
 				} else {
@@ -73,45 +73,43 @@ public class Player extends Entity {
 					speed.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY));
 				}
 			}
-			if (DisplayManager.isKeyDown(GLFW.GLFW_KEY_S)) {
+			if (Display.isKeyDown(GLFW.GLFW_KEY_S)) {
 				speed.x += this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY));
 				speed.z += this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY));
 			}
-			if (DisplayManager.isKeyDown(GLFW.GLFW_KEY_A)) {
+			if (Display.isKeyDown(GLFW.GLFW_KEY_A)) {
 				speed.x -= this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY + 90));
 				speed.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY + 90));
 			}
-			if (DisplayManager.isKeyDown(GLFW.GLFW_KEY_D)) {
+			if (Display.isKeyDown(GLFW.GLFW_KEY_D)) {
 				speed.x -= this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY - 90));
 				speed.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY - 90));
 			}
 
-			if (DisplayManager.isKeyDown(GLFW.GLFW_KEY_SPACE)) {
+			if (Display.isKeyDown(GLFW.GLFW_KEY_SPACE)) {
 				speed.y += this.getSpeed() * 0.9f;
 			}
 
-			if (DisplayManager.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
+			if (Display.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
 				speed.y -= this.getSpeed() * 0.9f;
 			}
 
-			pos.rotX -= DisplayManager.mouseDY * sensivity;
-			pos.rotY += DisplayManager.mouseDX * sensivity;
-			
-			
+			pos.rotX -= Display.mouseDY * sensivity;
+			pos.rotY += Display.mouseDX * sensivity;
 
-			if (DisplayManager.isMouseDown(0) & block_select != null
-					& DisplayManager.currentTime - placeTimeCount > 100) {
+			if (Display.isMouseDown(0) & block_select != null
+					& Display.currentTime - placeTimeCount > 100) {
 				world.setBlock(block_select, null);
-				placeTimeCount = DisplayManager.currentTime;
+				placeTimeCount = Display.currentTime;
 			}
 
-			if (DisplayManager.isMouseDown(1) & block_select != null
-					& DisplayManager.currentTime - placeTimeCount > 100) {
+			if (Display.isMouseDown(1) & block_select != null
+					& Display.currentTime - placeTimeCount > 100) {
 				world.setBlock(last_block_select, 1);
-				placeTimeCount = DisplayManager.currentTime;
+				placeTimeCount = Display.currentTime;
 			}
 		}
-		
+
 		super.updatePos(world);
 
 	}

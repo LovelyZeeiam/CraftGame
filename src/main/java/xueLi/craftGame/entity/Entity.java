@@ -2,7 +2,7 @@ package xueLi.craftGame.entity;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import xueLi.craftGame.utils.DisplayManager;
+import xueLi.craftGame.utils.Display;
 import xueLi.craftGame.utils.Vector;
 import xueLi.craftGame.world.World;
 
@@ -14,7 +14,7 @@ public abstract class Entity {
 	// For physical engine
 	// public boolean[] collide = new boolean[6];
 
-	//TODO: For entity bones
+	// TODO: For entity bones
 
 	public Entity(float x, float y, float z) {
 		pos = new Vector(x, y, z);
@@ -35,8 +35,8 @@ public abstract class Entity {
 	// But now one of the most important things is adding entities,so :} I think it
 	// will be done much later.
 	public void updatePos(World w) {
-		Vector3f deltaPos = new Vector3f(speed.x * DisplayManager.deltaTime, speed.y * DisplayManager.deltaTime,
-				speed.z * DisplayManager.deltaTime);
+		Vector3f deltaPos = new Vector3f(speed.x * Display.deltaTime, speed.y * Display.deltaTime,
+				speed.z * Display.deltaTime);
 
 		/**
 		 * The player will be stuck when collided with this code

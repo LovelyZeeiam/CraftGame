@@ -1,4 +1,4 @@
-package xueLi.craftGame.template.bilibili;
+package xueLi.craftGame.gsonTemplate.bilibili;
 
 public class TUpperRelationData {
 

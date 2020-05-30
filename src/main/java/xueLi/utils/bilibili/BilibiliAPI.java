@@ -7,12 +7,12 @@ import java.net.URL;
 
 import com.google.gson.Gson;
 
-import xueLi.craftGame.template.bilibili.TUpperRelation;
+import xueLi.craftGame.gsonTemplate.bilibili.TUpperRelation;
 
 public class BilibiliAPI {
 
 	public static Gson gson = new Gson();
-	
+
 	public static boolean realtimeGetFansRunning = true;
 	public static long follower;
 

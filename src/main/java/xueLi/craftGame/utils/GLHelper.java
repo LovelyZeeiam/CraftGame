@@ -17,6 +17,7 @@ import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import xueLi.craftGame.entity.Player;
+import xueLi.craftGame.gui.GUIWidget;
 
 public class GLHelper {
 
@@ -26,7 +27,7 @@ public class GLHelper {
 	public static int registerTexture(String path) {
 		return registerTexture(new File(path));
 	}
-	
+
 	public static int registerTexture(File file) {
 		try {
 			return registerTexture(new FileInputStream(file));
@@ -35,21 +36,21 @@ public class GLHelper {
 		}
 		return -1;
 	}
-	
+
 	public static int registerTexture(InputStream stream) {
 		int[] pixels = null;
-		int width = 0,height = 0;
+		int width = 0, height = 0;
 		try {
 			BufferedImage image = ImageIO.read(stream);
 			width = image.getWidth();
 			height = image.getHeight();
 			pixels = new int[width * height];
 			image.getRGB(0, 0, width, height, pixels, 0, width);
-		} catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		int[] data = new int[width * height];
-		for(int i = 0;i < width*height;i++) {
+		for (int i = 0; i < width * height; i++) {
 			int a = (pixels[i] & 0xff000000) >> 24;
 			int r = (pixels[i] & 0xff0000) >> 16;
 			int g = (pixels[i] & 0xff00) >> 8;
@@ -64,7 +65,8 @@ public class GLHelper {
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_BASE_LEVEL, 0);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_MAX_LEVEL, 4);
-		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, width, height, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, data);
+		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, width, height, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE,
+				data);
 		GLHelper.printGLError("Texture Register");
 		return id;
 	}
@@ -255,6 +257,11 @@ public class GLHelper {
 		return true;
 	}
 	
+	public static boolean isPointInGUIWidget(double xPos,double yPos,GUIWidget widget) {
+		return (widget.x < xPos & (widget.x + widget.width) > xPos)
+			&& (widget.y < yPos & (widget.y + widget.height) > yPos); 
+	}
+
 	public static float doubleToFloat(double value) {
 		return new BigDecimal(String.valueOf(value)).floatValue();
 	}
@@ -274,11 +281,11 @@ public class GLHelper {
 	public static long vert2ToLong(int x, int z) {
 		return (long) x & 4294967295L | ((long) z & 4294967295L) << 32;
 	}
-	
+
 	public static void printGLError(String state) {
 		int error = GL11.glGetError();
 		if (error != 0) {
-			System.out.println("["+state+"] " + GLU.gluErrorString(error));
+			System.out.println("[" + state + "] " + GLU.gluErrorString(error));
 		}
 	}
 

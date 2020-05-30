@@ -18,21 +18,41 @@ repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://raw.githubusercontent.com/SpinyOwl/repo/snapshots" }
+    maven { url "https://raw.githubusercontent.com/SpinyOwl/repo/releases" }
+    
 }
 
 dependencies {
-	compile fileTree(dir:'libs/lwjgl',include:['*.jar'])
+	compile fileTree(dir:'legui/',include:['*.jar'])
 	
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:28.0-jre'
     implementation 'com.google.code.gson:gson:2.6.2'
     
-    compile group: 'org.lwjgl', name: 'lwjgl', version: '3.2.3'
-	compile group: 'org.lwjgl', name: 'lwjgl-opengl', version: '3.2.3'
-    compile group: 'org.lwjgl', name: 'lwjgl-glfw', version: '3.2.3'
-    compile group: 'org.lwjgl', name: 'lwjgl-openal', version: '3.2.3'
-    compile group: 'org.lwjgl', name: 'lwjgl-opengles', version: '3.2.3'
 	compile group: 'slick-util', name: 'slick-util', version: '1.0.0'
+	
+    compile group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true
+    runtime group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    runtime group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true, classifier: 'natives-linux'
+    runtime group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true, classifier: 'natives-macos'
+
+    compile group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true
+    compile group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    compile group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true, classifier: 'natives-linux'
+    compile group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true, classifier: 'natives-macos'
+    
+    compile group: 'org.lwjgl', name: 'lwjgl-opengles', version: lwjgl_version, changing: true
+    compile group: 'org.lwjgl', name: 'lwjgl-opengles', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    compile group: 'org.lwjgl', name: 'lwjgl-opengles', version: lwjgl_version, changing: true, classifier: 'natives-linux'
+    compile group: 'org.lwjgl', name: 'lwjgl-opengles', version: lwjgl_version, changing: true, classifier: 'natives-macos'
+
+    compile group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true
+    runtime group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    runtime group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-linux'
+    runtime group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-macos'
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'

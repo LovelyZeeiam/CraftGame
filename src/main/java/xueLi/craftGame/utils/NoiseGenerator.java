@@ -10,6 +10,4 @@ public class NoiseGenerator {
 		r.setSeed(seed);
 	}
 
-	
-
 }

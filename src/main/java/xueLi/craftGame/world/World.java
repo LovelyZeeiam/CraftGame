@@ -212,7 +212,7 @@ public class World {
 	}
 
 	public static void processPlayer(Player player) {
-		//TODO: 在写了GUI之后会把setProjMatrix这个方法放在GUI的callback嗲
+		// TODO: 在写了GUI之后会把setProjMatrix这个方法放在GUI的callback嗲
 		WorldVertexBinder.shader.setViewMatrix(player);
 		GLHelper.calculateFrustumPlane();
 	}

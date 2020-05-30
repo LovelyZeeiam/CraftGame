@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.FloatBuffer;
 
-
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
@@ -32,7 +31,7 @@ public abstract class Shader {
 	}
 
 	public abstract void prepare();
-	
+
 	public static int getShader(String vertCode, String fragCode) {
 		int vertID = GL20.glCreateShader(GL20.GL_VERTEX_SHADER);
 		GL20.glShaderSource(vertID, vertCode);
@@ -40,14 +39,14 @@ public abstract class Shader {
 		if (GL20.glGetShaderi(vertID, GL20.GL_COMPILE_STATUS) != GL11.GL_TRUE) {
 			throw new RuntimeException(GL20.glGetShaderInfoLog(vertID, 500));
 		}
-		
+
 		int fragID = GL20.glCreateShader(GL20.GL_FRAGMENT_SHADER);
 		GL20.glShaderSource(fragID, fragCode);
 		GL20.glCompileShader(fragID);
 		if (GL20.glGetShaderi(fragID, GL20.GL_COMPILE_STATUS) != GL11.GL_TRUE) {
 			throw new RuntimeException(GL20.glGetShaderInfoLog(fragID, 500));
 		}
-		
+
 		int id = GL20.glCreateProgram();
 		GL20.glAttachShader(id, vertID);
 		GL20.glAttachShader(id, fragID);
@@ -105,9 +104,9 @@ public abstract class Shader {
 		b.flip();
 		GL20.glUniformMatrix4fv(loc, false, b);
 	}
-	
-	public void setUniformVector3(int loc,Vector3f v) {
-		GL20.glUniform3f(loc, v.x,v.y,v.z);
+
+	public void setUniformVector3(int loc, Vector3f v) {
+		GL20.glUniform3f(loc, v.x, v.y, v.z);
 	}
 
 	public void unbind() {
