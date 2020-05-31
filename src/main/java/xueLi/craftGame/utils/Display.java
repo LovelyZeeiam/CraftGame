@@ -1,7 +1,6 @@
 package xueLi.craftGame.utils;
 
 import java.awt.Dimension;
-import java.awt.Event;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 
@@ -38,8 +37,9 @@ public class Display {
 	private static GLFWKeyCallback keycb = new GLFWKeyCallback() {
 		@Override
 		public void invoke(long window, int key, int scancode, int action, int mods) {
-			if (key == -1) {
+			if (key < 0) {
 				System.out.println("What is this key? -1");
+				return;
 			}
 
 			keys[key] = action != GLFW.GLFW_RELEASE;
@@ -57,26 +57,19 @@ public class Display {
 		public void sized(int width, int height);
 	}
 
-	private static SizedCallback szcbb;
-
-	public static void setSizedCallback(SizedCallback cb) {
-		szcbb = cb;
-	}
-
 	private static GLFWWindowSizeCallback sizecb = new GLFWWindowSizeCallback() {
 		@Override
 		public void invoke(long window, int width, int height) {
 			d_width = width;
 			d_height = height;
 			GL11.glViewport(0, 0, d_width, d_height);
-			
-			if(WorldVertexBinder.shader != null)
-				WorldVertexBinder.shader.updateProjMatrix();
-			
-			GUIRenderer.updateOrthoMatrix();
 
-			if (szcbb != null)
-				szcbb.sized(width, height);
+			if (WorldVertexBinder.shader != null)
+				WorldVertexBinder.shader.updateProjMatrix();
+
+			
+			GUIRenderer.sizedUpdate(width, height);
+			
 		}
 	};
 
@@ -132,6 +125,8 @@ public class Display {
 		GLFW.glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MINOR, 2);
 		GLFW.glfwWindowHint(GLFW.GLFW_OPENGL_PROFILE, GLFW.GLFW_OPENGL_CORE_PROFILE);
 		GLFW.glfwWindowHint(GLFW.GLFW_OPENGL_FORWARD_COMPAT, GLFW.GLFW_TRUE);
+		// 采样次数
+		// GLFW.glfwWindowHint(GLFW.GLFW_SAMPLES, 4);
 
 		// 创建窗口
 		window = GLFW.glfwCreateWindow(width, height, Constants.GAME_NAME + (Constants.IS_DEBUG ? " - alpha" : ""), 0,
@@ -175,10 +170,10 @@ public class Display {
 		// 启动深度测试 就是有一个前后的物体区分
 		// 如果没有这个东西的话就没有前后物体之分了
 		GLHelper.enableDepthTest();
+		GL11.glDepthFunc(GL11.GL_ONE);
 		GLHelper.printGLError("Init - Depth Test");
 
-		GL11.glEnable(GL11.GL_CULL_FACE);
-		GL11.glCullFace(GL11.GL_BACK);
+		GLHelper.enableCullFace();
 		GLHelper.printGLError("Init - Cull Face");
 
 		// The website said these are the way to anti-aliasing
@@ -188,6 +183,8 @@ public class Display {
 		GL11.glEnable(GL11.GL_POLYGON_SMOOTH);
 		GLHelper.printGLError("Init - Anti-aliasing");
 
+		GLHelper.enableStencilTest();
+
 		d_width = width;
 		d_height = height;
 
@@ -196,11 +193,12 @@ public class Display {
 
 	public static boolean mouseGrabbed = false;
 
-	public static void grabMouse() {
+	public static boolean grabMouse() {
 		GLFW.glfwSetInputMode(window, GLFW.GLFW_CURSOR,
 				mouseGrabbed ? GLFW.GLFW_CURSOR_NORMAL : GLFW.GLFW_CURSOR_DISABLED);
 		mouseGrabbed = !mouseGrabbed;
 		ShouldnotProcessMouseMoveEvent = true;
+		return mouseGrabbed;
 	}
 
 	private static long getCurrentTime() {
@@ -241,7 +239,7 @@ public class Display {
 	}
 
 	public static void setSubtitie(String subtitle) {
-		GLFW.glfwSetWindowTitle(window, Constants.GAME_NAME + (Constants.IS_DEBUG ? " - alpha" : "") + subtitle);
+		GLFW.glfwSetWindowTitle(window, Constants.GAME_NAME + (Constants.IS_DEBUG ? " - alpha" : "") + (subtitle == null ? "" : (" - " + subtitle)));
 	}
 
 	public static void postDestroyMessage() {

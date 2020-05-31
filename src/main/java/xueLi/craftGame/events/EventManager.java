@@ -20,7 +20,7 @@ public class EventManager {
 				e.printStackTrace();
 			}
 		}
-	});
+	}, "mouseListenerThread");
 
 	private static Thread keyListenerThread = new Thread(() -> {
 		while (listening) {
@@ -34,7 +34,7 @@ public class EventManager {
 			}
 
 		}
-	});
+	}, "keyListenerThread");
 
 	public static void startListener() {
 		listening = true;

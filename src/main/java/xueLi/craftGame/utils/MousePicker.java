@@ -29,8 +29,8 @@ public class MousePicker {
 	public static BlockPos getPointOnRay(float distance) {
 		Vector3f scaledRay = new Vector3f(ray.x * distance, ray.y * distance, ray.z * distance);
 		Vector3f rayEnd = Vector3f.add(camPos, scaledRay, null);
-		return new BlockPos(GLHelper.floatToInt(rayEnd.x), GLHelper.floatToInt(rayEnd.y),
-				GLHelper.floatToInt(rayEnd.z));
+		return new BlockPos(MathUtils.floatToInt(rayEnd.x), MathUtils.floatToInt(rayEnd.y),
+				MathUtils.floatToInt(rayEnd.z));
 	}
 
 }

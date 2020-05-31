@@ -34,6 +34,11 @@ dependencies {
     
 	compile group: 'slick-util', name: 'slick-util', version: '1.0.0'
 	
+	compile group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true
+    runtime group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    runtime group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-linux'
+    runtime group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-macos'
+	
     compile group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true
     runtime group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true, classifier: 'natives-windows'
     runtime group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true, classifier: 'natives-linux'
@@ -49,10 +54,12 @@ dependencies {
     compile group: 'org.lwjgl', name: 'lwjgl-opengles', version: lwjgl_version, changing: true, classifier: 'natives-linux'
     compile group: 'org.lwjgl', name: 'lwjgl-opengles', version: lwjgl_version, changing: true, classifier: 'natives-macos'
 
-    compile group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true
-    runtime group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-windows'
-    runtime group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-linux'
-    runtime group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-macos'
+
+ 	compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true
+    compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-linux'
+    compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-macos'
+    
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'

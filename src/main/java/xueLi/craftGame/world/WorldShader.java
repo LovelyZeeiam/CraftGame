@@ -25,7 +25,7 @@ public class WorldShader extends Shader {
 		updateProjMatrix();
 
 	}
-	
+
 	public void updateProjMatrix() {
 		super.use();
 		super.setUniformMatrix(loc_projMatrix,

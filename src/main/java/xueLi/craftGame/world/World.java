@@ -12,6 +12,7 @@ import xueLi.craftGame.entity.Player;
 import xueLi.craftGame.utils.BlockPos;
 import xueLi.craftGame.utils.ChunkPos;
 import xueLi.craftGame.utils.GLHelper;
+import xueLi.craftGame.utils.MathUtils;
 
 public class World {
 
@@ -35,7 +36,7 @@ public class World {
 	public void generate() {
 		for (int x = 0; x < limit_long; x++) {
 			for (int z = 0; z < limit_width; z++) {
-				chunks.put(GLHelper.vert2ToLong(x, z), ChunkGenerator.superflat(x, z));
+				chunks.put(MathUtils.vert2ToLong(x, z), ChunkGenerator.superflat(x, z));
 			}
 		}
 	}
@@ -52,7 +53,7 @@ public class World {
 			int zInChunk = z - cp.getZ() * Chunk.size;
 
 			if (tempChunk == null || cp.getX() != tempChunk.chunkX || cp.getZ() != tempChunk.chunkZ)
-				tempChunk = chunks.get(GLHelper.vert2ToLong(cp.getX(), cp.getZ()));
+				tempChunk = chunks.get(MathUtils.vert2ToLong(cp.getX(), cp.getZ()));
 			if (tempChunk == null)
 				return null;
 			return tempChunk.getBlock(xInChunk, y, zInChunk);
@@ -69,7 +70,7 @@ public class World {
 
 			int xInChunk = x - cp.getX() * Chunk.size;
 			int zInChunk = z - cp.getZ() * Chunk.size;
-			chunks.get(GLHelper.vert2ToLong(cp.getX(), cp.getZ())).setBlock(xInChunk, y, zInChunk, block);
+			chunks.get(MathUtils.vert2ToLong(cp.getX(), cp.getZ())).setBlock(xInChunk, y, zInChunk, block);
 		}
 	}
 
@@ -95,7 +96,7 @@ public class World {
 
 			int xInChunk = p.getX() - cp.getX() * Chunk.size;
 			int zInChunk = p.getZ() - cp.getZ() * Chunk.size;
-			return chunks.get(GLHelper.vert2ToLong(cp.getX(), cp.getZ()))
+			return chunks.get(MathUtils.vert2ToLong(cp.getX(), cp.getZ()))
 					.hasBlock(new BlockPos(xInChunk, p.getY(), zInChunk));
 		}
 		return false;
@@ -112,7 +113,7 @@ public class World {
 				+ chunkRenderDistance; chunkX++) {
 			for (int chunkZ = chunkPos.getZ() - chunkRenderDistance; chunkZ < chunkPos.getZ()
 					+ chunkRenderDistance; chunkZ++) {
-				Chunk c = this.chunks.get(GLHelper.vert2ToLong(chunkX, chunkZ));
+				Chunk c = this.chunks.get(MathUtils.vert2ToLong(chunkX, chunkZ));
 				if (c == null)
 					continue;
 				c.update();
@@ -161,7 +162,7 @@ public class World {
 
 	public void addEntity(Entity entity) {
 		ChunkPos chunkPos = getChunkPosFromBlock(entity.pos.x, entity.pos.z);
-		chunks.get(GLHelper.vert2ToLong(chunkPos.getX(), chunkPos.getZ())).entities.add(entity);
+		chunks.get(MathUtils.vert2ToLong(chunkPos.getX(), chunkPos.getZ())).entities.add(entity);
 	}
 
 	public ArrayList<HitBox> getHitBoxes(HitBox box, int worldMaxSize) {

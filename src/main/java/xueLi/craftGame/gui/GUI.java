@@ -6,7 +6,7 @@ import xueLi.craftGame.events.KeyEvent;
 import xueLi.craftGame.events.MouseButtonEvent;
 import xueLi.craftGame.utils.GLHelper;
 
-public class GUI {
+public abstract class GUI {
 
 	public String title;
 
@@ -39,6 +39,9 @@ public class GUI {
 		}
 
 	}
+	
+	public abstract void update();
+	public abstract void sizedUpdate(float width, float height);
 
 	public void render() {
 		for (GUIWidget widget : widgets) {
