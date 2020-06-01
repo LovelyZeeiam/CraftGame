@@ -1,5 +1,6 @@
 package xueLi.craftGame.gui;
 
+import xueLi.craftGame.Constants;
 import xueLi.craftGame.utils.Display;
 import xueLi.craftGame.utils.GLHelper;
 
@@ -17,7 +18,10 @@ public class GUIRenderer {
 	private static HashMap<String, Integer> fontsHashMap = new HashMap<String, Integer>();
 
 	public static boolean init() throws IOException {
-		nvg = nvgCreate(NVG_STENCIL_STROKES);
+		if (Constants.IS_DEBUG)
+			nvg = nvgCreate(NVG_STENCIL_STROKES | NVG_ANTIALIAS | NVG_DEBUG);
+		else
+			nvg = nvgCreate(NVG_STENCIL_STROKES | NVG_ANTIALIAS);
 		if (nvg == 0) {
 			System.err.println("Can't init NanoVG xD I'm not convinced that you play this game without a menu :}");
 			return false;
@@ -39,10 +43,13 @@ public class GUIRenderer {
 
 	public static void setGUI(GUI gui) {
 		currentGui = gui;
-		if (gui == null)
+		if (gui == null) {
 			Display.setSubtitie(null);
-		else
+		}
+		else {
 			Display.setSubtitie(gui.title);
+			currentGui.sizedUpdate(Display.d_width, Display.d_height);
+		}
 	}
 
 	public static void render() {
@@ -50,6 +57,7 @@ public class GUIRenderer {
 			GLHelper.disableDepthTest();
 			GLHelper.enableBlendAlpha();
 			GLHelper.enableStencilTest();
+			currentGui.update();
 			nvgBeginFrame(nvg, Display.d_width, Display.d_height, 1);
 			currentGui.render();
 			nvgEndFrame(nvg);
@@ -60,9 +68,9 @@ public class GUIRenderer {
 	}
 
 	public static void sizedUpdate(float width, float height) {
-		if(currentGui != null)
+		if (currentGui != null)
 			currentGui.sizedUpdate(width, height);
-		
+
 	}
 
 }

@@ -1,8 +1,9 @@
-package xueLi.craftGame.events;
+package xueLi.craftGame.inputListener;
 
 import java.util.concurrent.LinkedBlockingDeque;
 
 import xueLi.craftGame.gui.GUIRenderer;
+import xueLi.craftGame.utils.Display;
 
 public class EventManager {
 
@@ -18,6 +19,7 @@ public class EventManager {
 					GUIRenderer.currentGui.processMouseButtonEvent(mouseButtonEvent);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+				Display.postDestroyMessage();
 			}
 		}
 	}, "mouseListenerThread");
@@ -28,9 +30,9 @@ public class EventManager {
 				KeyEvent keyEvent = keyEvents.take();
 				if (GUIRenderer.currentGui != null)
 					GUIRenderer.currentGui.processKeyEvent(keyEvent);
-
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+				Display.postDestroyMessage();
 			}
 
 		}

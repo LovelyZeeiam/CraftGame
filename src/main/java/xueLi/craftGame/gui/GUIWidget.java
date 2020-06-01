@@ -1,7 +1,7 @@
 package xueLi.craftGame.gui;
 
-import xueLi.craftGame.events.KeyEvent;
-import xueLi.craftGame.events.MouseButtonEvent;
+import xueLi.craftGame.inputListener.KeyEvent;
+import xueLi.craftGame.inputListener.MouseButtonEvent;
 import xueLi.craftGame.utils.Display;
 import xueLi.craftGame.utils.GLHelper;
 
@@ -23,7 +23,7 @@ public abstract class GUIWidget {
 		this.alignment = alignment;
 
 	}
-	
+
 	protected boolean isMouseCovered() {
 		return GLHelper.isPointInGUIWidget(Display.mouseX, Display.mouseY, this);
 	}

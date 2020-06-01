@@ -1,4 +1,4 @@
-package xueLi.craftGame.events;
+package xueLi.craftGame.inputListener;
 
 public class MouseButtonEvent {
 

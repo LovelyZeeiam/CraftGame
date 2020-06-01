@@ -6,16 +6,13 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
 import xueLi.craftGame.world.WorldRenderer;
-import xueLi.craftGame.events.EventManager;
 import xueLi.craftGame.gui.GUIRenderer;
 import xueLi.craftGame.gui.guis.GuiPauseMenu;
 import xueLi.craftGame.initer.*;
+import xueLi.craftGame.inputListener.EventManager;
 import xueLi.craftGame.utils.Display;
+import xueLi.craftGame.utils.TaskManager;
 
-/**
- * 目前已知的bug: 游戏GUI动画在第一次打开游戏的时候不正常
- *
- */
 public class Main {
 
 	private static int width = 1200, height = 680;
@@ -41,12 +38,14 @@ public class Main {
 
 		// 启动事件监听
 		EventManager.startListener();
+		// 启动任务监听
+		TaskManager.startListener();
 
 		Display.grabMouse();
-		
+
 		while (Display.isRunning()) {
 			if (Display.isKeyDownOnce(GLFW.GLFW_KEY_ESCAPE)) {
-				if(Display.grabMouse())
+				if (Display.grabMouse())
 					GUIRenderer.setGUI(null);
 				else
 					GUIRenderer.setGUI(new GuiPauseMenu());
@@ -74,6 +73,7 @@ public class Main {
 
 		// 资源释放
 		WorldRenderer.release();
+		TaskManager.stopListener();
 		EventManager.stopListener();
 		Display.destroy();
 

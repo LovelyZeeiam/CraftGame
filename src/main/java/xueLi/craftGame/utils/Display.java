@@ -15,10 +15,10 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
 import xueLi.craftGame.Constants;
-import xueLi.craftGame.events.EventManager;
-import xueLi.craftGame.events.KeyEvent;
-import xueLi.craftGame.events.MouseButtonEvent;
 import xueLi.craftGame.gui.GUIRenderer;
+import xueLi.craftGame.inputListener.EventManager;
+import xueLi.craftGame.inputListener.KeyEvent;
+import xueLi.craftGame.inputListener.MouseButtonEvent;
 import xueLi.craftGame.world.WorldVertexBinder;
 
 public class Display {
@@ -32,7 +32,7 @@ public class Display {
 	public static long deltaTime;
 
 	private static boolean[] keys = new boolean[65536];
-	private static boolean[] keysOnce = new boolean[65536];
+	public static boolean[] keysOnce = new boolean[65536];
 	private static ArrayList<Integer> keyPressed = new ArrayList<Integer>();
 	private static GLFWKeyCallback keycb = new GLFWKeyCallback() {
 		@Override
@@ -67,9 +67,8 @@ public class Display {
 			if (WorldVertexBinder.shader != null)
 				WorldVertexBinder.shader.updateProjMatrix();
 
-			
 			GUIRenderer.sizedUpdate(width, height);
-			
+
 		}
 	};
 
@@ -96,9 +95,11 @@ public class Display {
 		}
 	};
 
+	private static boolean[] mouseButtons = new boolean[128];
 	private static GLFWMouseButtonCallback mbcb = new GLFWMouseButtonCallback() {
 		@Override
 		public void invoke(long window, int button, int action, int mods) {
+			mouseButtons[button] = action != GLFW.GLFW_RELEASE;
 			EventManager.addMouseButtonEvent(new MouseButtonEvent(mouseX, mouseY, button, action));
 
 		}
@@ -200,6 +201,16 @@ public class Display {
 		ShouldnotProcessMouseMoveEvent = true;
 		return mouseGrabbed;
 	}
+	
+	public static void grabMouse(boolean grabbed) {
+		mouseGrabbed = grabbed;
+		if(grabbed) {
+			GLFW.glfwSetInputMode(window, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_DISABLED);
+		} else {
+			GLFW.glfwSetInputMode(window, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
+		}
+		
+	}
 
 	private static long getCurrentTime() {
 		return System.currentTimeMillis();
@@ -216,7 +227,9 @@ public class Display {
 
 		GLFW.glfwSwapBuffers(window);
 		GLFW.glfwPollEvents();
-
+		
+		
+		
 		deltaTime = getCurrentTime() - currentTime;
 	}
 
@@ -229,7 +242,7 @@ public class Display {
 	}
 
 	public static boolean isMouseDown(int i) {
-		return GLFW.glfwGetMouseButton(window, i) == 1;
+		return mouseButtons[i];
 	}
 
 	public static boolean isRunning() {
@@ -239,7 +252,8 @@ public class Display {
 	}
 
 	public static void setSubtitie(String subtitle) {
-		GLFW.glfwSetWindowTitle(window, Constants.GAME_NAME + (Constants.IS_DEBUG ? " - alpha" : "") + (subtitle == null ? "" : (" - " + subtitle)));
+		GLFW.glfwSetWindowTitle(window, Constants.GAME_NAME + (Constants.IS_DEBUG ? " - alpha" : "")
+				+ (subtitle == null ? "" : (" - " + subtitle)));
 	}
 
 	public static void postDestroyMessage() {

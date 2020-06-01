@@ -30,17 +30,15 @@ public class WorldRenderer {
 		w.generate();
 
 	}
-	
+
 	public static void update() {
 		player.tick(w);
 		player.pickTick(w);
-		
+
 	}
 
 	public static void render() {
 		GL11.glClearColor(skyColor.x, skyColor.y, skyColor.z, 1.0f);
-
-		
 
 		WorldVertexBinder.useShader();
 		World.processPlayer(player);
@@ -63,8 +61,6 @@ public class WorldRenderer {
 		// EntityRenderer.render();
 
 		GLHelper.printGLError("World Renderer");
-
-		
 
 	}
 
