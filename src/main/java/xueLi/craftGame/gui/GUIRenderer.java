@@ -45,8 +45,7 @@ public class GUIRenderer {
 		currentGui = gui;
 		if (gui == null) {
 			Display.setSubtitie(null);
-		}
-		else {
+		} else {
 			Display.setSubtitie(gui.title);
 			currentGui.sizedUpdate(Display.d_width, Display.d_height);
 		}
@@ -57,10 +56,12 @@ public class GUIRenderer {
 			GLHelper.disableDepthTest();
 			GLHelper.enableBlendAlpha();
 			GLHelper.enableStencilTest();
+			GLHelper.disableCullFace();
 			currentGui.update();
 			nvgBeginFrame(nvg, Display.d_width, Display.d_height, 1);
 			currentGui.render();
 			nvgEndFrame(nvg);
+			GLHelper.enableCullFace();
 			GLHelper.disableStencilTest();
 			GLHelper.disableBlendAlpha();
 			GLHelper.enableDepthTest();

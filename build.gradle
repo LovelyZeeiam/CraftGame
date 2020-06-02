@@ -33,6 +33,9 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.6.2'
     
 	compile group: 'slick-util', name: 'slick-util', version: '1.0.0'
+	// https://mvnrepository.com/artifact/org.jcraft/jorbis
+	compile group: 'org.jcraft', name: 'jorbis', version: '0.0.17'
+	
 	
 	compile group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true
     runtime group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-windows'
@@ -49,6 +52,11 @@ dependencies {
     compile group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true, classifier: 'natives-linux'
     compile group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true, classifier: 'natives-macos'
     
+    compile group: 'org.lwjgl', name: 'lwjgl-openal', version: lwjgl_version, changing: true
+    compile group: 'org.lwjgl', name: 'lwjgl-openal', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    compile group: 'org.lwjgl', name: 'lwjgl-openal', version: lwjgl_version, changing: true, classifier: 'natives-linux'
+    compile group: 'org.lwjgl', name: 'lwjgl-openal', version: lwjgl_version, changing: true, classifier: 'natives-macos'
+    
     compile group: 'org.lwjgl', name: 'lwjgl-opengles', version: lwjgl_version, changing: true
     compile group: 'org.lwjgl', name: 'lwjgl-opengles', version: lwjgl_version, changing: true, classifier: 'natives-windows'
     compile group: 'org.lwjgl', name: 'lwjgl-opengles', version: lwjgl_version, changing: true, classifier: 'natives-linux'
@@ -59,7 +67,6 @@ dependencies {
     compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-windows'
     compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-linux'
     compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-macos'
-    
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'

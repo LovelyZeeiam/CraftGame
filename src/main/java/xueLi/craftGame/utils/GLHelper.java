@@ -9,12 +9,16 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import org.lwjgl.nanovg.NVGColor;
+import org.lwjgl.nanovg.NanoVG;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4b;
+
 import xueLi.craftGame.entity.Player;
 import xueLi.craftGame.gui.GUIWidget;
 
@@ -317,6 +321,12 @@ public class GLHelper {
 		if (error != 0) {
 			System.out.println("[" + state + "] " + GLU.gluErrorString(error));
 		}
+	}
+
+	public static NVGColor getNvgColorRGBA(Vector4b color) {
+		NVGColor nvgColor = NVGColor.create();
+		NanoVG.nvgRGBA(color.x, color.y, color.z, color.w, nvgColor);
+		return nvgColor;
 	}
 
 }

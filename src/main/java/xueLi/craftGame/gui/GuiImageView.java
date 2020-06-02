@@ -35,11 +35,11 @@ public class GuiImageView extends GUIWidget {
 		if (imagesMap.containsKey(path))
 			return imagesMap.get(path);
 		File file = new File(path);
-		if(!file.exists()) {
+		if (!file.exists()) {
 			System.err.println("Can't find image: " + path);
 			return -1;
 		}
-		
+
 		int pointer = nvgCreateImage(nvg, path, NVG_IMAGE_NEAREST);
 
 		if (pointer == -1) {

@@ -1,6 +1,7 @@
 package xueLi.craftGame.utils;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingDeque;
 
 public class TaskManager {
@@ -44,6 +45,26 @@ public class TaskManager {
 
 	public static void stopListener() {
 		taskListenerStarted = false;
+	}
+
+	private volatile static LinkedList<Runnable> mainThreadQueue = new LinkedList<Runnable>();
+
+	public static void addTaskToMainThread(Runnable runnable) {
+		mainThreadQueue.add(runnable);
+	}
+
+	public static void addTaskToMainThread(int id) {
+		mainThreadQueue.add(tasks.get(id));
+	}
+
+	public static void processQueueOfMainThread(int count) {
+		for (int i = 0; i < count; i++) {
+			Runnable runnable = mainThreadQueue.poll();
+			if (runnable != null)
+				runnable.run();
+			else
+				break;
+		}
 	}
 
 }

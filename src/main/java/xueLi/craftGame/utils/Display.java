@@ -32,7 +32,7 @@ public class Display {
 	public static long deltaTime;
 
 	private static boolean[] keys = new boolean[65536];
-	public static boolean[] keysOnce = new boolean[65536];
+	private static boolean[] keysOnce = new boolean[65536];
 	private static ArrayList<Integer> keyPressed = new ArrayList<Integer>();
 	private static GLFWKeyCallback keycb = new GLFWKeyCallback() {
 		@Override
@@ -201,15 +201,15 @@ public class Display {
 		ShouldnotProcessMouseMoveEvent = true;
 		return mouseGrabbed;
 	}
-	
+
 	public static void grabMouse(boolean grabbed) {
 		mouseGrabbed = grabbed;
-		if(grabbed) {
+		if (grabbed) {
 			GLFW.glfwSetInputMode(window, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_DISABLED);
 		} else {
 			GLFW.glfwSetInputMode(window, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
 		}
-		
+
 	}
 
 	private static long getCurrentTime() {
@@ -227,9 +227,7 @@ public class Display {
 
 		GLFW.glfwSwapBuffers(window);
 		GLFW.glfwPollEvents();
-		
-		
-		
+
 		deltaTime = getCurrentTime() - currentTime;
 	}
 

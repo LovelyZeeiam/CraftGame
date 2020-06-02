@@ -24,7 +24,7 @@ public abstract class GUIWidget {
 
 	}
 
-	protected boolean isMouseCovered() {
+	public boolean isMouseCovered() {
 		return GLHelper.isPointInGUIWidget(Display.mouseX, Display.mouseY, this);
 	}
 

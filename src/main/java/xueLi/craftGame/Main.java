@@ -1,7 +1,6 @@
 package xueLi.craftGame;
 
 import java.io.IOException;
-
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
@@ -36,6 +35,8 @@ public class Main {
 		if (!GUIRenderer.init())
 			return;
 
+		Audios.init();
+
 		// 启动事件监听
 		EventManager.startListener();
 		// 启动任务监听
@@ -50,6 +51,8 @@ public class Main {
 				else
 					GUIRenderer.setGUI(new GuiPauseMenu());
 			}
+
+			TaskManager.processQueueOfMainThread(1);
 
 			// 返回FPS的值 如果处在debug模式则会在控制台里面输出
 			// FPSTimer.getFPS();
@@ -72,6 +75,7 @@ public class Main {
 		}
 
 		// 资源释放
+		Audios.close();
 		WorldRenderer.release();
 		TaskManager.stopListener();
 		EventManager.stopListener();
