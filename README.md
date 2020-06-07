@@ -21,3 +21,5 @@ I have no computer running Linux or MacOS
 but I'm convinced it be able to start.
 
 # Have fun!
+
+Next Task: add multy-thread world reading and writing
