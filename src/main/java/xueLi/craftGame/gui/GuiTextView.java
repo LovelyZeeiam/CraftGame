@@ -29,7 +29,7 @@ public class GuiTextView extends GUIWidget {
 
 	}
 
-	//private static float box_width = 2.0f;
+	// private static float box_width = 2.0f;
 
 	@Override
 	public void render() {
@@ -38,7 +38,7 @@ public class GuiTextView extends GUIWidget {
 		nvgTextAlign(nvg, align);
 		nvgFillColor(nvg, color);
 		nvgText(nvg, x, y, label);
-		
+
 		/*
 		 * nvgBeginPath(nvg);
 		 * 
@@ -50,7 +50,7 @@ public class GuiTextView extends GUIWidget {
 		 * 
 		 * nvgFill(nvg);
 		 */
-		
+
 	}
 
 	@Override

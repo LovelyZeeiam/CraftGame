@@ -14,20 +14,17 @@ public class WorldRenderer {
 	private static int texture;
 	private static FloatBuffer buffer;
 
-	private static World w = new World(16, 16);
+	private static World w = new World();
 	private static Vector3f skyColor = new Vector3f(0.5f, 0.8f, 1.0f);
 
-	private static Player player = new Player(16, 8, 16, 0, 0, 0);
+	private static Player player = new Player(64, 16, 64, 0, 0, 0);
 
 	// private static FrameBuffer fb;
 
-	public static void init() {
+	public static void init(String path) {
 		texture = GLHelper.registerTexture("res/textures.png");
 		WorldVertexBinder.init();
 		// fb = new FrameBuffer();
-
-		// 上面那jige函数是跟OpenGL有关的
-		w.generate();
 
 	}
 
@@ -45,6 +42,7 @@ public class WorldRenderer {
 		WorldVertexBinder.setSkyColor(skyColor);
 
 		buffer = WorldVertexBinder.map();
+		buffer.clear();
 		buffer.position(0);
 		int v = w.draw(player, buffer);
 		buffer.flip();
@@ -56,8 +54,6 @@ public class WorldRenderer {
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 		WorldVertexBinder.unbindShader();
 
-		buffer.clear();
-
 		// EntityRenderer.render();
 
 		GLHelper.printGLError("World Renderer");
@@ -65,6 +61,7 @@ public class WorldRenderer {
 	}
 
 	public static void release() {
+		w.saveAll();
 		GLHelper.deleteTexture(texture);
 		WorldVertexBinder.delete();
 

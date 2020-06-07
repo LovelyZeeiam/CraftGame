@@ -21,5 +21,11 @@ public class ChunkPos {
 	public String toString() {
 		return x + "," + z;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		ChunkPos pos = (ChunkPos) obj;
+		return pos.x == x && pos.z == z;
+	}
 
 }

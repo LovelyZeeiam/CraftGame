@@ -27,7 +27,7 @@ public class WorldVertexBinder {
 
 		vbo = GL15.glGenBuffers();
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo);
-		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, 2359296L * World.chunkRenderDistance * World.chunkRenderDistance,
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, 4 * 2359296L * World.chunkRenderDistance * World.chunkRenderDistance,
 				GL15.GL_DYNAMIC_DRAW);
 
 		// UV

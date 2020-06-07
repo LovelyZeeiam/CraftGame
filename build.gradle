@@ -32,6 +32,9 @@ dependencies {
     implementation 'com.google.guava:guava:28.0-jre'
     implementation 'com.google.code.gson:gson:2.6.2'
     
+    // https://mvnrepository.com/artifact/org.iq80.leveldb/leveldb
+	compile group: 'org.iq80.leveldb', name: 'leveldb', version: '0.12'
+    
 	compile group: 'slick-util', name: 'slick-util', version: '1.0.0'
 	// https://mvnrepository.com/artifact/org.jcraft/jorbis
 	compile group: 'org.jcraft', name: 'jorbis', version: '0.0.17'

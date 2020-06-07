@@ -3,12 +3,16 @@ package xueLi.craftGame.block;
 import java.nio.FloatBuffer;
 
 import xueLi.craftGame.entity.HitBox;
+import xueLi.craftGame.utils.BlockPos;
+import xueLi.craftGame.world.World;
 
 public class Block {
 
 	private BlockData data;
 
 	public int dataValue = 0;
+
+	public BlockPos pos;
 
 	public Block(int id) {
 		this.data = BlockData.getData(id);
@@ -38,6 +42,18 @@ public class Block {
 
 	public int getID() {
 		return data.getId();
+	}
+
+	public void onRightClick(World world) {
+		data.onRightClick(world, this);
+	}
+
+	public void onDestroy(World world) {
+		data.onDestroy(world, this);
+	}
+
+	public void onCreate(World world) {
+		data.onCreate(world, this);
 	}
 
 	public HitBox getHitbox(int x, int y, int z) {

@@ -14,7 +14,7 @@ public class Player extends Entity {
 
 	public BlockPos blockPointed;
 
-	public float resistant = 0.015f;
+	public float resistant = 0.0005f;
 	public float sensivity = 0.05f;
 
 	private final HitBox hitbox = new HitBox(-0.2f, -1.8f, -0.2f, 0.2f, 0.2f, 0.2f);
@@ -33,41 +33,13 @@ public class Player extends Entity {
 
 	@Override
 	public void tick(World world) {
-		if (speed.x > 0) {
-			speed.x -= resistant * speed.x * Display.deltaTime;
-			if (speed.x < 0)
-				speed.x = 0;
-		} else if (speed.x < 0) {
-			speed.x -= resistant * speed.x * Display.deltaTime;
-			if (speed.x > 0)
-				speed.x = 0;
-		}
-
-		if (speed.y > 0) {
-			speed.y -= resistant * speed.y * 1.2f * Display.deltaTime;
-			if (speed.y < 0)
-				speed.y = 0;
-		} else if (speed.y < 0) {
-			speed.y -= resistant * speed.y * 1.2f * Display.deltaTime;
-			if (speed.y > 0)
-				speed.y = 0;
-		}
-
-		if (speed.z > 0) {
-			speed.z -= resistant * speed.z * Display.deltaTime;
-			if (speed.z < 0)
-				speed.z = 0;
-		} else if (speed.z < 0) {
-			speed.z -= resistant * speed.z * Display.deltaTime;
-			if (speed.z > 0)
-				speed.z = 0;
-		}
+		speed.x = speed.y = speed.z = 0;
 
 		if (Display.mouseGrabbed) {
 			if (Display.isKeyDown(GLFW.GLFW_KEY_W)) {
 				if (Display.isKeyDown(GLFW.GLFW_KEY_R)) {
-					speed.x -= this.getSpeed() * 3f * (float) Math.sin(Math.toRadians(-pos.rotY));
-					speed.z -= this.getSpeed() * 3f * (float) Math.cos(Math.toRadians(-pos.rotY));
+					speed.x -= this.getSpeed() * 2f * (float) Math.sin(Math.toRadians(-pos.rotY));
+					speed.z -= this.getSpeed() * 2f * (float) Math.cos(Math.toRadians(-pos.rotY));
 				} else {
 					speed.x -= this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY));
 					speed.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY));
@@ -87,11 +59,11 @@ public class Player extends Entity {
 			}
 
 			if (Display.isKeyDown(GLFW.GLFW_KEY_SPACE)) {
-				speed.y += this.getSpeed() * 0.9f;
+				speed.y += this.getSpeed() * 0.5f;
 			}
 
 			if (Display.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
-				speed.y -= this.getSpeed() * 0.9f;
+				speed.y -= this.getSpeed() * 0.5f;
 			}
 
 			pos.rotX -= Display.mouseDY * sensivity;
@@ -127,7 +99,7 @@ public class Player extends Entity {
 
 	@Override
 	public float getSpeed() {
-		return 0.002f;
+		return 0.01f;
 	}
 
 	@Override

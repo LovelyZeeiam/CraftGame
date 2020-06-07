@@ -31,7 +31,7 @@ public class Main {
 		// 这个函数初始化世界渲染器
 		// 材质放在"res/textures.png"里面,好几个材质组合存储
 		// 关于新增方块的教程 在Block的init方法里面
-		WorldRenderer.init();
+		WorldRenderer.init(Constants.savePath);
 		if (!GUIRenderer.init())
 			return;
 
@@ -75,13 +75,13 @@ public class Main {
 		}
 
 		// 资源释放
-		Audios.close();
 		WorldRenderer.release();
+		Audios.close();
 		TaskManager.stopListener();
 		EventManager.stopListener();
 		Display.destroy();
 
 		System.exit(0);
-
+		
 	}
 }

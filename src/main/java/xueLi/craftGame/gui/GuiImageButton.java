@@ -16,15 +16,15 @@ import org.lwjgl.util.vector.Vector4b;
  * puppet Button 嘻嘻
  *
  */
-public class GuiButtonWithBox extends GuiImageView {
+public class GuiImageButton extends GuiImageView {
 
 	private static float box_width = 2.0f;
 
 	private NVGColor originBoxColor, coveredBoxColor;
 
-	public GuiButtonWithBox(String path, Vector4b originBoxColor, Vector4b coveredBoxColor, float x, float y,
+	public GuiImageButton(String imagepath, Vector4b originBoxColor, Vector4b coveredBoxColor, float x, float y,
 			WidgetAlignment alignment, float width, float height) {
-		super(path, x, y, alignment, width, height);
+		super(imagepath, x, y, alignment, width, height);
 
 		this.originBoxColor = GLHelper.getNvgColorRGBA(originBoxColor);
 		this.coveredBoxColor = GLHelper.getNvgColorRGBA(coveredBoxColor);

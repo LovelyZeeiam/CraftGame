@@ -179,9 +179,9 @@ public class Display {
 
 		// The website said these are the way to anti-aliasing
 		GLHelper.enableBlendAlpha();
-		GL11.glEnable(GL11.GL_POINT_SMOOTH);
-		GL11.glEnable(GL11.GL_LINE_SMOOTH);
-		GL11.glEnable(GL11.GL_POLYGON_SMOOTH);
+		// GL11.glEnable(GL11.GL_POINT_SMOOTH);
+		// GL11.glEnable(GL11.GL_LINE_SMOOTH);
+		// GL11.glEnable(GL11.GL_POLYGON_SMOOTH);
 		GLHelper.printGLError("Init - Anti-aliasing");
 
 		GLHelper.enableStencilTest();

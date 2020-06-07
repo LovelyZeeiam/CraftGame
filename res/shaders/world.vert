@@ -8,7 +8,7 @@ out vec3 f_color;
 out vec2 f_tex;
 
 //Fog
-const float density = 0.00015, gradient = 2.1;
+const float density = 0.00005, gradient = 1.2;
 out float visibility;
 
 uniform mat4 projMatrix;

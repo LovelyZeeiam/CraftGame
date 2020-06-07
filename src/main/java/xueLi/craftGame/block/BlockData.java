@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import xueLi.craftGame.entity.HitBox;
 import xueLi.craftGame.utils.BlockPos;
+import xueLi.craftGame.world.World;
 
 public abstract class BlockData {
 
@@ -59,5 +60,14 @@ public abstract class BlockData {
 
 	// 渲染方式 返回顶点数量
 	public abstract int render(FloatBuffer buffer, int x, int y, int z, int dataValue, int face);
+
+	public void onDestroy(World w, Block b) {
+	}
+
+	public void onRightClick(World w, Block b) {
+	}
+
+	public void onCreate(World w, Block b) {
+	}
 
 }

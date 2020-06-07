@@ -2,7 +2,7 @@ package xueLi.craftGame.gui.guis;
 
 import xueLi.craftGame.gui.GUI;
 import xueLi.craftGame.gui.GUIRenderer;
-import xueLi.craftGame.gui.GuiButtonWithBox;
+import xueLi.craftGame.gui.GuiImageButton;
 import xueLi.craftGame.gui.GuiImageView;
 import xueLi.craftGame.gui.GuiTextView;
 import xueLi.craftGame.gui.WidgetAlignment;
@@ -33,14 +33,14 @@ public class GuiPauseMenu extends GUI {
 				Display.d_width / 2, 0, 100, 100);
 		super.addWidget(pausedTextView);
 
-		imageView = new GuiButtonWithBox("res/test.png", new Vector4b((byte) 249, (byte) 249, (byte) 249, (byte) 249),
+		imageView = new GuiImageButton("res/test.png", new Vector4b((byte) 249, (byte) 249, (byte) 249, (byte) 249),
 				new Vector4b((byte) 0, (byte) 200, (byte) 255, (byte) 255), 0, 0, WidgetAlignment.NONE, 200, 200) {
 			@Override
 			public void onLeftClick() {
 				TaskManager.addTaskToMainThread(0);
 				// 正常的将自己的GUI变成空
 				GUIRenderer.setGUI(null);
-				
+
 				GUI.playSound(0);
 
 			}

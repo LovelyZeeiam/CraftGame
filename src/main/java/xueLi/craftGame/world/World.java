@@ -1,10 +1,13 @@
 package xueLi.craftGame.world;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import xueLi.craftGame.Constants;
 import xueLi.craftGame.block.Block;
 import xueLi.craftGame.entity.Entity;
 import xueLi.craftGame.entity.HitBox;
@@ -16,66 +19,49 @@ import xueLi.craftGame.utils.MathUtils;
 
 public class World {
 
-	private Map<Long, Chunk> chunks = new HashMap<Long, Chunk>();
-
-	private boolean isWorldLimited = false;
-	public int wlimit_long, wlimit_width;
-	private int limit_long, limit_width;
+	volatile Map<Long, Chunk> chunks = new HashMap<Long, Chunk>();
+	
+	private WorldIO saver;
 
 	// 世界大小 按区块来算
-	public World(int limit_long, int limit_width) {
-		isWorldLimited = true;
-		this.wlimit_long = limit_long * Chunk.size;
-		this.wlimit_width = limit_width * Chunk.size;
-		this.limit_long = limit_long;
-		this.limit_width = limit_width;
-
-	}
-
-	// 世界生成的方法
-	public void generate() {
-		for (int x = 0; x < limit_long; x++) {
-			for (int z = 0; z < limit_width; z++) {
-				chunks.put(MathUtils.vert2ToLong(x, z), ChunkGenerator.superflat(x, z));
-			}
-		}
+	public World() {
+		saver = new WorldIO(Constants.savePath);
+		
 	}
 
 	private static Chunk tempChunk;
 
 	public Block getBlock(int x, int y, int z) {
 		ChunkPos cp = getChunkPosFromBlock(x, z);
-		if (isWorldLimited) {
-			if (cp.getX() > this.limit_long - 1 || cp.getZ() > this.limit_width - 1 || cp.getX() < 0 || cp.getZ() < 0)
-				return null;
 
-			int xInChunk = x - cp.getX() * Chunk.size;
-			int zInChunk = z - cp.getZ() * Chunk.size;
+		int xInChunk = x - cp.getX() * Chunk.size;
+		int zInChunk = z - cp.getZ() * Chunk.size;
 
-			if (tempChunk == null || cp.getX() != tempChunk.chunkX || cp.getZ() != tempChunk.chunkZ)
-				tempChunk = chunks.get(MathUtils.vert2ToLong(cp.getX(), cp.getZ()));
-			if (tempChunk == null)
-				return null;
-			return tempChunk.getBlock(xInChunk, y, zInChunk);
-		}
-		return null;
+		if (tempChunk == null || cp.getX() != tempChunk.chunkX || cp.getZ() != tempChunk.chunkZ)
+			tempChunk = chunks.get(MathUtils.vert2ToLong(cp.getX(), cp.getZ()));
+		if (tempChunk == null)
+			return null;
+		return tempChunk.getBlock(xInChunk, y, zInChunk);
 	}
 
 	public void setBlock(int x, int y, int z, Block block) {
 		ChunkPos cp = getChunkPosFromBlock(x, z);
-		if (isWorldLimited) {
-			if (cp.getX() > this.limit_long - 1 || cp.getZ() > this.limit_width - 1 || cp.getX() < 0 || cp.getZ() < 0
-					|| y > Chunk.height - 1 || y < 0)
-				return;
+		Chunk chunk = chunks.get(MathUtils.vert2ToLong(cp.getX(), cp.getZ()));
+		if(chunk == null)
+			return;
+		
+		int xInChunk = x - cp.getX() * Chunk.size;
+		int zInChunk = z - cp.getZ() * Chunk.size;
+		if (block == null) {
+			chunk.getBlock(xInChunk, y, zInChunk).onDestroy(this);
 
-			int xInChunk = x - cp.getX() * Chunk.size;
-			int zInChunk = z - cp.getZ() * Chunk.size;
-			chunks.get(MathUtils.vert2ToLong(cp.getX(), cp.getZ())).setBlock(xInChunk, y, zInChunk, block);
+		} else {
+			block.onCreate(this);
+
 		}
+		chunk.setBlock(xInChunk, y, zInChunk, block);
 	}
 
-	// I accidently found that sometimes the game will throw NullPointerException on
-	// World.java:77 and I dont know why
 	public void setBlock(BlockPos p, Block b) {
 		if (p == null)
 			return;
@@ -88,21 +74,24 @@ public class World {
 		setBlock(p.getX(), p.getY(), p.getZ(), new Block(blockID));
 	}
 
-	public boolean hasBlock(BlockPos p) {
-		ChunkPos cp = getChunkPosFromBlock(p.getX(), p.getZ());
-		if (isWorldLimited) {
-			if (cp.getX() > this.limit_long - 1 || cp.getZ() > this.limit_width - 1 || cp.getX() < 0 || cp.getZ() < 0)
-				return false;
+	public void onRightClickOnBlock(BlockPos pos) {
+		Block block = getBlock(pos.getX(), pos.getY(), pos.getZ());
+		block.onRightClick(this);
 
-			int xInChunk = p.getX() - cp.getX() * Chunk.size;
-			int zInChunk = p.getZ() - cp.getZ() * Chunk.size;
-			return chunks.get(MathUtils.vert2ToLong(cp.getX(), cp.getZ()))
-					.hasBlock(new BlockPos(xInChunk, p.getY(), zInChunk));
-		}
-		return false;
 	}
 
-	public static int chunkRenderDistance = 5;
+	public boolean hasBlock(BlockPos p) {
+		ChunkPos cp = getChunkPosFromBlock(p.getX(), p.getZ());
+		Chunk chunk = chunks.get(MathUtils.vert2ToLong(cp.getX(), cp.getZ()));
+		if (chunk == null)
+			return false;
+		int xInChunk = p.getX() - cp.getX() * Chunk.size;
+		int zInChunk = p.getZ() - cp.getZ() * Chunk.size;
+
+		return chunk.hasBlock(new BlockPos(xInChunk, p.getY(), zInChunk));
+	}
+
+	public static int chunkRenderDistance = 8;
 
 	public int draw(Player cam, FloatBuffer buffer) {
 		int vertCount = 0;
@@ -113,9 +102,14 @@ public class World {
 				+ chunkRenderDistance; chunkX++) {
 			for (int chunkZ = chunkPos.getZ() - chunkRenderDistance; chunkZ < chunkPos.getZ()
 					+ chunkRenderDistance; chunkZ++) {
-				Chunk c = this.chunks.get(MathUtils.vert2ToLong(chunkX, chunkZ));
-				if (c == null)
+
+				long chunkXZ = MathUtils.vert2ToLong(chunkX, chunkZ);
+				Chunk c = this.chunks.get(chunkXZ);
+				if (c == null) {
+					chunks.put(MathUtils.vert2ToLong(chunkX, chunkZ), saver.load(chunkX, chunkZ,this));
+					
 					continue;
+				}
 				c.update();
 				if (!GLHelper.isChunkInFrustum(chunkX, Chunk.height, chunkZ))
 					continue;
@@ -216,6 +210,18 @@ public class World {
 		// TODO: 在写了GUI之后会把setProjMatrix这个方法放在GUI的callback嗲
 		WorldVertexBinder.shader.setViewMatrix(player);
 		GLHelper.calculateFrustumPlane();
+	}
+
+	public void saveAll() {
+		for (Map.Entry<Long, Chunk> chunkEntry : chunks.entrySet()) {
+			Chunk chunk = chunkEntry.getValue();
+			try {
+				saver.save(chunk);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		saver.close();
 	}
 
 }
