@@ -1,0 +1,15 @@
+{
+	"preload": {
+		"gui.splash": "textures/gui/game_loading/splash.jpg"
+		
+	}, 
+	
+	"load": {
+		
+		
+	}
+	
+	
+	
+	
+}

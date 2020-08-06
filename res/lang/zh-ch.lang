@@ -1,0 +1,8 @@
+#Game Start
+game.name=CraftGame
+game.version=alpha
+#Game Loading
+loading_message.loading=Loading~
+
+
+

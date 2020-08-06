@@ -17,6 +17,9 @@ plugins {
 repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
+    
+    maven { url "https://maven.aliyun.com/repository/jcenter" }
+    
     jcenter()
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
@@ -35,10 +38,8 @@ dependencies {
     // https://mvnrepository.com/artifact/org.iq80.leveldb/leveldb
 	compile group: 'org.iq80.leveldb', name: 'leveldb', version: '0.12'
     
-	compile group: 'slick-util', name: 'slick-util', version: '1.0.0'
 	// https://mvnrepository.com/artifact/org.jcraft/jorbis
 	compile group: 'org.jcraft', name: 'jorbis', version: '0.0.17'
-	
 	
 	compile group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true
     runtime group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-windows'
@@ -60,12 +61,6 @@ dependencies {
     compile group: 'org.lwjgl', name: 'lwjgl-openal', version: lwjgl_version, changing: true, classifier: 'natives-linux'
     compile group: 'org.lwjgl', name: 'lwjgl-openal', version: lwjgl_version, changing: true, classifier: 'natives-macos'
     
-    compile group: 'org.lwjgl', name: 'lwjgl-opengles', version: lwjgl_version, changing: true
-    compile group: 'org.lwjgl', name: 'lwjgl-opengles', version: lwjgl_version, changing: true, classifier: 'natives-windows'
-    compile group: 'org.lwjgl', name: 'lwjgl-opengles', version: lwjgl_version, changing: true, classifier: 'natives-linux'
-    compile group: 'org.lwjgl', name: 'lwjgl-opengles', version: lwjgl_version, changing: true, classifier: 'natives-macos'
-
-
  	compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true
     compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-windows'
     compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-linux'

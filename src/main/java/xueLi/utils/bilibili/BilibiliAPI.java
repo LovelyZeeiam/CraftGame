@@ -7,7 +7,7 @@ import java.net.URL;
 
 import com.google.gson.Gson;
 
-import xueLi.craftGame.gsonTemplate.bilibili.TUpperRelation;
+import xueLi.utils.bilibili.gsonTemplate.TUpperRelation;
 
 public class BilibiliAPI {
 
