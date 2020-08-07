@@ -10,14 +10,14 @@ import org.lwjgl.nanovg.NVGColor;
 
 public class GUIImageView extends GUIWidget {
 
-	private static NVGPaint paint;
+	protected static NVGPaint paint;
 
 	static {
 		paint = NVGPaint.create();
 
 	}
 
-	private int textureID;
+	protected int textureID;
 
 	public GUIImageView(EvalableFloat x, EvalableFloat y, EvalableFloat width, EvalableFloat height, int textureID) {
 		super(x, y, width, height);

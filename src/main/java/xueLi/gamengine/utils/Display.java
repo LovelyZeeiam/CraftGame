@@ -5,7 +5,8 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
-import xueLi.gamengine.utils.display.DisplaySizedCallback;
+import xueLi.gamengine.utils.callbacks.CursorPosCallback;
+import xueLi.gamengine.utils.callbacks.DisplaySizedCallback;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -22,6 +23,7 @@ public class Display {
 	private String mainTitle;
 
 	private DisplaySizedCallback sizedCallback;
+	private CursorPosCallback cursorPosCallback;
 
 	public boolean running = false;
 
@@ -43,7 +45,7 @@ public class Display {
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 		// 采样次数
-		// glfwWindowHint(GLFW_SAMPLES, 4);
+		glfwWindowHint(GLFW_SAMPLES, 4);
 
 		// 创建窗口
 		window = glfwCreateWindow(width, height, title, 0, 0);
@@ -72,8 +74,10 @@ public class Display {
 		GL11.glEnable(GL11.GL_LINE_SMOOTH);
 		GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST);
 		// 启用点的抗锯齿
-		// GL11.glEnable(GL11.GL_POINT_SMOOTH);
-		// GL11.glHint(GL11.GL_POINT_SMOOTH_HINT,GL11.GL_NICEST);
+		GL11.glEnable(GL11.GL_POINT_SMOOTH);
+		GL11.glHint(GL11.GL_POINT_SMOOTH_HINT,GL11.GL_NICEST);
+		
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
 
 		return true;
 	}
@@ -81,6 +85,11 @@ public class Display {
 	public void setSizedCallback(DisplaySizedCallback callback) {
 		glfwSetWindowSizeCallback(window, callback);
 		this.sizedCallback = callback;
+	}
+	
+	public void setCursorPosCallback(CursorPosCallback callback) {
+		glfwSetCursorPosCallback(window, callback);
+		this.cursorPosCallback = callback;
 	}
 
 	public void showWindow() {
@@ -118,6 +127,14 @@ public class Display {
 
 	public float getScale() {
 		return sizedCallback.scale;
+	}
+	
+	public int getMouseX() {
+		return (int)cursorPosCallback.mouseX;
+	}
+	
+	public int getMouseY() {
+		return (int)cursorPosCallback.mouseY;
 	}
 
 	public void destroy() {

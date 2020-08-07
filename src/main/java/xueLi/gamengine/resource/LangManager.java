@@ -45,9 +45,9 @@ public class LangManager extends IResource {
 	public void setLang(String name) {
 		LanguageFile languageFile = langFileMap.get(name);
 		if (languageFile == null)
-			xueLi.gamengine.utils.Logger.info("Lang: Failed to set Lang File: " + name + " Keep origin.");
+			Logger.info("Lang: Failed to set Lang File: " + name + " Keep origin.");
 		else {
-			xueLi.gamengine.utils.Logger.info("Lang: set Lang File: " + name);
+			Logger.info("Lang: set Lang File: " + name);
 			this.currentLanguageFile = languageFile;
 		}
 	}

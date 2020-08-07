@@ -95,6 +95,8 @@ public class TextureManager implements Closeable {
 		Set<Entry<String, JsonElement>> entrys = loadObject.entrySet();
 		float progressPerElement = (endValue - startValue) / entrys.size();
 		int count = 0;
+		
+		String loading_messageString = textView.getText();
 
 		for (Entry<String, JsonElement> entry : entrys) {
 			loadTexture(entry.getKey(), entry.getValue(), false);
@@ -102,7 +104,7 @@ public class TextureManager implements Closeable {
 			++count;
 			progressBar.setProgress(startValue + progressPerElement * count);
 
-			textView.setText("Loading... : " + entry.getKey());
+			textView.setText(loading_messageString + " - " + entry.getKey());
 
 		}
 		;

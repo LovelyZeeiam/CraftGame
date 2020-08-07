@@ -1,4 +1,4 @@
-package xueLi.gamengine.utils.display;
+package xueLi.gamengine.utils.callbacks;
 
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL11;
@@ -22,10 +22,10 @@ public abstract class DisplaySizedCallback extends GLFWWindowSizeCallback {
 
 		GL11.glViewport(0, 0, width, height);
 
-		sized(width, height);
+		sized();
 
 	}
 
-	public abstract void sized(int width, int height);
+	public abstract void sized();
 
 }

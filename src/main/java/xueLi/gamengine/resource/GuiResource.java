@@ -12,7 +12,6 @@ import java.util.Map.Entry;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NanoVG;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
@@ -21,6 +20,7 @@ import com.google.gson.JsonSyntaxException;
 
 import xueLi.gamengine.gui.AnimationWait;
 import xueLi.gamengine.gui.GUI;
+import xueLi.gamengine.gui.GUIButton;
 import xueLi.gamengine.gui.GUIImageView;
 import xueLi.gamengine.gui.GUIProgressBar;
 import xueLi.gamengine.gui.GUITextView;
@@ -43,8 +43,6 @@ public class GuiResource extends IResource {
 		this.real_path = pathString + "gui/";
 
 	}
-
-	private Gson gson = new Gson();
 
 	public HashMap<String, GUI> guisHashMap = new HashMap<String, GUI>();
 
@@ -77,6 +75,8 @@ public class GuiResource extends IResource {
 
 		int count = 0;
 		float progressPerElement = (endValue - startValue) / guiFiles.size();
+		
+		String loading_textString = textView.getText();
 
 		for (File f : guiFiles) {
 			loadGui(f.getName(), langManager);
@@ -84,7 +84,7 @@ public class GuiResource extends IResource {
 			++count;
 			progressBar.setProgress(startValue + progressPerElement * count);
 
-			textView.setText("Loading... : " + f.getName());
+			textView.setText(loading_textString + " - " + f.getName());
 
 		}
 
@@ -189,6 +189,23 @@ public class GuiResource extends IResource {
 					imageView = new GUIImageView(widgetPosX, widgetPosY, widgetWidth, widgetHeight, textureID);
 				imageView.animations = animations;
 				gui.widgets.put(nameString, imageView);
+
+				break;
+			case "button":
+				String textureString1 = widgetJsonObject.get("texture").getAsString();
+				int textureID1 = textureManager.getTexture(textureString1).id;
+				
+				// 按钮的选中框
+				JsonElement chosenBorderJsonElement = widgetJsonObject.get("outline");
+				JsonObject chosenBorderJsonObject = chosenBorderJsonElement.getAsJsonObject();
+				JsonArray chosenBorderColorArray = chosenBorderJsonObject.get("color").getAsJsonArray();
+				NVGColor chosenBorderColor = loadColor(chosenBorderColorArray);
+				int chosenBorderWidth = chosenBorderJsonObject.get("width").getAsInt();
+				
+				GUIButton button = new GUIButton(widgetPosX, widgetPosY, widgetWidth, widgetHeight, textureID1,
+						chosenBorderColor, chosenBorderWidth);
+				button.animations = animations;
+				gui.widgets.put(nameString, button);
 
 				break;
 			case "progress_bar":

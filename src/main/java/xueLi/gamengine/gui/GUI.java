@@ -8,7 +8,7 @@ public class GUI {
 
 	public String titleString;
 	public NVGColor backgroundColor;
-
+	
 	public HashMap<String, GUIWidget> widgets = new HashMap<String, GUIWidget>();
 
 	public GUI(String titleString) {
