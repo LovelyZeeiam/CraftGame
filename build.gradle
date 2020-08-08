@@ -84,7 +84,7 @@ version 'alpha-SNAPSHOT'
 
 jar {
 	manifest {
-        attributes 'Implementation-Title': 'Application',
+        attributes 'Implementation-Title': 'CraftGame',
                 'Implementation-Version': version,
                 'Main-Class': 'xueLi.craftGame.Main'
     }
