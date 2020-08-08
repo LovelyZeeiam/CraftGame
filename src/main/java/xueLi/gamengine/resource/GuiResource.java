@@ -75,7 +75,7 @@ public class GuiResource extends IResource {
 
 		int count = 0;
 		float progressPerElement = (endValue - startValue) / guiFiles.size();
-		
+
 		String loading_textString = textView.getText();
 
 		for (File f : guiFiles) {
@@ -192,18 +192,26 @@ public class GuiResource extends IResource {
 
 				break;
 			case "button":
-				String textureString1 = widgetJsonObject.get("texture").getAsString();
-				int textureID1 = textureManager.getTexture(textureString1).id;
-				
+				JsonElement label = widgetJsonObject.get("text");
+				String labelString = null;
+				EvalableFloat textSize = null;
+				NVGColor textColor = null;
+				if (label != null) {
+					labelString = langManager.getStringFromLangMap(label.getAsString());
+					textSize = new EvalableFloat(widgetJsonObject.get("text_size").getAsString());
+					textColor = loadColor(widgetJsonObject.getAsJsonArray("text_color"));
+					
+				}
+
 				// 按钮的选中框
 				JsonElement chosenBorderJsonElement = widgetJsonObject.get("outline");
 				JsonObject chosenBorderJsonObject = chosenBorderJsonElement.getAsJsonObject();
-				JsonArray chosenBorderColorArray = chosenBorderJsonObject.get("color").getAsJsonArray();
-				NVGColor chosenBorderColor = loadColor(chosenBorderColorArray);
+				NVGColor chosenBorderColor = loadColor(chosenBorderJsonObject.get("color").getAsJsonArray());
 				int chosenBorderWidth = chosenBorderJsonObject.get("width").getAsInt();
+				NVGColor chosenTextColor = loadColor(chosenBorderJsonObject.get("text_color").getAsJsonArray());
 				
-				GUIButton button = new GUIButton(widgetPosX, widgetPosY, widgetWidth, widgetHeight, textureID1,
-						chosenBorderColor, chosenBorderWidth);
+				GUIButton button = new GUIButton(widgetPosX, widgetPosY, widgetWidth, widgetHeight, labelString,textSize,textColor,
+						chosenBorderColor, chosenBorderWidth, chosenTextColor);
 				button.animations = animations;
 				gui.widgets.put(nameString, button);
 
@@ -226,10 +234,10 @@ public class GuiResource extends IResource {
 			case "text_view":
 				// text_size
 				String textSizeString = widgetJsonObject.get("text_size").getAsString();
-				EvalableFloat textSize = new EvalableFloat(textSizeString);
+				EvalableFloat textSize1 = new EvalableFloat(textSizeString);
 				// text_color
 				JsonArray textColorJsonArray = widgetJsonObject.get("text_color").getAsJsonArray();
-				NVGColor textColor = loadColor(textColorJsonArray);
+				NVGColor textColor1 = loadColor(textColorJsonArray);
 				// text
 				String textString = widgetJsonObject.get("text").getAsString();
 				textString = langManager.getStringFromLangMap(textString);
@@ -261,8 +269,8 @@ public class GuiResource extends IResource {
 				else
 					align = NanoVG.NVG_ALIGN_LEFT;
 
-				GUITextView textView = new GUITextView(widgetPosX, widgetPosY, widgetWidth, widgetHeight, textSize,
-						textColor, align);
+				GUITextView textView = new GUITextView(widgetPosX, widgetPosY, widgetWidth, widgetHeight, textSize1,
+						textColor1, align);
 				textView.setText(textString);
 				textView.animations = animations;
 				gui.widgets.put(nameString, textView);

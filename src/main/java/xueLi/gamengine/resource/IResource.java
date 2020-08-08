@@ -37,13 +37,13 @@ public abstract class IResource implements Closeable {
 		}
 		return files;
 	}
-	
+
 	public static String readAllToString(File file) {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			StringBuilder builder = new StringBuilder();
 			String lineString;
-			while((lineString = reader.readLine()) != null) {
+			while ((lineString = reader.readLine()) != null) {
 				builder.append(lineString).append("\n");
 			}
 			reader.close();
@@ -52,9 +52,9 @@ public abstract class IResource implements Closeable {
 			e.printStackTrace();
 			return null;
 		}
-		
+
 	}
-	
+
 	public static Gson gson = new Gson();
 
 	public String getPathString() {

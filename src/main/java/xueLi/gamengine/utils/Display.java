@@ -75,8 +75,8 @@ public class Display {
 		GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST);
 		// 启用点的抗锯齿
 		GL11.glEnable(GL11.GL_POINT_SMOOTH);
-		GL11.glHint(GL11.GL_POINT_SMOOTH_HINT,GL11.GL_NICEST);
-		
+		GL11.glHint(GL11.GL_POINT_SMOOTH_HINT, GL11.GL_NICEST);
+
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 
 		return true;
@@ -86,7 +86,7 @@ public class Display {
 		glfwSetWindowSizeCallback(window, callback);
 		this.sizedCallback = callback;
 	}
-	
+
 	public void setCursorPosCallback(CursorPosCallback callback) {
 		glfwSetCursorPosCallback(window, callback);
 		this.cursorPosCallback = callback;
@@ -128,13 +128,13 @@ public class Display {
 	public float getScale() {
 		return sizedCallback.scale;
 	}
-	
+
 	public int getMouseX() {
-		return (int)cursorPosCallback.mouseX;
+		return (int) cursorPosCallback.mouseX;
 	}
-	
+
 	public int getMouseY() {
-		return (int)cursorPosCallback.mouseY;
+		return (int) cursorPosCallback.mouseY;
 	}
 
 	public void destroy() {

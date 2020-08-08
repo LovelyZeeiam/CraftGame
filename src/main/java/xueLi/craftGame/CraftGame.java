@@ -38,7 +38,7 @@ public class CraftGame implements Runnable {
 		langManager.setLang("zh-ch.lang");
 
 		String game_name = langManager.getStringFromLangMap("#game.name");
-		
+
 		Options options = new Options("res/");
 		options.load();
 
@@ -49,7 +49,7 @@ public class CraftGame implements Runnable {
 
 		Display display = new Display();
 		display.create(width, height, game_name);
-		
+
 		ShaderResource shaderResource = new ShaderResource("res/");
 		// 加载着色器
 		shaderResource.load();
@@ -77,32 +77,41 @@ public class CraftGame implements Runnable {
 		guiResource.loadGui("game_loading.json", langManager);
 
 		guiManager.setResourceSource(guiResource);
+
 		GUI loading_gui = guiManager.setFadeinGui("game_loading.json");
+
 		GUIImageView loading_imageView = (GUIImageView) loading_gui.widgets.get("loading_splash");
 		GUIProgressBar loading_ProgressBar = (GUIProgressBar) loading_gui.widgets.get("loading_progress_bar");
 		GUITextView loading_TextView = (GUITextView) loading_gui.widgets.get("loading_message");
 
+		// 加载材质
+		textureManager.load(loading_TextView, loading_ProgressBar, 0.0f, 0.25f);
+
 		Thread gameLogicThread = new Thread(() -> {
 			/* 资源加载 */
 			
-			// TODO: 将默认的loading文字传入到load方法里面
+			String loading_messageString = loading_TextView.getText();
 
 			// 设置加载动画
 			loading_imageView.setAnimation("loading");
-			// 加载材质
-			textureManager.load(loading_TextView, loading_ProgressBar, 0.0f, 0.25f);
 			// 加载GUI
 			guiResource.loadGui(langManager, loading_TextView, loading_ProgressBar, 0.25f, 1.00f);
+			
+			loading_TextView.setText(loading_messageString);
+			
 			// 加载options
-			
+
 			// 加载方块
-			
+
 			// 加载物品
 
 			// 等待直到进度条到底
 			loading_TextView.setText("Loading...");
 			loading_ProgressBar.waitUtilProgressFull();
 			loading_TextView.setText("Loaded successfully~");
+
+			// 换界面!
+			guiManager.setFadeinGui("main_menu.json");
 
 			/* Game Logic */
 
@@ -116,7 +125,6 @@ public class CraftGame implements Runnable {
 
 		while (display.running) {
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
-			GL11.glClearColor(1,1,1,1);
 
 			// 绘制GUI
 			guiManager.draw();
@@ -134,7 +142,7 @@ public class CraftGame implements Runnable {
 			options.close();
 			langManager.close();
 			shaderResource.close();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

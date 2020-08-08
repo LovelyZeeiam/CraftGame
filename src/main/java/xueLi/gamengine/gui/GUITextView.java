@@ -30,7 +30,7 @@ public class GUITextView extends GUIWidget {
 		this.align = align;
 
 	}
-	
+
 	public String getText() {
 		return text;
 	}

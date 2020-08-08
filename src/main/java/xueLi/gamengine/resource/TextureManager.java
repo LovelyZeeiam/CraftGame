@@ -16,6 +16,7 @@ import com.google.gson.JsonSyntaxException;
 import xueLi.gamengine.gui.GUIManager;
 import xueLi.gamengine.gui.GUIProgressBar;
 import xueLi.gamengine.gui.GUITextView;
+import xueLi.gamengine.utils.Logger;
 
 public class TextureManager implements Closeable {
 
@@ -46,8 +47,12 @@ public class TextureManager implements Closeable {
 		String pathString = this.resourcePath + element.getAsString();
 		if (name.startsWith("gui.")) {
 			int id = guiRenderer.loadTexture(pathString);
-			Texture texture = new Texture(id, preload, true);
-			textures.put(name, texture);
+			if (id == 0) {
+				Logger.error("[Texture] Can't load texture: " + name);
+			} else {
+				Texture texture = new Texture(id, preload, true);
+				textures.put(name, texture);
+			}
 		} else {
 			// TODO: 一般材质读取
 
@@ -95,7 +100,7 @@ public class TextureManager implements Closeable {
 		Set<Entry<String, JsonElement>> entrys = loadObject.entrySet();
 		float progressPerElement = (endValue - startValue) / entrys.size();
 		int count = 0;
-		
+
 		String loading_messageString = textView.getText();
 
 		for (Entry<String, JsonElement> entry : entrys) {

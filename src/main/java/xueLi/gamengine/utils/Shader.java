@@ -87,9 +87,9 @@ public class Shader {
 	}
 
 	private HashMap<String, Integer> uniforms = new HashMap<String, Integer>();
-	
+
 	public int getUnifromLocation(String name) {
-		int location = uniforms.containsKey(name) ? uniforms.get(name) : GL20.glGetUniformLocation(this.shaderID, name);;
+		int location = uniforms.containsKey(name) ? uniforms.get(name) : GL20.glGetUniformLocation(this.shaderID, name);
 		if (location == -1)
 			System.err.println("Can't find uniform location: " + name);
 		return location;
@@ -107,11 +107,11 @@ public class Shader {
 	public void setUniformVector3(int loc, Vector3f v) {
 		GL20.glUniform3f(loc, v.x, v.y, v.z);
 	}
-	
+
 	public void setInt(int loc, int v) {
 		GL20.glUniform1i(loc, v);
 	}
-	
+
 	public void setFloat(int loc, float v) {
 		GL20.glUniform1f(loc, v);
 	}

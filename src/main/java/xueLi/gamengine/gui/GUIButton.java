@@ -1,22 +1,56 @@
 package xueLi.gamengine.gui;
 
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgFill;
-import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
-import static org.lwjgl.nanovg.NanoVG.nvgImagePattern;
-import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
+import static org.lwjgl.nanovg.NanoVG.*;
 
 import org.lwjgl.nanovg.NVGColor;
+import org.lwjgl.nanovg.NVGPaint;
 
 import xueLi.gamengine.utils.Display;
 import xueLi.gamengine.utils.EvalableFloat;
 
-public class GUIButton extends GUIImageView {
+public class GUIButton extends GUIWidget {
+	
+	protected static NVGPaint paint;
 
-	public GUIButton(EvalableFloat x, EvalableFloat y, EvalableFloat width, EvalableFloat height, int textureID,
-			NVGColor borderColor, int borderWidth) {
-		super(x, y, width, height, textureID, borderColor, borderWidth);
+	static {
+		paint = NVGPaint.create();
+
+	}
+
+	protected int textureID;
+	private String labelString = null;
+	
+	private EvalableFloat textSize;
+	private NVGColor textColor;
+	private NVGColor clickedTextColor;
+	
+	private static NVGColor BLACK_COLOR = NVGColor.create();
+	private static NVGColor GREY_COLOR = NVGColor.create();
+	private static NVGColor ANOTHER_GREY_Color = NVGColor.create();
+	private static NVGColor Darker_GREY_Color = NVGColor.create();
+	
+	static {
+		nvgRGB((byte)0x0, (byte)0x0, (byte)0x0, BLACK_COLOR);
+		nvgRGB((byte)0xAAAAAA, (byte)0xAAAAAA, (byte)0xAAAAAA, GREY_COLOR);
+		nvgRGB((byte)0x6F6F6F, (byte)0x6F6F6F, (byte)0x6F6F6F, ANOTHER_GREY_Color);
+		nvgRGBA((byte)0x0, (byte)0x0, (byte)0x0, (byte)0x415411, Darker_GREY_Color);
 		
+	}
+
+	public GUIButton(EvalableFloat x, EvalableFloat y, EvalableFloat width, EvalableFloat height, String label, EvalableFloat textSize,NVGColor textColor,
+			NVGColor borderColor, int borderWidth, NVGColor clickedTextColor) {
+		super(x, y, width, height, borderColor, borderWidth);
+		this.labelString = label;
+		this.textSize = textSize;
+		this.clickedTextColor = clickedTextColor;
+		this.textColor = textColor;
+		
+		if(textSize != null) {
+			textSize.eval();	
+		}
+		
+		
+
 	}
 
 	@Override
@@ -24,20 +58,68 @@ public class GUIButton extends GUIImageView {
 		paint.clear();
 
 		super.anim_tick();
+
+		// 边框
+		nvgBeginPath(nvg);
+		nvgMoveTo(nvg, real_x, real_y);
+		nvgLineTo(nvg, real_x + real_width, real_y);
+		nvgLineTo(nvg, real_x + real_width, real_y + real_height);
+		nvgLineTo(nvg, real_x, real_y + real_height);
+		nvgLineTo(nvg, real_x, real_y);
+		nvgFillColor(nvg, BLACK_COLOR);
+		nvgFill(nvg);
+		
+		nvgBeginPath(nvg);
+		nvgMoveTo(nvg, real_x + 3, real_y + 3);
+		nvgLineTo(nvg, real_x + real_width - 3, real_y + 3);
+		nvgLineTo(nvg, real_x + real_width - 3, real_y + real_height - 3);
+		nvgLineTo(nvg, real_x + 3, real_y + real_height - 3);
+		nvgLineTo(nvg, real_x + 3, real_y + 3);
+		nvgFillColor(nvg, GREY_COLOR);
+		nvgFill(nvg);
+		
+		nvgBeginPath(nvg);
+		nvgMoveTo(nvg, real_x + 5, real_y + 5);
+		nvgLineTo(nvg, real_x + real_width - 5, real_y + 5);
+		nvgLineTo(nvg, real_x + real_width - 5, real_y + real_height - 5);
+		nvgLineTo(nvg, real_x + 5, real_y + real_height - 5);
+		nvgLineTo(nvg, real_x + 5, real_y + 5);
+		nvgFillColor(nvg, ANOTHER_GREY_Color);
+		nvgFill(nvg);
+		
+		nvgBeginPath(nvg);
+		nvgMoveTo(nvg, real_x + real_width, real_y + real_height);
+		nvgLineTo(nvg, real_x, real_y + real_height);
+		nvgLineTo(nvg, real_x, real_y + real_height - 13);
+		nvgLineTo(nvg, real_x + real_width, real_y + real_height - 13);
+		nvgLineTo(nvg, real_x + real_width, real_y + real_height);
+		nvgFillColor(nvg, Darker_GREY_Color);
+		nvgFill(nvg);
 		
 		int cursorX = Display.currentDisplay.getMouseX();
 		int cursorY = Display.currentDisplay.getMouseY();
-		if(cursorX > real_x & cursorX < real_x + real_width & cursorY > real_y & cursorY < real_y + real_height) {
+
+		if (cursorX > real_x & cursorX < real_x + real_width & cursorY > real_y & cursorY < real_y + real_height) {
 			super.drawBorder(nvg);
+			nvgFillColor(nvg, clickedTextColor);
+			
+		} else {
+			nvgFillColor(nvg, textColor);
 			
 		}
 		
-		nvgImagePattern(nvg, real_x, real_y, real_width, real_height, 0, textureID, 1, paint);
-		nvgBeginPath(nvg);
-		nvgRoundedRect(nvg, real_x, real_y, real_width, real_height, 0);
-		nvgFillPaint(nvg, paint);
-		nvgFill(nvg);
+		nvgFontSize(nvg, textSize.value);
+		nvgFontFace(nvg, "simhei");
+		nvgTextAlign(nvg, NVG_ALIGN_CENTER);
+		nvgText(nvg, real_x + real_width / 2, real_y + real_height / 2 + textSize.value / 4, labelString);
 		
+
+	}
+	
+	@Override
+	public void size() {
+		textSize.eval();
+		super.size();
 	}
 
 }

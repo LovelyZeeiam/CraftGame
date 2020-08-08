@@ -3,6 +3,7 @@ package xueLi.gamengine.gui;
 import xueLi.gamengine.resource.GuiResource;
 import xueLi.gamengine.resource.Options;
 import xueLi.gamengine.utils.Display;
+import xueLi.gamengine.utils.FrameBuffer;
 import xueLi.gamengine.utils.Logger;
 import xueLi.gamengine.utils.Shader;
 
@@ -10,7 +11,6 @@ import static org.lwjgl.nanovg.NanoVGGL3.*;
 
 import java.nio.IntBuffer;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.nanovg.NVGLUFramebuffer;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL15;
@@ -26,21 +26,19 @@ public class GUIManager {
 
 	// 当前GUI
 	private GUI currentGui;
-	private NVGLUFramebuffer currentFramebuffer;
-	private int currentFBO_tbo;
+	private FrameBuffer currentFrameBuffer;
 	// 即将淡入的GUI
 	private GUI fadeInGui;
-	private NVGLUFramebuffer fadeInFramebuffer;
-	private int fadeInFBO_tbo;
+	private FrameBuffer fadeInFrameBuffer;
 	// 淡入指数
 	private float fade = 0.0f;
 	// 控制淡入淡出的着色器
 	private Shader guiShader;
 	// 锵 ~ GUIの标准素养 之 全屏展示
-	private static int vao,vbo,tpo;
+	private static int vao, vbo, tpo;
 	// GUI的fade时间 让gui有一个逐渐显示的过程
 	private long fade_duration;
-	
+
 	static long nvg;
 
 	static {
@@ -48,24 +46,14 @@ public class GUIManager {
 		if (nvg == 0) {
 			Logger.error(new Throwable("[GUI] Emm, You don't want a game without gui, do u?"));
 		}
-		
+
 		IntBuffer verticesBuffer = BufferUtils.createIntBuffer(8);
-		verticesBuffer.put(new int[] {
-			1,1,
-			1,-1,
-			-1,-1,
-			-1,1,
-		});
+		verticesBuffer.put(new int[] { 1, 1, 1, -1, -1, -1, -1, 1, });
 		verticesBuffer.flip();
 		IntBuffer texCoordBuffer = BufferUtils.createIntBuffer(8);
-		texCoordBuffer.put(new int[] {
-			1,1,
-			1,0,
-			0,0,
-			0,1,
-		});
+		texCoordBuffer.put(new int[] { 1, 1, 1, 0, 0, 0, 0, 1, });
 		texCoordBuffer.flip();
-		
+
 		vao = GL30.glGenVertexArrays();
 		GL30.glBindVertexArray(vao);
 		vbo = GL15.glGenBuffers();
@@ -80,45 +68,30 @@ public class GUIManager {
 		GL20.glEnableVertexAttribArray(1);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 		GL30.glBindVertexArray(0);
-		
-		
+
 	}
 
 	public GUIManager(Display display, Options options, Shader guiShader) {
 		this.display = display;
 		this.guiShader = guiShader;
 		this.options = options;
-		
+
 		guiShader.use();
 		guiShader.setInt(guiShader.getUnifromLocation("texture1"), 0);
 		guiShader.setInt(guiShader.getUnifromLocation("texture2"), 1);
 		guiShader.unbind();
-		
+
 		fade_duration = this.options.get("fade_duration").getAsLong();
-		
-	}
-	
-	private void createFrameBuffer() {
-		currentFramebuffer = nvgluCreateFramebuffer(nvg, display.getWidth(), display.getHeight(),NVG_IMAGE_NEAREST);
-		currentFBO_tbo = currentFramebuffer.texture();
-		
-		fadeInFramebuffer = nvgluCreateFramebuffer(nvg, display.getWidth(), display.getHeight(),NVG_IMAGE_NEAREST);
-		fadeInFBO_tbo = fadeInFramebuffer.texture();
-		
-	}
-	
-	private void deleteFrameBuffer() {
-		if(currentFramebuffer != null)
-			nvgluDeleteFramebuffer(nvg, currentFramebuffer);
-		if(fadeInFramebuffer != null)
-			nvgluDeleteFramebuffer(nvg, fadeInFramebuffer);
-		
+
+		currentFrameBuffer = new FrameBuffer();
+		fadeInFrameBuffer = new FrameBuffer();
+
 	}
 
 	public int loadTexture(String path) {
 		return nvgCreateImage(nvg, path, NVG_IMAGE_GENERATE_MIPMAPS);
 	}
-	
+
 	private GuiResource resource;
 
 	// 字体ID
@@ -132,92 +105,102 @@ public class GUIManager {
 
 	public GUI setGui(String guiName) {
 		this.currentGui = resource.getGui(guiName);
+		this.currentGui.size();
 		display.setSubtitle(currentGui.titleString);
 		return currentGui;
 	}
-	
+
 	private long fadeStartTime = -1;
-	
+
 	public GUI setFadeinGui(String guiName) {
 		this.fadeInGui = resource.getGui(guiName);
-		this.fade = 0.0f;
+		this.fadeInGui.size();
 		return fadeInGui;
 	}
 
 	public void draw() {
 		/**
-		 * 思路:
-		 * 1. 将2个GUI分别渲染到Frame Buffer内部
-		 * 2. 向着色器提供mix比例
-		 * 
+		 * 思路: 1. 将2个GUI分别渲染到Frame Buffer内部 2. 向着色器提供mix比例
 		 */
-		if (currentGui != null){
-			nvgluBindFramebuffer(nvg, currentFramebuffer);
+		if (currentGui != null) {
+			currentFrameBuffer.bind();
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
-			GL11.glClearColor(currentGui.backgroundColor.r(), currentGui.backgroundColor.g(),
-					currentGui.backgroundColor.b(), currentGui.backgroundColor.a());
 			nvgBeginFrame(nvg, display.getWidth(), display.getHeight(), display.getRatio());
+
+			nvgBeginPath(nvg);
+			nvgRect(nvg, 0, 0, display.getWidth(), display.getHeight());
+			nvgFillColor(nvg, currentGui.backgroundColor);
+			nvgFill(nvg);
+
 			currentGui.draw(nvg);
+			
 			nvgEndFrame(nvg);
-			nvgluBindFramebuffer(nvg, null);
+			currentFrameBuffer.unbind();
+
 			
-			GL13.glActiveTexture(GL13.GL_TEXTURE0);
-			GL13.glBindTexture(GL13.GL_TEXTURE_2D, currentFBO_tbo);
-			
+
 		}
-		
-		if(fadeInGui != null) {
-			nvgluBindFramebuffer(nvg, fadeInFramebuffer);
+
+		if (fadeInGui != null) {
+			fadeInFrameBuffer.bind();
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
-			GL11.glClearColor(fadeInGui.backgroundColor.r(), fadeInGui.backgroundColor.g(),
-					fadeInGui.backgroundColor.b(), fadeInGui.backgroundColor.a());
 			nvgBeginFrame(nvg, display.getWidth(), display.getHeight(), display.getRatio());
+
+			nvgBeginPath(nvg);
+			nvgRect(nvg, 0, 0, display.getWidth(), display.getHeight());
+			nvgFillColor(nvg, fadeInGui.backgroundColor);
+			nvgFill(nvg);
+
 			fadeInGui.draw(nvg);
+
 			nvgEndFrame(nvg);
-			nvgluBindFramebuffer(nvg, null);
-			
-			GL13.glActiveTexture(GL13.GL_TEXTURE1);
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, fadeInFBO_tbo);
-			
-			if(this.fadeStartTime == -1) {
+			fadeInFrameBuffer.unbind();
+
+			if (this.fadeStartTime == -1) {
 				this.fadeStartTime = System.currentTimeMillis();
 			}
-			
-			fade = (float)(System.currentTimeMillis() - fadeStartTime) / fade_duration;
-			
-		}	
-		
+
+			fade = (float) (System.currentTimeMillis() - fadeStartTime) / fade_duration;
+
+		}
+
 		guiShader.use();
-		GL30.glBindVertexArray(vao);
 		guiShader.setFloat(guiShader.getUnifromLocation("mix_value"), fade);
+		
+		GL13.glActiveTexture(GL13.GL_TEXTURE0);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, currentFrameBuffer.getTbo());
+		GL13.glActiveTexture(GL13.GL_TEXTURE1);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, fadeInFrameBuffer.getTbo());
+		
+		GL30.glBindVertexArray(vao);
 		GL11.glDrawArrays(GL11.GL_TRIANGLE_FAN, 0, 4);
 		GL30.glBindVertexArray(0);
 		guiShader.unbind();
-		
-		if(fade >= 1) {
+
+		if (fade >= 1) {
 			this.currentGui = fadeInGui;
 			this.fadeInGui = null;
 			this.fadeStartTime = -1;
 			this.fade = 0.0f;
 			display.setSubtitle(currentGui.titleString);
-			
+
 		}
-		
+
 	}
 
 	public void size() {
-		deleteFrameBuffer();
-		createFrameBuffer();
+		currentFrameBuffer.size(display.getWidth(), display.getHeight());
+		fadeInFrameBuffer.size(display.getWidth(), display.getHeight());
 
 		if (currentGui != null) {
 			currentGui.size();
-			
+
 		}
-		if(fadeInGui != null) {
+		if (fadeInGui != null) {
 			fadeInGui.size();
-			
+
 		}
-		
+
 	}
 
 	public void destroy() {

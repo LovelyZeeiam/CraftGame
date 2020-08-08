@@ -3,6 +3,10 @@ game.name=CraftGame
 game.version=alpha
 #Game Loading
 loading_message.loading=Loading~
+#Main Menu
+main_menu.single_player=Single Player
+main_menu.multi_player=Multiplayer
+main_menu.setting=Setting
 
 
 

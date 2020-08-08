@@ -11,12 +11,16 @@ public abstract class DisplaySizedCallback extends GLFWWindowSizeCallback {
 
 	@Override
 	public void invoke(long window, int width, int height) {
-		this.width = width;
-		this.height = height;
+		if (width != 0)
+			this.width = width;
+		if (height != 0)
+			this.height = height;
 		this.ratio = (float) width / height;
 
-		if (width < 800 || height < 600)
-			scale = 0.3f;
+		if (width < 400 || height < 300)
+			scale = 0.1f;
+		else if(width < 1000 || height < 600)
+			scale = 0.4f;
 		else
 			scale = 1.0f;
 
