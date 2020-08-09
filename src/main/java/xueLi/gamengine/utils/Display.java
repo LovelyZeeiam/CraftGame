@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL13;
 
 import xueLi.gamengine.utils.callbacks.CursorPosCallback;
 import xueLi.gamengine.utils.callbacks.DisplaySizedCallback;
+import xueLi.gamengine.utils.callbacks.MouseButtonCallback;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -24,6 +25,7 @@ public class Display {
 
 	private DisplaySizedCallback sizedCallback;
 	private CursorPosCallback cursorPosCallback;
+	private MouseButtonCallback mouseButtonCallback;
 
 	public boolean running = false;
 
@@ -91,6 +93,11 @@ public class Display {
 		glfwSetCursorPosCallback(window, callback);
 		this.cursorPosCallback = callback;
 	}
+	
+	public void setMouseButtonCallback(MouseButtonCallback callback) {
+		glfwSetMouseButtonCallback(window, callback);
+		this.mouseButtonCallback = callback;
+	}
 
 	public void showWindow() {
 		glfwShowWindow(window);
@@ -135,6 +142,10 @@ public class Display {
 
 	public int getMouseY() {
 		return (int) cursorPosCallback.mouseY;
+	}
+	
+	public boolean isMouseDown(int button) {
+		return this.mouseButtonCallback.buttons[button];
 	}
 
 	public void destroy() {

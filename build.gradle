@@ -66,8 +66,6 @@ dependencies {
     compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-linux'
     compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-macos'
 
-    // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
     
 }
 

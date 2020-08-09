@@ -20,6 +20,8 @@ public abstract class GUIWidget implements AutoCloseable {
 
 	public HashMap<String, IAnimation> animations;
 	private IAnimation currentAnimation = null;
+	
+	public boolean mouseClicked = false;
 
 	public GUIWidget(EvalableFloat x, EvalableFloat y, EvalableFloat width, EvalableFloat height) {
 		this.x = x;
@@ -64,6 +66,8 @@ public abstract class GUIWidget implements AutoCloseable {
 	}
 
 	protected void anim_tick() {
+		mouseClicked = false;
+		
 		real_x = x.value;
 		real_y = y.value;
 		real_width = width.value;
@@ -104,6 +108,12 @@ public abstract class GUIWidget implements AutoCloseable {
 			Logger.warn("[GUI] Didn't found animation: " + key + "!");
 		}
 	}
+	
+	public static interface OnClickListener {
+		public void onClick(int button);
+	}
+	
+	public OnClickListener onClickListener = null;
 
 	@Override
 	public void close() throws Exception {

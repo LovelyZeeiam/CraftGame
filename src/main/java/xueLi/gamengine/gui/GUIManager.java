@@ -38,6 +38,9 @@ public class GUIManager {
 	private static int vao, vbo, tpo;
 	// GUI的fade时间 让gui有一个逐渐显示的过程
 	private long fade_duration;
+	
+	// 上次鼠标点在哪个widget上面 在输入文字的时候会用到
+	private GUIWidget focusedWidget;
 
 	static long nvg;
 
@@ -201,6 +204,21 @@ public class GUIManager {
 
 		}
 
+	}
+	
+	public void mouseClicked(int button) {
+		focusedWidget = null;
+		if(currentGui != null) {
+			for(GUIWidget widget : currentGui.widgets.values()) {
+				if (display.getMouseX() > widget.real_x & display.getMouseX() < widget.real_x + widget.real_width & display.getMouseY() > widget.real_y & display.getMouseY() < widget.real_y + widget.real_height) {
+					widget.mouseClicked = true;
+					if(widget.onClickListener != null)
+						widget.onClickListener.onClick(button);
+					focusedWidget = widget;
+				}
+			}
+		}
+		
 	}
 
 	public void destroy() {

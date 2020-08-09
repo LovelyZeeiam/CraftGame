@@ -1,6 +1,8 @@
 package xueLi.craftGame;
 
 import java.io.IOException;
+
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import xueLi.gamengine.gui.GUI;
 import xueLi.gamengine.gui.GUIImageView;
@@ -15,6 +17,7 @@ import xueLi.gamengine.resource.TextureManager;
 import xueLi.gamengine.utils.Display;
 import xueLi.gamengine.utils.callbacks.CursorPosCallback;
 import xueLi.gamengine.utils.callbacks.DisplaySizedCallback;
+import xueLi.gamengine.utils.callbacks.MouseButtonCallback;
 
 public class CraftGame implements Runnable {
 
@@ -72,6 +75,15 @@ public class CraftGame implements Runnable {
 				System.out.println(this.mouseDX + ", " + this.mouseDY);
 			}
 		});
+		display.setMouseButtonCallback(new MouseButtonCallback() {
+			@Override
+			public void invoke(long window, int button, int action, int mods) {
+				super.invoke(window, button, action, mods);
+				if(action == GLFW.GLFW_PRESS)
+					guiManager.mouseClicked(button);
+				
+			}
+		});
 
 		GuiResource guiResource = new GuiResource("res/", textureManager);
 		guiResource.loadGui("game_loading.json", langManager);
@@ -99,7 +111,21 @@ public class CraftGame implements Runnable {
 			
 			loading_TextView.setText(loading_messageString);
 			
-			// 加载options
+			// 设置监听
+			GUI mainMenuGui = guiResource.getGui("main_menu.json");
+			
+			mainMenuGui.widgets.get("single_player_button").onClickListener = (button) -> {
+				System.out.println("Single!!!");
+				
+			};
+			mainMenuGui.widgets.get("multi_player_button").onClickListener = (button) -> {
+				System.out.println("多人运♂动!!!");
+				
+			};
+			mainMenuGui.widgets.get("setting_button").onClickListener = (button) -> {
+				System.out.println("调♂整屑♂定!!!");
+				
+			};
 
 			// 加载方块
 
