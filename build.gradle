@@ -83,7 +83,7 @@ def releaseTime() {
 jar {
 	manifest {
         attributes 'Implementation-Title': 'CraftGame',
-                'Implementation-Version': "Alpha_${releaseTime()}",
+                'Implementation-Version': "Alpha_${releaseTime()}"
     }
 	
 	
