@@ -120,6 +120,15 @@
 				"win_width * 0.1"
 			],
 			"texture": "gui.logo"
+		},
+		"version": {
+			"type": "text_view",
+			"pos": [ "5.0", "win_height-5.0" ],
+			"size": [ "0.0", "0.0" ],
+			"text_color": [255,255,255,255],
+			"text_size": "20.0 * scale",
+			"align": [ "bottom", "left" ],
+			"text": "#game.version"
 		}
 	}
 }

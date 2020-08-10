@@ -137,7 +137,7 @@
 				255
 			],
 			"text_size": "20.0 * scale",
-			"align": "top",
+			"align": [ "top" ],
 			"text": "#loading_message.loading"
 		}
 	}

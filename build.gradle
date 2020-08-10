@@ -73,21 +73,17 @@ application {
     // Define the main class for the application.
     apply plugin: 'application'
     mainClassName = 'xueLi.craftGame.Main'
-    applicationDefaultJvmArgs = [
-        	'-Djava.library.path="natives/"']
 
 }
 
-version 'alpha-SNAPSHOT'
+def releaseTime() {
+  return new Date().format("yyyyMMdd", TimeZone.getTimeZone("GMT+08:00"))
+}
 
 jar {
 	manifest {
         attributes 'Implementation-Title': 'CraftGame',
-                'Implementation-Version': version,
-                'Main-Class': 'xueLi.craftGame.Main'
-    }
-    from('/') {
-		include 'res/'
+                'Implementation-Version': "Alpha_${releaseTime()}",
     }
 	
 	

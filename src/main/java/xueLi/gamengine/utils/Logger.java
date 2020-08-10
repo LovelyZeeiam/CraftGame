@@ -11,14 +11,13 @@ public class Logger {
 
 	private static void printDate() {
 		System.out.print(format.format(new Date()));
-		
+
 		// 上上一级方法der~
-		String className = Thread.currentThread().getStackTrace()[3].getClassName();//调用的类名
-        int lineNumber = Thread.currentThread().getStackTrace()[3].getLineNumber();//调用的行数
-        
-        System.out.print(" " + className + ": " + lineNumber + " ");
-        
-		
+		String className = Thread.currentThread().getStackTrace()[3].getClassName();// 调用的类名
+		int lineNumber = Thread.currentThread().getStackTrace()[3].getLineNumber();// 调用的行数
+
+		System.out.print(" " + className + ": " + lineNumber + " ");
+
 	}
 
 	public static void info(Object o) {

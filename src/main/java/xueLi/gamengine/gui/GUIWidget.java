@@ -20,7 +20,7 @@ public abstract class GUIWidget implements AutoCloseable {
 
 	public HashMap<String, IAnimation> animations;
 	private IAnimation currentAnimation = null;
-	
+
 	public boolean mouseClicked = false;
 
 	public GUIWidget(EvalableFloat x, EvalableFloat y, EvalableFloat width, EvalableFloat height) {
@@ -45,6 +45,13 @@ public abstract class GUIWidget implements AutoCloseable {
 
 	}
 
+	public GUIWidget(float real_x, float real_y, float real_width, float real_height) {
+		this.real_x = real_x;
+		this.real_y = real_y;
+		this.real_width = real_width;
+		this.real_height = real_height;
+	}
+
 	protected void drawBorder(long nvg) {
 		if (!hasBorder)
 			return;
@@ -67,11 +74,15 @@ public abstract class GUIWidget implements AutoCloseable {
 
 	protected void anim_tick() {
 		mouseClicked = false;
-		
-		real_x = x.value;
-		real_y = y.value;
-		real_width = width.value;
-		real_height = height.value;
+
+		if (x != null)
+			real_x = x.value;
+		if (y != null)
+			real_y = y.value;
+		if (width != null)
+			real_width = width.value;
+		if (height != null)
+			real_height = height.value;
 
 		if (this.currentAnimation != null) {
 			if (this.currentAnimation.tick(this)) {
@@ -88,15 +99,22 @@ public abstract class GUIWidget implements AutoCloseable {
 	public abstract void draw(long nvg);
 
 	public void size() {
-		x.eval();
-		y.eval();
-		width.eval();
-		height.eval();
-
-		real_x = x.value;
-		real_y = y.value;
-		real_width = width.value;
-		real_height = height.value;
+		if (x != null) {
+			x.eval();
+			real_x = x.value;
+		}
+		if (y != null) {
+			y.eval();
+			real_y = y.value;
+		}
+		if (width != null) {
+			width.eval();
+			real_width = width.value;
+		}
+		if (height != null) {
+			height.eval();
+			real_height = height.value;
+		}
 
 	}
 
@@ -108,11 +126,11 @@ public abstract class GUIWidget implements AutoCloseable {
 			Logger.warn("[GUI] Didn't found animation: " + key + "!");
 		}
 	}
-	
+
 	public static interface OnClickListener {
 		public void onClick(int button);
 	}
-	
+
 	public OnClickListener onClickListener = null;
 
 	@Override

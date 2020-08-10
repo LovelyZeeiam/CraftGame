@@ -19,7 +19,7 @@ public abstract class DisplaySizedCallback extends GLFWWindowSizeCallback {
 
 		if (width < 400 || height < 300)
 			scale = 0.1f;
-		else if(width < 1000 || height < 600)
+		else if (width < 1000 || height < 600)
 			scale = 0.4f;
 		else
 			scale = 1.0f;

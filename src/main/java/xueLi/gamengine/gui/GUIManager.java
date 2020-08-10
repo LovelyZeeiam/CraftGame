@@ -38,7 +38,7 @@ public class GUIManager {
 	private static int vao, vbo, tpo;
 	// GUI的fade时间 让gui有一个逐渐显示的过程
 	private long fade_duration;
-	
+
 	// 上次鼠标点在哪个widget上面 在输入文字的时候会用到
 	private GUIWidget focusedWidget;
 
@@ -84,7 +84,8 @@ public class GUIManager {
 		guiShader.setInt(guiShader.getUnifromLocation("texture2"), 1);
 		guiShader.unbind();
 
-		fade_duration = this.options.get("fade_duration").getAsLong();
+		if (options != null)
+			fade_duration = this.options.get("fade_duration").getAsLong();
 
 		currentFrameBuffer = new FrameBuffer();
 		fadeInFrameBuffer = new FrameBuffer();
@@ -102,8 +103,14 @@ public class GUIManager {
 
 	public void setResourceSource(GuiResource resource) {
 		this.resource = resource;
-		this.fontID = nvgCreateFont(nvg, "simhei", resource.getPathString() + "fonts/simhei.ttf");
 
+	}
+
+	public void setFont(String pathString) {
+		this.fontID = nvgCreateFont(nvg, "simhei", resource.getPathString() + "fonts/" + pathString);
+		if (this.fontID == -1) {
+			Logger.error("[Font] Can't create font!");
+		}
 	}
 
 	public GUI setGui(String guiName) {
@@ -111,6 +118,17 @@ public class GUIManager {
 		this.currentGui.size();
 		display.setSubtitle(currentGui.titleString);
 		return currentGui;
+	}
+
+	public void setGui(GUI gui) {
+		if (gui == null) {
+			this.currentGui = null;
+			display.setSubtitle(null);
+			return;
+		}
+		this.currentGui = gui;
+		this.currentGui.size();
+		display.setSubtitle(gui.titleString);
 	}
 
 	private long fadeStartTime = -1;
@@ -121,7 +139,11 @@ public class GUIManager {
 		return fadeInGui;
 	}
 
+	private boolean needToRender = false;
+
 	public void draw() {
+		needToRender = false;
+
 		/**
 		 * 思路: 1. 将2个GUI分别渲染到Frame Buffer内部 2. 向着色器提供mix比例
 		 */
@@ -136,11 +158,11 @@ public class GUIManager {
 			nvgFill(nvg);
 
 			currentGui.draw(nvg);
-			
+
 			nvgEndFrame(nvg);
 			currentFrameBuffer.unbind();
 
-			
+			needToRender = true;
 
 		}
 
@@ -165,28 +187,33 @@ public class GUIManager {
 
 			fade = (float) (System.currentTimeMillis() - fadeStartTime) / fade_duration;
 
+			needToRender = true;
+
 		}
 
-		guiShader.use();
-		guiShader.setFloat(guiShader.getUnifromLocation("mix_value"), fade);
-		
-		GL13.glActiveTexture(GL13.GL_TEXTURE0);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, currentFrameBuffer.getTbo());
-		GL13.glActiveTexture(GL13.GL_TEXTURE1);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, fadeInFrameBuffer.getTbo());
-		
-		GL30.glBindVertexArray(vao);
-		GL11.glDrawArrays(GL11.GL_TRIANGLE_FAN, 0, 4);
-		GL30.glBindVertexArray(0);
-		guiShader.unbind();
+		if (needToRender) {
 
-		if (fade >= 1) {
-			this.currentGui = fadeInGui;
-			this.fadeInGui = null;
-			this.fadeStartTime = -1;
-			this.fade = 0.0f;
-			display.setSubtitle(currentGui.titleString);
+			guiShader.use();
+			guiShader.setFloat(guiShader.getUnifromLocation("mix_value"), fade);
 
+			GL13.glActiveTexture(GL13.GL_TEXTURE0);
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, currentFrameBuffer.getTbo());
+			GL13.glActiveTexture(GL13.GL_TEXTURE1);
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, fadeInFrameBuffer.getTbo());
+
+			GL30.glBindVertexArray(vao);
+			GL11.glDrawArrays(GL11.GL_TRIANGLE_FAN, 0, 4);
+			GL30.glBindVertexArray(0);
+			guiShader.unbind();
+
+			if (fade >= 1) {
+				this.currentGui = fadeInGui;
+				this.fadeInGui = null;
+				this.fadeStartTime = -1;
+				this.fade = 0.0f;
+				display.setSubtitle(currentGui.titleString);
+
+			}
 		}
 
 	}
@@ -205,20 +232,22 @@ public class GUIManager {
 		}
 
 	}
-	
+
 	public void mouseClicked(int button) {
 		focusedWidget = null;
-		if(currentGui != null) {
-			for(GUIWidget widget : currentGui.widgets.values()) {
-				if (display.getMouseX() > widget.real_x & display.getMouseX() < widget.real_x + widget.real_width & display.getMouseY() > widget.real_y & display.getMouseY() < widget.real_y + widget.real_height) {
+		if (currentGui != null) {
+			for (GUIWidget widget : currentGui.widgets.values()) {
+				if (display.getMouseX() > widget.real_x & display.getMouseX() < widget.real_x + widget.real_width
+						& display.getMouseY() > widget.real_y
+						& display.getMouseY() < widget.real_y + widget.real_height) {
 					widget.mouseClicked = true;
-					if(widget.onClickListener != null)
+					if (widget.onClickListener != null)
 						widget.onClickListener.onClick(button);
 					focusedWidget = widget;
 				}
 			}
 		}
-		
+
 	}
 
 	public void destroy() {

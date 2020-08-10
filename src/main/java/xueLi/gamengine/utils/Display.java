@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL13;
 
 import xueLi.gamengine.utils.callbacks.CursorPosCallback;
 import xueLi.gamengine.utils.callbacks.DisplaySizedCallback;
+import xueLi.gamengine.utils.callbacks.KeyCallback;
 import xueLi.gamengine.utils.callbacks.MouseButtonCallback;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -26,21 +27,25 @@ public class Display {
 	private DisplaySizedCallback sizedCallback;
 	private CursorPosCallback cursorPosCallback;
 	private MouseButtonCallback mouseButtonCallback;
+	private KeyCallback keyCallback;
 
 	public boolean running = false;
 
-	public boolean create(int width, int height, String title) {
+	public Display() {
 		GLFWErrorCallback.createPrint(System.err).set();
 
 		if (!glfwInit()) {
 			Logger.error("Sorry can't init GLFW~ xD");
-			return false;
+			return;
 		}
+	}
 
+	public void setDefaultWindowHints() {
 		glfwDefaultWindowHints();
+	}
+
+	public boolean create(int width, int height, String title) {
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-		// 窗口可缩放
-		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 		// OpenGL版本
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
@@ -84,6 +89,10 @@ public class Display {
 		return true;
 	}
 
+	public void setResizable(int resizable) {
+		glfwWindowHint(GLFW_RESIZABLE, resizable);
+	}
+
 	public void setSizedCallback(DisplaySizedCallback callback) {
 		glfwSetWindowSizeCallback(window, callback);
 		this.sizedCallback = callback;
@@ -93,10 +102,15 @@ public class Display {
 		glfwSetCursorPosCallback(window, callback);
 		this.cursorPosCallback = callback;
 	}
-	
+
 	public void setMouseButtonCallback(MouseButtonCallback callback) {
 		glfwSetMouseButtonCallback(window, callback);
 		this.mouseButtonCallback = callback;
+	}
+
+	public void setKeyboardCallback(KeyCallback keyCallback) {
+		glfwSetKeyCallback(window, keyCallback);
+		this.keyCallback = keyCallback;
 	}
 
 	public void showWindow() {
@@ -108,6 +122,9 @@ public class Display {
 	public void update() {
 		Time.tick();
 
+		if (this.keyCallback != null)
+			this.keyCallback.tick();
+
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
@@ -117,7 +134,10 @@ public class Display {
 	}
 
 	public void setSubtitle(String subtitle) {
-		glfwSetWindowTitle(window, this.mainTitle + " - " + subtitle);
+		if (subtitle != null)
+			glfwSetWindowTitle(window, this.mainTitle + " - " + subtitle);
+		else
+			glfwSetWindowTitle(window, this.mainTitle);
 	}
 
 	public int getWidth() {
@@ -143,7 +163,7 @@ public class Display {
 	public int getMouseY() {
 		return (int) cursorPosCallback.mouseY;
 	}
-	
+
 	public boolean isMouseDown(int button) {
 		return this.mouseButtonCallback.buttons[button];
 	}

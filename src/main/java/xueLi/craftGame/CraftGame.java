@@ -2,9 +2,11 @@ package xueLi.craftGame;
 
 import java.io.IOException;
 
+import org.checkerframework.common.reflection.qual.NewInstance;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import xueLi.gamengine.gui.GUI;
+import xueLi.gamengine.gui.GUIButton;
 import xueLi.gamengine.gui.GUIImageView;
 import xueLi.gamengine.gui.GUIManager;
 import xueLi.gamengine.gui.GUIProgressBar;
@@ -51,6 +53,8 @@ public class CraftGame implements Runnable {
 		// 3. 加载其它资源
 
 		Display display = new Display();
+		display.setDefaultWindowHints();
+		display.setResizable(GLFW.GLFW_TRUE);
 		display.create(width, height, game_name);
 
 		ShaderResource shaderResource = new ShaderResource("res/");
@@ -79,9 +83,9 @@ public class CraftGame implements Runnable {
 			@Override
 			public void invoke(long window, int button, int action, int mods) {
 				super.invoke(window, button, action, mods);
-				if(action == GLFW.GLFW_PRESS)
+				if (action == GLFW.GLFW_PRESS)
 					guiManager.mouseClicked(button);
-				
+
 			}
 		});
 
@@ -89,6 +93,7 @@ public class CraftGame implements Runnable {
 		guiResource.loadGui("game_loading.json", langManager);
 
 		guiManager.setResourceSource(guiResource);
+		guiManager.setFont("simhei.ttf");
 
 		GUI loading_gui = guiManager.setFadeinGui("game_loading.json");
 
@@ -99,32 +104,36 @@ public class CraftGame implements Runnable {
 		// 加载材质
 		textureManager.load(loading_TextView, loading_ProgressBar, 0.0f, 0.25f);
 
+		// 世界方面的参数
+
 		Thread gameLogicThread = new Thread(() -> {
+			Object waiter = new Object();
+
 			/* 资源加载 */
-			
+
 			String loading_messageString = loading_TextView.getText();
 
 			// 设置加载动画
 			loading_imageView.setAnimation("loading");
 			// 加载GUI
 			guiResource.loadGui(langManager, loading_TextView, loading_ProgressBar, 0.25f, 1.00f);
-			
+
 			loading_TextView.setText(loading_messageString);
-			
+
 			// 设置监听
 			GUI mainMenuGui = guiResource.getGui("main_menu.json");
-			
+
 			mainMenuGui.widgets.get("single_player_button").onClickListener = (button) -> {
-				System.out.println("Single!!!");
-				
+				synchronized (waiter) {
+					waiter.notify();
+				}
+
 			};
 			mainMenuGui.widgets.get("multi_player_button").onClickListener = (button) -> {
-				System.out.println("多人运♂动!!!");
-				
+
 			};
 			mainMenuGui.widgets.get("setting_button").onClickListener = (button) -> {
-				System.out.println("调♂整屑♂定!!!");
-				
+
 			};
 
 			// 加载方块
@@ -139,7 +148,19 @@ public class CraftGame implements Runnable {
 			// 换界面!
 			guiManager.setFadeinGui("main_menu.json");
 
+			// 休息
+			synchronized (waiter) {
+				try {
+					waiter.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+
 			/* Game Logic */
+
+			// 线程: 叫沃起床干甚·_· 本宝宝有小脾气辽~
+			guiManager.setGui((GUI) null);
 
 			/* 资源释放 */
 

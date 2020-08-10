@@ -108,7 +108,8 @@ public class GuiResource extends IResource {
 		} catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		String subtitleString = jsonObject.get("subtitle").getAsString();
+		JsonElement subtitleElement = jsonObject.get("subtitle");
+		String subtitleString = subtitleElement.isJsonNull() ? null : subtitleElement.getAsString();
 		GUI gui = new GUI(subtitleString);
 		// 本UI的背景颜色
 		JsonArray backgroundColorArray = jsonObject.get("back_color").getAsJsonArray();
@@ -200,7 +201,7 @@ public class GuiResource extends IResource {
 					labelString = langManager.getStringFromLangMap(label.getAsString());
 					textSize = new EvalableFloat(widgetJsonObject.get("text_size").getAsString());
 					textColor = loadColor(widgetJsonObject.getAsJsonArray("text_color"));
-					
+
 				}
 
 				// 按钮的选中框
@@ -209,9 +210,9 @@ public class GuiResource extends IResource {
 				NVGColor chosenBorderColor = loadColor(chosenBorderJsonObject.get("color").getAsJsonArray());
 				int chosenBorderWidth = chosenBorderJsonObject.get("width").getAsInt();
 				NVGColor chosenTextColor = loadColor(chosenBorderJsonObject.get("text_color").getAsJsonArray());
-				
-				GUIButton button = new GUIButton(widgetPosX, widgetPosY, widgetWidth, widgetHeight, labelString,textSize,textColor,
-						chosenBorderColor, chosenBorderWidth, chosenTextColor);
+
+				GUIButton button = new GUIButton(widgetPosX, widgetPosY, widgetWidth, widgetHeight, labelString,
+						textSize, textColor, chosenBorderColor, chosenBorderWidth, chosenTextColor);
 				button.animations = animations;
 				gui.widgets.put(nameString, button);
 
@@ -244,29 +245,34 @@ public class GuiResource extends IResource {
 				// align
 				JsonElement alignElement = widgetJsonObject.get("align");
 				int align = -1;
-				if (alignElement != null)
-					switch (alignElement.getAsString()) {
-					case "left":
-						align = NanoVG.NVG_ALIGN_LEFT;
-						break;
-					case "right":
-						align = NanoVG.NVG_ALIGN_RIGHT;
-						break;
-					case "top":
-						align = NanoVG.NVG_ALIGN_TOP;
-						break;
-					case "bottom":
-						align = NanoVG.NVG_ALIGN_BOTTOM;
-						break;
-					case "center":
-						align = NanoVG.NVG_ALIGN_CENTER;
-					case "middle":
-						align = NanoVG.NVG_ALIGN_MIDDLE;
-					default:
-						align = NanoVG.NVG_ALIGN_LEFT;
-						break;
+				if (alignElement != null) {
+					JsonArray alignArray = alignElement.getAsJsonArray();
+					for (JsonElement eash : alignArray) {
+						switch (eash.getAsString()) {
+						case "left":
+							align = NanoVG.NVG_ALIGN_LEFT;
+							break;
+						case "right":
+							align = NanoVG.NVG_ALIGN_RIGHT;
+							break;
+						case "top":
+							align = NanoVG.NVG_ALIGN_TOP;
+							break;
+						case "bottom":
+							align = NanoVG.NVG_ALIGN_BOTTOM;
+							break;
+						case "center":
+							align = NanoVG.NVG_ALIGN_CENTER;
+							break;
+						case "middle":
+							align = NanoVG.NVG_ALIGN_MIDDLE;
+							break;
+						default:
+							align = NanoVG.NVG_ALIGN_LEFT;
+							break;
+						}
 					}
-				else
+				} else
 					align = NanoVG.NVG_ALIGN_LEFT;
 
 				GUITextView textView = new GUITextView(widgetPosX, widgetPosY, widgetWidth, widgetHeight, textSize1,

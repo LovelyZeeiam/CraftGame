@@ -31,6 +31,15 @@ public class GUITextView extends GUIWidget {
 
 	}
 
+	public GUITextView(float real_x, float real_y, float real_width, float real_height, EvalableFloat textSize,
+			NVGColor textColor, String text, int align) {
+		super(real_x, real_y, real_width, real_height);
+		this.textSize = textSize;
+		this.textColor = textColor;
+		this.text = text;
+		this.align = align;
+	}
+
 	public String getText() {
 		return text;
 	}
