@@ -18,17 +18,18 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
-import xueLi.gamengine.gui.AnimationWait;
-import xueLi.gamengine.gui.GUI;
-import xueLi.gamengine.gui.GUIButton;
-import xueLi.gamengine.gui.GUIImageView;
-import xueLi.gamengine.gui.GUIProgressBar;
-import xueLi.gamengine.gui.GUITextView;
-import xueLi.gamengine.gui.GuiAnimation;
-import xueLi.gamengine.gui.GuiAnimationGroup;
-import xueLi.gamengine.gui.IAnimation;
 import xueLi.gamengine.utils.EvalableFloat;
 import xueLi.gamengine.utils.Logger;
+import xueLi.gamengine.view.AnimationWait;
+import xueLi.gamengine.view.GUIBackground;
+import xueLi.gamengine.view.GUIButton;
+import xueLi.gamengine.view.GUIImageView;
+import xueLi.gamengine.view.GUIProgressBar;
+import xueLi.gamengine.view.GUITextView;
+import xueLi.gamengine.view.GuiAnimation;
+import xueLi.gamengine.view.GuiAnimationGroup;
+import xueLi.gamengine.view.IAnimation;
+import xueLi.gamengine.view.View;
 
 public class GuiResource extends IResource {
 
@@ -44,7 +45,7 @@ public class GuiResource extends IResource {
 
 	}
 
-	public HashMap<String, GUI> guisHashMap = new HashMap<String, GUI>();
+	public HashMap<String, View> guisHashMap = new HashMap<String, View>();
 
 	public void loadGui(LangManager langManager) {
 		ArrayList<File> guiFiles = findAllFiles(new File(real_path));
@@ -99,7 +100,7 @@ public class GuiResource extends IResource {
 		return backgroundColor;
 	}
 
-	public GUI loadGui(String filename, LangManager langManager) {
+	public View loadGui(String filename, LangManager langManager) {
 		if (guisHashMap.containsKey(filename))
 			return guisHashMap.get(filename);
 		JsonObject jsonObject = null;
@@ -110,21 +111,57 @@ public class GuiResource extends IResource {
 		}
 		JsonElement subtitleElement = jsonObject.get("subtitle");
 		String subtitleString = subtitleElement.isJsonNull() ? null : subtitleElement.getAsString();
-		GUI gui = new GUI(subtitleString);
-		// 本UI的背景颜色
-		JsonArray backgroundColorArray = jsonObject.get("back_color").getAsJsonArray();
-		gui.backgroundColor = loadColor(backgroundColorArray);
+		View gui = new View(subtitleString);
+		// 本UI的背景
+		JsonObject backgroundObj = null;
+		try {
+			backgroundObj = jsonObject.get("background").getAsJsonObject();
+		} catch (NullPointerException e) {
+			Logger.error("[GUI] Couldn't find param in " + filename + ": background");
+			return null;
+		}
+		if (backgroundObj.has("color")) {
+			JsonArray colorArray = backgroundObj.getAsJsonArray("color");
+			NVGColor backColor = loadColor(colorArray);
+			gui.background = new GUIBackground(backColor);
+		} else if (backgroundObj.has("image")) {
+			int textureID = textureManager.getTexture(backgroundObj.get("image").getAsString()).id;
+			JsonArray imageParam = backgroundObj.getAsJsonArray("scale");
+			gui.background = new GUIBackground(textureID, imageParam.get(0).getAsInt(), imageParam.get(1).getAsInt(),
+					imageParam.get(2).getAsInt(), imageParam.get(3).getAsInt());
+		} else {
+			Logger.error("[GUI] Couldn't find param of background in " + filename);
+			return null;
+		}
 		// 控件们
-		JsonObject guiwidgetsJsonObject = jsonObject.get("widgets").getAsJsonObject();
+		JsonObject guiwidgetsJsonObject = null;
+		try {
+			guiwidgetsJsonObject = jsonObject.get("widgets").getAsJsonObject();
+		} catch (NullPointerException e) {
+			Logger.error("[GUI] Couldn't find param in " + filename + ": widgets");
+			return null;
+		}
 		for (Entry<String, JsonElement> e : guiwidgetsJsonObject.entrySet()) {
 			String nameString = e.getKey();
 			JsonObject widgetJsonObject = e.getValue().getAsJsonObject();
 			// 控件位置
-			JsonArray widgetPosJsonArray = widgetJsonObject.get("pos").getAsJsonArray();
+			JsonArray widgetPosJsonArray = null;
+			try {
+				widgetPosJsonArray = widgetJsonObject.get("pos").getAsJsonArray();
+			} catch (NullPointerException e2) {
+				Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": pos");
+				continue;
+			}
 			EvalableFloat widgetPosX = new EvalableFloat(widgetPosJsonArray.get(0).getAsString());
 			EvalableFloat widgetPosY = new EvalableFloat(widgetPosJsonArray.get(1).getAsString());
 			// 控件大小
-			JsonArray widgetSizeJsonArray = widgetJsonObject.get("size").getAsJsonArray();
+			JsonArray widgetSizeJsonArray = null;
+			try {
+				widgetSizeJsonArray = widgetJsonObject.get("size").getAsJsonArray();
+			} catch (NullPointerException e2) {
+				Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": size");
+				continue;
+			}
 			EvalableFloat widgetWidth = new EvalableFloat(widgetSizeJsonArray.get(0).getAsString());
 			EvalableFloat widgetHeight = new EvalableFloat(widgetSizeJsonArray.get(1).getAsString());
 			// 边框
@@ -176,10 +213,23 @@ public class GuiResource extends IResource {
 
 			}
 			// 控件类型
-			String widgetTypeString = widgetJsonObject.get("type").getAsString();
+			String widgetTypeString = null;
+			try {
+				widgetTypeString = widgetJsonObject.get("type").getAsString();
+			} catch (NullPointerException e2) {
+				Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": type");
+				continue;
+			}
 			switch (widgetTypeString) {
 			case "image_view":
-				String textureString = widgetJsonObject.get("texture").getAsString();
+				String textureString = null;
+				try {
+					textureString = widgetJsonObject.get("texture").getAsString();
+				} catch (NullPointerException e2) {
+					Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": texture");
+					continue;
+				}
+
 				int textureID = textureManager.getTexture(textureString).id;
 				GUIImageView imageView;
 
@@ -206,6 +256,10 @@ public class GuiResource extends IResource {
 
 				// 按钮的选中框
 				JsonElement chosenBorderJsonElement = widgetJsonObject.get("outline");
+				if (chosenBorderJsonElement == null) {
+					Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": outline");
+					continue;
+				}
 				JsonObject chosenBorderJsonObject = chosenBorderJsonElement.getAsJsonObject();
 				NVGColor chosenBorderColor = loadColor(chosenBorderJsonObject.get("color").getAsJsonArray());
 				int chosenBorderWidth = chosenBorderJsonObject.get("width").getAsInt();
@@ -218,57 +272,95 @@ public class GuiResource extends IResource {
 
 				break;
 			case "progress_bar":
-				float start_progress = widgetJsonObject.get("start_progress").getAsFloat();
+				float start_progress = widgetJsonObject.has("start_progress")
+						? widgetJsonObject.get("start_progress").getAsFloat()
+						: 0.0f;
 				// back_color
-				JsonArray backColorArray = widgetJsonObject.get("back_color").getAsJsonArray();
+				JsonArray backColorArray = null;
+				try {
+					backColorArray = widgetJsonObject.get("back_color").getAsJsonArray();
+				} catch (NullPointerException e2) {
+					Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": back_color");
+					continue;
+				}
 				NVGColor backColor = loadColor(backColorArray);
 				// progress_color
-				JsonArray progressColorArray = widgetJsonObject.get("progress_color").getAsJsonArray();
+				JsonArray progressColorArray = null;
+				try {
+					progressColorArray = widgetJsonObject.get("progress_color").getAsJsonArray();
+				} catch (NullPointerException e2) {
+					Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": progress_color");
+					continue;
+				}
 				NVGColor progressColor = loadColor(progressColorArray);
 
 				GUIProgressBar progressBar = new GUIProgressBar(widgetPosX, widgetPosY, widgetWidth, widgetHeight,
 						start_progress, backColor, progressColor);
+
+				if (widgetJsonObject.has("progress_margin")) {
+					progressBar.setProgressBarWidth(widgetJsonObject.get("progress_margin").getAsInt());
+				}
+
 				progressBar.animations = animations;
 				gui.widgets.put(nameString, progressBar);
 
 				break;
 			case "text_view":
 				// text_size
-				String textSizeString = widgetJsonObject.get("text_size").getAsString();
+				String textSizeString = null;
+				try {
+					textSizeString = widgetJsonObject.get("text_size").getAsString();
+				} catch (NullPointerException e2) {
+					Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": text_size");
+					continue;
+				}
 				EvalableFloat textSize1 = new EvalableFloat(textSizeString);
 				// text_color
-				JsonArray textColorJsonArray = widgetJsonObject.get("text_color").getAsJsonArray();
+				JsonArray textColorJsonArray = null;
+				try {
+					textColorJsonArray = widgetJsonObject.get("text_color").getAsJsonArray();
+				} catch (NullPointerException e2) {
+					Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": text_color");
+					continue;
+				}
 				NVGColor textColor1 = loadColor(textColorJsonArray);
 				// text
-				String textString = widgetJsonObject.get("text").getAsString();
+
+				String textString = null;
+				try {
+					textString = widgetJsonObject.get("text").getAsString();
+				} catch (NullPointerException e2) {
+					Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": text");
+					continue;
+				}
 				textString = langManager.getStringFromLangMap(textString);
 				// align
 				JsonElement alignElement = widgetJsonObject.get("align");
-				int align = -1;
+				int align = 0;
 				if (alignElement != null) {
 					JsonArray alignArray = alignElement.getAsJsonArray();
 					for (JsonElement eash : alignArray) {
 						switch (eash.getAsString()) {
 						case "left":
-							align = NanoVG.NVG_ALIGN_LEFT;
+							align |= NanoVG.NVG_ALIGN_LEFT;
 							break;
 						case "right":
-							align = NanoVG.NVG_ALIGN_RIGHT;
+							align |= NanoVG.NVG_ALIGN_RIGHT;
 							break;
 						case "top":
-							align = NanoVG.NVG_ALIGN_TOP;
+							align |= NanoVG.NVG_ALIGN_TOP;
 							break;
 						case "bottom":
-							align = NanoVG.NVG_ALIGN_BOTTOM;
+							align |= NanoVG.NVG_ALIGN_BOTTOM;
 							break;
 						case "center":
-							align = NanoVG.NVG_ALIGN_CENTER;
+							align |= NanoVG.NVG_ALIGN_CENTER;
 							break;
 						case "middle":
-							align = NanoVG.NVG_ALIGN_MIDDLE;
+							align |= NanoVG.NVG_ALIGN_MIDDLE;
 							break;
 						default:
-							align = NanoVG.NVG_ALIGN_LEFT;
+							align |= NanoVG.NVG_ALIGN_LEFT;
 							break;
 						}
 					}
@@ -291,7 +383,7 @@ public class GuiResource extends IResource {
 		return gui;
 	}
 
-	public GUI getGui(String name) {
+	public View getGui(String name) {
 		return guisHashMap.get(name);
 	}
 

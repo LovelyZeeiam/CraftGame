@@ -2,12 +2,11 @@ package xueLi.gamengine.resource;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 import java.util.HashMap;
 
-import xueLi.gamengine.gui.GUIProgressBar;
-import xueLi.gamengine.gui.GUITextView;
 import xueLi.gamengine.utils.Shader;
+import xueLi.gamengine.view.GUIProgressBar;
+import xueLi.gamengine.view.GUITextView;
 
 public class ShaderResource extends IResource {
 
@@ -99,7 +98,7 @@ public class ShaderResource extends IResource {
 	}
 
 	@Override
-	public void close() throws IOException {
+	public void close() {
 		for (Shader s : shaders.values()) {
 			s.release();
 

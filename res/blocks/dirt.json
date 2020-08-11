@@ -1,0 +1,12 @@
+{
+    "name": "#tile.dirt.name",
+    "block": {
+        "type": "Nature",
+
+        "destroyTime": 1000,
+
+        "texture": "block.dirt"
+
+    }
+
+}

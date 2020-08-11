@@ -1,9 +1,12 @@
 package xueLi.gamengine.utils;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
+import org.lwjgl.stb.STBImage;
+import org.lwjgl.system.MemoryUtil;
 
 import xueLi.gamengine.utils.callbacks.CursorPosCallback;
 import xueLi.gamengine.utils.callbacks.DisplaySizedCallback;
@@ -14,6 +17,8 @@ import static org.lwjgl.glfw.GLFW.*;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 
 public class Display {
 
@@ -87,6 +92,47 @@ public class Display {
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 
 		return true;
+	}
+
+	/**
+	 * From:
+	 * https://gamedev.stackexchange.com/questions/105555/setting-window-icon-using-glfw-lwjgl-3
+	 */
+	public void setIcon(String filePath) {
+		IntBuffer w = MemoryUtil.memAllocInt(1);
+		IntBuffer h = MemoryUtil.memAllocInt(1);
+		IntBuffer comp = MemoryUtil.memAllocInt(1);
+
+		// Icons
+		{
+			ByteBuffer icon16;
+			ByteBuffer icon32;
+			try {
+				icon16 = IOUtils.ioResourceToByteBuffer(filePath + "icon.png", 2048);
+				icon32 = IOUtils.ioResourceToByteBuffer(filePath + "icon.png", 4096);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+
+			try (GLFWImage.Buffer icons = GLFWImage.malloc(2)) {
+				ByteBuffer pixels16 = STBImage.stbi_load_from_memory(icon16, w, h, comp, 4);
+				icons.position(0).width(w.get(0)).height(h.get(0)).pixels(pixels16);
+
+				ByteBuffer pixels32 = STBImage.stbi_load_from_memory(icon32, w, h, comp, 4);
+				icons.position(1).width(w.get(0)).height(h.get(0)).pixels(pixels32);
+
+				icons.position(0);
+				glfwSetWindowIcon(window, icons);
+
+				STBImage.stbi_image_free(pixels32);
+				STBImage.stbi_image_free(pixels16);
+			}
+		}
+
+		MemoryUtil.memFree(comp);
+		MemoryUtil.memFree(h);
+		MemoryUtil.memFree(w);
+
 	}
 
 	public void setResizable(int resizable) {

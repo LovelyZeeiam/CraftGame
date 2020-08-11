@@ -1,11 +1,13 @@
 {
 	"subtitle": "Loading",
-	"back_color": [
-		240,
-		248,
-		255,
-		255
-	],
+	"background": {
+		"color": [
+			240,
+			248,
+			255,
+			255
+		]
+	},
 	"widgets": {
 		"loading_splash": {
 			"type": "image_view",
@@ -137,7 +139,9 @@
 				255
 			],
 			"text_size": "20.0 * scale",
-			"align": [ "top" ],
+			"align": [
+				"top"
+			],
 			"text": "#loading_message.loading"
 		}
 	}

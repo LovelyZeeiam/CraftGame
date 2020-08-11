@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,8 +13,8 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
-import xueLi.gamengine.gui.GUIProgressBar;
-import xueLi.gamengine.gui.GUITextView;
+import xueLi.gamengine.view.GUIProgressBar;
+import xueLi.gamengine.view.GUITextView;
 
 public class Options extends IResource {
 
@@ -82,7 +81,7 @@ public class Options extends IResource {
 	}
 
 	@Override
-	public void close() throws IOException {
+	public void close() {
 
 	}
 

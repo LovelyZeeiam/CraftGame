@@ -1,0 +1,19 @@
+{
+    "name": "#tile.grass.name",
+    "block": {
+        "type": "Nature",
+
+        "destroyTime": 1300,
+
+        "texture": {
+            "front": "",
+            "back": "",
+            "left": "",
+            "right": "",
+            "top": "",
+            "bottom": ""
+        }
+
+    }
+
+}

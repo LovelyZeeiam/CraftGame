@@ -2,7 +2,6 @@ package xueLi.gamengine.resource;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.util.HashMap;
 
 import xueLi.gamengine.utils.Logger;
@@ -60,7 +59,7 @@ public class LangManager extends IResource {
 	}
 
 	@Override
-	public void close() throws IOException {
+	public void close() {
 
 	}
 

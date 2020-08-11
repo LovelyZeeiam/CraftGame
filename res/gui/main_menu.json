@@ -1,20 +1,22 @@
 {
 	"subtitle": "Main Menu",
-	"back_color": [
-		180,
-		200,
-		255,
-		255
-	],
+	"background": {
+		"color": [
+			180,
+			200,
+			255,
+			255
+		]
+	},
 	"widgets": {
 		"single_player_button": {
 			"type": "button",
 			"pos": [
-				"win_width * 0.5 - 300 * scale",
+				"win_width * 0.5 - 250 * scale",
 				"win_height * 0.55 - 25 * scale - 55.0 * scale"
 			],
 			"size": [
-				"600.0 * scale",
+				"500.0 * scale",
 				"50.0 * scale"
 			],
 			"text_color": [
@@ -27,8 +29,8 @@
 			"text": "#main_menu.single_player",
 			"outline": {
 				"color": [
-					233,
-					233,
+					114,
+					145,
 					233,
 					255
 				],
@@ -44,11 +46,11 @@
 		"multi_player_button": {
 			"type": "button",
 			"pos": [
-				"win_width * 0.5 - 300 * scale",
+				"win_width * 0.5 - 250 * scale",
 				"win_height * 0.55 - 25 * scale"
 			],
 			"size": [
-				"600.0 * scale",
+				"500.0 * scale",
 				"50.0 * scale"
 			],
 			"text_color": [
@@ -78,11 +80,11 @@
 		"setting_button": {
 			"type": "button",
 			"pos": [
-				"win_width * 0.5 - 300 * scale",
+				"win_width * 0.5 - 250 * scale",
 				"win_height * 0.55 - 25 * scale + 55.0 * scale"
 			],
 			"size": [
-				"600.0 * scale",
+				"500.0 * scale",
 				"50.0 * scale"
 			],
 			"text_color": [
@@ -123,11 +125,25 @@
 		},
 		"version": {
 			"type": "text_view",
-			"pos": [ "5.0", "win_height-5.0" ],
-			"size": [ "0.0", "0.0" ],
-			"text_color": [255,255,255,255],
+			"pos": [
+				"5.0",
+				"win_height-5.0"
+			],
+			"size": [
+				"0.0",
+				"0.0"
+			],
+			"text_color": [
+				0,
+				0,
+				0,
+				255
+			],
 			"text_size": "20.0 * scale",
-			"align": [ "bottom", "left" ],
+			"align": [
+				"bottom",
+				"left"
+			],
 			"text": "#game.version"
 		}
 	}

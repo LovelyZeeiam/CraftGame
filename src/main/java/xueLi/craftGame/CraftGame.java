@@ -1,16 +1,8 @@
 package xueLi.craftGame;
 
-import java.io.IOException;
-
-import org.checkerframework.common.reflection.qual.NewInstance;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
-import xueLi.gamengine.gui.GUI;
-import xueLi.gamengine.gui.GUIButton;
-import xueLi.gamengine.gui.GUIImageView;
-import xueLi.gamengine.gui.GUIManager;
-import xueLi.gamengine.gui.GUIProgressBar;
-import xueLi.gamengine.gui.GUITextView;
+
 import xueLi.gamengine.resource.GuiResource;
 import xueLi.gamengine.resource.LangManager;
 import xueLi.gamengine.resource.Options;
@@ -20,6 +12,9 @@ import xueLi.gamengine.utils.Display;
 import xueLi.gamengine.utils.callbacks.CursorPosCallback;
 import xueLi.gamengine.utils.callbacks.DisplaySizedCallback;
 import xueLi.gamengine.utils.callbacks.MouseButtonCallback;
+import xueLi.gamengine.view.View;
+import xueLi.gamengine.view.ViewManager;
+import xueLi.gamengine.view.WorldRenderer;
 
 public class CraftGame implements Runnable {
 
@@ -28,23 +23,38 @@ public class CraftGame implements Runnable {
 	public CraftGame() {
 
 	}
+	
+	static LangManager langManager;
+	static String game_name;
+	static Options options;
+	static Display display;
+	static ShaderResource shaderResource;
+	static ViewManager viewManager;
+	static TextureManager textureManager;
+	static GuiResource guiResource;
+	
+	static WorldRenderer worldRenderer = new WorldRenderer();
+	
+	// 由于View的改变只能在主线程中完成才不会报错 所以,,,
+	static View viewThatNeedToChange = null;
 
 	@Override
 	public void run() {
 		try {
 			Class.forName("org.lwjgl.system.Library");
 			Class.forName("org.lwjgl.nanovg.LibNanoVG");
+			Class.forName("org.lwjgl.stb.LibSTB");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 
-		LangManager langManager = new LangManager("res/");
+		langManager = new LangManager("res/");
 		langManager.loadLang();
 		langManager.setLang("zh-ch.lang");
 
-		String game_name = langManager.getStringFromLangMap("#game.name");
+		game_name = langManager.getStringFromLangMap("#game.name");
 
-		Options options = new Options("res/");
+		options = new Options("res/");
 		options.load();
 
 		// 先加载加载界面需要的资源 再加载:
@@ -52,24 +62,25 @@ public class CraftGame implements Runnable {
 		// 2. 加载加载界面的GUI
 		// 3. 加载其它资源
 
-		Display display = new Display();
+		display = new Display();
 		display.setDefaultWindowHints();
 		display.setResizable(GLFW.GLFW_TRUE);
 		display.create(width, height, game_name);
+		display.setIcon("res/");
 
-		ShaderResource shaderResource = new ShaderResource("res/");
+		shaderResource = new ShaderResource("res/");
 		// 加载着色器
 		shaderResource.load();
 
-		GUIManager guiManager = new GUIManager(display, options, shaderResource.get("gui"));
-		TextureManager textureManager = new TextureManager("res/", guiManager);
+		viewManager = new ViewManager(display, options, shaderResource.get("gui"));
+		textureManager = new TextureManager("res/", viewManager);
 		textureManager.preload();
 
 		// 回调
 		display.setSizedCallback(new DisplaySizedCallback() {
 			@Override
 			public void sized() {
-				guiManager.size();
+				viewManager.size();
 
 			}
 		});
@@ -83,98 +94,38 @@ public class CraftGame implements Runnable {
 			@Override
 			public void invoke(long window, int button, int action, int mods) {
 				super.invoke(window, button, action, mods);
-				if (action == GLFW.GLFW_PRESS)
-					guiManager.mouseClicked(button);
+				if (action == GLFW.GLFW_RELEASE)
+					viewManager.mouseClicked(button);
 
 			}
 		});
 
-		GuiResource guiResource = new GuiResource("res/", textureManager);
+		guiResource = new GuiResource("res/", textureManager);
 		guiResource.loadGui("game_loading.json", langManager);
 
-		guiManager.setResourceSource(guiResource);
-		guiManager.setFont("simhei.ttf");
-
-		GUI loading_gui = guiManager.setFadeinGui("game_loading.json");
-
-		GUIImageView loading_imageView = (GUIImageView) loading_gui.widgets.get("loading_splash");
-		GUIProgressBar loading_ProgressBar = (GUIProgressBar) loading_gui.widgets.get("loading_progress_bar");
-		GUITextView loading_TextView = (GUITextView) loading_gui.widgets.get("loading_message");
+		viewManager.setResourceSource(guiResource);
+		viewManager.setFont("Minecraft.ttf");
 
 		// 加载材质
-		textureManager.load(loading_TextView, loading_ProgressBar, 0.0f, 0.25f);
-
-		// 世界方面的参数
-
-		Thread gameLogicThread = new Thread(() -> {
-			Object waiter = new Object();
-
-			/* 资源加载 */
-
-			String loading_messageString = loading_TextView.getText();
-
-			// 设置加载动画
-			loading_imageView.setAnimation("loading");
-			// 加载GUI
-			guiResource.loadGui(langManager, loading_TextView, loading_ProgressBar, 0.25f, 1.00f);
-
-			loading_TextView.setText(loading_messageString);
-
-			// 设置监听
-			GUI mainMenuGui = guiResource.getGui("main_menu.json");
-
-			mainMenuGui.widgets.get("single_player_button").onClickListener = (button) -> {
-				synchronized (waiter) {
-					waiter.notify();
-				}
-
-			};
-			mainMenuGui.widgets.get("multi_player_button").onClickListener = (button) -> {
-
-			};
-			mainMenuGui.widgets.get("setting_button").onClickListener = (button) -> {
-
-			};
-
-			// 加载方块
-
-			// 加载物品
-
-			// 等待直到进度条到底
-			loading_TextView.setText("Loading...");
-			loading_ProgressBar.waitUtilProgressFull();
-			loading_TextView.setText("Loaded successfully~");
-
-			// 换界面!
-			guiManager.setFadeinGui("main_menu.json");
-
-			// 休息
-			synchronized (waiter) {
-				try {
-					waiter.wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-
-			/* Game Logic */
-
-			// 线程: 叫沃起床干甚·_· 本宝宝有小脾气辽~
-			guiManager.setGui((GUI) null);
-
-			/* 资源释放 */
-
-		});
+		textureManager.load();
+		
+		GameLogicThread gameLogicThread = new GameLogicThread();
+		Thread thread = new Thread(gameLogicThread);
 
 		display.showWindow();
 
-		gameLogicThread.start();
+		thread.start();
 
 		while (display.running) {
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
 
 			// 绘制GUI
-			guiManager.draw();
+			viewManager.draw();
+			
+			if(viewThatNeedToChange != null) {
+				viewManager.setGui(viewThatNeedToChange);
+				viewThatNeedToChange = null;
+			}
 
 			display.update();
 		}
@@ -184,16 +135,20 @@ public class CraftGame implements Runnable {
 		// 2. 销毁销毁界面的GUI和textures
 
 		textureManager.close();
-
-		try {
-			options.close();
-			langManager.close();
-			shaderResource.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		options.close();
+		langManager.close();
+		shaderResource.close();
+		
 		display.destroy();
+		
+		if(gameLogicThread.sleeping)
+			System.exit(0);
+		
+		if(gameLogicThread.waitingForLove) {
+			synchronized (gameLogicThread.waiter) {
+				gameLogicThread.waiter.notify();
+			}
+		}
 
 	}
 
