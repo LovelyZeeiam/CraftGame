@@ -1,4 +1,4 @@
-package xueLi.craftGame;
+package xueLi.craftGame.block;
 
 public class BlockData {
 
@@ -6,9 +6,9 @@ public class BlockData {
 	private BlockType type;
 	private long destroyTime;
 	private int[] textures;
-	
+
 	private BlockListener listener = new BlockListener();
-	
+
 	public BlockData(String blockName, BlockType type, long destroyTime, int[] textures) {
 		this.blockName = blockName;
 		this.type = type;
@@ -31,16 +31,14 @@ public class BlockData {
 	public int[] getTextures() {
 		return textures;
 	}
-	
+
 	public void setListener(BlockListener listener) {
 		this.listener = listener;
-		
+
 	}
-	
+
 	public BlockListener getListener() {
 		return listener;
 	}
 
-	
-	
 }

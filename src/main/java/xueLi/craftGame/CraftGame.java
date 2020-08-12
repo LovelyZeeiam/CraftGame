@@ -23,7 +23,7 @@ public class CraftGame implements Runnable {
 	public CraftGame() {
 
 	}
-	
+
 	static LangManager langManager;
 	static String game_name;
 	static Options options;
@@ -32,9 +32,9 @@ public class CraftGame implements Runnable {
 	static ViewManager viewManager;
 	static TextureManager textureManager;
 	static GuiResource guiResource;
-	
-	static WorldRenderer worldRenderer = new WorldRenderer();
-	
+
+	static WorldRenderer worldRenderer;
+
 	// 由于View的改变只能在主线程中完成才不会报错 所以,,,
 	static View viewThatNeedToChange = null;
 
@@ -108,9 +108,12 @@ public class CraftGame implements Runnable {
 
 		// 加载材质
 		textureManager.load();
-		
+
 		GameLogicThread gameLogicThread = new GameLogicThread();
 		Thread thread = new Thread(gameLogicThread);
+
+		// World Renderer初始化
+		worldRenderer = new WorldRenderer();
 
 		display.showWindow();
 
@@ -121,8 +124,8 @@ public class CraftGame implements Runnable {
 
 			// 绘制GUI
 			viewManager.draw();
-			
-			if(viewThatNeedToChange != null) {
+
+			if (viewThatNeedToChange != null) {
 				viewManager.setGui(viewThatNeedToChange);
 				viewThatNeedToChange = null;
 			}
@@ -138,13 +141,13 @@ public class CraftGame implements Runnable {
 		options.close();
 		langManager.close();
 		shaderResource.close();
-		
+
 		display.destroy();
-		
-		if(gameLogicThread.sleeping)
+
+		if (gameLogicThread.sleeping)
 			System.exit(0);
-		
-		if(gameLogicThread.waitingForLove) {
+
+		if (gameLogicThread.waitingForLove) {
 			synchronized (gameLogicThread.waiter) {
 				gameLogicThread.waiter.notify();
 			}

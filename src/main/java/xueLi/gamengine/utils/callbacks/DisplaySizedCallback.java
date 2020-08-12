@@ -16,7 +16,7 @@ public abstract class DisplaySizedCallback extends GLFWWindowSizeCallback {
 		if (height != 0)
 			this.height = height;
 		this.ratio = (float) width / height;
-		
+
 		scale = Math.min(width, height) / 400.0f * 0.6f + 0.1f;
 
 		GL11.glViewport(0, 0, width, height);

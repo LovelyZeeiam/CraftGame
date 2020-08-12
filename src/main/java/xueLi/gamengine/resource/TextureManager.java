@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map.Entry;
-
 import java.util.Set;
 
 import javax.imageio.ImageIO;
@@ -24,8 +23,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
 import xueLi.gamengine.utils.Logger;
-import xueLi.gamengine.view.GUIProgressBar;
-import xueLi.gamengine.view.GUITextView;
 import xueLi.gamengine.view.ViewManager;
 
 import static org.lwjgl.nanovg.NanoVG.*;
@@ -57,9 +54,15 @@ public class TextureManager implements Closeable {
 
 	private void loadTexture(String name, JsonElement element, boolean preload) {
 		String pathString = null;
-		if (element.isJsonObject())
-			pathString = this.resourcePath + element.getAsJsonObject().get("path").getAsString();
-		else
+
+		boolean isAtlas = false;
+
+		if (element.isJsonObject()) {
+			if (element.getAsJsonObject().has("path"))
+				pathString = this.resourcePath + element.getAsJsonObject().get("path").getAsString();
+			else
+				isAtlas = true;
+		} else
 			pathString = this.resourcePath + element.getAsString();
 
 		if (name.startsWith("gui.")) {
@@ -96,18 +99,84 @@ public class TextureManager implements Closeable {
 				textures.put(name, texture);
 			}
 		} else {
-			// TODO: 一般材质读取系列
 			int[] pixels = null;
 			int width = 0, height = 0;
-			try {
-				BufferedImage image = ImageIO.read(new File(pathString));
+			
+			// For Atlas:
+			HashMap<String, Integer> atlas = new HashMap<String, Integer>();
+			// 材质册中单个图片的大小
+			int singlePictureSize = 0;
+
+			if (isAtlas) {
+				JsonObject atlasJsonObject = element.getAsJsonObject();
+				
+				// TODO: ATLAS!
+				Set<Entry<String, JsonElement>> entrySet = atlasJsonObject.entrySet();
+				int size = entrySet.size();
+				
+				// 材质册是正方形的 这个记录了横竖都有几个图片
+				int length = new Double(Math.ceil(Math.sqrt(size))).intValue();
+				
+				int[][] pixelss = new int[size][];
+				int count = 0;
+				
+				// 图片类型
+				int picture_type = -1;
+				
+				for(Entry<String, JsonElement> entry : entrySet) {
+					String namespace = entry.getKey();
+					String path = this.resourcePath + entry.getValue().getAsString();
+					
+					BufferedImage image = null;
+					try {
+						image = ImageIO.read(new File(path));
+						width = image.getWidth();
+						height = image.getHeight();
+						picture_type = image.getType();
+						pixelss[count] = new int[width * height];
+						image.getRGB(0, 0, width, height, pixelss[count], 0, width);
+						
+						singlePictureSize = Math.max(singlePictureSize, Math.max(width, height));
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					atlas.put(namespace, count);
+
+					++count;
+				}
+				
+				BufferedImage image = new BufferedImage(singlePictureSize * length, singlePictureSize * length, picture_type);
+				
+				count = 0;
+				for(;count < size;++count) {
+					int x = count / length;
+					int y = count % length;
+					
+					image.setRGB(x * singlePictureSize, y * singlePictureSize, singlePictureSize, singlePictureSize, pixelss[count], 0, width);
+					
+				}
+				
 				width = image.getWidth();
 				height = image.getHeight();
 				pixels = new int[width * height];
 				image.getRGB(0, 0, width, height, pixels, 0, width);
-			} catch (IOException e) {
-				e.printStackTrace();
+				
+
+			} else {
+				try {
+					BufferedImage image = ImageIO.read(new File(pathString));
+					width = image.getWidth();
+					height = image.getHeight();
+					pixels = new int[width * height];
+					image.getRGB(0, 0, width, height, pixels, 0, width);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
 			}
+
 			int[] data = new int[width * height];
 			for (int i = 0; i < width * height; i++) {
 				int a = (pixels[i] & 0xff000000) >> 24;
@@ -116,6 +185,7 @@ public class TextureManager implements Closeable {
 				int b = (pixels[i] & 0xff);
 				data[i] = a << 24 | b << 16 | g << 8 | r;
 			}
+
 			int id = GL11.glGenTextures();
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL13.GL_CLAMP_TO_BORDER);
@@ -124,12 +194,14 @@ public class TextureManager implements Closeable {
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_BASE_LEVEL, 0);
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_MAX_LEVEL, 4);
-			GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, width, height, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE,
-					data);
-			
-			Texture texture = new Texture(id, preload, false);
+			GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, width, height, 0, GL11.GL_RGBA,
+					GL11.GL_UNSIGNED_BYTE, data);
+			Texture texture = null;
+			if(!isAtlas)
+				texture = new Texture(id, preload, false);
+			else
+				texture = new TextureAtlas(atlas, singlePictureSize, id, preload, false);
 			textures.put(name, texture);
-			
 
 		}
 
@@ -145,51 +217,10 @@ public class TextureManager implements Closeable {
 	public void load() {
 		JsonObject loadObject = textureJsonObject.get("load").getAsJsonObject();
 		loadObject.entrySet().forEach(entry -> {
-			loadTexture(entry.getKey(), entry.getValue(), false);
+			JsonElement element = entry.getValue();
+			String nameString = entry.getKey();
+			loadTexture(nameString, element, false);
 		});
-	}
-
-	public void load(GUIProgressBar progressBar, float startValue, float endValue) {
-		JsonObject loadObject = textureJsonObject.get("load").getAsJsonObject();
-
-		Set<Entry<String, JsonElement>> entrys = loadObject.entrySet();
-		float progressPerElement = (endValue - startValue) / entrys.size();
-		int count = 0;
-
-		for (Entry<String, JsonElement> entry : entrys) {
-			loadTexture(entry.getKey(), entry.getValue(), false);
-
-			++count;
-			progressBar.setProgress(startValue + progressPerElement * count);
-
-		}
-		;
-
-		progressBar.setProgress(endValue);
-
-	}
-
-	public void load(GUITextView textView, GUIProgressBar progressBar, float startValue, float endValue) {
-		JsonObject loadObject = textureJsonObject.get("load").getAsJsonObject();
-
-		Set<Entry<String, JsonElement>> entrys = loadObject.entrySet();
-		float progressPerElement = (endValue - startValue) / entrys.size();
-		int count = 0;
-
-		String loading_messageString = textView.getText();
-
-		for (Entry<String, JsonElement> entry : entrys) {
-			loadTexture(entry.getKey(), entry.getValue(), false);
-
-			++count;
-			progressBar.setProgress(startValue + progressPerElement * count);
-
-			textView.setText(loading_messageString + " - " + entry.getKey());
-
-		}
-
-		progressBar.setProgress(endValue);
-
 	}
 
 	public Texture getTexture(String name) {
@@ -201,14 +232,14 @@ public class TextureManager implements Closeable {
 	 */
 	@Override
 	public void close() {
-		
+
 	}
 
 	/**
 	 * 真正的删除所有资源
 	 */
 	public void release() {
-		
+
 	}
 
 }

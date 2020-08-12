@@ -1,4 +1,5 @@
 {
+	"namespace": "craftgame:dirt",
     "name": "#tile.dirt.name",
     "block": {
         "type": "Nature",

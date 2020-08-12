@@ -11,9 +11,16 @@
 			"flag": [ "nearest", "repeat_x", "repeat_y" ]
 		},
 		
-		"block.dirt": "textures/blocks/dirt.png",
-		"block.grass.side": "textures/blocks/grass_block_side.png",
-		"block.stone": "textures/blocks/stone.png"
+		"blocks": {
+			"block.dirt": "textures/blocks/dirt.png",
+			"block.grass.side": "textures/blocks/grass_block_side.png",
+			"block.grass.top": "textures/blocks/grass_block_top.png",
+			"block.stone": "textures/blocks/stone.png"
+			
+			
+		}
+		
+		
 		
 	}
 	

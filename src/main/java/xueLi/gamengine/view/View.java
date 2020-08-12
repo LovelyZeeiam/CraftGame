@@ -13,20 +13,22 @@ public class View {
 		this.titleString = titleString;
 
 	}
-	
+
 	public void create() {
-		
+
 	}
 
 	public void draw(long nvg) {
-		background.draw(nvg);
+		if (background != null)
+			background.draw(nvg);
 		for (ViewWidget widget : widgets.values()) {
 			widget.draw(nvg);
 		}
 	}
 
 	public void size() {
-		background.size();
+		if (background != null)
+			background.size();
 		for (ViewWidget widget : widgets.values()) {
 			widget.size();
 		}

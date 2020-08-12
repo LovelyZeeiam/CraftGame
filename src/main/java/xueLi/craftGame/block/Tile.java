@@ -1,22 +1,24 @@
-package xueLi.craftGame;
+package xueLi.craftGame.block;
+
+import xueLi.craftGame.BlockResource;
 
 public class Tile {
 
 	public BlockData data;
 	private BlockListener listener;
-	
-	private int x,y,z;
-	
-	public Tile(int id) {
-		
+
+	private int x, y, z;
+
+	public Tile(String namespace) {
+		this.data = BlockResource.blockDatas.get(namespace);
+		this.listener = data.getListener();
+
 	}
-	
+
 	public Tile(BlockData data) {
 		this.data = data;
 		this.listener = data.getListener();
-		
-		this.listener.onCreate();
-		
+
 	}
 
 	public BlockListener getListener() {
@@ -34,6 +36,5 @@ public class Tile {
 	public int getZ() {
 		return z;
 	}
-	
 
 }

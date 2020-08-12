@@ -2,26 +2,28 @@ package xueLi.craftGame;
 
 import org.lwjgl.glfw.GLFW;
 
+import xueLi.craftGame.world.World;
 import xueLi.gamengine.view.GUIImageView;
 import xueLi.gamengine.view.GUIProgressBar;
 import xueLi.gamengine.view.GUITextView;
 import xueLi.gamengine.view.View;
+
 import static xueLi.craftGame.CraftGame.*;
 
 public class GameLogicThread implements Runnable {
-	
+
 	Object waiter = new Object();
 	// ◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤
 	boolean waitingForLove = false;
 	boolean sleeping = false;
-	
+
 	static BlockResource resource;
 
 	@Override
 	public void run() {
 		/* 资源加载 */
 		View loading_gui = viewManager.setFadeinGui("game_loading.json");
-		
+
 		GUIImageView loading_imageView = (GUIImageView) loading_gui.widgets.get("loading_splash");
 		GUIProgressBar loading_ProgressBar = (GUIProgressBar) loading_gui.widgets.get("loading_progress_bar");
 		GUITextView loading_TextView = (GUITextView) loading_gui.widgets.get("loading_message");
@@ -44,35 +46,35 @@ public class GameLogicThread implements Runnable {
 					waiter.notify();
 				}
 				waitingForLove = false;
-				
+
 				viewManager.setGui("world_loading.json");
-				
+
 			}
 
 		};
 
 		mainMenuGui.widgets.get("multi_player_button").onClickListener = (button) -> {
-			
+
 		};
 		mainMenuGui.widgets.get("setting_button").onClickListener = (button) -> {
-			
+
 		};
 
 		// 加载方块
 		resource = new BlockResource("res/");
 		resource.load(loading_TextView, loading_ProgressBar, 0.25f, 1.00f);
-		
+
 		// 加载物品
 
 		// 等待直到进度条到底
 		loading_TextView.setText("Loading...");
-		
+
 		waitingForLove = true;
 		sleeping = true;
 		loading_ProgressBar.waitUtilProgressFull();
 		sleeping = false;
 		waitingForLove = false;
-		
+
 		loading_TextView.setText("Loaded successfully~");
 
 		// 换界面!
@@ -89,21 +91,28 @@ public class GameLogicThread implements Runnable {
 		}
 
 		waitingForLove = false;
-		
+
 		/* Game Logic */
-		
+
 		View world_loading_gui = guiResource.getGui("world_loading.json");
 		GUIProgressBar world_loading_progressBar = (GUIProgressBar) world_loading_gui.widgets.get("loading_bar");
-		
-		
-		
-		
-		
+
+		worldRenderer.loadLevel();
+
+		world_loading_progressBar.setProgress(1.00f);
+		world_loading_progressBar.waitUtilProgressFull();
+
+		viewThatNeedToChange = worldRenderer;
+
+		TileBuilderThread tileBuilderThread = worldRenderer.tileBuilderThread;
+		World world = worldRenderer.world;
 
 		/* 资源释放 */
-		
+
+		tileBuilderThread.running = false;
+
 		resource.close();
-		
+
 	}
-	
+
 }

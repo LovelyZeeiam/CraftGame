@@ -1,4 +1,5 @@
 {
+	"namespace": "craftgame:stone",
     "name": "#tile.stone.name",
     "block": {
         "type": "Cave",

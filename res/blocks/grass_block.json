@@ -1,4 +1,5 @@
 {
+	"namespace": "craftgame:grass_block",
     "name": "#tile.grass.name",
     "block": {
         "type": "Nature",
@@ -6,12 +7,12 @@
         "destroyTime": 1300,
 
         "texture": {
-            "front": "",
-            "back": "",
-            "left": "",
-            "right": "",
-            "top": "",
-            "bottom": ""
+            "front": "block.grass.side",
+            "back": "block.grass.side",
+            "left": "block.grass.side",
+            "right": "block.grass.side",
+            "top": "block.grass.top",
+            "bottom": "block.dirt"
         }
 
     }
