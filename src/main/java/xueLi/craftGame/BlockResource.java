@@ -17,6 +17,7 @@ import xueLi.gamengine.resource.IResource;
 import xueLi.gamengine.resource.LangManager;
 import xueLi.gamengine.resource.TextureAtlas;
 import xueLi.gamengine.resource.TextureManager;
+import xueLi.gamengine.util.vector.Vector2s;
 import xueLi.gamengine.utils.Logger;
 import xueLi.gamengine.view.GUIProgressBar;
 import xueLi.gamengine.view.GUITextView;
@@ -30,12 +31,12 @@ public class BlockResource extends IResource {
 
 	public static HashMap<String, BlockData> blockDatas = new HashMap<String, BlockData>();
 
-	public BlockResource(String pathString) {
+	public BlockResource(String pathString, LangManager langManager, TextureManager textureManager) {
 		super(pathString);
 		this.real_path = pathString + "blocks/";
 
-		langManager = CraftGame.langManager;
-		textureManager = CraftGame.textureManager;
+		this.langManager = langManager;
+		this.textureManager = textureManager;
 
 	}
 
@@ -77,19 +78,26 @@ public class BlockResource extends IResource {
 				return;
 			}
 			JsonElement blockTexture = blockJsonObject.get("texture");
-			int[] textures = new int[6];
+			Vector2s[] textures = new Vector2s[6];
 			if (blockTexture.isJsonObject()) {
 				JsonObject textureObject = blockTexture.getAsJsonObject();
-				textures[0] = ((TextureAtlas)textureManager.getTexture("blocks")).getAtlasID(textureObject.get("front").getAsString());
-				textures[1] = ((TextureAtlas)textureManager.getTexture("blocks")).getAtlasID(textureObject.get("back").getAsString());
-				textures[2] = ((TextureAtlas)textureManager.getTexture("blocks")).getAtlasID(textureObject.get("left").getAsString());
-				textures[3] = ((TextureAtlas)textureManager.getTexture("blocks")).getAtlasID(textureObject.get("right").getAsString());
-				textures[4] = ((TextureAtlas)textureManager.getTexture("blocks")).getAtlasID(textureObject.get("top").getAsString());
-				textures[5] = ((TextureAtlas)textureManager.getTexture("blocks")).getAtlasID(textureObject.get("bottom").getAsString());
+				textures[0] = ((TextureAtlas) textureManager.getTexture("blocks"))
+						.getAtlasID(textureObject.get("front").getAsString());
+				textures[1] = ((TextureAtlas) textureManager.getTexture("blocks"))
+						.getAtlasID(textureObject.get("back").getAsString());
+				textures[2] = ((TextureAtlas) textureManager.getTexture("blocks"))
+						.getAtlasID(textureObject.get("left").getAsString());
+				textures[3] = ((TextureAtlas) textureManager.getTexture("blocks"))
+						.getAtlasID(textureObject.get("right").getAsString());
+				textures[4] = ((TextureAtlas) textureManager.getTexture("blocks"))
+						.getAtlasID(textureObject.get("top").getAsString());
+				textures[5] = ((TextureAtlas) textureManager.getTexture("blocks"))
+						.getAtlasID(textureObject.get("bottom").getAsString());
 
 			} else {
 				// 单个材质六面
-				int textureID = ((TextureAtlas)textureManager.getTexture("blocks")).getAtlasID(blockTexture.getAsString());
+				Vector2s textureID = ((TextureAtlas) textureManager.getTexture("blocks"))
+						.getAtlasID(blockTexture.getAsString());
 				textures[0] = textures[1] = textures[2] = textures[3] = textures[4] = textures[5] = textureID;
 			}
 

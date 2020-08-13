@@ -3,7 +3,6 @@ package xueLi.gamengine.resource;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -388,7 +387,7 @@ public class GuiResource extends IResource {
 	}
 
 	@Override
-	public void close() throws IOException {
+	public void close() {
 
 	}
 

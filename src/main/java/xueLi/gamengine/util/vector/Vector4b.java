@@ -1,4 +1,4 @@
-package org.lwjgl.util.vector;
+package xueLi.gamengine.util.vector;
 
 public class Vector4b {
 

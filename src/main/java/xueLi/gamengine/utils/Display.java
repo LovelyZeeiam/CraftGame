@@ -35,6 +35,7 @@ public class Display {
 	private KeyCallback keyCallback;
 
 	public boolean running = false;
+	public boolean mouseGrabbed = false;
 
 	public Display() {
 		GLFWErrorCallback.createPrint(System.err).set();
@@ -52,8 +53,8 @@ public class Display {
 	public boolean create(int width, int height, String title) {
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 		// OpenGL版本
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 		// 采样次数
@@ -79,6 +80,8 @@ public class Display {
 		glfwSwapInterval(1);
 
 		currentDisplay = this;
+
+		GLHelper.printDeviceInfo();
 
 		// 抗锯齿 多重采样
 		GL11.glEnable(GL13.GL_MULTISAMPLE);
@@ -159,6 +162,12 @@ public class Display {
 		this.keyCallback = keyCallback;
 	}
 
+	public void toggleMouseGrabbed() {
+		glfwSetInputMode(window, GLFW_CURSOR, mouseGrabbed ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_DISABLED);
+		mouseGrabbed = !mouseGrabbed;
+		cursorPosCallback.shouldNotProcessMouseThisTime = true;
+	}
+
 	public void showWindow() {
 		glfwShowWindow(window);
 		this.running = true;
@@ -212,6 +221,14 @@ public class Display {
 
 	public boolean isMouseDown(int button) {
 		return this.mouseButtonCallback.buttons[button];
+	}
+
+	public int getMouseDX() {
+		return (int) cursorPosCallback.mouseDX;
+	}
+
+	public int getMouseDY() {
+		return (int) cursorPosCallback.mouseDY;
 	}
 
 	public void destroy() {

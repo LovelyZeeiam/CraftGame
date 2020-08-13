@@ -5,11 +5,12 @@ public class Time {
 	private static long last_time = System.currentTimeMillis();
 
 	public static long deltaTime = 0;
+	public static long thisTime = 0;
 
 	public static void tick() {
-		long this_time = System.currentTimeMillis();
-		deltaTime = this_time - last_time;
-		last_time = this_time;
+		thisTime = System.currentTimeMillis();
+		deltaTime = thisTime - last_time;
+		last_time = thisTime;
 
 	}
 

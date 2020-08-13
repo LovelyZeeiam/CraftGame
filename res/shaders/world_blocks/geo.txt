@@ -1,0 +1,62 @@
+#version 440 core
+
+const uint FRONT = 0u;
+const uint BACK = 1u;
+const uint LEFT = 2u;
+const uint RIGHT = 3u;
+const uint TOP = 4u;
+const uint BOTTOM = 5u;
+
+layout (points) in;
+layout (triangle_strip, max_vertices = 4) out;
+
+in VS_OUT {
+    vec3 pos;
+	int face;
+	vec2 texPos;
+    vec3 color;
+} gs_in[];
+
+uniform int tex_atlas_width, tex_atlas_height;
+
+uniform mat4 projMatrix;
+
+out vec2 texCoord;
+out vec3 color;
+
+void main(){
+	
+	vec3 pos = gs_in[0].pos;
+	vec2 texPos = gs_in[0].texPos;
+	color = gs_in[0].color;
+	
+	switch(gs_in[0].face){
+	case FRONT:
+		
+		texCoord = vec2(float(texPos.x) / tex_atlas_width, float(texPos.y + 1) / tex_atlas_height);
+		gl_Position = projMatrix * (vec4(pos, 1.0f) + vec4(0, 0, 0, 0));
+		EmitVertex();
+		
+		texCoord = vec2(float(texPos.x + 1) / tex_atlas_width, float(texPos.y + 1) / tex_atlas_height);
+		gl_Position = projMatrix * (vec4(pos, 1.0f) + vec4(1, 0, 0, 0));
+		EmitVertex();
+		
+		texCoord = vec2(float(texPos.x) / tex_atlas_width, float(texPos.y) / tex_atlas_height);
+		gl_Position = projMatrix * (vec4(pos, 1.0f) + vec4(0, 1, 0, 0));
+		EmitVertex();
+		
+		texCoord = vec2(float(texPos.x + 1) / tex_atlas_width, float(texPos.y) / tex_atlas_height);
+		gl_Position = projMatrix * (vec4(pos, 1.0f) + vec4(1, 1, 0, 0));
+		EmitVertex();
+		
+		break;
+		
+		
+	}
+	
+	EndPrimitive();
+	
+	
+	
+}
+

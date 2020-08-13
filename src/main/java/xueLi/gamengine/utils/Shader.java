@@ -10,12 +10,13 @@ import java.util.HashMap;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL32;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 public class Shader {
 
-	private int shaderID, vertID, fragID;
+	private int shaderID, vertID, fragID, geoID = -1;
 
 	public Shader(String vertPath, String fragPath) {
 		vertID = getShader(vertPath, GL20.GL_VERTEX_SHADER);
@@ -23,6 +24,20 @@ public class Shader {
 
 		this.shaderID = GL20.glCreateProgram();
 		GL20.glAttachShader(this.shaderID, vertID);
+		GL20.glAttachShader(this.shaderID, fragID);
+		GL20.glLinkProgram(this.shaderID);
+		GL20.glValidateProgram(this.shaderID);
+
+	}
+
+	public Shader(String vertPath, String geoPath, String fragPath) {
+		vertID = getShader(vertPath, GL20.GL_VERTEX_SHADER);
+		geoID = getShader(geoPath, GL32.GL_GEOMETRY_SHADER);
+		fragID = getShader(fragPath, GL20.GL_FRAGMENT_SHADER);
+
+		this.shaderID = GL20.glCreateProgram();
+		GL20.glAttachShader(this.shaderID, vertID);
+		GL20.glAttachShader(this.shaderID, geoID);
 		GL20.glAttachShader(this.shaderID, fragID);
 		GL20.glLinkProgram(this.shaderID);
 		GL20.glValidateProgram(this.shaderID);
@@ -89,7 +104,13 @@ public class Shader {
 	private HashMap<String, Integer> uniforms = new HashMap<String, Integer>();
 
 	public int getUnifromLocation(String name) {
-		int location = uniforms.containsKey(name) ? uniforms.get(name) : GL20.glGetUniformLocation(this.shaderID, name);
+		int location = -1;
+		if (uniforms.containsKey(name)) {
+			location = uniforms.get(name);
+		} else {
+			location = GL20.glGetUniformLocation(this.shaderID, name);
+			uniforms.put(name, location);
+		}
 		if (location == -1)
 			System.err.println("Can't find uniform location: " + name);
 		return location;

@@ -1,6 +1,11 @@
 package xueLi.gamengine.view;
 
+import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
+import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
+
 import java.util.HashMap;
+
+import xueLi.gamengine.utils.Display;
 
 public class View {
 
@@ -19,11 +24,14 @@ public class View {
 	}
 
 	public void draw(long nvg) {
+		nvgBeginFrame(nvg, Display.currentDisplay.getWidth(), Display.currentDisplay.getHeight(),
+				Display.currentDisplay.getRatio());
 		if (background != null)
 			background.draw(nvg);
 		for (ViewWidget widget : widgets.values()) {
 			widget.draw(nvg);
 		}
+		nvgEndFrame(nvg);
 	}
 
 	public void size() {
@@ -32,6 +40,11 @@ public class View {
 		for (ViewWidget widget : widgets.values()) {
 			widget.size();
 		}
+
+	}
+
+	public void delete() {
+
 	}
 
 }

@@ -1,15 +1,17 @@
 package xueLi.craftGame.block;
 
+import xueLi.gamengine.util.vector.Vector2s;
+
 public class BlockData {
 
 	private String blockName;
 	private BlockType type;
 	private long destroyTime;
-	private int[] textures;
+	private Vector2s[] textures;
 
 	private BlockListener listener = new BlockListener();
 
-	public BlockData(String blockName, BlockType type, long destroyTime, int[] textures) {
+	public BlockData(String blockName, BlockType type, long destroyTime, Vector2s[] textures) {
 		this.blockName = blockName;
 		this.type = type;
 		this.destroyTime = destroyTime;
@@ -28,7 +30,7 @@ public class BlockData {
 		return destroyTime;
 	}
 
-	public int[] getTextures() {
+	public Vector2s[] getTextures() {
 		return textures;
 	}
 

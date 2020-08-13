@@ -114,6 +114,7 @@ public class ViewManager {
 	}
 
 	public View setGui(String guiName) {
+		focusedWidget = null;
 		this.currentGui = resource.getGui(guiName);
 		this.currentGui.create();
 		this.currentGui.size();
@@ -122,7 +123,9 @@ public class ViewManager {
 	}
 
 	public void setGui(View gui) {
+		focusedWidget = null;
 		if (gui == null) {
+			this.currentGui.delete();
 			this.currentGui = null;
 			display.setSubtitle(null);
 			return;
@@ -136,6 +139,7 @@ public class ViewManager {
 	private long fadeStartTime = -1;
 
 	public View setFadeinGui(String guiName) {
+		focusedWidget = null;
 		this.fadeInGui = resource.getGui(guiName);
 		this.fadeInGui.size();
 		return fadeInGui;
@@ -150,7 +154,6 @@ public class ViewManager {
 		if (currentGui != null) {
 			currentFrameBuffer.bind();
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
-			nvgBeginFrame(nvg, display.getWidth(), display.getHeight(), display.getRatio());
 
 			synchronized (currentGui) {
 				currentGui.draw(nvg);
@@ -166,13 +169,11 @@ public class ViewManager {
 		if (fadeInGui != null) {
 			fadeInFrameBuffer.bind();
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
-			nvgBeginFrame(nvg, display.getWidth(), display.getHeight(), display.getRatio());
 
 			synchronized (fadeInGui) {
 				fadeInGui.draw(nvg);
 			}
 
-			nvgEndFrame(nvg);
 			fadeInFrameBuffer.unbind();
 
 			if (this.fadeStartTime == -1) {
@@ -201,6 +202,8 @@ public class ViewManager {
 			guiShader.unbind();
 
 			if (fade >= 1) {
+				if (this.currentGui != null)
+					this.currentGui.delete();
 				this.currentGui = fadeInGui;
 				this.fadeInGui = null;
 				this.fadeStartTime = -1;

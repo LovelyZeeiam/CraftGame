@@ -29,7 +29,7 @@ public class ShaderResource extends IResource {
 			}
 		});
 		for (File f : folders) {
-			load(f.getName());
+			load(f.getName(), new File(f.getPath() + "/geo.txt").exists());
 
 		}
 
@@ -47,7 +47,7 @@ public class ShaderResource extends IResource {
 		float progressPerElement = (endValue - startValue) / folders.length;
 
 		for (File f : folders) {
-			load(f.getName());
+			load(f.getName(), new File(f.getPath() + "/geo.txt").exists());
 
 			++count;
 			progressBar.setProgress(startValue + progressPerElement * count);
@@ -72,7 +72,7 @@ public class ShaderResource extends IResource {
 		String loading_textString = textView.getText();
 
 		for (File f : folders) {
-			load(f.getName());
+			load(f.getName(), new File(f.getPath() + "/geo.txt").exists());
 
 			++count;
 			progressBar.setProgress(startValue + progressPerElement * count);
@@ -85,10 +85,15 @@ public class ShaderResource extends IResource {
 
 	}
 
-	public Shader load(String name) {
+	public Shader load(String name, boolean hasGeometryShader) {
 		if (shaders.containsKey(name))
 			return shaders.get(name);
-		Shader shader = new Shader(real_path + name + "/vert.txt", real_path + name + "/frag.txt");
+		Shader shader = null;
+		if (!hasGeometryShader)
+			shader = new Shader(real_path + name + "/vert.txt", real_path + name + "/frag.txt");
+		else
+			shader = new Shader(real_path + name + "/vert.txt", real_path + name + "/geo.txt",
+					real_path + name + "/frag.txt");
 		shaders.put(name, shader);
 		return shader;
 	}

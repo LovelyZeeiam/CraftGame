@@ -22,6 +22,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
+import xueLi.gamengine.util.vector.Vector2s;
 import xueLi.gamengine.utils.Logger;
 import xueLi.gamengine.view.ViewManager;
 
@@ -101,32 +102,32 @@ public class TextureManager implements Closeable {
 		} else {
 			int[] pixels = null;
 			int width = 0, height = 0;
-			
+
 			// For Atlas:
-			HashMap<String, Integer> atlas = new HashMap<String, Integer>();
+			HashMap<String, Vector2s> atlas = new HashMap<String, Vector2s>();
 			// 材质册中单个图片的大小
 			int singlePictureSize = 0;
+			// 材质册是正方形的 这个记录了横竖都有几个图片
+			int length = 0;
 
 			if (isAtlas) {
 				JsonObject atlasJsonObject = element.getAsJsonObject();
-				
-				// TODO: ATLAS!
+
 				Set<Entry<String, JsonElement>> entrySet = atlasJsonObject.entrySet();
 				int size = entrySet.size();
-				
-				// 材质册是正方形的 这个记录了横竖都有几个图片
-				int length = new Double(Math.ceil(Math.sqrt(size))).intValue();
-				
+
+				length = new Double(Math.ceil(Math.sqrt(size))).intValue();
+
 				int[][] pixelss = new int[size][];
 				int count = 0;
-				
+
 				// 图片类型
 				int picture_type = -1;
-				
-				for(Entry<String, JsonElement> entry : entrySet) {
+
+				for (Entry<String, JsonElement> entry : entrySet) {
 					String namespace = entry.getKey();
 					String path = this.resourcePath + entry.getValue().getAsString();
-					
+
 					BufferedImage image = null;
 					try {
 						image = ImageIO.read(new File(path));
@@ -135,34 +136,42 @@ public class TextureManager implements Closeable {
 						picture_type = image.getType();
 						pixelss[count] = new int[width * height];
 						image.getRGB(0, 0, width, height, pixelss[count], 0, width);
-						
+
 						singlePictureSize = Math.max(singlePictureSize, Math.max(width, height));
-						
+
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					
-					atlas.put(namespace, count);
+
+					atlas.put(namespace, new Vector2s(new Integer(count / length).shortValue(),
+							new Integer(count % length).shortValue()));
 
 					++count;
 				}
-				
-				BufferedImage image = new BufferedImage(singlePictureSize * length, singlePictureSize * length, picture_type);
-				
+
+				BufferedImage image = new BufferedImage(singlePictureSize * length, singlePictureSize * length,
+						picture_type);
+
 				count = 0;
-				for(;count < size;++count) {
+				for (; count < size; ++count) {
 					int x = count / length;
 					int y = count % length;
-					
-					image.setRGB(x * singlePictureSize, y * singlePictureSize, singlePictureSize, singlePictureSize, pixelss[count], 0, width);
-					
+
+					image.setRGB(x * singlePictureSize, y * singlePictureSize, singlePictureSize, singlePictureSize,
+							pixelss[count], 0, width);
+
 				}
-				
+
 				width = image.getWidth();
 				height = image.getHeight();
 				pixels = new int[width * height];
 				image.getRGB(0, 0, width, height, pixels, 0, width);
-				
+
+				try {
+					ImageIO.write(image, "png", new File("a.png"));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 
 			} else {
 				try {
@@ -197,10 +206,10 @@ public class TextureManager implements Closeable {
 			GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, width, height, 0, GL11.GL_RGBA,
 					GL11.GL_UNSIGNED_BYTE, data);
 			Texture texture = null;
-			if(!isAtlas)
+			if (!isAtlas)
 				texture = new Texture(id, preload, false);
 			else
-				texture = new TextureAtlas(atlas, singlePictureSize, id, preload, false);
+				texture = new TextureAtlas(atlas, length, length, id, preload, false);
 			textures.put(name, texture);
 
 		}
