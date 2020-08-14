@@ -72,7 +72,6 @@ public class Display {
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		// 窗口居中
 		glfwSetWindowPos(window, (screenSize.width - width) / 2, (screenSize.height - height) / 2);
-		// 窗口图标
 
 		glfwMakeContextCurrent(window);
 		GL.createCapabilities();
@@ -179,7 +178,7 @@ public class Display {
 
 		if (this.keyCallback != null)
 			this.keyCallback.tick();
-
+		
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 

@@ -81,5 +81,7 @@ public class World {
 
 		return chunk.hasBlock(new BlockPos(xInChunk, p.getY(), zInChunk));
 	}
+	
+	
 
 }

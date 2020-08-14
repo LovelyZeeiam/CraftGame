@@ -383,7 +383,11 @@ public class GuiResource extends IResource {
 	}
 
 	public View getGui(String name) {
-		return guisHashMap.get(name);
+		View view = guisHashMap.get(name);
+		if(view == null & name != null) {
+			Logger.error("Can't find Gui: " + name);
+		}
+		return view;
 	}
 
 	@Override

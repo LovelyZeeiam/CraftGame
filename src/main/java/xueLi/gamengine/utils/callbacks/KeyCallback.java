@@ -28,7 +28,6 @@ public class KeyCallback extends GLFWKeyCallback {
 	public void tick() {
 		for (int keyID : keyPressed)
 			keysOnce[keyID] = false;
-
 	}
 
 }

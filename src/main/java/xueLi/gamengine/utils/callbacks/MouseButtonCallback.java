@@ -8,7 +8,7 @@ import xueLi.gamengine.utils.Logger;
 public abstract class MouseButtonCallback extends GLFWMouseButtonCallback {
 
 	// 只要按下按钮 true就不会停息
-	public boolean[] buttons = new boolean[256];
+	public boolean[] buttons = new boolean[8];
 
 	@Override
 	public void invoke(long window, int button, int action, int mods) {

@@ -69,9 +69,6 @@ public class Player extends Entity {
 				speed.y -= this.getSpeed() * 0.5f;
 			}
 
-			pos.rotX -= display.getMouseDY() * sensivity;
-			pos.rotY += display.getMouseDX() * sensivity;
-
 			if (display.isMouseDown(0) & block_select != null & Time.thisTime - placeTimeCount > 100) {
 				world.setBlock(block_select, (Tile) null);
 				placeTimeCount = Time.thisTime;
@@ -102,7 +99,7 @@ public class Player extends Entity {
 
 	@Override
 	public float getSpeed() {
-		return 0.01f;
+		return 0.004f;
 	}
 
 }

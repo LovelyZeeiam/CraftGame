@@ -120,6 +120,7 @@ public class CraftGame extends IGame {
 
 					worldLogic = new WorldLogic(cg);
 					worldLogic.loadLevel();
+					worldLogic.running = true;
 					new Thread(worldLogic).start();
 
 				}

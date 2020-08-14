@@ -15,6 +15,7 @@ import xueLi.gamengine.resource.TextureManager;
 import xueLi.gamengine.utils.Display;
 import xueLi.gamengine.utils.callbacks.CursorPosCallback;
 import xueLi.gamengine.utils.callbacks.DisplaySizedCallback;
+import xueLi.gamengine.utils.callbacks.KeyCallback;
 import xueLi.gamengine.utils.callbacks.MouseButtonCallback;
 import xueLi.gamengine.view.ViewManager;
 
@@ -117,6 +118,7 @@ public abstract class IGame implements Runnable {
 
 			}
 		});
+		display.setKeyboardCallback(new KeyCallback() {});
 
 	}
 

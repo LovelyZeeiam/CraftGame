@@ -9,9 +9,9 @@ The game is in beta now. So if you have some suggestion, just leave in the comme
 
 ## Plan
 
-1. Icon
-2. GUI Engine
-3. Multithreading world rendering and game logic
+1. GUI Engine
+2. Multithreading world rendering and game logic
+3. Texture (Because I can't draw a nice texture so,,, I use that of origin minecraft;
 
 ****
 

@@ -17,6 +17,7 @@ public abstract class CursorPosCallback extends GLFWCursorPosCallback {
 			mouseDY = lastTimeMouseY - ypos;
 		} else {
 			mouseDX = mouseDY = 0;
+			shouldNotProcessMouseThisTime = false;
 		}
 
 		lastTimeMouseX = xpos;
