@@ -2,6 +2,8 @@ package xueLi.craftGame.block;
 
 import xueLi.craftGame.BlockResource;
 import xueLi.craftGame.world.BlockPos;
+import xueLi.gamengine.resource.TextureAtlas;
+import xueLi.gamengine.utils.FloatList;
 
 public class Tile {
 
@@ -38,6 +40,10 @@ public class Tile {
 
 	public int getZ() {
 		return pos.getZ();
+	}
+
+	public int getDrawData(int x, int y, int z, byte face, TextureAtlas blockTextureAtlas, FloatList buffer) {
+		return listener.getDrawData(buffer, this, x, y, z, face, blockTextureAtlas);
 	}
 
 }

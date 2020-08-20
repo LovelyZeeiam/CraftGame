@@ -1,4 +1,4 @@
-#version 440 core
+#version 330
 
 layout (location = 0) in vec3 pos;
 layout (location = 1) in vec2 texPos;
@@ -11,9 +11,7 @@ out vec2 otexPos;
 out vec3 ocolor;
 
 void main(){
-	mat4 mvpMatrix = projMatrix * viewMatrix;
-	
-	gl_Position = mvpMatrix * vec4(pos,1.0);
+	gl_Position = projMatrix * viewMatrix * vec4(pos,1.0);
 	otexPos = texPos;
 	ocolor = color;
 	

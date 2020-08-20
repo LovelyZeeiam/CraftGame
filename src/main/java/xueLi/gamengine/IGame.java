@@ -118,7 +118,8 @@ public abstract class IGame implements Runnable {
 
 			}
 		});
-		display.setKeyboardCallback(new KeyCallback() {});
+		display.setKeyboardCallback(new KeyCallback() {
+		});
 
 	}
 
@@ -134,6 +135,9 @@ public abstract class IGame implements Runnable {
 		loadShader();
 		loadTexture();
 		loadGui();
+
+		// For Linux
+		display.getSizedCallback().invoke(0, width, height);
 
 	}
 
@@ -189,7 +193,7 @@ public abstract class IGame implements Runnable {
 	public void run() {
 		onCreate();
 		while (display.running) {
-			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
+			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 			onDrawFrame();
 			display.update();
 		}

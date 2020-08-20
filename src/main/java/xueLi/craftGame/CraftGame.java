@@ -1,8 +1,11 @@
 package xueLi.craftGame;
 
+import org.checkerframework.framework.qual.LiteralKind;
 import org.lwjgl.glfw.GLFW;
 
 import xueLi.gamengine.IGame;
+import xueLi.gamengine.utils.FloatList;
+import xueLi.gamengine.utils.TaskManager;
 import xueLi.gamengine.view.GUIImageView;
 import xueLi.gamengine.view.GUIProgressBar;
 import xueLi.gamengine.view.GUITextView;
@@ -28,6 +31,8 @@ public class CraftGame extends IGame {
 		Thread gameLoaderThread = new Thread(gameLoader);
 
 		showDisplay();
+
+		TaskManager.startListener();
 
 		gameLoaderThread.start();
 
@@ -56,8 +61,9 @@ public class CraftGame extends IGame {
 	protected void onDrawFrame() {
 		if (inWorld) {
 			worldLogic.draw();
-		} else
+		} else {
 			viewManager.draw();
+		}
 
 		runQueueList();
 
@@ -68,6 +74,8 @@ public class CraftGame extends IGame {
 		if (inWorld) {
 			worldLogic.running = false;
 		}
+
+		TaskManager.stopListener();
 
 		releaseAll();
 
@@ -86,6 +94,7 @@ public class CraftGame extends IGame {
 
 		public GameLoader(CraftGame cg) {
 			this.cg = cg;
+
 		}
 
 		@Override

@@ -99,7 +99,7 @@ public class Player extends Entity {
 
 	@Override
 	public float getSpeed() {
-		return 0.004f;
+		return 0.008f;
 	}
 
 }

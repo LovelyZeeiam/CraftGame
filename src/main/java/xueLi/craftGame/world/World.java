@@ -1,15 +1,34 @@
 package xueLi.craftGame.world;
 
+import java.nio.FloatBuffer;
 import java.util.HashMap;
-
+import xueLi.craftGame.WorldLogic;
 import xueLi.craftGame.block.Tile;
+import xueLi.craftGame.entity.Player;
+import xueLi.gamengine.resource.TextureAtlas;
 import xueLi.gamengine.utils.MathUtils;
+import xueLi.gamengine.utils.MatrixHelper;
 
 public class World {
 
-	public volatile HashMap<Long, Chunk> chunks = new HashMap<Long, Chunk>();
+	private WorldLogic worldLogic;
 
-	public World() {
+	private ChunkGenerator chunkGenerator;
+
+	private volatile HashMap<Long, Chunk> chunks = new HashMap<Long, Chunk>();
+
+	public World(WorldLogic worldLogic) {
+		this.worldLogic = worldLogic;
+
+		chunkGenerator = new ChunkGenerator(this);
+
+		for (int i = 0; i < 4; i++) {
+			for (int m = 0; m < 4; m++) {
+				Chunk chunk = chunkGenerator.superflat(i, m);
+				chunks.put(MathUtils.vert2ToLong(i, m), chunk);
+
+			}
+		}
 
 	}
 
@@ -21,8 +40,11 @@ public class World {
 		int xInChunk = x - cp.getX() << Chunk.size_yiwei;
 		int zInChunk = z - cp.getZ() << Chunk.size_yiwei;
 
-		if (tempChunk == null || cp.getX() != tempChunk.chunkX || cp.getZ() != tempChunk.chunkZ)
-			tempChunk = chunks.get(MathUtils.vert2ToLong(cp.getX(), cp.getZ()));
+		if (tempChunk == null || cp.getX() != tempChunk.chunkX || cp.getZ() != tempChunk.chunkZ) {
+			long key = MathUtils.vert2ToLong(cp.getX(), cp.getZ());
+			tempChunk = chunks.get(key);
+
+		}
 		if (tempChunk == null)
 			return null;
 		return tempChunk.getBlock(xInChunk, y, zInChunk);
@@ -30,15 +52,18 @@ public class World {
 
 	public void setBlock(int x, int y, int z, Tile block) {
 		ChunkPos cp = getChunkPosFromBlock(x, z);
-		Chunk chunk = chunks.get(MathUtils.vert2ToLong(cp.getX(), cp.getZ()));
+
+		long key = MathUtils.vert2ToLong(cp.getX(), cp.getZ());
+		Chunk chunk = chunks.get(key);
 		if (chunk == null)
 			return;
 
-		int xInChunk = x - cp.getX() << Chunk.size_yiwei;
-		int zInChunk = z - cp.getZ() << Chunk.size_yiwei;
+		int xInChunk = x - (cp.getX() << Chunk.size_yiwei);
+		int zInChunk = z - (cp.getZ() << Chunk.size_yiwei);
 		if (block == null) {
 			Tile tile = chunk.getBlock(xInChunk, y, zInChunk);
-			tile.getListener().onDestroy(tile, chunk, this);
+			if (tile != null)
+				tile.getListener().onDestroy(tile, chunk, this);
 
 		} else {
 			block.getListener().onCreate(block, chunk, this);
@@ -57,6 +82,13 @@ public class World {
 		if (p == null)
 			return;
 		setBlock(p.getX(), p.getY(), p.getZ(), new Tile(blockName));
+	}
+
+	public void putChunk(Chunk chunk) {
+		long key = MathUtils.vert2ToLong(chunk.chunkX, chunk.chunkZ);
+
+		chunks.put(key, chunk);
+
 	}
 
 	public void onRightClickOnBlock(BlockPos pos) {
@@ -81,7 +113,70 @@ public class World {
 
 		return chunk.hasBlock(new BlockPos(xInChunk, p.getY(), zInChunk));
 	}
-	
-	
+
+	public Chunk getChunk(int x, int z) {
+		long key = MathUtils.vert2ToLong(x, z);
+		Chunk chunk = chunks.get(key);
+		return chunk;
+	}
+
+	public void updateVertexBuffer(TextureAtlas textureAtlas, Player player, int draw_distance) {
+		ChunkPos chunkPos = getChunkPosFromBlock((int) player.pos.x, (int) player.pos.z);
+
+		for (int x = chunkPos.getX() - draw_distance; x < chunkPos.getX() + draw_distance; x++) {
+			for (int z = chunkPos.getZ() - draw_distance; z < chunkPos.getZ() + draw_distance; z++) {
+				// long key = MathUtils.vert2ToLong(x, z);
+				Chunk chunk = getChunk(x, z);
+				if (chunk != null) {
+					chunk.update(textureAtlas);
+				}
+
+			}
+		}
+	}
+
+	public void preDraw(TextureAtlas textureAtlas, Player player, int draw_distance) {
+		ChunkPos chunkPos = getChunkPosFromBlock((int) player.pos.x, (int) player.pos.z);
+
+		for (int x = chunkPos.getX() - draw_distance; x < chunkPos.getX() + draw_distance; x++) {
+			for (int z = chunkPos.getZ() - draw_distance; z < chunkPos.getZ() + draw_distance; z++) {
+				// long key = MathUtils.vert2ToLong(x, z);
+				Chunk chunk = getChunk(x, z);
+				if (chunk != null) {
+					chunk.update(textureAtlas);
+
+				}
+
+			}
+		}
+
+	}
+
+	public int draw(TextureAtlas textureAtlas, Player player, FloatBuffer drawData, int draw_distance) {
+		ChunkPos chunkPos = getChunkPosFromBlock((int) player.pos.x, (int) player.pos.z);
+
+		int vertCount = 0;
+
+		for (int x = chunkPos.getX() - draw_distance; x < chunkPos.getX() + draw_distance; x++) {
+			for (int z = chunkPos.getZ() - draw_distance; z < chunkPos.getZ() + draw_distance; z++) {
+				// long key = MathUtils.vert2ToLong(x, z);
+				Chunk chunk = getChunk(x, z);
+				if (chunk != null) {
+					if (MatrixHelper.isChunkInFrustum(x, Chunk.height, z)) {
+						chunk.update(textureAtlas);
+						vertCount += chunk.getVertCount();
+						drawData.put(chunk.getDrawBuffer().getData());
+
+					}
+
+				}
+
+			}
+		}
+
+		// System.out.println(vertCount);
+
+		return vertCount;
+	}
 
 }

@@ -384,7 +384,7 @@ public class GuiResource extends IResource {
 
 	public View getGui(String name) {
 		View view = guisHashMap.get(name);
-		if(view == null & name != null) {
+		if (view == null & name != null) {
 			Logger.error("Can't find Gui: " + name);
 		}
 		return view;

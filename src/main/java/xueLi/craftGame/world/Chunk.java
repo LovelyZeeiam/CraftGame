@@ -1,8 +1,9 @@
 package xueLi.craftGame.world;
 
-import java.nio.ByteBuffer;
-
+import xueLi.craftGame.block.BlockFace;
 import xueLi.craftGame.block.Tile;
+import xueLi.gamengine.resource.TextureAtlas;
+import xueLi.gamengine.utils.FloatList;
 
 public class Chunk {
 
@@ -12,8 +13,9 @@ public class Chunk {
 	Tile[][][] blockState = new Tile[size][height][size];
 	public int[][] heightMap = new int[size][size];
 
-	public boolean needRebuild = false;
-	public ByteBuffer blocksVertexBuffer = ByteBuffer.allocate(475136);
+	public boolean needRebuild = true;
+	private FloatList buffer = new FloatList(500000);
+	private int vertCount = 0;
 
 	public int chunkX, chunkZ;
 
@@ -23,24 +25,65 @@ public class Chunk {
 	}
 
 	@WorldGLData
-	public void update() {
+	public void update(TextureAtlas blockTextureAtlas) {
 		if (needRebuild) {
+			int offset_x = chunkX << size_yiwei;
+			int offset_z = chunkZ << size_yiwei;
+
+			vertCount = 0;
+			buffer.clear();
 			for (int x = 0; x < size; x++) {
 				for (int z = 0; z < size; z++) {
 					int height = heightMap[x][z];
-					for (int y = 0; y < height; y++) {
-
+					for (int y = 0; y <= height; y++) {
+						Tile block = blockState[x][y][z];
+						if (block != null) {
+							if (x - 1 < 0 || blockState[x - 1][y][z] == null) {
+								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.LEFT,
+										blockTextureAtlas, buffer);
+							}
+							if (x + 1 >= size || blockState[x + 1][y][z] == null) {
+								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.RIGHT,
+										blockTextureAtlas, buffer);
+							}
+							if (z - 1 < 0 || blockState[x][y][z - 1] == null) {
+								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.FRONT,
+										blockTextureAtlas, buffer);
+							}
+							if (z + 1 >= size || blockState[x][y][z + 1] == null) {
+								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.BACK,
+										blockTextureAtlas, buffer);
+							}
+							if (y - 1 < 0 || blockState[x][y - 1][z] == null) {
+								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.BOTTOM,
+										blockTextureAtlas, buffer);
+							}
+							if (y + 1 >= Chunk.height || blockState[x][y + 1][z] == null) {
+								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.TOP,
+										blockTextureAtlas, buffer);
+							}
+						}
 					}
 				}
 			}
+			needRebuild = false;
 		}
 
+	}
+
+	public int getVertCount() {
+		return vertCount;
+	}
+
+	public FloatList getDrawBuffer() {
+		return buffer;
 	}
 
 	public void setBlock(int x, int y, int z, Tile block) {
 		if (x < 0 || x >= size || y < 0 || y >= height || z < 0 || z >= size)
 			return;
 		blockState[x][y][z] = block;
+		needRebuild = true;
 
 		if (y > heightMap[x][z]) {
 			if (block == null) {

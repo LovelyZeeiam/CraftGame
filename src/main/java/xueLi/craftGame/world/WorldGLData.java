@@ -12,8 +12,9 @@ package xueLi.craftGame.world;
  * TODO: wanna use Unsigned integer in location 1 - 3 but it doesn't work 4 me
  * 嘤嘤嘤
  * </p>
- * <h2> 上面的方式好像实际在我电脑上面发现很卡 </h2>
- * <p> 还是按传统的方式吧
+ * <h2>上面的方式好像实际在我电脑上面发现很卡</h2>
+ * <p>
+ * 还是按传统的方式吧
  */
 public @interface WorldGLData {
 }
