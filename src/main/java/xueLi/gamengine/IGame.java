@@ -106,6 +106,7 @@ public abstract class IGame implements Runnable {
 			@Override
 			public void invoke() {
 				onCursorPos(mouseDX, mouseDY);
+				
 			}
 		});
 		display.setMouseButtonCallback(new MouseButtonCallback() {

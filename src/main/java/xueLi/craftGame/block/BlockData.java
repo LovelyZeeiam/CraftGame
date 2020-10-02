@@ -1,6 +1,6 @@
 package xueLi.craftGame.block;
 
-import xueLi.gamengine.util.vector.Vector2s;
+import xueLi.gamengine.utils.vector.Vector2s;
 
 public class BlockData {
 

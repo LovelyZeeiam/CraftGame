@@ -1,7 +1,6 @@
 package xueLi.craftGame;
 
 import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
 import org.lwjgl.glfw.GLFW;
@@ -33,6 +32,7 @@ public class WorldLogic implements Runnable {
 	private int vertexCount = 0;
 
 	private View gameGui;
+	private State state;
 
 	@WorldGLData
 	public WorldLogic(CraftGame cg) {
@@ -119,7 +119,8 @@ public class WorldLogic implements Runnable {
 			cg.getDisplay().toggleMouseGrabbed();
 
 		});
-
+		
+		this.state = State.INGAME;
 		cg.inWorld = true;
 
 	}
@@ -134,10 +135,16 @@ public class WorldLogic implements Runnable {
 	public void draw() {
 
 		if (KeyCallback.keysOnce[GLFW.GLFW_KEY_ESCAPE]) {
-
-			if (gameGui == null) {
+			if (this.state == State.INGAME) {
 				cg.getDisplay().toggleMouseGrabbed();
-				// gameGui = cg.getGuiResource().guisHashMap.get("");
+				
+				this.state = State.ESC_MENU;
+				
+			} else if (this.state == State.ESC_MENU) {
+				cg.getDisplay().toggleMouseGrabbed();
+				
+				this.state = State.INGAME;
+
 			}
 
 		}
@@ -191,20 +198,6 @@ public class WorldLogic implements Runnable {
 
 		GLHelper.checkGLError("World: After-render");
 
-		if (gameGui != null) {
-			cg.getViewManager().draw();
-		}
-
-	}
-
-	private View setIngameGui(String name) {
-		View gameGui = cg.getGuiResource().getGui(name);
-		if (name == null || gameGui == null) {
-			cg.getViewManager().setGui((View) null);
-		} else if (gameGui != null) {
-			cg.getViewManager().setGui(gameGui);
-		}
-		return gameGui;
 	}
 
 	public void delete() {

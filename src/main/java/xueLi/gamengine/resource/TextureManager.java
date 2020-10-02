@@ -22,8 +22,8 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
-import xueLi.gamengine.util.vector.Vector2s;
 import xueLi.gamengine.utils.Logger;
+import xueLi.gamengine.utils.vector.Vector2s;
 import xueLi.gamengine.view.ViewManager;
 
 import static org.lwjgl.nanovg.NanoVG.*;

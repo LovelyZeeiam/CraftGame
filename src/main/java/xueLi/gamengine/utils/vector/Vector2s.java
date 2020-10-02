@@ -1,4 +1,4 @@
-package xueLi.gamengine.util.vector;
+package xueLi.gamengine.utils.vector;
 
 public class Vector2s {
 

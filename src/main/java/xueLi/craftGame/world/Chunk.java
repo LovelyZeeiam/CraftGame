@@ -13,15 +13,19 @@ public class Chunk {
 	Tile[][][] blockState = new Tile[size][height][size];
 	public int[][] heightMap = new int[size][size];
 
+	private World world;
+
 	public boolean needRebuild = true;
 	private FloatList buffer = new FloatList(500000);
 	private int vertCount = 0;
 
 	public int chunkX, chunkZ;
 
-	public Chunk(int chunkX, int chunkZ) {
+	public Chunk(int chunkX, int chunkZ, World world) {
 		this.chunkX = chunkX;
 		this.chunkZ = chunkZ;
+		this.world = world;
+
 	}
 
 	@WorldGLData
@@ -38,27 +42,33 @@ public class Chunk {
 					for (int y = 0; y <= height; y++) {
 						Tile block = blockState[x][y][z];
 						if (block != null) {
-							if (x - 1 < 0 || blockState[x - 1][y][z] == null) {
+							if ((x - 1 < 0) ? (world.getBlock(x + offset_x - 1, y, z + offset_z) == null)
+									: (blockState[x - 1][y][z] == null)) {
 								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.LEFT,
 										blockTextureAtlas, buffer);
 							}
-							if (x + 1 >= size || blockState[x + 1][y][z] == null) {
+							if ((x + 1 >= size) ? (world.getBlock(x + offset_x + 1, y, z + offset_z) == null)
+									: (blockState[x + 1][y][z] == null)) {
 								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.RIGHT,
 										blockTextureAtlas, buffer);
 							}
-							if (z - 1 < 0 || blockState[x][y][z - 1] == null) {
+							if ((z - 1 < 0) ? (world.getBlock(x + offset_x, y, z + offset_z - 1) == null)
+									: (blockState[x][y][z - 1] == null)) {
 								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.FRONT,
 										blockTextureAtlas, buffer);
 							}
-							if (z + 1 >= size || blockState[x][y][z + 1] == null) {
+							if ((z + 1 >= size) ? (world.getBlock(x + offset_x, y, z + offset_z + 1) == null)
+									: (blockState[x][y][z + 1] == null)) {
 								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.BACK,
 										blockTextureAtlas, buffer);
 							}
-							if (y - 1 < 0 || blockState[x][y - 1][z] == null) {
+							if ((y - 1 < 0) ? (world.getBlock(x + offset_x, y - 1, z + offset_z) == null)
+									: (blockState[x][y - 1][z] == null)) {
 								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.BOTTOM,
 										blockTextureAtlas, buffer);
 							}
-							if (y + 1 >= Chunk.height || blockState[x][y + 1][z] == null) {
+							if ((y + 1 >= Chunk.height) ? (world.getBlock(x + offset_x, y + 1, z + offset_z) == null)
+									: (blockState[x][y + 1][z] == null)) {
 								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.TOP,
 										blockTextureAtlas, buffer);
 							}

@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL32;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 public class Shader {
@@ -127,6 +128,10 @@ public class Shader {
 
 	public void setUniformVector3(int loc, Vector3f v) {
 		GL20.glUniform3f(loc, v.x, v.y, v.z);
+	}
+	
+	public void setUniformVector2(int loc, Vector2f v) {
+		GL20.glUniform2f(loc, v.x, v.y);
 	}
 
 	public void setInt(int loc, int v) {

@@ -1,15 +1,14 @@
 package xueLi.craftGame;
 
-import org.checkerframework.framework.qual.LiteralKind;
 import org.lwjgl.glfw.GLFW;
 
 import xueLi.gamengine.IGame;
-import xueLi.gamengine.utils.FloatList;
 import xueLi.gamengine.utils.TaskManager;
 import xueLi.gamengine.view.GUIImageView;
 import xueLi.gamengine.view.GUIProgressBar;
 import xueLi.gamengine.view.GUITextView;
 import xueLi.gamengine.view.View;
+import xueLi.gamengine.view.GUIFader.Faders;
 
 public class CraftGame extends IGame {
 
@@ -91,21 +90,30 @@ public class CraftGame extends IGame {
 		BlockResource resource;
 
 		private CraftGame cg;
+		
+		// 这些东西在构造函数初始化 不然有可能会抛空指针
+		/* 资源加载 */
+		private View loading_gui;
+		private GUIImageView loading_imageView;
+		private GUIProgressBar loading_ProgressBar;
+		private GUITextView loading_TextView;
 
 		public GameLoader(CraftGame cg) {
 			this.cg = cg;
+			
+			/* 资源加载 */
+			loading_gui = guiResource.getGui("game_loading.json");
+			loading_imageView = (GUIImageView) loading_gui.widgets.get("loading_splash");
+			loading_ProgressBar = (GUIProgressBar) loading_gui.widgets.get("loading_progress_bar");
+			loading_TextView = (GUITextView) loading_gui.widgets.get("loading_message");
 
 		}
 
 		@Override
 		public void run() {
+			viewManager.setFadeinGui(loading_gui, Faders.LINEAR.fader);
+			
 			/* 资源加载 */
-			View loading_gui = viewManager.setFadeinGui("game_loading.json");
-
-			GUIImageView loading_imageView = (GUIImageView) loading_gui.widgets.get("loading_splash");
-			GUIProgressBar loading_ProgressBar = (GUIProgressBar) loading_gui.widgets.get("loading_progress_bar");
-			GUITextView loading_TextView = (GUITextView) loading_gui.widgets.get("loading_message");
-
 			String loading_messageString = loading_TextView.getText();
 
 			// 设置加载动画
@@ -161,7 +169,7 @@ public class CraftGame extends IGame {
 			loading_TextView.setText("Loaded successfully~");
 
 			// 换界面!
-			viewManager.setFadeinGui("main_menu.json");
+			viewManager.setFadeinGui("main_menu.json", Faders.LINEAR.fader);
 
 		}
 

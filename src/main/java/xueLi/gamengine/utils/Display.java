@@ -53,12 +53,12 @@ public class Display {
 	public boolean create(int width, int height, String title) {
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 		// OpenGL版本
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-		// glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-		// glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 		// 采样次数
-		// glfwWindowHint(GLFW_SAMPLES, 4);
+		glfwWindowHint(GLFW_SAMPLES, 4);
 
 		// 创建窗口
 		window = glfwCreateWindow(width, height, title, 0, 0);
@@ -83,7 +83,7 @@ public class Display {
 		GLHelper.printDeviceInfo();
 
 		// 抗锯齿 多重采样
-		// GL11.glEnable(GL13.GL_MULTISAMPLE);
+		GL11.glEnable(GL13.GL_MULTISAMPLE);
 		// 平滑线
 		// GL11.glEnable(GL11.GL_LINE_SMOOTH);
 		// GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST);

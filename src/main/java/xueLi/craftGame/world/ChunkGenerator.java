@@ -12,7 +12,7 @@ public class ChunkGenerator {
 	}
 
 	public Chunk superflat(int chunkX, int chunkZ) {
-		Chunk chunk = new Chunk(chunkX, chunkZ);
+		Chunk chunk = new Chunk(chunkX, chunkZ, world);
 		for (int x = 0; x < Chunk.size; x++) {
 			for (int z = 0; z < Chunk.size; z++) {
 				for (int y = 0; y < 4; y++) {

@@ -17,8 +17,8 @@ import xueLi.gamengine.resource.IResource;
 import xueLi.gamengine.resource.LangManager;
 import xueLi.gamengine.resource.TextureAtlas;
 import xueLi.gamengine.resource.TextureManager;
-import xueLi.gamengine.util.vector.Vector2s;
 import xueLi.gamengine.utils.Logger;
+import xueLi.gamengine.utils.vector.Vector2s;
 import xueLi.gamengine.view.GUIProgressBar;
 import xueLi.gamengine.view.GUITextView;
 

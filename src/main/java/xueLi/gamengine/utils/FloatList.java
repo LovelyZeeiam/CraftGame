@@ -30,10 +30,6 @@ public class FloatList {
 	}
 
 	public void clear() {
-		for (int i = 0; i < size; i++) {
-			data[i] = 0.0f;
-		}
-
 		this.pointer = 0;
 		this.size = 0;
 

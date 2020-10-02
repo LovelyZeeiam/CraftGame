@@ -17,9 +17,9 @@ public class EvalableFloat {
 
 	public void eval() {
 		String newExpressionString = expression
-				.replaceAll("win_width", new Float(Display.currentDisplay.getWidth()).toString())
-				.replaceAll("win_height", new Float(Display.currentDisplay.getHeight()).toString())
-				.replaceAll("scale", new Float(Display.currentDisplay.getScale()).toString());
+				.replaceAll("win_width", Float.valueOf(Display.currentDisplay.getWidth()).toString())
+				.replaceAll("win_height", Float.valueOf(Display.currentDisplay.getHeight()).toString())
+				.replaceAll("scale", Float.valueOf(Display.currentDisplay.getScale()).toString());
 		try {
 			this.value = Evaler.evalToFloat(newExpressionString);
 		} catch (ScriptException e) {
