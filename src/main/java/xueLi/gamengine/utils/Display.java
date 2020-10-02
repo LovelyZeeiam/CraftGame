@@ -92,6 +92,8 @@ public class Display {
 		// GL11.glHint(GL11.GL_POINT_SMOOTH_HINT, GL11.GL_NICEST);
 
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		
+		Time.tick();
 
 		return true;
 	}

@@ -32,7 +32,7 @@ public class CraftGame extends IGame {
 		showDisplay();
 
 		TaskManager.startListener();
-
+		
 		gameLoaderThread.start();
 
 	}
@@ -106,12 +106,13 @@ public class CraftGame extends IGame {
 			loading_imageView = (GUIImageView) loading_gui.widgets.get("loading_splash");
 			loading_ProgressBar = (GUIProgressBar) loading_gui.widgets.get("loading_progress_bar");
 			loading_TextView = (GUITextView) loading_gui.widgets.get("loading_message");
+			
+			viewManager.setFadeinGui(loading_gui, Faders.LINEAR.fader);
 
 		}
 
 		@Override
 		public void run() {
-			viewManager.setFadeinGui(loading_gui, Faders.LINEAR.fader);
 			
 			/* 资源加载 */
 			String loading_messageString = loading_TextView.getText();

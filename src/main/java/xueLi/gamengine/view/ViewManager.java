@@ -184,7 +184,8 @@ public class ViewManager {
 
 		if (fadeInGui != null) {
 			if (this.fadeStartTime == -1) {
-				this.fadeStartTime = Time.thisTime;
+				this.fadeStartTime = System.currentTimeMillis();
+				//System.out.println(this.fadeStartTime);
 			}
 			
 			fadeInFrameBuffer.bind();

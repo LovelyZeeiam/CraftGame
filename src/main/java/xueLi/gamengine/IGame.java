@@ -188,6 +188,7 @@ public abstract class IGame implements Runnable {
 		textureManager.close();
 		textureManager.release();
 		guiResource.close();
+		
 	}
 
 	@Override
@@ -199,6 +200,7 @@ public abstract class IGame implements Runnable {
 			display.update();
 		}
 		onExit();
+		
 	}
 
 	protected abstract void onCreate();
