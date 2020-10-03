@@ -81,7 +81,7 @@ public abstract class IGame implements Runnable {
 
 	protected void loadGui() {
 		guiResource = new GuiResource(resPath, textureManager);
-		guiResource.loadGui("game_loading.json", langManager);
+		guiResource.loadGui("game_loading.json", langManager, false);
 		viewManager.setResourceSource(guiResource);
 		viewManager.setFont("Minecraft.ttf");
 
@@ -106,7 +106,7 @@ public abstract class IGame implements Runnable {
 			@Override
 			public void invoke() {
 				onCursorPos(mouseDX, mouseDY);
-				
+
 			}
 		});
 		display.setMouseButtonCallback(new MouseButtonCallback() {
@@ -188,7 +188,7 @@ public abstract class IGame implements Runnable {
 		textureManager.close();
 		textureManager.release();
 		guiResource.close();
-		
+
 	}
 
 	@Override
@@ -200,7 +200,7 @@ public abstract class IGame implements Runnable {
 			display.update();
 		}
 		onExit();
-		
+
 	}
 
 	protected abstract void onCreate();

@@ -1,0 +1,15 @@
+# Game Start
+game.name=CraftGame
+game.version=CraftGame alpha
+#Game Loading
+loading_message.loading=Loading~
+# Main Menu
+main_menu.single_player=Single Player
+main_menu.multi_player=Multiplayer
+main_menu.setting=Setting
+# World Loading
+world_loading.loading_terrain_message=Loading world
+# Block name
+tile.dirt.name=Dirt
+tile.grass.name=Grass Block
+tile.stone.name=Stone

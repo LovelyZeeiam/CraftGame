@@ -4,7 +4,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-import xueLi.craftGame.world.BlockPos;
+import xueLi.craftgame.world.BlockPos;
 
 public class MousePicker {
 

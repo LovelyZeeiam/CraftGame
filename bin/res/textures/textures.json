@@ -1,0 +1,30 @@
+{
+	"preload": {
+		"gui.splash": "textures/gui/splash.jpg"
+		
+	}, 
+	
+	"load": {
+		"gui.logo": "textures/gui/CraftGame.png",
+		"gui.background": {
+			"path": "textures/gui/options_background.png",
+			"flag": [ "nearest", "repeat_x", "repeat_y" ]
+		},
+		
+		"blocks": {
+			"block.dirt": "textures/blocks/dirt.png",
+			"block.grass.side": "textures/blocks/grass_block_side.png",
+			"block.grass.top": "textures/blocks/grass_block_top.png",
+			"block.stone": "textures/blocks/stone.png"
+			
+			
+		}
+		
+		
+		
+	}
+	
+	
+	
+	
+}

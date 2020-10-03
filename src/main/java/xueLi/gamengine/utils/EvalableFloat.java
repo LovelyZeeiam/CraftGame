@@ -2,8 +2,6 @@ package xueLi.gamengine.utils;
 
 import javax.script.ScriptException;
 
-import xueLi.gamengine.resource.Evaler;
-
 public class EvalableFloat {
 
 	public String expression;

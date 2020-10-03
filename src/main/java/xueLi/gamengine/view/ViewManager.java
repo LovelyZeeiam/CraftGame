@@ -6,7 +6,6 @@ import xueLi.gamengine.utils.Display;
 import xueLi.gamengine.utils.FrameBuffer;
 import xueLi.gamengine.utils.Logger;
 import xueLi.gamengine.utils.Shader;
-import xueLi.gamengine.utils.Time;
 import xueLi.gamengine.view.GUIFader.Fader;
 
 import static org.lwjgl.nanovg.NanoVGGL3.*;
@@ -166,7 +165,7 @@ public class ViewManager {
 
 	public void draw() {
 		needToRender = false;
-		
+
 		if (currentGui != null) {
 			currentFrameBuffer.bind();
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
@@ -175,7 +174,6 @@ public class ViewManager {
 				currentGui.draw(nvg);
 			}
 
-			nvgEndFrame(nvg);
 			currentFrameBuffer.unbind();
 
 			needToRender = true;
@@ -185,9 +183,9 @@ public class ViewManager {
 		if (fadeInGui != null) {
 			if (this.fadeStartTime == -1) {
 				this.fadeStartTime = System.currentTimeMillis();
-				//System.out.println(this.fadeStartTime);
+				// System.out.println(this.fadeStartTime);
 			}
-			
+
 			fadeInFrameBuffer.bind();
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
 
@@ -203,15 +201,15 @@ public class ViewManager {
 
 		if (needToRender) {
 			guiShader.use();
-			
+
 			restoreShader();
-			
-			if(this.fader != null) {
-				//System.out.println(fadeStartTime);
+
+			if (this.fader != null) {
+				// System.out.println(fadeStartTime);
 				this.isFading = !fader.fade(fade_duration, guiShader, fadeStartTime);
-				
+
 			}
-			
+
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
@@ -233,29 +231,29 @@ public class ViewManager {
 				this.fadeStartTime = -1;
 				this.fader = null;
 				display.setSubtitle(currentGui.titleString);
-				
+
 				restoreShader();
 
 			}
-			
+
 			GL11.glDisable(GL11.GL_BLEND);
 
 		}
 
 	}
-	
+
 	public FrameBuffer getCurrentFrameBuffer() {
 		return currentFrameBuffer;
 	}
-	
+
 	public FrameBuffer getFadeInFrameBuffer() {
 		return fadeInFrameBuffer;
 	}
-	
+
 	private void restoreShader() {
 		guiShader.setFloat(guiShader.getUnifromLocation("mix_value"), 0.0f);
 		guiShader.setUniformVector2(guiShader.getUnifromLocation("translate"), new Vector2f(0.0f, 0.0f));
-		
+
 	}
 
 	public void size() {

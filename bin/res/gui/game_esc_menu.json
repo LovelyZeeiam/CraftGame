@@ -1,0 +1,11 @@
+{
+	"subtitle": "Menu",
+	"background": {
+		"image": "gui.background",
+		"scale": [ 0, 0, 1920, 1022 ]
+	},
+	"widgets": {
+		
+	}
+
+}

@@ -29,6 +29,7 @@
 				],
 				"width": 3
 			},
+			"text": "#loading_message.loading",
 			"animation": {
 				"loading_1": {
 					"anim": {

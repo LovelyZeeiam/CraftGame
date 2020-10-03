@@ -48,7 +48,7 @@ public class GuiResource extends IResource {
 
 	public void loadGui(LangManager langManager) {
 		ArrayList<File> guiFiles = findAllFiles(new File(real_path));
-		guiFiles.forEach(file -> loadGui(file.getName(), langManager));
+		guiFiles.forEach(file -> loadGui(file.getName(), langManager, false));
 	}
 
 	public void loadGui(LangManager langManager, GUIProgressBar progressBar, float startValue, float endValue) {
@@ -58,7 +58,7 @@ public class GuiResource extends IResource {
 		float progressPerElement = (endValue - startValue) / guiFiles.size();
 
 		for (File f : guiFiles) {
-			loadGui(f.getName(), langManager);
+			loadGui(f.getName(), langManager, false);
 
 			++count;
 			progressBar.setProgress(startValue + progressPerElement * count);
@@ -79,7 +79,7 @@ public class GuiResource extends IResource {
 		String loading_textString = textView.getText();
 
 		for (File f : guiFiles) {
-			loadGui(f.getName(), langManager);
+			loadGui(f.getName(), langManager, false);
 
 			++count;
 			progressBar.setProgress(startValue + progressPerElement * count);
@@ -99,9 +99,9 @@ public class GuiResource extends IResource {
 		return backgroundColor;
 	}
 
-	public View loadGui(String filename, LangManager langManager) {
+	public View loadGui(String filename, LangManager langManager, boolean reloadEnable) {
 		if (guisHashMap.containsKey(filename))
-			return guisHashMap.get(filename);
+			if(!reloadEnable) return guisHashMap.get(filename);
 		JsonObject jsonObject = null;
 		try {
 			jsonObject = gson.fromJson(new FileReader(real_path + filename), JsonObject.class);
