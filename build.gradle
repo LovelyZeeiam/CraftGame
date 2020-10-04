@@ -18,13 +18,11 @@ repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
     
+    mavenCentral()
     maven { url "https://maven.aliyun.com/repository/jcenter" }
     
     jcenter()
-    mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-    maven { url "https://raw.githubusercontent.com/SpinyOwl/repo/snapshots" }
-    maven { url "https://raw.githubusercontent.com/SpinyOwl/repo/releases" }
     
 }
 

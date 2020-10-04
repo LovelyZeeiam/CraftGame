@@ -101,7 +101,8 @@ public class GuiResource extends IResource {
 
 	public View loadGui(String filename, LangManager langManager, boolean reloadEnable) {
 		if (guisHashMap.containsKey(filename))
-			if(!reloadEnable) return guisHashMap.get(filename);
+			if (!reloadEnable)
+				return guisHashMap.get(filename);
 		JsonObject jsonObject = null;
 		try {
 			jsonObject = gson.fromJson(new FileReader(real_path + filename), JsonObject.class);
@@ -176,41 +177,6 @@ public class GuiResource extends IResource {
 				borderFlag = true;
 
 			}
-			// 动画列表
-			JsonElement animationsElement = widgetJsonObject.get("animation");
-			HashMap<String, IAnimation> animations = new HashMap<String, IAnimation>();
-			if (animationsElement != null) {
-				for (Map.Entry<String, JsonElement> entry : animationsElement.getAsJsonObject().entrySet()) {
-					String name = entry.getKey();
-					JsonObject value = entry.getValue().getAsJsonObject();
-					if (value.has("anim")) {
-						animations.put(name, new GuiAnimation(value.get("anim").getAsJsonObject(),
-								value.get("duration").getAsInt(), value.get("stay").getAsBoolean()));
-					} else if (value.has("anim_group")) {
-						JsonArray anims = value.get("anim_group").getAsJsonArray();
-						ArrayList<IAnimation> group = new ArrayList<IAnimation>();
-						anims.forEach(anim -> {
-							JsonObject element = anim.getAsJsonObject();
-							String type = element.get("type").getAsString();
-							switch (type) {
-							case "anim":
-								group.add(animations.get(element.get("name").getAsString()));
-								break;
-							case "wait":
-								group.add(new AnimationWait(element.get("duration").getAsInt()));
-								break;
-							default:
-								Logger.warn(
-										"[GUI Loader] Couldn't find animation type in file " + filename + ": " + type);
-								break;
-							}
-						});
-						boolean loop = value.get("loop").getAsBoolean();
-						animations.put(name, new GuiAnimationGroup(group, loop));
-					}
-				}
-
-			}
 			// 控件类型
 			String widgetTypeString = null;
 			try {
@@ -237,7 +203,6 @@ public class GuiResource extends IResource {
 							borderColor, borderWidth);
 				else
 					imageView = new GUIImageView(widgetPosX, widgetPosY, widgetWidth, widgetHeight, textureID);
-				imageView.animations = animations;
 				gui.widgets.put(nameString, imageView);
 
 				break;
@@ -266,7 +231,6 @@ public class GuiResource extends IResource {
 
 				GUIButton button = new GUIButton(widgetPosX, widgetPosY, widgetWidth, widgetHeight, labelString,
 						textSize, textColor, chosenBorderColor, chosenBorderWidth, chosenTextColor);
-				button.animations = animations;
 				gui.widgets.put(nameString, button);
 
 				break;
@@ -300,7 +264,6 @@ public class GuiResource extends IResource {
 					progressBar.setProgressBarWidth(widgetJsonObject.get("progress_margin").getAsInt());
 				}
 
-				progressBar.animations = animations;
 				gui.widgets.put(nameString, progressBar);
 
 				break;
@@ -369,7 +332,6 @@ public class GuiResource extends IResource {
 				GUITextView textView = new GUITextView(widgetPosX, widgetPosY, widgetWidth, widgetHeight, textSize1,
 						textColor1, align);
 				textView.setText(textString);
-				textView.animations = animations;
 				gui.widgets.put(nameString, textView);
 
 				break;
@@ -378,6 +340,58 @@ public class GuiResource extends IResource {
 			}
 
 		}
+
+		// 动画列表
+		JsonElement animationsElement = jsonObject.get("animation");
+		HashMap<String, IAnimation> animations = new HashMap<String, IAnimation>();
+		if (animationsElement != null) {
+			for (Map.Entry<String, JsonElement> entry : animationsElement.getAsJsonObject().entrySet()) {
+				String name = entry.getKey();
+				JsonObject value = entry.getValue().getAsJsonObject();
+				
+				if(value.has("anims")) {
+					int duration = value.get("duration").getAsInt();
+					boolean stay = value.get("stay").getAsBoolean();
+					JsonObject paramJsonObject = value.get("anims").getAsJsonObject();
+					
+					GuiAnimation animation = new GuiAnimation(paramJsonObject, duration, stay);
+					animations.put(name, animation);
+					
+				} else if (value.has("anim_group")) {
+					boolean loop = value.get("loop").getAsBoolean();
+					
+					JsonArray groupArray = value.get("anim_group").getAsJsonArray();
+					ArrayList<IAnimation> group = new ArrayList<IAnimation>();
+					
+					groupArray.forEach(anim -> {
+						JsonObject element = anim.getAsJsonObject();
+						String type = element.get("type").getAsString();
+						switch (type) {
+						case "anim":
+							group.add(animations.get(element.get("name").getAsString()));
+							break;
+						case "wait":
+							group.add(new AnimationWait(element.get("duration").getAsInt()));
+							break;
+						default:
+							Logger.warn(
+									"[GUI Loader] Couldn't find animation type in file " + filename + ": " + type);
+							break;
+						}
+					});
+					
+					animations.put(name, new GuiAnimationGroup(group, loop, gui));
+					
+				}
+				
+				gui.animations = animations;
+				
+				
+				
+			}
+
+		}
+
 		guisHashMap.put(filename, gui);
 		return gui;
 	}

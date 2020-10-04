@@ -28,73 +28,6 @@
 					255
 				],
 				"width": 3
-			},
-			"animation": {
-				"loading_1": {
-					"anim": {
-						"x": {
-							"from": "win_width * 0.5 - 100.0 * scale",
-							"to": "win_width * 0.5 - 115.0 * scale"
-						},
-						"y": {
-							"from": "win_height * 0.4 - 100.0 * scale",
-							"to": "win_height * 0.4 - 115.0 * scale"
-						},
-						"width": {
-							"from": "200.0 * scale",
-							"to": "230.0 * scale"
-						},
-						"height": {
-							"from": "200.0 * scale",
-							"to": "230.0 * scale"
-						}
-					},
-					"duration": 1000,
-					"stay": true
-				},
-				"loading_2": {
-					"anim": {
-						"x": {
-							"from": "win_width * 0.5 - 115.0 * scale",
-							"to": "win_width * 0.5 - 100.0 * scale"
-						},
-						"y": {
-							"from": "win_height * 0.4 - 115.0 * scale",
-							"to": "win_height * 0.4 - 100.0 * scale"
-						},
-						"width": {
-							"from": "230.0 * scale",
-							"to": "200.0 * scale"
-						},
-						"height": {
-							"from": "230.0 * scale",
-							"to": "200.0 * scale"
-						}
-					},
-					"duration": 1000,
-					"stay": true
-				},
-				"loading": {
-					"anim_group": [
-						{
-							"type": "anim",
-							"name": "loading_1"
-						},
-						{
-							"type": "wait",
-							"duration": 500
-						},
-						{
-							"type": "anim",
-							"name": "loading_2"
-						},
-						{
-							"type": "wait",
-							"duration": 500
-						}
-					],
-					"loop": true
-				}
 			}
 		},
 		"loading_progress_bar": {
@@ -142,6 +75,77 @@
 				"top"
 			],
 			"text": "#loading_message.loading"
+		}
+	},
+	"animation": {
+		"loading_1": {
+			"anims": {
+				"loading_splash": {
+					"x": {
+						"from": "win_width * 0.5 - 100.0 * scale",
+						"to": "win_width * 0.5 - 115.0 * scale"
+					},
+					"y": {
+						"from": "win_height * 0.4 - 100.0 * scale",
+						"to": "win_height * 0.4 - 115.0 * scale"
+					},
+					"width": {
+						"from": "200.0 * scale",
+						"to": "230.0 * scale"
+					},
+					"height": {
+						"from": "200.0 * scale",
+						"to": "230.0 * scale"
+					}
+				}
+			},
+			"duration": 1000,
+			"stay": true
+		},
+		"loading_2": {
+			"anims": {
+				"loading_splash": {
+					"x": {
+						"from": "win_width * 0.5 - 115.0 * scale",
+						"to": "win_width * 0.5 - 100.0 * scale"
+					},
+					"y": {
+						"from": "win_height * 0.4 - 115.0 * scale",
+						"to": "win_height * 0.4 - 100.0 * scale"
+					},
+					"width": {
+						"from": "230.0 * scale",
+						"to": "200.0 * scale"
+					},
+					"height": {
+						"from": "230.0 * scale",
+						"to": "200.0 * scale"
+					}
+				}
+			},
+			"duration": 1000,
+			"stay": true
+		},
+		"loading": {
+			"anim_group": [
+				{
+					"type": "anim",
+					"name": "loading_1"
+				},
+				{
+					"type": "wait",
+					"duration": 500
+				},
+				{
+					"type": "anim",
+					"name": "loading_2"
+				},
+				{
+					"type": "wait",
+					"duration": 500
+				}
+			],
+			"loop": true
 		}
 	}
 }

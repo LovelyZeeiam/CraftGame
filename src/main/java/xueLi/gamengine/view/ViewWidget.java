@@ -3,11 +3,7 @@ package xueLi.gamengine.view;
 import org.lwjgl.nanovg.NVGColor;
 
 import xueLi.gamengine.utils.EvalableFloat;
-import xueLi.gamengine.utils.Logger;
-
 import static org.lwjgl.nanovg.NanoVG.*;
-
-import java.util.HashMap;
 
 public abstract class ViewWidget implements AutoCloseable {
 
@@ -18,8 +14,7 @@ public abstract class ViewWidget implements AutoCloseable {
 	private NVGColor borderColor;
 	private int borderWidth;
 
-	public HashMap<String, IAnimation> animations;
-	private IAnimation currentAnimation = null;
+	private WidgetAnimation currentAnimation = null;
 
 	public boolean mouseClicked = false;
 
@@ -118,12 +113,10 @@ public abstract class ViewWidget implements AutoCloseable {
 
 	}
 
-	public void setAnimation(String key) {
-		this.currentAnimation = this.animations.get(key);
+	public void setAnimation(WidgetAnimation anim) {
+		this.currentAnimation = anim;
 		if (this.currentAnimation != null) {
-			this.currentAnimation.start();
-		} else {
-			Logger.warn("[GUI] Didn't found animation: " + key + "!");
+			this.currentAnimation.start(null, this);
 		}
 	}
 

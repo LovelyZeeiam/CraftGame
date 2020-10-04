@@ -1,56 +1,60 @@
 package xueLi.gamengine.view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GuiAnimationGroup extends IAnimation {
 
+	private View ctxView;
+	
 	private ArrayList<IAnimation> animationGroup;
 	private IAnimation currentAnimation;
+	
 	private int anim_count;
 	private boolean loop;
 
-	public GuiAnimationGroup(ArrayList<IAnimation> group) {
+	public GuiAnimationGroup(ArrayList<IAnimation> group, View ctxView) {
 		this.animationGroup = group;
 		this.loop = false;
+		this.ctxView = ctxView;
 
 	}
 
-	public GuiAnimationGroup(ArrayList<IAnimation> group, boolean loop) {
+	public GuiAnimationGroup(ArrayList<IAnimation> group, boolean loop, View ctxView) {
 		this.animationGroup = group;
 		this.loop = loop;
+		this.ctxView = ctxView;
 
 	}
-
+	
 	@Override
-	public void start() {
+	public void start(HashMap<String, ViewWidget> widgets, ViewWidget widget) {
 		this.currentAnimation = animationGroup.get(0);
-		this.currentAnimation.start();
+		this.currentAnimation.start(widgets, widget);
 
 		this.anim_count = 0;
+		
+		super.start(widgets, widget);
 
 	}
-
+	
 	@Override
-	public boolean tick(ViewWidget widget) {
-		if (this.currentAnimation.tick(widget)) {
+	public boolean tick(HashMap<String, ViewWidget> widgets) {
+		boolean flag = this.currentAnimation.tick(widgets);
+		if (flag) {
 			// 介个动画结束辽 上下一个
 			++this.anim_count;
 			try {
 				this.currentAnimation = animationGroup.get(this.anim_count);
 			} catch (IndexOutOfBoundsException e) {
 				if (loop) {
-					this.start();
+					this.start(widgets, widget);
 					return false;
 				} else {
 					return true;
 				}
 			}
-			this.currentAnimation.start();
-
-			widget.real_x = widget.x.value;
-			widget.real_y = widget.y.value;
-			widget.real_width = widget.width.value;
-			widget.real_height = widget.height.value;
+			this.currentAnimation.start(ctxView.widgets, widget);
 
 		}
 		return false;

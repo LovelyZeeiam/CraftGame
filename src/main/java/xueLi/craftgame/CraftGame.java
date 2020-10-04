@@ -118,7 +118,7 @@ public class CraftGame extends IGame {
 			String loading_messageString = loading_TextView.getText();
 
 			// 设置加载动画
-			loading_imageView.setAnimation("loading");
+			loading_gui.setAnimation("loading");
 			// 加载GUI
 			guiResource.loadGui(langManager, loading_TextView, loading_ProgressBar, 0.00f, 0.25f);
 

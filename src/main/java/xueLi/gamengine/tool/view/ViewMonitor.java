@@ -88,7 +88,7 @@ public class ViewMonitor {
 		initialize();
 	}
 
-	private int start_width = 900, start_height = 600;
+	private int start_width = 900, start_height = 900;
 	private ViewMonitor ctx;
 
 	private void initialize() {
@@ -132,6 +132,12 @@ public class ViewMonitor {
 
 		JMenuItem mntmNewMenuItem = new JMenuItem("Attach");
 		mnNewMenu.add(mntmNewMenuItem);
+		
+		JSeparator separator_1 = new JSeparator();
+		mnNewMenu.add(separator_1);
+		
+		JMenuItem animChooseMenuItem = new JMenuItem("Animation");
+		mnNewMenu.add(animChooseMenuItem);
 
 		JMenu mnNewMenu_1 = new JMenu("About");
 		mnNewMenu_1.setFont(new Font("JetBrains Mono", Font.PLAIN, 12));
@@ -150,12 +156,16 @@ public class ViewMonitor {
 		frmXuelisGuiMonitor.getContentPane().setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
-		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		frmXuelisGuiMonitor.getContentPane().add(panel, BorderLayout.SOUTH);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-
+		panel.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panel.add(panel_2, BorderLayout.SOUTH);
+		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.X_AXIS));
+		
 		JLabel bottomStateLabel = new JLabel("XueLi's Gui Monitor");
-		panel.add(bottomStateLabel);
+		panel_2.add(bottomStateLabel);
 
 		mntmNewMenuItem.addMouseListener(new MouseAdapter() {
 			@Override

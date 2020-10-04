@@ -1,5 +1,7 @@
 package xueLi.gamengine.view;
 
+import java.util.HashMap;
+
 public class AnimationWait extends IAnimation {
 
 	private int duration;
@@ -8,13 +10,23 @@ public class AnimationWait extends IAnimation {
 		this.duration = duration;
 
 	}
-
-	@Override
-	public boolean tick(ViewWidget widget) {
+	
+	private boolean tick() {
 		if (System.currentTimeMillis() - startTime > duration)
 			return true;
 		return false;
-
 	}
 
+	@Override
+	public boolean tick(ViewWidget widget) {
+		return tick();
+	}
+	
+	@Override
+	public boolean tick(HashMap<String, ViewWidget> widgets) {
+		return tick();
+	}
+	
 }
+
+

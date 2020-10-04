@@ -13,6 +13,9 @@ public class View {
 
 	public GUIBackground background;
 	public HashMap<String, ViewWidget> widgets = new HashMap<String, ViewWidget>();
+	
+	public HashMap<String, IAnimation> animations = new HashMap<String, IAnimation>();
+	private IAnimation currentAnimation;
 
 	public View(String titleString) {
 		this.titleString = titleString;
@@ -24,6 +27,9 @@ public class View {
 	}
 
 	public void draw(long nvg) {
+		if(this.currentAnimation != null) {
+			this.currentAnimation.tick(widgets);
+		}
 		nvgBeginFrame(nvg, Display.currentDisplay.getWidth(), Display.currentDisplay.getHeight(),
 				Display.currentDisplay.getRatio());
 		if (background != null)
@@ -45,6 +51,12 @@ public class View {
 
 	public void delete() {
 
+	}
+
+	public void setAnimation(String name) {
+		// 默认IAnimation instanceof GuiAnimation或GuiAnimationGroup
+		this.currentAnimation = animations.get(name);
+		this.currentAnimation.start(widgets, null);
 	}
 
 }
