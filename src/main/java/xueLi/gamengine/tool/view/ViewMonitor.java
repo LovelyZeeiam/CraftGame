@@ -88,7 +88,7 @@ public class ViewMonitor {
 		initialize();
 	}
 
-	private int start_width = 900, start_height = 900;
+	private int start_width = 600, start_height = 600;
 	private ViewMonitor ctx;
 
 	private void initialize() {

@@ -1,38 +1,36 @@
 package xueLi.craftgame;
 
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
-
 import xueLi.craftgame.entity.Player;
-import xueLi.craftgame.world.Chunk;
 import xueLi.craftgame.world.World;
 import xueLi.craftgame.world.WorldGLData;
 import xueLi.gamengine.resource.TextureAtlas;
 import xueLi.gamengine.utils.GLHelper;
+import xueLi.gamengine.utils.Logger;
 import xueLi.gamengine.utils.MatrixHelper;
 import xueLi.gamengine.utils.Shader;
 import xueLi.gamengine.utils.callbacks.KeyCallback;
 import xueLi.gamengine.view.GUIProgressBar;
 import xueLi.gamengine.view.View;
 
+import java.nio.ByteBuffer;
+
 public class WorldLogic implements Runnable {
 
-	private CraftGame cg;
+	private final CraftGame cg;
 	public boolean running = false;
 
-	private int vao, vbo;
+	private final int vao, vbo;
 	private ByteBuffer mappedBuffer;
 	private int vertexCount = 0;
 
-	private View gameGui;
-	private State state;
+	public View gameGui;
+	public State state;
 
 	@WorldGLData
 	public WorldLogic(CraftGame cg) {
@@ -80,6 +78,8 @@ public class WorldLogic implements Runnable {
 	}
 
 	public void closeLevel() {
+		world = null;
+		player = null;
 
 	}
 
@@ -91,11 +91,9 @@ public class WorldLogic implements Runnable {
 	}
 
 	/**
-	 * frustum clulling 依照从前到后的顺序排序几何体 顶点处理器基于32位浮点值工作 Fragment Shader使用16位浮点值工作
+	 * frustum culling 依照从前到后的顺序排序几何体 顶点处理器基于32位浮点值工作 Fragment Shader使用16位浮点值工作
 	 * 
 	 */
-
-	public volatile ArrayList<Chunk> chunkThatNeedBeDrew = new ArrayList<Chunk>();
 
 	private Matrix4f playerMatrix = new Matrix4f();
 
@@ -108,11 +106,13 @@ public class WorldLogic implements Runnable {
 
 		world_loading_progressBar.setProgress(1.0f);
 
-		cg.queueRunningInMainThread.add(() -> size());
+		cg.queueRunningInMainThread.add(this::size);
 
 		world.updateVertexBuffer(blockTextureAtlas, player, 10);
 
 		world_loading_progressBar.waitUtilProgressFull();
+
+		this.state = State.INGAME;
 
 		cg.queueRunningInMainThread.add(() -> {
 			cg.getViewManager().setGui((View) null);
@@ -120,7 +120,12 @@ public class WorldLogic implements Runnable {
 
 		});
 
-		this.state = State.INGAME;
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 		cg.inWorld = true;
 
 	}
@@ -130,6 +135,10 @@ public class WorldLogic implements Runnable {
 		blockRenderShader.setUniformMatrix(blockRenderShader.getUnifromLocation("projMatrix"), MatrixHelper
 				.perspecive(cg.getDisplay().getWidth(), cg.getDisplay().getHeight(), 90.0f, 0.01f, 114514.0f));
 		blockRenderShader.unbind();
+
+		if(gameGui != null)
+			gameGui.size();
+
 	}
 
 	public void draw() {
@@ -137,12 +146,15 @@ public class WorldLogic implements Runnable {
 		if (KeyCallback.keysOnce[GLFW.GLFW_KEY_ESCAPE]) {
 			if (this.state == State.INGAME) {
 				cg.getDisplay().toggleMouseGrabbed();
-
+				gameGui = cg.getGuiResource().getGui("game_esc_menu.json");
+				cg.getViewManager().setGui(gameGui);
 				this.state = State.ESC_MENU;
 
 			} else if (this.state == State.ESC_MENU) {
+				// 从esc界面回到游戏中
 				cg.getDisplay().toggleMouseGrabbed();
-
+				cg.getViewManager().setGui((View) null);
+				gameGui = null;
 				this.state = State.INGAME;
 
 			}
@@ -164,6 +176,9 @@ public class WorldLogic implements Runnable {
 		GLHelper.checkGLError("World: Pre-render");
 
 		mappedBuffer = GL15.glMapBuffer(GL15.GL_ARRAY_BUFFER, GL15.GL_WRITE_ONLY, mappedBuffer);
+		if(mappedBuffer == null){
+			Logger.error(new Throwable("Buffer map error!"));
+		}
 		mappedBuffer.clear();
 		mappedBuffer.position(0);
 
@@ -196,6 +211,10 @@ public class WorldLogic implements Runnable {
 		GL11.glDisable(GL11.GL_CULL_FACE);
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 
+		if(gameGui != null){
+			cg.getViewManager().draw();
+		}
+
 		GLHelper.checkGLError("World: After-render");
 
 	}
@@ -203,6 +222,8 @@ public class WorldLogic implements Runnable {
 	public void delete() {
 		GL30.glDeleteVertexArrays(vao);
 		GL15.glDeleteBuffers(vbo);
+
+		closeLevel();
 
 	}
 

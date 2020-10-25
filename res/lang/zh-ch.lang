@@ -7,6 +7,8 @@ loading_message.loading=Loading~
 main_menu.single_player=Single Player
 main_menu.multi_player=Multiplayer
 main_menu.setting=Setting
+esc_menu.back_to_game=Back To Game
+esc_menu.quit=Save And Quit
 # World Loading
 world_loading.loading_terrain_message=Loading world
 # Block name

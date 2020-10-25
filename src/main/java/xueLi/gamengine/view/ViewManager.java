@@ -128,7 +128,7 @@ public class ViewManager {
 
 	public void setGui(View gui) {
 		focusedWidget = null;
-		if (gui == null || this.currentGui == null) {
+		if (gui == null & this.currentGui != null) {
 			this.currentGui.delete();
 			this.currentGui = null;
 			display.setSubtitle(null);
@@ -155,8 +155,10 @@ public class ViewManager {
 	public void setFadeinGui(View gui, Fader fader) {
 		focusedWidget = null;
 		this.fadeInGui = gui;
-		this.fadeInGui.create();
-		this.fadeInGui.size();
+		if(this.fadeInGui != null) {
+			this.fadeInGui.create();
+			this.fadeInGui.size();
+		}
 		this.fader = fader;
 		this.isFading = true;
 	}

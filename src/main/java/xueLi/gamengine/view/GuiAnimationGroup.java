@@ -40,7 +40,8 @@ public class GuiAnimationGroup extends IAnimation {
 	
 	@Override
 	public boolean tick(HashMap<String, ViewWidget> widgets) {
-		boolean flag = this.currentAnimation.tick(widgets);
+		boolean flag = false;
+		if(this.currentAnimation == null) flag = this.currentAnimation.tick(widgets);
 		if (flag) {
 			// 介个动画结束辽 上下一个
 			++this.anim_count;

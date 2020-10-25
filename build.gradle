@@ -14,6 +14,10 @@ plugins {
     id 'application'
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
 repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
@@ -67,9 +71,10 @@ dependencies {
     compile group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-windows'
     compile group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-linux'
     compile group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-macos'
-    
-    implementation 'org.lwjglx:lwjgl3-awt:0.1.7'
 
+    // https://mvnrepository.com/artifact/org.lwjglx/lwjgl3-awt
+    compile group: 'org.lwjgl', name: 'lwjgl-jawt', version: '3.2.3'
+    //compile group: 'org.lwjglx', name: 'lwjgl3-awt', version: '0.1.6'
     
 }
 

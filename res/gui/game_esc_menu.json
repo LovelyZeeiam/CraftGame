@@ -5,7 +5,69 @@
 		"scale": [ 0, 0, 1920, 1022 ]
 	},
 	"widgets": {
-		
+		"back_to_game_button": {
+			"type": "button",
+			"pos": [ "win_width * 0.5 - 250 * scale",
+				"win_height * 0.5 - 25 * scale - 55.0 * scale" ],
+			"size": [
+				"500.0 * scale",
+				"50.0 * scale"
+			],
+			"text_color": [
+				233,
+				233,
+				233,
+				255
+			],
+			"text_size": "20.0 * scale",
+			"text": "#esc_menu.back_to_game",
+			"outline": {
+				"color": [
+					114,
+					145,
+					233,
+					255
+				],
+				"width": 2,
+				"text_color": [
+					255,
+					251,
+					145,
+					255
+				]
+			}
+		},
+		"quit_button": {
+			"type": "button",
+			"pos": [ "win_width * 0.5 - 250 * scale",
+				"win_height * 0.6 - 25 * scale - 55.0 * scale" ],
+			"size": [
+				"500.0 * scale",
+				"50.0 * scale"
+			],
+			"text_color": [
+				233,
+				233,
+				233,
+				255
+			],
+			"text_size": "20.0 * scale",
+			"text": "#esc_menu.quit",
+			"outline": {
+				"color": [
+					114,
+					145,
+					233,
+					255
+				],
+				"width": 2,
+				"text_color": [
+					255,
+					251,
+					145,
+					255
+				]
+			}
+		}
 	}
-
 }

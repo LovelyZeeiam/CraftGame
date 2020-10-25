@@ -6,7 +6,6 @@ import java.util.Queue;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
-import marshmello.Happier;
 import xueLi.gamengine.resource.GuiResource;
 import xueLi.gamengine.resource.LangManager;
 import xueLi.gamengine.resource.Options;
@@ -19,7 +18,6 @@ import xueLi.gamengine.utils.callbacks.KeyCallback;
 import xueLi.gamengine.utils.callbacks.MouseButtonCallback;
 import xueLi.gamengine.view.ViewManager;
 
-@Happier
 public abstract class IGame implements Runnable {
 
 	static {

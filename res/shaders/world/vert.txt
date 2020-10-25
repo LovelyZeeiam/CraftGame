@@ -7,8 +7,6 @@ layout (location = 2) in vec3 color;
 uniform mat4 projMatrix;
 uniform mat4 viewMatrix;
 
-
-
 out vec2 otexPos;
 out vec3 ocolor;
 

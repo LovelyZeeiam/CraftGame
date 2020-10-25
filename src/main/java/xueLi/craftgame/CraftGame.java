@@ -82,7 +82,6 @@ public class CraftGame extends IGame {
 
 	public class GameLoader implements Runnable {
 
-		Object waiter = new Object();
 		// ◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤
 		boolean waitingForLove = false;
 		boolean sleeping = false;
@@ -129,9 +128,6 @@ public class CraftGame extends IGame {
 
 			mainMenuGui.widgets.get("single_player_button").onClickListener = (button) -> {
 				if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
-					synchronized (waiter) {
-						waiter.notify();
-					}
 					waitingForLove = false;
 
 					viewManager.setGui("world_loading.json");
@@ -149,6 +145,26 @@ public class CraftGame extends IGame {
 
 			};
 			mainMenuGui.widgets.get("setting_button").onClickListener = (button) -> {
+
+			};
+
+			View esc_menu = cg.getGuiResource().getGui("game_esc_menu.json");
+			esc_menu.widgets.get("back_to_game_button").onClickListener = (button) -> {
+				// 从esc界面回到游戏中
+				display.toggleMouseGrabbed();
+				viewManager.setGui((View) null);
+				worldLogic.gameGui = null;
+				worldLogic.state = State.INGAME;
+
+			};
+
+			esc_menu.widgets.get("quit_button").onClickListener = (button) -> {
+				inWorld = false;
+				worldLogic.delete();
+				worldLogic = null;
+				viewManager.setGui("main_menu.json");
+
+				guiResource.loadGui("world_loading.json",langManager,true);
 
 			};
 
