@@ -35,13 +35,13 @@ package org.lwjgl.util.vector;
  * @author foo
  */
 public interface ReadableVector2f extends ReadableVector {
-	/**
-	 * @return x
-	 */
-	float getX();
+    /**
+     * @return x
+     */
+    float getX();
 
-	/**
-	 * @return y
-	 */
-	float getY();
+    /**
+     * @return y
+     */
+    float getY();
 }

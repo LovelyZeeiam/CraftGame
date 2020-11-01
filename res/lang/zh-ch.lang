@@ -1,6 +1,7 @@
 # Game Start
 game.name=CraftGame
-game.version=CraftGame alpha
+game.version=alpha
+game.copyright=Licensed under AGPL 3.0
 #Game Loading
 loading_message.loading=Loading~
 # Main Menu

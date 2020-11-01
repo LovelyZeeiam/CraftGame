@@ -25,7 +25,7 @@
 				233,
 				255
 			],
-			"text_size": "20.0 * scale",
+			"text_size": "15.0 * scale",
 			"text": "#main_menu.single_player",
 			"outline": {
 				"color": [
@@ -59,7 +59,7 @@
 				233,
 				255
 			],
-			"text_size": "20.0 * scale",
+			"text_size": "15.0 * scale",
 			"text": "#main_menu.multi_player",
 			"outline": {
 				"color": [
@@ -93,13 +93,13 @@
 				233,
 				255
 			],
-			"text_size": "20.0 * scale",
+			"text_size": "15.0 * scale",
 			"text": "#main_menu.setting",
 			"outline": {
 				"color": [
-					114,
-					145,
-					233,
+					134,
+					165,
+					253,
 					255
 				],
 				"width": 2,
@@ -126,6 +126,29 @@
 		"version": {
 			"type": "text_view",
 			"pos": [
+				"win_width-5.0",
+				"win_height-5.0"
+			],
+			"size": [
+				"0.0",
+				"0.0"
+			],
+			"text_color": [
+				0,
+				0,
+				0,
+				255
+			],
+			"text_size": "15.0 * scale",
+			"align": [
+				"bottom",
+				"right"
+			],
+			"text": "#game.version"
+		},
+		"copyright": {
+			"type": "text_view",
+			"pos": [
 				"5.0",
 				"win_height-5.0"
 			],
@@ -139,12 +162,35 @@
 				0,
 				255
 			],
-			"text_size": "20.0 * scale",
+			"text_size": "15.0 * scale",
 			"align": [
 				"bottom",
 				"left"
 			],
-			"text": "#game.version"
+			"text": "#game.copyright"
+		},
+		"random_sentence": {
+			"type": "text_view",
+			"pos": [
+				"win_width / 2.0",
+				"win_height * 0.26 - 0.1 * win_width / 2 + win_width * 0.1 + 5.0"
+			],
+			"size": [
+				"0.0",
+				"0.0"
+			],
+			"text_color": [
+				55,
+				55,
+				0,
+				100
+			],
+			"text_size": "11.0 * scale",
+			"align": [
+				"center",
+				"middle"
+			],
+			"text": "@splash.txt"
 		}
 	}
 }

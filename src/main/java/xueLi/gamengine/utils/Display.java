@@ -17,292 +17,287 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public class Display {
 
-	public static Display currentDisplay;
+    public static Display currentDisplay;
+    public boolean running = false;
+    public boolean mouseGrabbed = false;
+    private Dimension screenSize;
+    private boolean useGLFW = false;
+    private long window;
+    private String mainTitle;
+    private DisplaySizedCallback sizedCallback;
+    private CursorPosCallback cursorPosCallback;
+    private MouseButtonCallback mouseButtonCallback;
+    private KeyCallback keyCallback;
+    private AWTGLCanvas canvas;
+    private AWTMouseListener awtMouseListener = new AWTMouseListener();
 
-	private Dimension screenSize;
+    public Display() {
+        useGLFW = true;
+        GLFWErrorCallback.createPrint(System.err).set();
 
-	private boolean useGLFW = false;
-	private long window;
-	private String mainTitle;
+        if (!glfwInit()) {
+            Logger.error("Sorry can't init GLFW~ xD");
+            return;
+        }
+    }
 
-	private DisplaySizedCallback sizedCallback;
-	private CursorPosCallback cursorPosCallback;
-	private MouseButtonCallback mouseButtonCallback;
-	private KeyCallback keyCallback;
+    public Display(AWTGLCanvas canvas) {
+        this.canvas = canvas;
+        this.canvas.addMouseMotionListener(awtMouseListener);
+        currentDisplay = this;
 
-	private AWTGLCanvas canvas;
-	private AWTMouseListener awtMouseListener = new AWTMouseListener();
+    }
 
-	public boolean running = false;
-	public boolean mouseGrabbed = false;
+    public void setDefaultWindowHints() {
+        glfwDefaultWindowHints();
+    }
 
-	public Display() {
-		useGLFW = true;
-		GLFWErrorCallback.createPrint(System.err).set();
+    public boolean create(int width, int height, String title) {
+        if (useGLFW) {
+            glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+            // OpenGL版本
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+            glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
+            // 采样次数
+            // glfwWindowHint(GLFW_SAMPLES, 4);
 
-		if (!glfwInit()) {
-			Logger.error("Sorry can't init GLFW~ xD");
-			return;
-		}
-	}
+            // 创建窗口
+            window = glfwCreateWindow(width, height, title, 0, 0);
+            this.mainTitle = title;
+            if (window == 0) {
+                Logger.error("Sorry can't create window xD");
+                return false;
+            }
 
-	public Display(AWTGLCanvas canvas) {
-		this.canvas = canvas;
-		this.canvas.addMouseMotionListener(awtMouseListener);
-		currentDisplay = this;
+            // 获取计算机屏幕宽和高
+            screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            // 窗口居中
+            glfwSetWindowPos(window, (screenSize.width - width) / 2, (screenSize.height - height) / 2);
 
-	}
+            glfwMakeContextCurrent(window);
+            GL.createCapabilities();
 
-	public void setDefaultWindowHints() {
-		glfwDefaultWindowHints();
-	}
+            glfwSwapInterval(1);
 
-	public boolean create(int width, int height, String title) {
-		if (useGLFW) {
-			glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-			// OpenGL版本
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
-			// 采样次数
-			// glfwWindowHint(GLFW_SAMPLES, 4);
+            currentDisplay = this;
 
-			// 创建窗口
-			window = glfwCreateWindow(width, height, title, 0, 0);
-			this.mainTitle = title;
-			if (window == 0) {
-				Logger.error("Sorry can't create window xD");
-				return false;
-			}
+            GLHelper.printDeviceInfo();
 
-			// 获取计算机屏幕宽和高
-			screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-			// 窗口居中
-			glfwSetWindowPos(window, (screenSize.width - width) / 2, (screenSize.height - height) / 2);
+            // 抗锯齿 多重采样
+            // GL11.glEnable(GL13.GL_MULTISAMPLE);
+            // 平滑线
+            // GL11.glEnable(GL11.GL_LINE_SMOOTH);
+            // GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST);
+            // 启用点的抗锯齿
+            // GL11.glEnable(GL11.GL_POINT_SMOOTH);
+            // GL11.glHint(GL11.GL_POINT_SMOOTH_HINT, GL11.GL_NICEST);
 
-			glfwMakeContextCurrent(window);
-			GL.createCapabilities();
+            GL11.glEnable(GL11.GL_TEXTURE_2D);
+        } else {
+            Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
+        }
 
-			glfwSwapInterval(1);
+        Time.tick();
 
-			currentDisplay = this;
+        return true;
+    }
 
-			GLHelper.printDeviceInfo();
+    /**
+     * From:
+     * https://gamedev.stackexchange.com/questions/105555/setting-window-icon-using-glfw-lwjgl-3
+     */
+    public void setIcon(String filePath) {
+        if (!useGLFW)
+            Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
 
-			// 抗锯齿 多重采样
-			// GL11.glEnable(GL13.GL_MULTISAMPLE);
-			// 平滑线
-			// GL11.glEnable(GL11.GL_LINE_SMOOTH);
-			// GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST);
-			// 启用点的抗锯齿
-			// GL11.glEnable(GL11.GL_POINT_SMOOTH);
-			// GL11.glHint(GL11.GL_POINT_SMOOTH_HINT, GL11.GL_NICEST);
+        IntBuffer w = MemoryUtil.memAllocInt(1);
+        IntBuffer h = MemoryUtil.memAllocInt(1);
+        IntBuffer comp = MemoryUtil.memAllocInt(1);
 
-			GL11.glEnable(GL11.GL_TEXTURE_2D);
-		} else {
-			Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
-		}
+        // Icons
+        {
+            ByteBuffer icon16;
+            ByteBuffer icon32;
+            try {
+                icon16 = IOUtils.ioResourceToByteBuffer(filePath + "icon.png", 2048);
+                icon32 = IOUtils.ioResourceToByteBuffer(filePath + "icon.png", 4096);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
 
-		Time.tick();
+            try (GLFWImage.Buffer icons = GLFWImage.malloc(2)) {
+                ByteBuffer pixels16 = STBImage.stbi_load_from_memory(icon16, w, h, comp, 4);
+                icons.position(0).width(w.get(0)).height(h.get(0)).pixels(pixels16);
 
-		return true;
-	}
+                ByteBuffer pixels32 = STBImage.stbi_load_from_memory(icon32, w, h, comp, 4);
+                icons.position(1).width(w.get(0)).height(h.get(0)).pixels(pixels32);
 
-	/**
-	 * From:
-	 * https://gamedev.stackexchange.com/questions/105555/setting-window-icon-using-glfw-lwjgl-3
-	 */
-	public void setIcon(String filePath) {
-		if (!useGLFW)
-			Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
+                icons.position(0);
+                glfwSetWindowIcon(window, icons);
 
-		IntBuffer w = MemoryUtil.memAllocInt(1);
-		IntBuffer h = MemoryUtil.memAllocInt(1);
-		IntBuffer comp = MemoryUtil.memAllocInt(1);
+                STBImage.stbi_image_free(pixels32);
+                STBImage.stbi_image_free(pixels16);
+            }
+        }
 
-		// Icons
-		{
-			ByteBuffer icon16;
-			ByteBuffer icon32;
-			try {
-				icon16 = IOUtils.ioResourceToByteBuffer(filePath + "icon.png", 2048);
-				icon32 = IOUtils.ioResourceToByteBuffer(filePath + "icon.png", 4096);
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
+        MemoryUtil.memFree(comp);
+        MemoryUtil.memFree(h);
+        MemoryUtil.memFree(w);
 
-			try (GLFWImage.Buffer icons = GLFWImage.malloc(2)) {
-				ByteBuffer pixels16 = STBImage.stbi_load_from_memory(icon16, w, h, comp, 4);
-				icons.position(0).width(w.get(0)).height(h.get(0)).pixels(pixels16);
+    }
 
-				ByteBuffer pixels32 = STBImage.stbi_load_from_memory(icon32, w, h, comp, 4);
-				icons.position(1).width(w.get(0)).height(h.get(0)).pixels(pixels32);
+    public void setResizable(int resizable) {
+        if (!useGLFW)
+            Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
+        glfwWindowHint(GLFW_RESIZABLE, resizable);
+    }
 
-				icons.position(0);
-				glfwSetWindowIcon(window, icons);
+    public void setKeyboardCallback(KeyCallback keyCallback) {
+        if (!useGLFW)
+            Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
+        glfwSetKeyCallback(window, keyCallback);
+        this.keyCallback = keyCallback;
+    }
 
-				STBImage.stbi_image_free(pixels32);
-				STBImage.stbi_image_free(pixels16);
-			}
-		}
+    public DisplaySizedCallback getSizedCallback() {
+        return sizedCallback;
+    }
 
-		MemoryUtil.memFree(comp);
-		MemoryUtil.memFree(h);
-		MemoryUtil.memFree(w);
+    public void setSizedCallback(DisplaySizedCallback callback) {
+        if (!useGLFW)
+            Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
+        glfwSetWindowSizeCallback(window, callback);
+        this.sizedCallback = callback;
+    }
 
-	}
+    public CursorPosCallback getCursorPosCallback() {
+        return cursorPosCallback;
+    }
 
-	public void setResizable(int resizable) {
-		if (!useGLFW)
-			Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
-		glfwWindowHint(GLFW_RESIZABLE, resizable);
-	}
+    public void setCursorPosCallback(CursorPosCallback callback) {
+        if (!useGLFW)
+            Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
+        glfwSetCursorPosCallback(window, callback);
+        this.cursorPosCallback = callback;
+    }
 
-	public void setSizedCallback(DisplaySizedCallback callback) {
-		if (!useGLFW)
-			Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
-		glfwSetWindowSizeCallback(window, callback);
-		this.sizedCallback = callback;
-	}
+    public MouseButtonCallback getMouseButtonCallback() {
+        return mouseButtonCallback;
+    }
 
-	public void setCursorPosCallback(CursorPosCallback callback) {
-		if (!useGLFW)
-			Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
-		glfwSetCursorPosCallback(window, callback);
-		this.cursorPosCallback = callback;
-	}
+    public void setMouseButtonCallback(MouseButtonCallback callback) {
+        if (!useGLFW)
+            Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
+        glfwSetMouseButtonCallback(window, callback);
+        this.mouseButtonCallback = callback;
+    }
 
-	public void setMouseButtonCallback(MouseButtonCallback callback) {
-		if (!useGLFW)
-			Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
-		glfwSetMouseButtonCallback(window, callback);
-		this.mouseButtonCallback = callback;
-	}
+    public KeyCallback getKeyCallback() {
+        return keyCallback;
+    }
 
-	public void setKeyboardCallback(KeyCallback keyCallback) {
-		if (!useGLFW)
-			Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
-		glfwSetKeyCallback(window, keyCallback);
-		this.keyCallback = keyCallback;
-	}
+    public void toggleMouseGrabbed() {
+        if (!useGLFW)
+            Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
+        glfwSetInputMode(window, GLFW_CURSOR, mouseGrabbed ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_DISABLED);
+        mouseGrabbed = !mouseGrabbed;
+        cursorPosCallback.shouldNotProcessMouseThisTime = true;
+    }
 
-	public DisplaySizedCallback getSizedCallback() {
-		return sizedCallback;
-	}
+    public void showWindow() {
+        if (!useGLFW)
+            Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
+        glfwShowWindow(window);
+        this.running = true;
 
-	public CursorPosCallback getCursorPosCallback() {
-		return cursorPosCallback;
-	}
+    }
 
-	public MouseButtonCallback getMouseButtonCallback() {
-		return mouseButtonCallback;
-	}
+    public void update() {
+        if (!useGLFW)
+            Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
 
-	public KeyCallback getKeyCallback() {
-		return keyCallback;
-	}
+        Time.tick();
 
-	public void toggleMouseGrabbed() {
-		if (!useGLFW)
-			Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
-		glfwSetInputMode(window, GLFW_CURSOR, mouseGrabbed ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_DISABLED);
-		mouseGrabbed = !mouseGrabbed;
-		cursorPosCallback.shouldNotProcessMouseThisTime = true;
-	}
+        if (this.keyCallback != null)
+            this.keyCallback.tick();
 
-	public void showWindow() {
-		if (!useGLFW)
-			Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
-		glfwShowWindow(window);
-		this.running = true;
+        glfwSwapBuffers(window);
+        glfwPollEvents();
 
-	}
+        if (glfwWindowShouldClose(window))
+            running = false;
 
-	public void update() {
-		if (!useGLFW)
-			Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
+    }
 
-		Time.tick();
+    public void setSubtitle(String subtitle) {
+        if (!useGLFW)
+            return;
 
-		if (this.keyCallback != null)
-			this.keyCallback.tick();
+        if (subtitle != null)
+            glfwSetWindowTitle(window, this.mainTitle + " - " + subtitle);
+        else
+            glfwSetWindowTitle(window, this.mainTitle);
+    }
 
-		glfwSwapBuffers(window);
-		glfwPollEvents();
+    public int getWidth() {
+        if (!useGLFW)
+            return canvas.getWidth();
+        return sizedCallback.width;
+    }
 
-		if (glfwWindowShouldClose(window))
-			running = false;
+    public int getHeight() {
+        if (!useGLFW)
+            return canvas.getHeight();
+        return sizedCallback.height;
+    }
 
-	}
+    public float getRatio() {
+        if (!useGLFW)
+            return (float) getWidth() / (float) getHeight();
+        return sizedCallback.ratio;
+    }
 
-	public void setSubtitle(String subtitle) {
-		if (!useGLFW)
-			return;
+    public float getScale() {
+        if (!useGLFW)
+            return DisplaySizedCallback.getScale(getWidth(), getHeight());
+        return sizedCallback.scale;
+    }
 
-		if (subtitle != null)
-			glfwSetWindowTitle(window, this.mainTitle + " - " + subtitle);
-		else
-			glfwSetWindowTitle(window, this.mainTitle);
-	}
+    public int getMouseX() {
+        if (!useGLFW)
+            return awtMouseListener.getX();
+        return (int) cursorPosCallback.mouseX;
+    }
 
-	public int getWidth() {
-		if (!useGLFW)
-			return canvas.getWidth();
-		return sizedCallback.width;
-	}
+    public int getMouseY() {
+        if (!useGLFW)
+            return awtMouseListener.getY();
+        return (int) cursorPosCallback.mouseY;
+    }
 
-	public int getHeight() {
-		if (!useGLFW)
-			return canvas.getHeight();
-		return sizedCallback.height;
-	}
+    public boolean isMouseDown(int button) {
+        return this.mouseButtonCallback.buttons[button];
+    }
 
-	public float getRatio() {
-		if (!useGLFW)
-			return (float) getWidth() / (float) getHeight();
-		return sizedCallback.ratio;
-	}
+    public int getMouseDX() {
+        return (int) cursorPosCallback.mouseDX;
+    }
 
-	public float getScale() {
-		if (!useGLFW)
-			return DisplaySizedCallback.getScale(getWidth(), getHeight());
-		return sizedCallback.scale;
-	}
+    public int getMouseDY() {
+        return (int) cursorPosCallback.mouseDY;
+    }
 
-	public int getMouseX() {
-		if (!useGLFW)
-			return awtMouseListener.getX();
-		return (int) cursorPosCallback.mouseX;
-	}
+    public void destroy() {
+        if (!useGLFW)
+            Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
 
-	public int getMouseY() {
-		if (!useGLFW)
-			return awtMouseListener.getY();
-		return (int) cursorPosCallback.mouseY;
-	}
+        glfwDestroyWindow(window);
+        glfwTerminate();
 
-	public boolean isMouseDown(int button) {
-		return this.mouseButtonCallback.buttons[button];
-	}
+        glfwSetErrorCallback(null).free();
 
-	public int getMouseDX() {
-		return (int) cursorPosCallback.mouseDX;
-	}
-
-	public int getMouseDY() {
-		return (int) cursorPosCallback.mouseDY;
-	}
-
-	public void destroy() {
-		if (!useGLFW)
-			Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
-
-		glfwDestroyWindow(window);
-		glfwTerminate();
-
-		glfwSetErrorCallback(null).free();
-
-	}
+    }
 
 }

@@ -14,7 +14,7 @@
 			"type": "scroll_bar",
 			"pos": [
 				"win_width / 2 - 100.0 * scale",
-				"win_height / 2 - 10.0 * scale"
+				"win_height / 2 - 100.0 - 10.0 * scale"
 			]
 			,
 			"size": [

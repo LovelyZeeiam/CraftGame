@@ -17,71 +17,71 @@ import java.util.Map;
 
 public class Options extends IResource {
 
-	private String real_path;
+    private String real_path;
 
-	private HashMap<String, JsonElement> options = new HashMap<String, JsonElement>();
-	private Type type = new TypeToken<Map<String, JsonElement>>() {
-	}.getType();
+    private HashMap<String, JsonElement> options = new HashMap<String, JsonElement>();
+    private Type type = new TypeToken<Map<String, JsonElement>>() {
+    }.getType();
 
-	public Options(String pathString) {
-		super(pathString);
-		this.real_path = pathString + "options/";
+    public Options(String pathString) {
+        super(pathString);
+        this.real_path = pathString + "options/";
 
-	}
+    }
 
-	public void load() {
-		File file = new File(real_path);
-		for (File f : file.listFiles(new FileFilter() {
-			@Override
-			public boolean accept(File pathname) {
-				return pathname.getName().endsWith(".json");
-			}
-		})) {
-			try {
-				options.putAll(gson.fromJson(new FileReader(f.getPath()), type));
-			} catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+    public void load() {
+        File file = new File(real_path);
+        for (File f : file.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return pathname.getName().endsWith(".json");
+            }
+        })) {
+            try {
+                options.putAll(gson.fromJson(new FileReader(f.getPath()), type));
+            } catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-	public void load(GUITextView textView, GUIProgressBar progressBar, float startValue, float endValue) {
-		File[] files = new File(real_path).listFiles(new FileFilter() {
-			@Override
-			public boolean accept(File pathname) {
-				return pathname.getName().endsWith(".json");
-			}
-		});
+    public void load(GUITextView textView, GUIProgressBar progressBar, float startValue, float endValue) {
+        File[] files = new File(real_path).listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return pathname.getName().endsWith(".json");
+            }
+        });
 
-		int count = 0;
-		float progressPerElement = (endValue - startValue) / files.length;
+        int count = 0;
+        float progressPerElement = (endValue - startValue) / files.length;
 
-		String loading_messageString = textView.getText();
+        String loading_messageString = textView.getText();
 
-		for (File f : files) {
-			textView.setText(loading_messageString + " - " + f.getName());
-			try {
-				options.putAll(gson.fromJson(new FileReader(f.getPath()), type));
-			} catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
-				e.printStackTrace();
-			}
+        for (File f : files) {
+            textView.setText(loading_messageString + " - " + f.getName());
+            try {
+                options.putAll(gson.fromJson(new FileReader(f.getPath()), type));
+            } catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
+                e.printStackTrace();
+            }
 
-			++count;
-			progressBar.setProgress(startValue + progressPerElement * count);
+            ++count;
+            progressBar.setProgress(startValue + progressPerElement * count);
 
-		}
+        }
 
-		progressBar.setProgress(endValue);
+        progressBar.setProgress(endValue);
 
-	}
+    }
 
-	public JsonElement get(String key) {
-		return options.get(key);
-	}
+    public JsonElement get(String key) {
+        return options.get(key);
+    }
 
-	@Override
-	public void close() {
+    @Override
+    public void close() {
 
-	}
+    }
 
 }

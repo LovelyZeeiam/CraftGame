@@ -70,7 +70,7 @@
 				0,
 				255
 			],
-			"text_size": "20.0 * scale",
+			"text_size": "15.0 * scale",
 			"align": [
 				"top"
 			],

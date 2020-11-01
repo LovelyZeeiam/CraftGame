@@ -10,39 +10,39 @@ import java.net.URL;
 
 public class BilibiliAPI {
 
-	public static Gson gson = new Gson();
+    public static Gson gson = new Gson();
 
-	public static boolean realtimeGetFansRunning = true;
-	public static long follower;
+    public static boolean realtimeGetFansRunning = true;
+    public static long follower;
 
-	private static final Thread realtimeGetFans = new Thread(() -> {
-		while (realtimeGetFansRunning) {
-			try {
-				follower = BilibiliAPI.getBilibiliUpperFollower(157262276);
-				System.out.println("宁的粉丝数: " + follower);
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	});
+    private static final Thread realtimeGetFans = new Thread(() -> {
+        while (realtimeGetFansRunning) {
+            try {
+                follower = BilibiliAPI.getBilibiliUpperFollower(157262276);
+                System.out.println("宁的粉丝数: " + follower);
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    });
 
-	public static void startThreadOfRealtimeGetFans() {
-		realtimeGetFans.start();
-	}
+    public static void startThreadOfRealtimeGetFans() {
+        realtimeGetFans.start();
+    }
 
-	public static void stopThreadOfRealtimeGetFans() {
-		realtimeGetFansRunning = false;
-	}
+    public static void stopThreadOfRealtimeGetFans() {
+        realtimeGetFansRunning = false;
+    }
 
-	public static long getBilibiliUpperFollower(long uuid) throws IOException {
-		URL url = new URL("http://api.bilibili.com/x/relation/stat?vmid=" + uuid);
-		InputStream in = url.openStream();
-		TUpperRelation r = gson.fromJson(new InputStreamReader(in), TUpperRelation.class);
-		in.close();
-		return r.data.follower;
-	}
+    public static long getBilibiliUpperFollower(long uuid) throws IOException {
+        URL url = new URL("http://api.bilibili.com/x/relation/stat?vmid=" + uuid);
+        InputStream in = url.openStream();
+        TUpperRelation r = gson.fromJson(new InputStreamReader(in), TUpperRelation.class);
+        in.close();
+        return r.data.follower;
+    }
 
 }
