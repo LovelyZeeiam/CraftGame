@@ -1,10 +1,10 @@
 package xueLi.gamengine.resource;
 
+import xueLi.gamengine.utils.Logger;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.HashMap;
-
-import xueLi.gamengine.utils.Logger;
 
 public class LangManager extends IResource {
 

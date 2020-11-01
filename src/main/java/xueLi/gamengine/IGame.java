@@ -1,22 +1,17 @@
 package xueLi.gamengine;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
-
-import xueLi.gamengine.resource.GuiResource;
-import xueLi.gamengine.resource.LangManager;
-import xueLi.gamengine.resource.Options;
-import xueLi.gamengine.resource.ShaderResource;
-import xueLi.gamengine.resource.TextureManager;
+import xueLi.gamengine.resource.*;
 import xueLi.gamengine.utils.Display;
 import xueLi.gamengine.utils.callbacks.CursorPosCallback;
 import xueLi.gamengine.utils.callbacks.DisplaySizedCallback;
 import xueLi.gamengine.utils.callbacks.KeyCallback;
 import xueLi.gamengine.utils.callbacks.MouseButtonCallback;
 import xueLi.gamengine.view.ViewManager;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 public abstract class IGame implements Runnable {
 
@@ -111,8 +106,7 @@ public abstract class IGame implements Runnable {
 			@Override
 			public void invoke(long window, int button, int action, int mods) {
 				super.invoke(window, button, action, mods);
-				if (action == GLFW.GLFW_RELEASE)
-					viewManager.mouseClicked(button);
+				viewManager.mouseClicked(button,action,display.getMouseX(),display.getMouseY());
 				onMouseButton(button);
 
 			}

@@ -1,7 +1,6 @@
 package xueLi.craftgame.entity;
 
 import org.lwjgl.util.vector.Vector3f;
-
 import xueLi.craftgame.world.World;
 import xueLi.gamengine.utils.Time;
 import xueLi.gamengine.utils.Vector;

@@ -10,7 +10,7 @@ public class AnimationWait extends IAnimation {
 		this.duration = duration;
 
 	}
-	
+
 	private boolean tick() {
 		if (System.currentTimeMillis() - startTime > duration)
 			return true;
@@ -21,12 +21,10 @@ public class AnimationWait extends IAnimation {
 	public boolean tick(ViewWidget widget) {
 		return tick();
 	}
-	
+
 	@Override
 	public boolean tick(HashMap<String, ViewWidget> widgets) {
 		return tick();
 	}
-	
+
 }
-
-

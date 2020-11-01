@@ -1,11 +1,11 @@
 package xueLi.gamengine.view;
 
-import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
-import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
+import xueLi.gamengine.utils.Display;
 
 import java.util.HashMap;
 
-import xueLi.gamengine.utils.Display;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
+import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
 
 public class View {
 
@@ -13,7 +13,7 @@ public class View {
 
 	public GUIBackground background;
 	public HashMap<String, ViewWidget> widgets = new HashMap<String, ViewWidget>();
-	
+
 	public HashMap<String, IAnimation> animations = new HashMap<String, IAnimation>();
 	private IAnimation currentAnimation;
 
@@ -27,7 +27,7 @@ public class View {
 	}
 
 	public void draw(long nvg) {
-		if(this.currentAnimation != null) {
+		if (this.currentAnimation != null) {
 			this.currentAnimation.tick(widgets);
 		}
 		nvgBeginFrame(nvg, Display.currentDisplay.getWidth(), Display.currentDisplay.getHeight(),

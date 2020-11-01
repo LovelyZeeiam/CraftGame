@@ -71,7 +71,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Set this matrix to be the identity matrix.
-	 * 
+	 *
 	 * @return this
 	 */
 	public Matrix setIdentity() {
@@ -80,7 +80,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Set the given matrix to be the identity matrix.
-	 * 
+	 *
 	 * @param m The matrix to set to the identity
 	 * @return m
 	 */
@@ -107,7 +107,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Set this matrix to 0.
-	 * 
+	 *
 	 * @return this
 	 */
 	public Matrix setZero() {
@@ -116,7 +116,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Set the given matrix to 0.
-	 * 
+	 *
 	 * @param m The matrix to set to 0
 	 * @return m
 	 */
@@ -143,7 +143,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Load from another matrix4f
-	 * 
+	 *
 	 * @param src The source matrix
 	 * @return this
 	 */
@@ -153,7 +153,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Copy the source matrix to the destination matrix
-	 * 
+	 *
 	 * @param src  The source matrix
 	 * @param dest The destination matrix, or null of a new one is to be created
 	 * @return The copied matrix
@@ -242,7 +242,7 @@ public class Matrix4f extends Matrix implements Serializable {
 	/**
 	 * Store this matrix in a float buffer. The matrix is stored in column major
 	 * (openGL) order.
-	 * 
+	 *
 	 * @param buf The buffer to store this matrix in
 	 */
 	public Matrix store(FloatBuffer buf) {
@@ -268,7 +268,7 @@ public class Matrix4f extends Matrix implements Serializable {
 	/**
 	 * Store this matrix in a float buffer. The matrix is stored in row major
 	 * (maths) order.
-	 * 
+	 *
 	 * @param buf The buffer to store this matrix in
 	 */
 	public Matrix storeTranspose(FloatBuffer buf) {
@@ -294,7 +294,7 @@ public class Matrix4f extends Matrix implements Serializable {
 	/**
 	 * Store the rotation portion of this matrix in a float buffer. The matrix is
 	 * stored in column major (openGL) order.
-	 * 
+	 *
 	 * @param buf The buffer to store this matrix in
 	 */
 	public Matrix store3f(FloatBuffer buf) {
@@ -312,7 +312,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Add two matrices together and place the result in a third matrix.
-	 * 
+	 *
 	 * @param left  The left source matrix
 	 * @param right The right source matrix
 	 * @param dest  The destination matrix, or null if a new one is to be created
@@ -345,7 +345,7 @@ public class Matrix4f extends Matrix implements Serializable {
 	/**
 	 * Subtract the right matrix from the left and place the result in a third
 	 * matrix.
-	 * 
+	 *
 	 * @param left  The left source matrix
 	 * @param right The right source matrix
 	 * @param dest  The destination matrix, or null if a new one is to be created
@@ -377,7 +377,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Multiply the right matrix by the left and place the result in a third matrix.
-	 * 
+	 *
 	 * @param left  The left source matrix
 	 * @param right The right source matrix
 	 * @param dest  The destination matrix, or null if a new one is to be created
@@ -426,7 +426,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Transform a Vector by a matrix and return the result in a destination vector.
-	 * 
+	 *
 	 * @param left  The left matrix
 	 * @param right The right vector
 	 * @param dest  The destination vector, or null if a new one is to be created
@@ -451,7 +451,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Transpose this matrix
-	 * 
+	 *
 	 * @return this
 	 */
 	public Matrix transpose() {
@@ -460,7 +460,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Translate this matrix
-	 * 
+	 *
 	 * @param vec The vector to translate by
 	 * @return this
 	 */
@@ -470,7 +470,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Translate this matrix
-	 * 
+	 *
 	 * @param vec The vector to translate by
 	 * @return this
 	 */
@@ -480,7 +480,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Scales this matrix
-	 * 
+	 *
 	 * @param vec The vector to scale by
 	 * @return this
 	 */
@@ -490,7 +490,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Scales the source matrix and put the result in the destination matrix
-	 * 
+	 *
 	 * @param vec  The vector to scale by
 	 * @param src  The source matrix
 	 * @param dest The destination matrix, or null if a new matrix is to be created
@@ -516,7 +516,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Rotates the matrix around the given axis the specified angle
-	 * 
+	 *
 	 * @param angle the angle, in radians.
 	 * @param axis  The vector representing the rotation axis. Must be normalized.
 	 * @return this
@@ -527,7 +527,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Rotates the matrix around the given axis the specified angle
-	 * 
+	 *
 	 * @param angle the angle, in radians.
 	 * @param axis  The vector representing the rotation axis. Must be normalized.
 	 * @param dest  The matrix to put the result, or null if a new matrix is to be
@@ -541,7 +541,7 @@ public class Matrix4f extends Matrix implements Serializable {
 	/**
 	 * Rotates the source matrix around the given axis the specified angle and put
 	 * the result in the destination matrix.
-	 * 
+	 *
 	 * @param angle the angle, in radians.
 	 * @param axis  The vector representing the rotation axis. Must be normalized.
 	 * @param src   The matrix to rotate
@@ -599,7 +599,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Translate this matrix and stash the result in another matrix
-	 * 
+	 *
 	 * @param vec  The vector to translate by
 	 * @param dest The destination matrix or null if a new matrix is to be created
 	 * @return the translated matrix
@@ -610,7 +610,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Translate the source matrix and stash the result in the destination matrix
-	 * 
+	 *
 	 * @param vec  The vector to translate by
 	 * @param src  The source matrix
 	 * @param dest The destination matrix or null if a new matrix is to be created
@@ -630,7 +630,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Translate this matrix and stash the result in another matrix
-	 * 
+	 *
 	 * @param vec  The vector to translate by
 	 * @param dest The destination matrix or null if a new matrix is to be created
 	 * @return the translated matrix
@@ -641,7 +641,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Translate the source matrix and stash the result in the destination matrix
-	 * 
+	 *
 	 * @param vec  The vector to translate by
 	 * @param src  The source matrix
 	 * @param dest The destination matrix or null if a new matrix is to be created
@@ -661,7 +661,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Transpose this matrix and place the result in another matrix
-	 * 
+	 *
 	 * @param dest The destination matrix or null if a new matrix is to be created
 	 * @return the transposed matrix
 	 */
@@ -671,7 +671,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Transpose the source matrix and place the result in the destination matrix
-	 * 
+	 *
 	 * @param src  The source matrix
 	 * @param dest The destination matrix or null if a new matrix is to be created
 	 * @return the transposed matrix
@@ -733,7 +733,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Calculate the determinant of a 3x3 matrix
-	 * 
+	 *
 	 * @return result
 	 */
 
@@ -744,7 +744,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Invert this matrix
-	 * 
+	 *
 	 * @return this if successful, null otherwise
 	 */
 	public Matrix invert() {
@@ -753,7 +753,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Invert the source matrix and put the result in the destination
-	 * 
+	 *
 	 * @param src  The source matrix
 	 * @param dest The destination matrix, or null if a new matrix is to be created
 	 * @return The inverted matrix if successful, null otherwise
@@ -822,7 +822,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Negate this matrix
-	 * 
+	 *
 	 * @return this
 	 */
 	public Matrix negate() {
@@ -831,7 +831,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Negate this matrix and place the result in a destination matrix.
-	 * 
+	 *
 	 * @param dest The destination matrix, or null if a new matrix is to be created
 	 * @return the negated matrix
 	 */
@@ -841,7 +841,7 @@ public class Matrix4f extends Matrix implements Serializable {
 
 	/**
 	 * Negate this matrix and place the result in a destination matrix.
-	 * 
+	 *
 	 * @param src  The source matrix
 	 * @param dest The destination matrix, or null if a new matrix is to be created
 	 * @return The negated matrix

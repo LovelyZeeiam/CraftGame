@@ -1,12 +1,10 @@
 package xueLi.gamengine.view;
 
+import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
-
 import xueLi.gamengine.utils.EvalableFloat;
 
 import static org.lwjgl.nanovg.NanoVG.*;
-
-import org.lwjgl.nanovg.NVGColor;
 
 public class GUIImageView extends ViewWidget {
 

@@ -2,7 +2,9 @@ package xueLi.gamengine.view;
 
 import org.lwjgl.nanovg.NVGColor;
 
+import xueLi.gamengine.utils.Display;
 import xueLi.gamengine.utils.EvalableFloat;
+
 import static org.lwjgl.nanovg.NanoVG.*;
 
 public abstract class ViewWidget implements AutoCloseable {
@@ -10,13 +12,11 @@ public abstract class ViewWidget implements AutoCloseable {
 	EvalableFloat x, y, width, height;
 	public float real_x, real_y, real_width, real_height;
 
-	private boolean hasBorder = false;
-	private NVGColor borderColor;
-	private int borderWidth;
+	protected boolean hasBorder = false;
+	protected NVGColor borderColor;
+	protected int borderWidth;
 
 	private WidgetAnimation currentAnimation = null;
-
-	public boolean mouseClicked = false;
 
 	public ViewWidget(EvalableFloat x, EvalableFloat y, EvalableFloat width, EvalableFloat height) {
 		this.x = x;
@@ -68,8 +68,6 @@ public abstract class ViewWidget implements AutoCloseable {
 	}
 
 	protected void anim_tick() {
-		mouseClicked = false;
-
 		if (x != null)
 			real_x = x.value;
 		if (y != null)
@@ -120,8 +118,21 @@ public abstract class ViewWidget implements AutoCloseable {
 		}
 	}
 
+	protected boolean isMouseHover() {
+		// 鼠标位置
+		int cursorX = Display.currentDisplay.getMouseX();
+		int cursorY = Display.currentDisplay.getMouseY();
+		return cursorX > real_x & cursorX < real_x + real_width & cursorY > real_y & cursorY < real_y + real_height;
+	}
+
 	public static interface OnClickListener {
-		public void onClick(int button);
+		/**
+		 * 点击监听事件
+		 * @param button 鼠标按钮id
+		 * @param offsetX 鼠标点击位置关于控件左上角的位移
+		 * @param offsetY 鼠标点击位置关于控件右上角的位移
+		 */
+		public void onClick(int button, int action, double offsetX, double offsetY);
 	}
 
 	public OnClickListener onClickListener = null;

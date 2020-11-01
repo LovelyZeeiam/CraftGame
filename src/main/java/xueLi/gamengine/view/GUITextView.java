@@ -1,7 +1,6 @@
 package xueLi.gamengine.view;
 
 import org.lwjgl.nanovg.NVGColor;
-
 import xueLi.gamengine.utils.EvalableFloat;
 
 import static org.lwjgl.nanovg.NanoVG.*;

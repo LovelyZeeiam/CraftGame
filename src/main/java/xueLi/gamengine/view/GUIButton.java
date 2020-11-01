@@ -1,12 +1,11 @@
 package xueLi.gamengine.view;
 
-import static org.lwjgl.nanovg.NanoVG.*;
-
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
-
 import xueLi.gamengine.utils.Display;
 import xueLi.gamengine.utils.EvalableFloat;
+
+import static org.lwjgl.nanovg.NanoVG.*;
 
 public class GUIButton extends ViewWidget {
 

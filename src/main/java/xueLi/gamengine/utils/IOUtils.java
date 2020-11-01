@@ -1,5 +1,7 @@
 package xueLi.gamengine.utils;
 
+import org.lwjgl.BufferUtils;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -9,8 +11,6 @@ import java.nio.channels.SeekableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import org.lwjgl.BufferUtils;
 
 public class IOUtils {
 
@@ -30,15 +30,13 @@ public class IOUtils {
 
 	/**
 	 * Reads the specified resource and returns the raw data as a ByteBuffer.
-	 * 
+	 * <p>
 	 * From:
 	 * https://gamedev.stackexchange.com/questions/105555/setting-window-icon-using-glfw-lwjgl-3
 	 *
 	 * @param resource   the resource to read
 	 * @param bufferSize the initial buffer size
-	 *
 	 * @return the resource data
-	 *
 	 * @throws IOException if an IO error occurs
 	 */
 	public static ByteBuffer ioResourceToByteBuffer(String resource, int bufferSize) throws IOException {

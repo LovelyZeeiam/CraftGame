@@ -92,7 +92,6 @@ public class WorldLogic implements Runnable {
 
 	/**
 	 * frustum culling 依照从前到后的顺序排序几何体 顶点处理器基于32位浮点值工作 Fragment Shader使用16位浮点值工作
-	 * 
 	 */
 
 	private Matrix4f playerMatrix = new Matrix4f();
@@ -136,7 +135,7 @@ public class WorldLogic implements Runnable {
 				.perspecive(cg.getDisplay().getWidth(), cg.getDisplay().getHeight(), 90.0f, 0.01f, 114514.0f));
 		blockRenderShader.unbind();
 
-		if(gameGui != null)
+		if (gameGui != null)
 			gameGui.size();
 
 	}
@@ -176,7 +175,7 @@ public class WorldLogic implements Runnable {
 		GLHelper.checkGLError("World: Pre-render");
 
 		mappedBuffer = GL15.glMapBuffer(GL15.GL_ARRAY_BUFFER, GL15.GL_WRITE_ONLY, mappedBuffer);
-		if(mappedBuffer == null){
+		if (mappedBuffer == null) {
 			Logger.error(new Throwable("Buffer map error!"));
 		}
 		mappedBuffer.clear();
@@ -211,7 +210,7 @@ public class WorldLogic implements Runnable {
 		GL11.glDisable(GL11.GL_CULL_FACE);
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 
-		if(gameGui != null){
+		if (gameGui != null) {
 			cg.getViewManager().draw();
 		}
 

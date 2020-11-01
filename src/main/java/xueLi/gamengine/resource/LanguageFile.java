@@ -1,13 +1,9 @@
 package xueLi.gamengine.resource;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashMap;
-
 import xueLi.gamengine.utils.Logger;
+
+import java.io.*;
+import java.util.HashMap;
 
 public class LanguageFile {
 

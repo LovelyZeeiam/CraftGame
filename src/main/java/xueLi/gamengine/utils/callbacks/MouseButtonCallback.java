@@ -2,7 +2,6 @@ package xueLi.gamengine.utils.callbacks;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
-
 import xueLi.gamengine.utils.Logger;
 
 public abstract class MouseButtonCallback extends GLFWMouseButtonCallback {

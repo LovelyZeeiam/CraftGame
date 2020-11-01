@@ -1,0 +1,50 @@
+{
+	"subtitle": "Game Setting",
+	"background": {
+		"image": "gui.background",
+		"scale": [
+			0,
+			0,
+			1920,
+			1022
+		]
+	},
+	"widgets": {
+		"scroll_bar": {
+			"type": "scroll_bar",
+			"pos": [
+				"win_width / 2 - 100.0 * scale",
+				"win_height / 2 - 10.0 * scale"
+			]
+			,
+			"size": [
+				"200.0 * scale",
+				"20.0 * scale"
+			]
+			,
+			"default_value": 0.30,
+			"background_color": [
+				12,
+				12,
+				12,
+				255
+			],
+			"scrollbar_color": [
+				65,
+				65,
+				65,
+				255
+			],
+			"outline": {
+				"color": [
+					114,
+					145,
+					233,
+					255
+				]
+				,
+				"width": 2
+			}
+		}
+	}
+}

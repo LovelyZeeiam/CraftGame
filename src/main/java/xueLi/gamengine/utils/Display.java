@@ -7,19 +7,13 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.awt.AWTGLCanvas;
 import org.lwjgl.stb.STBImage;
 import org.lwjgl.system.MemoryUtil;
+import xueLi.gamengine.utils.callbacks.*;
 
-import xueLi.gamengine.utils.callbacks.AWTMouseListener;
-import xueLi.gamengine.utils.callbacks.CursorPosCallback;
-import xueLi.gamengine.utils.callbacks.DisplaySizedCallback;
-import xueLi.gamengine.utils.callbacks.KeyCallback;
-import xueLi.gamengine.utils.callbacks.MouseButtonCallback;
-
-import static org.lwjgl.glfw.GLFW.*;
-
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+
+import static org.lwjgl.glfw.GLFW.*;
 
 public class Display {
 

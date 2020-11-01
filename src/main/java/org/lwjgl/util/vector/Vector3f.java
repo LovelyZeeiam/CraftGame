@@ -34,10 +34,7 @@ package org.lwjgl.util.vector;
 import java.io.Serializable;
 import java.nio.FloatBuffer;
 
-import org.lwjgl.util.vector.Vector3f;
-
 /**
- *
  * Holds a 3-tuple vector.
  *
  * @author cix_foo <cix_foo@users.sourceforge.net>
@@ -73,7 +70,7 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.lwjgl.util.vector.WritableVector2f#set(float, float)
 	 */
 	public void set(float x, float y) {
@@ -83,7 +80,7 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.lwjgl.util.vector.WritableVector3f#set(float, float, float)
 	 */
 	public void set(float x, float y, float z) {
@@ -94,7 +91,7 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 
 	/**
 	 * Load from another Vector3f
-	 * 
+	 *
 	 * @param src The source vector
 	 * @return this
 	 */
@@ -114,7 +111,7 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 
 	/**
 	 * Translate a vector
-	 * 
+	 *
 	 * @param x The translation in x
 	 * @param y the translation in y
 	 * @return this
@@ -128,7 +125,7 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 
 	/**
 	 * Add a vector to another vector and place the result in a destination vector.
-	 * 
+	 *
 	 * @param left  The LHS vector
 	 * @param right The RHS vector
 	 * @param dest  The destination vector, or null if a new vector is to be created
@@ -146,7 +143,7 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 	/**
 	 * Subtract a vector from another vector and place the result in a destination
 	 * vector.
-	 * 
+	 *
 	 * @param left  The LHS vector
 	 * @param right The RHS vector
 	 * @param dest  The destination vector, or null if a new vector is to be created
@@ -182,7 +179,7 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 
 	/**
 	 * Negate a vector
-	 * 
+	 *
 	 * @return this
 	 */
 	public Vector negate() {
@@ -194,7 +191,7 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 
 	/**
 	 * Negate a vector and place the result in a destination vector.
-	 * 
+	 *
 	 * @param dest The destination vector or null if a new vector is to be created
 	 * @return the negated vector
 	 */
@@ -209,7 +206,7 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 
 	/**
 	 * Normalise this vector and place the result in another vector.
-	 * 
+	 *
 	 * @param dest The destination vector, or null if a new vector is to be created
 	 * @return the normalised vector
 	 */
@@ -227,7 +224,7 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 	/**
 	 * The dot product of two vectors is calculated as v1.x * v2.x + v1.y * v2.y +
 	 * v1.z * v2.z
-	 * 
+	 *
 	 * @param left  The LHS vector
 	 * @param right The RHS vector
 	 * @return left dot right
@@ -238,7 +235,7 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 
 	/**
 	 * Calculate the angle between two vectors, in radians
-	 * 
+	 *
 	 * @param a A vector
 	 * @param b The other vector
 	 * @return the angle between the two vectors, in radians
@@ -254,7 +251,7 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.lwjgl.vector.Vector#load(FloatBuffer)
 	 */
 	public Vector load(FloatBuffer buf) {
@@ -266,7 +263,7 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.lwjgl.vector.Vector#scale(float)
 	 */
 	public Vector scale(float scale) {
@@ -281,7 +278,7 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.lwjgl.vector.Vector#store(FloatBuffer)
 	 */
 	public Vector store(FloatBuffer buf) {
@@ -295,7 +292,7 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
@@ -327,7 +324,7 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 
 	/**
 	 * Set X
-	 * 
+	 *
 	 * @param x
 	 */
 	public final void setX(float x) {
@@ -336,7 +333,7 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 
 	/**
 	 * Set Y
-	 * 
+	 *
 	 * @param y
 	 */
 	public final void setY(float y) {
@@ -345,7 +342,7 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 
 	/**
 	 * Set Z
-	 * 
+	 *
 	 * @param z
 	 */
 	public void setZ(float z) {
@@ -354,7 +351,7 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 
 	/*
 	 * (Overrides)
-	 * 
+	 *
 	 * @see org.lwjgl.vector.ReadableVector3f#getZ()
 	 */
 	public float getZ() {

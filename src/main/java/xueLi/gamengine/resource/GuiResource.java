@@ -1,5 +1,12 @@
 package xueLi.gamengine.resource;
 
+import com.google.gson.*;
+import org.lwjgl.nanovg.NVGColor;
+import org.lwjgl.nanovg.NanoVG;
+import xueLi.gamengine.utils.EvalableFloat;
+import xueLi.gamengine.utils.Logger;
+import xueLi.gamengine.view.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -7,28 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.lwjgl.nanovg.NVGColor;
-import org.lwjgl.nanovg.NanoVG;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-
-import xueLi.gamengine.utils.EvalableFloat;
-import xueLi.gamengine.utils.Logger;
-import xueLi.gamengine.view.AnimationWait;
-import xueLi.gamengine.view.GUIBackground;
-import xueLi.gamengine.view.GUIButton;
-import xueLi.gamengine.view.GUIImageView;
-import xueLi.gamengine.view.GUIProgressBar;
-import xueLi.gamengine.view.GUITextView;
-import xueLi.gamengine.view.GuiAnimation;
-import xueLi.gamengine.view.GuiAnimationGroup;
-import xueLi.gamengine.view.IAnimation;
-import xueLi.gamengine.view.View;
 
 public class GuiResource extends IResource {
 
@@ -225,6 +210,16 @@ public class GuiResource extends IResource {
 					continue;
 				}
 				JsonObject chosenBorderJsonObject = chosenBorderJsonElement.getAsJsonObject();
+				
+				if(!chosenBorderJsonObject.has("color") || !chosenBorderJsonObject.get("color").isJsonArray()) {
+					Logger.error("[GUI] Couldn't find array param in 'outline' in " + nameString + " in " + filename + ": color");
+					continue;
+				}
+				if(!chosenBorderJsonObject.has("width")) {
+					Logger.error("[GUI] Couldn't find param in 'outline' in " + nameString + " in " + filename + ": width");
+					continue;
+				}
+				
 				NVGColor chosenBorderColor = loadColor(chosenBorderJsonObject.get("color").getAsJsonArray());
 				int chosenBorderWidth = chosenBorderJsonObject.get("width").getAsInt();
 				NVGColor chosenTextColor = loadColor(chosenBorderJsonObject.get("text_color").getAsJsonArray());
@@ -301,11 +296,8 @@ public class GuiResource extends IResource {
 				int align = 0;
 				if (alignElement != null) {
 					JsonArray alignArray = alignElement.getAsJsonArray();
-					for (JsonElement eash : alignArray) {
-						switch (eash.getAsString()) {
-						case "left":
-							align |= NanoVG.NVG_ALIGN_LEFT;
-							break;
+					for (JsonElement each : alignArray) {
+						switch (each.getAsString()) {
 						case "right":
 							align |= NanoVG.NVG_ALIGN_RIGHT;
 							break;
@@ -321,7 +313,7 @@ public class GuiResource extends IResource {
 						case "middle":
 							align |= NanoVG.NVG_ALIGN_MIDDLE;
 							break;
-						default:
+						default: // include when "left"
 							align |= NanoVG.NVG_ALIGN_LEFT;
 							break;
 						}
@@ -334,6 +326,56 @@ public class GuiResource extends IResource {
 				textView.setText(textString);
 				gui.widgets.put(nameString, textView);
 
+				break;
+			case "scroll_bar":
+				// TODO: 将参数与Options的json文件勾连起来
+
+				if (!widgetJsonObject.has("default_value")) {
+					Logger.error(
+							"[GUI] Couldn't find float param in " + nameString + " in " + filename + ": default_value");
+					continue;
+				}
+				float defaultValue = widgetJsonObject.get("default_value").getAsFloat();
+
+				if (!widgetJsonObject.has("background_color")
+						|| !widgetJsonObject.get("background_color").isJsonArray()) {
+					Logger.error("[GUI] Couldn't find array param in " + nameString + " in " + filename
+							+ ": background_color");
+					continue;
+				}
+				NVGColor background_color = loadColor(widgetJsonObject.getAsJsonArray("background_color"));
+
+				if (!widgetJsonObject.has("scrollbar_color")
+						|| !widgetJsonObject.get("scrollbar_color").isJsonArray()) {
+					Logger.error("[GUI] Couldn't find array param in " + nameString + " in " + filename
+							+ ": scrollbar_color");
+					continue;
+				}
+				NVGColor scrollbar_color = loadColor(widgetJsonObject.getAsJsonArray("scrollbar_color"));
+
+				JsonElement outlineElement = widgetJsonObject.get("outline");
+				if(outlineElement == null) {
+					Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": outline");
+					continue;
+				}
+				JsonObject outlineObject = outlineElement.getAsJsonObject();
+				
+				if(!outlineObject.has("color") || !outlineObject.get("color").isJsonArray()) {
+					Logger.error("[GUI] Couldn't find array param in 'outline' in " + nameString + " in " + filename + ": color");
+					continue;
+				}
+				if(!outlineObject.has("width")) {
+					Logger.error("[GUI] Couldn't find param in 'outline' in " + nameString + " in " + filename + ": width");
+					continue;
+				}
+				
+				NVGColor outlineColor = loadColor(outlineObject.get("color").getAsJsonArray());
+				int outlineWidth = outlineObject.get("width").getAsInt();
+				
+				GUIScrollBar scrollBar = new GUIScrollBar(widgetPosX, widgetPosY, widgetWidth, widgetHeight,
+						defaultValue, background_color, scrollbar_color,outlineColor,outlineWidth);
+				gui.widgets.put(nameString, scrollBar);
+				
 				break;
 			default:
 				break;
@@ -348,21 +390,21 @@ public class GuiResource extends IResource {
 			for (Map.Entry<String, JsonElement> entry : animationsElement.getAsJsonObject().entrySet()) {
 				String name = entry.getKey();
 				JsonObject value = entry.getValue().getAsJsonObject();
-				
-				if(value.has("anims")) {
+
+				if (value.has("anims")) {
 					int duration = value.get("duration").getAsInt();
 					boolean stay = value.get("stay").getAsBoolean();
 					JsonObject paramJsonObject = value.get("anims").getAsJsonObject();
-					
+
 					GuiAnimation animation = new GuiAnimation(paramJsonObject, duration, stay);
 					animations.put(name, animation);
-					
+
 				} else if (value.has("anim_group")) {
 					boolean loop = value.get("loop").getAsBoolean();
-					
+
 					JsonArray groupArray = value.get("anim_group").getAsJsonArray();
 					ArrayList<IAnimation> group = new ArrayList<IAnimation>();
-					
+
 					groupArray.forEach(anim -> {
 						JsonObject element = anim.getAsJsonObject();
 						String type = element.get("type").getAsString();
@@ -374,20 +416,17 @@ public class GuiResource extends IResource {
 							group.add(new AnimationWait(element.get("duration").getAsInt()));
 							break;
 						default:
-							Logger.warn(
-									"[GUI Loader] Couldn't find animation type in file " + filename + ": " + type);
+							Logger.warn("[GUI Loader] Couldn't find animation type in file " + filename + ": " + type);
 							break;
 						}
 					});
-					
+
 					animations.put(name, new GuiAnimationGroup(group, loop, gui));
-					
+
 				}
-				
+
 				gui.animations = animations;
-				
-				
-				
+
 			}
 
 		}

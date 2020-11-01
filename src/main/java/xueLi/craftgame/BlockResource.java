@@ -1,16 +1,9 @@
 package xueLi.craftgame;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-
 import xueLi.craftgame.block.BlockData;
 import xueLi.craftgame.block.BlockType;
 import xueLi.gamengine.resource.IResource;
@@ -21,6 +14,12 @@ import xueLi.gamengine.utils.Logger;
 import xueLi.gamengine.utils.vector.Vector2s;
 import xueLi.gamengine.view.GUIProgressBar;
 import xueLi.gamengine.view.GUITextView;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BlockResource extends IResource {
 

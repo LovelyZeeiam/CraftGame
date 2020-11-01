@@ -1,21 +1,21 @@
 package xueLi.gamengine.view;
 
+import xueLi.gamengine.utils.EvalableFloat;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import xueLi.gamengine.utils.EvalableFloat;
-
 public class WidgetAnimation extends IAnimation {
-	
+
 	private HashMap<String, EvalableFloat[]> parameters;
 	private float duration;
 	private boolean stay;
-	
+
 	public WidgetAnimation(HashMap<String, EvalableFloat[]> paramsHashMap, float duration, boolean stay) {
 		this.parameters = paramsHashMap;
 		this.duration = duration;
 		this.stay = stay;
-		
+
 	}
 
 	@Override

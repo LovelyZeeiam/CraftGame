@@ -1,48 +1,29 @@
 package xueLi.gamengine.tool.view;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-
-import xueLi.gamengine.resource.GuiResource;
-import xueLi.gamengine.resource.LangManager;
-import xueLi.gamengine.resource.Options;
-import xueLi.gamengine.resource.ShaderResource;
-import xueLi.gamengine.resource.TextureManager;
-import xueLi.gamengine.utils.Display;
-import xueLi.gamengine.utils.GLHelper;
-import xueLi.gamengine.utils.Logger;
-import xueLi.gamengine.utils.Shader;
-import xueLi.gamengine.view.ViewManager;
-
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import java.awt.Font;
-import java.awt.Toolkit;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
-import javax.swing.SwingUtilities;
-import javax.swing.BoxLayout;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.border.EtchedBorder;
-import javax.swing.filechooser.FileFilter;
-
 import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.awt.AWTGLCanvas;
 import org.lwjgl.opengl.awt.GLData;
+import xueLi.gamengine.resource.*;
+import xueLi.gamengine.utils.Display;
+import xueLi.gamengine.utils.GLHelper;
+import xueLi.gamengine.utils.Logger;
+import xueLi.gamengine.utils.Shader;
+import xueLi.gamengine.utils.callbacks.CursorPosCallback;
+import xueLi.gamengine.utils.callbacks.DisplaySizedCallback;
+import xueLi.gamengine.utils.callbacks.KeyCallback;
+import xueLi.gamengine.utils.callbacks.MouseButtonCallback;
+import xueLi.gamengine.view.ViewManager;
+
+import javax.swing.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.filechooser.FileFilter;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
@@ -55,10 +36,17 @@ public class ViewMonitor {
 	private FileAlterationMonitor fileMonitor = null;
 	boolean needReload = false;
 	private File attachedFile;
+	
+	private static boolean debug = false;
 
 	public static void main(String[] args) {
 		Logger.info("来自XueLi: 针不戳，看着别人去漫展自己在家里打代码，针不戳~");
 		Logger.info("来自XueLi: 所以请毫不吝啬的挑选宁的英雄吧！");
+		
+		if(args != null && args[0].equals("debug")) {
+			Logger.info("来自XueLi: Debug模式开启~");
+			debug = true;
+		}
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -90,6 +78,15 @@ public class ViewMonitor {
 
 	private int start_width = 600, start_height = 600;
 	private ViewMonitor ctx;
+	
+	private LangManager langManager = new LangManager("res/");
+	private Options options = new Options("res/");
+	private ViewManager viewManager;
+	private ShaderResource shaderResource = new ShaderResource("res/");
+	private Shader guiShader;
+	private Display display;
+	private GuiResource guiResource;
+	private TextureManager textureManager;
 
 	private void initialize() {
 		ctx = this;
@@ -132,10 +129,10 @@ public class ViewMonitor {
 
 		JMenuItem mntmNewMenuItem = new JMenuItem("Attach");
 		mnNewMenu.add(mntmNewMenuItem);
-		
+
 		JSeparator separator_1 = new JSeparator();
 		mnNewMenu.add(separator_1);
-		
+
 		JMenuItem animChooseMenuItem = new JMenuItem("Animation");
 		mnNewMenu.add(animChooseMenuItem);
 
@@ -158,12 +155,12 @@ public class ViewMonitor {
 		JPanel panel = new JPanel();
 		frmXuelisGuiMonitor.getContentPane().add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panel.add(panel_2, BorderLayout.SOUTH);
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.X_AXIS));
-		
+
 		JLabel bottomStateLabel = new JLabel("XueLi's Gui Monitor");
 		panel_2.add(bottomStateLabel);
 
@@ -215,15 +212,6 @@ public class ViewMonitor {
 		canvas = new AWTGLCanvas(glData) {
 			private static final long serialVersionUID = -5758847215745459382L;
 
-			private LangManager langManager = new LangManager("res/");
-			private Options options = new Options("res/");
-			private ViewManager viewManager;
-			private ShaderResource shaderResource = new ShaderResource("res/");
-			private Shader guiShader;
-			private Display display;
-			private GuiResource guiResource;
-			private TextureManager textureManager;
-
 			@Override
 			public void initGL() {
 				GL.createCapabilities();
@@ -238,13 +226,13 @@ public class ViewMonitor {
 				textureManager = new TextureManager("res/", viewManager);
 				guiResource = new GuiResource("res/", textureManager);
 				viewManager.setResourceSource(guiResource);
-				
+
 				textureManager.preload();
 				textureManager.load();
-				
+
 				langManager.setLang("zh-ch.lang");
 				viewManager.setFont("Minecraft.ttf");
-				
+
 				// TODO: Restart to reload texture, reload language files
 
 			}
@@ -253,7 +241,7 @@ public class ViewMonitor {
 			public void paintGL() {
 				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
 				GL11.glClearColor(0, 0, 0, 1);
-				
+
 				GL11.glViewport(0, 0, getWidth(), getHeight());
 				viewManager.size();
 

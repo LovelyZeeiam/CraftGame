@@ -1,14 +1,13 @@
 package xueLi.craftgame;
 
 import org.lwjgl.glfw.GLFW;
-
 import xueLi.gamengine.IGame;
 import xueLi.gamengine.utils.TaskManager;
+import xueLi.gamengine.view.GUIFader.Faders;
 import xueLi.gamengine.view.GUIImageView;
 import xueLi.gamengine.view.GUIProgressBar;
 import xueLi.gamengine.view.GUITextView;
 import xueLi.gamengine.view.View;
-import xueLi.gamengine.view.GUIFader.Faders;
 
 public class CraftGame extends IGame {
 
@@ -112,12 +111,12 @@ public class CraftGame extends IGame {
 
 		@Override
 		public void run() {
-
 			/* 资源加载 */
 			String loading_messageString = loading_TextView.getText();
 
 			// 设置加载动画
 			loading_gui.setAnimation("loading");
+			
 			// 加载GUI
 			guiResource.loadGui(langManager, loading_TextView, loading_ProgressBar, 0.00f, 0.25f);
 
@@ -126,8 +125,8 @@ public class CraftGame extends IGame {
 			// 设置监听
 			View mainMenuGui = guiResource.getGui("main_menu.json");
 
-			mainMenuGui.widgets.get("single_player_button").onClickListener = (button) -> {
-				if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
+			mainMenuGui.widgets.get("single_player_button").onClickListener = (button,action,offsetX,offsetY) -> {
+				if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT & action == GLFW.GLFW_RELEASE) {
 					waitingForLove = false;
 
 					viewManager.setGui("world_loading.json");
@@ -141,30 +140,39 @@ public class CraftGame extends IGame {
 
 			};
 
-			mainMenuGui.widgets.get("multi_player_button").onClickListener = (button) -> {
+			mainMenuGui.widgets.get("multi_player_button").onClickListener = (button,action,offsetX,offsetY) -> {
 
 			};
-			mainMenuGui.widgets.get("setting_button").onClickListener = (button) -> {
-
+			mainMenuGui.widgets.get("setting_button").onClickListener = (button,action,offsetX,offsetY) -> {
+				if(button == GLFW.GLFW_MOUSE_BUTTON_LEFT & action == GLFW.GLFW_RELEASE) {
+					viewManager.setGui("game_setting.json");
+					
+				}
 			};
 
 			View esc_menu = cg.getGuiResource().getGui("game_esc_menu.json");
-			esc_menu.widgets.get("back_to_game_button").onClickListener = (button) -> {
+			esc_menu.widgets.get("back_to_game_button").onClickListener = (button,action,offsetX,offsetY) -> {
+				if(action == GLFW.GLFW_RELEASE) {
 				// 从esc界面回到游戏中
 				display.toggleMouseGrabbed();
 				viewManager.setGui((View) null);
 				worldLogic.gameGui = null;
 				worldLogic.state = State.INGAME;
+				
+				}
 
 			};
 
-			esc_menu.widgets.get("quit_button").onClickListener = (button) -> {
+			esc_menu.widgets.get("quit_button").onClickListener = (button,action,offsetX,offsetY) -> {
+				if(action == GLFW.GLFW_RELEASE) {
 				inWorld = false;
 				worldLogic.delete();
 				worldLogic = null;
 				viewManager.setGui("main_menu.json");
 
-				guiResource.loadGui("world_loading.json",langManager,true);
+				guiResource.loadGui("world_loading.json", langManager, true);
+				
+				}
 
 			};
 
@@ -174,8 +182,11 @@ public class CraftGame extends IGame {
 
 			// 加载物品
 
-			// 等待直到进度条到底
-			loading_TextView.setText("Loading...");
+			queueRunningInMainThread.add(() -> {
+				// 等待直到进度条到底
+				loading_TextView.setText("Loading...");
+				
+			});
 
 			waitingForLove = true;
 			sleeping = true;
@@ -183,10 +194,12 @@ public class CraftGame extends IGame {
 			sleeping = false;
 			waitingForLove = false;
 
-			loading_TextView.setText("Loaded successfully~");
+			queueRunningInMainThread.add(() -> {
+				loading_TextView.setText("Loaded successfully~");
 
-			// 换界面!
-			viewManager.setFadeinGui("main_menu.json", Faders.LINEAR.fader);
+				// 换界面!
+				viewManager.setFadeinGui("main_menu.json", Faders.LINEAR.fader);
+			});
 
 		}
 

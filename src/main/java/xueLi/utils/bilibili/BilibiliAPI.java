@@ -1,13 +1,12 @@
 package xueLi.utils.bilibili;
 
+import com.google.gson.Gson;
+import xueLi.utils.bilibili.gsonTemplate.TUpperRelation;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-
-import com.google.gson.Gson;
-
-import xueLi.utils.bilibili.gsonTemplate.TUpperRelation;
 
 public class BilibiliAPI {
 

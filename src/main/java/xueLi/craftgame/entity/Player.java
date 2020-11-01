@@ -1,7 +1,6 @@
 package xueLi.craftgame.entity;
 
 import org.lwjgl.glfw.GLFW;
-
 import xueLi.craftgame.block.Tile;
 import xueLi.craftgame.world.BlockPos;
 import xueLi.craftgame.world.World;

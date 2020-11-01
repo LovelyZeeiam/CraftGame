@@ -1,5 +1,8 @@
 package xueLi.gamengine.view;
 
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.*;
+import org.lwjgl.util.vector.Vector2f;
 import xueLi.gamengine.resource.GuiResource;
 import xueLi.gamengine.resource.Options;
 import xueLi.gamengine.utils.Display;
@@ -8,18 +11,11 @@ import xueLi.gamengine.utils.Logger;
 import xueLi.gamengine.utils.Shader;
 import xueLi.gamengine.view.GUIFader.Fader;
 
-import static org.lwjgl.nanovg.NanoVGGL3.*;
-
 import java.nio.IntBuffer;
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL13;
-import org.lwjgl.opengl.GL15;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
-import org.lwjgl.util.vector.Vector2f;
 
-import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.nanovg.NanoVG.nvgCreateFont;
+import static org.lwjgl.nanovg.NanoVG.nvgCreateImage;
+import static org.lwjgl.nanovg.NanoVGGL3.*;
 
 public class ViewManager {
 
@@ -155,7 +151,7 @@ public class ViewManager {
 	public void setFadeinGui(View gui, Fader fader) {
 		focusedWidget = null;
 		this.fadeInGui = gui;
-		if(this.fadeInGui != null) {
+		if (this.fadeInGui != null) {
 			this.fadeInGui.create();
 			this.fadeInGui.size();
 		}
@@ -273,16 +269,15 @@ public class ViewManager {
 
 	}
 
-	public void mouseClicked(int button) {
+	public void mouseClicked(int button,int action,double x, double y) {
 		focusedWidget = null;
 		if (currentGui != null) {
 			for (ViewWidget widget : currentGui.widgets.values()) {
 				if (display.getMouseX() > widget.real_x & display.getMouseX() < widget.real_x + widget.real_width
 						& display.getMouseY() > widget.real_y
 						& display.getMouseY() < widget.real_y + widget.real_height) {
-					widget.mouseClicked = true;
 					if (widget.onClickListener != null)
-						widget.onClickListener.onClick(button);
+						widget.onClickListener.onClick(button,action,x-widget.real_x,y-widget.real_y);
 					focusedWidget = widget;
 				}
 			}
