@@ -14,7 +14,7 @@
 			"type": "scroll_bar",
 			"pos": [
 				"win_width / 2 - 100.0 * scale",
-				"win_height / 2 - 100.0 - 10.0 * scale"
+				"win_height / 2 - 30.0 * scale"
 			]
 			,
 			"size": [
@@ -43,6 +43,43 @@
 					255
 				]
 				,
+				"width": 2
+			}
+		},
+		"textbox": {
+			"type": "textbox",
+			"pos": [
+				"win_width / 2 - 100.0 * scale",
+				"win_height / 2 + 30.0 * scale"
+			]
+		,
+			"size": [
+				"200.0 * scale",
+				"20.0 * scale"
+			]
+		,
+			"default_value": 0.30,
+			"background_color": [
+				12,
+				12,
+				12,
+				255
+			],
+			"text_color": [
+				255,
+				255,
+				255,
+				255
+			],
+			"text_size": "15.0 * scale",
+			"hint": "Hint!",
+			"outline": {
+				"color": [
+					114,
+					145,
+					233,
+					255
+				],
 				"width": 2
 			}
 		}

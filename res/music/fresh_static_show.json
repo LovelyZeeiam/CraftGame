@@ -1,0 +1,14 @@
+{
+  "format_version": 0,
+  "name": "Fresh Static Show",
+  "author": [ "Porter Robinson", "LovelyZeeiam" ],
+  "bpm": 110,
+  "data": [
+    {
+      "time": 20,
+      "type": "harp",
+      "note": 0
+    }
+
+  ]
+}
