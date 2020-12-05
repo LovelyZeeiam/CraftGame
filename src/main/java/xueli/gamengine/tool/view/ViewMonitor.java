@@ -40,6 +40,7 @@ public class ViewMonitor {
     private Display display;
     private GuiResource guiResource;
     private TextureManager textureManager;
+
     public ViewMonitor() {
         initialize();
     }
@@ -216,7 +217,6 @@ public class ViewMonitor {
                 guiResource = new GuiResource("res/", textureManager);
                 viewManager.setResourceSource(guiResource);
 
-                textureManager.preload();
                 textureManager.load();
 
                 langManager.setLang("zh-ch.lang");

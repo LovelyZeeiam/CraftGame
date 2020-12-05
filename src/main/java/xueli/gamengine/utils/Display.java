@@ -162,10 +162,10 @@ public class Display {
         this.keyCallback = keyCallback;
     }
 
-    public void setCharCallback(CharCallback charCallback){
+    public void setCharCallback(CharCallback charCallback) {
         if (!useGLFW)
             Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
-        glfwSetCharCallback(window,charCallback);
+        glfwSetCharCallback(window, charCallback);
         this.charCallback = charCallback;
     }
 

@@ -16,9 +16,8 @@ public abstract class ViewWidget implements AutoCloseable {
     protected NVGColor borderColor;
     protected int borderWidth;
     EvalableFloat x, y, width, height;
-    private WidgetAnimation currentAnimation = null;
-
     boolean isSelectedLastTime = false;
+    private WidgetAnimation currentAnimation = null;
 
     public ViewWidget(EvalableFloat x, EvalableFloat y, EvalableFloat width, EvalableFloat height) {
         this.x = x;

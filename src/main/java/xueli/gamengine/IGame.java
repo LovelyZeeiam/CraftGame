@@ -62,7 +62,6 @@ public abstract class IGame implements Runnable {
     protected void loadTexture() {
         viewManager = new ViewManager(display, options, shaderResource.get("gui"));
         textureManager = new TextureManager(resPath, viewManager);
-        textureManager.preload();
         textureManager.load();
 
     }
@@ -110,11 +109,11 @@ public abstract class IGame implements Runnable {
             @Override
             public void invoke(long window, int key, int scancode, int action, int mods) {
                 super.invoke(window, key, scancode, action, mods);
-                viewManager.keyAction(key,action,mods);
+                viewManager.keyAction(key, action, mods);
 
             }
         });
-        display.setCharCallback(new CharCallback(){
+        display.setCharCallback(new CharCallback() {
             @Override
             public void invoke(long window, int codepoint) {
                 viewManager.keyAction(codepoint);
@@ -187,7 +186,6 @@ public abstract class IGame implements Runnable {
         options.close();
         shaderResource.close();
         textureManager.close();
-        textureManager.release();
         guiResource.close();
 
     }

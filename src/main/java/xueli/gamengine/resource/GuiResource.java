@@ -403,7 +403,7 @@ public class GuiResource extends IResource {
 
                     break;
                 case "textbox":
-                	JsonElement outlineElement1 = widgetJsonObject.get("outline");
+                    JsonElement outlineElement1 = widgetJsonObject.get("outline");
                     if (outlineElement1 == null) {
                         Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": outline");
                         continue;
@@ -420,10 +420,10 @@ public class GuiResource extends IResource {
                                 "[GUI] Couldn't find param in 'outline' in " + nameString + " in " + filename + ": width");
                         continue;
                     }
-                    
+
                     NVGColor outlineColor1 = loadColor(outlineObject1.get("color").getAsJsonArray());
                     int outlineWidth1 = outlineObject1.get("width").getAsInt();
-                    
+
                     if (!widgetJsonObject.has("background_color")
                             || !widgetJsonObject.get("background_color").isJsonArray()) {
                         Logger.error("[GUI] Couldn't find array param in " + nameString + " in " + filename
@@ -431,12 +431,12 @@ public class GuiResource extends IResource {
                         continue;
                     }
                     NVGColor background_color1 = loadColor(widgetJsonObject.getAsJsonArray("background_color"));
-                    
+
                     String hint = null;
                     JsonElement hintElement = widgetJsonObject.get("hint");
-                    if(hintElement != null) {
-                    	hint = hintElement.getAsString();
-                    	
+                    if (hintElement != null) {
+                        hint = hintElement.getAsString();
+
                     }
 
                     // text_size
@@ -457,11 +457,11 @@ public class GuiResource extends IResource {
                         continue;
                     }
                     NVGColor textColor2 = loadColor(textColorJsonArray);
-                    
-                    GUITextBox textBox = new GUITextBox(widgetPosX, widgetPosY, widgetWidth, widgetHeight,background_color1, outlineColor1, outlineWidth1,textColor2,textSize1, hint);
-                	gui.widgets.put(nameString, textBox);
-                    
-                	break;
+
+                    GUITextBox textBox = new GUITextBox(widgetPosX, widgetPosY, widgetWidth, widgetHeight, background_color1, outlineColor1, outlineWidth1, textColor2, textSize1, hint);
+                    gui.widgets.put(nameString, textBox);
+
+                    break;
                 default:
                     break;
             }

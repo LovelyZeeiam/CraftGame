@@ -168,9 +168,9 @@ public class ViewManager {
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
 
             synchronized (currentGui) {
-            	currentGui.draw(nvg);
-            	
-			}
+                currentGui.draw(nvg);
+
+            }
 
             currentFrameBuffer.unbind();
 
@@ -273,7 +273,7 @@ public class ViewManager {
      * 鼠标监听
      */
     public void mouseClicked(int button, int action, double x, double y) {
-        if(focusedWidget != null)
+        if (focusedWidget != null)
             focusedWidget.isSelectedLastTime = false;
         focusedWidget = null;
         if (currentGui != null) {
@@ -294,15 +294,15 @@ public class ViewManager {
     /**
      * 键盘监听
      */
-    public void keyAction(int codepoint){
-        if(focusedWidget != null)
+    public void keyAction(int codepoint) {
+        if (focusedWidget != null)
             focusedWidget.keyDown(codepoint, KeyType.READABLE);
     }
 
     @KeyDesc
-    public void keyAction(int key,int action, int mods) {
-        if((action == GLFW_PRESS || action == GLFW_REPEAT) && (key >= 256 & key <= 261)) {
-            if(focusedWidget != null)
+    public void keyAction(int key, int action, int mods) {
+        if ((action == GLFW_PRESS || action == GLFW_REPEAT) && (key >= 256 & key <= 261)) {
+            if (focusedWidget != null)
                 focusedWidget.keyDown(key, KeyType.CONTROL);
         }
     }

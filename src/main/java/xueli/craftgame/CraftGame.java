@@ -1,6 +1,7 @@
 package xueli.craftgame;
 
 import org.lwjgl.glfw.GLFW;
+import xueli.craftgame.block.BlockResource;
 import xueli.gamengine.IGame;
 import xueli.gamengine.utils.TaskManager;
 import xueli.gamengine.view.GUIFader.Faders;
@@ -11,9 +12,10 @@ import xueli.gamengine.view.View;
 
 public class CraftGame extends IGame {
 
-    private static int width = 640, height = 480;
+    private static int width = 800, height = 600;
     public boolean inWorld = false;
     private WorldLogic worldLogic;
+
     public CraftGame() {
         super("res/");
 
@@ -21,15 +23,20 @@ public class CraftGame extends IGame {
 
     @Override
     protected void onCreate() {
+        // 游戏引擎本身的初始化
         initAll(width, height);
 
+        // 在另一个线程线程初始化在游戏加载时可以初始化的游戏资源
         GameLoader gameLoader = new GameLoader(this);
         Thread gameLoaderThread = new Thread(gameLoader);
 
+        // 显示窗口
         showDisplay();
 
+        // 游戏引擎里面的另一个线程，当有些需要在背景偷偷进行的task进入这里面的列表，就会悄悄在背后执行
         TaskManager.startListener();
 
+        // 启动游戏加载的线程
         gameLoaderThread.start();
 
     }
@@ -55,13 +62,23 @@ public class CraftGame extends IGame {
 
     @Override
     protected void onDrawFrame() {
-        if (inWorld) {
-            worldLogic.draw();
-        } else {
-            viewManager.draw();
-        }
+        try {
+            // 当在世界内部时，就渲染世界，否则就渲染游戏GUI
+            if (inWorld) {
+                worldLogic.draw();
+            } else {
+                viewManager.draw();
+            }
 
-        runQueueList();
+            // 有些任务只能在主线程做才不会出问题，这个方法会让主线程每次渲染时执行这个列表里面的一个方法，防止卡顿
+            runQueueList();
+
+        } catch (Exception e) {
+            // 有些时候可能会在开发过程中出exception，此时其它的线程仍然在运行，窗口还卡死着，就会让开发者束手无策
+            // 于是干脆出异常就将程序退出算了~
+            e.printStackTrace();
+            System.exit(-1);
+        }
 
     }
 
@@ -179,7 +196,7 @@ public class CraftGame extends IGame {
             resource.load(loading_TextView, loading_ProgressBar, 0.25f, 1.00f);
 
             // 加载物品
-            
+
 
             queueRunningInMainThread.add(() -> {
                 loading_TextView.setText("Loading...");
@@ -188,10 +205,10 @@ public class CraftGame extends IGame {
 
             waitingForLove = true;
             sleeping = true;
-            
+
             // 等待直到进度条到底
             loading_ProgressBar.waitUtilProgressFull();
-            
+
             sleeping = false;
             waitingForLove = false;
 
@@ -200,6 +217,7 @@ public class CraftGame extends IGame {
 
                 // 换界面!
                 viewManager.setFadeinGui("main_menu.json", Faders.LINEAR.fader);
+
             });
 
         }

@@ -1,11 +1,9 @@
-package xueli.craftgame;
+package xueli.craftgame.block;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import xueli.craftgame.block.BlockData;
-import xueli.craftgame.block.BlockType;
 import xueli.gamengine.resource.IResource;
 import xueli.gamengine.resource.LangManager;
 import xueli.gamengine.resource.TextureAtlas;

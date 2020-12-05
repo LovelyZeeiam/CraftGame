@@ -19,16 +19,18 @@ public class Player extends Entity {
     public float resistant = 0.0005f;
     public float sensivity = 0.05f;
 
-    public Player(float x, float y, float z) {
-        super(x, y, z);
+    public Player(float x, float y, float z, World world) {
+        super(x, y, z, world);
 
     }
-    public Player(float x, float y, float z, float rotX, float rotY, float rotZ) {
-        super(x, y, z, rotX, rotY, rotZ);
+
+    public Player(float x, float y, float z, float rotX, float rotY, float rotZ, World world) {
+        super(x, y, z, rotX, rotY, rotZ, world);
+
     }
 
     @Override
-    public void tick(World world) {
+    public void tick() {
         speed.x = speed.y = speed.z = 0;
 
         Display display = Display.currentDisplay;
@@ -75,11 +77,11 @@ public class Player extends Entity {
             }
         }
 
-        super.updatePos(world);
+        super.updatePos();
 
     }
 
-    public void pickTick(World world) {
+    public void pickTick() {
         block_select = null;
         MousePicker.ray(pos);
         for (float distance = 0; distance < 8; distance += 0.05f) {
@@ -94,7 +96,7 @@ public class Player extends Entity {
 
     @Override
     public float getSpeed() {
-        return 0.008f;
+        return 0.002f;
     }
 
 }

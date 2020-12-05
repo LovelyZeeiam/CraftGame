@@ -43,9 +43,7 @@ public class WorldLogic implements Runnable {
     public WorldLogic(CraftGame cg) {
         this.cg = cg;
 
-        /*
-         * 注册vao, vbo
-         */
+        // 注册vao, vbo
         vao = GL30.glGenVertexArrays();
         GL30.glBindVertexArray(vao);
 
@@ -73,17 +71,26 @@ public class WorldLogic implements Runnable {
         this.blockTextureAtlas = (TextureAtlas) cg.getTextureManager().getTexture("blocks");
         this.blockRenderShader = cg.getShaderResource().get("world");
 
+        // 创建新的世界
         world = new World(this);
-        player = new Player(8, 8, 8, 0, 135, 0);
+        // 安置新的玩家
+        player = new Player(8, 8, 8, 0, 135, 0, world);
 
     }
 
     public void closeLevel() {
+        // 非常草率的关闭世界
         world = null;
         player = null;
 
     }
 
+    /**
+     * 处理鼠标的移动
+     *
+     * @param dx 鼠标移动x坐标的位移
+     * @param dy 鼠标移动y标的位移
+     */
     public void mouseMove(double dx, double dy) {
         if (cg.getDisplay().mouseGrabbed) {
             player.pos.rotX -= dy * player.sensivity;
@@ -91,18 +98,21 @@ public class WorldLogic implements Runnable {
         }
     }
 
+    /**
+     * 这个是世界加载的时候会进行的工作
+     */
     @Override
     public void run() {
         GUIProgressBar world_loading_progressBar = (GUIProgressBar) (cg.getGuiResource()
                 .getGui("world_loading.json").widgets.get("loading_bar"));
 
-        world.preDraw(blockTextureAtlas, player, 10);
+        // 提前先生成好世界的顶点数据 防止第一次绘制的时候 CPU姬突然接收到那么多数据 由于无法按时完成生成任务而无奈的让显卡姬等一等
+        // 似乎在Windows系统上面没什么用 ubuntu还好
+        world.updateVertexBuffer(blockTextureAtlas, player, 10);
 
         world_loading_progressBar.setProgress(1.0f);
 
         cg.queueRunningInMainThread.add(this::size);
-
-        world.updateVertexBuffer(blockTextureAtlas, player, 10);
 
         world_loading_progressBar.waitUtilProgressFull();
 
@@ -120,6 +130,7 @@ public class WorldLogic implements Runnable {
             e.printStackTrace();
         }
 
+        // 转换画面到世界内部
         cg.inWorld = true;
 
     }
@@ -136,7 +147,8 @@ public class WorldLogic implements Runnable {
     }
 
     public void draw() {
-
+        // 检查这个按键是否被按下 使用keysOnce是因为只有在游戏在循环过程中第一次发现这个按键被按下时才会让对应的按键的布尔值变为true
+        // Nobody wanna see their mouse guichu~
         if (KeyCallback.keysOnce[GLFW.GLFW_KEY_ESCAPE]) {
             if (this.state == State.INGAME) {
                 cg.getDisplay().toggleMouseGrabbed();
@@ -155,11 +167,17 @@ public class WorldLogic implements Runnable {
 
         }
 
-        player.tick(world);
+        // 由于这是单纯的本地客户端 所以会有本地的玩家的按键处理
+        // 当做成可以多人游戏的版本的时候 这里就似乎得改一改了
+        player.tick();
+        // 生成玩家视角的视角矩阵
         playerMatrix = MatrixHelper.player(player.pos);
         MatrixHelper.calculateFrustumPlane();
-        player.pickTick(world);
 
+        // 玩家指针指向方块的更新
+        player.pickTick();
+
+        // 清空颜色
         GL11.glClearColor(0.7f, 0.8f, 1.0f, 1.0f);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glEnable(GL11.GL_CULL_FACE);
@@ -169,6 +187,7 @@ public class WorldLogic implements Runnable {
 
         GLHelper.checkGLError("World: Pre-render");
 
+        // 将内存地址映射 效率提高了
         mappedBuffer = GL15.glMapBuffer(GL15.GL_ARRAY_BUFFER, GL15.GL_WRITE_ONLY, mappedBuffer);
         if (mappedBuffer == null) {
             Logger.error(new Throwable("Buffer map error!"));
@@ -176,32 +195,42 @@ public class WorldLogic implements Runnable {
         mappedBuffer.clear();
         mappedBuffer.position(0);
 
+        // 得到世界的渲染顶点信息
         vertexCount = world.draw(blockTextureAtlas, player, mappedBuffer.asFloatBuffer(), 10);
 
+        // 将这一块内存变成读的状态 方便OpenGL娘的处理
         mappedBuffer.flip();
+
+        // 解除内存地址的映射 OpenGL娘就不会担心在处理时内存数据突然改变而引起的束手无策
         GL15.glUnmapBuffer(GL15.GL_ARRAY_BUFFER);
 
         GLHelper.checkGLError("World: Map Buffer");
 
+        // 将方块材质加入到OpenGL娘的首个材质槽里面
         blockTextureAtlas.bind();
         GLHelper.checkGLError("World: Bind Texture");
 
+        // 将着色器放到OpenGL娘的着色器槽里面
         blockRenderShader.use();
 
+        // 设置着色器娘的视角姬参数
         blockRenderShader.setUniformMatrix(blockRenderShader.getUnifromLocation("viewMatrix"), playerMatrix);
 
         GLHelper.checkGLError("World: Bind Shader");
 
+        // 让OpenGL娘去绘制叭~
         GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, vertexCount);
 
         GLHelper.checkGLError("World: Drawer");
 
+        // 接触绑定 (束缚 真)
         blockTextureAtlas.unbind();
         blockRenderShader.unbind();
 
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
         GL30.glBindVertexArray(0);
 
+        // 去除背面渲染
         GL11.glDisable(GL11.GL_CULL_FACE);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
 

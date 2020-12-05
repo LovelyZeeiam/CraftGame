@@ -133,23 +133,6 @@ public class World {
         }
     }
 
-    public void preDraw(TextureAtlas textureAtlas, Player player, int draw_distance) {
-        ChunkPos chunkPos = getChunkPosFromBlock((int) player.pos.x, (int) player.pos.z);
-
-        for (int x = chunkPos.getX() - draw_distance; x < chunkPos.getX() + draw_distance; x++) {
-            for (int z = chunkPos.getZ() - draw_distance; z < chunkPos.getZ() + draw_distance; z++) {
-                // long key = MathUtils.vert2ToLong(x, z);
-                Chunk chunk = getChunk(x, z);
-                if (chunk != null) {
-                    chunk.update(textureAtlas);
-
-                }
-
-            }
-        }
-
-    }
-
     public int draw(TextureAtlas textureAtlas, Player player, FloatBuffer drawData, int draw_distance) {
         ChunkPos chunkPos = getChunkPosFromBlock((int) player.pos.x, (int) player.pos.z);
 

@@ -75,7 +75,7 @@ public class IOUtils {
     public static String[] readLines(String path) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(path));
         ArrayList<String> lines = new ArrayList<>();
-        
+
         String line;
         while ((line = reader.readLine()) != null) {
             lines.add(new String(line.getBytes(), Charset.forName("UTF-8")));
@@ -83,9 +83,9 @@ public class IOUtils {
 
         String[] linesArray = new String[lines.size()];
         lines.toArray(linesArray);
-        
+
         reader.close();
-        
+
         return linesArray;
     }
 

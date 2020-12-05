@@ -1,6 +1,5 @@
 package xueli.craftgame.block;
 
-import xueli.craftgame.BlockResource;
 import xueli.craftgame.world.BlockPos;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.FloatList;

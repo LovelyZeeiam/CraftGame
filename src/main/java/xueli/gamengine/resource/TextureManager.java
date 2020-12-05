@@ -204,15 +204,8 @@ public class TextureManager implements Closeable {
 
     }
 
-    public void preload() {
-        JsonObject loadObject = textureJsonObject.get("preload").getAsJsonObject();
-        loadObject.entrySet().forEach(entry -> {
-            loadTexture(entry.getKey(), entry.getValue(), true);
-        });
-    }
-
     public void load() {
-        JsonObject loadObject = textureJsonObject.get("load").getAsJsonObject();
+        JsonObject loadObject = textureJsonObject.get("textures").getAsJsonObject();
         loadObject.entrySet().forEach(entry -> {
             JsonElement element = entry.getValue();
             String nameString = entry.getKey();
@@ -224,19 +217,15 @@ public class TextureManager implements Closeable {
         return textures.get(name);
     }
 
-    /**
-     * 会删除所有资源除了preload
-     */
     @Override
     public void close() {
+        for (Texture texture : textures.values()) {
+            // According to src of nanovg, when call 'nvgDelete' nanovg itself deletes all the texture registered using its method
+            if (!texture.isGUITexture) {
+                GL11.glDeleteTextures(texture.id);
 
-    }
-
-    /**
-     * 真正的删除所有资源
-     */
-    public void release() {
-
+            }
+        }
     }
 
 }

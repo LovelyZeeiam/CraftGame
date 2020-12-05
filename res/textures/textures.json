@@ -1,10 +1,6 @@
 {
-	"preload": {
-		"gui.splash": "textures/gui/splash.jpg"
-		
-	}, 
-	
-	"load": {
+	"textures": {
+		"gui.splash": "textures/gui/splash.jpg",
 		"gui.logo": "textures/gui/CraftGame.png",
 		"gui.background": {
 			"path": "textures/gui/options_background.png",
