@@ -13,6 +13,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Deprecated
 public class MusicJson {
 
     private static Gson gson = new Gson();

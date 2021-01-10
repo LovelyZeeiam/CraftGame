@@ -4,6 +4,7 @@ import org.lwjgl.glfw.GLFW;
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.world.BlockPos;
 import xueli.craftgame.world.World;
+import xueli.gamengine.physics.AABB;
 import xueli.gamengine.utils.Display;
 import xueli.gamengine.utils.MousePicker;
 import xueli.gamengine.utils.Time;
@@ -13,6 +14,7 @@ public class Player extends Entity {
 
     private static BlockPos block_select, last_block_select;
     private static long placeTimeCount;
+    private static AABB originAABB = new AABB(-0.5f, 0.5f, -1.5f, 0.2f, -0.5f, 0.5f);
     public int gamemode = 1;
     public int health = 20;
     public BlockPos blockPointed;
@@ -96,7 +98,12 @@ public class Player extends Entity {
 
     @Override
     public float getSpeed() {
-        return 0.002f;
+        return 0.004f;
+    }
+
+    @Override
+    public AABB getOriginAABB() {
+        return originAABB;
     }
 
 }

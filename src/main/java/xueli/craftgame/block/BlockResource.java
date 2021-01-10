@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import xueli.gamengine.physics.AABB;
 import xueli.gamengine.resource.IResource;
 import xueli.gamengine.resource.LangManager;
 import xueli.gamengine.resource.TextureAtlas;
@@ -96,7 +97,10 @@ public class BlockResource extends IResource {
                 textures[0] = textures[1] = textures[2] = textures[3] = textures[4] = textures[5] = textureID;
             }
 
-            BlockData blockData = new BlockData(name, blockType, destroyTime, textures);
+            ArrayList<AABB> aabbs = new ArrayList<AABB>();
+            aabbs.add(new AABB(0, 1, 0, 1, 0, 1));
+
+            BlockData blockData = new BlockData(name, blockType, destroyTime, textures, aabbs);
             blockDatas.put(namespace, blockData);
 
         } else {

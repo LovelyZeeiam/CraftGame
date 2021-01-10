@@ -36,9 +36,9 @@ public class GUIImageView extends ViewWidget {
         super.anim_tick();
         super.drawBorder(nvg);
 
-        nvgImagePattern(nvg, real_x, real_y, real_width, real_height, 0, textureID, 1, paint);
+        nvgImagePattern(nvg, x.getValue(), y.getValue(), width.getValue(), height.getValue(), 0, textureID, 1, paint);
         nvgBeginPath(nvg);
-        nvgRoundedRect(nvg, real_x, real_y, real_width, real_height, 0);
+        nvgRoundedRect(nvg, x.getValue(), y.getValue(), width.getValue(), height.getValue(), 0);
         nvgFillPaint(nvg, paint);
         nvgFill(nvg);
 

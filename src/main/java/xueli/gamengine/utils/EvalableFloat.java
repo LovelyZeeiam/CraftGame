@@ -4,8 +4,9 @@ import javax.script.ScriptException;
 
 public class EvalableFloat {
 
-    public String expression;
-    public float value = 0;
+    private String expression;
+    private boolean needEval = true;
+    private float value = 0;
 
     public EvalableFloat(String expressionString) {
         this.expression = expressionString;
@@ -13,7 +14,15 @@ public class EvalableFloat {
 
     }
 
-    public void eval() {
+    public void needEvalAgain() {
+        needEval = true;
+
+    }
+
+    private void eval() {
+        if (!needEval)
+            return;
+
         String newExpressionString = expression
                 .replaceAll("win_width", Float.valueOf(Display.currentDisplay.getWidth()).toString())
                 .replaceAll("win_height", Float.valueOf(Display.currentDisplay.getHeight()).toString())
@@ -24,6 +33,30 @@ public class EvalableFloat {
             e.printStackTrace();
         }
 
+        needEval = false;
+
     }
 
+    public String getExpression() {
+        return expression;
+    }
+
+    public void setExpression(String expression) {
+        this.expression = expression;
+        needEval = true;
+    }
+
+    public float getValue() {
+        if (needEval) eval();
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return "EvalableFloat{" +
+                "expression='" + expression + '\'' +
+                ", needEval=" + needEval +
+                ", value=" + value +
+                '}';
+    }
 }

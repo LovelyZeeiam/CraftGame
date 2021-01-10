@@ -9,6 +9,9 @@ import static org.lwjgl.nanovg.NanoVG.*;
 
 public class GUIButton extends ViewWidget {
 
+    private static final int NUMBER1 = 3;
+    private static final int NUMBER2 = 5;
+    private static final int NUMBER3 = 13;
     protected static NVGPaint paint;
     private static NVGColor BLACK_COLOR = NVGColor.create();
     private static NVGColor GREY_COLOR = NVGColor.create();
@@ -44,7 +47,7 @@ public class GUIButton extends ViewWidget {
         this.textColor = textColor;
 
         if (textSize != null) {
-            textSize.eval();
+            textSize.needEvalAgain();
         }
 
     }
@@ -57,38 +60,38 @@ public class GUIButton extends ViewWidget {
 
         // 边框
         nvgBeginPath(nvg);
-        nvgMoveTo(nvg, real_x, real_y);
-        nvgLineTo(nvg, real_x + real_width, real_y);
-        nvgLineTo(nvg, real_x + real_width, real_y + real_height);
-        nvgLineTo(nvg, real_x, real_y + real_height);
-        nvgLineTo(nvg, real_x, real_y);
+        nvgMoveTo(nvg, x.getValue(), y.getValue());
+        nvgLineTo(nvg, x.getValue() + width.getValue(), y.getValue());
+        nvgLineTo(nvg, x.getValue() + width.getValue(), y.getValue() + height.getValue());
+        nvgLineTo(nvg, x.getValue(), y.getValue() + height.getValue());
+        nvgLineTo(nvg, x.getValue(), y.getValue());
         nvgFillColor(nvg, BLACK_COLOR);
         nvgFill(nvg);
 
         nvgBeginPath(nvg);
-        nvgMoveTo(nvg, real_x + 3, real_y + 3);
-        nvgLineTo(nvg, real_x + real_width - 3, real_y + 3);
-        nvgLineTo(nvg, real_x + real_width - 3, real_y + real_height - 3);
-        nvgLineTo(nvg, real_x + 3, real_y + real_height - 3);
-        nvgLineTo(nvg, real_x + 3, real_y + 3);
+        nvgMoveTo(nvg, x.getValue() + NUMBER1, y.getValue() + NUMBER1);
+        nvgLineTo(nvg, x.getValue() + width.getValue() - NUMBER1, y.getValue() + NUMBER1);
+        nvgLineTo(nvg, x.getValue() + width.getValue() - NUMBER1, y.getValue() + height.getValue() - NUMBER1);
+        nvgLineTo(nvg, x.getValue() + NUMBER1, y.getValue() + height.getValue() - NUMBER1);
+        nvgLineTo(nvg, x.getValue() + NUMBER1, y.getValue() + NUMBER1);
         nvgFillColor(nvg, GREY_COLOR);
         nvgFill(nvg);
 
         nvgBeginPath(nvg);
-        nvgMoveTo(nvg, real_x + 5, real_y + 5);
-        nvgLineTo(nvg, real_x + real_width - 5, real_y + 5);
-        nvgLineTo(nvg, real_x + real_width - 5, real_y + real_height - 5);
-        nvgLineTo(nvg, real_x + 5, real_y + real_height - 5);
-        nvgLineTo(nvg, real_x + 5, real_y + 5);
+        nvgMoveTo(nvg, x.getValue() + NUMBER2, y.getValue() + NUMBER2);
+        nvgLineTo(nvg, x.getValue() + width.getValue() - NUMBER2, y.getValue() + NUMBER2);
+        nvgLineTo(nvg, x.getValue() + width.getValue() - NUMBER2, y.getValue() + height.getValue() - NUMBER2);
+        nvgLineTo(nvg, x.getValue() + NUMBER2, y.getValue() + height.getValue() - NUMBER2);
+        nvgLineTo(nvg, x.getValue() + NUMBER2, y.getValue() + NUMBER2);
         nvgFillColor(nvg, ANOTHER_GREY_Color);
         nvgFill(nvg);
 
         nvgBeginPath(nvg);
-        nvgMoveTo(nvg, real_x + real_width, real_y + real_height);
-        nvgLineTo(nvg, real_x, real_y + real_height);
-        nvgLineTo(nvg, real_x, real_y + real_height - 13);
-        nvgLineTo(nvg, real_x + real_width, real_y + real_height - 13);
-        nvgLineTo(nvg, real_x + real_width, real_y + real_height);
+        nvgMoveTo(nvg, x.getValue() + width.getValue(), y.getValue() + height.getValue());
+        nvgLineTo(nvg, x.getValue(), y.getValue() + height.getValue());
+        nvgLineTo(nvg, x.getValue(), y.getValue() + height.getValue() - NUMBER3);
+        nvgLineTo(nvg, x.getValue() + width.getValue(), y.getValue() + height.getValue() - NUMBER3);
+        nvgLineTo(nvg, x.getValue() + width.getValue(), y.getValue() + height.getValue());
         nvgFillColor(nvg, Darker_GREY_Color);
         nvgFill(nvg);
 
@@ -104,16 +107,16 @@ public class GUIButton extends ViewWidget {
 
         }
 
-        nvgFontSize(nvg, textSize.value);
+        nvgFontSize(nvg, textSize.getValue());
         nvgFontFace(nvg, "simhei");
         nvgTextAlign(nvg, NVG_ALIGN_CENTER);
-        nvgText(nvg, real_x + real_width / 2, real_y + real_height / 2 + textSize.value / 4, labelString);
+        nvgText(nvg, x.getValue() + width.getValue() / 2, y.getValue() + height.getValue() / 2 + textSize.getValue() / 4, labelString);
 
     }
 
     @Override
     public void size() {
-        textSize.eval();
+        textSize.needEvalAgain();
         super.size();
     }
 

@@ -31,6 +31,7 @@ public abstract class IGame implements Runnable {
     protected ViewManager viewManager;
     protected TextureManager textureManager;
     protected GuiResource guiResource;
+    protected DataResource dataResource;
     private String resPath;
 
     public IGame(String resPath) {
@@ -74,6 +75,11 @@ public abstract class IGame implements Runnable {
 
     }
 
+    protected void loadData() {
+        dataResource = new DataResource(resPath);
+
+    }
+
     protected void createDisplay(int width, int height) {
         display = new Display();
         display.setDefaultWindowHints();
@@ -84,7 +90,8 @@ public abstract class IGame implements Runnable {
         display.setSizedCallback(new DisplaySizedCallback() {
             @Override
             public void sized() {
-                viewManager.size();
+                if (viewManager != null)
+                    viewManager.size();
                 onSized();
 
             }
@@ -100,7 +107,8 @@ public abstract class IGame implements Runnable {
             @Override
             public void invoke(long window, int button, int action, int mods) {
                 super.invoke(window, button, action, mods);
-                viewManager.mouseClicked(button, action, display.getMouseX(), display.getMouseY());
+                if (viewManager != null)
+                    viewManager.mouseClicked(button, action, display.getMouseX(), display.getMouseY());
                 onMouseButton(button);
 
             }
@@ -109,14 +117,16 @@ public abstract class IGame implements Runnable {
             @Override
             public void invoke(long window, int key, int scancode, int action, int mods) {
                 super.invoke(window, key, scancode, action, mods);
-                viewManager.keyAction(key, action, mods);
+                if (viewManager != null)
+                    viewManager.keyAction(key, action, mods);
 
             }
         });
         display.setCharCallback(new CharCallback() {
             @Override
             public void invoke(long window, int codepoint) {
-                viewManager.keyAction(codepoint);
+                if (viewManager != null)
+                    viewManager.keyAction(codepoint);
 
             }
         });
@@ -174,6 +184,10 @@ public abstract class IGame implements Runnable {
         return guiResource;
     }
 
+    public DataResource getDataResource() {
+        return dataResource;
+    }
+
     public void runQueueList() {
         if (!queueRunningInMainThread.isEmpty())
             queueRunningInMainThread.poll().run();
@@ -183,10 +197,14 @@ public abstract class IGame implements Runnable {
     protected void releaseAll() {
         display.destroy();
         langManager.close();
-        options.close();
-        shaderResource.close();
-        textureManager.close();
-        guiResource.close();
+        if (options != null)
+            options.close();
+        if (shaderResource != null)
+            shaderResource.close();
+        if (textureManager != null)
+            textureManager.close();
+        if (guiResource != null)
+            guiResource.close();
 
     }
 

@@ -35,14 +35,14 @@ public class GUIScrollBar extends ViewWidget implements ViewWidget.OnClickListen
 
         // 边框
         nvgBeginPath(nvg);
-        nvgRect(nvg, real_x, real_y, real_width, real_height);
+        nvgRect(nvg, x.getValue(), y.getValue(), width.getValue(), height.getValue());
         nvgFillColor(nvg, GuiColor.BLACK);
         nvgFill(nvg);
 
         // 背景
         nvgBeginPath(nvg);
-        nvgRect(nvg, real_x + beside_width * scale, real_y + beside_width * scale,
-                real_width - 2 * beside_width * scale, real_height - 2 * beside_width * scale);
+        nvgRect(nvg, x.getValue() + beside_width * scale, y.getValue() + beside_width * scale,
+                width.getValue() - 2 * beside_width * scale, height.getValue() - 2 * beside_width * scale);
         nvgFillColor(nvg, background_color);
         nvgFill(nvg);
 
@@ -55,12 +55,12 @@ public class GUIScrollBar extends ViewWidget implements ViewWidget.OnClickListen
         }
 
         // 滑动块块的中心
-        float center_y = real_y + real_height / 2;
-        float center_x = real_x + scroll_bar_width * scale / 2 + (real_width - scroll_bar_width * scale) * value;
+        float center_y = y.getValue() + height.getValue() / 2;
+        float center_x = x.getValue() + scroll_bar_width * scale / 2 + (width.getValue() - scroll_bar_width * scale) * value;
 
         if (mouseDrag) {
-            float leftLimitX = real_x + scroll_bar_width * scale / 2;
-            float rightLimitX = real_x + scroll_bar_width * scale / 2 + (real_width - scroll_bar_width * scale);
+            float leftLimitX = x.getValue() + scroll_bar_width * scale / 2;
+            float rightLimitX = x.getValue() + scroll_bar_width * scale / 2 + (width.getValue() - scroll_bar_width * scale);
 
             float value = (Display.currentDisplay.getMouseX() - leftLimitX) / (rightLimitX - leftLimitX);
             this.value = Math.max(0.0f, value);
@@ -68,7 +68,7 @@ public class GUIScrollBar extends ViewWidget implements ViewWidget.OnClickListen
 
         }
 
-        float height = real_height + scroll_bar_height_plus * scale;
+        float height = this.height.getValue() + scroll_bar_height_plus * scale;
         float width = scroll_bar_width * scale;
         float x = center_x - scroll_bar_width * scale / 2;
         float y = center_y - height / 2;

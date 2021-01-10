@@ -1,6 +1,7 @@
 package xueli.gamengine.view;
 
 import xueli.gamengine.utils.Display;
+import xueli.gamengine.view.anim2d.Constant;
 
 import java.util.HashMap;
 
@@ -28,7 +29,8 @@ public class View {
 
     public void draw(long nvg) {
         if (this.currentAnimation != null) {
-            this.currentAnimation.tick(widgets);
+            if (this.currentAnimation.tick(widgets) == Constant.COMPONENT_CAN_BE_DISPOSED)
+                this.currentAnimation = null;
         }
         nvgBeginFrame(nvg, Display.currentDisplay.getWidth(), Display.currentDisplay.getHeight(),
                 Display.currentDisplay.getRatio());

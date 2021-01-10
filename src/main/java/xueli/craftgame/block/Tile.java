@@ -1,13 +1,14 @@
 package xueli.craftgame.block;
 
-import xueli.craftgame.world.BlockPos;
+import xueli.gamengine.physics.AABB;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.FloatList;
+
+import java.util.ArrayList;
 
 public class Tile {
 
     public BlockData data;
-    public BlockPos pos;
     private BlockListener listener;
 
     public Tile(String namespace) {
@@ -28,20 +29,12 @@ public class Tile {
         return listener;
     }
 
-    public int getX() {
-        return pos.getX();
-    }
-
-    public int getY() {
-        return pos.getY();
-    }
-
-    public int getZ() {
-        return pos.getZ();
-    }
-
     public int getDrawData(int x, int y, int z, byte face, TextureAtlas blockTextureAtlas, FloatList buffer) {
         return listener.getDrawData(buffer, this, x, y, z, face, blockTextureAtlas);
+    }
+
+    public ArrayList<AABB> getAabbs() {
+        return data.getAabbs();
     }
 
 }

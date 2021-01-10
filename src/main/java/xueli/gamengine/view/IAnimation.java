@@ -1,6 +1,7 @@
 package xueli.gamengine.view;
 
 import xueli.gamengine.utils.Time;
+import xueli.gamengine.view.anim2d.Constant;
 
 import java.util.HashMap;
 
@@ -22,18 +23,12 @@ public abstract class IAnimation {
         return a * (1f - f) + b * f;
     }
 
-    /**
-     * @return if animation ends, it will return true. Otherwise return false.
-     */
     public boolean tick(HashMap<String, ViewWidget> widgets) {
-        return true;
+        return Constant.COMPONENT_CAN_BE_DISPOSED;
     }
 
-    /**
-     * @return if animation ends, it will return true. Otherwise return false.
-     */
     public boolean tick(ViewWidget widget) {
-        return true;
+        return Constant.COMPONENT_CAN_BE_DISPOSED;
     }
 
 }

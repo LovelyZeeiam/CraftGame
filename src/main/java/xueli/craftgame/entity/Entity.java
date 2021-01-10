@@ -2,6 +2,7 @@ package xueli.craftgame.entity;
 
 import org.lwjgl.util.vector.Vector3f;
 import xueli.craftgame.world.World;
+import xueli.gamengine.physics.AABB;
 import xueli.gamengine.utils.Time;
 import xueli.gamengine.utils.Vector;
 
@@ -29,7 +30,7 @@ public abstract class Entity {
         Vector3f deltaPos = new Vector3f(speed.x * Time.deltaTime, speed.y * Time.deltaTime, speed.z * Time.deltaTime);
 
         if (doCollide()) {
-
+            world.getCollider().entityCollide(this, deltaPos);
 
         } else {
             pos.x += deltaPos.x;
@@ -47,5 +48,7 @@ public abstract class Entity {
     }
 
     public abstract float getSpeed();
+
+    public abstract AABB getOriginAABB();
 
 }

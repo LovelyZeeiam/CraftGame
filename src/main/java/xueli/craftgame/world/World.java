@@ -17,6 +17,8 @@ public class World {
     private ChunkGenerator chunkGenerator;
     private volatile HashMap<Long, Chunk> chunks = new HashMap<Long, Chunk>();
 
+    private CubeWorldCollider collider;
+
     public World(WorldLogic worldLogic) {
         this.worldLogic = worldLogic;
 
@@ -30,13 +32,19 @@ public class World {
             }
         }
 
+        collider = new CubeWorldCollider(this);
+
+    }
+
+    public CubeWorldCollider getCollider() {
+        return collider;
     }
 
     public Tile getBlock(int x, int y, int z) {
         ChunkPos cp = getChunkPosFromBlock(x, z);
 
-        int xInChunk = x - cp.getX() << Chunk.size_yiwei;
-        int zInChunk = z - cp.getZ() << Chunk.size_yiwei;
+        int xInChunk = x - (cp.getX() << Chunk.size_yiwei);
+        int zInChunk = z - (cp.getZ() << Chunk.size_yiwei);
 
         if (tempChunk == null || cp.getX() != tempChunk.chunkX || cp.getZ() != tempChunk.chunkZ) {
             long key = MathUtils.vert2ToLong(cp.getX(), cp.getZ());
@@ -158,6 +166,11 @@ public class World {
         // System.out.println(vertCount);
 
         return vertCount;
+    }
+
+    public void close() {
+
+
     }
 
 }

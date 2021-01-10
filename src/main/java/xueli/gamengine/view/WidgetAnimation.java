@@ -1,6 +1,8 @@
 package xueli.gamengine.view;
 
 import xueli.gamengine.utils.EvalableFloat;
+import xueli.gamengine.utils.Time;
+import xueli.gamengine.view.anim2d.Constant;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,58 +22,54 @@ public class WidgetAnimation extends IAnimation {
 
     @Override
     public boolean tick(ViewWidget widget) {
-        long delta_time = System.currentTimeMillis() - startTime;
+        long delta_time = Time.thisTime - startTime;
         if (delta_time > duration) {
-            if (stay) {
+            if (!stay) {
                 for (Map.Entry<String, EvalableFloat[]> e : parameters.entrySet()) {
                     switch (e.getKey()) {
                         case "width":
-                            widget.width.expression = e.getValue()[1].expression;
+                            widget.width.setExpression(e.getValue()[0].getExpression());
                             break;
                         case "height":
-                            widget.height.expression = e.getValue()[1].expression;
+                            widget.height.setExpression(e.getValue()[0].getExpression());
                             break;
                         case "x":
-                            widget.x.expression = e.getValue()[1].expression;
+                            widget.x.setExpression(e.getValue()[0].getExpression());
                             break;
                         case "y":
-                            widget.y.expression = e.getValue()[1].expression;
+                            widget.y.setExpression(e.getValue()[0].getExpression());
                             break;
                         default:
                             break;
                     }
                 }
             }
-            widget.size();
-            return true;
+            return Constant.COMPONENT_CAN_BE_DISPOSED;
         }
         for (Map.Entry<String, EvalableFloat[]> e : parameters.entrySet()) {
             EvalableFloat[] value = e.getValue();
-            // from
-            value[0].eval();
-            // to
-            value[1].eval();
 
-            float current_value = interpolate(value[0].value, value[1].value, (float) delta_time / duration);
+            String expression = String.format("(%s) + ((%s) - (%s)) * (1.0 - Math.cos((%f) * Math.PI)) / 2.0", value[0].getExpression(), value[1].getExpression(), value[0].getExpression(), (float) delta_time / duration);
+
             switch (e.getKey()) {
                 case "width":
-                    widget.real_width = current_value;
+                    widget.width.setExpression(expression);
                     break;
                 case "height":
-                    widget.real_height = current_value;
+                    widget.height.setExpression(expression);
                     break;
                 case "x":
-                    widget.real_x = current_value;
+                    widget.x.setExpression(expression);
                     break;
                 case "y":
-                    widget.real_y = current_value;
+                    widget.y.setExpression(expression);
                     break;
                 default:
                     break;
             }
 
         }
-        return false;
+        return Constant.COMPONENT_CANT_BE_DISPOSED_YET;
     }
 
 }

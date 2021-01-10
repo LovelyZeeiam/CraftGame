@@ -37,10 +37,10 @@ public class GUIProgressBar extends ViewWidget {
     }
 
     private void refreshRealProgressBar() {
-        real_progress_bar_x = real_x + progress_bar_width;
-        real_progress_bar_y = real_y + progress_bar_width;
-        real_progress_bar_width = real_width - (2 * progress_bar_width);
-        real_progress_bar_height = real_height - (2 * progress_bar_width);
+        real_progress_bar_x = x.getValue() + progress_bar_width;
+        real_progress_bar_y = y.getValue() + progress_bar_width;
+        real_progress_bar_width = width.getValue() - (2 * progress_bar_width);
+        real_progress_bar_height = height.getValue() - (2 * progress_bar_width);
 
     }
 
@@ -63,7 +63,7 @@ public class GUIProgressBar extends ViewWidget {
 
         // 进度条的背景
         nvgBeginPath(nvg);
-        nvgRect(nvg, real_x, real_y, real_width, real_height);
+        nvgRect(nvg, x.getValue(), y.getValue(), width.getValue(), height.getValue());
         nvgFillColor(nvg, backColor);
         nvgFill(nvg);
         // 蒸郑的进度条

@@ -38,4 +38,8 @@ public class Logger {
         throw new RuntimeException(throwable);
     }
 
+    public static void checkNullAndThrow(Object o, String message) {
+        if (o == null) error(new Exception(message));
+    }
+
 }

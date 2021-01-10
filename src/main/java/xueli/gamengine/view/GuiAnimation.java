@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import xueli.gamengine.utils.EvalableFloat;
 import xueli.gamengine.utils.Logger;
 import xueli.gamengine.utils.Time;
+import xueli.gamengine.view.anim2d.Constant;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,8 +51,8 @@ public class GuiAnimation extends IAnimation {
 
     private boolean tick() {
         if (Time.thisTime - startTime > duration)
-            return true;
-        return false;
+            return Constant.COMPONENT_CAN_BE_DISPOSED;
+        return Constant.COMPONENT_CANT_BE_DISPOSED_YET;
     }
 
     @Override
@@ -64,4 +65,14 @@ public class GuiAnimation extends IAnimation {
         return tick();
     }
 
+    @Override
+    public String toString() {
+        return "GuiAnimation{" +
+                "parameters=" + parameters +
+                ", duration=" + duration +
+                ", stay=" + stay +
+                ", widget=" + widget +
+                ", startTime=" + startTime +
+                '}';
+    }
 }

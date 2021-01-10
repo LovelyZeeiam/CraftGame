@@ -10,6 +10,7 @@ public class GUIBackground extends ViewWidget {
 
     private static NVGPaint paint = NVGPaint.create();
     private NVGColor backgroundColor = null;
+
     private int backgroundTexture = 0;
     private int texture_start_x, texture_start_y, texture_end_x, texture_end_y;
 
@@ -36,7 +37,7 @@ public class GUIBackground extends ViewWidget {
     @Override
     public void draw(long nvg) {
         nvgBeginPath(nvg);
-        nvgRect(nvg, 0, 0, real_width, real_height);
+        nvgRect(nvg, 0, 0, width.getValue(), height.getValue());
         if (this.backgroundColor != null)
             nvgFillColor(nvg, backgroundColor);
         if (this.backgroundTexture != 0) {

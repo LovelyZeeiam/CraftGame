@@ -5,13 +5,21 @@
  * For more details take a look at the Java Quickstart chapter in the Gradle
  * User Manual available at https://docs.gradle.org/6.0/userguide/tutorial_java_projects.html
  */
-
 plugins {
     // Apply the java plugin to add support for Java
     id 'java'
 
     // Apply the application plugin to add support for building a CLI application.
     id 'application'
+
+}
+
+application {
+    // Define the main class for the application.
+    apply plugin: 'application'
+
+    mainClassName = 'xueli.craftgame.Main'
+
 }
 
 tasks.withType(JavaCompile) {
@@ -21,22 +29,24 @@ tasks.withType(JavaCompile) {
 repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
-    
+
+    maven { url "https://maven.aliyun.com/repository/central" }
     maven { url "https://maven.aliyun.com/repository/jcenter" }
- 	mavenCentral()
-    
+
+    mavenCentral()
+
     jcenter()
+
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     
 }
 
 dependencies {
     compile fileTree(dir:'libs/',include:['*.jar'])
 	
-    // This dependency is used by the application.
     //implementation 'com.google.guava:guava:28.0-jre'
     implementation 'com.google.code.gson:gson:2.6.2'
-    // https://mvnrepository.com/artifact/commons-io/commons-io
 	compile group: 'commons-io', name: 'commons-io', version: '2.8.0'
 
     compile group: 'org.mozilla', name: 'rhino', version: '1.7.13'
@@ -71,20 +81,11 @@ dependencies {
     compile group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-linux'
     compile group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-macos'
 
-    // https://mvnrepository.com/artifact/org.lwjglx/lwjgl3-awt
     compile group: 'org.lwjgl', name: 'lwjgl-jawt', version: '3.2.3'
     //compile group: 'org.lwjglx', name: 'lwjgl3-awt', version: '0.1.6'
 
-    // https://mvnrepository.com/artifact/slick-util/slick-util
     compile group: 'slick-util', name: 'slick-util', version: '1.0.0'
 
-
-}
-
-application {
-    // Define the main class for the application.
-    apply plugin: 'application'
-    mainClassName = 'xueli.craftgame.Main'
 
 }
 

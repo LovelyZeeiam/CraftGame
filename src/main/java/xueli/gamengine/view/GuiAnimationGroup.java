@@ -1,5 +1,7 @@
 package xueli.gamengine.view;
 
+import xueli.gamengine.view.anim2d.Constant;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -41,9 +43,9 @@ public class GuiAnimationGroup extends IAnimation {
     @Override
     public boolean tick(HashMap<String, ViewWidget> widgets) {
         boolean flag = false;
-        if (this.currentAnimation == null)
+        if (this.currentAnimation != null)
             flag = this.currentAnimation.tick(widgets);
-        if (flag) {
+        if (flag == Constant.COMPONENT_CAN_BE_DISPOSED) {
             // 介个动画结束辽 上下一个
             ++this.anim_count;
             try {
@@ -51,15 +53,14 @@ public class GuiAnimationGroup extends IAnimation {
             } catch (IndexOutOfBoundsException e) {
                 if (loop) {
                     this.start(widgets, widget);
-                    return false;
+                    return Constant.COMPONENT_CANT_BE_DISPOSED_YET;
                 } else {
-                    return true;
+                    return Constant.COMPONENT_CAN_BE_DISPOSED;
                 }
             }
             this.currentAnimation.start(ctxView.widgets, widget);
-
         }
-        return false;
+        return Constant.COMPONENT_CANT_BE_DISPOSED_YET;
     }
 
 }

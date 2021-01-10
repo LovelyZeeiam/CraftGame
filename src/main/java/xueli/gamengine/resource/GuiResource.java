@@ -31,6 +31,41 @@ public class GuiResource extends IResource {
 
     }
 
+    public static int getAlign(JsonArray alignElement) {
+        JsonArray alignArray = alignElement.getAsJsonArray();
+        int align = 0;
+        for (JsonElement each : alignArray) {
+            switch (each.getAsString()) {
+                case "right":
+                    align |= NanoVG.NVG_ALIGN_RIGHT;
+                    break;
+                case "top":
+                    align |= NanoVG.NVG_ALIGN_TOP;
+                    break;
+                case "bottom":
+                    align |= NanoVG.NVG_ALIGN_BOTTOM;
+                    break;
+                case "center":
+                    align |= NanoVG.NVG_ALIGN_CENTER;
+                    break;
+                case "middle":
+                    align |= NanoVG.NVG_ALIGN_MIDDLE;
+                    break;
+                default: // include when "left"
+                    align |= NanoVG.NVG_ALIGN_LEFT;
+                    break;
+            }
+        }
+        return align;
+    }
+
+    public static NVGColor loadColor(JsonArray colorArray) {
+        NVGColor backgroundColor = NVGColor.create();
+        NanoVG.nvgRGBA(colorArray.get(0).getAsByte(), colorArray.get(1).getAsByte(), colorArray.get(2).getAsByte(),
+                colorArray.get(3).getAsByte(), backgroundColor);
+        return backgroundColor;
+    }
+
     public void loadGui(LangManager langManager) {
         ArrayList<File> guiFiles = findAllFiles(new File(real_path));
         guiFiles.forEach(file -> loadGui(file.getName(), langManager, false));
@@ -77,13 +112,6 @@ public class GuiResource extends IResource {
 
     }
 
-    private NVGColor loadColor(JsonArray colorArray) {
-        NVGColor backgroundColor = NVGColor.create();
-        NanoVG.nvgRGBA(colorArray.get(0).getAsByte(), colorArray.get(1).getAsByte(), colorArray.get(2).getAsByte(),
-                colorArray.get(3).getAsByte(), backgroundColor);
-        return backgroundColor;
-    }
-
     public View loadGui(String filename, LangManager langManager, boolean reloadEnable) {
         if (guisHashMap.containsKey(filename))
             if (!reloadEnable)
@@ -92,7 +120,8 @@ public class GuiResource extends IResource {
         try {
             jsonObject = gson.fromJson(new FileReader(real_path + filename), JsonObject.class);
         } catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
-            e.printStackTrace();
+            Logger.error("Read gui error: " + e.getMessage());
+            return null;
         }
         JsonElement subtitleElement = jsonObject.get("subtitle");
         String subtitleString = subtitleElement.isJsonNull() ? null : subtitleElement.getAsString();
@@ -310,33 +339,7 @@ public class GuiResource extends IResource {
 
                     // align
                     JsonElement alignElement = widgetJsonObject.get("align");
-                    int align = 0;
-                    if (alignElement != null) {
-                        JsonArray alignArray = alignElement.getAsJsonArray();
-                        for (JsonElement each : alignArray) {
-                            switch (each.getAsString()) {
-                                case "right":
-                                    align |= NanoVG.NVG_ALIGN_RIGHT;
-                                    break;
-                                case "top":
-                                    align |= NanoVG.NVG_ALIGN_TOP;
-                                    break;
-                                case "bottom":
-                                    align |= NanoVG.NVG_ALIGN_BOTTOM;
-                                    break;
-                                case "center":
-                                    align |= NanoVG.NVG_ALIGN_CENTER;
-                                    break;
-                                case "middle":
-                                    align |= NanoVG.NVG_ALIGN_MIDDLE;
-                                    break;
-                                default: // include when "left"
-                                    align |= NanoVG.NVG_ALIGN_LEFT;
-                                    break;
-                            }
-                        }
-                    } else
-                        align = NanoVG.NVG_ALIGN_LEFT;
+                    int align = alignElement == null ? NanoVG.NVG_ALIGN_LEFT : getAlign(alignElement.getAsJsonArray());
 
                     if (!isRandomText) {
                         GUITextView textView = new GUITextView(widgetPosX, widgetPosY, widgetWidth, widgetHeight, textSize1,

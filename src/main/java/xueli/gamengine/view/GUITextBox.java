@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import static org.lwjgl.nanovg.NanoVG.*;
 
+@Deprecated
 public class GUITextBox extends ViewWidget {
 
     private static final int in_border = 2;
@@ -52,12 +53,12 @@ public class GUITextBox extends ViewWidget {
         this.nvg = nvg;
 
         nvgBeginPath(nvg);
-        nvgRect(nvg, real_x, real_y, real_width, real_height);
+        nvgRect(nvg, x.getValue(), y.getValue(), width.getValue(), this.height.getValue());
         nvgFillColor(nvg, GuiColor.BLACK);
         nvgFill(nvg);
 
         nvgBeginPath(nvg);
-        nvgRect(nvg, real_x + in_border, real_y + in_border, real_width - 2 * in_border, real_height - 2 * in_border);
+        nvgRect(nvg, x.getValue() + in_border, y.getValue() + in_border, width.getValue() - 2 * in_border, this.height.getValue() - 2 * in_border);
         nvgFillColor(nvg, backgroundColor);
         nvgFill(nvg);
 
@@ -67,21 +68,21 @@ public class GUITextBox extends ViewWidget {
         }
 
         nvgSave(nvg);
-        nvgScissor(nvg, real_x, real_y, real_width, real_height);
+        nvgScissor(nvg, x.getValue(), y.getValue(), width.getValue(), this.height.getValue());
 
-        nvgFontSize(nvg, textSize.value);
+        nvgFontSize(nvg, textSize.getValue());
         nvgFontFace(nvg, "simhei");
         nvgTextAlign(nvg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
         nvgFillColor(nvg, textColor);
-        nvgText(nvg, real_x + in_border - offset_x, real_y + real_height / 2 + font_offset, text);
+        nvgText(nvg, x.getValue() + in_border - offset_x, y.getValue() + this.height.getValue() / 2 + font_offset, text);
 
         nvgTextMetrics(nvg, null, null, line_height);
 
         if (this.isSelectedLastTime) {
             // 文本框光标
             nvgBeginPath(nvg);
-            nvgMoveTo(nvg, lettersPos[pointer], real_y + in_border);
-            nvgRect(nvg, lettersPos[pointer] - offset_x, real_y + in_border, pointer_width, real_height - 2 * in_border);
+            nvgMoveTo(nvg, lettersPos[pointer], y.getValue() + in_border);
+            nvgRect(nvg, lettersPos[pointer] - offset_x, y.getValue() + in_border, pointer_width, this.height.getValue() - 2 * in_border);
             nvgFillColor(nvg, GuiColor.YELLOW);
             nvgFill(nvg);
 
@@ -126,13 +127,13 @@ public class GUITextBox extends ViewWidget {
         lettersPos = new float[text.length() + 1];
         NVGGlyphPosition.Buffer letterPosBuffer = NVGGlyphPosition.malloc(text.length());
 
-        nvgFontSize(nvg, textSize.value);
+        nvgFontSize(nvg, textSize.getValue());
         nvgFontFace(nvg, "simhei");
         nvgTextAlign(nvg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
-        nvgTextGlyphPositions(nvg, real_x + in_border - offset_x, real_y, text, letterPosBuffer);
+        nvgTextGlyphPositions(nvg, x.getValue() + in_border - offset_x, y.getValue(), text, letterPosBuffer);
 
         List<NVGGlyphPosition> nvgGlyphPositions = letterPosBuffer.stream().collect(Collectors.toList());
-        lettersPos[0] = real_x + in_border;
+        lettersPos[0] = x.getValue() + in_border;
         for (int i = 0; i < nvgGlyphPositions.size(); i++) {
             lettersPos[i + 1] = nvgGlyphPositions.get(i).maxx();
 

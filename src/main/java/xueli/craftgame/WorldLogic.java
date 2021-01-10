@@ -79,6 +79,8 @@ public class WorldLogic implements Runnable {
     }
 
     public void closeLevel() {
+        world.close();
+
         // 非常草率的关闭世界
         world = null;
         player = null;

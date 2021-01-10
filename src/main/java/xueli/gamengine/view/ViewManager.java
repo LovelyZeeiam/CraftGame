@@ -278,11 +278,11 @@ public class ViewManager {
         focusedWidget = null;
         if (currentGui != null) {
             for (ViewWidget widget : currentGui.widgets.values()) {
-                if (display.getMouseX() > widget.real_x & display.getMouseX() < widget.real_x + widget.real_width
-                        & display.getMouseY() > widget.real_y
-                        & display.getMouseY() < widget.real_y + widget.real_height) {
+                if (display.getMouseX() > widget.x.getValue() & display.getMouseX() < widget.x.getValue() + widget.width.getValue()
+                        & display.getMouseY() > widget.y.getValue()
+                        & display.getMouseY() < widget.y.getValue() + widget.height.getValue()) {
                     if (widget.onClickListener != null)
-                        widget.onClickListener.onClick(button, action, x - widget.real_x, y - widget.real_y);
+                        widget.onClickListener.onClick(button, action, x - widget.x.getValue(), y - widget.y.getValue());
                     focusedWidget = widget;
                     widget.isSelectedLastTime = true;
                 }
