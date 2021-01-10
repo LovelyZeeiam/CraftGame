@@ -11,9 +11,10 @@
 			"block.dirt": "textures/blocks/dirt.png",
 			"block.grass.side": "textures/blocks/grass_block_side.png",
 			"block.grass.top": "textures/blocks/grass_block_top.png",
-			"block.stone": "textures/blocks/stone.png"
-			
-			
+			"block.stone": "textures/blocks/stone.png",
+			"block.oak_log.side": "textures/blocks/oak_log.png",
+			"block.oak_log.top": "textures/blocks/oak_log_top.png"
+
 		}
 		
 		

@@ -1,0 +1,20 @@
+{
+  "namespace": "craftgame:oak_log",
+  "name": "#tile.oak_log.name",
+  "block": {
+    "type": "Nature",
+
+    "destroyTime": 2000,
+
+    "texture": {
+      "front": "block.oak_log.side",
+      "back": "block.oak_log.side",
+      "left": "block.oak_log.side",
+      "right": "block.oak_log.side",
+      "top": "block.oak_log.top",
+      "bottom": "block.oak_log.top"
+    }
+
+  }
+
+}

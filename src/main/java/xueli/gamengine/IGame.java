@@ -1,235 +1,244 @@
 package xueli.gamengine;
 
-import org.lwjgl.glfw.GLFW;
-import org.lwjgl.opengl.GL11;
-import xueli.gamengine.resource.*;
-import xueli.gamengine.utils.Display;
-import xueli.gamengine.utils.callbacks.*;
-import xueli.gamengine.view.ViewManager;
-
 import java.util.LinkedList;
 import java.util.Queue;
 
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.opengl.GL11;
+
+import xueli.gamengine.resource.DataResource;
+import xueli.gamengine.resource.GuiResource;
+import xueli.gamengine.resource.LangManager;
+import xueli.gamengine.resource.Options;
+import xueli.gamengine.resource.ShaderResource;
+import xueli.gamengine.resource.TextureManager;
+import xueli.gamengine.utils.Display;
+import xueli.gamengine.utils.callbacks.CharCallback;
+import xueli.gamengine.utils.callbacks.CursorPosCallback;
+import xueli.gamengine.utils.callbacks.DisplaySizedCallback;
+import xueli.gamengine.utils.callbacks.KeyCallback;
+import xueli.gamengine.utils.callbacks.MouseButtonCallback;
+import xueli.gamengine.view.ViewManager;
+
 public abstract class IGame implements Runnable {
 
-    static {
-        try {
-            Class.forName("org.lwjgl.system.Library");
-            Class.forName("org.lwjgl.nanovg.LibNanoVG");
-            Class.forName("org.lwjgl.stb.LibSTB");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+	static {
+		try {
+			Class.forName("org.lwjgl.system.Library");
+			Class.forName("org.lwjgl.nanovg.LibNanoVG");
+			Class.forName("org.lwjgl.stb.LibSTB");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 
-    public Queue<Runnable> queueRunningInMainThread = new LinkedList<Runnable>();
-    protected LangManager langManager;
-    protected String game_name;
-    protected Options options;
-    protected Display display;
-    protected ShaderResource shaderResource;
-    protected ViewManager viewManager;
-    protected TextureManager textureManager;
-    protected GuiResource guiResource;
-    protected DataResource dataResource;
-    private String resPath;
+	public Queue<Runnable> queueRunningInMainThread = new LinkedList<Runnable>();
+	protected LangManager langManager;
+	protected String game_name;
+	protected Options options;
+	protected Display display;
+	protected ShaderResource shaderResource;
+	protected ViewManager viewManager;
+	protected TextureManager textureManager;
+	protected GuiResource guiResource;
+	protected DataResource dataResource;
+	private String resPath;
 
-    public IGame(String resPath) {
-        this.resPath = resPath;
+	public IGame(String resPath) {
+		this.resPath = resPath;
 
-    }
+	}
 
-    protected void loadLang() {
-        langManager = new LangManager(resPath);
-        langManager.loadLang();
-        langManager.setLang("zh-ch.lang");
+	protected void loadLang() {
+		langManager = new LangManager(resPath);
+		langManager.loadLang();
+		langManager.setLang("zh-ch.lang");
 
-        game_name = langManager.getStringFromLangMap("#game.name");
+		game_name = langManager.getStringFromLangMap("#game.name");
 
-    }
+	}
 
-    protected void loadOptions() {
-        options = new Options(resPath);
-        options.load();
+	protected void loadOptions() {
+		options = new Options(resPath);
+		options.load();
 
-    }
+	}
 
-    protected void loadShader() {
-        shaderResource = new ShaderResource(resPath);
-        shaderResource.load();
+	protected void loadShader() {
+		shaderResource = new ShaderResource(resPath);
+		shaderResource.load();
 
-    }
+	}
 
-    protected void loadTexture() {
-        viewManager = new ViewManager(display, options, shaderResource.get("gui"));
-        textureManager = new TextureManager(resPath, viewManager);
-        textureManager.load();
+	protected void loadTexture() {
+		viewManager = new ViewManager(display, options, shaderResource.get("gui"));
+		textureManager = new TextureManager(resPath, viewManager);
+		textureManager.load();
 
-    }
+	}
 
-    protected void loadGui() {
-        guiResource = new GuiResource(resPath, textureManager);
-        guiResource.loadGui("game_loading.json", langManager, false);
-        viewManager.setResourceSource(guiResource);
-        viewManager.setFont("Minecraft.ttf");
+	protected void loadGui() {
+		guiResource = new GuiResource(resPath, textureManager);
+		guiResource.loadGui("game_loading.json", langManager, false);
+		viewManager.setResourceSource(guiResource);
+		viewManager.setFont("Minecraft.ttf");
 
-    }
+	}
 
-    protected void loadData() {
-        dataResource = new DataResource(resPath);
+	protected void loadData() {
+		dataResource = new DataResource(resPath);
 
-    }
+	}
 
-    protected void createDisplay(int width, int height) {
-        display = new Display();
-        display.setDefaultWindowHints();
-        display.setResizable(GLFW.GLFW_TRUE);
-        display.create(width, height, game_name);
-        display.setIcon(resPath);
+	protected void createDisplay(int width, int height) {
+		display = new Display();
+		display.setDefaultWindowHints();
+		display.setResizable(GLFW.GLFW_TRUE);
+		display.create(width, height, game_name);
+		display.setIcon(resPath);
 
-        display.setSizedCallback(new DisplaySizedCallback() {
-            @Override
-            public void sized() {
-                if (viewManager != null)
-                    viewManager.size();
-                onSized();
+		display.setSizedCallback(new DisplaySizedCallback() {
+			@Override
+			public void sized() {
+				if (viewManager != null)
+					viewManager.size();
+				onSized();
 
-            }
-        });
-        display.setCursorPosCallback(new CursorPosCallback() {
-            @Override
-            public void invoke() {
-                onCursorPos(mouseDX, mouseDY);
+			}
+		});
+		display.setCursorPosCallback(new CursorPosCallback() {
+			@Override
+			public void invoke() {
+				onCursorPos(mouseDX, mouseDY);
 
-            }
-        });
-        display.setMouseButtonCallback(new MouseButtonCallback() {
-            @Override
-            public void invoke(long window, int button, int action, int mods) {
-                super.invoke(window, button, action, mods);
-                if (viewManager != null)
-                    viewManager.mouseClicked(button, action, display.getMouseX(), display.getMouseY());
-                onMouseButton(button);
+			}
+		});
+		display.setMouseButtonCallback(new MouseButtonCallback() {
+			@Override
+			public void invoke(long window, int button, int action, int mods) {
+				super.invoke(window, button, action, mods);
+				if (viewManager != null)
+					viewManager.mouseClicked(button, action, display.getMouseX(), display.getMouseY());
+				onMouseButton(button);
 
-            }
-        });
-        display.setKeyboardCallback(new KeyCallback() {
-            @Override
-            public void invoke(long window, int key, int scancode, int action, int mods) {
-                super.invoke(window, key, scancode, action, mods);
-                if (viewManager != null)
-                    viewManager.keyAction(key, action, mods);
+			}
+		});
+		display.setKeyboardCallback(new KeyCallback() {
+			@Override
+			public void invoke(long window, int key, int scancode, int action, int mods) {
+				super.invoke(window, key, scancode, action, mods);
+				if (viewManager != null)
+					viewManager.keyAction(key, action, mods);
 
-            }
-        });
-        display.setCharCallback(new CharCallback() {
-            @Override
-            public void invoke(long window, int codepoint) {
-                if (viewManager != null)
-                    viewManager.keyAction(codepoint);
+			}
+		});
+		display.setCharCallback(new CharCallback() {
+			@Override
+			public void invoke(long window, int codepoint) {
+				if (viewManager != null)
+					viewManager.keyAction(codepoint);
 
-            }
-        });
+			}
+		});
 
+	}
 
-    }
+	protected void showDisplay() {
+		display.showWindow();
 
-    protected void showDisplay() {
-        display.showWindow();
+	}
 
-    }
+	protected void initAll(int width, int height) {
+		loadLang();
+		loadOptions();
+		createDisplay(width, height);
+		loadShader();
+		loadTexture();
+		loadGui();
 
-    protected void initAll(int width, int height) {
-        loadLang();
-        loadOptions();
-        createDisplay(width, height);
-        loadShader();
-        loadTexture();
-        loadGui();
+		// For Linux
+		display.getSizedCallback().invoke(0, width, height);
 
-        // For Linux
-        display.getSizedCallback().invoke(0, width, height);
+	}
 
-    }
+	public LangManager getLangManager() {
+		return langManager;
+	}
 
-    public LangManager getLangManager() {
-        return langManager;
-    }
+	public String getGame_name() {
+		return game_name;
+	}
 
-    public String getGame_name() {
-        return game_name;
-    }
+	public Options getOptions() {
+		return options;
+	}
 
-    public Options getOptions() {
-        return options;
-    }
+	public Display getDisplay() {
+		return display;
+	}
 
-    public Display getDisplay() {
-        return display;
-    }
+	public ShaderResource getShaderResource() {
+		return shaderResource;
+	}
 
-    public ShaderResource getShaderResource() {
-        return shaderResource;
-    }
+	public ViewManager getViewManager() {
+		return viewManager;
+	}
 
-    public ViewManager getViewManager() {
-        return viewManager;
-    }
+	public TextureManager getTextureManager() {
+		return textureManager;
+	}
 
-    public TextureManager getTextureManager() {
-        return textureManager;
-    }
+	public GuiResource getGuiResource() {
+		return guiResource;
+	}
 
-    public GuiResource getGuiResource() {
-        return guiResource;
-    }
+	public DataResource getDataResource() {
+		return dataResource;
+	}
 
-    public DataResource getDataResource() {
-        return dataResource;
-    }
+	public void runQueueList() {
+		if (!queueRunningInMainThread.isEmpty())
+			queueRunningInMainThread.poll().run();
 
-    public void runQueueList() {
-        if (!queueRunningInMainThread.isEmpty())
-            queueRunningInMainThread.poll().run();
+	}
 
-    }
+	protected void releaseAll() {
+		display.destroy();
+		langManager.close();
+		if (options != null)
+			options.close();
+		if (shaderResource != null)
+			shaderResource.close();
+		if (textureManager != null)
+			textureManager.close();
+		if (guiResource != null)
+			guiResource.close();
 
-    protected void releaseAll() {
-        display.destroy();
-        langManager.close();
-        if (options != null)
-            options.close();
-        if (shaderResource != null)
-            shaderResource.close();
-        if (textureManager != null)
-            textureManager.close();
-        if (guiResource != null)
-            guiResource.close();
+	}
 
-    }
+	@Override
+	public void run() {
+		onCreate();
+		while (display.running) {
+			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+			onDrawFrame();
+			display.update();
+		}
+		onExit();
 
-    @Override
-    public void run() {
-        onCreate();
-        while (display.running) {
-            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-            onDrawFrame();
-            display.update();
-        }
-        onExit();
+	}
 
-    }
+	protected abstract void onCreate();
 
-    protected abstract void onCreate();
+	protected abstract void onSized();
 
-    protected abstract void onSized();
+	protected abstract void onCursorPos(double dx, double dy);
 
-    protected abstract void onCursorPos(double dx, double dy);
+	protected abstract void onMouseButton(int button);
 
-    protected abstract void onMouseButton(int button);
+	protected abstract void onDrawFrame();
 
-    protected abstract void onDrawFrame();
-
-    protected abstract void onExit();
+	protected abstract void onExit();
 
 }

@@ -2,6 +2,6 @@ package xueli.craftgame.block;
 
 public enum BlockType {
 
-    Nature, Cave, Build
+	Nature, Cave, Build
 
 }
