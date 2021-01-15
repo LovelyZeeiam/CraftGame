@@ -38,6 +38,14 @@ public class BlockResource extends IResource {
 
 	}
 
+	public BlockResource(String pathString, LangManager lang) {
+		super(pathString);
+		this.real_path = pathString + "blocks/";
+
+		this.langManager = lang;
+
+	}
+
 	private void load(File file) {
 		JsonObject jsonObject = null;
 		try {
@@ -71,32 +79,36 @@ public class BlockResource extends IResource {
 			}
 			int destroyTime = blockJsonObject.get("destroyTime").getAsInt();
 
-			if (!blockJsonObject.has("texture")) {
-				Logger.error("[Block] Can't read param of block in " + file.getName() + ": texture");
-				return;
-			}
-			JsonElement blockTexture = blockJsonObject.get("texture");
 			Vector2s[] textures = new Vector2s[6];
-			if (blockTexture.isJsonObject()) {
-				JsonObject textureObject = blockTexture.getAsJsonObject();
-				textures[0] = ((TextureAtlas) textureManager.getTexture("blocks"))
-						.getAtlasID(textureObject.get("front").getAsString());
-				textures[1] = ((TextureAtlas) textureManager.getTexture("blocks"))
-						.getAtlasID(textureObject.get("back").getAsString());
-				textures[2] = ((TextureAtlas) textureManager.getTexture("blocks"))
-						.getAtlasID(textureObject.get("left").getAsString());
-				textures[3] = ((TextureAtlas) textureManager.getTexture("blocks"))
-						.getAtlasID(textureObject.get("right").getAsString());
-				textures[4] = ((TextureAtlas) textureManager.getTexture("blocks"))
-						.getAtlasID(textureObject.get("top").getAsString());
-				textures[5] = ((TextureAtlas) textureManager.getTexture("blocks"))
-						.getAtlasID(textureObject.get("bottom").getAsString());
 
-			} else {
-				// 单个材质六面
-				Vector2s textureID = ((TextureAtlas) textureManager.getTexture("blocks"))
-						.getAtlasID(blockTexture.getAsString());
-				textures[0] = textures[1] = textures[2] = textures[3] = textures[4] = textures[5] = textureID;
+			if (this.textureManager != null) {
+				if (!blockJsonObject.has("texture")) {
+					Logger.error("[Block] Can't read param of block in " + file.getName() + ": texture");
+					return;
+				}
+				JsonElement blockTexture = blockJsonObject.get("texture");
+				if (blockTexture.isJsonObject()) {
+					JsonObject textureObject = blockTexture.getAsJsonObject();
+					textures[0] = ((TextureAtlas) textureManager.getTexture("blocks"))
+							.getAtlasID(textureObject.get("front").getAsString());
+					textures[1] = ((TextureAtlas) textureManager.getTexture("blocks"))
+							.getAtlasID(textureObject.get("back").getAsString());
+					textures[2] = ((TextureAtlas) textureManager.getTexture("blocks"))
+							.getAtlasID(textureObject.get("left").getAsString());
+					textures[3] = ((TextureAtlas) textureManager.getTexture("blocks"))
+							.getAtlasID(textureObject.get("right").getAsString());
+					textures[4] = ((TextureAtlas) textureManager.getTexture("blocks"))
+							.getAtlasID(textureObject.get("top").getAsString());
+					textures[5] = ((TextureAtlas) textureManager.getTexture("blocks"))
+							.getAtlasID(textureObject.get("bottom").getAsString());
+
+				} else {
+					// 单个材质六面
+					Vector2s textureID = ((TextureAtlas) textureManager.getTexture("blocks"))
+							.getAtlasID(blockTexture.getAsString());
+					textures[0] = textures[1] = textures[2] = textures[3] = textures[4] = textures[5] = textureID;
+				}
+
 			}
 
 			ArrayList<AABB> aabbs = new ArrayList<AABB>();
@@ -104,6 +116,8 @@ public class BlockResource extends IResource {
 
 			BlockData blockData = new BlockData(name, blockType, destroyTime, textures, aabbs);
 			blockDatas.put(namespace, blockData);
+
+			Logger.info("Blocks: read Block Defination File: " + name);
 
 		} else {
 			return;
@@ -113,6 +127,8 @@ public class BlockResource extends IResource {
 
 	public void load(GUITextView textView, GUIProgressBar progressBar, float startValue, float endValue) {
 		ArrayList<File> blocksFiles = findAllFiles(new File(real_path));
+
+		Logger.info("Blocks: find Block Defination File: " + blocksFiles.size());
 
 		int count = 0;
 		float progressPerElement = (endValue - startValue) / blocksFiles.size();
@@ -130,6 +146,18 @@ public class BlockResource extends IResource {
 		}
 
 		progressBar.setProgress(endValue);
+
+	}
+
+	public void load() {
+		ArrayList<File> blocksFiles = findAllFiles(new File(real_path));
+
+		Logger.info("Blocks: find Block Defination File: " + blocksFiles.size());
+
+		for (File f : blocksFiles) {
+			load(f);
+
+		}
 
 	}
 

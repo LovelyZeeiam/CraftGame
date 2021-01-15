@@ -3,10 +3,14 @@
     "name": "#tile.dirt.name",
     "block": {
         "type": "Nature",
-
         "destroyTime": 1000,
-
-        "texture": "block.dirt"
+        "texture": "block.dirt",
+        
+        "model": "cube",
+        "renderer_args": {
+            "isotropic": "all_faces"
+            
+        }
 
     }
 

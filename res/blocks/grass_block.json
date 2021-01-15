@@ -3,9 +3,7 @@
     "name": "#tile.grass.name",
     "block": {
         "type": "Nature",
-
         "destroyTime": 1300,
-
         "texture": {
             "front": "block.grass.side",
             "back": "block.grass.side",
@@ -13,6 +11,15 @@
             "right": "block.grass.side",
             "top": "block.grass.top",
             "bottom": "block.dirt"
+        },
+        
+        "model": "cube",
+        "renderer_args": {
+            "isotropic": [
+                "top", "bottom"
+            ],
+            "mult_biome_color": [ "top" ]
+            
         }
 
     }

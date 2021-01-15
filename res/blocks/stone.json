@@ -2,10 +2,8 @@
 	"namespace": "craftgame:stone",
     "name": "#tile.stone.name",
     "block": {
-        "type": "Cave",
-
+        "type": "Nature",
         "destroyTime": 10000,
-
         "texture": "block.stone"
 
     }
