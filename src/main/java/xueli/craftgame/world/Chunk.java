@@ -2,14 +2,15 @@ package xueli.craftgame.world;
 
 import xueli.craftgame.block.BlockFace;
 import xueli.craftgame.block.Tile;
+import xueli.craftgame.world.biome.BiomeData;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.FloatList;
 import xueli.gamengine.utils.Time;
 
 public class Chunk {
 
-	public static final int size_yiwei = 4, height_yiwei = 7;
-	static final int size = 1 << size_yiwei, height = 1 << height_yiwei;
+	public static final int size_yiwei = 4, height_yiwei = 8;
+	public static final int size = 1 << size_yiwei, height = 1 << height_yiwei;
 	public int[][] heightMap = new int[size][size];
 	public boolean needRebuild = true;
 	public int chunkX, chunkZ;
@@ -18,10 +19,13 @@ public class Chunk {
 	private FloatList buffer = new FloatList(500000);
 	private int vertCount = 0;
 
-	public Chunk(int chunkX, int chunkZ, World world) {
+	private BiomeData biome;
+
+	public Chunk(int chunkX, int chunkZ, World world, BiomeData biome) {
 		this.chunkX = chunkX;
 		this.chunkZ = chunkZ;
 		this.world = world;
+		this.biome = biome;
 
 	}
 
@@ -39,32 +43,32 @@ public class Chunk {
 					for (int y = 0; y <= height; y++) {
 						Tile block = blockState[x][y][z];
 						if (block != null) {
-							if ((x - 1 < 0) ? (world.getBlock(x + offset_x - 1, y, z + offset_z) == null)
+							if ((x - 1 < 0) ? (world.getBlock(x + offset_x - 1, y, z + offset_z) == null) || (world.getBlock(x + offset_x - 1, y, z + offset_z).data.isAlpha())
 									: (blockState[x - 1][y][z] == null)) {
 								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.LEFT,
 										blockTextureAtlas, buffer);
 							}
-							if ((x + 1 >= size) ? (world.getBlock(x + offset_x + 1, y, z + offset_z) == null)
+							if ((x + 1 >= size) ? (world.getBlock(x + offset_x + 1, y, z + offset_z) == null) || (world.getBlock(x + offset_x + 1, y, z + offset_z).data.isAlpha())
 									: (blockState[x + 1][y][z] == null)) {
 								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.RIGHT,
 										blockTextureAtlas, buffer);
 							}
-							if ((z - 1 < 0) ? (world.getBlock(x + offset_x, y, z + offset_z - 1) == null)
+							if ((z - 1 < 0) ? (world.getBlock(x + offset_x, y, z + offset_z - 1) == null) || (world.getBlock(x + offset_x, y, z + offset_z - 1).data.isAlpha())
 									: (blockState[x][y][z - 1] == null)) {
 								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.FRONT,
 										blockTextureAtlas, buffer);
 							}
-							if ((z + 1 >= size) ? (world.getBlock(x + offset_x, y, z + offset_z + 1) == null)
+							if ((z + 1 >= size) ? (world.getBlock(x + offset_x, y, z + offset_z + 1) == null) || (world.getBlock(x + offset_x, y, z + offset_z + 1).data.isAlpha())
 									: (blockState[x][y][z + 1] == null)) {
 								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.BACK,
 										blockTextureAtlas, buffer);
 							}
-							if ((y - 1 < 0) ? (world.getBlock(x + offset_x, y - 1, z + offset_z) == null)
+							if ((y - 1 < 0) ? (world.getBlock(x + offset_x, y - 1, z + offset_z) == null) || (world.getBlock(x + offset_x, y - 1, z + offset_z).data.isAlpha())
 									: (blockState[x][y - 1][z] == null)) {
 								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.BOTTOM,
 										blockTextureAtlas, buffer);
 							}
-							if ((y + 1 >= Chunk.height) ? (world.getBlock(x + offset_x, y + 1, z + offset_z) == null)
+							if ((y + 1 >= Chunk.height) ? (world.getBlock(x + offset_x, y + 1, z + offset_z) == null) || (world.getBlock(x + offset_x, y + 1, z + offset_z).data.isAlpha())
 									: (blockState[x][y + 1][z] == null)) {
 								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.TOP,
 										blockTextureAtlas, buffer);
@@ -87,6 +91,10 @@ public class Chunk {
 	public FloatList getDrawBuffer() {
 		lastUsedTime = Time.thisTime;
 		return buffer;
+	}
+
+	public BiomeData getBiome() {
+		return biome;
 	}
 
 	public long getLastUsedTime() {

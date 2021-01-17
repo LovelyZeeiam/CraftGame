@@ -1,0 +1,17 @@
+{
+  "namespace": "craftgame:river",
+  "name": "#biome.plain.name",
+  "biomes": {
+    "height": [ 50, 66 ],
+    "noise_stretch": 10.0,
+    "blocks": [
+      "grass_block",
+      "dirt",
+      "stone",
+      "bedrock"
+    ],
+    "map_color": [
+      0,255,0
+    ]
+  }
+}

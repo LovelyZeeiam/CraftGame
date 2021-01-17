@@ -3,6 +3,8 @@ package xueli.craftgame;
 import org.lwjgl.glfw.GLFW;
 
 import xueli.craftgame.block.BlockResource;
+import xueli.craftgame.world.biome.BiomeResource;
+import xueli.craftgame.world.biome.Biomes;
 import xueli.gamengine.IGame;
 import xueli.gamengine.utils.TaskManager;
 import xueli.gamengine.view.GUIFader.Faders;
@@ -58,6 +60,24 @@ public class CraftGame extends IGame {
 
 	@Override
 	protected void onMouseButton(int button) {
+		if (worldLogic != null)
+			worldLogic.onMouseClick(button);
+
+	}
+
+	@Override
+	protected void onKeyboard(int key) {
+		if (worldLogic != null)
+			worldLogic.onKeyboard(key);
+
+	}
+
+	@Override
+	protected void onScroll(float scroll) {
+		if (worldLogic != null) {
+			worldLogic.onMouseScroll(scroll);
+
+		}
 
 	}
 
@@ -194,9 +214,15 @@ public class CraftGame extends IGame {
 
 			// 加载方块
 			resource = new BlockResource("res/", langManager, textureManager);
-			resource.load(loading_TextView, loading_ProgressBar, 0.25f, 1.00f);
+			resource.load(loading_TextView, loading_ProgressBar, 0.25f, 0.5f);
 
 			// 加载物品
+
+			// 加载生物群系
+			queueRunningInMainThread.add(() -> loading_TextView.setText("Loading biomes..."));
+			new BiomeResource("res/", cg.getLangManager()).load();
+			Biomes.init();
+			queueRunningInMainThread.add(() -> loading_ProgressBar.setProgress(0.75f));
 
 			queueRunningInMainThread.add(() -> {
 				loading_TextView.setText("Loading...");

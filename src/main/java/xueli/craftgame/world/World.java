@@ -23,10 +23,10 @@ public class World {
 
 		collider = new CubeWorldCollider(this);
 
-		ChunkGenerator generator = new ChunkGenerator(this);
+		ChunkGeneratorMaster generator = new ChunkGeneratorMaster(this);
 
-		for (int i = 0; i < 4; i++)
-			for (int q = 0; q < 4; q++)
+		for (int i = 0; i < 12; i++)
+			for (int q = 0; q < 12; q++)
 				chunks.put(MathUtils.vert2ToLong(i, q), generator.normal(i, q));
 
 	}

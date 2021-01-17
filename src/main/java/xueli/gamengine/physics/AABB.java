@@ -70,7 +70,7 @@ public class AABB {
 		return new AABB(this.x0 - xa, this.x1 + xa, this.y0 - ya, this.y1 + ya, this.z0 - za, this.z1 + za);
 	}
 
-	public float clipXCollide(AABB target, float xd) {
+	public double clipXCollide(AABB target, double xd) {
 		if (target.y1 <= this.y0 || target.y0 >= this.y1) {
 			return xd;
 		}
@@ -92,7 +92,7 @@ public class AABB {
 		return xd;
 	}
 
-	public float clipYCollide(AABB target, float yd) {
+	public double clipYCollide(AABB target, double yd) {
 		if (target.x1 <= this.x0 || target.x0 >= this.x1) {
 			return yd;
 		}
@@ -114,7 +114,7 @@ public class AABB {
 		return yd;
 	}
 
-	public float clipZCollide(AABB target, float zd) {
+	public double clipZCollide(AABB target, double zd) {
 		if (target.x1 <= this.x0 || target.x0 >= this.x1) {
 			return zd;
 		}

@@ -1,0 +1,14 @@
+{
+  "namespace": "craftgame:concrete.green",
+  "name": "#tile.concrete.name",
+  "block": {
+    "type": "Build",
+    "destroyTime": 1000,
+    "texture": "block.concrete.green",
+    "map_color": [
+      72,91,36
+    ]
+
+  }
+
+}

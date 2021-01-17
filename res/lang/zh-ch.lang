@@ -12,8 +12,26 @@ esc_menu.back_to_game=Back To Game
 esc_menu.quit=Save And Quit
 # World Loading
 world_loading.loading_terrain_message=Loading world
+# HUD
+hud.ingame.position=Position:
+hud.ingame.fps=FPS:
+# Biome name
+biome.plain.name=Plain
+biome.mountain.name=Mountain
+biome.forest.name=Forest
+
 # Block name
 tile.dirt.name=Dirt
 tile.grass.name=Grass Block
 tile.stone.name=Stone
 tile.oak_log.name=Log
+tile.bedrock.name=Bedrock
+tile.brick.name=Brick
+tile.cobblestone.name=Cobblestone
+tile.cobblestone_mossy.name=Mossy Cobblestone
+tile.concrete.name=Concrete
+tile.leave_oak.name=Oak Leave
+tile.water.name=Water
+
+
+

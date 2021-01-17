@@ -4,7 +4,8 @@
     "block": {
         "type": "Nature",
         "destroyTime": 10000,
-        "texture": "block.stone"
+        "texture": "block.stone",
+        "map_color": [104,104,104]
 
     }
 

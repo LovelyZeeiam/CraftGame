@@ -3,7 +3,6 @@
   "name": "#tile.oak_log.name",
   "block": {
     "type": "Nature",
-
     "destroyTime": 2000,
 
     "texture": {
@@ -13,7 +12,11 @@
       "right": "block.oak_log.side",
       "top": "block.oak_log.top",
       "bottom": "block.oak_log.top"
-    }
+    },
+
+    "map_color": [
+      184,148,95
+    ]
 
   }
 

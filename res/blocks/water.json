@@ -1,0 +1,15 @@
+{
+  "namespace": "craftgame:water",
+  "name": "#tile.water.name",
+  "block": {
+    "type": "Nature",
+    "destroyTime": 1000,
+    "texture": "block.water.carried",
+    "map_color": [
+      20,220,20
+    ],
+    "isAlpha": true
+
+  }
+
+}

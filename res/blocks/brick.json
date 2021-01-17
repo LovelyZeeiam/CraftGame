@@ -1,0 +1,14 @@
+{
+  "namespace": "craftgame:brick",
+  "name": "#tile.brick.name",
+  "block": {
+    "type": "Build",
+    "destroyTime": 1000,
+    "texture": "block.brick",
+    "map_color": [
+      115,86,67
+    ]
+
+  }
+
+}

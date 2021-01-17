@@ -19,10 +19,12 @@ import org.lwjgl.util.vector.Matrix4f;
 
 import xueli.craftgame.block.Blocks;
 import xueli.craftgame.entity.Player;
-import xueli.craftgame.view.InGameBackgroundView;
+import xueli.craftgame.view.HUDView;
+import xueli.craftgame.view.InGameHUDView;
 import xueli.craftgame.view.InventoryView;
 import xueli.craftgame.world.World;
 import xueli.craftgame.world.WorldGLData;
+import xueli.craftgame.world.biome.BiomeResource;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.Display;
 import xueli.gamengine.utils.GLHelper;
@@ -46,6 +48,9 @@ public class WorldLogic implements Runnable {
 	private Player player;
 	private TextureAtlas blockTextureAtlas;
 	private Shader blockRenderShader;
+
+	private int drawDistance = 12;
+
 	/**
 	 * frustum culling 依照从前到后的顺序排序几何体 顶点处理器基于32位浮点值工作 Fragment Shader使用16位浮点值工作
 	 */
@@ -53,6 +58,8 @@ public class WorldLogic implements Runnable {
 	private Matrix4f playerMatrix = new Matrix4f();
 
 	private long nvg;
+	
+	private InGameHUDView ingameView;
 
 	@WorldGLData
 	public WorldLogic(CraftGame cg) {
@@ -91,6 +98,8 @@ public class WorldLogic implements Runnable {
 
 		Blocks.init(nvg, cg, (TextureAtlas) cg.getTextureManager().getTexture("blocks"));
 
+		ingameView = new HUDView(this, cg);
+		
 	}
 
 	public void loadLevel() {
@@ -100,7 +109,7 @@ public class WorldLogic implements Runnable {
 		// 创建新的世界
 		world = new World(this);
 		// 安置新的玩家
-		player = new Player(8, 8, 8, 0, 135, 0, world);
+		player = new Player(8, 85, 8, 0, 135, 0, world);
 
 	}
 
@@ -136,7 +145,7 @@ public class WorldLogic implements Runnable {
 
 		// 提前先生成好世界的顶点数据 防止第一次绘制的时候 CPU姬突然接收到那么多数据 由于无法按时完成生成任务而无奈的让显卡姬等一等
 		// 似乎在Windows系统上面没什么用 ubuntu还好
-		world.updateVertexBuffer(blockTextureAtlas, player, 8);
+		world.updateVertexBuffer(blockTextureAtlas, player, drawDistance);
 
 		world_loading_progressBar.setProgress(1.0f);
 
@@ -170,52 +179,20 @@ public class WorldLogic implements Runnable {
 			gameGui.size();
 
 	}
-
-	private InGameBackgroundView ingameView;
+	
+	public Player getClientPlayer() {
+		return player;
+	}
 
 	public void toggleGuiExit() {
 		cg.getDisplay().toggleMouseGrabbed();
 		this.state = State.INGAME;
+		this.ingameView = null;
+		this.ingameView = new HUDView(this, cg);
 
 	}
 
 	public void draw() {
-		// 检查这个按键是否被按下 使用keysOnce是因为只有在游戏在循环过程中第一次发现这个按键被按下时才会让对应的按键的布尔值变为true
-		// Nobody wanna see their mouse guichu~
-		if (KeyCallback.keysOnce[GLFW.GLFW_KEY_ESCAPE]) {
-			if (this.state == State.INGAME) {
-				cg.getDisplay().toggleMouseGrabbed();
-				gameGui = cg.getGuiResource().getGui("game_esc_menu.json");
-				cg.getViewManager().setGui(gameGui);
-				this.state = State.ESC_MENU;
-
-			} else if (this.state == State.ESC_MENU) {
-				// 从esc界面回到游戏中
-				cg.getDisplay().toggleMouseGrabbed();
-				cg.getViewManager().setGui((View) null);
-				gameGui = null;
-				this.state = State.INGAME;
-
-			} else {
-				toggleGuiExit();
-
-			}
-
-		}
-
-		if (KeyCallback.keysOnce[GLFW.GLFW_KEY_E]) {
-			if (this.state == State.INGAME) {
-				cg.getDisplay().toggleMouseGrabbed();
-				ingameView = new InventoryView(this, cg, player);
-				this.state = State.INVENTORY;
-			} else if (this.state == State.INVENTORY) {
-				// 从esc界面回到游戏中
-				cg.getDisplay().toggleMouseGrabbed();
-				this.state = State.INGAME;
-			}
-
-		}
-
 		// Blocks.init(nvg, cg, (TextureAtlas)
 		// cg.getTextureManager().getTexture("blocks"));
 
@@ -249,7 +226,7 @@ public class WorldLogic implements Runnable {
 		mappedBuffer.position(0);
 
 		// 得到世界的渲染顶点信息
-		vertexCount = world.draw(blockTextureAtlas, player, mappedBuffer.asFloatBuffer(), 3);
+		vertexCount = world.draw(blockTextureAtlas, player, mappedBuffer.asFloatBuffer(), drawDistance);
 
 		// 将这一块内存变成读的状态 方便OpenGL娘的处理
 		mappedBuffer.flip();
@@ -293,7 +270,7 @@ public class WorldLogic implements Runnable {
 
 		GLHelper.checkGLError("World: After-render");
 
-		if (state == State.INVENTORY) {
+		if (ingameView != null) {
 			nvgBeginFrame(nvg, Display.currentDisplay.getWidth(), Display.currentDisplay.getHeight(),
 					Display.currentDisplay.getRatio());
 
@@ -302,6 +279,65 @@ public class WorldLogic implements Runnable {
 			nvgEndFrame(nvg);
 
 		}
+
+	}
+
+	public void onMouseScroll(float scroll) {
+		if (ingameView != null)
+			ingameView.onScroll(cg.getDisplay().getMouseX(), cg.getDisplay().getMouseY(), scroll);
+
+	}
+
+	public void onMouseClick(int button) {
+		if (ingameView != null)
+			ingameView.onClick(cg.getDisplay().getMouseX(), cg.getDisplay().getMouseY(), button);
+
+	}
+
+	public void onKeyboard(int key) {
+		// 检查这个按键是否被按下 使用keysOnce是因为只有在游戏在循环过程中第一次发现这个按键被按下时才会让对应的按键的布尔值变为true
+		// Nobody wanna see their mouse guichu~
+		if (KeyCallback.keysOnce[GLFW.GLFW_KEY_ESCAPE]) {
+			if (this.state == State.INGAME) {
+				cg.getDisplay().toggleMouseGrabbed();
+				gameGui = cg.getGuiResource().getGui("game_esc_menu.json");
+				cg.getViewManager().setGui(gameGui);
+				this.state = State.ESC_MENU;
+
+			} else if (this.state == State.ESC_MENU) {
+				// 从esc界面回到游戏中
+				cg.getDisplay().toggleMouseGrabbed();
+				cg.getViewManager().setGui((View) null);
+				gameGui = null;
+				this.state = State.INGAME;
+
+			} else {
+				toggleGuiExit();
+
+			}
+
+		}
+
+		if (KeyCallback.keysOnce[GLFW.GLFW_KEY_E]) {
+			if (this.state == State.INGAME) {
+				cg.getDisplay().toggleMouseGrabbed();
+				ingameView = new InventoryView(this, cg, player);
+				this.state = State.INVENTORY;
+			} else if (this.state == State.INVENTORY) {
+				// 从esc界面回到游戏中
+				cg.getDisplay().toggleMouseGrabbed();
+				this.state = State.INGAME;
+			}
+
+		}
+		
+		if(this.state == State.INGAME) {
+			ingameView = new HUDView(this, cg);
+			
+		}
+		
+		if(this.state == State.ESC_MENU)
+			ingameView = null;
 
 	}
 

@@ -9,12 +9,16 @@ import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
 import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
 import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
 import static org.lwjgl.nanovg.NanoVG.nvgImagePattern;
+import static org.lwjgl.nanovg.NanoVG.nvgRestore;
 import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
+import static org.lwjgl.nanovg.NanoVG.nvgSave;
+import static org.lwjgl.nanovg.NanoVG.nvgScissor;
 import static org.lwjgl.nanovg.NanoVG.nvgText;
 import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
 
 import java.util.Map;
 
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NanoVG;
@@ -25,18 +29,16 @@ import xueli.craftgame.block.BlockData;
 import xueli.craftgame.block.BlockResource;
 import xueli.craftgame.block.BlockReviewGenerator;
 import xueli.craftgame.entity.Player;
-import xueli.gamengine.utils.vector.Vector2i;
 import xueli.gamengine.view.GuiColor;
-import xueli.utils.Table;
 
-public class InventoryView extends InGameBackgroundView {
+public class InventoryView extends InGameHUDView {
 
 	private static NVGColor backgroundColor = NVGColor.create();
 
-	private static final float width = 600, height = 400;
+	private static final float width = 610, height = 400;
 	private static final float border = 10;
-	private static final float sizePerBlock = 64;
-	private static final float blockMargin = 10;
+	private static final float sizePerBlock = 60;
+	private static final float blockMargin = 8;
 	private static final int infoBoxOffset = 10;
 
 	static {
@@ -53,63 +55,78 @@ public class InventoryView extends InGameBackgroundView {
 
 	}
 
-	private Table<BlockData> drawTable = new Table<BlockData>();
+	private BlockData lastTimeMouseHoveredBlockData = null;
+
+	private float scrollOffset = 0.0f;
 
 	@Override
 	public void draw(long nvg) {
 		super.draw(nvg);
 
+		// 整个界面的左上角坐标
 		float x = (game.getDisplay().getWidth() - width * game.getDisplay().getScale()) / 2.0f;
 		float y = (game.getDisplay().getHeight() - height * game.getDisplay().getScale()) / 2.0f;
 
+		// 界面内的小框框的左上角坐标
 		float pointerX = x + border / 2.0f;
 		float pointerY = y + border / 2.0f;
 
+		// 绘制时用到的指针
 		float startPointerX = pointerX;
-
 		float pointerXMax = pointerX + width * game.getDisplay().getScale() - border;
 
+		// 背景框框的绘制
 		drawBox(x, y, width * game.getDisplay().getScale(), height * game.getDisplay().getScale(), GuiColor.BLACK,
 				backgroundColor, 2.0f, nvg);
 		drawBox(pointerX, pointerY, width * game.getDisplay().getScale() - border,
 				height * game.getDisplay().getScale() - border, GuiColor.BLACK, backgroundColor, 2.0f, nvg);
 
-		int xoffset = 0, yoffset = 0;
-
+		// 鼠标位置
 		float mouseX = game.getDisplay().getMouseX();
 		float mouseY = game.getDisplay().getMouseY();
-		Vector2i indexVector2i = getIndexFromMouse(mouseX, mouseY);
 
+		// 上次鼠标指到的方块清空
+		lastTimeMouseHoveredBlockData = null;
+
+		// 裁剪
+		nvgSave(nvg);
+		nvgScissor(nvg, pointerX, pointerY, width * game.getDisplay().getScale() - border,
+				height * game.getDisplay().getScale() - border);
+
+		// 物品栏元素
 		for (Map.Entry<String, BlockData> entry : BlockResource.blockDatas.entrySet()) {
 			String namespace = entry.getKey();
 
-			boolean mousePointed = xoffset == indexVector2i.x & yoffset == indexVector2i.y;
-			drawBox(pointerX, pointerY, sizePerBlock, sizePerBlock, mousePointed ? GuiColor.YELLOW : GuiColor.BLACK,
-					backgroundColor, mousePointed ? 5.0f : 2.0f, nvg);
+			// 是否有鼠标指着这个方块
+			boolean mousePointed = mouseX - pointerX < sizePerBlock & mouseY - pointerY - scrollOffset < sizePerBlock
+					& mouseX > pointerX & mouseY > pointerY + scrollOffset;
+			drawBox(pointerX, pointerY + scrollOffset, sizePerBlock, sizePerBlock,
+					mousePointed ? GuiColor.YELLOW : GuiColor.BLACK, backgroundColor, blockMargin / 4, nvg);
 
+			if (mousePointed) {
+				lastTimeMouseHoveredBlockData = entry.getValue();
+
+			}
+
+			// 绘制每个小方格代表的方块
 			int texture = BlockReviewGenerator.getTexture(namespace);
-			nvgImagePattern(nvg, pointerX, pointerY, sizePerBlock, sizePerBlock, 0, texture, 1, paint);
+			nvgImagePattern(nvg, pointerX, pointerY + scrollOffset, sizePerBlock, sizePerBlock, 0, texture, 1, paint);
 			nvgBeginPath(nvg);
-			nvgRoundedRect(nvg, pointerX, pointerY, sizePerBlock, sizePerBlock, 0);
+			nvgRoundedRect(nvg, pointerX, pointerY + scrollOffset, sizePerBlock, sizePerBlock, 0);
 			nvgFillPaint(nvg, paint);
 			nvgFill(nvg);
 
-			drawTable.put(xoffset, yoffset, entry.getValue());
-
 			pointerX += sizePerBlock + blockMargin;
-			xoffset++;
-
 			if (pointerX + sizePerBlock > pointerXMax) {
 				pointerY += sizePerBlock + blockMargin;
 				pointerX = startPointerX;
-				yoffset++;
 
 			}
 
 		}
 
-		BlockData data = drawTable.get(indexVector2i.x, indexVector2i.y);
-		if (data != null) {
+		nvgRestore(nvg);
+		if (lastTimeMouseHoveredBlockData != null) {
 			float boxY = y + height * game.getDisplay().getScale() + infoBoxOffset;
 			float boxWidth = width * game.getDisplay().getScale();
 			float boxHeight = 30;
@@ -119,29 +136,25 @@ public class InventoryView extends InGameBackgroundView {
 			nvgFontFace(nvg, "game");
 			nvgTextAlign(nvg, NVG_ALIGN_CENTER | NVG_ALIGN_MIDDLE);
 			nvgFillColor(nvg, GuiColor.BLACK);
-			nvgText(nvg, x + boxWidth / 2, boxY + boxHeight / 2, data.getBlockName());
+			nvgText(nvg, x + boxWidth / 2, boxY + boxHeight / 2, lastTimeMouseHoveredBlockData.getBlockName());
 
 		}
 
-	}
-
-	private Vector2i getIndexFromMouse(float x, float y) {
-		float realX = x
-				- ((game.getDisplay().getWidth() - width * game.getDisplay().getScale()) / 2.0f + border / 2.0f);
-		float realY = y
-				- ((game.getDisplay().getHeight() - height * game.getDisplay().getScale()) / 2.0f + border / 2.0f);
-		return new Vector2i((int) (realX / sizePerBlock), (int) (realY / sizePerBlock));
 	}
 
 	@Override
-	public void onLeftClick(float x, float y) {
-		Vector2i indexVector2s = getIndexFromMouse(x, y);
-		BlockData data = drawTable.get(indexVector2s.x, indexVector2s.y);
-		if (data != null) {
-			player.handBlockData = data;
+	public void onClick(float x, float y, int button) {
+		if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT & lastTimeMouseHoveredBlockData != null) {
+			player.handBlockData = lastTimeMouseHoveredBlockData;
 			logic.toggleGuiExit();
 
 		}
+
+	}
+
+	@Override
+	public void onScroll(float x, float y, float scroll) {
+		scrollOffset += scroll * 20;
 
 	}
 

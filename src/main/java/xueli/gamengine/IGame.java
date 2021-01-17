@@ -18,6 +18,7 @@ import xueli.gamengine.utils.callbacks.CursorPosCallback;
 import xueli.gamengine.utils.callbacks.DisplaySizedCallback;
 import xueli.gamengine.utils.callbacks.KeyCallback;
 import xueli.gamengine.utils.callbacks.MouseButtonCallback;
+import xueli.gamengine.utils.callbacks.MouseScrollCallback;
 import xueli.gamengine.view.ViewManager;
 
 public abstract class IGame implements Runnable {
@@ -119,7 +120,9 @@ public abstract class IGame implements Runnable {
 				super.invoke(window, button, action, mods);
 				if (viewManager != null)
 					viewManager.mouseClicked(button, action, display.getMouseX(), display.getMouseY());
-				onMouseButton(button);
+
+				if (action == GLFW.GLFW_RELEASE)
+					onMouseButton(button);
 
 			}
 		});
@@ -129,6 +132,8 @@ public abstract class IGame implements Runnable {
 				super.invoke(window, key, scancode, action, mods);
 				if (viewManager != null)
 					viewManager.keyAction(key, action, mods);
+				if (action == GLFW.GLFW_PRESS)
+					onKeyboard(key);
 
 			}
 		});
@@ -137,6 +142,15 @@ public abstract class IGame implements Runnable {
 			public void invoke(long window, int codepoint) {
 				if (viewManager != null)
 					viewManager.keyAction(codepoint);
+
+			}
+		});
+		display.setScrollCallback(new MouseScrollCallback() {
+			@Override
+			public void invoke(long window, double xoffset, double yoffset) {
+				if (viewManager != null)
+					viewManager.mouseScroll((float) yoffset);
+				onScroll((float) yoffset);
 
 			}
 		});
@@ -236,6 +250,10 @@ public abstract class IGame implements Runnable {
 	protected abstract void onCursorPos(double dx, double dy);
 
 	protected abstract void onMouseButton(int button);
+
+	protected abstract void onScroll(float scroll);
+
+	protected abstract void onKeyboard(int key);
 
 	protected abstract void onDrawFrame();
 

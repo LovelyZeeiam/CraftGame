@@ -7,6 +7,7 @@ import xueli.craftgame.block.BlockListener;
 import xueli.craftgame.block.BlockResource;
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.world.BlockPos;
+import xueli.craftgame.world.CubeWorldCollider;
 import xueli.craftgame.world.World;
 import xueli.gamengine.physics.AABB;
 import xueli.gamengine.utils.Display;
@@ -119,7 +120,7 @@ public class Player extends Entity {
 
 	@Override
 	public float getSpeed() {
-		return 0.004f;
+		return 0.04f;
 	}
 
 	@Override

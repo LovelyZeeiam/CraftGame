@@ -7,11 +7,11 @@ public class ChunkProvider {
 	private static int generateDistance = 5;
 
 	private World world;
-	private ChunkGenerator chunkGenerator;
+	private ChunkGeneratorMaster chunkGenerator;
 
 	public ChunkProvider(World world) {
 		this.world = world;
-		this.chunkGenerator = new ChunkGenerator(world);
+		this.chunkGenerator = new ChunkGeneratorMaster(world);
 
 	}
 

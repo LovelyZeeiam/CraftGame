@@ -24,6 +24,7 @@ import static org.lwjgl.glfw.GLFW.glfwSetErrorCallback;
 import static org.lwjgl.glfw.GLFW.glfwSetInputMode;
 import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
 import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetScrollCallback;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowIcon;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback;
@@ -54,6 +55,7 @@ import xueli.gamengine.utils.callbacks.CursorPosCallback;
 import xueli.gamengine.utils.callbacks.DisplaySizedCallback;
 import xueli.gamengine.utils.callbacks.KeyCallback;
 import xueli.gamengine.utils.callbacks.MouseButtonCallback;
+import xueli.gamengine.utils.callbacks.MouseScrollCallback;
 
 public class Display {
 
@@ -63,12 +65,16 @@ public class Display {
 	private Dimension screenSize;
 	private boolean useGLFW = false;
 	private long window;
+
 	private String mainTitle;
+
 	private DisplaySizedCallback sizedCallback;
 	private CursorPosCallback cursorPosCallback;
 	private MouseButtonCallback mouseButtonCallback;
 	private KeyCallback keyCallback;
 	private CharCallback charCallback;
+	private MouseScrollCallback scrollCallback;
+
 	private AWTGLCanvas canvas;
 	private AWTMouseListener awtMouseListener = new AWTMouseListener();
 
@@ -240,6 +246,14 @@ public class Display {
 			Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
 		glfwSetMouseButtonCallback(window, callback);
 		this.mouseButtonCallback = callback;
+	}
+
+	public void setScrollCallback(MouseScrollCallback callback) {
+		if (!useGLFW)
+			Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
+		glfwSetScrollCallback(window, callback);
+		this.scrollCallback = callback;
+
 	}
 
 	public KeyCallback getKeyCallback() {

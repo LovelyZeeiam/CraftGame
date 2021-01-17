@@ -13,7 +13,25 @@
 			"block.grass.top": "textures/blocks/grass_block_top.png",
 			"block.stone": "textures/blocks/stone.png",
 			"block.oak_log.side": "textures/blocks/oak_log.png",
-			"block.oak_log.top": "textures/blocks/oak_log_top.png"
+			"block.oak_log.top": "textures/blocks/oak_log_top.png",
+			"block.bedrock": "textures/blocks/bedrock.png",
+			"block.brick": "textures/blocks/brick.png",
+			"block.cobblestone": "textures/blocks/cobblestone.png",
+			"block.cobblestone_mossy": "textures/blocks/cobblestone_mossy.png",
+			"block.concrete.black": "textures/blocks/concrete_black.png",
+			"block.concrete.blue": "textures/blocks/concrete_blue.png",
+			"block.concrete.brown": "textures/blocks/concrete_brown.png",
+			"block.concrete.cyan": "textures/blocks/concrete_cyan.png",
+			"block.concrete.gray": "textures/blocks/concrete_gray.png",
+			"block.concrete.green": "textures/blocks/concrete_green.png",
+			"block.concrete.light_blue": "textures/blocks/concrete_light_blue.png",
+			"block.concrete.lime": "textures/blocks/concrete_lime.png",
+			"block.concrete.magenta": "textures/blocks/concrete_magenta.png",
+			"block.concrete.orange": "textures/blocks/concrete_orange.png",
+			"block.concrete.pink": "textures/blocks/concrete_pink.png",
+			"block.oak_leave.carried": "textures/blocks/leaves_oak_carried.png",
+			"block.water.carried": "textures/blocks/water_carried.png"
+
 
 		}
 		

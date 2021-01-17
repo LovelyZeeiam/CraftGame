@@ -11,11 +11,9 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
-import xueli.gamengine.physics.AABB;
-import xueli.gamengine.resource.IResource;
-import xueli.gamengine.resource.LangManager;
-import xueli.gamengine.resource.TextureAtlas;
-import xueli.gamengine.resource.TextureManager;
+import org.lwjgl.nanovg.NVGColor;
+import xueli.craftgame.block.model.Models;
+import xueli.gamengine.resource.*;
 import xueli.gamengine.utils.Logger;
 import xueli.gamengine.utils.vector.Vector2s;
 import xueli.gamengine.view.GUIProgressBar;
@@ -111,13 +109,26 @@ public class BlockResource extends IResource {
 
 			}
 
-			ArrayList<AABB> aabbs = new ArrayList<AABB>();
-			aabbs.add(new AABB(0, 1, 0, 1, 0, 1));
+			String modelName = null;
+			if (blockJsonObject.has("model")) {
+				modelName = blockJsonObject.get("model").getAsString();
+			} else {
+				modelName = "cube";
+			}
 
-			BlockData blockData = new BlockData(name, blockType, destroyTime, textures, aabbs);
+			JsonObject renderArgs = null;
+			if (blockJsonObject.has("renderer_args")) {
+				renderArgs = blockJsonObject.getAsJsonObject("renderer_args");
+			}
+
+			NVGColor mapColor = GuiResource.loadColor(blockJsonObject.getAsJsonArray("map_color"));
+			boolean isAlpha = blockJsonObject.has("isAlpha") && blockJsonObject.get("isAlpha").getAsBoolean();
+
+			BlockData blockData = new BlockData(namespace, name, blockType, destroyTime, textures,mapColor,isAlpha,
+					Models.getModel(modelName, renderArgs));
 			blockDatas.put(namespace, blockData);
 
-			Logger.info("Blocks: read Block Defination File: " + name);
+			Logger.info("Blocks: read Block Defination File: " + file.getName());
 
 		} else {
 			return;

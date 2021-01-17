@@ -318,6 +318,15 @@ public class ViewManager {
 		}
 	}
 
+	/**
+	 * 鼠标滚轮
+	 */
+	public void mouseScroll(float scroll) {
+		if (focusedWidget != null)
+			focusedWidget.scroll(scroll);
+
+	}
+
 	public void destroy() {
 		nvgDelete(nvg);
 		guiShader.release();

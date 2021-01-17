@@ -30,11 +30,13 @@ public class Tile {
 	}
 
 	public int getDrawData(int x, int y, int z, byte face, TextureAtlas blockTextureAtlas, FloatList buffer) {
-		return listener.getDrawData(buffer, this.data, x, y, z, face, blockTextureAtlas);
+		return data.getDrawData(buffer, this.data, x, y, z, face, blockTextureAtlas);
 	}
 
 	public ArrayList<AABB> getAabbs() {
 		return data.getAabbs();
 	}
+
+
 
 }

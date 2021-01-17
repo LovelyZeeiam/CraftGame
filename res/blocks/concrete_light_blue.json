@@ -1,0 +1,14 @@
+{
+  "namespace": "craftgame:concrete.light_blue",
+  "name": "#tile.concrete.name",
+  "block": {
+    "type": "Build",
+    "destroyTime": 1000,
+    "texture": "block.concrete.light_blue",
+    "map_color": [
+      35,137,199
+    ]
+
+  }
+
+}

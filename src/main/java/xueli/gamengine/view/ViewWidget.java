@@ -114,6 +114,10 @@ public abstract class ViewWidget implements AutoCloseable {
 
 	}
 
+	public void scroll(float scroll) {
+
+	}
+
 	@Override
 	public void close() throws Exception {
 

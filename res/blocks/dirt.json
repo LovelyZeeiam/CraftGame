@@ -8,9 +8,11 @@
         
         "model": "cube",
         "renderer_args": {
-            "isotropic": "all_faces"
             
-        }
+        },
+        "map_color": [
+            121,85,58
+        ]
 
     }
 

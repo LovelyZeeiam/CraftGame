@@ -1,0 +1,17 @@
+{
+  "namespace": "craftgame:forest",
+  "name": "#biome.forest.name",
+  "biomes": {
+    "height": [ 70, 80 ],
+    "noise_stretch": 10.0,
+    "blocks": [
+      "grass_block",
+      "dirt",
+      "stone",
+      "bedrock"
+    ],
+    "map_color": [
+      20,200,20
+    ]
+  }
+}
