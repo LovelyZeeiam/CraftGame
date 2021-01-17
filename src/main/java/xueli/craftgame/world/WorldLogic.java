@@ -7,14 +7,12 @@ import static org.lwjgl.nanovg.NanoVGGL3.NVG_ANTIALIAS;
 import static org.lwjgl.nanovg.NanoVGGL3.NVG_DEBUG;
 import static org.lwjgl.nanovg.NanoVGGL3.NVG_STENCIL_STROKES;
 import static org.lwjgl.nanovg.NanoVGGL3.nvgCreate;
+import static org.lwjgl.opengl.GL11.glViewport;
 
 import java.nio.ByteBuffer;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL15;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 
 import xueli.craftgame.CraftGame;
@@ -22,12 +20,10 @@ import xueli.craftgame.State;
 import xueli.craftgame.block.Blocks;
 import xueli.craftgame.entity.Player;
 import xueli.craftgame.view.HUDView;
-import xueli.craftgame.view.InGameHUDView;
+import xueli.craftgame.view.InGameView;
 import xueli.craftgame.view.InventoryView;
-import xueli.craftgame.world.World;
-import xueli.craftgame.world.WorldGLData;
-import xueli.craftgame.world.biome.BiomeResource;
 import xueli.craftgame.world.renderer.Renderer;
+import xueli.craftgame.world.renderer.ShadowMapper;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.Display;
 import xueli.gamengine.utils.GLHelper;
@@ -51,7 +47,7 @@ public class WorldLogic implements Runnable {
 	private TextureAtlas blockTextureAtlas;
 	private Shader blockRenderShader;
 
-	private int drawDistance = 12;
+	private int drawDistance = 5;
 
 	/**
 	 * frustum culling 依照从前到后的顺序排序几何体 顶点处理器基于32位浮点值工作 Fragment Shader使用16位浮点值工作
@@ -60,16 +56,18 @@ public class WorldLogic implements Runnable {
 	private Matrix4f playerMatrix = new Matrix4f();
 
 	private long nvg;
-	
-	private InGameHUDView ingameView;
+
+	private InGameView ingameView;
 
 	private Renderer normalRenderer;
+	private ShadowMapper shadowMapper;
 
 	@WorldGLData
 	public WorldLogic(CraftGame cg) {
 		this.cg = cg;
 
 		normalRenderer = new Renderer(cg, this);
+		shadowMapper = new ShadowMapper(cg, this);
 
 		nvg = nvgCreate(NVG_STENCIL_STROKES | NVG_ANTIALIAS | NVG_DEBUG);
 		if (nvg == 0) {
@@ -83,7 +81,7 @@ public class WorldLogic implements Runnable {
 		Blocks.init(nvg, cg, (TextureAtlas) cg.getTextureManager().getTexture("blocks"));
 
 		ingameView = new HUDView(this, cg);
-		
+
 	}
 
 	public void loadLevel() {
@@ -163,9 +161,13 @@ public class WorldLogic implements Runnable {
 			gameGui.size();
 
 	}
-	
+
 	public Player getClientPlayer() {
 		return player;
+	}
+
+	public Shader getBlockRenderShader() {
+		return blockRenderShader;
 	}
 
 	public void toggleGuiExit() {
@@ -190,6 +192,8 @@ public class WorldLogic implements Runnable {
 
 		// 玩家指针指向方块的更新
 		player.pickTick();
+
+		glViewport(0, 0, cg.getDisplay().getWidth(), cg.getDisplay().getHeight());
 
 		// 清空颜色
 		GL11.glClearColor(0.7f, 0.8f, 1.0f, 1.0f);
@@ -241,6 +245,11 @@ public class WorldLogic implements Runnable {
 
 		// 去除背面渲染
 		GL11.glDisable(GL11.GL_CULL_FACE);
+
+		// shadowMapper.renderToDepthBuffer(normalRenderer);
+
+		glViewport(0, 0, cg.getDisplay().getWidth(), cg.getDisplay().getHeight());
+
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 
 		if (gameGui != null) {
@@ -259,6 +268,10 @@ public class WorldLogic implements Runnable {
 
 		}
 
+	}
+
+	public int getVertexCount() {
+		return vertexCount;
 	}
 
 	public void onMouseScroll(float scroll) {
@@ -309,15 +322,19 @@ public class WorldLogic implements Runnable {
 			}
 
 		}
-		
-		if(this.state == State.INGAME) {
+
+		if (this.state == State.INGAME) {
 			ingameView = new HUDView(this, cg);
-			
+
 		}
-		
-		if(this.state == State.ESC_MENU)
+
+		if (this.state == State.ESC_MENU)
 			ingameView = null;
 
+	}
+
+	public World getWorld() {
+		return world;
 	}
 
 	public void delete() {

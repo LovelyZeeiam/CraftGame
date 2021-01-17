@@ -5,7 +5,8 @@ import xueli.craftgame.world.World;
 
 public interface IChunkGenerator {
 
-    public void generate(Chunk chunk);
-    public void postGenerate(World world, Chunk chunk);
+	public void generate(Chunk chunk);
+
+	public void postGenerate(World world, Chunk chunk);
 
 }

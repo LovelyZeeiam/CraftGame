@@ -25,10 +25,10 @@ public class GUIButton extends ViewWidget {
 	private static final int NUMBER2 = 5;
 	private static final int NUMBER3 = 13;
 	protected static NVGPaint paint;
-	private static NVGColor BLACK_COLOR = NVGColor.create();
-	private static NVGColor GREY_COLOR = NVGColor.create();
-	private static NVGColor ANOTHER_GREY_Color = NVGColor.create();
-	private static NVGColor Darker_GREY_Color = NVGColor.create();
+	public static NVGColor BLACK_COLOR = NVGColor.create();
+	public static NVGColor GREY_COLOR = NVGColor.create();
+	public static NVGColor ANOTHER_GREY_Color = NVGColor.create();
+	public static NVGColor Darker_GREY_Color = NVGColor.create();
 
 	static {
 		paint = NVGPaint.create();
@@ -64,6 +64,45 @@ public class GUIButton extends ViewWidget {
 
 	}
 
+	public static void buttonBorder(long nvg, float x, float y, float width, float height) {
+		nvgBeginPath(nvg);
+		nvgMoveTo(nvg, x, y);
+		nvgLineTo(nvg, x + width, y);
+		nvgLineTo(nvg, x + width, y + height);
+		nvgLineTo(nvg, x, y + height);
+		nvgLineTo(nvg, x, y);
+		nvgFillColor(nvg, BLACK_COLOR);
+		nvgFill(nvg);
+
+		nvgBeginPath(nvg);
+		nvgMoveTo(nvg, x + NUMBER1, y + NUMBER1);
+		nvgLineTo(nvg, x + width - NUMBER1, y + NUMBER1);
+		nvgLineTo(nvg, x + width - NUMBER1, y + height - NUMBER1);
+		nvgLineTo(nvg, x + NUMBER1, y + height - NUMBER1);
+		nvgLineTo(nvg, x + NUMBER1, y + NUMBER1);
+		nvgFillColor(nvg, GREY_COLOR);
+		nvgFill(nvg);
+
+		nvgBeginPath(nvg);
+		nvgMoveTo(nvg, x + NUMBER2, y + NUMBER2);
+		nvgLineTo(nvg, x + width - NUMBER2, y + NUMBER2);
+		nvgLineTo(nvg, x + width - NUMBER2, y + height - NUMBER2);
+		nvgLineTo(nvg, x + NUMBER2, y + height - NUMBER2);
+		nvgLineTo(nvg, x + NUMBER2, y + NUMBER2);
+		nvgFillColor(nvg, ANOTHER_GREY_Color);
+		nvgFill(nvg);
+
+		nvgBeginPath(nvg);
+		nvgMoveTo(nvg, x + width, y + height);
+		nvgLineTo(nvg, x, y + height);
+		nvgLineTo(nvg, x, y + height - NUMBER3);
+		nvgLineTo(nvg, x + width, y + height - NUMBER3);
+		nvgLineTo(nvg, x + width, y + height);
+		nvgFillColor(nvg, Darker_GREY_Color);
+		nvgFill(nvg);
+
+	}
+
 	@Override
 	public void draw(long nvg) {
 		paint.clear();
@@ -71,41 +110,7 @@ public class GUIButton extends ViewWidget {
 		super.anim_tick();
 
 		// 边框
-		nvgBeginPath(nvg);
-		nvgMoveTo(nvg, x.getValue(), y.getValue());
-		nvgLineTo(nvg, x.getValue() + width.getValue(), y.getValue());
-		nvgLineTo(nvg, x.getValue() + width.getValue(), y.getValue() + height.getValue());
-		nvgLineTo(nvg, x.getValue(), y.getValue() + height.getValue());
-		nvgLineTo(nvg, x.getValue(), y.getValue());
-		nvgFillColor(nvg, BLACK_COLOR);
-		nvgFill(nvg);
-
-		nvgBeginPath(nvg);
-		nvgMoveTo(nvg, x.getValue() + NUMBER1, y.getValue() + NUMBER1);
-		nvgLineTo(nvg, x.getValue() + width.getValue() - NUMBER1, y.getValue() + NUMBER1);
-		nvgLineTo(nvg, x.getValue() + width.getValue() - NUMBER1, y.getValue() + height.getValue() - NUMBER1);
-		nvgLineTo(nvg, x.getValue() + NUMBER1, y.getValue() + height.getValue() - NUMBER1);
-		nvgLineTo(nvg, x.getValue() + NUMBER1, y.getValue() + NUMBER1);
-		nvgFillColor(nvg, GREY_COLOR);
-		nvgFill(nvg);
-
-		nvgBeginPath(nvg);
-		nvgMoveTo(nvg, x.getValue() + NUMBER2, y.getValue() + NUMBER2);
-		nvgLineTo(nvg, x.getValue() + width.getValue() - NUMBER2, y.getValue() + NUMBER2);
-		nvgLineTo(nvg, x.getValue() + width.getValue() - NUMBER2, y.getValue() + height.getValue() - NUMBER2);
-		nvgLineTo(nvg, x.getValue() + NUMBER2, y.getValue() + height.getValue() - NUMBER2);
-		nvgLineTo(nvg, x.getValue() + NUMBER2, y.getValue() + NUMBER2);
-		nvgFillColor(nvg, ANOTHER_GREY_Color);
-		nvgFill(nvg);
-
-		nvgBeginPath(nvg);
-		nvgMoveTo(nvg, x.getValue() + width.getValue(), y.getValue() + height.getValue());
-		nvgLineTo(nvg, x.getValue(), y.getValue() + height.getValue());
-		nvgLineTo(nvg, x.getValue(), y.getValue() + height.getValue() - NUMBER3);
-		nvgLineTo(nvg, x.getValue() + width.getValue(), y.getValue() + height.getValue() - NUMBER3);
-		nvgLineTo(nvg, x.getValue() + width.getValue(), y.getValue() + height.getValue());
-		nvgFillColor(nvg, Darker_GREY_Color);
-		nvgFill(nvg);
+		buttonBorder(nvg, x.getValue(), y.getValue(), width.getValue(), height.getValue());
 
 		int cursorX = Display.currentDisplay.getMouseX();
 		int cursorY = Display.currentDisplay.getMouseY();

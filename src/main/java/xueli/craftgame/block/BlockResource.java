@@ -6,14 +6,19 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.lwjgl.nanovg.NVGColor;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
-import org.lwjgl.nanovg.NVGColor;
 import xueli.craftgame.block.model.Models;
-import xueli.gamengine.resource.*;
+import xueli.gamengine.resource.GuiResource;
+import xueli.gamengine.resource.IResource;
+import xueli.gamengine.resource.LangManager;
+import xueli.gamengine.resource.TextureAtlas;
+import xueli.gamengine.resource.TextureManager;
 import xueli.gamengine.utils.Logger;
 import xueli.gamengine.utils.vector.Vector2s;
 import xueli.gamengine.view.GUIProgressBar;
@@ -124,7 +129,7 @@ public class BlockResource extends IResource {
 			NVGColor mapColor = GuiResource.loadColor(blockJsonObject.getAsJsonArray("map_color"));
 			boolean isAlpha = blockJsonObject.has("isAlpha") && blockJsonObject.get("isAlpha").getAsBoolean();
 
-			BlockData blockData = new BlockData(namespace, name, blockType, destroyTime, textures,mapColor,isAlpha,
+			BlockData blockData = new BlockData(namespace, name, blockType, destroyTime, textures, mapColor, isAlpha,
 					Models.getModel(modelName, renderArgs));
 			blockDatas.put(namespace, blockData);
 

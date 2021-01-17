@@ -1,6 +1,7 @@
 package xueli.craftgame.view;
 
 import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgCircle;
 import static org.lwjgl.nanovg.NanoVG.nvgFill;
 import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
 import static org.lwjgl.nanovg.NanoVG.nvgRect;
@@ -12,7 +13,7 @@ import xueli.craftgame.CraftGame;
 import xueli.craftgame.world.WorldLogic;
 import xueli.gamengine.view.View;
 
-public abstract class InGameHUDView extends View {
+public abstract class InGameView extends View {
 
 	private static NVGColor backgroundColor = NVGColor.create();
 
@@ -24,7 +25,7 @@ public abstract class InGameHUDView extends View {
 	protected CraftGame game;
 	protected WorldLogic logic;
 
-	public InGameHUDView(WorldLogic logic, CraftGame game) {
+	public InGameView(WorldLogic logic, CraftGame game) {
 		super("InGameView");
 		this.game = game;
 		this.logic = logic;
@@ -71,6 +72,13 @@ public abstract class InGameHUDView extends View {
 		float y = (game.getDisplay().getHeight() - height) / 2.0f;
 		drawBox(x, y, width, height, lineColor, inboxColor, lineWidth, nvg);
 
+	}
+
+	protected void drawPoint(float x, float y, NVGColor color, long nvg) {
+		nvgBeginPath(nvg);
+		nvgFillColor(nvg, color);
+		nvgCircle(nvg, x, y, 1.0f);
+		nvgFill(nvg);
 	}
 
 	public abstract void onClick(float x, float y, int button);

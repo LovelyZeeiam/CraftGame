@@ -3,6 +3,7 @@ package xueli.craftgame.block;
 import java.util.ArrayList;
 
 import org.lwjgl.nanovg.NVGColor;
+
 import xueli.craftgame.block.model.IModel;
 import xueli.craftgame.world.Chunk;
 import xueli.craftgame.world.World;
@@ -25,7 +26,8 @@ public class BlockData {
 
 	private IModel model;
 
-	public BlockData(String namespace, String blockName, BlockType type, long destroyTime, Vector2s[] textures, NVGColor mapColor, boolean isAlpha, IModel model) {
+	public BlockData(String namespace, String blockName, BlockType type, long destroyTime, Vector2s[] textures,
+			NVGColor mapColor, boolean isAlpha, IModel model) {
 		this.namespace = namespace;
 		this.blockName = blockName;
 		this.type = type;
@@ -65,6 +67,10 @@ public class BlockData {
 		return isAlpha;
 	}
 
+	public NVGColor getMapColor() {
+		return mapColor;
+	}
+
 	public void setListener(BlockListener listener) {
 		this.listener = listener;
 
@@ -75,8 +81,8 @@ public class BlockData {
 	}
 
 	public int getDrawData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
-						   TextureAtlas blockTextureAtlas, Chunk chunk, World world) {
-		return model.getRenderCubeData(buffer, data, x, y, z, face, blockTextureAtlas,chunk, world);
+			TextureAtlas blockTextureAtlas, Chunk chunk, World world) {
+		return model.getRenderCubeData(buffer, data, x, y, z, face, blockTextureAtlas, chunk, world);
 	}
 
 }

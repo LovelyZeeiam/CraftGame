@@ -1,8 +1,9 @@
 package xueli.craftgame.world;
 
-import java.lang.reflect.Array;
 import java.nio.FloatBuffer;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.entity.Player;
@@ -34,6 +35,22 @@ public class World {
 
 	public CubeWorldCollider getCollider() {
 		return collider;
+	}
+
+	public int getHeight(int x, int z) {
+		ChunkPos cp = getChunkPosFromBlock(x, z);
+
+		int xInChunk = x - (cp.getX() << Chunk.size_yiwei);
+		int zInChunk = z - (cp.getZ() << Chunk.size_yiwei);
+
+		if (tempChunk == null || cp.getX() != tempChunk.chunkX || cp.getZ() != tempChunk.chunkZ) {
+			long key = MathUtils.vert2ToLong(cp.getX(), cp.getZ());
+			tempChunk = chunks.get(key);
+
+		}
+		if (tempChunk == null)
+			return -1;
+		return tempChunk.heightMap[xInChunk][zInChunk];
 	}
 
 	public Tile getBlock(int x, int y, int z) {
@@ -147,7 +164,7 @@ public class World {
 					Chunk chunk = getChunk(x, z);
 					if (chunk != null) {
 						drawChunk.add(chunk);
-					}  else {
+					} else {
 						// provider.postGenChunk(x, z);
 
 					}
@@ -178,7 +195,7 @@ public class World {
 		ArrayList<Chunk> drawChunk = getDrawChunks(player, draw_distance);
 		int vertCount = 0;
 
-		for(Chunk chunk : drawChunk) {
+		for (Chunk chunk : drawChunk) {
 			chunk.update(textureAtlas);
 			vertCount += chunk.getVertCount();
 			drawData.put(chunk.getDrawBuffer().getData());

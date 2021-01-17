@@ -31,14 +31,13 @@ public class Tile {
 		return listener;
 	}
 
-	public int getDrawData(int x, int y, int z, byte face, TextureAtlas blockTextureAtlas, FloatList buffer, World world, Chunk chunk) {
+	public int getDrawData(int x, int y, int z, byte face, TextureAtlas blockTextureAtlas, FloatList buffer,
+			World world, Chunk chunk) {
 		return data.getDrawData(buffer, this.data, x, y, z, face, blockTextureAtlas, chunk, world);
 	}
 
 	public ArrayList<AABB> getAabbs() {
 		return data.getAabbs();
 	}
-
-
 
 }

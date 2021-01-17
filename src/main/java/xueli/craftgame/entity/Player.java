@@ -7,7 +7,6 @@ import xueli.craftgame.block.BlockListener;
 import xueli.craftgame.block.BlockResource;
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.world.BlockPos;
-import xueli.craftgame.world.CubeWorldCollider;
 import xueli.craftgame.world.World;
 import xueli.gamengine.physics.AABB;
 import xueli.gamengine.utils.Display;

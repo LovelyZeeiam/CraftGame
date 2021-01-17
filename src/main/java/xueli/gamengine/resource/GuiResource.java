@@ -79,10 +79,10 @@ public class GuiResource extends IResource {
 
 	public static NVGColor loadColor(JsonArray colorArray) {
 		NVGColor backgroundColor = NVGColor.create();
-		if(colorArray.size() == 4)
+		if (colorArray.size() == 4)
 			NanoVG.nvgRGBA(colorArray.get(0).getAsByte(), colorArray.get(1).getAsByte(), colorArray.get(2).getAsByte(),
 					colorArray.get(3).getAsByte(), backgroundColor);
-		else if(colorArray.size() == 3)
+		else if (colorArray.size() == 3)
 			NanoVG.nvgRGB(colorArray.get(0).getAsByte(), colorArray.get(1).getAsByte(), colorArray.get(2).getAsByte(),
 					backgroundColor);
 		else

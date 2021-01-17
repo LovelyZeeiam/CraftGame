@@ -1,14 +1,13 @@
 package xueli.craftgame.world;
 
+import java.util.HashMap;
+import java.util.Random;
+
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.world.biome.BiomeData;
 import xueli.craftgame.world.biome.BiomeResource;
-import xueli.craftgame.world.biome.Biomes;
 import xueli.craftgame.world.generate.SimplexNoise;
 import xueli.gamengine.utils.MathUtils;
-
-import java.util.HashMap;
-import java.util.Random;
 
 public class ChunkGeneratorMaster {
 
@@ -49,12 +48,14 @@ public class ChunkGeneratorMaster {
 	private static final int SEA_LEVEL = 64;
 
 	private float generateChunkCornerHeight(int chunkX, int chunkZ) {
-		if(heightMaps.containsKey(MathUtils.vert2ToLong(chunkX, chunkZ)))
+		if (heightMaps.containsKey(MathUtils.vert2ToLong(chunkX, chunkZ)))
 			return heightMaps.get(MathUtils.vert2ToLong(chunkX, chunkZ));
-		double perlinNoise = (SimplexNoise.noise((chunkX * 23521.0) % seed, (chunkZ * 1232521.0) % seed) + 1.0) * 0.5;
+		double perlinNoise = (SimplexNoise.noise(((chunkX * 23521.0) % seed) / 10.0f,
+				((chunkZ * 1232521.0) % seed) / 10.0f) + 1.0) * 0.5;
 		int allCount = BiomeResource.biomes.size();
 		int chosenId = (int) (allCount * perlinNoise);
-		if(chosenId >= allCount) chosenId = allCount - 1;
+		if (chosenId >= allCount)
+			chosenId = allCount - 1;
 
 		BiomeData[] datas = new BiomeData[allCount];
 		BiomeResource.biomes.values().toArray(datas);
@@ -71,7 +72,7 @@ public class ChunkGeneratorMaster {
 	public Chunk normal(int chunkX, int chunkZ) {
 		// 生成区块的最小的一个角的高度
 		float y1 = generateChunkCornerHeight(chunkX, chunkZ);
-		float y2 = generateChunkCornerHeight(chunkX + 1,chunkZ);
+		float y2 = generateChunkCornerHeight(chunkX + 1, chunkZ);
 		float y3 = generateChunkCornerHeight(chunkX, chunkZ + 1);
 		float y4 = generateChunkCornerHeight(chunkX + 1, chunkZ + 1);
 
@@ -88,10 +89,10 @@ public class ChunkGeneratorMaster {
 
 				int y_max = (int) MathUtils.interpolate(v1, v2, (float) z / Chunk.size);
 
-				int bedrock_height = (int) (Math.random()* 6 + 2);
+				int bedrock_height = (int) (Math.random() * 6 + 2);
 				int dirt_height = (int) (Math.random() * 4 + 2);
 
-				for(int y = 0;y < bedrock_height; y++) {
+				for (int y = 0; y < bedrock_height; y++) {
 					Tile block = new Tile(biome.getBlocks()[3]);
 					chunk.blockState[x][y][z] = block;
 
@@ -103,7 +104,7 @@ public class ChunkGeneratorMaster {
 
 				}
 
-				for(int y = y_max - dirt_height;y < y_max;y++){
+				for (int y = y_max - dirt_height; y < y_max; y++) {
 					Tile block = new Tile(biome.getBlocks()[1]);
 					chunk.blockState[x][y][z] = block;
 
@@ -115,14 +116,14 @@ public class ChunkGeneratorMaster {
 				chunk.heightMap[x][z] = y_max;
 
 				while (chunk.heightMap[x][z] < SEA_LEVEL) {
-					chunk.setBlock(x,chunk.heightMap[x][z]+1,z,new Tile("craftgame:water"));
+					chunk.setBlock(x, chunk.heightMap[x][z] + 1, z, new Tile("craftgame:water"));
 				}
 
 			}
 		}
 
 		// 区块生成之后
-		if(biome.getGenerator() != null)
+		if (biome.getGenerator() != null)
 			biome.getGenerator().postGenerate(world, chunk);
 
 		return chunk;
