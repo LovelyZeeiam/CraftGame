@@ -1,7 +1,7 @@
 package xueli.craftgame.view;
 
 import xueli.craftgame.CraftGame;
-import xueli.craftgame.WorldLogic;
+import xueli.craftgame.world.WorldLogic;
 import xueli.gamengine.utils.Time;
 import xueli.gamengine.utils.Vector;
 import xueli.gamengine.view.GuiColor;

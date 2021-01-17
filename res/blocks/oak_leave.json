@@ -4,11 +4,15 @@
   "block": {
     "type": "Nature",
     "destroyTime": 1000,
-    "texture": "block.oak_leave.carried",
+    "texture": "block.oak_leave",
     "map_color": [
       20,220,20
     ],
-    "isAlpha": true
+    "isAlpha": true,
+    "model": "leaf",
+    "renderer_args": {
+
+    }
 
   }
 

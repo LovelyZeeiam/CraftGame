@@ -24,7 +24,7 @@ import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NanoVG;
 
 import xueli.craftgame.CraftGame;
-import xueli.craftgame.WorldLogic;
+import xueli.craftgame.world.WorldLogic;
 import xueli.craftgame.block.BlockData;
 import xueli.craftgame.block.BlockResource;
 import xueli.craftgame.block.BlockReviewGenerator;

@@ -37,7 +37,9 @@ public class BiomeResource extends IResource {
         BiomeData data = gson.fromJson(root.get("biomes"), BiomeData.class);
         data.name = name;
 
-        NanoVG.nvgRGB(data.mapcolor[0],data.mapcolor[1],data.mapcolor[2], data.mapcolor_nvg);
+        NanoVG.nvgRGB(data.map_color[0],data.map_color[1],data.map_color[2], data.map_color_nvg);
+        NanoVG.nvgRGB(data.water_color[0],data.water_color[1],data.water_color[2], data.water_color_nvg);
+        NanoVG.nvgRGB(data.leaves_color[0],data.leaves_color[1],data.leaves_color[2], data.leaves_color_nvg);
 
         biomes.put(namespace, data);
         Logger.info("Biomes: read Biome Defination file: " + f.getName());

@@ -12,6 +12,12 @@
     ],
     "map_color": [
       0,255,0
+    ],
+    "water_color": [
+      0,0,255
+    ],
+    "leaves_color": [
+      0,200,0
     ]
   }
 }

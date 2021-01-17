@@ -11,7 +11,9 @@ public class Models {
 	private static HashMap<String, Class<? extends IModel>> models = new HashMap<>();
 
 	static {
-		models.put("cube", BlockModel.class);
+		models.put("cube", ModelCube.class);
+		models.put("water", ModelWater.class);
+		models.put("leaf", ModelLeaf.class);
 
 	}
 

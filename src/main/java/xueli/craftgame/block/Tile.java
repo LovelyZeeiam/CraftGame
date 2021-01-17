@@ -2,6 +2,8 @@ package xueli.craftgame.block;
 
 import java.util.ArrayList;
 
+import xueli.craftgame.world.Chunk;
+import xueli.craftgame.world.World;
 import xueli.gamengine.physics.AABB;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.FloatList;
@@ -29,8 +31,8 @@ public class Tile {
 		return listener;
 	}
 
-	public int getDrawData(int x, int y, int z, byte face, TextureAtlas blockTextureAtlas, FloatList buffer) {
-		return data.getDrawData(buffer, this.data, x, y, z, face, blockTextureAtlas);
+	public int getDrawData(int x, int y, int z, byte face, TextureAtlas blockTextureAtlas, FloatList buffer, World world, Chunk chunk) {
+		return data.getDrawData(buffer, this.data, x, y, z, face, blockTextureAtlas, chunk, world);
 	}
 
 	public ArrayList<AABB> getAabbs() {

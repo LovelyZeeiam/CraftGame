@@ -13,9 +13,13 @@ public class BiomeData {
     private int[] height;
     private float noise_stretch;
     private String[] blocks = new String[4];
-    byte[] mapcolor = new byte[3];
+    byte[] map_color = new byte[3];
+    byte[] water_color = new byte[3];
+    byte[] leaves_color = new byte[3];
 
-    NVGColor mapcolor_nvg = NVGColor.create();
+    NVGColor map_color_nvg = NVGColor.create();
+    NVGColor water_color_nvg = NVGColor.create();
+    NVGColor leaves_color_nvg = NVGColor.create();
     private IChunkGenerator generator;
 
     public int[] getHeight() {
@@ -26,8 +30,8 @@ public class BiomeData {
         return noise_stretch;
     }
 
-    public NVGColor getMapcolor_nvg() {
-        return mapcolor_nvg;
+    public NVGColor getMap_color_nvg() {
+        return map_color_nvg;
     }
 
     public void setGenerator(IChunkGenerator generator) {
@@ -46,13 +50,21 @@ public class BiomeData {
         return (int) (new Random().nextFloat() * (height[1] - height[0]) + height[0]);
     }
 
+    public NVGColor getWater_color_nvg() {
+        return water_color_nvg;
+    }
+
+    public NVGColor getLeaves_color_nvg() {
+        return leaves_color_nvg;
+    }
+
     @Override
     public String toString() {
         return "BiomeData{" +
                 "name='" + name + '\'' +
                 ", height=" + Arrays.toString(height) +
                 ", noise_stretch=" + noise_stretch +
-                ", mapcolor=" + Arrays.toString(mapcolor) +
+                ", mapcolor=" + Arrays.toString(map_color) +
                 '}';
     }
 

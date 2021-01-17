@@ -153,7 +153,7 @@ public class TextureManager implements Closeable {
 				}
 
 				BufferedImage image = new BufferedImage(singlePictureSize * length, singlePictureSize * length,
-						picture_type);
+						BufferedImage.TYPE_3BYTE_BGR);
 
 				count = 0;
 				for (; count < size; ++count) {

@@ -1,14 +1,15 @@
 package xueli.craftgame.world;
 
+import java.lang.reflect.Array;
 import java.nio.FloatBuffer;
-import java.util.HashMap;
+import java.util.*;
 
-import xueli.craftgame.WorldLogic;
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.entity.Player;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.MathUtils;
 import xueli.gamengine.utils.MatrixHelper;
+import xueli.gamengine.utils.vector.Vector2i;
 
 public class World {
 
@@ -134,31 +135,54 @@ public class World {
 
 	}
 
-	public int draw(TextureAtlas textureAtlas, Player player, FloatBuffer drawData, int draw_distance) {
+	private ArrayList<Chunk> getDrawChunks(Player player, int draw_distance) {
 		ChunkPos chunkPos = getChunkPosFromBlock((int) player.pos.x, (int) player.pos.z);
-
-		int vertCount = 0;
+		// 将要绘制的区块成列表
+		ArrayList<Chunk> drawChunk = new ArrayList<>();
 
 		for (int x = chunkPos.getX() - draw_distance; x < chunkPos.getX() + draw_distance; x++) {
 			for (int z = chunkPos.getZ() - draw_distance; z < chunkPos.getZ() + draw_distance; z++) {
 				// long key = MathUtils.vert2ToLong(x, z);
-				Chunk chunk = getChunk(x, z);
-				if (chunk != null) {
-					if (MatrixHelper.isChunkInFrustum(x, Chunk.height, z)) {
-						chunk.update(textureAtlas);
-						vertCount += chunk.getVertCount();
-						drawData.put(chunk.getDrawBuffer().getData());
+				if (MatrixHelper.isChunkInFrustum(x, Chunk.height, z)) {
+					Chunk chunk = getChunk(x, z);
+					if (chunk != null) {
+						drawChunk.add(chunk);
+					}  else {
+						// provider.postGenChunk(x, z);
 
 					}
-				} else {
-					// provider.postGenChunk(x, z);
-
 				}
-
 			}
 		}
 
-		// System.out.println(vertCount);
+		// 玩家坐标的整数值
+		int playerX = (int) player.pos.x;
+		int playerZ = (int) player.pos.z;
+
+		// 根据离玩家的远近排序
+		Collections.sort(drawChunk, (c1, c2) -> {
+			// 区块中心二维坐标
+			Vector2i c1vec = c1.getChunkCenter2DPosition();
+			Vector2i c2vec = c2.getChunkCenter2DPosition();
+
+			// 区块中心到玩家的二维距离
+			double c1dis = Math.pow(c1vec.x - playerX, 2) + Math.pow(c1vec.y - playerZ, 2);
+			double c2dis = Math.pow(c2vec.x - playerX, 2) + Math.pow(c2vec.y - playerZ, 2);
+			return (int) (c2dis - c1dis);
+		});
+
+		return drawChunk;
+	}
+
+	public int draw(TextureAtlas textureAtlas, Player player, FloatBuffer drawData, int draw_distance) {
+		ArrayList<Chunk> drawChunk = getDrawChunks(player, draw_distance);
+		int vertCount = 0;
+
+		for(Chunk chunk : drawChunk) {
+			chunk.update(textureAtlas);
+			vertCount += chunk.getVertCount();
+			drawData.put(chunk.getDrawBuffer().getData());
+		}
 
 		return vertCount;
 	}

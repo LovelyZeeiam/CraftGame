@@ -9,7 +9,7 @@ import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NanoVG;
 
 import xueli.craftgame.CraftGame;
-import xueli.craftgame.WorldLogic;
+import xueli.craftgame.world.WorldLogic;
 import xueli.gamengine.view.View;
 
 public abstract class InGameHUDView extends View {

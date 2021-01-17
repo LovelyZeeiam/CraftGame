@@ -3,6 +3,7 @@ package xueli.craftgame;
 import org.lwjgl.glfw.GLFW;
 
 import xueli.craftgame.block.BlockResource;
+import xueli.craftgame.world.WorldLogic;
 import xueli.craftgame.world.biome.BiomeResource;
 import xueli.craftgame.world.biome.Biomes;
 import xueli.gamengine.IGame;

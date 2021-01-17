@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.lwjgl.nanovg.NVGColor;
 import xueli.craftgame.block.model.IModel;
+import xueli.craftgame.world.Chunk;
+import xueli.craftgame.world.World;
 import xueli.gamengine.physics.AABB;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.FloatList;
@@ -73,8 +75,8 @@ public class BlockData {
 	}
 
 	public int getDrawData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
-			TextureAtlas blockTextureAtlas) {
-		return model.getRenderData(buffer, data, x, y, z, face, blockTextureAtlas);
+						   TextureAtlas blockTextureAtlas, Chunk chunk, World world) {
+		return model.getRenderCubeData(buffer, data, x, y, z, face, blockTextureAtlas,chunk, world);
 	}
 
 }
