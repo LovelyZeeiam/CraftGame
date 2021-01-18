@@ -6,6 +6,7 @@ import java.util.Random;
 import org.lwjgl.nanovg.NVGColor;
 
 import xueli.craftgame.world.generate.IChunkGenerator;
+import xueli.gamengine.utils.Color;
 
 public class BiomeData {
 
@@ -17,10 +18,9 @@ public class BiomeData {
 	byte[] map_color = new byte[3];
 	byte[] water_color = new byte[3];
 	byte[] leaves_color = new byte[3];
-
-	NVGColor map_color_nvg = NVGColor.create();
-	NVGColor water_color_nvg = NVGColor.create();
-	NVGColor leaves_color_nvg = NVGColor.create();
+	
+	Color map_color_wrapper, water_color_wrapper, leaves_color_wrapper;
+	
 	private IChunkGenerator generator;
 
 	public int[] getHeight() {
@@ -32,7 +32,7 @@ public class BiomeData {
 	}
 
 	public NVGColor getMap_color_nvg() {
-		return map_color_nvg;
+		return map_color_wrapper.getNVGColor();
 	}
 
 	public void setGenerator(IChunkGenerator generator) {
@@ -52,11 +52,11 @@ public class BiomeData {
 	}
 
 	public NVGColor getWater_color_nvg() {
-		return water_color_nvg;
+		return water_color_wrapper.getNVGColor();
 	}
 
 	public NVGColor getLeaves_color_nvg() {
-		return leaves_color_nvg;
+		return leaves_color_wrapper.getNVGColor();
 	}
 
 	@Override

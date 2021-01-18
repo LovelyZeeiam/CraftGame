@@ -76,6 +76,14 @@ public class GuiResource extends IResource {
 		}
 		return align;
 	}
+	
+	public static byte[] loadColorToByteArray(JsonArray color) {
+		byte[] array = new byte[color.size()];
+		for(int i = 0;i < array.length;i++) {
+			array[i] = color.get(i).getAsByte();
+		}
+		return array;
+	}
 
 	public static NVGColor loadColor(JsonArray colorArray) {
 		NVGColor backgroundColor = NVGColor.create();

@@ -126,7 +126,7 @@ public class BlockResource extends IResource {
 				renderArgs = blockJsonObject.getAsJsonObject("renderer_args");
 			}
 
-			NVGColor mapColor = GuiResource.loadColor(blockJsonObject.getAsJsonArray("map_color"));
+			byte[] mapColor = GuiResource.loadColorToByteArray(blockJsonObject.getAsJsonArray("map_color"));
 			boolean isAlpha = blockJsonObject.has("isAlpha") && blockJsonObject.get("isAlpha").getAsBoolean();
 
 			BlockData blockData = new BlockData(namespace, name, blockType, destroyTime, textures, mapColor, isAlpha,

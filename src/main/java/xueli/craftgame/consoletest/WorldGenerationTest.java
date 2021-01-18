@@ -1,6 +1,7 @@
 package xueli.craftgame.consoletest;
 
 import xueli.craftgame.block.BlockResource;
+import xueli.craftgame.world.biome.BiomeResource;
 import xueli.gamengine.resource.LangManager;
 import xueli.gamengine.utils.Logger;
 
@@ -18,6 +19,12 @@ public class WorldGenerationTest implements Runnable {
 
 		BlockResource blockRes = new BlockResource("res/", lang);
 		blockRes.load();
+		
+		BiomeResource biomeRes = new BiomeResource("res/", lang);
+		biomeRes.load();
+		
+		
+		
 
 	}
 

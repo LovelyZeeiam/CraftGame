@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 
 import xueli.gamengine.resource.IResource;
 import xueli.gamengine.resource.LangManager;
+import xueli.gamengine.utils.Color;
 import xueli.gamengine.utils.Logger;
 
 public class BiomeResource extends IResource {
@@ -42,10 +43,10 @@ public class BiomeResource extends IResource {
 		BiomeData data = gson.fromJson(root.get("biomes"), BiomeData.class);
 		data.name = name;
 
-		NanoVG.nvgRGB(data.map_color[0], data.map_color[1], data.map_color[2], data.map_color_nvg);
-		NanoVG.nvgRGB(data.water_color[0], data.water_color[1], data.water_color[2], data.water_color_nvg);
-		NanoVG.nvgRGB(data.leaves_color[0], data.leaves_color[1], data.leaves_color[2], data.leaves_color_nvg);
-
+		data.leaves_color_wrapper = new Color(data.leaves_color);
+		data.map_color_wrapper = new Color(data.map_color);
+		data.water_color_wrapper = new Color(data.water_color);
+		
 		biomes.put(namespace, data);
 		Logger.info("Biomes: read Biome Defination file: " + f.getName());
 

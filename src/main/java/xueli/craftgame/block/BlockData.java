@@ -9,6 +9,7 @@ import xueli.craftgame.world.Chunk;
 import xueli.craftgame.world.World;
 import xueli.gamengine.physics.AABB;
 import xueli.gamengine.resource.TextureAtlas;
+import xueli.gamengine.utils.Color;
 import xueli.gamengine.utils.FloatList;
 import xueli.gamengine.utils.vector.Vector2s;
 
@@ -19,7 +20,7 @@ public class BlockData {
 	private BlockType type;
 	private long destroyTime;
 	private Vector2s[] textures;
-	private NVGColor mapColor;
+	private Color mapColor;
 	private boolean isAlpha;
 
 	private BlockListener listener = new BlockListener();
@@ -27,15 +28,16 @@ public class BlockData {
 	private IModel model;
 
 	public BlockData(String namespace, String blockName, BlockType type, long destroyTime, Vector2s[] textures,
-			NVGColor mapColor, boolean isAlpha, IModel model) {
+			byte[] mapColor, boolean isAlpha, IModel model) {
 		this.namespace = namespace;
 		this.blockName = blockName;
 		this.type = type;
 		this.destroyTime = destroyTime;
 		this.textures = textures;
 		this.model = model;
-		this.mapColor = mapColor;
+		this.mapColor = new Color(mapColor);
 		this.isAlpha = isAlpha;
+		
 
 	}
 
@@ -68,7 +70,11 @@ public class BlockData {
 	}
 
 	public NVGColor getMapColor() {
-		return mapColor;
+		return mapColor.getNVGColor();
+	}
+	
+	public byte[] getColorArray() {
+		return mapColor.getColor();
 	}
 
 	public void setListener(BlockListener listener) {
