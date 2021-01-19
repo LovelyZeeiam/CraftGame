@@ -16,6 +16,7 @@ public class World {
 
 	private static Chunk tempChunk;
 	private WorldLogic worldLogic;
+	private ChunkGeneratorMaster gen;
 	volatile HashMap<Long, Chunk> chunks = new HashMap<Long, Chunk>();
 
 	private CubeWorldCollider collider;
@@ -25,14 +26,27 @@ public class World {
 
 		collider = new CubeWorldCollider(this);
 
-		ChunkGeneratorMaster generator = new ChunkGeneratorMaster(this);
+		gen = new ChunkGeneratorMaster(this);
 
 		for (int i = 0; i < 12; i++)
 			for (int q = 0; q < 12; q++)
-				chunks.put(MathUtils.vert2ToLong(i, q), generator.normal(i, q));
+				chunks.put(MathUtils.vert2ToLong(i, q), gen.normal(i, q));
 
 	}
 
+	public World() {
+		gen = new ChunkGeneratorMaster(this);
+		
+	}
+
+	public Chunk requireGenChunk(int x, int z) {
+		if(chunks.containsKey(MathUtils.vert2ToLong(x, z)))
+			return chunks.get(MathUtils.vert2ToLong(x, z));
+		Chunk chunk = gen.normal(x, z);
+		chunks.put(MathUtils.vert2ToLong(x, z), gen.normal(x, z));
+		return chunk;
+	}
+	
 	public CubeWorldCollider getCollider() {
 		return collider;
 	}

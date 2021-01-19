@@ -1,8 +1,11 @@
 package xueli.craftgame.consoletest;
 
 import xueli.craftgame.block.BlockResource;
+import xueli.craftgame.world.Chunk;
+import xueli.craftgame.world.World;
 import xueli.craftgame.world.biome.BiomeResource;
 import xueli.gamengine.resource.LangManager;
+import xueli.gamengine.utils.Color;
 import xueli.gamengine.utils.Logger;
 
 public class WorldGenerationTest implements Runnable {
@@ -23,6 +26,10 @@ public class WorldGenerationTest implements Runnable {
 		BiomeResource biomeRes = new BiomeResource("res/", lang);
 		biomeRes.load();
 		
+		World world = new World();
+		Chunk chunk = world.requireGenChunk(0, 0);
+		chunk.generateMap();
+		Color[][] map = chunk.getColorMap();
 		
 		
 

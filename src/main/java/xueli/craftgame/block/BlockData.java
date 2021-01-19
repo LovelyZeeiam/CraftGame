@@ -69,8 +69,12 @@ public class BlockData {
 		return isAlpha;
 	}
 
-	public NVGColor getMapColor() {
+	public NVGColor getMapColorNVG() {
 		return mapColor.getNVGColor();
+	}
+	
+	public Color getMapColor() {
+		return mapColor;
 	}
 	
 	public byte[] getColorArray() {

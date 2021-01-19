@@ -117,7 +117,7 @@ public class HUDView extends InGameView {
 			for (int z = ((int) playerZ - 50); z < ((int) playerZ + 50); z++) {
 				Tile tile = logic.getWorld().getBlock(x, logic.getWorld().getHeight(x, z), z);
 				if (tile != null) {
-					NVGColor color = tile.data.getMapColor();
+					NVGColor color = tile.data.getMapColorNVG();
 
 					int blockPlayerXDistance = x - (int) playerX;
 					int blockPlayerZDistance = z - (int) playerZ;

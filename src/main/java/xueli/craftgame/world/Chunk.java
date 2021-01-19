@@ -1,9 +1,13 @@
 package xueli.craftgame.world;
 
+import java.util.HashMap;
+
 import xueli.craftgame.block.BlockFace;
+import xueli.craftgame.block.BlockParameters;
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.world.biome.BiomeData;
 import xueli.gamengine.resource.TextureAtlas;
+import xueli.gamengine.utils.Color;
 import xueli.gamengine.utils.FloatList;
 import xueli.gamengine.utils.Time;
 import xueli.gamengine.utils.vector.Vector2i;
@@ -12,10 +16,13 @@ public class Chunk {
 
 	public static final int size_yiwei = 4, height_yiwei = 8;
 	public static final int size = 1 << size_yiwei, height = 1 << height_yiwei;
-	public int[][] heightMap = new int[size][size];
-	public boolean needRebuild = true;
+	
 	public int chunkX, chunkZ;
+	
+	public int[][] heightMap = new int[size][size];
 	Tile[][][] blockState = new Tile[size][height][size];
+	
+	public boolean needRebuild = true;
 	private World world;
 	private FloatList buffer = new FloatList(500000);
 	private FloatList bufferForAlphaDraw = new FloatList(500000);
@@ -23,12 +30,16 @@ public class Chunk {
 
 	private BiomeData biome;
 	private long lastUsedTime;
+	
+	private Color[][] colorMap;
+	private HashMap<BlockPos, BlockParameters> blockParams = new HashMap<>();
 
 	public Chunk(int chunkX, int chunkZ, World world, BiomeData biome) {
 		this.chunkX = chunkX;
 		this.chunkZ = chunkZ;
 		this.world = world;
 		this.biome = biome;
+		this.colorMap = new Color[size][size];
 
 	}
 
@@ -44,6 +55,9 @@ public class Chunk {
 			for (int x = 0; x < size; x++) {
 				for (int z = 0; z < size; z++) {
 					int height = heightMap[x][z];
+					
+					// TODO: generate map
+					
 					for (int y = 0; y <= height; y++) {
 						Tile block = blockState[x][y][z];
 						if (block != null) {
@@ -120,6 +134,22 @@ public class Chunk {
 			}
 		}
 		needRebuild = false;
+	}
+	
+	public void generateMap() {
+		for(int x = 0; x < size;x ++)
+			for(int z = 0;z < size; z++) {
+				int height = this.heightMap[x][z];
+				Tile tile = this.getBlock(x, height, z);
+				if(tile != null)
+					this.colorMap[x][z] = tile.data.getMapColor();
+				
+			}
+		
+	}
+
+	public Color[][] getColorMap() {
+		return colorMap;
 	}
 
 	public int getVertCount() {
