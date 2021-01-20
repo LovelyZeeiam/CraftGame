@@ -1,5 +1,11 @@
 package xueli.craftgame.consoletest;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import xueli.craftgame.block.BlockResource;
 import xueli.craftgame.world.Chunk;
 import xueli.craftgame.world.World;
@@ -31,7 +37,21 @@ public class WorldGenerationTest implements Runnable {
 		chunk.generateMap();
 		Color[][] map = chunk.getColorMap();
 		
+		BufferedImage image = new BufferedImage(Chunk.size,Chunk.size,BufferedImage.TYPE_3BYTE_BGR);
+		for(int u = 0; u < Chunk.size; u++) {
+			for(int v = 0; v < Chunk.size; v++) {
+				byte[] color = map[u][v].getColor();
+				image.setRGB(v, u, 
+					color[2] << 16 | color[1] << 8 | color[0]
+				);
+			}
+		}
 		
+		try {
+			ImageIO.write(image, "png", new File("map.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
