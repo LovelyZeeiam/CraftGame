@@ -6,6 +6,8 @@
 			"path": "textures/gui/options_background.png",
 			"flag": [ "nearest", "repeat_x", "repeat_y" ]
 		},
+
+		"ingame.gui.crossbar": "textures/gui/cross.png",
 		
 		"blocks": {
 			"block.dirt": "textures/blocks/dirt.png",

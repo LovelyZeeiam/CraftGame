@@ -114,6 +114,8 @@ public class CraftGame extends IGame {
 
 		releaseAll();
 
+		System.exit(0);
+
 	}
 
 	public class GameLoader implements Runnable {
@@ -168,8 +170,9 @@ public class CraftGame extends IGame {
 
 					queueRunningInMainThread.add(() -> viewManager.setGui("world_loading.json"));
 
+					System.gc();
+
 					worldLogic = new WorldLogic(cg);
-					worldLogic.loadLevel();
 					worldLogic.running = true;
 					new Thread(worldLogic).start();
 
@@ -191,10 +194,10 @@ public class CraftGame extends IGame {
 			esc_menu.widgets.get("back_to_game_button").onClickListener = (button, action, offsetX, offsetY) -> {
 				if (action == GLFW.GLFW_RELEASE) {
 					// 从esc界面回到游戏中
-					display.toggleMouseGrabbed();
 					viewManager.setGui((View) null);
 					worldLogic.gameGui = null;
 					worldLogic.state = State.INGAME;
+					worldLogic.toggleGuiExit();
 
 				}
 
@@ -208,6 +211,8 @@ public class CraftGame extends IGame {
 					viewManager.setGui("main_menu.json");
 
 					guiResource.loadGui("world_loading.json", langManager, true);
+
+					System.gc();
 
 				}
 

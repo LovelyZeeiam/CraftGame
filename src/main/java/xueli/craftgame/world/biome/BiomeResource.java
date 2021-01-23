@@ -42,6 +42,7 @@ public class BiomeResource extends IResource {
 		String namespace = root.get("namespace").getAsString();
 		BiomeData data = gson.fromJson(root.get("biomes"), BiomeData.class);
 		data.name = name;
+		data.namespace = namespace;
 
 		data.leaves_color_wrapper = new Color(data.leaves_color);
 		data.map_color_wrapper = new Color(data.map_color);

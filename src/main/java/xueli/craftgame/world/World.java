@@ -10,6 +10,8 @@ import xueli.craftgame.entity.Player;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.MathUtils;
 import xueli.gamengine.utils.MatrixHelper;
+import xueli.gamengine.utils.TaskManager;
+import xueli.gamengine.utils.Time;
 import xueli.gamengine.utils.vector.Vector2i;
 
 public class World {
@@ -20,17 +22,18 @@ public class World {
 	volatile HashMap<Long, Chunk> chunks = new HashMap<Long, Chunk>();
 
 	private CubeWorldCollider collider;
+	private WorldIO io;
 
 	public World(WorldLogic worldLogic) {
 		this.worldLogic = worldLogic;
 
 		collider = new CubeWorldCollider(this);
-
+		io = new WorldIO(this);
 		gen = new ChunkGeneratorMaster(this);
 
-		for (int i = 0; i < 12; i++)
-			for (int q = 0; q < 12; q++)
-				chunks.put(MathUtils.vert2ToLong(i, q), gen.normal(i, q));
+		for(int i = 0;i < 8;i++)
+		for(int m = 0;m < 8;m++)
+			requireGenChunk(i,m);
 
 	}
 
@@ -39,16 +42,23 @@ public class World {
 		
 	}
 
-	public Chunk requireGenChunk(int x, int z) {
+	public void requireGenChunk(int x, int z) {
 		if(chunks.containsKey(MathUtils.vert2ToLong(x, z)))
-			return chunks.get(MathUtils.vert2ToLong(x, z));
-		Chunk chunk = gen.normal(x, z);
-		chunks.put(MathUtils.vert2ToLong(x, z), gen.normal(x, z));
-		return chunk;
+			return;
+		io.readChunk(x,z);
+
+	}
+
+	public void requireGenChunkSync(int x, int z) {
+		io.readChunkSync(x,z);
 	}
 	
 	public CubeWorldCollider getCollider() {
 		return collider;
+	}
+
+	public ChunkGeneratorMaster getGen() {
+		return gen;
 	}
 
 	public int getHeight(int x, int z) {
@@ -107,7 +117,7 @@ public class World {
 
 	public void setBlock(BlockPos p, Tile b) {
 		if (p == null)
-			return;
+		return;
 		setBlock(p.getX(), p.getY(), p.getZ(), b);
 	}
 
@@ -161,64 +171,109 @@ public class World {
 		}
 	}
 
+	private long lastSaveTime = Time.thisTime;
+
 	public void tick(Player player) {
-		// removalChecker.tick();
+		synchronized (chunkThatNeedAdd) {
+			for(Chunk c : chunkThatNeedAdd) {
+				this.chunks.put(MathUtils.vert2ToLong(c.chunkX, c.chunkZ), c);
+				if(chunkThatHasRequired.contains(MathUtils.vert2ToLong(c.chunkX, c.chunkZ))) {
+					chunkThatHasRequired.remove(MathUtils.vert2ToLong(c.chunkX, c.chunkZ));
+				}
+			}
+			chunkThatNeedAdd.clear();
+		}
+		/*synchronized (chunkThatNeedRemove) {
+			for(Long c : chunkThatNeedRemove) {
+				if(this.chunks.containsKey(c)) {
+					this.chunks.get(c).close();
+					this.chunks.remove(c);
+				}
+			}
+			chunkThatNeedRemove.clear();
+		}
+		if(Time.thisTime - lastSaveTime > 10000) {
+			lastSaveTime = Time.thisTime;
+			io.checkSave();
+
+		}*/
 
 	}
+
+	private ArrayList<Long> chunkThatHasRequired = new ArrayList<>();
+	ArrayList<Chunk> chunkThatNeedAdd = new ArrayList<>();
+	ArrayList<Long> chunkThatNeedRemove = new ArrayList<>();
 
 	private ArrayList<Chunk> getDrawChunks(Player player, int draw_distance) {
 		ChunkPos chunkPos = getChunkPosFromBlock((int) player.pos.x, (int) player.pos.z);
 		// 将要绘制的区块成列表
 		ArrayList<Chunk> drawChunk = new ArrayList<>();
 
-		for (int x = chunkPos.getX() - draw_distance; x < chunkPos.getX() + draw_distance; x++) {
-			for (int z = chunkPos.getZ() - draw_distance; z < chunkPos.getZ() + draw_distance; z++) {
-				// long key = MathUtils.vert2ToLong(x, z);
-				if (MatrixHelper.isChunkInFrustum(x, Chunk.height, z)) {
-					Chunk chunk = getChunk(x, z);
-					if (chunk != null) {
-						drawChunk.add(chunk);
-					} else {
-						// provider.postGenChunk(x, z);
+			for (int x = chunkPos.getX() - draw_distance; x < chunkPos.getX() + draw_distance; x++) {
+				for (int z = chunkPos.getZ() - draw_distance; z < chunkPos.getZ() + draw_distance; z++) {
+					// long key = MathUtils.vert2ToLong(x, z);
+					if (MatrixHelper.isChunkInFrustum(x, Chunk.height, z)) {
+						Chunk chunk = getChunk(x, z);
+						if (chunk != null) {
+							drawChunk.add(chunk);
+						} else if (!chunkThatHasRequired.contains(MathUtils.vert2ToLong(x, z))) {
+							/*int finalX = x;
+							int finalZ = z;
+							worldLogic.getCg().queueRunningInMainThread.add(() -> chunkThatNeedAdd.add(requireGenChunk(finalX, finalZ)));
+							chunkThatHasRequired.add(MathUtils.vert2ToLong(x, z));*/
 
+						}
 					}
 				}
 			}
-		}
-
-		// 玩家坐标的整数值
-		int playerX = (int) player.pos.x;
-		int playerZ = (int) player.pos.z;
-
-		// 根据离玩家的远近排序
-		Collections.sort(drawChunk, (c1, c2) -> {
-			// 区块中心二维坐标
-			Vector2i c1vec = c1.getChunkCenter2DPosition();
-			Vector2i c2vec = c2.getChunkCenter2DPosition();
-
-			// 区块中心到玩家的二维距离
-			double c1dis = Math.pow(c1vec.x - playerX, 2) + Math.pow(c1vec.y - playerZ, 2);
-			double c2dis = Math.pow(c2vec.x - playerX, 2) + Math.pow(c2vec.y - playerZ, 2);
-			return (int) (c2dis - c1dis);
-		});
 
 		return drawChunk;
 	}
 
 	public int draw(TextureAtlas textureAtlas, Player player, FloatBuffer drawData, int draw_distance) {
-		ArrayList<Chunk> drawChunk = getDrawChunks(player, draw_distance);
 		int vertCount = 0;
+			ArrayList<Chunk> drawChunk = getDrawChunks(player, draw_distance);
 
-		for (Chunk chunk : drawChunk) {
-			chunk.update(textureAtlas);
-			vertCount += chunk.getVertCount();
-			drawData.put(chunk.getDrawBuffer().getData());
-		}
+			for (Chunk chunk : drawChunk) {
+				chunk.update(textureAtlas);
+				vertCount += chunk.getVertCount();
+				drawData.put(chunk.getDrawBuffer().getData());
+			}
 
 		return vertCount;
 	}
 
+	public int drawAlpha(TextureAtlas textureAtlas, Player player, FloatBuffer drawData, int draw_distance) {
+		int vertCount = 0;
+			ArrayList<Chunk> drawChunk = getDrawChunks(player, draw_distance);
+
+			for (Chunk chunk : drawChunk) {
+				chunk.update(textureAtlas);
+				vertCount += chunk.getVertCountForAlphaDraw();
+				drawData.put(chunk.getBufferForAlphaDraw().getData());
+			}
+
+		return vertCount;
+	}
+
+	public void saveAndLoad() {
+		io.checkSave();
+
+	}
+
+	public WorldLogic getWorldLogic() {
+		return worldLogic;
+	}
+
 	public void close() {
+		chunks.forEach((n, c) -> {
+			c.close();
+			io.saveChunk(c);
+		});
+
+		chunks.clear();
+		io.close();
+		io = null;
 
 	}
 

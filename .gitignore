@@ -5,3 +5,7 @@
 build
 
 bin
+
+# Ignore level directory and debug output
+level
+output

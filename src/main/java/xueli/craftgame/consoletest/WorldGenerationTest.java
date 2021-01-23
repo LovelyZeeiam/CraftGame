@@ -33,7 +33,8 @@ public class WorldGenerationTest implements Runnable {
 		biomeRes.load();
 		
 		World world = new World();
-		Chunk chunk = world.requireGenChunk(0, 0);
+		world.requireGenChunkSync(0, 0);
+		Chunk chunk = world.getChunk(0,0);
 		chunk.generateMap();
 		Color[][] map = chunk.getColorMap();
 		

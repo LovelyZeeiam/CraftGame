@@ -86,6 +86,10 @@ dependencies {
 
     compile group: 'slick-util', name: 'slick-util', version: '1.0.0'
 
+    compile group: 'org.iq80.leveldb', name: 'leveldb', version: '0.12'
+    compile 'com.flowpowered:flow-nbt:1.0.0'
+
+
 
 }
 

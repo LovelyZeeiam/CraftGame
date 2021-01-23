@@ -77,6 +77,12 @@ public class FloatList {
 		return this.realDataCache;
 	}
 
+	public void postDispose() {
+		this.data = null;
+		realDataCache = null;
+
+	}
+
 	@Override
 	public String toString() {
 		return Arrays.toString(getData());

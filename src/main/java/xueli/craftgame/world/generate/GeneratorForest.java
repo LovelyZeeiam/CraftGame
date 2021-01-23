@@ -22,7 +22,7 @@ public class GeneratorForest implements IChunkGenerator {
 		// 生成树的地方们
 		ArrayList<Vector2i> treePoses = new ArrayList<>();
 
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 14; i++) {
 			int posX = (int) (1 + 14 * Math.random());
 			int posZ = (int) (1 + 14 * Math.random());
 
@@ -58,7 +58,7 @@ public class GeneratorForest implements IChunkGenerator {
 			int rootY = heightMap[posX][posZ];
 
 			if (chunk.getBlock(posX, rootY - 1, posZ) != null
-					&& chunk.getBlock(posX, rootY - 1, posZ).data.getNamespace().equals("craftgame:water"))
+					&& chunk.getBlock(posX, rootY - 1, posZ).getData().getNamespace().equals("craftgame:water"))
 				continue;
 
 			chunk.setBlock(posX, rootY + 1, posZ, new Tile("craftgame:oak_log"));

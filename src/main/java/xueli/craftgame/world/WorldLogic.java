@@ -1,15 +1,11 @@
 package xueli.craftgame.world;
 
-import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
-import static org.lwjgl.nanovg.NanoVG.nvgCreateFont;
-import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_ANTIALIAS;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_DEBUG;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_STENCIL_STROKES;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgCreate;
+import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.nanovg.NanoVGGL3.*;
 import static org.lwjgl.opengl.GL11.glViewport;
 
 import java.nio.ByteBuffer;
+import java.util.HashMap;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
@@ -24,6 +20,7 @@ import xueli.craftgame.view.InGameView;
 import xueli.craftgame.view.InventoryView;
 import xueli.craftgame.world.renderer.Renderer;
 import xueli.craftgame.world.renderer.ShadowMapper;
+import xueli.gamengine.resource.Texture;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.Display;
 import xueli.gamengine.utils.GLHelper;
@@ -47,7 +44,7 @@ public class WorldLogic implements Runnable {
 	private TextureAtlas blockTextureAtlas;
 	private Shader blockRenderShader;
 
-	private int drawDistance = 5;
+	private int drawDistance = 8;
 
 	/**
 	 * frustum culling 依照从前到后的顺序排序几何体 顶点处理器基于32位浮点值工作 Fragment Shader使用16位浮点值工作
@@ -56,6 +53,7 @@ public class WorldLogic implements Runnable {
 	private Matrix4f playerMatrix = new Matrix4f();
 
 	private long nvg;
+	private HashMap<String, Integer> nvgTextures = new HashMap<>();
 
 	private InGameView ingameView;
 
@@ -69,6 +67,7 @@ public class WorldLogic implements Runnable {
 		normalRenderer = new Renderer(cg, this);
 		shadowMapper = new ShadowMapper(cg, this);
 
+		// 游戏内gui绘制
 		nvg = nvgCreate(NVG_STENCIL_STROKES | NVG_ANTIALIAS | NVG_DEBUG);
 		if (nvg == 0) {
 			Logger.error(new Throwable("[GUI] Emm, You don't want a game without gui, do u?"));
@@ -77,6 +76,12 @@ public class WorldLogic implements Runnable {
 		if (nvgCreateFont(nvg, "game", "res/fonts/Minecraft-Ascii.ttf") == -1) {
 			Logger.error("[Font] Can't create font!");
 		}
+
+		cg.getTextureManager().getTextures().forEach((e, t) -> {
+			if(e.startsWith("ingame.gui.")) {
+				nvgTextures.put(e, nvglCreateImageFromHandle(nvg, t.id, t.width, t.height, NVG_IMAGE_NEAREST));
+			}
+		});
 
 		Blocks.init(nvg, cg, (TextureAtlas) cg.getTextureManager().getTexture("blocks"));
 
@@ -91,14 +96,13 @@ public class WorldLogic implements Runnable {
 		// 创建新的世界
 		world = new World(this);
 		// 安置新的玩家
-		player = new Player(8, 150, 8, 0, 135, 0, world);
+		player = new Player(8, 10, 8, 0, 135, 0, world);
 
 	}
 
 	public void closeLevel() {
-		world.close();
-
 		// 非常草率的关闭世界
+		world.close();
 		world = null;
 		player = null;
 
@@ -125,9 +129,7 @@ public class WorldLogic implements Runnable {
 		GUIProgressBar world_loading_progressBar = (GUIProgressBar) (cg.getGuiResource()
 				.getGui("world_loading.json").widgets.get("loading_bar"));
 
-		// 提前先生成好世界的顶点数据 防止第一次绘制的时候 CPU姬突然接收到那么多数据 由于无法按时完成生成任务而无奈的让显卡姬等一等
-		// 似乎在Windows系统上面没什么用 ubuntu还好
-		world.updateVertexBuffer(blockTextureAtlas, player, drawDistance);
+		loadLevel();
 
 		world_loading_progressBar.setProgress(1.0f);
 
@@ -168,6 +170,10 @@ public class WorldLogic implements Runnable {
 
 	public Shader getBlockRenderShader() {
 		return blockRenderShader;
+	}
+
+	public HashMap<String, Integer> getNvgTextures() {
+		return nvgTextures;
 	}
 
 	public void toggleGuiExit() {
@@ -232,6 +238,29 @@ public class WorldLogic implements Runnable {
 			normalRenderer.draw(vertexCount);
 
 			GLHelper.checkGLError("World: Drawer");
+
+			blockRenderShader.unbind();
+
+		}
+
+		{
+			mappedBuffer = normalRenderer.mapBuffer();
+			vertexCount = world.drawAlpha(blockTextureAtlas, player, mappedBuffer.asFloatBuffer(), drawDistance);
+			normalRenderer.unmap();
+
+			GLHelper.checkGLError("World Alpha: Map Buffer");
+
+			blockTextureAtlas.bind();
+			GLHelper.checkGLError("World Alpha: Bind Texture");
+
+			blockRenderShader.use();
+
+			GLHelper.checkGLError("World Alpha: Bind Shader");
+
+			// 让OpenGL娘去绘制叭~
+			normalRenderer.draw(vertexCount);
+
+			GLHelper.checkGLError("World Alpha: Drawer");
 
 			blockRenderShader.unbind();
 
@@ -331,6 +360,10 @@ public class WorldLogic implements Runnable {
 		if (this.state == State.ESC_MENU)
 			ingameView = null;
 
+	}
+
+	public CraftGame getCg() {
+		return cg;
 	}
 
 	public World getWorld() {

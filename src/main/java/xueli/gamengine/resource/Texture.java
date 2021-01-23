@@ -9,6 +9,11 @@ public class Texture {
 	public boolean isPreloading = false;
 	public boolean isGUITexture = false;
 
+	/**
+	 * Only enabled when not nvg texture
+	 */
+	public int width,height;
+
 	public Texture(int id, boolean isPreloading, boolean isGuiTexture) {
 		this.id = id;
 		this.isPreloading = isPreloading;

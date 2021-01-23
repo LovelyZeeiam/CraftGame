@@ -7,6 +7,7 @@ import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
 import static org.lwjgl.nanovg.NanoVG.nvgRect;
 
 import org.lwjgl.nanovg.NVGColor;
+import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NanoVG;
 
 import xueli.craftgame.CraftGame;
@@ -16,6 +17,7 @@ import xueli.gamengine.view.View;
 public abstract class InGameView extends View {
 
 	private static NVGColor backgroundColor = NVGColor.create();
+	private static NVGPaint paint = NVGPaint.create();
 
 	static {
 		NanoVG.nvgRGBA((byte) 0, (byte) 0, (byte) 0, (byte) 150, backgroundColor);
@@ -79,6 +81,10 @@ public abstract class InGameView extends View {
 		nvgFillColor(nvg, color);
 		nvgCircle(nvg, x, y, 1.0f);
 		nvgFill(nvg);
+	}
+
+	protected static NVGPaint getPaint() {
+		return paint;
 	}
 
 	public abstract void onClick(float x, float y, int button);

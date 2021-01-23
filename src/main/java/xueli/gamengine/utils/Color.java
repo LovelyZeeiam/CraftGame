@@ -15,6 +15,7 @@ public class Color {
 	
 	public NVGColor getNVGColor() {
 		if(this.colorNVG == null) {
+			this.colorNVG = NVGColor.create();
 			if (color.length == 4)
 				NanoVG.nvgRGBA(color[0],color[1],color[2],color[3], colorNVG);
 			else if (color.length == 3)

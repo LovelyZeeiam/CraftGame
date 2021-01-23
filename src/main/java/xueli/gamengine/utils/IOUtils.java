@@ -9,6 +9,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.SeekableByteChannel;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -78,7 +79,7 @@ public class IOUtils {
 
 		String line;
 		while ((line = reader.readLine()) != null) {
-			lines.add(new String(line.getBytes(), Charset.forName("UTF-8")));
+			lines.add(new String(line.getBytes(), StandardCharsets.UTF_8));
 		}
 
 		String[] linesArray = new String[lines.size()];
@@ -95,11 +96,13 @@ public class IOUtils {
 
 		String line;
 		while ((line = reader.readLine()) != null) {
-			lines.append(new String(line.getBytes(), Charset.forName("UTF-8")) + "\n");
+			lines.append(new String(line.getBytes(), StandardCharsets.UTF_8)).append("\n");
 		}
 
 		reader.close();
 		return lines.toString();
 	}
+
+
 
 }

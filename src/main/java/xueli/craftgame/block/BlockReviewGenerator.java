@@ -63,7 +63,7 @@ public class BlockReviewGenerator {
 			int vertCount = 0;
 			FloatList list = new FloatList();
 			for (byte face = 0; face < 6; face++)
-				vertCount += data.getDrawData(list, data, 0, 0, 0, face, blockAtlasTexture, null, null);
+				vertCount += data.getDrawData(list, data, 0, 0, 0, face, blockAtlasTexture, null,null, null);
 			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, list.getData(), GL15.GL_STATIC_DRAW);
 
 			FrameBuffer buffer = new FrameBuffer();

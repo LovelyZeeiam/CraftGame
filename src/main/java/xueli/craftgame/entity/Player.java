@@ -109,7 +109,8 @@ public class Player extends Entity {
 				block_select = searching_block_pos;
 
 				Tile tile = world.getBlock(block_select.getX(), block_select.getY(), block_select.getZ());
-				tile.getListener().onLookAt(block_select.getX(), block_select.getY(), block_select.getZ(), world);
+				if(tile.getListener() != null)
+					tile.getListener().onLookAt(block_select.getX(), block_select.getY(), block_select.getZ(), world);
 
 				break;
 			}
@@ -119,7 +120,7 @@ public class Player extends Entity {
 
 	@Override
 	public float getSpeed() {
-		return 0.04f;
+		return 0.008f;
 	}
 
 	@Override

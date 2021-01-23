@@ -1,6 +1,7 @@
 package xueli.craftgame.block;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import org.lwjgl.nanovg.NVGColor;
 
@@ -91,8 +92,21 @@ public class BlockData {
 	}
 
 	public int getDrawData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
-			TextureAtlas blockTextureAtlas, Chunk chunk, World world) {
-		return model.getRenderCubeData(buffer, data, x, y, z, face, blockTextureAtlas, chunk, world);
+			TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+		return model.getRenderCubeData(buffer, data, x, y, z, face, blockTextureAtlas, params, chunk, world);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		BlockData blockData = (BlockData) o;
+		return namespace.equals(blockData.namespace) && listener.equals(blockData.listener);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(namespace, listener);
 	}
 
 }

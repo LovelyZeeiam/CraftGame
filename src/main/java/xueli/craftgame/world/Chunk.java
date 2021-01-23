@@ -2,17 +2,22 @@ package xueli.craftgame.world;
 
 import java.util.HashMap;
 
+import com.flowpowered.nbt.CompoundMap;
+import com.flowpowered.nbt.CompoundTag;
+import com.flowpowered.nbt.StringTag;
 import xueli.craftgame.block.BlockFace;
 import xueli.craftgame.block.BlockParameters;
 import xueli.craftgame.block.Tile;
+import xueli.craftgame.interfaces.Saveable;
 import xueli.craftgame.world.biome.BiomeData;
+import xueli.craftgame.world.biome.BiomeResource;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.Color;
 import xueli.gamengine.utils.FloatList;
 import xueli.gamengine.utils.Time;
 import xueli.gamengine.utils.vector.Vector2i;
 
-public class Chunk {
+public class Chunk implements Saveable {
 
 	public static final int size_yiwei = 4, height_yiwei = 8;
 	public static final int size = 1 << size_yiwei, height = 1 << height_yiwei;
@@ -20,12 +25,12 @@ public class Chunk {
 	public int chunkX, chunkZ;
 	
 	public int[][] heightMap = new int[size][size];
-	Tile[][][] blockState = new Tile[size][height][size];
+	private ChunkGrid grid = new ChunkGrid();
 	
 	public boolean needRebuild = true;
 	private World world;
-	private FloatList buffer = new FloatList(500000);
-	private FloatList bufferForAlphaDraw = new FloatList(500000);
+	private FloatList buffer;
+	private FloatList bufferForAlphaDraw;
 	private int vertCount = 0, vertCountForAlphaDraw = 0;
 
 	private BiomeData biome;
@@ -43,14 +48,31 @@ public class Chunk {
 
 	}
 
+	public Chunk(int chunkX, int chunkZ, World world, CompoundTag chunkData) {
+		this.chunkX = chunkX;
+		this.chunkZ = chunkZ;
+		this.world = world;
+		this.colorMap = new Color[size][size];
+
+		setSaveData(chunkData);
+
+	}
+
 	@WorldGLData
 	public void update(TextureAtlas blockTextureAtlas) {
 		if (needRebuild) {
+			if(buffer == null)
+				buffer = new FloatList(300000);
+			if(bufferForAlphaDraw == null)
+				bufferForAlphaDraw = new FloatList(50000);
+
 			int offset_x = chunkX << size_yiwei;
 			int offset_z = chunkZ << size_yiwei;
 
 			vertCount = 0;
+			vertCountForAlphaDraw = 0;
 			buffer.clear();
+			bufferForAlphaDraw.clear();
 
 			for (int x = 0; x < size; x++) {
 				for (int z = 0; z < size; z++) {
@@ -59,71 +81,94 @@ public class Chunk {
 					// TODO: generate map
 					
 					for (int y = 0; y <= height; y++) {
-						Tile block = blockState[x][y][z];
+						Tile block = grid.getBlock(x,y,z);
 						if (block != null) {
-							FloatList targetBuffer = buffer;
-
-							if (block.data.isAlpha()) {
-								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.LEFT,
-										blockTextureAtlas, targetBuffer, world, this);
-								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.RIGHT,
-										blockTextureAtlas, targetBuffer, world, this);
-								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.FRONT,
-										blockTextureAtlas, targetBuffer, world, this);
-								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.BACK,
-										blockTextureAtlas, targetBuffer, world, this);
-								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.BOTTOM,
-										blockTextureAtlas, targetBuffer, world, this);
-								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.TOP,
-										blockTextureAtlas, targetBuffer, world, this);
+							BlockParameters params = block.getParams();
+							if (block.getData().isAlpha()) {
+								if ((x - 1 < 0)
+										? (world.getBlock(x + offset_x - 1, y, z + offset_z) == null)
+										: (grid.getBlock(x - 1,y,z) == null)) {
+									vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.LEFT,
+											blockTextureAtlas, bufferForAlphaDraw, params,world, this);
+								}
+								if ((x + 1 >= size)
+										? (world.getBlock(x + offset_x + 1, y, z + offset_z) == null)
+										: (grid.getBlock(x + 1,y,z) == null)) {
+									vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.RIGHT,
+											blockTextureAtlas, bufferForAlphaDraw, params,world, this);
+								}
+								if ((z - 1 < 0)
+										? (world.getBlock(x + offset_x, y, z + offset_z - 1) == null)
+										: (grid.getBlock(x,y,z - 1) == null)) {
+									vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.FRONT,
+											blockTextureAtlas, bufferForAlphaDraw, params,world, this);
+								}
+								if ((z + 1 >= size)
+										? (world.getBlock(x + offset_x, y, z + offset_z + 1) == null)
+										: (grid.getBlock(x,y,z + 1) == null)) {
+									vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.BACK,
+											blockTextureAtlas, bufferForAlphaDraw,params, world, this);
+								}
+								if ((y - 1 < 0)
+										? (world.getBlock(x + offset_x, y - 1, z + offset_z) == null)
+										: (grid.getBlock(x,y - 1,z) == null)) {
+									vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.BOTTOM,
+											blockTextureAtlas, bufferForAlphaDraw,params, world, this);
+								}
+								if ((y + 1 >= Chunk.height)
+										? (world.getBlock(x + offset_x, y + 1, z + offset_z) == null)
+										: (grid.getBlock(x,y + 1,z) == null)) {
+									vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.TOP,
+											blockTextureAtlas, bufferForAlphaDraw,params, world, this);
+								}
 							} else {
 								if ((x - 1 < 0)
 										? (world.getBlock(x + offset_x - 1, y, z + offset_z) == null
-												|| world.getBlock(x + offset_x - 1, y, z + offset_z).data.isAlpha())
-										: (blockState[x - 1][y][z] == null)
-												|| (world.getBlock(x + offset_x - 1, y, z + offset_z).data.isAlpha())) {
+												|| world.getBlock(x + offset_x - 1, y, z + offset_z).getData().isAlpha())
+										: (grid.getBlock(x - 1,y,z) == null)
+												|| (world.getBlock(x + offset_x - 1, y, z + offset_z).getData().isAlpha())) {
 									vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.LEFT,
-											blockTextureAtlas, targetBuffer, world, this);
+											blockTextureAtlas, buffer, params,world, this);
 								}
 								if ((x + 1 >= size)
 										? (world.getBlock(x + offset_x + 1, y, z + offset_z) == null
-												|| world.getBlock(x + offset_x + 1, y, z + offset_z).data.isAlpha())
-										: (blockState[x + 1][y][z] == null)
-												|| (world.getBlock(x + offset_x + 1, y, z + offset_z).data.isAlpha())) {
+												|| world.getBlock(x + offset_x + 1, y, z + offset_z).getData().isAlpha())
+										: (grid.getBlock(x + 1,y,z) == null)
+												|| (world.getBlock(x + offset_x + 1, y, z + offset_z).getData().isAlpha())) {
 									vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.RIGHT,
-											blockTextureAtlas, targetBuffer, world, this);
+											blockTextureAtlas, buffer,params, world, this);
 								}
 								if ((z - 1 < 0)
 										? (world.getBlock(x + offset_x, y, z + offset_z - 1) == null
-												|| world.getBlock(x + offset_x, y, z + offset_z - 1).data.isAlpha())
-										: (blockState[x][y][z - 1] == null)
-												|| (world.getBlock(x + offset_x, y, z + offset_z - 1).data.isAlpha())) {
+												|| world.getBlock(x + offset_x, y, z + offset_z - 1).getData().isAlpha())
+										: (grid.getBlock(x,y,z - 1) == null)
+												|| (world.getBlock(x + offset_x, y, z + offset_z - 1).getData().isAlpha())) {
 									vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.FRONT,
-											blockTextureAtlas, targetBuffer, world, this);
+											blockTextureAtlas, buffer, params,world, this);
 								}
 								if ((z + 1 >= size)
 										? (world.getBlock(x + offset_x, y, z + offset_z + 1) == null
-												|| world.getBlock(x + offset_x, y, z + offset_z + 1).data.isAlpha())
-										: (blockState[x][y][z + 1] == null)
-												|| (world.getBlock(x + offset_x, y, z + offset_z + 1).data.isAlpha())) {
+												|| world.getBlock(x + offset_x, y, z + offset_z + 1).getData().isAlpha())
+										: (grid.getBlock(x,y,z + 1) == null)
+												|| (world.getBlock(x + offset_x, y, z + offset_z + 1).getData().isAlpha())) {
 									vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.BACK,
-											blockTextureAtlas, targetBuffer, world, this);
+											blockTextureAtlas, buffer,params, world, this);
 								}
 								if ((y - 1 < 0)
 										? (world.getBlock(x + offset_x, y - 1, z + offset_z) == null
-												|| world.getBlock(x + offset_x, y - 1, z + offset_z).data.isAlpha())
-										: (blockState[x][y - 1][z] == null)
-												|| (world.getBlock(x + offset_x, y - 1, z + offset_z).data.isAlpha())) {
+												|| world.getBlock(x + offset_x, y - 1, z + offset_z).getData().isAlpha())
+										: (grid.getBlock(x,y - 1,z) == null)
+												|| (world.getBlock(x + offset_x, y - 1, z + offset_z).getData().isAlpha())) {
 									vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.BOTTOM,
-											blockTextureAtlas, targetBuffer, world, this);
+											blockTextureAtlas, buffer, params,world, this);
 								}
 								if ((y + 1 >= Chunk.height)
 										? (world.getBlock(x + offset_x, y + 1, z + offset_z) == null
-												|| world.getBlock(x + offset_x, y + 1, z + offset_z).data.isAlpha())
-										: (blockState[x][y + 1][z] == null)
-												|| (world.getBlock(x + offset_x, y + 1, z + offset_z).data.isAlpha())) {
+												|| world.getBlock(x + offset_x, y + 1, z + offset_z).getData().isAlpha())
+										: (grid.getBlock(x,y + 1,z) == null)
+												|| (world.getBlock(x + offset_x, y + 1, z + offset_z).getData().isAlpha())) {
 									vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.TOP,
-											blockTextureAtlas, targetBuffer, world, this);
+											blockTextureAtlas, buffer, params,world, this);
 								}
 							}
 
@@ -133,6 +178,7 @@ public class Chunk {
 				}
 			}
 		}
+
 		needRebuild = false;
 	}
 	
@@ -142,7 +188,7 @@ public class Chunk {
 				int height = this.heightMap[x][z];
 				Tile tile = this.getBlock(x, height, z);
 				if(tile != null)
-					this.colorMap[x][z] = tile.data.getMapColor();
+					this.colorMap[x][z] = tile.getData().getMapColor();
 				
 			}
 		
@@ -158,6 +204,40 @@ public class Chunk {
 
 	public int getVertCountForAlphaDraw() {
 		return vertCountForAlphaDraw;
+	}
+
+	@Override
+	public CompoundTag getSaveData() {
+		CompoundTag tag = grid.getSaveData();
+		tag.getValue().put(new StringTag("biome", biome.getNamespace()));
+		return tag;
+	}
+
+	@Override
+	public void setSaveData(CompoundTag data) {
+		CompoundMap map = data.getValue();
+		String biomeNamespace = ((StringTag) map.get("biome")).getValue();
+		this.biome = BiomeResource.biomes.get(biomeNamespace);
+		grid.setSaveData(data);
+
+		// 初始化顶点缓存
+		if(buffer == null)
+			buffer = new FloatList(300000);
+		if(bufferForAlphaDraw == null)
+			bufferForAlphaDraw = new FloatList(50000);
+
+		// 计算heightmap
+		for(int x = 0; x < Chunk.size;x ++) {
+			for(int z = 0; z < Chunk.size;z++) {
+				for(int y = Chunk.height - 1;y >= 0;y--) {
+					if(hasBlock(new BlockPos(x,y,z))) {
+						heightMap[x][z] = y;
+						break;
+					}
+				}
+			}
+		}
+
 	}
 
 	public FloatList getDrawBuffer() {
@@ -181,7 +261,7 @@ public class Chunk {
 	public void setBlock(int x, int y, int z, Tile block) {
 		if (x < 0 || x >= size || y < 0 || y >= height || z < 0 || z >= size)
 			return;
-		blockState[x][y][z] = block;
+		grid.setBlock(x,y,z,block);
 		needRebuild = true;
 
 		if (y > heightMap[x][z]) {
@@ -227,14 +307,22 @@ public class Chunk {
 	public Tile getBlock(int x, int y, int z) {
 		if (x < 0 || x >= size || y < 0 || y >= height || z < 0 || z >= size)
 			return null;
-		return blockState[x][y][z];
+		return grid.getBlock(x, y, z);
 	}
 
 	public boolean hasBlock(BlockPos pos) {
 		if (pos.getX() < 0 || pos.getX() >= size || pos.getY() < 0 || pos.getY() >= height || pos.getZ() < 0
 				|| pos.getZ() >= size)
 			return false;
-		return blockState[pos.getX()][pos.getY()][pos.getZ()] != null;
+		return grid.getBlock(pos.getX(), pos.getY(), pos.getZ()) != null;
+	}
+
+	public void close() {
+		if(buffer != null)
+			buffer.postDispose();
+		if(bufferForAlphaDraw != null)
+			bufferForAlphaDraw.postDispose();
+
 	}
 
 }

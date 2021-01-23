@@ -13,7 +13,7 @@ import xueli.gamengine.utils.Time;
 public class GUIProgressBar extends ViewWidget {
 
 	// 进度条动画的滚动速度
-	private static final float progress_bar_anim_velocity = 0.0005f;
+	private static final float progress_bar_anim_velocity = 0.001f;
 	// 进度条的进度
 	float progress = 0.0f;
 	// 进度条的动画要达到的目标进度

@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -153,7 +154,7 @@ public class TextureManager implements Closeable {
 				}
 
 				BufferedImage image = new BufferedImage(singlePictureSize * length, singlePictureSize * length,
-						BufferedImage.TYPE_3BYTE_BGR);
+						BufferedImage.TYPE_4BYTE_ABGR);
 
 				count = 0;
 				for (; count < size; ++count) {
@@ -209,10 +210,14 @@ public class TextureManager implements Closeable {
 			GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, width, height, 0, GL11.GL_RGBA,
 					GL11.GL_UNSIGNED_BYTE, data);
 			Texture texture = null;
-			if (!isAtlas)
+			if (!isAtlas) {
 				texture = new Texture(id, preload, false);
-			else
+			}
+			else {
 				texture = new TextureAtlas(atlas, length, length, id, preload, false);
+			}
+			texture.width = width;
+			texture.height = height;
 			textures.put(name, texture);
 
 		}
@@ -243,5 +248,10 @@ public class TextureManager implements Closeable {
 			}
 		}
 	}
+
+	public HashMap<String, Texture> getTextures() {
+		return textures;
+	}
+
 
 }

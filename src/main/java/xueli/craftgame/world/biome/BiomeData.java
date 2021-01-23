@@ -10,6 +10,7 @@ import xueli.gamengine.utils.Color;
 
 public class BiomeData {
 
+	String namespace;
 	String name;
 
 	private int[] height;
@@ -57,6 +58,10 @@ public class BiomeData {
 
 	public NVGColor getLeaves_color_nvg() {
 		return leaves_color_wrapper.getNVGColor();
+	}
+
+	public String getNamespace() {
+		return namespace;
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 
 import xueli.craftgame.block.BlockData;
 import xueli.craftgame.block.BlockFace;
+import xueli.craftgame.block.BlockParameters;
 import xueli.craftgame.world.Chunk;
 import xueli.craftgame.world.World;
 import xueli.gamengine.physics.AABB;
@@ -22,7 +23,7 @@ public abstract class IModel {
 	}
 
 	public abstract int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
-			TextureAtlas blockTextureAtlas, Chunk chunk, World world);
+										  TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world);
 
 	public abstract ArrayList<AABB> getAabbs();
 

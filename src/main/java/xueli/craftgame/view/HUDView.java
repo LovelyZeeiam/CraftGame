@@ -1,19 +1,5 @@
 package xueli.craftgame.view;
 
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_LEFT;
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_TOP;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgFill;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
-import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
-import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
-import static org.lwjgl.nanovg.NanoVG.nvgRect;
-import static org.lwjgl.nanovg.NanoVG.nvgRestore;
-import static org.lwjgl.nanovg.NanoVG.nvgSave;
-import static org.lwjgl.nanovg.NanoVG.nvgScissor;
-import static org.lwjgl.nanovg.NanoVG.nvgText;
-import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
-
 import org.lwjgl.nanovg.NVGColor;
 
 import xueli.craftgame.CraftGame;
@@ -24,6 +10,8 @@ import xueli.gamengine.utils.Vector;
 import xueli.gamengine.view.GUIButton;
 import xueli.gamengine.view.GuiColor;
 
+import static org.lwjgl.nanovg.NanoVG.*;
+
 public class HUDView extends InGameView {
 
 	private static final float debugTextSize = 20;
@@ -31,6 +19,7 @@ public class HUDView extends InGameView {
 	private static final float minimap_size = 80;
 	private static final float minimap_padding = 3;
 	private static final float minimap_player_size = 5;
+	private static final float crossbarSize = 20;
 
 	public HUDView(WorldLogic logic, CraftGame game) {
 		super(logic, game);
@@ -87,7 +76,14 @@ public class HUDView extends InGameView {
 		nvgText(nvg, 2 * game.getDisplay().getScale(), pointerY + fontSize,
 				game.getLangManager().getStringFromLangMap("#hud.ingame.fps") + Time.fps);
 
-		// 小地图 右上角的边框
+		// 准心
+		nvgImagePattern(nvg, game.getDisplay().getWidth() / 2.0f - crossbarSize * game.getDisplay().getScale(), game.getDisplay().getHeight() / 2.0f - crossbarSize * game.getDisplay().getScale(),crossbarSize * game.getDisplay().getScale(), crossbarSize * game.getDisplay().getScale(), 0, logic.getNvgTextures().get("ingame.gui.crossbar"), 1, getPaint());
+		nvgBeginPath(nvg);
+		nvgRoundedRect(nvg, game.getDisplay().getWidth() / 2.0f - crossbarSize * game.getDisplay().getScale(), game.getDisplay().getHeight() / 2.0f - crossbarSize * game.getDisplay().getScale(),crossbarSize * game.getDisplay().getScale(), crossbarSize * game.getDisplay().getScale(), 0);
+		nvgFillPaint(nvg, getPaint());
+		nvgFill(nvg);
+
+		/*// 小地图 右上角的边框
 		float minimap_realMargin = minimap_margin * game.getDisplay().getScale();
 		float minimap_realSize = minimap_size * game.getDisplay().getScale();
 		float minimap_realPadding = minimap_padding * game.getDisplay().getScale();
@@ -117,7 +113,7 @@ public class HUDView extends InGameView {
 			for (int z = ((int) playerZ - 50); z < ((int) playerZ + 50); z++) {
 				Tile tile = logic.getWorld().getBlock(x, logic.getWorld().getHeight(x, z), z);
 				if (tile != null) {
-					NVGColor color = tile.data.getMapColorNVG();
+					NVGColor color = tile.getData().getMapColorNVG();
 
 					int blockPlayerXDistance = x - (int) playerX;
 					int blockPlayerZDistance = z - (int) playerZ;
@@ -133,7 +129,7 @@ public class HUDView extends InGameView {
 				minimap_real_player_size, minimap_real_player_size, GuiColor.BLACK, GuiColor.WHITE, 1.0f, nvg);
 
 		// 取消裁剪
-		nvgRestore(nvg);
+		nvgRestore(nvg);*/
 
 	}
 
