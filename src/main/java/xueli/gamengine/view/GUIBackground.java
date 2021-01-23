@@ -1,16 +1,10 @@
 package xueli.gamengine.view;
 
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgFill;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
-import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
-import static org.lwjgl.nanovg.NanoVG.nvgImagePattern;
-import static org.lwjgl.nanovg.NanoVG.nvgRect;
-
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
-
 import xueli.gamengine.utils.EvalableFloat;
+
+import static org.lwjgl.nanovg.NanoVG.*;
 
 public class GUIBackground extends ViewWidget {
 

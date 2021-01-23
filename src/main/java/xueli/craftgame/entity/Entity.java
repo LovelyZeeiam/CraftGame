@@ -1,7 +1,6 @@
 package xueli.craftgame.entity;
 
 import org.lwjgl.util.vector.Vector3f;
-
 import xueli.craftgame.world.CubeWorldCollider;
 import xueli.craftgame.world.World;
 import xueli.gamengine.physics.AABB;

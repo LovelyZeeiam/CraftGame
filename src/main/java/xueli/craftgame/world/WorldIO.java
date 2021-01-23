@@ -3,7 +3,6 @@ package xueli.craftgame.world;
 import com.flowpowered.nbt.CompoundTag;
 import com.flowpowered.nbt.stream.NBTInputStream;
 import com.flowpowered.nbt.stream.NBTOutputStream;
-import org.lwjgl.system.CallbackI;
 import xueli.gamengine.utils.MathUtils;
 import xueli.gamengine.utils.Time;
 import xueli.utils.Files;
@@ -15,7 +14,6 @@ import java.io.IOException;
 import java.nio.ByteOrder;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.zip.GZIPOutputStream;
 
 public class WorldIO {
 

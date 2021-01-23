@@ -1,20 +1,17 @@
 package xueli.craftgame.world.biome;
 
+import com.google.gson.JsonObject;
+import xueli.gamengine.resource.IResource;
+import xueli.gamengine.resource.LangManager;
+import xueli.gamengine.utils.Color;
+import xueli.gamengine.utils.Logger;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import org.lwjgl.nanovg.NanoVG;
-
-import com.google.gson.JsonObject;
-
-import xueli.gamengine.resource.IResource;
-import xueli.gamengine.resource.LangManager;
-import xueli.gamengine.utils.Color;
-import xueli.gamengine.utils.Logger;
 
 public class BiomeResource extends IResource {
 

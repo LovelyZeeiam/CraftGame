@@ -1,13 +1,9 @@
 package xueli.craftgame.view;
 
-import org.lwjgl.nanovg.NVGColor;
-
 import xueli.craftgame.CraftGame;
-import xueli.craftgame.block.Tile;
 import xueli.craftgame.world.WorldLogic;
 import xueli.gamengine.utils.Time;
 import xueli.gamengine.utils.Vector;
-import xueli.gamengine.view.GUIButton;
 import xueli.gamengine.view.GuiColor;
 
 import static org.lwjgl.nanovg.NanoVG.*;

@@ -1,10 +1,10 @@
 package xueli.craftgame.block.model;
 
+import com.google.gson.JsonObject;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
-
-import com.google.gson.JsonObject;
 
 public class Models {
 

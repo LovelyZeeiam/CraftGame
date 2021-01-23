@@ -1,7 +1,6 @@
 package xueli.craftgame.entity;
 
 import org.lwjgl.glfw.GLFW;
-
 import xueli.craftgame.block.BlockData;
 import xueli.craftgame.block.BlockListener;
 import xueli.craftgame.block.BlockResource;

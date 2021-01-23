@@ -1,9 +1,6 @@
 package xueli.craftgame.block.model;
 
-import java.util.ArrayList;
-
 import com.google.gson.JsonObject;
-
 import xueli.craftgame.block.BlockData;
 import xueli.craftgame.block.BlockParameters;
 import xueli.craftgame.world.Chunk;
@@ -12,6 +9,8 @@ import xueli.gamengine.physics.AABB;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.FloatList;
 import xueli.gamengine.view.GuiColor;
+
+import java.util.ArrayList;
 
 public class ModelCube extends IModel {
 

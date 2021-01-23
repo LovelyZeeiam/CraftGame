@@ -1,8 +1,5 @@
 package xueli.craftgame.block;
 
-import java.util.ArrayList;
-import java.util.Objects;
-
 import com.flowpowered.nbt.CompoundMap;
 import com.flowpowered.nbt.CompoundTag;
 import com.flowpowered.nbt.StringTag;
@@ -13,6 +10,9 @@ import xueli.craftgame.world.World;
 import xueli.gamengine.physics.AABB;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.FloatList;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class Tile implements Saveable {
 

@@ -1,7 +1,5 @@
 package xueli.craftgame.world;
 
-import java.util.HashMap;
-
 import com.flowpowered.nbt.CompoundMap;
 import com.flowpowered.nbt.CompoundTag;
 import com.flowpowered.nbt.StringTag;
@@ -16,6 +14,8 @@ import xueli.gamengine.utils.Color;
 import xueli.gamengine.utils.FloatList;
 import xueli.gamengine.utils.Time;
 import xueli.gamengine.utils.vector.Vector2i;
+
+import java.util.HashMap;
 
 public class Chunk implements Saveable {
 

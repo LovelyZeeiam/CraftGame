@@ -31,22 +31,22 @@ but I'm convinced it be able to run by typing the following 2 commands.
 
 1. Game UI
 2. World Generate and Biomes
+3. World save and load.
 
 #### DOINGS
 
-1. little map
+1. Multiplayer
+   use library tcp of javaherobrine
 
 #### Plans
 
-1. World save and load
+1. little map
 2. Blocks: stairs, slabs, attachable (eg. sign)
 3. Light Calculation
-4. Multiplayer
-    plan to use library javaherobrine/CraftGame
-5. Audio
-6. Resource pack
-7. Settings
-8. Arrange codes and add comments for modding
-9. Texture (Because I can't draw a nice texture so,,, I use that of origin minecraft)
+4. Audio
+5. Resource pack
+6. Settings
+7. Arrange codes and add comments for modding
+8. Texture (Because I can't draw a nice texture so,,, I use that of origin minecraft)
 
 ****

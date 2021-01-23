@@ -1,25 +1,8 @@
 package xueli.gamengine.view;
 
-import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
-import static org.lwjgl.glfw.GLFW.GLFW_REPEAT;
-import static org.lwjgl.nanovg.NanoVG.nvgCreateFont;
-import static org.lwjgl.nanovg.NanoVG.nvgCreateImage;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_ANTIALIAS;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_DEBUG;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_STENCIL_STROKES;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgCreate;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgDelete;
-
-import java.nio.IntBuffer;
-
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL13;
-import org.lwjgl.opengl.GL15;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
+import org.lwjgl.opengl.*;
 import org.lwjgl.util.vector.Vector2f;
-
 import xueli.gamengine.resource.GuiResource;
 import xueli.gamengine.resource.Options;
 import xueli.gamengine.utils.Display;
@@ -29,6 +12,14 @@ import xueli.gamengine.utils.Shader;
 import xueli.gamengine.view.GUIFader.Fader;
 import xueli.gamengine.view.text.KeyDesc;
 import xueli.gamengine.view.text.KeyType;
+
+import java.nio.IntBuffer;
+
+import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
+import static org.lwjgl.glfw.GLFW.GLFW_REPEAT;
+import static org.lwjgl.nanovg.NanoVG.nvgCreateFont;
+import static org.lwjgl.nanovg.NanoVG.nvgCreateImage;
+import static org.lwjgl.nanovg.NanoVGGL3.*;
 
 public class ViewManager {
 

@@ -1,16 +1,8 @@
 package xueli.craftgame.world;
 
-import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.nanovg.NanoVGGL3.*;
-import static org.lwjgl.opengl.GL11.glViewport;
-
-import java.nio.ByteBuffer;
-import java.util.HashMap;
-
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
-
 import xueli.craftgame.CraftGame;
 import xueli.craftgame.State;
 import xueli.craftgame.block.Blocks;
@@ -20,16 +12,18 @@ import xueli.craftgame.view.InGameView;
 import xueli.craftgame.view.InventoryView;
 import xueli.craftgame.world.renderer.Renderer;
 import xueli.craftgame.world.renderer.ShadowMapper;
-import xueli.gamengine.resource.Texture;
 import xueli.gamengine.resource.TextureAtlas;
-import xueli.gamengine.utils.Display;
-import xueli.gamengine.utils.GLHelper;
-import xueli.gamengine.utils.Logger;
-import xueli.gamengine.utils.MatrixHelper;
-import xueli.gamengine.utils.Shader;
+import xueli.gamengine.utils.*;
 import xueli.gamengine.utils.callbacks.KeyCallback;
 import xueli.gamengine.view.GUIProgressBar;
 import xueli.gamengine.view.View;
+
+import java.nio.ByteBuffer;
+import java.util.HashMap;
+
+import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.nanovg.NanoVGGL3.*;
+import static org.lwjgl.opengl.GL11.glViewport;
 
 public class WorldLogic implements Runnable {
 

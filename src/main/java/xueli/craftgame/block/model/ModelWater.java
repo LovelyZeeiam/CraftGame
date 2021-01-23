@@ -1,11 +1,7 @@
 package xueli.craftgame.block.model;
 
-import java.util.ArrayList;
-
-import org.lwjgl.nanovg.NVGColor;
-
 import com.google.gson.JsonObject;
-
+import org.lwjgl.nanovg.NVGColor;
 import xueli.craftgame.block.BlockData;
 import xueli.craftgame.block.BlockFace;
 import xueli.craftgame.block.BlockParameters;
@@ -16,6 +12,8 @@ import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.FloatList;
 import xueli.gamengine.utils.vector.Vector2s;
 import xueli.gamengine.view.GuiColor;
+
+import java.util.ArrayList;
 
 public class ModelWater extends IModel {
 

@@ -1,16 +1,15 @@
 package xueli.craftgame.world.renderer;
 
-import java.nio.ByteBuffer;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
-
 import xueli.craftgame.CraftGame;
 import xueli.craftgame.world.WorldLogic;
 import xueli.gamengine.utils.GLHelper;
 import xueli.gamengine.utils.Logger;
+
+import java.nio.ByteBuffer;
 
 public class Renderer {
 
@@ -29,6 +28,7 @@ public class Renderer {
 		vbo = GL15.glGenBuffers();
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo);
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, 671088640, GL15.GL_DYNAMIC_DRAW);
+
 
 		// UV
 		GL20.glVertexAttribPointer(1, 2, GL11.GL_FLOAT, false, 8 * 4, 0);
