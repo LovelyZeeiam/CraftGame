@@ -35,7 +35,7 @@ public class CubeWorldCollider {
 				for (int z = z0; z < z1; z++) {
 					Tile tile = world.getBlock(x, y, z);
 					if (tile != null) {
-						ArrayList<AABB> tileAabbs = tile.getAabbs();
+						ArrayList<AABB> tileAabbs = tile.getAabbs(tile.getParams());
 						for (AABB tileAabb : tileAabbs) {
 							aabbs.add(tileAabb.move((float) x, (float) y, (float) z));
 						}

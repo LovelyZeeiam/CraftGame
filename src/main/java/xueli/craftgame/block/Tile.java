@@ -65,8 +65,8 @@ public class Tile implements Saveable {
 		return data.getDrawData(buffer, this.data, x, y, z, face, blockTextureAtlas, params, chunk, world);
 	}
 
-	public ArrayList<AABB> getAabbs() {
-		return data.getAabbs();
+	public ArrayList<AABB> getAabbs(BlockParameters params) {
+		return data.getAabbs(params);
 	}
 
 	@Override
@@ -95,12 +95,12 @@ public class Tile implements Saveable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Tile tile = (Tile) o;
-		return Objects.equals(data, tile.data);
+		return Objects.equals(data, tile.data) && Objects.equals(params, tile.params);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(data);
+		return Objects.hash(data, params);
 	}
 
 }

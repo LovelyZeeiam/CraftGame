@@ -1,5 +1,6 @@
 package xueli.craftgame.world;
 
+import org.lwjgl.util.vector.Vector3i;
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.entity.Player;
 import xueli.gamengine.resource.TextureAtlas;
@@ -112,13 +113,13 @@ public class World {
 		chunk.setBlock(xInChunk, y, zInChunk, block);
 	}
 
-	public void setBlock(BlockPos p, Tile b) {
+	public void setBlock(Vector3i p, Tile b) {
 		if (p == null)
 		return;
 		setBlock(p.getX(), p.getY(), p.getZ(), b);
 	}
 
-	public void setBlock(BlockPos p, String blockName) {
+	public void setBlock(Vector3i p, String blockName) {
 		if (p == null)
 			return;
 		setBlock(p.getX(), p.getY(), p.getZ(), new Tile(blockName));
@@ -136,7 +137,7 @@ public class World {
 		return new ChunkPos(chunkX, chunkZ);
 	}
 
-	public boolean hasBlock(BlockPos p) {
+	public boolean hasBlock(Vector3i p) {
 		ChunkPos cp = getChunkPosFromBlock(p.getX(), p.getZ());
 		Chunk chunk = chunks.get(MathUtils.vert2ToLong(cp.getX(), cp.getZ()));
 		if (chunk == null)
@@ -144,7 +145,7 @@ public class World {
 		int xInChunk = p.getX() - (cp.getX() << Chunk.size_yiwei);
 		int zInChunk = p.getZ() - (cp.getZ() << Chunk.size_yiwei);
 
-		return chunk.hasBlock(new BlockPos(xInChunk, p.getY(), zInChunk));
+		return chunk.hasBlock(new Vector3i(xInChunk, p.getY(), zInChunk));
 	}
 
 	public Chunk getChunk(int x, int z) {

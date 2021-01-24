@@ -3,7 +3,7 @@ package xueli.gamengine.utils;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
-import xueli.craftgame.world.BlockPos;
+import org.lwjgl.util.vector.Vector3i;
 
 public class MousePicker {
 
@@ -27,11 +27,10 @@ public class MousePicker {
 		ray.normalise();
 	}
 
-	public static BlockPos getPointOnRay(float distance) {
+	public static Vector3f getPointOnRay(float distance) {
 		Vector3f scaledRay = new Vector3f(ray.x * distance, ray.y * distance, ray.z * distance);
 		Vector3f rayEnd = Vector3f.add(camPos, scaledRay, null);
-		return new BlockPos(MathUtils.floatToInt(rayEnd.x), MathUtils.floatToInt(rayEnd.y),
-				MathUtils.floatToInt(rayEnd.z));
+		return new Vector3f(rayEnd.x, rayEnd.y, rayEnd.z);
 	}
 
 }

@@ -1,0 +1,12 @@
+{
+  "namespace": "craftgame:oak_plank",
+  "name": "#tile.plank.oak.name",
+  "block": {
+    "type": "Build",
+    "destroyTime": 4000,
+    "texture": "block.plank.oak",
+    "map_color": [159,132,77]
+
+  }
+
+}

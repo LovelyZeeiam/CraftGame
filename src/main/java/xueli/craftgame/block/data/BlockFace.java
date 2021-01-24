@@ -1,4 +1,4 @@
-package xueli.craftgame.block;
+package xueli.craftgame.block.data;
 
 public class BlockFace {
 

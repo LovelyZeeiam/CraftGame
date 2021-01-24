@@ -3,8 +3,8 @@
   "name": "#tile.leave_oak.name",
   "block": {
     "type": "Nature",
-    "destroyTime": 1000,
-    "texture": "block.oak_leave",
+    "destroyTime": 500,
+    "texture": "block.leaf.oak",
     "map_color": [
       20,220,20
     ],

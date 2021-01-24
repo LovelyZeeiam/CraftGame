@@ -1,11 +1,10 @@
 package xueli.craftgame.entity;
 
 import org.lwjgl.glfw.GLFW;
-import xueli.craftgame.block.BlockData;
-import xueli.craftgame.block.BlockListener;
-import xueli.craftgame.block.BlockResource;
-import xueli.craftgame.block.Tile;
-import xueli.craftgame.world.BlockPos;
+import org.lwjgl.util.vector.Vector3f;
+import xueli.craftgame.block.*;
+import org.lwjgl.util.vector.Vector3i;
+import xueli.craftgame.block.data.SlabAndStairData;
 import xueli.craftgame.world.World;
 import xueli.gamengine.physics.AABB;
 import xueli.gamengine.utils.Display;
@@ -15,7 +14,10 @@ import xueli.gamengine.utils.callbacks.KeyCallback;
 
 public class Player extends Entity {
 
-	private static BlockPos block_select, last_block_select;
+	private static Vector3f last_time_ray_end;
+	private static Vector3i block_select, last_block_select;
+	private static final int placeBlockDuration = 200;
+
 	private static long placeTimeCount;
 	private static AABB originAABB = new AABB(-0.5f, 0.5f, -1.5f, 0.2f, -0.5f, 0.5f);
 	public int gamemode = 1;
@@ -79,18 +81,21 @@ public class Player extends Entity {
 				speed.y -= this.getSpeed() * 0.5f;
 			}
 
-			if (display.isMouseDown(0) & block_select != null & Time.thisTime - placeTimeCount > 100) {
+			if (display.isMouseDown(0) & block_select != null & Time.thisTime - placeTimeCount > placeBlockDuration) {
 				Tile tile = world.getBlock(block_select.getX(), block_select.getY(), block_select.getZ());
 				tile.getListener().onLeftClick(block_select.getX(), block_select.getY(), block_select.getZ(), world);
 
 				placeTimeCount = Time.thisTime;
 			}
 
-			if (display.isMouseDown(1) & block_select != null & Time.thisTime - placeTimeCount > 100) {
+			if (display.isMouseDown(1) & block_select != null & Time.thisTime - placeTimeCount > placeBlockDuration) {
 				Tile tile = world.getBlock(block_select.getX(), block_select.getY(), block_select.getZ());
 				if (tile.getListener().onRightClick(block_select.getX(), block_select.getY(), block_select.getZ(),
-						world) == BlockListener.RightClick.PLACE_BLOCK_WHEN_RIGHT_CLICK)
-					world.setBlock(last_block_select, new Tile(handBlockData));
+						world) == BlockListener.RightClick.PLACE_BLOCK_WHEN_RIGHT_CLICK) {
+					BlockParameters parameters = new BlockParameters();
+					parameters.slabOrStairData = last_time_ray_end.getY() - last_block_select.getY() > 0.5f ? SlabAndStairData.UP : SlabAndStairData.DOWN;
+					world.setBlock(last_block_select, new Tile(handBlockData,parameters));
+				}
 				placeTimeCount = Time.thisTime;
 			}
 		}
@@ -103,7 +108,8 @@ public class Player extends Entity {
 		block_select = null;
 		MousePicker.ray(pos);
 		for (float distance = 0; distance < 8; distance += 0.05f) {
-			BlockPos searching_block_pos = MousePicker.getPointOnRay(distance);
+			Vector3f searching_ray_end = MousePicker.getPointOnRay(distance);
+			Vector3i searching_block_pos = new Vector3i((int) searching_ray_end.getX(), (int) searching_ray_end.getY(), (int) searching_ray_end.getZ());
 			if (world.hasBlock(searching_block_pos)) {
 				block_select = searching_block_pos;
 
@@ -114,6 +120,7 @@ public class Player extends Entity {
 				break;
 			}
 			last_block_select = searching_block_pos;
+			last_time_ray_end = searching_ray_end;
 		}
 	}
 

@@ -1,12 +1,12 @@
-package xueli.craftgame.world;
+package org.lwjgl.util.vector;
 
 import java.util.Objects;
 
-public class BlockPos {
+public class Vector3i {
 
 	private int x, y, z;
 
-	public BlockPos(int x, int y, int z) {
+	public Vector3i(int x, int y, int z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -42,7 +42,7 @@ public class BlockPos {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BlockPos other = (BlockPos) obj;
+		Vector3i other = (Vector3i) obj;
 		if (x != other.x)
 			return false;
 		if (y != other.y)

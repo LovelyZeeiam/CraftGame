@@ -31,8 +31,9 @@
 			"block.concrete.magenta": "textures/blocks/concrete_magenta.png",
 			"block.concrete.orange": "textures/blocks/concrete_orange.png",
 			"block.concrete.pink": "textures/blocks/concrete_pink.png",
-			"block.oak_leave": "textures/blocks/oak_leaves.png",
-			"block.water": "textures/blocks/water_static.png"
+			"block.leaf.oak": "textures/blocks/oak_leaves.png",
+			"block.water": "textures/blocks/water_static.png",
+			"block.plank.oak": "textures/blocks/planks_oak.png"
 
 
 		}

@@ -198,7 +198,6 @@ public class WorldLogic implements Runnable {
 		// 清空颜色
 		GL11.glClearColor(0.7f, 0.8f, 1.0f, 1.0f);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glEnable(GL11.GL_CULL_FACE);
 
 		// 透明材质
 		// GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -207,6 +206,8 @@ public class WorldLogic implements Runnable {
 		normalRenderer.initDraw();
 
 		{
+			GL11.glEnable(GL11.GL_CULL_FACE);
+
 			// 将内存地址映射 效率提高了
 			mappedBuffer = normalRenderer.mapBuffer();
 			// 得到世界的渲染顶点信息
@@ -234,6 +235,8 @@ public class WorldLogic implements Runnable {
 			GLHelper.checkGLError("World: Drawer");
 
 			blockRenderShader.unbind();
+
+			GL11.glDisable(GL11.GL_CULL_FACE);
 
 		}
 

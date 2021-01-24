@@ -86,8 +86,8 @@ public class BlockData {
 
 	}
 
-	public ArrayList<AABB> getAabbs() {
-		return model.getAabbs();
+	public ArrayList<AABB> getAabbs(BlockParameters params) {
+		return model.getAabbs(params);
 	}
 
 	public int getDrawData(FloatList buffer, BlockData data, int x, int y, int z, byte face,

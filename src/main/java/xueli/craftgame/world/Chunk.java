@@ -3,7 +3,8 @@ package xueli.craftgame.world;
 import com.flowpowered.nbt.CompoundMap;
 import com.flowpowered.nbt.CompoundTag;
 import com.flowpowered.nbt.StringTag;
-import xueli.craftgame.block.BlockFace;
+import org.lwjgl.util.vector.Vector3i;
+import xueli.craftgame.block.data.BlockFace;
 import xueli.craftgame.block.BlockParameters;
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.interfaces.Saveable;
@@ -37,7 +38,7 @@ public class Chunk implements Saveable {
 	private long lastUsedTime;
 	
 	private Color[][] colorMap;
-	private HashMap<BlockPos, BlockParameters> blockParams = new HashMap<>();
+	private HashMap<Vector3i, BlockParameters> blockParams = new HashMap<>();
 
 	public Chunk(int chunkX, int chunkZ, World world, BiomeData biome) {
 		this.chunkX = chunkX;
@@ -77,50 +78,24 @@ public class Chunk implements Saveable {
 			for (int x = 0; x < size; x++) {
 				for (int z = 0; z < size; z++) {
 					int height = heightMap[x][z];
-					
-					// TODO: generate map
-					
 					for (int y = 0; y <= height; y++) {
 						Tile block = grid.getBlock(x,y,z);
 						if (block != null) {
 							BlockParameters params = block.getParams();
 							if (block.getData().isAlpha()) {
-								if ((x - 1 < 0)
-										? (world.getBlock(x + offset_x - 1, y, z + offset_z) == null)
-										: (grid.getBlock(x - 1,y,z) == null)) {
 									vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.LEFT,
 											blockTextureAtlas, bufferForAlphaDraw, params,world, this);
-								}
-								if ((x + 1 >= size)
-										? (world.getBlock(x + offset_x + 1, y, z + offset_z) == null)
-										: (grid.getBlock(x + 1,y,z) == null)) {
 									vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.RIGHT,
 											blockTextureAtlas, bufferForAlphaDraw, params,world, this);
-								}
-								if ((z - 1 < 0)
-										? (world.getBlock(x + offset_x, y, z + offset_z - 1) == null)
-										: (grid.getBlock(x,y,z - 1) == null)) {
 									vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.FRONT,
 											blockTextureAtlas, bufferForAlphaDraw, params,world, this);
-								}
-								if ((z + 1 >= size)
-										? (world.getBlock(x + offset_x, y, z + offset_z + 1) == null)
-										: (grid.getBlock(x,y,z + 1) == null)) {
 									vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.BACK,
 											blockTextureAtlas, bufferForAlphaDraw,params, world, this);
-								}
-								if ((y - 1 < 0)
-										? (world.getBlock(x + offset_x, y - 1, z + offset_z) == null)
-										: (grid.getBlock(x,y - 1,z) == null)) {
 									vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.BOTTOM,
 											blockTextureAtlas, bufferForAlphaDraw,params, world, this);
-								}
-								if ((y + 1 >= Chunk.height)
-										? (world.getBlock(x + offset_x, y + 1, z + offset_z) == null)
-										: (grid.getBlock(x,y + 1,z) == null)) {
 									vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.TOP,
 											blockTextureAtlas, bufferForAlphaDraw,params, world, this);
-								}
+
 							} else {
 								if ((x - 1 < 0)
 										? (world.getBlock(x + offset_x - 1, y, z + offset_z) == null
@@ -230,7 +205,7 @@ public class Chunk implements Saveable {
 		for(int x = 0; x < Chunk.size;x ++) {
 			for(int z = 0; z < Chunk.size;z++) {
 				for(int y = Chunk.height - 1;y >= 0;y--) {
-					if(hasBlock(new BlockPos(x,y,z))) {
+					if(hasBlock(new Vector3i(x,y,z))) {
 						heightMap[x][z] = y;
 						break;
 					}
@@ -310,7 +285,7 @@ public class Chunk implements Saveable {
 		return grid.getBlock(x, y, z);
 	}
 
-	public boolean hasBlock(BlockPos pos) {
+	public boolean hasBlock(Vector3i pos) {
 		if (pos.getX() < 0 || pos.getX() >= size || pos.getY() < 0 || pos.getY() >= height || pos.getZ() < 0
 				|| pos.getZ() >= size)
 			return false;

@@ -32,6 +32,8 @@ tile.cobblestone_mossy.name=Mossy Cobblestone
 tile.concrete.name=Concrete
 tile.leave_oak.name=Oak Leave
 tile.water.name=Water
+tile.plank.oak.name=Oak Plank
+tile.slab.plank.oak.name=Oak Plank Slab
 
 
 
