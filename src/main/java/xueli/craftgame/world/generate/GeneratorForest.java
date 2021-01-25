@@ -61,54 +61,54 @@ public class GeneratorForest implements IChunkGenerator {
 					&& chunk.getBlock(posX, rootY - 1, posZ).getData().getNamespace().equals("craftgame:water"))
 				continue;
 
-			chunk.setBlock(posX, rootY + 1, posZ, new Tile("craftgame:oak_log"));
-			chunk.setBlock(posX, rootY + 2, posZ, new Tile("craftgame:oak_log"));
-			chunk.setBlock(posX, rootY + 3, posZ, new Tile("craftgame:oak_log"));
-			chunk.setBlock(posX, rootY + 4, posZ, new Tile("craftgame:oak_log"));
-			chunk.setBlock(posX, rootY + 5, posZ, new Tile("craftgame:oak_log"));
-			chunk.setBlock(posX, rootY + 6, posZ, new Tile("craftgame:oak_log"));
+			chunk.setBlock(posX, rootY + 1, posZ, new Tile("craftgame:oak_log", world.getWorldLogic()));
+			chunk.setBlock(posX, rootY + 2, posZ, new Tile("craftgame:oak_log", world.getWorldLogic()));
+			chunk.setBlock(posX, rootY + 3, posZ, new Tile("craftgame:oak_log", world.getWorldLogic()));
+			chunk.setBlock(posX, rootY + 4, posZ, new Tile("craftgame:oak_log", world.getWorldLogic()));
+			chunk.setBlock(posX, rootY + 5, posZ, new Tile("craftgame:oak_log", world.getWorldLogic()));
+			chunk.setBlock(posX, rootY + 6, posZ, new Tile("craftgame:oak_log", world.getWorldLogic()));
 
-			chunk.setBlock(posX, rootY + 7, posZ, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX, rootY + 7, posZ + 1, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX, rootY + 7, posZ - 1, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX + 1, rootY + 7, posZ, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX - 1, rootY + 7, posZ, new Tile("craftgame:oak_leave"));
+			chunk.setBlock(posX, rootY + 7, posZ, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX, rootY + 7, posZ + 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX, rootY + 7, posZ - 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX + 1, rootY + 7, posZ, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX - 1, rootY + 7, posZ, new Tile("craftgame:oak_leave", world.getWorldLogic()));
 
-			chunk.setBlock(posX + 1, rootY + 6, posZ + 1, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX - 1, rootY + 6, posZ + 1, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX, rootY + 6, posZ + 1, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX + 1, rootY + 6, posZ, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX - 1, rootY + 6, posZ, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX + 1, rootY + 6, posZ - 1, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX - 1, rootY + 6, posZ - 1, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX, rootY + 6, posZ - 1, new Tile("craftgame:oak_leave"));
+			chunk.setBlock(posX + 1, rootY + 6, posZ + 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX - 1, rootY + 6, posZ + 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX, rootY + 6, posZ + 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX + 1, rootY + 6, posZ, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX - 1, rootY + 6, posZ, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX + 1, rootY + 6, posZ - 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX - 1, rootY + 6, posZ - 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX, rootY + 6, posZ - 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
 
-			chunk.setBlock(posX + 1, rootY + 5, posZ + 1, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX - 1, rootY + 5, posZ + 1, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX, rootY + 5, posZ + 1, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX + 1, rootY + 5, posZ, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX - 1, rootY + 5, posZ, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX + 1, rootY + 5, posZ - 1, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX - 1, rootY + 5, posZ - 1, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX, rootY + 5, posZ - 1, new Tile("craftgame:oak_leave"));
+			chunk.setBlock(posX + 1, rootY + 5, posZ + 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX - 1, rootY + 5, posZ + 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX, rootY + 5, posZ + 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX + 1, rootY + 5, posZ, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX - 1, rootY + 5, posZ, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX + 1, rootY + 5, posZ - 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX - 1, rootY + 5, posZ - 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX, rootY + 5, posZ - 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
 
-			chunk.setBlock(posX + 2, rootY + 5, posZ + 2, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX - 2, rootY + 5, posZ + 2, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX, rootY + 5, posZ + 2, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX + 2, rootY + 5, posZ, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX - 2, rootY + 5, posZ, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX + 2, rootY + 5, posZ - 2, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX - 2, rootY + 5, posZ - 2, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX, rootY + 5, posZ - 2, new Tile("craftgame:oak_leave"));
+			chunk.setBlock(posX + 2, rootY + 5, posZ + 2, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX - 2, rootY + 5, posZ + 2, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX, rootY + 5, posZ + 2, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX + 2, rootY + 5, posZ, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX - 2, rootY + 5, posZ, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX + 2, rootY + 5, posZ - 2, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX - 2, rootY + 5, posZ - 2, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX, rootY + 5, posZ - 2, new Tile("craftgame:oak_leave", world.getWorldLogic()));
 
-			chunk.setBlock(posX + 1, rootY + 4, posZ + 1, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX - 1, rootY + 4, posZ + 1, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX, rootY + 4, posZ + 1, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX + 1, rootY + 4, posZ, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX - 1, rootY + 4, posZ, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX + 1, rootY + 4, posZ - 1, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX - 1, rootY + 4, posZ - 1, new Tile("craftgame:oak_leave"));
-			chunk.setBlock(posX, rootY + 4, posZ - 1, new Tile("craftgame:oak_leave"));
+			chunk.setBlock(posX + 1, rootY + 4, posZ + 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX - 1, rootY + 4, posZ + 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX, rootY + 4, posZ + 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX + 1, rootY + 4, posZ, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX - 1, rootY + 4, posZ, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX + 1, rootY + 4, posZ - 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX - 1, rootY + 4, posZ - 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
+			chunk.setBlock(posX, rootY + 4, posZ - 1, new Tile("craftgame:oak_leave", world.getWorldLogic()));
 
 		}
 

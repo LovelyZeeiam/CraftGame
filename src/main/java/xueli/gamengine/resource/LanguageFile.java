@@ -3,6 +3,7 @@ package xueli.gamengine.resource;
 import xueli.gamengine.utils.Logger;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class LanguageFile {
@@ -33,10 +34,12 @@ public class LanguageFile {
 	}
 
 	public void read() {
-		String line;
+		String readline;
 		int lineNum = 0;
 		try {
-			while ((line = inputStream.readLine()) != null) {
+			while ((readline = inputStream.readLine()) != null) {
+				String line = new String(readline.getBytes(), StandardCharsets.UTF_8);
+				line = line.replaceAll("\\\\n", "\n");
 				if (line.startsWith("#"))
 					// 是注释
 					continue;

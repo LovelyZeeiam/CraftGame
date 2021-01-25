@@ -1,6 +1,5 @@
 package xueli.craftgame.view;
 
-import xueli.craftgame.CraftGame;
 import xueli.craftgame.world.WorldLogic;
 import xueli.gamengine.utils.Time;
 import xueli.gamengine.utils.Vector;
@@ -17,8 +16,8 @@ public class HUDView extends InGameView {
 	private static final float minimap_player_size = 5;
 	private static final float crossbarSize = 20;
 
-	public HUDView(WorldLogic logic, CraftGame game) {
-		super(logic, game);
+	public HUDView(WorldLogic logic) {
+		super(logic);
 
 	}
 
@@ -73,7 +72,15 @@ public class HUDView extends InGameView {
 				game.getLangManager().getStringFromLangMap("#hud.ingame.fps") + Time.fps);
 
 		// 准心
-		nvgImagePattern(nvg, game.getDisplay().getWidth() / 2.0f - crossbarSize * game.getDisplay().getScale(), game.getDisplay().getHeight() / 2.0f - crossbarSize * game.getDisplay().getScale(),crossbarSize * game.getDisplay().getScale(), crossbarSize * game.getDisplay().getScale(), 0, logic.getNvgTextures().get("ingame.gui.crossbar"), 1, getPaint());
+		nvgImagePattern(nvg,
+				game.getDisplay().getWidth() / 2.0f - crossbarSize * game.getDisplay().getScale(),
+				game.getDisplay().getHeight() / 2.0f - crossbarSize * game.getDisplay().getScale(),
+				crossbarSize * game.getDisplay().getScale(),
+				crossbarSize * game.getDisplay().getScale(),
+				0,
+				logic.getNvgTextures().get("ingame.hud.crossbar"),
+				1,
+				getPaint());
 		nvgBeginPath(nvg);
 		nvgRoundedRect(nvg, game.getDisplay().getWidth() / 2.0f - crossbarSize * game.getDisplay().getScale(), game.getDisplay().getHeight() / 2.0f - crossbarSize * game.getDisplay().getScale(),crossbarSize * game.getDisplay().getScale(), crossbarSize * game.getDisplay().getScale(), 0);
 		nvgFillPaint(nvg, getPaint());

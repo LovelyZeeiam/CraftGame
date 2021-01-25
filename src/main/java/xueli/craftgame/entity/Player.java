@@ -2,8 +2,8 @@ package xueli.craftgame.entity;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.vector.Vector3f;
-import xueli.craftgame.block.*;
 import org.lwjgl.util.vector.Vector3i;
+import xueli.craftgame.block.*;
 import xueli.craftgame.block.data.SlabAndStairData;
 import xueli.craftgame.world.World;
 import xueli.gamengine.physics.AABB;
@@ -94,7 +94,7 @@ public class Player extends Entity {
 						world) == BlockListener.RightClick.PLACE_BLOCK_WHEN_RIGHT_CLICK) {
 					BlockParameters parameters = new BlockParameters();
 					parameters.slabOrStairData = last_time_ray_end.getY() - last_block_select.getY() > 0.5f ? SlabAndStairData.UP : SlabAndStairData.DOWN;
-					world.setBlock(last_block_select, new Tile(handBlockData,parameters));
+					world.setBlock(last_block_select, new Tile(handBlockData,parameters, world.getWorldLogic()));
 				}
 				placeTimeCount = Time.thisTime;
 			}

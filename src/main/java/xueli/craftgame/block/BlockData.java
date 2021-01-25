@@ -21,14 +21,13 @@ public class BlockData {
 	private long destroyTime;
 	private Vector2s[] textures;
 	private Color mapColor;
-	private boolean isAlpha;
 
 	private BlockListener listener = new BlockListener();
 
 	private IModel model;
 
 	public BlockData(String namespace, String blockName, BlockType type, long destroyTime, Vector2s[] textures,
-			byte[] mapColor, boolean isAlpha, IModel model) {
+			byte[] mapColor, IModel model) {
 		this.namespace = namespace;
 		this.blockName = blockName;
 		this.type = type;
@@ -36,7 +35,6 @@ public class BlockData {
 		this.textures = textures;
 		this.model = model;
 		this.mapColor = new Color(mapColor);
-		this.isAlpha = isAlpha;
 		
 
 	}
@@ -65,10 +63,6 @@ public class BlockData {
 		return listener;
 	}
 
-	public boolean isAlpha() {
-		return isAlpha;
-	}
-
 	public NVGColor getMapColorNVG() {
 		return mapColor.getNVGColor();
 	}
@@ -79,6 +73,10 @@ public class BlockData {
 	
 	public byte[] getColorArray() {
 		return mapColor.getColor();
+	}
+
+	public IModel getModel() {
+		return model;
 	}
 
 	public void setListener(BlockListener listener) {

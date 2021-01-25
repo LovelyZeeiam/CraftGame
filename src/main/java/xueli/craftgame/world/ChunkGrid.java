@@ -37,7 +37,7 @@ public class ChunkGrid implements Saveable {
     }
 
     @Override
-    public CompoundTag getSaveData() {
+    public CompoundTag getSaveData(WorldLogic logic) {
         CompoundMap rootTag = new CompoundMap();
 
         rootTag.put(new IntTag("version", 0));
@@ -50,7 +50,7 @@ public class ChunkGrid implements Saveable {
                 tilesTag.add(new CompoundTag("", airTag));
             }
             else
-                tilesTag.add(tile.getSaveData());
+                tilesTag.add(tile.getSaveData(logic));
         }
         rootTag.put(new ListTag<>("blockStates", CompoundTag.class, tilesTag));
 
@@ -68,7 +68,7 @@ public class ChunkGrid implements Saveable {
     }
 
     @Override
-    public void setSaveData(CompoundTag data) {
+    public void setSaveData(CompoundTag data, WorldLogic logic) {
         CompoundMap rootTag = data.getValue();
         int version = (Integer) rootTag.get("version").getValue();
         if(version == 0) {
@@ -77,7 +77,7 @@ public class ChunkGrid implements Saveable {
                 CompoundMap statesRoot = tag.getValue();
                 String namespace = (String) statesRoot.get("namespace").getValue();
                 if(!namespace.equals("air"))
-                    tiles.add(new Tile(tag));
+                    tiles.add(new Tile(tag, logic));
             }
 
             List<IntTag> blocks = (List<IntTag>) rootTag.get("blocks").getValue();

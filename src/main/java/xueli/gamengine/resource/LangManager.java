@@ -20,12 +20,7 @@ public class LangManager extends IResource {
 		langFileMap.clear();
 
 		// language
-		FilenameFilter langFilenameFilter = new FilenameFilter() {
-			@Override
-			public boolean accept(File dir, String name) {
-				return name.endsWith(".lang");
-			}
-		};
+		FilenameFilter langFilenameFilter = (dir, name) -> name.endsWith(".lang");
 
 		File[] langFiles = new File(pathString + "lang/").listFiles(langFilenameFilter);
 		Logger.info("Lang: find Lang File: " + langFiles.length);

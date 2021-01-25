@@ -30,6 +30,11 @@ public abstract class IModel {
     public abstract int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
                                           TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world);
 
+    public boolean isAlpha(World world) {
+        return false;
+    }
+    public boolean isCompleteBlock(World world) { return true; }
+
     public ArrayList<AABB> getAabbs(BlockParameters params) {
         return aabbs;
     }

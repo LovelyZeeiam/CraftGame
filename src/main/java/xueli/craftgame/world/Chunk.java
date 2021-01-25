@@ -4,9 +4,9 @@ import com.flowpowered.nbt.CompoundMap;
 import com.flowpowered.nbt.CompoundTag;
 import com.flowpowered.nbt.StringTag;
 import org.lwjgl.util.vector.Vector3i;
-import xueli.craftgame.block.data.BlockFace;
 import xueli.craftgame.block.BlockParameters;
 import xueli.craftgame.block.Tile;
+import xueli.craftgame.block.data.BlockFace;
 import xueli.craftgame.interfaces.Saveable;
 import xueli.craftgame.world.biome.BiomeData;
 import xueli.craftgame.world.biome.BiomeResource;
@@ -55,7 +55,7 @@ public class Chunk implements Saveable {
 		this.world = world;
 		this.colorMap = new Color[size][size];
 
-		setSaveData(chunkData);
+		setSaveData(chunkData, world.getWorldLogic());
 
 	}
 
@@ -82,7 +82,7 @@ public class Chunk implements Saveable {
 						Tile block = grid.getBlock(x,y,z);
 						if (block != null) {
 							BlockParameters params = block.getParams();
-							if (block.getData().isAlpha()) {
+							if (block.getModel().isAlpha(world)) {
 									vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.LEFT,
 											blockTextureAtlas, bufferForAlphaDraw, params,world, this);
 									vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.RIGHT,
@@ -96,52 +96,78 @@ public class Chunk implements Saveable {
 									vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.TOP,
 											blockTextureAtlas, bufferForAlphaDraw,params, world, this);
 
+							} else if(!block.getModel().isCompleteBlock(world)) {
+								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.LEFT,
+										blockTextureAtlas, buffer, params,world, this);
+								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.RIGHT,
+										blockTextureAtlas, buffer, params,world, this);
+								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.FRONT,
+										blockTextureAtlas, buffer, params,world, this);
+								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.BACK,
+										blockTextureAtlas, buffer,params, world, this);
+								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.BOTTOM,
+										blockTextureAtlas, buffer,params, world, this);
+								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.TOP,
+										blockTextureAtlas, buffer,params, world, this);
+
 							} else {
 								if ((x - 1 < 0)
 										? (world.getBlock(x + offset_x - 1, y, z + offset_z) == null
-												|| world.getBlock(x + offset_x - 1, y, z + offset_z).getData().isAlpha())
+												|| world.getBlock(x + offset_x - 1, y, z + offset_z).getModel().isAlpha(world)
+												|| !world.getBlock(x + offset_x - 1, y, z + offset_z).getModel().isCompleteBlock(world))
 										: (grid.getBlock(x - 1,y,z) == null)
-												|| (world.getBlock(x + offset_x - 1, y, z + offset_z).getData().isAlpha())) {
+												|| (world.getBlock(x + offset_x - 1, y, z + offset_z).getModel().isAlpha(world))
+												|| (!world.getBlock(x + offset_x - 1, y, z + offset_z).getModel().isCompleteBlock(world))) {
 									vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.LEFT,
 											blockTextureAtlas, buffer, params,world, this);
 								}
 								if ((x + 1 >= size)
 										? (world.getBlock(x + offset_x + 1, y, z + offset_z) == null
-												|| world.getBlock(x + offset_x + 1, y, z + offset_z).getData().isAlpha())
+												|| world.getBlock(x + offset_x + 1, y, z + offset_z).getModel().isAlpha(world)
+												|| !world.getBlock(x + offset_x + 1, y, z + offset_z).getModel().isCompleteBlock(world))
 										: (grid.getBlock(x + 1,y,z) == null)
-												|| (world.getBlock(x + offset_x + 1, y, z + offset_z).getData().isAlpha())) {
+												|| (world.getBlock(x + offset_x + 1, y, z + offset_z).getModel().isAlpha(world))
+												|| (!world.getBlock(x + offset_x + 1, y, z + offset_z).getModel().isCompleteBlock(world))) {
 									vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.RIGHT,
 											blockTextureAtlas, buffer,params, world, this);
 								}
 								if ((z - 1 < 0)
 										? (world.getBlock(x + offset_x, y, z + offset_z - 1) == null
-												|| world.getBlock(x + offset_x, y, z + offset_z - 1).getData().isAlpha())
+												|| world.getBlock(x + offset_x, y, z + offset_z - 1).getModel().isAlpha(world)
+												|| !world.getBlock(x + offset_x, y, z + offset_z - 1).getModel().isCompleteBlock(world))
 										: (grid.getBlock(x,y,z - 1) == null)
-												|| (world.getBlock(x + offset_x, y, z + offset_z - 1).getData().isAlpha())) {
+												|| (world.getBlock(x + offset_x, y, z + offset_z - 1).getModel().isAlpha(world))
+												|| (!world.getBlock(x + offset_x, y, z + offset_z - 1).getModel().isCompleteBlock(world))) {
 									vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.FRONT,
 											blockTextureAtlas, buffer, params,world, this);
 								}
 								if ((z + 1 >= size)
 										? (world.getBlock(x + offset_x, y, z + offset_z + 1) == null
-												|| world.getBlock(x + offset_x, y, z + offset_z + 1).getData().isAlpha())
+												|| world.getBlock(x + offset_x, y, z + offset_z + 1).getModel().isAlpha(world)
+												|| !world.getBlock(x + offset_x, y, z + offset_z + 1).getModel().isCompleteBlock(world))
 										: (grid.getBlock(x,y,z + 1) == null)
-												|| (world.getBlock(x + offset_x, y, z + offset_z + 1).getData().isAlpha())) {
+												|| (world.getBlock(x + offset_x, y, z + offset_z + 1).getModel().isAlpha(world))
+												|| (!world.getBlock(x + offset_x, y, z + offset_z + 1).getModel().isCompleteBlock(world))) {
 									vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.BACK,
 											blockTextureAtlas, buffer,params, world, this);
 								}
 								if ((y - 1 < 0)
 										? (world.getBlock(x + offset_x, y - 1, z + offset_z) == null
-												|| world.getBlock(x + offset_x, y - 1, z + offset_z).getData().isAlpha())
+												|| world.getBlock(x + offset_x, y - 1, z + offset_z).getModel().isAlpha(world)
+												|| !world.getBlock(x + offset_x, y - 1, z + offset_z).getModel().isCompleteBlock(world))
 										: (grid.getBlock(x,y - 1,z) == null)
-												|| (world.getBlock(x + offset_x, y - 1, z + offset_z).getData().isAlpha())) {
+												|| (world.getBlock(x + offset_x, y - 1, z + offset_z).getModel().isAlpha(world))
+												|| (!world.getBlock(x + offset_x, y - 1, z + offset_z).getModel().isCompleteBlock(world))) {
 									vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.BOTTOM,
 											blockTextureAtlas, buffer, params,world, this);
 								}
 								if ((y + 1 >= Chunk.height)
 										? (world.getBlock(x + offset_x, y + 1, z + offset_z) == null
-												|| world.getBlock(x + offset_x, y + 1, z + offset_z).getData().isAlpha())
+												|| world.getBlock(x + offset_x, y + 1, z + offset_z).getModel().isAlpha(world)
+												|| !world.getBlock(x + offset_x, y + 1, z + offset_z).getModel().isCompleteBlock(world))
 										: (grid.getBlock(x,y + 1,z) == null)
-												|| (world.getBlock(x + offset_x, y + 1, z + offset_z).getData().isAlpha())) {
+												|| (world.getBlock(x + offset_x, y + 1, z + offset_z).getModel().isAlpha(world))
+												|| (!world.getBlock(x + offset_x, y + 1, z + offset_z).getModel().isCompleteBlock(world))) {
 									vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.TOP,
 											blockTextureAtlas, buffer, params,world, this);
 								}
@@ -182,18 +208,18 @@ public class Chunk implements Saveable {
 	}
 
 	@Override
-	public CompoundTag getSaveData() {
-		CompoundTag tag = grid.getSaveData();
+	public CompoundTag getSaveData(WorldLogic logic) {
+		CompoundTag tag = grid.getSaveData(logic);
 		tag.getValue().put(new StringTag("biome", biome.getNamespace()));
 		return tag;
 	}
 
 	@Override
-	public void setSaveData(CompoundTag data) {
+	public void setSaveData(CompoundTag data, WorldLogic logic) {
 		CompoundMap map = data.getValue();
 		String biomeNamespace = ((StringTag) map.get("biome")).getValue();
 		this.biome = BiomeResource.biomes.get(biomeNamespace);
-		grid.setSaveData(data);
+		grid.setSaveData(data, logic);
 
 		// 初始化顶点缓存
 		if(buffer == null)

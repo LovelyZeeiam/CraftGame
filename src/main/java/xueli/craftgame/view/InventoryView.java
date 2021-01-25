@@ -4,7 +4,6 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NanoVG;
-import xueli.craftgame.CraftGame;
 import xueli.craftgame.block.BlockData;
 import xueli.craftgame.block.BlockResource;
 import xueli.craftgame.block.BlockReviewGenerator;
@@ -34,8 +33,8 @@ public class InventoryView extends InGameView {
 	private Player player;
 	private NVGPaint paint = NVGPaint.create();
 
-	public InventoryView(WorldLogic logic, CraftGame game, Player player) {
-		super(logic, game);
+	public InventoryView(WorldLogic logic, Player player) {
+		super(logic);
 		this.player = player;
 
 	}

@@ -19,6 +19,7 @@ import xueli.gamengine.view.GUIProgressBar;
 import xueli.gamengine.view.View;
 
 import java.nio.ByteBuffer;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 
 import static org.lwjgl.nanovg.NanoVG.*;
@@ -72,14 +73,14 @@ public class WorldLogic implements Runnable {
 		}
 
 		cg.getTextureManager().getTextures().forEach((e, t) -> {
-			if(e.startsWith("ingame.gui.")) {
+			if(e.startsWith("ingame.")) {
 				nvgTextures.put(e, nvglCreateImageFromHandle(nvg, t.id, t.width, t.height, NVG_IMAGE_NEAREST));
 			}
 		});
 
 		Blocks.init(nvg, cg, (TextureAtlas) cg.getTextureManager().getTexture("blocks"));
 
-		ingameView = new HUDView(this, cg);
+		ingameView = new HUDView(this);
 
 	}
 
@@ -174,7 +175,14 @@ public class WorldLogic implements Runnable {
 		cg.getDisplay().toggleMouseGrabbed();
 		this.state = State.INGAME;
 		this.ingameView = null;
-		this.ingameView = new HUDView(this, cg);
+		this.ingameView = new HUDView(this);
+
+	}
+
+	public void toggleSetIngameGui(InGameView view) {
+		cg.getDisplay().toggleMouseGrabbed();
+		this.state = State.INVENTORY;
+		this.ingameView = view;
 
 	}
 
@@ -198,10 +206,6 @@ public class WorldLogic implements Runnable {
 		// 清空颜色
 		GL11.glClearColor(0.7f, 0.8f, 1.0f, 1.0f);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
-
-		// 透明材质
-		// GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		// GL11.glEnable(GL11.GL_BLEND);
 
 		normalRenderer.initDraw();
 
@@ -241,6 +245,12 @@ public class WorldLogic implements Runnable {
 		}
 
 		{
+			// 透明材质
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			GL11.glEnable(GL11.GL_BLEND);
+
+			// TODO: 透明物体“两面派”
+
 			mappedBuffer = normalRenderer.mapBuffer();
 			vertexCount = world.drawAlpha(blockTextureAtlas, player, mappedBuffer.asFloatBuffer(), drawDistance);
 			normalRenderer.unmap();
@@ -261,6 +271,9 @@ public class WorldLogic implements Runnable {
 
 			blockRenderShader.unbind();
 
+			// 透明材质
+			GL11.glDisable(GL11.GL_BLEND);
+
 		}
 
 		// 接触绑定 (束缚 真)
@@ -275,8 +288,6 @@ public class WorldLogic implements Runnable {
 		// shadowMapper.renderToDepthBuffer(normalRenderer);
 
 		glViewport(0, 0, cg.getDisplay().getWidth(), cg.getDisplay().getHeight());
-
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
 
 		if (gameGui != null) {
 			cg.getViewManager().draw();
@@ -339,7 +350,7 @@ public class WorldLogic implements Runnable {
 		if (KeyCallback.keysOnce[GLFW.GLFW_KEY_E]) {
 			if (this.state == State.INGAME) {
 				cg.getDisplay().toggleMouseGrabbed();
-				ingameView = new InventoryView(this, cg, player);
+				ingameView = new InventoryView(this, player);
 				this.state = State.INVENTORY;
 			} else if (this.state == State.INVENTORY) {
 				// 从esc界面回到游戏中
@@ -350,7 +361,7 @@ public class WorldLogic implements Runnable {
 		}
 
 		if (this.state == State.INGAME) {
-			ingameView = new HUDView(this, cg);
+			ingameView = new HUDView(this);
 
 		}
 
@@ -367,9 +378,15 @@ public class WorldLogic implements Runnable {
 		return world;
 	}
 
+	private volatile boolean isClosing = false;
+
 	public void delete() {
-		normalRenderer.delete();
-		closeLevel();
+		try {
+			isClosing = true;
+			normalRenderer.delete();
+			closeLevel();
+		} catch (ConcurrentModificationException e) {
+		}
 
 	}
 

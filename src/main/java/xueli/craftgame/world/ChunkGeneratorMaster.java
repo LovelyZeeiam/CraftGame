@@ -26,13 +26,13 @@ public class ChunkGeneratorMaster {
 		for (int x = 0; x < Chunk.size; x++) {
 			for (int z = 0; z < Chunk.size; z++) {
 				for (int y = 0; y < 4; y++) {
-					Tile block = new Tile("stone");
+					Tile block = new Tile("stone", world.getWorldLogic());
 					// block.pos = new BlockPos(x, y, z);
 					chunk.setBlock(x,y,z,block);
 
 				}
 
-				Tile block = new Tile("grass_block");
+				Tile block = new Tile("grass_block", world.getWorldLogic());
 				// block.pos = new BlockPos(x, 4, z);
 				chunk.setBlock(x,4,z,block);
 
@@ -92,30 +92,30 @@ public class ChunkGeneratorMaster {
 				int dirt_height = (int) (Math.random() * 4 + 2);
 
 				for (int y = 0; y < bedrock_height; y++) {
-					Tile block = new Tile(biome.getBlocks()[3]);
+					Tile block = new Tile(biome.getBlocks()[3], world.getWorldLogic());
 					chunk.setBlock(x,y,z,block);
 
 				}
 
 				for (int y = bedrock_height; y < y_max - dirt_height; y++) {
-					Tile block = new Tile(biome.getBlocks()[2]);
+					Tile block = new Tile(biome.getBlocks()[2], world.getWorldLogic());
 					chunk.setBlock(x,y,z,block);
 
 				}
 
 				for (int y = y_max - dirt_height; y < y_max; y++) {
-					Tile block = new Tile(biome.getBlocks()[1]);
+					Tile block = new Tile(biome.getBlocks()[1], world.getWorldLogic());
 					chunk.setBlock(x,y,z,block);
 
 				}
 
-				Tile block = new Tile(biome.getBlocks()[0]);
+				Tile block = new Tile(biome.getBlocks()[0], world.getWorldLogic());
 				chunk.setBlock(x,y_max,z,block);
 
 				chunk.heightMap[x][z] = y_max;
 
 				while (chunk.heightMap[x][z] < SEA_LEVEL) {
-					chunk.setBlock(x, chunk.heightMap[x][z] + 1, z, new Tile("craftgame:water"));
+					chunk.setBlock(x, chunk.heightMap[x][z] + 1, z, new Tile("craftgame:water", world.getWorldLogic()));
 				}
 
 			}

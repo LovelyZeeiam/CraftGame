@@ -5,6 +5,7 @@ import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NanoVG;
 import xueli.craftgame.CraftGame;
 import xueli.craftgame.world.WorldLogic;
+import xueli.gamengine.utils.Display;
 import xueli.gamengine.view.View;
 
 import static org.lwjgl.nanovg.NanoVG.*;
@@ -21,11 +22,13 @@ public abstract class InGameView extends View {
 
 	protected CraftGame game;
 	protected WorldLogic logic;
+	protected Display display;
 
-	public InGameView(WorldLogic logic, CraftGame game) {
+	public InGameView(WorldLogic logic) {
 		super("InGameView");
-		this.game = game;
+		this.game = logic.getCg();
 		this.logic = logic;
+		this.display = this.game.getDisplay();
 
 	}
 

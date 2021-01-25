@@ -297,6 +297,15 @@ public class ModelSlab extends IModel {
         return 6;
     }
 
+    @Override
+    public boolean isAlpha(World world) {
+        return false;
+    }
+
+    @Override
+    public boolean isCompleteBlock(World world) {
+        return false;
+    }
 
     @Override
     public ArrayList<AABB> getAabbs(BlockParameters params) {

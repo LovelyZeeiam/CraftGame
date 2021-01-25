@@ -120,16 +120,13 @@ public class BlockResource extends IResource {
 			}
 
 			byte[] mapColor = GuiResource.loadColorToByteArray(blockJsonObject.getAsJsonArray("map_color"));
-			boolean isAlpha = blockJsonObject.has("isAlpha") && blockJsonObject.get("isAlpha").getAsBoolean();
 
-			BlockData blockData = new BlockData(namespace, name, blockType, destroyTime, textures, mapColor, isAlpha,
+			BlockData blockData = new BlockData(namespace, name, blockType, destroyTime, textures, mapColor,
 					Models.getModel(modelName, renderArgs));
 			blockDatas.put(namespace, blockData);
 
 			Logger.info("Blocks: read Block Defination File: " + file.getName());
 
-		} else {
-			return;
 		}
 
 	}

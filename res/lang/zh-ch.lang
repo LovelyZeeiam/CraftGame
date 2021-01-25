@@ -4,23 +4,29 @@ game.version=alpha
 game.copyright=Licensed under AGPL 3.0
 #Game Loading
 loading_message.loading=Loading~
+
 # Main Menu
 main_menu.single_player=Single Player
 main_menu.multi_player=Multiplayer
 main_menu.setting=Setting
 esc_menu.back_to_game=Back To Game
 esc_menu.quit=Save And Quit
+
 # World Loading
 world_loading.loading_terrain_message=Loading world
+
 # HUD
 hud.ingame.position=Position:
 hud.ingame.fps=FPS:
+hud.ingame.block_message.title=From Block:
+
 # Biome name
 biome.plain.name=Plain
 biome.mountain.name=Mountain
 biome.forest.name=Forest
 
 # Block name
+tile.unknown.name=Unknown Block
 tile.dirt.name=Dirt
 tile.grass.name=Grass Block
 tile.stone.name=Stone
@@ -35,5 +41,6 @@ tile.water.name=Water
 tile.plank.oak.name=Oak Plank
 tile.slab.plank.oak.name=Oak Plank Slab
 
-
+# Block Message
+tile.unknown.message=What Happened to My Computer?\nYour important blocks are encrypted.\nMany of your documents, photos, videos, game levels and other files are no longer accessible because they have been encrypted. Maybe you are busy looking for a way to recover your files, but do not waste your time. Nobody can recover your files without our decryption service.
 

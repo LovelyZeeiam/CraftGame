@@ -7,9 +7,12 @@
 			"flag": [ "nearest", "repeat_x", "repeat_y" ]
 		},
 
-		"ingame.gui.crossbar": "textures/gui/cross.png",
+		"ingame.hud.crossbar": "textures/gui/ingame/hud/cross.png",
+		"ingame.gui.block_message": "textures/gui/ingame/block_message_view.png",
 		
 		"blocks": {
+			"block.unknown": "textures/blocks/bug_block.png",
+
 			"block.dirt": "textures/blocks/dirt.png",
 			"block.grass.side": "textures/blocks/grass_block_side.png",
 			"block.grass.top": "textures/blocks/grass_block_top.png",

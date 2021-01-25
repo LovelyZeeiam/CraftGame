@@ -45,7 +45,7 @@ public class WorldIO {
 
                 world.chunks.put(MathUtils.vert2ToLong(x,z), new Chunk(x,z,world,tag));
 
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 e.printStackTrace();
 
                 // 生成新的区块
@@ -75,7 +75,7 @@ public class WorldIO {
 
     public void saveChunk(Chunk chunk) {
         // 生成区块保存标签
-        CompoundTag tag = chunk.getSaveData();
+        CompoundTag tag = chunk.getSaveData(world.getWorldLogic());
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
             NBTOutputStream nbtout = new NBTOutputStream(out, false, ByteOrder.LITTLE_ENDIAN);
@@ -90,7 +90,7 @@ public class WorldIO {
             new File("level/").mkdir();
 
         try {
-            Files.fileOutput(path + getChunkSaveName(chunk.chunkX, chunk.chunkZ), out.toString());
+            Files.fileOutput(path + getChunkSaveName(chunk.chunkX, chunk.chunkZ), out.toByteArray());
         } catch (IOException e) {
             e.printStackTrace();
         }

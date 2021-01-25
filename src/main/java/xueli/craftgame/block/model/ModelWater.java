@@ -2,6 +2,7 @@ package xueli.craftgame.block.model;
 
 import com.google.gson.JsonObject;
 import org.lwjgl.nanovg.NVGColor;
+import org.lwjgl.util.vector.Vector3i;
 import xueli.craftgame.block.BlockData;
 import xueli.craftgame.block.BlockParameters;
 import xueli.craftgame.block.data.BlockFace;
@@ -16,6 +17,15 @@ import xueli.gamengine.view.GuiColor;
 import java.util.ArrayList;
 
 public class ModelWater extends IModel {
+
+    private static final boolean[] faceAlpha = new boolean[6];
+
+    static {
+        for(int i = 0; i < 6;i++)
+            faceAlpha[i] = true;
+
+
+    }
 
     public ModelWater(JsonObject renderArgs) {
         super(renderArgs);
@@ -40,6 +50,8 @@ public class ModelWater extends IModel {
 
         switch (face) {
             case BlockFace.FRONT:
+                if(world != null && world.hasBlock(new Vector3i(x,y,z-1)) && world.getBlock(x,y,z-1).getData().getNamespace().equals(data.getNamespace()))
+                    break;
                 buffer.put(u1).put(v2);
                 buffer.put(0.7f * r).put(0.7f * g).put(0.7f * b);
                 buffer.put(x).put(y).put(z);
@@ -60,6 +72,8 @@ public class ModelWater extends IModel {
                 buffer.put(x + 1).put(y).put(z);
                 break;
             case BlockFace.RIGHT:
+                if(world != null && world.hasBlock(new Vector3i(x+1,y,z)) && world.getBlock(x+1,y,z).getData().getNamespace().equals(data.getNamespace()))
+                    break;
                 buffer.put(u1).put(v2);
                 buffer.put(0.7f * r).put(0.7f * g).put(0.7f * b);
                 buffer.put(x + 1).put(y).put(z);
@@ -80,6 +94,8 @@ public class ModelWater extends IModel {
                 buffer.put(x + 1).put(y).put(z + 1);
                 break;
             case BlockFace.BACK:
+                if(world != null && world.hasBlock(new Vector3i(x,y,z+1)) && world.getBlock(x,y,z+1).getData().getNamespace().equals(data.getNamespace()))
+                    break;
                 buffer.put(u1).put(v2);
                 buffer.put(0.7f * r).put(0.7f * g).put(0.7f * b);
                 buffer.put(x).put(y).put(z + 1);
@@ -100,6 +116,8 @@ public class ModelWater extends IModel {
                 buffer.put(x + 1).put(y + 0.8f).put(z + 1);
                 break;
             case BlockFace.LEFT:
+                if(world != null && world.hasBlock(new Vector3i(x-1,y,z)) && world.getBlock(x-1,y,z).getData().getNamespace().equals(data.getNamespace()))
+                    break;
                 buffer.put(u1).put(v2);
                 buffer.put(0.7f * r).put(0.7f * g).put(0.7f * b);
                 buffer.put(x).put(y).put(z);
@@ -120,6 +138,8 @@ public class ModelWater extends IModel {
                 buffer.put(x).put(y + 0.8f).put(z + 1);
                 break;
             case BlockFace.TOP:
+                if(world != null && world.hasBlock(new Vector3i(x,y+1,z)) && world.getBlock(x,y+1,z).getData().getNamespace().equals(data.getNamespace()))
+                    break;
                 buffer.put(u1).put(v2);
                 buffer.put(1.0f * r).put(1.0f * g).put(1.0f * b);
                 buffer.put(x).put(y + 0.8f).put(z);
@@ -140,6 +160,8 @@ public class ModelWater extends IModel {
                 buffer.put(x + 1).put(y + 0.8f).put(z + 1);
                 break;
             case BlockFace.BOTTOM:
+                if(world != null && world.hasBlock(new Vector3i(x,y-1,z)) && world.getBlock(x,y-1,z).getData().getNamespace().equals(data.getNamespace()))
+                    break;
                 buffer.put(u1).put(v2);
                 buffer.put(0.5f * r).put(0.5f * g).put(0.5f * b);
                 buffer.put(x).put(y).put(z);
@@ -162,6 +184,11 @@ public class ModelWater extends IModel {
         }
 
         return 6;
+    }
+
+    @Override
+    public boolean isAlpha(World world) {
+        return true;
     }
 
     @Override

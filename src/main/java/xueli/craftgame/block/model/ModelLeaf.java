@@ -11,6 +11,14 @@ import xueli.gamengine.view.GuiColor;
 
 public class ModelLeaf extends IModel {
 
+    private static final boolean[] leafFaceAlpha = new boolean[6];
+
+    static {
+        for(int i = 0;i < 6;i++)
+            leafFaceAlpha[i] = true;
+
+    }
+
     public ModelLeaf(JsonObject renderArgs) {
         super(renderArgs);
 
@@ -21,6 +29,11 @@ public class ModelLeaf extends IModel {
                                  TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
         return getRenderCubeData(buffer, data, x, y, z, face, blockTextureAtlas, chunk, world,
                 chunk == null ? GuiColor.GREEN : chunk.getBiome().getLeaves_color_nvg());
+    }
+
+    @Override
+    public boolean isAlpha(World world) {
+        return true;
     }
 
 }

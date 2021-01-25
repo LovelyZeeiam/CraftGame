@@ -122,7 +122,7 @@ public class World {
 	public void setBlock(Vector3i p, String blockName) {
 		if (p == null)
 			return;
-		setBlock(p.getX(), p.getY(), p.getZ(), new Tile(blockName));
+		setBlock(p.getX(), p.getY(), p.getZ(), new Tile(blockName, worldLogic));
 	}
 
 	public void putChunk(Chunk chunk) {
