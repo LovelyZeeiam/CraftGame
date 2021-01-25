@@ -15,6 +15,7 @@ public class Models {
         models.put("water", ModelWater.class);
         models.put("leaf", ModelLeaf.class);
         models.put("slab", ModelSlab.class);
+        models.put("stair", ModelStair.class);
 
     }
 

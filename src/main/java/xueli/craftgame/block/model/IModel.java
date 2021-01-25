@@ -27,6 +27,9 @@ public abstract class IModel {
 
     }
 
+    /**
+     * @return 绘制的有多少个面
+     */
     public abstract int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
                                           TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world);
 

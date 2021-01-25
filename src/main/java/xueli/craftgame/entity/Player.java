@@ -4,6 +4,7 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector3i;
 import xueli.craftgame.block.*;
+import xueli.craftgame.block.data.BlockFace;
 import xueli.craftgame.block.data.SlabAndStairData;
 import xueli.craftgame.world.World;
 import xueli.gamengine.physics.AABB;
@@ -14,11 +15,12 @@ import xueli.gamengine.utils.callbacks.KeyCallback;
 
 public class Player extends Entity {
 
-	private static Vector3f last_time_ray_end;
-	private static Vector3i block_select, last_block_select;
 	private static final int placeBlockDuration = 200;
+	private Vector3f last_time_ray_end;
+	private Vector3i block_select, last_block_select;
+	private byte place_block_face_to;
 
-	private static long placeTimeCount;
+	private long placeTimeCount = 0;
 	private static AABB originAABB = new AABB(-0.5f, 0.5f, -1.5f, 0.2f, -0.5f, 0.5f);
 	public int gamemode = 1;
 	public int health = 20;
@@ -94,6 +96,8 @@ public class Player extends Entity {
 						world) == BlockListener.RightClick.PLACE_BLOCK_WHEN_RIGHT_CLICK) {
 					BlockParameters parameters = new BlockParameters();
 					parameters.slabOrStairData = last_time_ray_end.getY() - last_block_select.getY() > 0.5f ? SlabAndStairData.UP : SlabAndStairData.DOWN;
+					parameters.faceTo = place_block_face_to;
+					
 					world.setBlock(last_block_select, new Tile(handBlockData,parameters, world.getWorldLogic()));
 				}
 				placeTimeCount = Time.thisTime;
@@ -112,7 +116,31 @@ public class Player extends Entity {
 			Vector3i searching_block_pos = new Vector3i((int) searching_ray_end.getX(), (int) searching_ray_end.getY(), (int) searching_ray_end.getZ());
 			if (world.hasBlock(searching_block_pos)) {
 				block_select = searching_block_pos;
-
+				
+				float delta_x = last_time_ray_end.getX() - searching_ray_end.getX();
+				float delta_z = last_time_ray_end.getZ() - searching_ray_end.getZ();
+				int delta_x_int = last_block_select.getX() - searching_block_pos.getX();
+				int delta_z_int = last_block_select.getZ() - searching_block_pos.getZ();
+				
+				if(delta_x_int > 0 && delta_z_int == 0)
+					place_block_face_to = BlockFace.RIGHT;
+				else if(delta_x_int < 0 && delta_z_int == 0)
+					place_block_face_to = BlockFace.LEFT;
+				else if(delta_z_int > 0 && delta_x_int == 0)
+					place_block_face_to = BlockFace.BACK;
+				else if(delta_z_int < 0 && delta_x_int == 0)
+					place_block_face_to = BlockFace.FRONT;
+				else if(delta_x - Math.abs(delta_z) > 0)
+					place_block_face_to = BlockFace.RIGHT;
+				else if(delta_x + Math.abs(delta_z) < 0)
+					place_block_face_to = BlockFace.LEFT;
+				else if(delta_z - Math.abs(delta_x) > 0)
+					place_block_face_to = BlockFace.BACK;
+				else if(delta_z + Math.abs(delta_x) < 0)
+					place_block_face_to = BlockFace.FRONT;
+				else
+					place_block_face_to = BlockFace.FRONT;
+				
 				Tile tile = world.getBlock(block_select.getX(), block_select.getY(), block_select.getZ());
 				if(tile.getListener() != null)
 					tile.getListener().onLookAt(block_select.getX(), block_select.getY(), block_select.getZ(), world);
