@@ -3,6 +3,8 @@ package xueli.craftgame.world;
 import com.flowpowered.nbt.CompoundTag;
 import com.flowpowered.nbt.stream.NBTInputStream;
 import com.flowpowered.nbt.stream.NBTOutputStream;
+
+import xueli.gamengine.utils.Logger;
 import xueli.gamengine.utils.MathUtils;
 import xueli.gamengine.utils.Time;
 import xueli.utils.Files;
@@ -46,7 +48,7 @@ public class WorldIO {
                 world.chunks.put(MathUtils.vert2ToLong(x,z), new Chunk(x,z,world,tag));
 
             } catch (Throwable e) {
-                e.printStackTrace();
+            	Logger.warn(e.getClass().getName()+": "+e.getMessage());
 
                 // 生成新的区块
                 world.chunks.put(MathUtils.vert2ToLong(x,z), world.getGen().superflat(x,z));
@@ -65,7 +67,7 @@ public class WorldIO {
             world.chunks.put(MathUtils.vert2ToLong(x,z), new Chunk(x,z,world,tag));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.warn(e.getClass().getName()+": "+e.getMessage());
 
             // 生成新的区块
             world.chunks.put(MathUtils.vert2ToLong(x,z), world.getGen().superflat(x,z));

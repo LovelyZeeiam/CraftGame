@@ -37,6 +37,7 @@ public class World {
 
 	public World() {
 		gen = new ChunkGeneratorMaster(this);
+		io = new WorldIO(this);
 		
 	}
 

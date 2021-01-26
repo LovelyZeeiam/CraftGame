@@ -52,6 +52,8 @@ public class WorldGenerationTest implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		world.close();
 
 	}
 
