@@ -1,12 +1,14 @@
 package xueli.craftgame.world.renderer;
 
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glViewport;
+
 import xueli.craftgame.CraftGame;
 import xueli.craftgame.world.WorldLogic;
 import xueli.gamengine.utils.FrameBuffer;
 import xueli.gamengine.utils.GLHelper;
 import xueli.gamengine.utils.Shader;
-
-import static org.lwjgl.opengl.GL11.*;
 
 /**
  * Later...

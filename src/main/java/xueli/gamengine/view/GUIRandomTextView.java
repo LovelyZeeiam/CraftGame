@@ -1,9 +1,10 @@
 package xueli.gamengine.view;
 
-import org.lwjgl.nanovg.NVGColor;
-import xueli.gamengine.utils.EvalableFloat;
-
 import java.util.Random;
+
+import org.lwjgl.nanovg.NVGColor;
+
+import xueli.gamengine.utils.EvalableFloat;
 
 public class GUIRandomTextView extends GUITextView {
 

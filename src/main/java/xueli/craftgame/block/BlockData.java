@@ -1,6 +1,10 @@
 package xueli.craftgame.block;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 import org.lwjgl.nanovg.NVGColor;
+
 import xueli.craftgame.block.model.IModel;
 import xueli.craftgame.world.Chunk;
 import xueli.craftgame.world.World;
@@ -9,9 +13,6 @@ import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.Color;
 import xueli.gamengine.utils.FloatList;
 import xueli.gamengine.utils.vector.Vector2s;
-
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class BlockData {
 
@@ -84,8 +85,8 @@ public class BlockData {
 
 	}
 
-	public ArrayList<AABB> getAabbs(BlockParameters params) {
-		return model.getAabbs(params);
+	public ArrayList<AABB> getAabbs(BlockParameters params, World world,int x,int y,int z) {
+		return model.getAabbs(params, world,x,y,z);
 	}
 
 	public int getDrawData(FloatList buffer, BlockData data, int x, int y, int z, byte face,

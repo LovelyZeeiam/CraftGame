@@ -1,17 +1,18 @@
 package xueli.gamengine.musicjson;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import xueli.gamengine.utils.Entry;
-import xueli.gamengine.utils.Logger;
-import xueli.gamengine.utils.SoundManager;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import xueli.gamengine.utils.Entry;
+import xueli.gamengine.utils.Logger;
+import xueli.gamengine.utils.SoundManager;
 
 @Deprecated
 public class MusicJson {

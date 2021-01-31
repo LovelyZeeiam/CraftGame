@@ -1,7 +1,11 @@
 package xueli.craftgame.block.model;
 
-import com.google.gson.JsonObject;
+import java.util.ArrayList;
+
 import org.lwjgl.nanovg.NVGColor;
+
+import com.google.gson.JsonObject;
+
 import xueli.craftgame.block.BlockData;
 import xueli.craftgame.block.BlockParameters;
 import xueli.craftgame.block.data.BlockFace;
@@ -11,8 +15,6 @@ import xueli.gamengine.physics.AABB;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.FloatList;
 import xueli.gamengine.utils.vector.Vector2s;
-
-import java.util.ArrayList;
 
 public abstract class IModel {
 
@@ -38,7 +40,7 @@ public abstract class IModel {
     }
     public boolean isCompleteBlock(World world) { return true; }
 
-    public ArrayList<AABB> getAabbs(BlockParameters params) {
+    public ArrayList<AABB> getAabbs(BlockParameters params, World world,int x,int y, int z) {
         return aabbs;
     }
 

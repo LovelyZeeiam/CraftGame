@@ -1,6 +1,9 @@
 package xueli.craftgame.block.model;
 
+import java.util.ArrayList;
+
 import com.google.gson.JsonObject;
+
 import xueli.craftgame.block.BlockData;
 import xueli.craftgame.block.BlockParameters;
 import xueli.craftgame.block.data.BlockFace;
@@ -11,8 +14,6 @@ import xueli.gamengine.physics.AABB;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.FloatList;
 import xueli.gamengine.utils.vector.Vector2s;
-
-import java.util.ArrayList;
 
 public class ModelSlab extends IModel {
 
@@ -308,7 +309,7 @@ public class ModelSlab extends IModel {
     }
 
     @Override
-    public ArrayList<AABB> getAabbs(BlockParameters params) {
+    public ArrayList<AABB> getAabbs(BlockParameters params,World world,int x,int y,int z) {
         if (params.slabOrStairData == SlabAndStairData.UP)
             return upAabbs;
         else if (params.slabOrStairData == SlabAndStairData.DOWN)

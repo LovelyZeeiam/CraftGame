@@ -1,9 +1,13 @@
 package xueli.craftgame.world;
 
+import java.util.HashMap;
+
+import org.lwjgl.util.vector.Vector3i;
+
 import com.flowpowered.nbt.CompoundMap;
 import com.flowpowered.nbt.CompoundTag;
 import com.flowpowered.nbt.StringTag;
-import org.lwjgl.util.vector.Vector3i;
+
 import xueli.craftgame.block.BlockParameters;
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.block.data.BlockFace;
@@ -15,8 +19,6 @@ import xueli.gamengine.utils.Color;
 import xueli.gamengine.utils.FloatList;
 import xueli.gamengine.utils.Time;
 import xueli.gamengine.utils.vector.Vector2i;
-
-import java.util.HashMap;
 
 public class Chunk implements Saveable {
 
@@ -63,9 +65,9 @@ public class Chunk implements Saveable {
 	public void update(TextureAtlas blockTextureAtlas) {
 		if (needRebuild) {
 			if(buffer == null)
-				buffer = new FloatList(300000);
+				buffer = new FloatList(30000);
 			if(bufferForAlphaDraw == null)
-				bufferForAlphaDraw = new FloatList(50000);
+				bufferForAlphaDraw = new FloatList(5000);
 
 			int offset_x = chunkX << size_yiwei;
 			int offset_z = chunkZ << size_yiwei;

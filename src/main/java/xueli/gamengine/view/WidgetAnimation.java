@@ -1,11 +1,11 @@
 package xueli.gamengine.view;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import xueli.gamengine.utils.EvalableFloat;
 import xueli.gamengine.utils.Time;
 import xueli.gamengine.view.anim2d.Constant;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class WidgetAnimation extends IAnimation {
 

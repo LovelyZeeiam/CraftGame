@@ -1,13 +1,5 @@
 package xueli.gamengine.resource;
 
-import com.google.gson.*;
-import org.lwjgl.nanovg.NVGColor;
-import org.lwjgl.nanovg.NanoVG;
-import xueli.gamengine.utils.EvalableFloat;
-import xueli.gamengine.utils.IOUtils;
-import xueli.gamengine.utils.Logger;
-import xueli.gamengine.view.*;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -16,6 +8,32 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.lwjgl.nanovg.NVGColor;
+import org.lwjgl.nanovg.NanoVG;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+
+import xueli.gamengine.utils.EvalableFloat;
+import xueli.gamengine.utils.IOUtils;
+import xueli.gamengine.utils.Logger;
+import xueli.gamengine.view.AnimationWait;
+import xueli.gamengine.view.GUIBackground;
+import xueli.gamengine.view.GUIButton;
+import xueli.gamengine.view.GUIImageView;
+import xueli.gamengine.view.GUIProgressBar;
+import xueli.gamengine.view.GUIRandomTextView;
+import xueli.gamengine.view.GUIScrollBar;
+import xueli.gamengine.view.GUITextBox;
+import xueli.gamengine.view.GUITextView;
+import xueli.gamengine.view.GuiAnimation;
+import xueli.gamengine.view.GuiAnimationGroup;
+import xueli.gamengine.view.IAnimation;
+import xueli.gamengine.view.View;
 
 public class GuiResource extends IResource {
 

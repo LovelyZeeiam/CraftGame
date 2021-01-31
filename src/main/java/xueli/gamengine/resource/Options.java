@@ -1,12 +1,5 @@
 package xueli.gamengine.resource;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
-import xueli.gamengine.view.GUIProgressBar;
-import xueli.gamengine.view.GUITextView;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileNotFoundException;
@@ -14,6 +7,14 @@ import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+
+import xueli.gamengine.view.GUIProgressBar;
+import xueli.gamengine.view.GUITextView;
 
 public class Options extends IResource {
 

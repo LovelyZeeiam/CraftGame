@@ -1,5 +1,13 @@
 package xueli.craftgame.world;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.ByteOrder;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import com.flowpowered.nbt.CompoundTag;
 import com.flowpowered.nbt.stream.NBTInputStream;
 import com.flowpowered.nbt.stream.NBTOutputStream;
@@ -9,21 +17,11 @@ import xueli.gamengine.utils.MathUtils;
 import xueli.gamengine.utils.Time;
 import xueli.utils.Files;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.ByteOrder;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 public class WorldIO {
 
     private static final String path = "level/";
 
     private World world;
-
-    private ExecutorService threadPool = Executors.newFixedThreadPool(10);
 
     private WorldCheckAndSaveThread thread = new WorldCheckAndSaveThread();
 
@@ -53,7 +51,10 @@ public class WorldIO {
                 // 生成新的区块
                 world.chunks.put(MathUtils.vert2ToLong(x,z), world.getGen().superflat(x,z));
 
-            }
+            } finally {
+				System.gc();
+				
+			}
         });
 
     }
@@ -128,6 +129,7 @@ public class WorldIO {
         }
 
         public void close() {
+        	service.shutdown();
             service.shutdownNow();
 
         }

@@ -1,9 +1,13 @@
 package xueli.craftgame.block;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 import com.flowpowered.nbt.CompoundMap;
 import com.flowpowered.nbt.CompoundTag;
 import com.flowpowered.nbt.StringTag;
 import com.google.gson.Gson;
+
 import xueli.craftgame.block.model.IModel;
 import xueli.craftgame.interfaces.Saveable;
 import xueli.craftgame.world.Chunk;
@@ -13,9 +17,6 @@ import xueli.gamengine.physics.AABB;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.FloatList;
 import xueli.gamengine.utils.Logger;
-
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class Tile implements Saveable {
 
@@ -81,8 +82,8 @@ public class Tile implements Saveable {
 		return data.getDrawData(buffer, this.data, x, y, z, face, blockTextureAtlas, params, chunk, world);
 	}
 
-	public ArrayList<AABB> getAabbs(BlockParameters params) {
-		return data.getAabbs(params);
+	public ArrayList<AABB> getAabbs(BlockParameters params,World world,int x, int y, int z) {
+		return data.getAabbs(params,world,x,y,z);
 	}
 
 	@Override

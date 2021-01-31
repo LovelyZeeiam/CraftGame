@@ -1,9 +1,9 @@
 package xueli.gamengine.view;
 
-import org.lwjgl.nanovg.NVGColor;
-
 import static org.lwjgl.nanovg.NanoVG.nvgRGB;
 import static org.lwjgl.nanovg.NanoVG.nvgRGBA;
+
+import org.lwjgl.nanovg.NVGColor;
 
 public class GuiColor {
 

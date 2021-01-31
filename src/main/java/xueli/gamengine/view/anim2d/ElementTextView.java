@@ -1,9 +1,14 @@
 package xueli.gamengine.view.anim2d;
 
-import org.lwjgl.nanovg.NVGColor;
-import xueli.gamengine.utils.EvalableFloat;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
+import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
+import static org.lwjgl.nanovg.NanoVG.nvgText;
+import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
 
-import static org.lwjgl.nanovg.NanoVG.*;
+import org.lwjgl.nanovg.NVGColor;
+
+import xueli.gamengine.utils.EvalableFloat;
 
 public class ElementTextView extends Element2D {
 

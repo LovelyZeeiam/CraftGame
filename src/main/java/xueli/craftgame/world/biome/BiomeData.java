@@ -1,11 +1,12 @@
 package xueli.craftgame.world.biome;
 
-import org.lwjgl.nanovg.NVGColor;
-import xueli.craftgame.world.generate.IChunkGenerator;
-import xueli.gamengine.utils.Color;
-
 import java.util.Arrays;
 import java.util.Random;
+
+import org.lwjgl.nanovg.NVGColor;
+
+import xueli.craftgame.world.generate.IChunkGenerator;
+import xueli.gamengine.utils.Color;
 
 public class BiomeData {
 

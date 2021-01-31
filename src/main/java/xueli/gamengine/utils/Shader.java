@@ -1,5 +1,12 @@
 package xueli.gamengine.utils;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.FloatBuffer;
+import java.util.HashMap;
+
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
@@ -7,14 +14,8 @@ import org.lwjgl.opengl.GL32;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
-import xueli.gamengine.IGame;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.FloatBuffer;
-import java.util.HashMap;
+import xueli.gamengine.IGame;
 
 public class Shader {
 

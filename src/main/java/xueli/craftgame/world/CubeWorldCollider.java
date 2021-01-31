@@ -1,11 +1,12 @@
 package xueli.craftgame.world;
 
+import java.util.ArrayList;
+
 import org.lwjgl.util.vector.Vector3f;
+
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.entity.Entity;
 import xueli.gamengine.physics.AABB;
-
-import java.util.ArrayList;
 
 public class CubeWorldCollider {
 
@@ -35,7 +36,7 @@ public class CubeWorldCollider {
 				for (int z = z0; z < z1; z++) {
 					Tile tile = world.getBlock(x, y, z);
 					if (tile != null) {
-						ArrayList<AABB> tileAabbs = tile.getAabbs(tile.getParams());
+						ArrayList<AABB> tileAabbs = tile.getAabbs(tile.getParams(), world,x,y,z);
 						for (AABB tileAabb : tileAabbs) {
 							aabbs.add(tileAabb.move((float) x, (float) y, (float) z));
 						}

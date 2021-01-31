@@ -1,9 +1,9 @@
 package xueli.gamengine.view.anim2d;
 
-import xueli.gamengine.data.Author;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import xueli.gamengine.data.Author;
 
 public class Anim2D {
 

@@ -1,8 +1,8 @@
 package xueli.gamengine.musicjson;
 
-import xueli.gamengine.utils.IOUtils;
-
 import java.io.IOException;
+
+import xueli.gamengine.utils.IOUtils;
 
 public class MusicJsonMain {
 
