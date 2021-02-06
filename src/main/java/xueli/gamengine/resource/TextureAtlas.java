@@ -22,6 +22,11 @@ public class TextureAtlas extends Texture {
 	public void bind() {
 		super.bind();
 	}
+	
+	@Override
+	public void bind(int textureID) {
+		super.bind(textureID);
+	}
 
 	public Vector2s getAtlasID(String key) {
 		return atlas.get(key);

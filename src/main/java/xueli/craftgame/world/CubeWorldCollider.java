@@ -45,24 +45,12 @@ public class CubeWorldCollider {
 			}
 		}
 
-		/**
-		 * the player will stick into the block in a very 45 degree angle 精度问题？
-		 */
 		double xd = deltaPos.x, yd = deltaPos.y, zd = deltaPos.z;
-		for (AABB aabb : aabbs) {
-			xd = aabb.clipXCollide(entityAabb, deltaPos.x);
+		for(AABB a : aabbs) {
+			
+
+
 		}
-		e.pos.x += xd;
-		entityAabb = e.getOriginAABB().move(e.pos.x, e.pos.y, e.pos.z);
-		for (AABB aabb : aabbs) {
-			yd = aabb.clipYCollide(entityAabb, deltaPos.y);
-		}
-		e.pos.y += yd;
-		entityAabb = e.getOriginAABB().move(e.pos.x, e.pos.y, e.pos.z);
-		for (AABB aabb : aabbs) {
-			zd = aabb.clipZCollide(entityAabb, deltaPos.z);
-		}
-		e.pos.z += zd;
 
 	}
 

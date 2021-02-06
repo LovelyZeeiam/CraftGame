@@ -27,6 +27,7 @@ public class HUDView extends InGameView {
 	private static final float minimap_padding = 3;
 	private static final float minimap_player_size = 5;
 	private static final float crossbarSize = 20;
+	private static final float chatbox_margin_bottom = 40;
 
 	public HUDView(WorldLogic logic) {
 		super(logic);
@@ -145,6 +146,12 @@ public class HUDView extends InGameView {
 
 		// 取消裁剪
 		nvgRestore(nvg);*/
+		
+		/**
+		 * 聊天窗口
+		 */
+		
+		
 
 	}
 

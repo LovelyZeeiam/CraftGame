@@ -3,7 +3,7 @@
   "name": "#tile.cobblestone.name",
   "block": {
     "type": "Build",
-    "destroyTime": 1000,
+    "destroyTime": 10000,
     "texture": "block.cobblestone",
     "map_color": [
       97,97,97

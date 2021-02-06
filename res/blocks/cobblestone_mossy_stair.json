@@ -1,0 +1,19 @@
+{
+  "namespace": "craftgame:cobblestone_mossy.stair",
+  "name": "#tile.stair.cobblestone_mossy.name",
+  "block": {
+    "type": "Build",
+    "destroyTime": 12000,
+    "texture": "block.cobblestone_mossy",
+    "map_color": [
+      125,130,115
+    ],
+    
+    "model": "stair",
+    "renderer_args": {
+
+    }
+
+  }
+
+}

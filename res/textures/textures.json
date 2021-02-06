@@ -19,6 +19,7 @@
 			"block.stone": "textures/blocks/stone.png",
 			"block.oak_log.side": "textures/blocks/oak_log.png",
 			"block.oak_log.top": "textures/blocks/oak_log_top.png",
+			"block.oak_log.stair.top": "textures/blocks/oak_log_top_stair.png",
 			"block.bedrock": "textures/blocks/bedrock.png",
 			"block.brick": "textures/blocks/brick.png",
 			"block.cobblestone": "textures/blocks/cobblestone.png",

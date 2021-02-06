@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 import org.lwjgl.util.vector.Matrix4f;
 
 import xueli.craftgame.CraftGame;
@@ -73,6 +74,9 @@ public class WorldLogic implements Runnable {
 
 		normalRenderer = new Renderer(cg, this);
 		shadowMapper = new ShadowMapper(cg, this);
+		this.blockRenderShader = cg.getShaderResource().get("world");
+		
+		this.shadowMapper.setDepthMap(blockRenderShader);
 
 		// 游戏内gui绘制
 		nvg = nvgCreate(NVG_STENCIL_STROKES | NVG_ANTIALIAS | NVG_DEBUG);
@@ -98,7 +102,6 @@ public class WorldLogic implements Runnable {
 
 	public void loadLevel() {
 		this.blockTextureAtlas = (TextureAtlas) cg.getTextureManager().getTexture("blocks");
-		this.blockRenderShader = cg.getShaderResource().get("world");
 
 		// 创建新的世界
 		world = new World(this);
@@ -198,6 +201,11 @@ public class WorldLogic implements Runnable {
 
 	}
 
+	public void setNormalViewPort() {
+		glViewport(0, 0, cg.getDisplay().getWidth(), cg.getDisplay().getHeight());
+		
+	}
+	
 	public void draw() {
 		// Blocks.init(nvg, cg, (TextureAtlas)
 		// cg.getTextureManager().getTexture("blocks"));
@@ -213,17 +221,16 @@ public class WorldLogic implements Runnable {
 		// 玩家指针指向方块的更新
 		player.pickTick();
 
-		glViewport(0, 0, cg.getDisplay().getWidth(), cg.getDisplay().getHeight());
+		setNormalViewPort();
 
 		// 清空颜色
 		GL11.glClearColor(0.5f, 0.8f, 1.0f, 1.0f);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 
-		normalRenderer.initDraw();
-
 		{
 			GL11.glEnable(GL11.GL_CULL_FACE);
 
+			normalRenderer.initDraw();
 			// 将内存地址映射 效率提高了
 			mappedBuffer = normalRenderer.mapBuffer();
 			// 得到世界的渲染顶点信息
@@ -235,6 +242,11 @@ public class WorldLogic implements Runnable {
 
 			// 将方块材质加入到OpenGL娘的首个材质槽里面
 			blockTextureAtlas.bind();
+			
+			// 阴影映射加入到第二个材质槽里面
+			GL13.glActiveTexture(GL13.GL_TEXTURE1);
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, shadowMapper.getBuffer().getTbo_depth());
+			
 			GLHelper.checkGLError("World: Bind Texture");
 
 			// 将着色器放到OpenGL娘的着色器槽里面
@@ -247,14 +259,23 @@ public class WorldLogic implements Runnable {
 
 			// 让OpenGL娘去绘制叭~
 			normalRenderer.draw(vertexCount);
+			
+			normalRenderer.postDraw();
 
 			GLHelper.checkGLError("World: Drawer");
 
 			blockRenderShader.unbind();
 
 			GL11.glDisable(GL11.GL_CULL_FACE);
-
+			
 		}
+		
+		shadowMapper.bindBuffer();
+		shadowMapper.clearBuffer();
+		shadowMapper.renderToDepthBuffer(normalRenderer);
+		shadowMapper.unbindBuffer();
+		
+		setNormalViewPort();
 
 		{
 			// 透明材质
@@ -263,6 +284,8 @@ public class WorldLogic implements Runnable {
 
 			// TODO: 透明物体“两面派”
 
+			normalRenderer.initDraw();
+			
 			mappedBuffer = normalRenderer.mapBuffer();
 			vertexCount = world.drawAlpha(blockTextureAtlas, player, mappedBuffer.asFloatBuffer(), drawDistance);
 			normalRenderer.unmap();
@@ -282,6 +305,8 @@ public class WorldLogic implements Runnable {
 			GLHelper.checkGLError("World Alpha: Drawer");
 
 			blockRenderShader.unbind();
+			
+			normalRenderer.postDraw();
 
 			// 透明材质
 			GL11.glDisable(GL11.GL_BLEND);
@@ -299,7 +324,7 @@ public class WorldLogic implements Runnable {
 
 		// shadowMapper.renderToDepthBuffer(normalRenderer);
 
-		glViewport(0, 0, cg.getDisplay().getWidth(), cg.getDisplay().getHeight());
+		setNormalViewPort();
 
 		if (gameGui != null) {
 			cg.getViewManager().draw();

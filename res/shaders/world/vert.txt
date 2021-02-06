@@ -11,10 +11,16 @@ out vec2 otexPos;
 out vec3 ocolor;
 out vec3 normal;
 
+uniform mat4 lightDirectionMatrix;
+uniform mat4 lightTransMatrix;
+out vec4 FragPosLightSpace;
+
 void main(){
 	gl_Position = projMatrix * viewMatrix * vec4(pos ,1.0);
 	otexPos = texPos;
 	ocolor = color;
+	
+	FragPosLightSpace = lightDirectionMatrix * lightTransMatrix * vec4(pos, 1.0); 
 	
 }
 

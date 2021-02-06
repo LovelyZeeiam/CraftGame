@@ -2,10 +2,11 @@
 
 layout (location = 0) in vec3 pos;
 
-uniform mat4 matrix;
+uniform mat4 projMatrix;
+uniform mat4 viewMatrix;
 
 void main(){
-	gl_Position = matrix * vec4(pos ,1.0);
+	gl_Position = projMatrix * viewMatrix * vec4(pos ,1.0);
 	
 	
 }

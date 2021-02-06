@@ -1,0 +1,19 @@
+{
+  "namespace": "craftgame:cobblestone.stair",
+  "name": "#tile.stair.cobblestone.name",
+  "block": {
+    "type": "Build",
+    "destroyTime": 12000,
+    "texture": "block.cobblestone",
+    "map_color": [
+      97,97,97
+    ],
+    
+    "model": "stair",
+    "renderer_args": {
+
+    }
+
+  }
+
+}
