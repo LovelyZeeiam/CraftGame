@@ -12,14 +12,6 @@ import xueli.gamengine.view.GuiColor;
 
 public class ModelLeaf extends IModel {
 
-    private static final boolean[] leafFaceAlpha = new boolean[6];
-
-    static {
-        for(int i = 0;i < 6;i++)
-            leafFaceAlpha[i] = true;
-
-    }
-
     public ModelLeaf(JsonObject renderArgs) {
         super(renderArgs);
 

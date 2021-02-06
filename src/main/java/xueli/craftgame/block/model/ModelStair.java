@@ -1,7 +1,10 @@
 package xueli.craftgame.block.model;
 
+import java.time.Year;
 import java.util.ArrayList;
 
+import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector3i;
 
 import com.google.gson.JsonObject;
@@ -27,4209 +30,168 @@ public class ModelStair extends IModel {
 	@Override
 	public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 			TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
-		Vector2s textureVector2s = data.getTextures()[face];
-
-		float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
-		float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
-		float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
-		float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
-		float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
-		float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+		IModel targetModel = null;
 
 		if (params == null) {
-			switch (face) {
-			case BlockFace.FRONT:
-				buffer.put(u1).put(v2);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y).put(z);
-				buffer.put(u1).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y + 0.5f).put(z);
-				buffer.put(u3).put(v2);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y).put(z);
-				buffer.put(u1).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y + 0.5f).put(z);
-				buffer.put(u3).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y + 0.5f).put(z);
-				buffer.put(u3).put(v2);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y).put(z);
-
-				buffer.put(u1).put(v2);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-				buffer.put(u1).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y + 1).put(z + 0.5f);
-				buffer.put(u3).put(v2);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-				buffer.put(u1).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y + 1).put(z + 0.5f);
-				buffer.put(u3).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-				buffer.put(u3).put(v2);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-
-				return 12;
-			case BlockFace.BACK:
-				buffer.put(u1).put(v3);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y).put(z + 1);
-				buffer.put(u2).put(v3);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y).put(z + 1);
-				buffer.put(u1).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y + 1).put(z + 1);
-				buffer.put(u1).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y + 1).put(z + 1);
-				buffer.put(u2).put(v3);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y).put(z + 1);
-				buffer.put(u2).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y + 1).put(z + 1);
-				return 6;
-			case BlockFace.LEFT:
-				buffer.put(u1).put(v2);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y).put(z);
-				buffer.put(u3).put(v2);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y).put(z + 1);
-				buffer.put(u1).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y + 0.5f).put(z);
-				buffer.put(u1).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y + 0.5f).put(z);
-				buffer.put(u3).put(v2);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y).put(z + 1);
-				buffer.put(u3).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y + 0.5f).put(z + 1);
-
-				buffer.put(u1).put(v2);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-				buffer.put(u2).put(v2);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y + 0.5f).put(z + 1);
-				buffer.put(u1).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y + 1).put(z + 0.5f);
-				buffer.put(u1).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y + 1).put(z + 0.5f);
-				buffer.put(u2).put(v2);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y + 0.5f).put(z + 1);
-				buffer.put(u2).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x).put(y + 1).put(z + 1);
-
-				return 12;
-			case BlockFace.RIGHT:
-				buffer.put(u1).put(v2);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y).put(z);
-				buffer.put(u1).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y + 0.5f).put(z);
-				buffer.put(u3).put(v2);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y).put(z + 1);
-				buffer.put(u1).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y + 0.5f).put(z);
-				buffer.put(u3).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-				buffer.put(u3).put(v2);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y).put(z + 1);
-
-				buffer.put(u1).put(v2);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-				buffer.put(u1).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-				buffer.put(u2).put(v2);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-				buffer.put(u1).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-				buffer.put(u2).put(v1);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y + 1).put(z + 1);
-				buffer.put(u2).put(v2);
-				buffer.put(0.7f).put(0.7f).put(0.7f);
-				buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-				return 12;
-			case BlockFace.TOP:
-				buffer.put(u2).put(v3);
-				buffer.put(1.0f).put(1.0f).put(1.0f);
-				buffer.put(x).put(y + 1).put(z + 0.5f);
-				buffer.put(u3).put(v3);
-				buffer.put(1.0f).put(1.0f).put(1.0f);
-				buffer.put(x).put(y + 1).put(z + 1);
-				buffer.put(u2).put(v1);
-				buffer.put(1.0f).put(1.0f).put(1.0f);
-				buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-				buffer.put(u2).put(v1);
-				buffer.put(1.0f).put(1.0f).put(1.0f);
-				buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-				buffer.put(u3).put(v3);
-				buffer.put(1.0f).put(1.0f).put(1.0f);
-				buffer.put(x).put(y + 1).put(z + 1);
-				buffer.put(u3).put(v1);
-				buffer.put(1.0f).put(1.0f).put(1.0f);
-				buffer.put(x + 1).put(y + 1).put(z + 1);
-
-				buffer.put(u2).put(v3);
-				buffer.put(1.0f).put(1.0f).put(1.0f);
-				buffer.put(x).put(y + 0.5f).put(z);
-				buffer.put(u3).put(v3);
-				buffer.put(1.0f).put(1.0f).put(1.0f);
-				buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-				buffer.put(u2).put(v1);
-				buffer.put(1.0f).put(1.0f).put(1.0f);
-				buffer.put(x + 1).put(y + 0.5f).put(z);
-				buffer.put(u2).put(v1);
-				buffer.put(1.0f).put(1.0f).put(1.0f);
-				buffer.put(x + 1).put(y + 0.5f).put(z);
-				buffer.put(u3).put(v3);
-				buffer.put(1.0f).put(1.0f).put(1.0f);
-				buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-				buffer.put(u3).put(v1);
-				buffer.put(1.0f).put(1.0f).put(1.0f);
-				buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-
-				return 12;
-			case BlockFace.BOTTOM:
-				buffer.put(u1).put(v3);
-				buffer.put(0.5f).put(0.5f).put(0.5f);
-				buffer.put(x).put(y).put(z);
-				buffer.put(u1).put(v1);
-				buffer.put(0.5f).put(0.5f).put(0.5f);
-				buffer.put(x + 1).put(y).put(z);
-				buffer.put(u3).put(v3);
-				buffer.put(0.5f).put(0.5f).put(0.5f);
-				buffer.put(x).put(y).put(z + 1);
-				buffer.put(u1).put(v1);
-				buffer.put(0.5f).put(0.5f).put(0.5f);
-				buffer.put(x + 1).put(y).put(z);
-				buffer.put(u3).put(v1);
-				buffer.put(0.5f).put(0.5f).put(0.5f);
-				buffer.put(x + 1).put(y).put(z + 1);
-				buffer.put(u3).put(v3);
-				buffer.put(0.5f).put(0.5f).put(0.5f);
-				buffer.put(x).put(y).put(z + 1);
-
-				return 6;
-			}
-
+			targetModel = new ModelStairBottomFacingFront();
 		} else {
 			RotateStat stat = getRotateStat(params.faceTo, params.slabOrStairData, world, x, y, z);
-
 			if (params.slabOrStairData == SlabAndStairData.DOWN) {
 				switch (params.faceTo) {
 				case BlockFace.FRONT:
-					switch (face) {
-					case BlockFace.FRONT:
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z);
-
-						if (stat != null && stat.getRotateSection() == BlockFace.RIGHT
-								&& stat.getRotateTo() == BlockFace.LEFT) {
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-						} else if (stat != null && stat.getRotateSection() == BlockFace.LEFT
-								&& stat.getRotateTo() == BlockFace.RIGHT) {
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-						} else if (stat != null && stat.getRotateSection() == BlockFace.RIGHT
-								&& stat.getRotateTo() == BlockFace.RIGHT) {
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-						} else if (stat != null && stat.getRotateSection() == BlockFace.LEFT
-								&& stat.rotateTo == BlockFace.LEFT) {
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-						} else {
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-						}
-
-						return 12;
-					case BlockFace.BACK:
-						if (stat != null && stat.getRotateSection() == BlockFace.RIGHT
-								&& stat.getRotateTo() == BlockFace.RIGHT) {
-							buffer.put(u1).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-							return 6;
-						} else if (stat != null && stat.getRotateSection() == BlockFace.LEFT
-								&& stat.rotateTo == BlockFace.LEFT) {
-							buffer.put(u1).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-							return 6;
-						} else if (stat != null) {
-							return 0;
-						} else {
-							buffer.put(u1).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-						}
-						return 6;
-					case BlockFace.LEFT:
-						if (stat != null && stat.getRotateSection() == BlockFace.RIGHT
-								&& stat.getRotateTo() == BlockFace.RIGHT) {
-							buffer.put(u1).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 1);
-
-							return 6;
-						} else {
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-
-							if (stat != null && stat.getRotateSection() == BlockFace.RIGHT
-									&& stat.getRotateTo() == BlockFace.LEFT) {
-								buffer.put(u1).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-								buffer.put(u2).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-							} else if (stat != null && stat.getRotateSection() == BlockFace.LEFT
-									&& stat.rotateTo == BlockFace.LEFT) {
-								buffer.put(u1).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 0.5f).put(z + 1);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 1).put(z + 0.5f);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 1).put(z + 0.5f);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 0.5f).put(z + 1);
-								buffer.put(u2).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 1).put(z + 1);
-
-								buffer.put(u1).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u2).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-
-								return 18;
-							} else {
-								buffer.put(u1).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 0.5f).put(z + 1);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 1).put(z + 0.5f);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 1).put(z + 0.5f);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 0.5f).put(z + 1);
-								buffer.put(u2).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 1).put(z + 1);
+					if(stat != null) {
+						if(stat.getRotateSection() == BlockFace.RIGHT) {
+							if(stat.getRotateTo() == BlockFace.LEFT) {
+								targetModel = new ModelStairBottomCornerFrontLeft();
+							} else if(stat.getRotateTo() == BlockFace.RIGHT) {
+								targetModel = new ModelStairBottomAroundFrontRight();
 							}
-
-						}
-						return 12;
-					case BlockFace.RIGHT:
-						if (stat != null && stat.getRotateSection() == BlockFace.LEFT
-								&& stat.rotateTo == BlockFace.LEFT) {
-							buffer.put(u1).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-
-							return 6;
-						} else {
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-
-							if (stat != null && stat.getRotateSection() == BlockFace.LEFT
-									&& stat.getRotateTo() == BlockFace.RIGHT) {
-								buffer.put(u1).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-								buffer.put(u2).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							} else if (stat != null && stat.getRotateSection() == BlockFace.RIGHT
-									&& stat.getRotateTo() == BlockFace.RIGHT) {
-								buffer.put(u1).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z);
-								buffer.put(u2).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-
-								buffer.put(u1).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-								buffer.put(u2).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 1).put(y + 1).put(z + 1);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-								return 18;
-							} else {
-								buffer.put(u1).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-								buffer.put(u2).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 1).put(y + 1).put(z + 1);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 1).put(y + 0.5f).put(z + 1);
+						} else if(stat.getRotateSection() == BlockFace.LEFT) {
+							if(stat.getRotateTo() == BlockFace.LEFT) {
+								targetModel = new ModelStairBottomAroundFrontLeft();
+							} else if(stat.getRotateTo() == BlockFace.RIGHT) {
+								targetModel = new ModelStairBottomCornerFrontRight();
 							}
-
 						}
-						return 12;
-					case BlockFace.TOP:
-						if (stat != null && stat.getRotateSection() == BlockFace.RIGHT
-								&& stat.getRotateTo() == BlockFace.RIGHT) {
-							buffer.put(u2).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-
-							buffer.put(u2).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-
-							buffer.put(v3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-
-							return 18;
-						} else if (stat != null && stat.getRotateSection() == BlockFace.LEFT
-								&& stat.rotateTo == BlockFace.LEFT) {
-							buffer.put(u2).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-
-							buffer.put(u2).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-
-							buffer.put(v3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-
-							return 18;
-						} else {
-							buffer.put(u2).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-
-							if (stat != null && stat.getRotateSection() == BlockFace.RIGHT
-									&& stat.getRotateTo() == BlockFace.LEFT) {
-								buffer.put(v3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-								buffer.put(u3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-								buffer.put(u3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-								buffer.put(u3).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 1).put(y + 1).put(z + 1);
-
-								buffer.put(v3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x).put(y + 0.5f).put(z + 1);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x).put(y + 0.5f).put(z + 1);
-								buffer.put(u3).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-
-								return 18;
-							} else if (stat != null && stat.getRotateSection() == BlockFace.LEFT
-									&& stat.getRotateTo() == BlockFace.RIGHT) {
-								buffer.put(v3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x).put(y + 1).put(z + 0.5f);
-								buffer.put(u3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x).put(y + 1).put(z + 1);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-								buffer.put(u3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x).put(y + 1).put(z + 1);
-								buffer.put(u3).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-
-								buffer.put(v3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-								buffer.put(u3).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-								return 18;
-							} else {
-								buffer.put(v3).put(v3);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x).put(y + 1).put(z + 0.5f);
-								buffer.put(u3).put(v3);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x).put(y + 1).put(z + 1);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-								buffer.put(u3).put(v3);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x).put(y + 1).put(z + 1);
-								buffer.put(u3).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 1).put(y + 1).put(z + 1);
-							}
-
-							return 12;
-						}
-					case BlockFace.BOTTOM:
-						buffer.put(u1).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y).put(z);
-						buffer.put(u3).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y).put(z + 1);
-						buffer.put(u3).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y).put(z + 1);
-
-						return 6;
-					}
+					} else
+						targetModel = new ModelStairBottomFacingFront();
 					break;
 				case BlockFace.BACK:
-					switch (face) {
-					case BlockFace.FRONT:
-						if (stat != null && stat.getRotateSection() == BlockFace.RIGHT
-								&& stat.getRotateTo() == BlockFace.LEFT) {
-							buffer.put(u1).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-
-						} else if (stat != null && stat.getRotateSection() == BlockFace.LEFT
-								&& stat.getRotateTo() == BlockFace.RIGHT) {
-							buffer.put(u1).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-
-						} else if (stat != null) {
-							return 0;
-						} else {
-							buffer.put(u1).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-
-						}
-						return 6;
-					case BlockFace.BACK:
-						if (stat != null && stat.getRotateSection() == BlockFace.LEFT
-								&& stat.getRotateTo() == BlockFace.RIGHT) {
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-
-							return 6;
-						}
-
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y).put(z + 1);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 1);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z + 1);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-						if (stat != null && stat.rotateSection == BlockFace.RIGHT && stat.rotateTo == BlockFace.RIGHT) {
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-
-						} else if (stat != null && stat.rotateSection == BlockFace.LEFT
-								&& stat.rotateTo == BlockFace.LEFT) {
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-
-						} else if (stat != null && stat.getRotateSection() == BlockFace.RIGHT
-								&& stat.getRotateTo() == BlockFace.LEFT) {
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-
-						} else {
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-
-						}
-
-						return 12;
-					case BlockFace.LEFT:
-						if (stat != null && stat.getRotateSection() == BlockFace.LEFT
-								&& stat.getRotateTo() == BlockFace.RIGHT) {
-							buffer.put(u1).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							return 6;
-						} else {
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-
-							if (stat != null && stat.getRotateSection() == BlockFace.LEFT
-									&& stat.getRotateTo() == BlockFace.LEFT) {
-								buffer.put(u1).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u2).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-
-							} else if (stat != null && stat.getRotateSection() == BlockFace.RIGHT
-									&& stat.getRotateTo() == BlockFace.LEFT) {
-								buffer.put(u1).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 0.5f).put(z);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 1).put(z);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 1).put(z);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u2).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 1).put(z + 0.5f);
-
-								buffer.put(u1).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-								buffer.put(u2).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-
-								return 18;
-							} else {
-								buffer.put(u1).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 0.5f).put(z);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 1).put(z);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 1).put(z);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u2).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x).put(y + 1).put(z + 0.5f);
-
+					if(stat != null) {
+						if(stat.getRotateSection() == BlockFace.RIGHT) {
+							if(stat.getRotateTo() == BlockFace.RIGHT) {
+								targetModel = new ModelStairBottomCornerBackRight();
+							} else if(stat.getRotateTo() == BlockFace.LEFT) {
+								targetModel = new ModelStairBottomAroundBackLeft();
 							}
-
-						}
-						return 12;
-					case BlockFace.RIGHT:
-						if (stat != null && stat.getRotateSection() == BlockFace.RIGHT
-								&& stat.getRotateTo() == BlockFace.LEFT) {
-							buffer.put(u1).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-
-							return 6;
-						} else {
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-
-							if (stat != null && stat.rotateSection == BlockFace.RIGHT
-									&& stat.rotateTo == BlockFace.RIGHT) {
-								buffer.put(u1).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z);
-								buffer.put(u2).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-
-							} else {
-								buffer.put(u1).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 1).put(y + 0.5f).put(z);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 1).put(y + 1).put(z);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u1).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 1).put(y + 1).put(z);
-								buffer.put(u2).put(v1);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-								buffer.put(u2).put(v2);
-								buffer.put(0.7f).put(0.7f).put(0.7f);
-								buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-
-								if (stat != null && stat.getRotateSection() == BlockFace.LEFT
-										&& stat.getRotateTo() == BlockFace.RIGHT) {
-									buffer.put(u1).put(v2);
-									buffer.put(0.7f).put(0.7f).put(0.7f);
-									buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-									buffer.put(u1).put(v1);
-									buffer.put(0.7f).put(0.7f).put(0.7f);
-									buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-									buffer.put(u2).put(v2);
-									buffer.put(0.7f).put(0.7f).put(0.7f);
-									buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-									buffer.put(u1).put(v1);
-									buffer.put(0.7f).put(0.7f).put(0.7f);
-									buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-									buffer.put(u2).put(v1);
-									buffer.put(0.7f).put(0.7f).put(0.7f);
-									buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-									buffer.put(u2).put(v2);
-									buffer.put(0.7f).put(0.7f).put(0.7f);
-									buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-
-									return 18;
-								}
-
+						} else if(stat.getRotateSection() == BlockFace.LEFT) {
+							if(stat.getRotateTo() == BlockFace.LEFT) {
+								targetModel = new ModelStairBottomCornerBackLeft();
+							} else if(stat.getRotateTo() == BlockFace.RIGHT) {
+								targetModel = new ModelStairBottomAroundBackRight();
 							}
-
 						}
-
-						return 12;
-					case BlockFace.TOP:
-						if (stat != null && stat.getRotateSection() == BlockFace.RIGHT
-								&& stat.getRotateTo() == BlockFace.LEFT) {
-							buffer.put(u2).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-
-							buffer.put(u2).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-
-							buffer.put(u2).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-
-							return 18;
-						} else if (stat != null && stat.getRotateSection() == BlockFace.LEFT
-								&& stat.getRotateTo() == BlockFace.LEFT) {
-							buffer.put(u1).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-
-							buffer.put(u2).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-
-							buffer.put(u2).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-							return 18;
-						} else if (stat != null && stat.getRotateSection() == BlockFace.LEFT
-								&& stat.getRotateTo() == BlockFace.RIGHT) {
-							buffer.put(u2).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-
-							buffer.put(u1).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-
-							buffer.put(u2).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-							return 18;
-						} else {
-							buffer.put(u2).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-							if (stat != null && stat.rotateSection == BlockFace.RIGHT
-									&& stat.rotateTo == BlockFace.RIGHT) {
-								buffer.put(u2).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x).put(y + 1).put(z);
-								buffer.put(u3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x).put(y + 1).put(z + 0.5f);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 1).put(z);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 1).put(z);
-								buffer.put(u3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x).put(y + 1).put(z + 0.5f);
-								buffer.put(u3).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-
-								buffer.put(u2).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-								buffer.put(u3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 1).put(y + 0.5f).put(z);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 1).put(y + 0.5f).put(z);
-								buffer.put(u3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u3).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-
-								return 18;
-							} else if (stat != null && stat.rotateSection == BlockFace.LEFT
-									&& stat.rotateTo == BlockFace.LEFT) {
-								buffer.put(u2).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x).put(y + 0.5f).put(z);
-								buffer.put(u3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-								buffer.put(u3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-								buffer.put(u3).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-
-								buffer.put(u2).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 1).put(z);
-								buffer.put(u3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 1).put(y + 1).put(z);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 1).put(y + 1).put(z);
-								buffer.put(u3).put(v2);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-								buffer.put(u3).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-
-								return 18;
-							} else {
-								buffer.put(u2).put(v3);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x).put(y + 1).put(z);
-								buffer.put(u3).put(v3);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x).put(y + 1).put(z + 0.5f);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 1).put(y + 1).put(z);
-								buffer.put(u2).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 1).put(y + 1).put(z);
-								buffer.put(u3).put(v3);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x).put(y + 1).put(z + 0.5f);
-								buffer.put(u3).put(v1);
-								buffer.put(1.0f).put(1.0f).put(1.0f);
-								buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-
-							}
-
-						}
-						return 12;
-					case BlockFace.BOTTOM:
-						buffer.put(u1).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y).put(z);
-						buffer.put(u3).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y).put(z + 1);
-						buffer.put(u3).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y).put(z + 1);
-
-						return 6;
-					}
+					} else
+						targetModel = new ModelStairBottomFacingBack();
 					break;
 				case BlockFace.LEFT:
-					if (stat != null && stat.getRotateSection() == BlockFace.LEFT
-							&& stat.getRotateTo() == BlockFace.FRONT) {
-						switch (face) {
-						case BlockFace.FRONT:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-
-							return 12;
-						case BlockFace.BACK:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-
-							return 12;
-						case BlockFace.LEFT:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-
-							return 12;
-						case BlockFace.RIGHT:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-							return 12;
-						case BlockFace.TOP:
-							buffer.put(u2).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-
-							buffer.put(v3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-
-							buffer.put(v3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-
-							return 18;
-						case BlockFace.BOTTOM:
-							buffer.put(u1).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z + 1);
-
-							return 6;
+					if(stat != null) {
+						if(stat.getRotateSection() == BlockFace.RIGHT) {
+							if(stat.getRotateTo() == BlockFace.FRONT) {
+								targetModel = new ModelStairBottomAroundFrontLeft();
+							} else if(stat.getRotateTo() == BlockFace.BACK) {
+								targetModel = new ModelStairBottomCornerBackLeft();
+							}
+						} else if(stat.getRotateSection() == BlockFace.LEFT) {
+							if(stat.getRotateTo() == BlockFace.FRONT) {
+								targetModel = new ModelStairBottomCornerFrontLeft();
+							} else if(stat.getRotateTo() == BlockFace.BACK) {
+								targetModel = new ModelStairBottomAroundBackLeft();
+							}
 						}
-					} else if (stat != null && stat.getRotateSection() == BlockFace.RIGHT
-							&& stat.getRotateTo() == BlockFace.BACK) {
-						switch (face) {
-						case BlockFace.FRONT:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-
-							return 12;
-						case BlockFace.BACK:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-
-							return 12;
-						case BlockFace.LEFT:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-
-							return 12;
-						case BlockFace.RIGHT:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-
-							return 12;
-						case BlockFace.TOP:
-							buffer.put(u1).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-
-							buffer.put(u2).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-
-							buffer.put(u2).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-							return 18;
-						case BlockFace.BOTTOM:
-							buffer.put(u1).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z + 1);
-
-							return 6;
-						default:
-							return 0;
-						}
-					} else if (stat != null && stat.getRotateSection() == BlockFace.LEFT
-							&& stat.getRotateTo() == BlockFace.BACK) {
-						switch (face) {
-						case BlockFace.FRONT:
-							buffer.put(u1).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							return 6;
-						case BlockFace.BACK:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-
-							return 18;
-						case BlockFace.LEFT:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-
-							return 18;
-						case BlockFace.RIGHT:
-							buffer.put(u1).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-
-							return 6;
-						case BlockFace.TOP:
-							buffer.put(u2).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-
-							buffer.put(u2).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-
-							buffer.put(u2).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-
-							return 18;
-						case BlockFace.BOTTOM:
-							buffer.put(u1).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z + 1);
-
-							return 6;
-						default:
-							return 0;
-						}
-					} else if (stat != null && stat.getRotateSection() == BlockFace.RIGHT
-							&& stat.getRotateTo() == BlockFace.FRONT) {
-						switch (face) {
-						case BlockFace.FRONT:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-
-							return 12;
-						case BlockFace.BACK:
-							buffer.put(u1).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-							return 6;
-						case BlockFace.LEFT:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 1);
-
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-
-							return 18;
-						case BlockFace.RIGHT:
-							buffer.put(u1).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-
-							return 6;
-						case BlockFace.TOP:
-							buffer.put(u2).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-
-							buffer.put(u2).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-
-							buffer.put(v3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-
-							return 18;
-						case BlockFace.BOTTOM:
-							buffer.put(u1).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z + 1);
-
-							return 6;
-						default:
-							return 0;
-						}
-					} else {
-						switch (face) {
-						case BlockFace.FRONT:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-
-							return 12;
-						case BlockFace.BACK:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-
-							return 12;
-						case BlockFace.LEFT:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-
-							return 12;
-						case BlockFace.RIGHT:
-							buffer.put(u1).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							return 6;
-						case BlockFace.TOP:
-							buffer.put(u1).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-
-							buffer.put(u1).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-							buffer.put(u1).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u1).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 1);
-
-							return 12;
-						case BlockFace.BOTTOM:
-							buffer.put(u1).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z + 1);
-
-							return 6;
-						}
-					}
+					} else
+						targetModel = new ModelStairBottomFacingLeft();
 					break;
 				case BlockFace.RIGHT:
-					// TODO: 我懒了 之后再弄叭~
-					if (stat != null && stat.getRotateSection() == BlockFace.LEFT
-							&& stat.getRotateTo() == BlockFace.FRONT) {
-						switch (face) {
-						case BlockFace.FRONT:
-							
-						case BlockFace.BACK:
-							
-						case BlockFace.LEFT:
-							
-						case BlockFace.RIGHT:
-
-						case BlockFace.TOP:
-							
-						case BlockFace.BOTTOM:
-							
-						default:
-							return 0;
+					if(stat != null) {
+						if(stat.getRotateSection() == BlockFace.RIGHT) {
+							if(stat.getRotateTo() == BlockFace.FRONT) {
+								targetModel = new ModelStairBottomCornerFrontRight();
+							} else if(stat.getRotateTo() == BlockFace.BACK) {
+								targetModel = new ModelStairBottomAroundBackRight();
+							}
+						} else if(stat.getRotateSection() == BlockFace.LEFT) {
+							if(stat.getRotateTo() == BlockFace.FRONT) {
+								targetModel = new ModelStairBottomAroundFrontRight();
+							} else if(stat.getRotateTo() == BlockFace.BACK) {
+								targetModel = new ModelStairBottomCornerBackRight();
+							}
 						}
-					} else if (stat != null && stat.getRotateSection() == BlockFace.RIGHT
-							&& stat.getRotateTo() == BlockFace.BACK) {
-						switch (face) {
-						case BlockFace.FRONT:
-							buffer.put(u1).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							return 6;
-						case BlockFace.BACK:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-							
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							
-							return 12;
-						case BlockFace.LEFT:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							
-							return 12;
-						case BlockFace.RIGHT:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							
-							return 12;
-						case BlockFace.TOP:
-							buffer.put(u1).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-
-							buffer.put(u2).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 0.5f);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 1).put(z + 0.5f);
-
-							buffer.put(u2).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u2).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-							return 18;
-						case BlockFace.BOTTOM:
-							buffer.put(u1).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z + 1);
-
-							return 6;
-						default:
-							return 0;
-						}
-					} else if (stat != null && stat.getRotateSection() == BlockFace.LEFT
-							&& stat.getRotateTo() == BlockFace.BACK) {
-						switch (face) {
-						case BlockFace.FRONT:
-							
-						case BlockFace.BACK:
-							
-						case BlockFace.LEFT:
-							
-						case BlockFace.RIGHT:
-
-						case BlockFace.TOP:
-							
-						case BlockFace.BOTTOM:
-							
-						default:
-							return 0;
-						}
-					} else if (stat != null && stat.getRotateSection() == BlockFace.RIGHT
-							&& stat.getRotateTo() == BlockFace.FRONT) {
-						switch (face) {
-						case BlockFace.FRONT:
-							
-						case BlockFace.BACK:
-							
-						case BlockFace.LEFT:
-							
-						case BlockFace.RIGHT:
-
-						case BlockFace.TOP:
-							
-						case BlockFace.BOTTOM:
-							
-						default:
-							return 0;
-						}
-					} else {
-						switch (face) {
-						case BlockFace.FRONT:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-
-							return 12;
-						case BlockFace.BACK:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-							buffer.put(u2).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u2).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-
-							return 12;
-						case BlockFace.LEFT:
-							buffer.put(u1).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							return 6;
-						case BlockFace.RIGHT:
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 1).put(y).put(z + 1);
-
-							buffer.put(u1).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u1).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.7f).put(0.7f).put(0.7f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-
-							return 12;
-						case BlockFace.TOP:
-							buffer.put(u1).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x).put(y + 1).put(z + 1);
-							buffer.put(u3).put(v1);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 1).put(z + 1);
-
-							buffer.put(u1).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u1).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u1).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-							buffer.put(u3).put(v2);
-							buffer.put(1.0f).put(1.0f).put(1.0f);
-							buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-							return 12;
-						case BlockFace.BOTTOM:
-							buffer.put(u1).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z);
-							buffer.put(u1).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u3).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z + 1);
-							buffer.put(u1).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z);
-							buffer.put(u3).put(v1);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x + 1).put(y).put(z + 1);
-							buffer.put(u3).put(v3);
-							buffer.put(0.5f).put(0.5f).put(0.5f);
-							buffer.put(x).put(y).put(z + 1);
-
-							return 6;
-						}
-						break;
-
-					}
+					} else
+						targetModel = new ModelStairBottomFacingRight();
+					break;
 				}
 			} else if (params.slabOrStairData == SlabAndStairData.UP) {
 				switch (params.faceTo) {
 				case BlockFace.FRONT:
-					switch (face) {
-					case BlockFace.FRONT:
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y).put(z + 0.5f);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z + 0.5f);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z + 0.5f);
-
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z);
-
-						return 12;
-					case BlockFace.BACK:
-						buffer.put(u1).put(v3);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y).put(z + 1);
-						buffer.put(u3).put(v3);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z + 1);
-						buffer.put(u3).put(v3);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z + 1);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z + 1);
-						return 6;
-					case BlockFace.LEFT:
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 1);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z + 1);
-
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y).put(z + 0.5f);
-						buffer.put(u2).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-						buffer.put(u2).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y).put(z + 1);
-						buffer.put(u2).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 1);
-
-						return 12;
-					case BlockFace.RIGHT:
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z + 1);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z + 0.5f);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-						buffer.put(u2).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-						buffer.put(u2).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-						buffer.put(u2).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z + 1);
-
-						return 12;
-					case BlockFace.TOP:
-						buffer.put(u1).put(v3);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x).put(y + 1).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x).put(y + 1).put(z + 1);
-						buffer.put(u3).put(v1);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x + 1).put(y + 1).put(z + 1);
-						return 6;
-					case BlockFace.BOTTOM:
-						buffer.put(u1).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y).put(z + 0.5f);
-						buffer.put(u1).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y).put(z + 0.5f);
-						buffer.put(u2).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y).put(z + 0.5f);
-						buffer.put(u2).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y).put(z + 1);
-						buffer.put(u2).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y).put(z + 1);
-
-						buffer.put(u2).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y + 0.5f).put(z);
-						buffer.put(u2).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-						buffer.put(u2).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-						buffer.put(u3).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-
-						return 12;
-					}
+					if(stat != null) {
+						if(stat.getRotateSection() == BlockFace.RIGHT) {
+							if(stat.getRotateTo() == BlockFace.LEFT) {
+								targetModel = new ModelStairUpCornerFrontLeft();
+							} else if(stat.getRotateTo() == BlockFace.RIGHT) {
+								targetModel = new ModelStairUpAroundFrontRight();
+							}
+						} else if(stat.getRotateSection() == BlockFace.LEFT) {
+							if(stat.getRotateTo() == BlockFace.LEFT) {
+								targetModel = new ModelStairUpAroundFrontLeft();
+							} else if(stat.getRotateTo() == BlockFace.RIGHT) {
+								targetModel = new ModelStairUpCornerFrontRight();
+							}
+						}
+					} else
+						targetModel = new ModelStairUpFacingFront();
 					break;
 				case BlockFace.BACK:
-					switch (face) {
-					case BlockFace.FRONT:
-						buffer.put(u1).put(v3);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z);
-						return 6;
-					case BlockFace.BACK:
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y).put(z + 0.5f);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z + 0.5f);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z + 0.5f);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 1);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z + 1);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z + 1);
-
-						return 12;
-					case BlockFace.LEFT:
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 1);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z + 1);
-
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y).put(z);
-						buffer.put(u2).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y).put(z + 0.5f);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z);
-						buffer.put(u2).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y).put(z + 0.5f);
-						buffer.put(u2).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-
-						return 12;
-					case BlockFace.RIGHT:
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z + 1);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z);
-						buffer.put(u2).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z + 0.5f);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z);
-						buffer.put(u2).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-						buffer.put(u2).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z + 0.5f);
-
-						return 12;
-					case BlockFace.TOP:
-						buffer.put(u1).put(v3);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x).put(y + 1).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x).put(y + 1).put(z + 1);
-						buffer.put(u3).put(v1);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x + 1).put(y + 1).put(z + 1);
-						return 6;
-					case BlockFace.BOTTOM:
-						buffer.put(u1).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y + 0.5f).put(z + 0.5f);
-						buffer.put(u1).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-						buffer.put(u2).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y + 0.5f).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 0.5f);
-						buffer.put(u2).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-						buffer.put(u2).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y + 0.5f).put(z + 1);
-
-						buffer.put(u2).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y).put(z);
-						buffer.put(u2).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y).put(z + 0.5f);
-						buffer.put(u2).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y).put(z);
-						buffer.put(u3).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y).put(z + 0.5f);
-						buffer.put(u3).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y).put(z + 0.5f);
-
-						return 12;
-					}
+					if(stat != null) {
+						if(stat.getRotateSection() == BlockFace.RIGHT) {
+							if(stat.getRotateTo() == BlockFace.RIGHT) {
+								targetModel = new ModelStairUpCornerBackRight();
+							} else if(stat.getRotateTo() == BlockFace.LEFT) {
+								targetModel = new ModelStairUpAroundBackLeft();
+							}
+						} else if(stat.getRotateSection() == BlockFace.LEFT) {
+							if(stat.getRotateTo() == BlockFace.LEFT) {
+								targetModel = new ModelStairUpCornerBackLeft();
+							} else if(stat.getRotateTo() == BlockFace.RIGHT) {
+								targetModel = new ModelStairUpAroundBackRight();
+							}
+						}
+					} else
+						targetModel = new ModelStairUpFacingBack();
 					break;
 				case BlockFace.LEFT:
-					switch (face) {
-					case BlockFace.FRONT:
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z);
-
-						buffer.put(u2).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y).put(z);
-						buffer.put(u2).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z);
-						buffer.put(u2).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z);
-
-						return 12;
-					case BlockFace.BACK:
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 1);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z + 1);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z + 1);
-
-						buffer.put(u2).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y).put(z + 1);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z + 1);
-						buffer.put(u2).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-						buffer.put(u2).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z + 1);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-						return 12;
-					case BlockFace.LEFT:
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y).put(z + 1);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z);
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 1);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z + 1);
-
-						return 12;
-					case BlockFace.RIGHT:
-						buffer.put(u1).put(v3);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z + 1);
-						buffer.put(u3).put(v3);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y).put(z + 1);
-						return 6;
-					case BlockFace.TOP:
-						buffer.put(u1).put(v3);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x).put(y + 1).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x).put(y + 1).put(z + 1);
-						buffer.put(u3).put(v1);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x + 1).put(y + 1).put(z + 1);
-						return 6;
-					case BlockFace.BOTTOM:
-						buffer.put(u1).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y + 0.5f).put(z);
-						buffer.put(u1).put(v2);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y + 0.5f).put(z + 1);
-						buffer.put(u1).put(v2);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-						buffer.put(u3).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y + 0.5f).put(z + 1);
-
-						buffer.put(u1).put(v2);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 0.5f).put(y).put(z);
-						buffer.put(u1).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 0.5f).put(y).put(z + 1);
-						buffer.put(u1).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y).put(z + 1);
-						buffer.put(u3).put(v2);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 0.5f).put(y).put(z + 1);
-
-						return 12;
-					}
+					if(stat != null) {
+						if(stat.getRotateSection() == BlockFace.RIGHT) {
+							if(stat.getRotateTo() == BlockFace.FRONT) {
+								targetModel = new ModelStairUpAroundFrontLeft();
+							} else if(stat.getRotateTo() == BlockFace.BACK) {
+								targetModel = new ModelStairUpCornerBackLeft();
+							}
+						} else if(stat.getRotateSection() == BlockFace.LEFT) {
+							if(stat.getRotateTo() == BlockFace.FRONT) {
+								targetModel = new ModelStairUpCornerFrontLeft();
+							} else if(stat.getRotateTo() == BlockFace.BACK) {
+								targetModel = new ModelStairUpAroundBackLeft();
+							}
+						}
+					} else
+						targetModel = new ModelStairUpFacingLeft();
 					break;
 				case BlockFace.RIGHT:
-					switch (face) {
-					case BlockFace.FRONT:
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z);
-
-						buffer.put(u2).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y).put(z);
-						buffer.put(u2).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y).put(z);
-						buffer.put(u2).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y).put(z);
-
-						return 12;
-					case BlockFace.BACK:
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 1);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z + 1);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z + 1);
-
-						buffer.put(u2).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y).put(z + 1);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y).put(z + 1);
-						buffer.put(u2).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 1);
-						buffer.put(u2).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 0.5f).put(z + 1);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y).put(z + 1);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-
-						return 12;
-					case BlockFace.LEFT:
-						buffer.put(u1).put(v3);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y).put(z + 1);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x).put(y + 1).put(z + 1);
-						return 6;
-					case BlockFace.RIGHT:
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v1);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 0.5f).put(y).put(z + 1);
-
-						buffer.put(u1).put(v3);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z);
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-						buffer.put(u1).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 1).put(z + 1);
-						buffer.put(u3).put(v3);
-						buffer.put(0.7f).put(0.7f).put(0.7f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-
-						return 12;
-					case BlockFace.TOP:
-						buffer.put(u1).put(v3);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x).put(y + 1).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x).put(y + 1).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x + 1).put(y + 1).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x).put(y + 1).put(z + 1);
-						buffer.put(u3).put(v1);
-						buffer.put(1.0f).put(1.0f).put(1.0f);
-						buffer.put(x + 1).put(y + 1).put(z + 1);
-						return 6;
-					case BlockFace.BOTTOM:
-						buffer.put(u1).put(v2);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y).put(z);
-						buffer.put(u1).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 0.5f).put(y).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y).put(z + 1);
-						buffer.put(u1).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 0.5f).put(y).put(z);
-						buffer.put(u3).put(v1);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 0.5f).put(y).put(z + 1);
-						buffer.put(u3).put(v2);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x).put(y).put(z + 1);
-
-						buffer.put(u1).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 0.5f).put(y + 0.5f).put(z);
-						buffer.put(u1).put(v2);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-						buffer.put(u1).put(v2);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y + 0.5f).put(z);
-						buffer.put(u3).put(v2);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 1).put(y + 0.5f).put(z + 1);
-						buffer.put(u3).put(v3);
-						buffer.put(0.5f).put(0.5f).put(0.5f);
-						buffer.put(x + 0.5f).put(y + 0.5f).put(z + 1);
-
-						return 12;
-					}
+					if(stat != null) {
+						if(stat.getRotateSection() == BlockFace.RIGHT) {
+							if(stat.getRotateTo() == BlockFace.FRONT) {
+								targetModel = new ModelStairUpCornerFrontRight();
+							} else if(stat.getRotateTo() == BlockFace.BACK) {
+								targetModel = new ModelStairUpAroundBackRight();
+							}
+						} else if(stat.getRotateSection() == BlockFace.LEFT) {
+							if(stat.getRotateTo() == BlockFace.FRONT) {
+								targetModel = new ModelStairUpAroundFrontRight();
+							} else if(stat.getRotateTo() == BlockFace.BACK) {
+								targetModel = new ModelStairUpCornerBackRight();
+							}
+						}
+					} else
+						targetModel = new ModelStairUpFacingRight();
 					break;
-
 				}
-
 			}
 		}
 
-		return 0;
+		if(targetModel == null)
+			return 0;
+		return targetModel.getRenderCubeData(buffer, data, x, y, z, face, blockTextureAtlas, params, chunk, world);
 	}
 
 	@Override
@@ -4389,4 +351,2285 @@ public class ModelStair extends IModel {
 
 	}
 
+	private static class ModelStairBottomFacingFront extends IModel {
+
+		public ModelStairBottomFacingFront() {
+			super(null);
+		}
+
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+	
+	private static class ModelStairBottomFacingBack extends IModel {
+
+		public ModelStairBottomFacingBack() {
+			super(null);
+		}
+
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 1, z), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+	
+	private static class ModelStairBottomFacingLeft extends IModel {
+
+		public ModelStairBottomFacingLeft() {
+			super(null);
+		}
+
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 1, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+	
+	private static class ModelStairBottomFacingRight extends IModel {
+
+		public ModelStairBottomFacingRight() {
+			super(null);
+		}
+
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x + 1, y, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f,0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x, y + 1, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f,0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v2), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+	
+	private static class ModelStairBottomCornerFrontLeft extends IModel {
+	
+		public ModelStairBottomCornerFrontLeft() {
+			super(null);
+		}
+	
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+	
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	            		new Vector3f(x, y, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	            		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	             		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	             		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	             		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	             		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+	             		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer,
+	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+	             		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+
+	private static class ModelStairBottomCornerFrontRight extends IModel {
+
+		public ModelStairBottomCornerFrontRight() {
+			super(null);
+		}
+
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+	
+	private static class ModelStairBottomCornerBackRight extends IModel {
+
+		public ModelStairBottomCornerBackRight() {
+			super(null);
+		}
+
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x + 1, y, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f,0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x, y + 1, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f,0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+	
+	private static class ModelStairBottomCornerBackLeft extends IModel {
+
+		public ModelStairBottomCornerBackLeft() {
+			super(null);
+		}
+
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 1, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+	
+	private static class ModelStairBottomAroundFrontLeft extends IModel {
+
+		public ModelStairBottomAroundFrontLeft() {
+			super(null);
+		}
+
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 1, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+	
+	private static class ModelStairBottomAroundFrontRight extends IModel {
+
+		public ModelStairBottomAroundFrontRight() {
+			super(null);
+		}
+
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer,	
+                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+	
+	private static class ModelStairBottomAroundBackRight extends IModel {
+
+		public ModelStairBottomAroundBackRight() {
+			super(null);
+		}
+
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x + 1, y, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f,0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+	
+	private static class ModelStairBottomAroundBackLeft extends IModel {
+
+		public ModelStairBottomAroundBackLeft() {
+			super(null);
+		}
+
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y, z), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+                break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v2), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+	
+	private static class ModelStairUpFacingFront extends IModel {
+
+		public ModelStairUpFacingFront() {
+			super(null);
+		}
+
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x, y + 1, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+	
+	private static class ModelStairUpFacingBack extends IModel {
+
+		public ModelStairUpFacingBack() {
+			super(null);
+		}
+
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u3, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+	
+	private static class ModelStairUpFacingLeft extends IModel {
+
+		public ModelStairUpFacingLeft() {
+			super(null);
+		}
+
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+	
+	private static class ModelStairUpFacingRight extends IModel {
+
+		public ModelStairUpFacingRight() {
+			super(null);
+		}
+
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f,0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x + 0.5f, y, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f,0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+
+	private static class ModelStairUpCornerFrontLeft extends IModel {
+	
+		public ModelStairUpCornerFrontLeft() {
+			super(null);
+		}
+	
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+	
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	            		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x, y + 1, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	            		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	            		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	            		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	             		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v2), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer,
+	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+
+	private static class ModelStairUpCornerFrontRight extends IModel {
+	
+		public ModelStairUpCornerFrontRight() {
+			super(null);
+		}
+	
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+	
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	            		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x, y + 1, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	            		new Vector3f(x, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	            		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	            		new Vector3f(x, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	             		new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+	             		new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u2, v2), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer,
+	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+
+	private static class ModelStairUpCornerBackRight extends IModel {
+	
+		public ModelStairUpCornerBackRight() {
+			super(null);
+		}
+	
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+	
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	            		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f,0.7f),
+	            		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f,0.7f),
+	            		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f,0.7f),
+	            		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f,0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	            		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f,0.7f),
+	            		new Vector3f(x + 0.5f, y, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f,0.7f),
+	            		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f,0.7f),
+	            		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f,0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	            		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	            		new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	             		new Vector3f(x, y, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	             		new Vector3f(x + 0.5f, y, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+	             		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer,
+	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+
+	private static class ModelStairUpCornerBackLeft extends IModel {
+	
+		public ModelStairUpCornerBackLeft() {
+			super(null);
+		}
+	
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+	
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	            		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	            		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	            		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	            		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	             		new Vector3f(x + 0.5f, y, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	             		new Vector3f(x + 1, y, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+	             		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v3), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v3), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.4f,0.4f,0.4f));
+				vertCount += drawQuadFacingBottom(buffer,
+	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f,0.4f,0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+
+	private static class ModelStairUpAroundFrontLeft extends IModel {
+	
+		public ModelStairUpAroundFrontLeft() {
+			super(null);
+		}
+	
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+	
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	            		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	            		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	            		new Vector3f(x, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	            		new Vector3f(x, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	             		new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	             		new Vector3f(x + 0.5f, y, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	             		new Vector3f(x + 1, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+	             		new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v3), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v1), new Vector3f(0.4f,0.4f,0.4f));
+				vertCount += drawQuadFacingBottom(buffer,
+	             		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v2), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f,0.4f,0.4f));
+				vertCount += drawQuadFacingBottom(buffer,
+	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f,0.4f,0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+
+	private static class ModelStairUpAroundFrontRight extends IModel {
+	
+		public ModelStairUpAroundFrontRight() {
+			super(null);
+		}
+	
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+	
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	            		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	            		new Vector3f(x, y, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 0.5f, y, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	            		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+	            		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	            		new Vector3f(x, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+	            		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+	             		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	             		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+	             		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+	             		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+	             		new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v3), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v1), new Vector3f(0.4f,0.4f,0.4f));
+				vertCount += drawQuadFacingBottom(buffer,	
+	             		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v1), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f,0.4f,0.4f));
+				vertCount += drawQuadFacingBottom(buffer,
+	             		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.4f,0.4f,0.4f),
+	             		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f,0.4f,0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+
+	private static class ModelStairUpAroundBackRight extends IModel {
+
+		public ModelStairUpAroundBackRight() {
+			super(null);
+		}
+
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x + 1, y, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f,0.7f),
+                		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f,0.7f));
+				break;
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y, z + 1), new Vector2f(u2, v2), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+	
+	private static class ModelStairUpAroundBackLeft extends IModel {
+
+		public ModelStairUpAroundBackLeft() {
+			super(null);
+		}
+
+		@Override
+		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+			int vertCount = 0;
+			
+			Vector2s textureVector2s = data.getTextures()[face];
+
+			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
+			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
+			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
+			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
+			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
+			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
+			
+			switch (face) {
+			case BlockFace.FRONT:
+				drawQuadFacingFrontOrLeft(buffer,
+                		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f),
+                		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+			case BlockFace.BACK:
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer,
+                		new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
+                		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				break;
+			case BlockFace.LEFT:
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer,
+                 		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
+			case BlockFace.RIGHT:
+				drawQuadFacingBackOrRight(buffer,
+                 		new Vector3f(x + 1, y, z), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
+                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+                break;
+			case BlockFace.TOP:
+				vertCount += drawQuadFacingTop(buffer,
+	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
+	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				break;
+			case BlockFace.BOTTOM:
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer,
+                 		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.4f, 0.4f, 0.4f),
+                 		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				break;
+			}
+			
+			return vertCount;
+		}
+		
+	}
+	
+	
+	
 }

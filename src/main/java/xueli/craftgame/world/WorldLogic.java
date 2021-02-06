@@ -216,7 +216,7 @@ public class WorldLogic implements Runnable {
 		glViewport(0, 0, cg.getDisplay().getWidth(), cg.getDisplay().getHeight());
 
 		// 清空颜色
-		GL11.glClearColor(0.7f, 0.8f, 1.0f, 1.0f);
+		GL11.glClearColor(0.5f, 0.8f, 1.0f, 1.0f);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 
 		normalRenderer.initDraw();

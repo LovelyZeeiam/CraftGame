@@ -20,7 +20,7 @@ public class ModelCube extends IModel {
     @Override
     public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
                                  TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
-        return getRenderCubeData(buffer, data, x, y, z, face, blockTextureAtlas, chunk, world, GuiColor.WHITE);
+        return super.getRenderCubeData(buffer, data, x, y, z, face, blockTextureAtlas, chunk, world, GuiColor.WHITE);
     }
 
 }

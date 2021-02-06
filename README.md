@@ -61,5 +61,7 @@ but I'm convinced it be able to run by typing the following 2 commands.
 12. clouds, day night cycle, weather
 13. Data: Model Data<br/>
    Json Format. Store in the same way as Minecraft stores recipes
+14. Debug stick
+   Can change block state
 
 ****

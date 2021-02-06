@@ -20,15 +20,6 @@ import xueli.gamengine.view.GuiColor;
 
 public class ModelWater extends IModel {
 
-    private static final boolean[] faceAlpha = new boolean[6];
-
-    static {
-        for(int i = 0; i < 6;i++)
-            faceAlpha[i] = true;
-
-
-    }
-
     public ModelWater(JsonObject renderArgs) {
         super(renderArgs);
 

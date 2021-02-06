@@ -2,6 +2,9 @@ package xueli.gamengine.utils;
 
 import java.util.Arrays;
 
+import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
+
 public class FloatList {
 
 	private float[] data;
@@ -53,6 +56,14 @@ public class FloatList {
 		return this;
 	}
 
+	public FloatList put(Vector3f v) {
+		return put(v.x).put(v.y).put(v.z);
+	}
+	
+	public FloatList put(Vector2f v) {
+		return put(v.x).put(v.y);
+	}
+	
 	public int getPointer() {
 		return pointer;
 	}
