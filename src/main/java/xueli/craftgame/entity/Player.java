@@ -26,7 +26,7 @@ public class Player extends Entity {
 	private byte place_block_face_to;
 
 	private long placeTimeCount = 0;
-	private static AABB originAABB = new AABB(-0.5f, 0.5f, -1.5f, 0.2f, -0.5f, 0.5f);
+	private static AABB originAABB = new AABB(-0.5f, 0.5f, -1.5f, 0.5f, -0.5f, 0.5f);
 	public int gamemode = 1;
 	public int health = 20;
 	public float resistant = 0.0005f;

@@ -36,4 +36,20 @@ public class MathUtils {
 		return a * (1f - f) + b * f;
 	}
 
+	public static double min(double... nums) {
+		double min = nums[0];
+		for(int i = 0; i < nums.length; i++) {
+			min = Math.min(min, nums[i]);
+		}
+		return min;
+	}
+
+	public static double max(double... nums) {
+		double max = nums[0];
+		for(int i = 0; i < nums.length; i++) {
+			max = Math.max(max, nums[i]);
+		}
+		return max;
+	}
+
 }

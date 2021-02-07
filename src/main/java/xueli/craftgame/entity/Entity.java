@@ -37,6 +37,7 @@ public abstract class Entity {
 		pos.x += deltaPos.x;
 		pos.y += deltaPos.y;
 		pos.z += deltaPos.z;
+		//collider.entityCollide(this, deltaPos);
 
 	}
 

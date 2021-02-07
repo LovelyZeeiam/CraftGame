@@ -70,72 +70,6 @@ public class AABB {
 		return new AABB(this.x0 - xa, this.x1 + xa, this.y0 - ya, this.y1 + ya, this.z0 - za, this.z1 + za);
 	}
 
-	public double clipXCollide(AABB target, double xd) {
-		if (target.y1 <= this.y0 || target.y0 >= this.y1) {
-			return xd;
-		}
-		if (target.z1 <= this.z0 || target.z0 >= this.z1) {
-			return xd;
-		}
-		if (xd > 0.0f && target.x1 <= this.x0) {
-			float max = (this.x0 - target.x1) - this.margin;
-			if (max < xd) {
-				xd = max;
-			}
-		}
-		if (xd < 0.0f && target.x0 >= this.x1) {
-			float max2 = (this.x1 - target.x0) + this.margin;
-			if (max2 > xd) {
-				xd = max2;
-			}
-		}
-		return xd;
-	}
-
-	public double clipYCollide(AABB target, double yd) {
-		if (target.x1 <= this.x0 || target.x0 >= this.x1) {
-			return yd;
-		}
-		if (target.z1 <= this.z0 || target.z0 >= this.z1) {
-			return yd;
-		}
-		if (yd > 0.0f && target.y1 <= this.y0) {
-			float max = (this.y0 - target.y1) - this.margin;
-			if (max < yd) {
-				yd = max;
-			}
-		}
-		if (yd < 0.0f && target.y0 >= this.y1) {
-			float max2 = (this.y1 - target.y0) + this.margin;
-			if (max2 > yd) {
-				yd = max2;
-			}
-		}
-		return yd;
-	}
-
-	public double clipZCollide(AABB target, double zd) {
-		if (target.x1 <= this.x0 || target.x0 >= this.x1) {
-			return zd;
-		}
-		if (target.y1 <= this.y0 || target.y0 >= this.y1) {
-			return zd;
-		}
-		if (zd > 0.0f && target.z1 <= this.z0) {
-			float max = (this.z0 - target.z1) - this.margin;
-			if (max < zd) {
-				zd = max;
-			}
-		}
-		if (zd < 0.0f && target.z0 >= this.z1) {
-			float max2 = (this.z1 - target.z0) + this.margin;
-			if (max2 > zd) {
-				zd = max2;
-			}
-		}
-		return zd;
-	}
-
 	public boolean intersect(AABB c) {
 		if (c.x1 <= this.x0 || c.x0 >= this.x1 || c.y1 <= this.y0 || c.y0 >= this.y1 || c.z1 <= this.z0
 				|| c.z0 >= this.z1) {
@@ -152,5 +86,7 @@ public class AABB {
 	public String toString() {
 		return "[Hitbox] " + x0 + ", " + y0 + ", " + z0 + " | " + x1 + ", " + y1 + ", " + z1;
 	}
+
+
 
 }
