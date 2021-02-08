@@ -19,7 +19,7 @@ public class NBSConverter {
 	private static final Gson gson = new Gson();
 
 	public static void main(String[] args) throws IOException {
-		convert("D:\\xueLi\\U\\redstonemusic\\fresh_static_snow.nbs", "res/music/fresh_static_snow.json");
+		convert("D:\\eclipse-java-workspace\\CraftGame\\res\\music\\One Summer Day.nbs", "D:\\eclipse-java-workspace\\CraftGame\\res\\music\\One Summer Day.json");
 
 	}
 
@@ -27,8 +27,6 @@ public class NBSConverter {
 		NBSInputStream in = new NBSInputStream(new BufferedInputStream(new FileInputStream(new File(inPath))));
 		List<NoteBlock> blocks = in.readNoteBlocks();
 		in.close();
-
-		// Collections.sort(blocks, Comparator.comparingInt(NoteBlock::getTick));
 
 		JsonObject mainJson = new JsonObject();
 		mainJson.addProperty("format_version", 0);

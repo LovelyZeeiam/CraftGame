@@ -30,8 +30,8 @@ public class World {
 		io = new WorldIO(this);
 		gen = new ChunkGeneratorMaster(this);
 
-		for(int i = 0;i < 8;i++)
-		for(int m = 0;m < 8;m++)
+		for(int i = 0;i < 4;i++)
+		for(int m = 0;m < 4;m++)
 			requireGenChunk(i,m);
 
 	}

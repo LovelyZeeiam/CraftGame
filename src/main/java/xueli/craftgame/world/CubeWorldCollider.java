@@ -105,10 +105,10 @@ public class CubeWorldCollider {
 			time_when_player_should_stop = Math.min(time_intersection_min, time_when_player_should_stop);
 
 		}
-		
+
 		System.out.println(time_when_player_should_stop);
 
-		time_when_player_should_stop -= 0.01;
+		time_when_player_should_stop *= 0.9;
 		
 		e.pos.x += deltaPos.x * time_when_player_should_stop;
 		e.pos.y += deltaPos.y * time_when_player_should_stop;

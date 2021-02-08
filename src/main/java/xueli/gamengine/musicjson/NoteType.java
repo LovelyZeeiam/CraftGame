@@ -30,7 +30,6 @@ public class NoteType {
 	}
 
 	public static void release() {
-		SoundManager.join();
 		SoundManager.release();
 
 	}

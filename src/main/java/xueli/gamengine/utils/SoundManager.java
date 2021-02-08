@@ -1,47 +1,25 @@
 package xueli.gamengine.utils;
 
-import static org.lwjgl.openal.AL10.AL_BUFFER;
-import static org.lwjgl.openal.AL10.AL_GAIN;
-import static org.lwjgl.openal.AL10.AL_PITCH;
-import static org.lwjgl.openal.AL10.AL_PLAYING;
-import static org.lwjgl.openal.AL10.AL_POSITION;
-import static org.lwjgl.openal.AL10.AL_SOURCE_STATE;
-import static org.lwjgl.openal.AL10.AL_VELOCITY;
-import static org.lwjgl.openal.AL10.alBufferData;
-import static org.lwjgl.openal.AL10.alDeleteSources;
-import static org.lwjgl.openal.AL10.alGenBuffers;
-import static org.lwjgl.openal.AL10.alGenSources;
-import static org.lwjgl.openal.AL10.alGetError;
-import static org.lwjgl.openal.AL10.alGetSourcei;
-import static org.lwjgl.openal.AL10.alSource3f;
-import static org.lwjgl.openal.AL10.alSourcePlay;
-import static org.lwjgl.openal.AL10.alSourcef;
-import static org.lwjgl.openal.AL10.alSourcei;
-import static org.lwjgl.openal.ALC10.ALC_DEFAULT_DEVICE_SPECIFIER;
-import static org.lwjgl.openal.ALC10.alcCloseDevice;
-import static org.lwjgl.openal.ALC10.alcCreateContext;
-import static org.lwjgl.openal.ALC10.alcDestroyContext;
-import static org.lwjgl.openal.ALC10.alcGetString;
-import static org.lwjgl.openal.ALC10.alcMakeContextCurrent;
-import static org.lwjgl.openal.ALC10.alcOpenDevice;
+import org.lwjgl.openal.AL;
+import org.lwjgl.openal.ALC;
+import org.lwjgl.openal.ALCCapabilities;
+import org.newdawn.slick.openal.WaveData;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.CompletableFuture;
 
-import org.lwjgl.openal.AL;
-import org.lwjgl.openal.ALC;
-import org.lwjgl.openal.ALCCapabilities;
-import org.newdawn.slick.openal.WaveData;
+import static org.lwjgl.openal.AL10.*;
+import static org.lwjgl.openal.ALC10.*;
 
 public class SoundManager {
 
 	private static long dev, ctx;
 	private static HashMap<String, Integer> sounds = new HashMap<>();
-	private static ArrayList<CompletableFuture> tasks = new ArrayList<>();
+
+	private static ArrayList<Integer> speakers = new ArrayList<>();
 
 	static {
 		String deviceString = alcGetString(0, ALC_DEFAULT_DEVICE_SPECIFIER);
@@ -69,39 +47,41 @@ public class SoundManager {
 
 	public static void play(String name, float volume, float pitch) {
 		int buffer = sounds.get(name);
-		CompletableFuture future = CompletableFuture.supplyAsync(() -> {
-			int src = alGenSources();
-			alSource3f(src, AL_POSITION, 0, 0, 0);
-			alSourcef(src, AL_GAIN, volume);
-			alSourcef(src, AL_PITCH, pitch);
-			alSourcei(src, AL_BUFFER, buffer);
-			alSource3f(src, AL_VELOCITY, 0, 0, 0);
-			alSourcePlay(src);
 
-			while (alGetSourcei(src, AL_SOURCE_STATE) == AL_PLAYING) {
-				synchronized (Thread.currentThread()) {
-					try {
-						Thread.currentThread().wait(100);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
+		int src = alGenSources();
+		alSource3f(src, AL_POSITION, 0, 0, 0);
+		alSourcef(src, AL_GAIN, volume);
+		alSourcef(src, AL_PITCH, pitch);
+		alSourcei(src, AL_BUFFER, buffer);
+		alSource3f(src, AL_VELOCITY, 0, 0, 0);
+		alSourcePlay(src);
 
-			checkALError();
-
-			return src;
-		}).thenAccept((src) -> alDeleteSources(src));
-		tasks.add(future);
+		speakers.add(src);
 
 	}
 
-	public static void join() {
-		tasks.forEach(CompletableFuture::join);
+	public static void tick() {
+		ArrayList<Integer> speakerToDispose = new ArrayList<>();
+		speakers.forEach(s -> {
+			if(alGetSourcei(s, AL_SOURCE_STATE) == AL_STOPPED) {
+				speakerToDispose.add(s);
+				alDeleteSources(s);
+			}
+		});
+		speakers.removeAll(speakerToDispose);
+
+		checkALError();
 
 	}
 
 	public static void release() {
+		speakers.forEach(s -> {
+			if(alGetSourcei(s, AL_SOURCE_STATE) == AL_PLAYING) {
+				alSourceStop(s);
+			}
+			alDeleteSources(s);
+		});
+
 		alcDestroyContext(ctx);
 		alcCloseDevice(dev);
 

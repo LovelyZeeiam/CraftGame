@@ -1,20 +1,16 @@
 package xueli.gamengine.musicjson;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import xueli.gamengine.utils.Entry;
 import xueli.gamengine.utils.Logger;
 import xueli.gamengine.utils.SoundManager;
+import xueli.gamengine.utils.Time;
 
-@Deprecated
 public class MusicJson {
 
 	private static Gson gson = new Gson();
@@ -29,8 +25,9 @@ public class MusicJson {
 
 	private String name;
 	private String[] authors;
-	private int bpm;
-	private ArrayList<INoteCommand> notes = new ArrayList<>();
+	private float bpm;
+	private HashMap<Integer, ArrayList<Note>> notes = new HashMap<>();
+	private int maxTime = 0;
 
 	public MusicJson(String data) {
 		JsonObject main_json = gson.fromJson(data, JsonObject.class);
@@ -64,37 +61,23 @@ public class MusicJson {
 		this.bpm = data.get("bpm").getAsInt();
 
 		JsonArray dataJson = data.get("data").getAsJsonArray();
-		// TreeMap<Integer, Note> notesCache = new TreeMap<>(Comparator.naturalOrder());
-		ArrayList<Entry<Integer, Note>> notesCache = new ArrayList<>();
 
 		float beatPerSecond = 60.0f / bpm;
 
 		dataJson.forEach((e) -> {
 			JsonObject o = e.getAsJsonObject();
 
-			int time = (int) (o.get("time").getAsInt() * beatPerSecond * 1000 / 8);
+			int time = (int) (o.get("time").getAsInt() * beatPerSecond * 1000 / 4) + 100;
 			String type = o.get("type").getAsString();
 			int note = o.get("note").getAsInt();
-			float rate = (float) Math.pow(2, (note - 12.0) / 12.0);
+			float rate = (float) Math.pow(2, (note) / 12.0);
 
 			Note n = new Note(type, rate);
-			notesCache.add(new Entry<Integer, Note>(time, n));
+			if(!notes.containsKey(time))
+				notes.put(time, new ArrayList<>());
+			notes.get(time).add(n);
 
-		});
-
-		Collections.sort(notesCache, Comparator.comparingInt(Entry::getK));
-
-		AtomicInteger lastTime = new AtomicInteger();
-		notesCache.forEach((e) -> {
-			int time = e.getK();
-
-			int deltaTime = time - lastTime.get();
-			if (deltaTime > 0)
-				notes.add(new CommandWait(deltaTime));
-
-			lastTime.set(time);
-
-			notes.add(e.getV());
+			maxTime = Math.max(maxTime, time);
 
 		});
 
@@ -107,36 +90,34 @@ public class MusicJson {
 
 	}
 
-	public void play() throws InterruptedException {
-		AtomicInteger tick = new AtomicInteger();
-		HashMap<Integer, ArrayList<Note>> readNotes = new HashMap<>();
-		notes.forEach((c) -> {
-			if (c instanceof Note) {
-				ArrayList<Note> notes = readNotes.get(tick.intValue());
-				if (notes == null) {
-					notes = new ArrayList<>();
-					readNotes.put(tick.intValue(), notes);
+	public void play() {
+		long startTime = System.currentTimeMillis();
+
+		int lastTimeNote = 0;
+
+		a: while(true) {
+			int duration = (int) (System.currentTimeMillis() - startTime);
+
+			for(int time = lastTimeNote + 1; time <= duration; time++) {
+				ArrayList<Note> tickNotes = notes.get(time);
+
+				if (tickNotes != null) {
+					tickNotes.forEach(n -> {
+						NoteType.playSound(n.getType(), n.getRate());
+					});
 				}
 
-				notes.add((Note) c);
-
-			} else if (c instanceof CommandWait) {
-				tick.addAndGet(((CommandWait) c).getWaitTime());
-
-			}
-		});
-
-		long starttime = System.currentTimeMillis();
-		while (true) {
-			long dura = System.currentTimeMillis() - starttime;
-
-			ArrayList<Note> ns = readNotes.get(dura);
-			if (ns != null) {
-				ns.forEach(n -> SoundManager.play(n.getType(), 1.0f, n.getRate()));
 			}
 
-			if (dura > tick.intValue())
+			lastTimeNote = duration;
+
+			if(duration > maxTime + 1000)
 				break;
+
+			if(duration % 1000 < 10) {
+				SoundManager.tick();
+
+			}
 
 		}
 
