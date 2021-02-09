@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector3i;
 
 import com.google.gson.JsonObject;
+
 import xueli.craftgame.block.BlockData;
 import xueli.craftgame.block.BlockParameters;
 import xueli.craftgame.block.data.BlockFace;
@@ -17,6 +18,7 @@ import xueli.gamengine.utils.vector.Vector2s;
 public class ModelFence extends IModel {
 	
 	private static float fence_bridge_x = 0.45f;
+	//private static float fence_bridge_y = 
 
     public ModelFence(JsonObject renderArgs) {
         super(renderArgs);
@@ -42,7 +44,7 @@ public class ModelFence extends IModel {
 	    		 vertCount += modelFenceLeftAttach.getRenderCubeData(buffer, data, x, y, z, face, blockTextureAtlas, params, chunk, world);
 	    	 }
     	 }
-    		 
+
          return vertCount;
     }
     

@@ -11,6 +11,7 @@ import xueli.craftgame.block.BlockResource;
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.block.data.BlockFace;
 import xueli.craftgame.block.data.SlabAndStairData;
+import xueli.craftgame.world.Chunk;
 import xueli.craftgame.world.World;
 import xueli.gamengine.physics.AABB;
 import xueli.gamengine.utils.Display;
@@ -53,7 +54,8 @@ public class Player extends Entity {
 
 	@Override
 	public void tick() {
-		speed.x = speed.y = speed.z = 0;
+		if(world.getChunk((int)pos.x >> Chunk.size_yiwei, (int)pos.z >> Chunk.size_yiwei) != null)
+			gravity();
 
 		Display display = Display.currentDisplay;
 
@@ -81,7 +83,8 @@ public class Player extends Entity {
 			}
 
 			if (KeyCallback.keys[GLFW.GLFW_KEY_SPACE]) {
-				speed.y += this.getSpeed() * 0.5f;
+				if(isOnGround)
+					speed.y += this.getSpeed() * 20f;
 			}
 
 			if (KeyCallback.keys[GLFW.GLFW_KEY_LEFT_SHIFT]) {
@@ -159,7 +162,7 @@ public class Player extends Entity {
 
 	@Override
 	public float getSpeed() {
-		return 0.008f;
+		return 3.0f;
 	}
 
 	@Override

@@ -15,6 +15,8 @@ public abstract class Entity {
 	public Vector3f speed = new Vector3f();
 	// 实体所在的世界
 	protected World world;
+	
+	public boolean isOnGround = true;
 
 	private CubeWorldCollider collider;
 
@@ -31,13 +33,34 @@ public abstract class Entity {
 		collider = new CubeWorldCollider(world);
 
 	}
+	
+	protected void gravity() {
+		if(!isOnGround) {
+			speed.y -= 0.4f * Time.deltaTime;
+			
+			if(speed.y <= -5.0f)
+				speed.y = -5.0f;
+			
+		}
+		
+	}
+	
+	// 不管因为什么原因 达到200的y都会抑制y更新
 
-	public void updatePos() {
-		Vector3f deltaPos = new Vector3f(speed.x * Time.deltaTime, speed.y * Time.deltaTime, speed.z * Time.deltaTime);
-		pos.x += deltaPos.x;
-		pos.y += deltaPos.y;
-		pos.z += deltaPos.z;
+	protected void updatePos() {
+		isOnGround = false;
+		
+		Vector3f deltaPos = new Vector3f(speed.x * Time.deltaTime / 1000.0f, speed.y * Time.deltaTime / 1000.0f, speed.z * Time.deltaTime / 1000.0f);
+		
+		/*
+		 * pos.x += deltaPos.x; pos.y += deltaPos.y; pos.z += deltaPos.z;
+		 */
+		collider.entityCollide(this, deltaPos);
 
+		speed.x *= 0.1f;
+		speed.y *= 0.1f;
+		speed.z *= 0.1f;
+		
 	}
 
 	public abstract void tick();

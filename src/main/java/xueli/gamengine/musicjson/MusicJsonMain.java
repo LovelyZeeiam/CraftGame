@@ -2,7 +2,6 @@ package xueli.gamengine.musicjson;
 
 import java.io.IOException;
 
-import xueli.gamengine.musicjson.nbs.NBSConverter;
 import xueli.gamengine.utils.IOUtils;
 
 public class MusicJsonMain {

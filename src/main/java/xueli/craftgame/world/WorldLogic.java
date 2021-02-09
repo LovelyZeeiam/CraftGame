@@ -125,7 +125,7 @@ public class WorldLogic implements Runnable {
 	 * @param dy 鼠标移动y标的位移
 	 */
 	public void mouseMove(double dx, double dy) {
-		if (cg.getDisplay().mouseGrabbed) {
+		if (cg.getDisplay().mouseGrabbed && player != null) {
 			player.pos.rotX -= dy * player.sensivity;
 			player.pos.rotY += dx * player.sensivity;
 		}
