@@ -1,13 +1,12 @@
 package xueli.craftgame;
 
 import org.lwjgl.glfw.GLFW;
-
 import xueli.craftgame.block.BlockResource;
 import xueli.craftgame.world.WorldLogic;
 import xueli.craftgame.world.biome.BiomeResource;
 import xueli.craftgame.world.biome.Biomes;
 import xueli.gamengine.IGame;
-import xueli.gamengine.utils.TaskManager;
+import xueli.gamengine.utils.resource.TaskManager;
 import xueli.gamengine.view.GUIFader.Faders;
 import xueli.gamengine.view.GUIImageView;
 import xueli.gamengine.view.GUIProgressBar;

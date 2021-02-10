@@ -1,12 +1,12 @@
 package xueli.gamengine.view;
 
-import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
-import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
+import xueli.gamengine.utils.Display;
+import xueli.gamengine.view.anim2d.Constant;
 
 import java.util.HashMap;
 
-import xueli.gamengine.utils.Display;
-import xueli.gamengine.view.anim2d.Constant;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
+import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
 
 public class View {
 

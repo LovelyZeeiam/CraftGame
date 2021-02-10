@@ -18,7 +18,9 @@ There you go!
 #### Linux && MacOS
 
 I have no computer running Linux or MacOS.
-but I'm convinced it be able to run by typing the following 2 commands.
+but I'm convinced it be able to run by typing the following 3 commands.
+
+> chmod +x gradlew
 
 > ./gradlew build
 
@@ -33,11 +35,15 @@ but I'm convinced it be able to run by typing the following 2 commands.
 1. Game UI
 2. World Generate and Biomes
 3. World save and load.
+4. multi-model blocks: stairs, slabs, fences
+5. make do with the physical collision
+6. daynight circle
 
 #### DOINGS
 
-1. Blocks: stairs, slabs, attachable (eg. sign), fences, fence gate, doors<br/>
+1. Blocks: attachable (eg. sign), fence gate, doors<br/>
    Tip: Add a new class in charge of quads with different shaders or textures of framebuffers (can be used in text renderer in 3 dimension. Example: sign or text tag)
+2. clouds
 
 #### Plans
 
@@ -55,12 +61,10 @@ but I'm convinced it be able to run by typing the following 2 commands.
 8. Multiplayer<br/>
    use library tcp of javaherobrine<br/>
    once accomplished, world update and render can finally be separated to diffrent thread and gameplay can be improved.
-9. Physical: AABB Collision
+9. Physical: AABB Collision - TODO: Improve
 10. Entity
 11. little map
-12. clouds, day night cycle, weather
-13. Data: Model Data<br/>
-   Json Format. Store in the same way as Minecraft stores recipes
+12. weather
 14. Debug stick
    Can change block state
 

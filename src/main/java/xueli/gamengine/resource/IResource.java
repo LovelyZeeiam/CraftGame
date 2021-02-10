@@ -1,13 +1,9 @@
 package xueli.gamengine.resource;
 
-import java.io.BufferedReader;
-import java.io.Closeable;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-
 import com.google.gson.Gson;
+
+import java.io.*;
+import java.util.ArrayList;
 
 public abstract class IResource implements Closeable {
 

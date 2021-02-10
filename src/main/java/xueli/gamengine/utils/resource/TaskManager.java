@@ -1,4 +1,4 @@
-package xueli.gamengine.utils;
+package xueli.gamengine.utils.resource;
 
 import java.util.HashMap;
 import java.util.concurrent.LinkedBlockingDeque;

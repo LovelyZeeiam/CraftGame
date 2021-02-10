@@ -1,20 +1,18 @@
 package xueli.craftgame.world;
 
-import java.nio.FloatBuffer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.lwjgl.util.vector.Vector3i;
-
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.entity.CubeWorldCollider;
 import xueli.craftgame.entity.Player;
 import xueli.craftgame.world.renderer.SkyRenderer;
 import xueli.gamengine.resource.TextureAtlas;
-import xueli.gamengine.utils.MathUtils;
-import xueli.gamengine.utils.MatrixHelper;
 import xueli.gamengine.utils.Time;
+import xueli.gamengine.utils.math.MathUtils;
+import xueli.gamengine.utils.math.MatrixHelper;
+
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class World {
 

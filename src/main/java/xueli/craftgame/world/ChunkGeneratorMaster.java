@@ -1,13 +1,13 @@
 package xueli.craftgame.world;
 
-import java.util.HashMap;
-import java.util.Random;
-
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.world.biome.BiomeData;
 import xueli.craftgame.world.biome.BiomeResource;
 import xueli.craftgame.world.generate.SimplexNoise;
-import xueli.gamengine.utils.MathUtils;
+import xueli.gamengine.utils.math.MathUtils;
+
+import java.util.HashMap;
+import java.util.Random;
 
 public class ChunkGeneratorMaster {
 

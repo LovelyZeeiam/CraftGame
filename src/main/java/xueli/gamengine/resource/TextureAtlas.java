@@ -1,8 +1,8 @@
 package xueli.gamengine.resource;
 
-import java.util.HashMap;
-
 import xueli.gamengine.utils.vector.Vector2s;
+
+import java.util.HashMap;
 
 public class TextureAtlas extends Texture {
 

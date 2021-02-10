@@ -1,36 +1,21 @@
 package xueli.gamengine.resource;
 
-import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_FLIPY;
-import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
-import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_PREMULTIPLIED;
-import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_REPEATX;
-import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_REPEATY;
+import com.google.gson.*;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+import org.lwjgl.opengl.GL13;
+import xueli.gamengine.utils.Logger;
+import xueli.gamengine.utils.vector.Vector2s;
+import xueli.gamengine.view.ViewManager;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.Closeable;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.imageio.ImageIO;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-import org.lwjgl.opengl.GL13;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-
-import xueli.gamengine.utils.Logger;
-import xueli.gamengine.utils.vector.Vector2s;
-import xueli.gamengine.view.ViewManager;
+import static org.lwjgl.nanovg.NanoVG.*;
 
 public class TextureManager implements Closeable {
 

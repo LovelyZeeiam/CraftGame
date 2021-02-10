@@ -1,13 +1,9 @@
 package xueli.craftgame.world;
 
-import java.util.HashMap;
-
-import org.lwjgl.util.vector.Vector3i;
-
 import com.flowpowered.nbt.CompoundMap;
 import com.flowpowered.nbt.CompoundTag;
 import com.flowpowered.nbt.StringTag;
-
+import org.lwjgl.util.vector.Vector3i;
 import xueli.craftgame.block.BlockParameters;
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.block.data.BlockFace;
@@ -15,10 +11,12 @@ import xueli.craftgame.interfaces.Saveable;
 import xueli.craftgame.world.biome.BiomeData;
 import xueli.craftgame.world.biome.BiomeResource;
 import xueli.gamengine.resource.TextureAtlas;
-import xueli.gamengine.utils.Color;
-import xueli.gamengine.utils.FloatList;
 import xueli.gamengine.utils.Time;
+import xueli.gamengine.utils.store.Color;
+import xueli.gamengine.utils.store.FloatList;
 import xueli.gamengine.utils.vector.Vector2i;
+
+import java.util.HashMap;
 
 public class Chunk implements Saveable {
 

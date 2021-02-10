@@ -1,14 +1,13 @@
 package xueli.gamengine.musicjson;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
 import xueli.gamengine.utils.Logger;
-import xueli.gamengine.utils.SoundManager;
+import xueli.gamengine.utils.resource.SoundManager;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MusicJson {
 

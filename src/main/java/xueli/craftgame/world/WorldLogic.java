@@ -1,25 +1,9 @@
 package xueli.craftgame.world;
 
-import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
-import static org.lwjgl.nanovg.NanoVG.nvgCreateFont;
-import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_ANTIALIAS;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_DEBUG;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_STENCIL_STROKES;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgCreate;
-import static org.lwjgl.nanovg.NanoVGGL3.nvglCreateImageFromHandle;
-import static org.lwjgl.opengl.GL11.glViewport;
-
-import java.nio.ByteBuffer;
-import java.util.ConcurrentModificationException;
-import java.util.HashMap;
-
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.util.vector.Matrix4f;
-
 import xueli.craftgame.CraftGame;
 import xueli.craftgame.State;
 import xueli.craftgame.block.Blocks;
@@ -31,14 +15,23 @@ import xueli.craftgame.world.renderer.Renderer;
 import xueli.craftgame.world.renderer.ShadowMapper;
 import xueli.gamengine.resource.Texture;
 import xueli.gamengine.resource.TextureAtlas;
-import xueli.gamengine.utils.Display;
 import xueli.gamengine.utils.GLHelper;
 import xueli.gamengine.utils.Logger;
-import xueli.gamengine.utils.MatrixHelper;
-import xueli.gamengine.utils.Shader;
 import xueli.gamengine.utils.callbacks.KeyCallback;
+import xueli.gamengine.utils.math.MatrixHelper;
+import xueli.gamengine.utils.Display;
+import xueli.gamengine.utils.renderer.Faces;
+import xueli.gamengine.utils.resource.Shader;
 import xueli.gamengine.view.GUIProgressBar;
 import xueli.gamengine.view.View;
+
+import java.nio.ByteBuffer;
+import java.util.ConcurrentModificationException;
+import java.util.HashMap;
+
+import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.nanovg.NanoVGGL3.*;
+import static org.lwjgl.opengl.GL11.glViewport;
 
 public class WorldLogic implements Runnable {
 
@@ -46,7 +39,7 @@ public class WorldLogic implements Runnable {
 	public boolean running = false;
 	public View gameGui;
 	public State state;
-	private ByteBuffer mappedBuffer, anotherMappedBuffer;
+	private ByteBuffer mappedBuffer;
 	private int vertexCount = 0;
 	private World world;
 	private Player player;
@@ -69,13 +62,17 @@ public class WorldLogic implements Runnable {
 	private Renderer normalRenderer;
 	private ShadowMapper shadowMapper;
 
+	private Faces faces;
+
 	@WorldGLData
 	public WorldLogic(CraftGame cg) {
 		this.cg = cg;
 
 		normalRenderer = new Renderer(cg, this);
+		faces = new Faces(this);
 		shadowMapper = new ShadowMapper(cg, this);
-		this.blockRenderShader = cg.getShaderResource().get("world");
+
+		blockRenderShader = cg.getShaderResource().get("world");
 		
 		this.shadowMapper.setDepthMap(blockRenderShader);
 
@@ -85,7 +82,7 @@ public class WorldLogic implements Runnable {
 			Logger.error(new Throwable("[GUI] Emm, You don't want a game without gui, do u?"));
 		}
 
-		if (nvgCreateFont(nvg, "game", "res/fonts/Minecraft-Ascii.ttf") == -1) {
+		if (nvgCreateFont(nvg, "game", "res/fonts/Minecraft.ttf") == -1) {
 			Logger.error("[Font] Can't create font!");
 		}
 
@@ -165,6 +162,10 @@ public class WorldLogic implements Runnable {
 		// 转换画面到世界内部
 		cg.inWorld = true;
 
+	}
+
+	public long getNvg() {
+		return nvg;
 	}
 
 	public void size() {
@@ -334,6 +335,11 @@ public class WorldLogic implements Runnable {
 		// 去除背面渲染
 		GL11.glDisable(GL11.GL_CULL_FACE);
 
+		{
+			faces.render();
+
+		}
+
 		// shadowMapper.renderToDepthBuffer(normalRenderer);
 
 		setNormalViewPort();
@@ -358,6 +364,10 @@ public class WorldLogic implements Runnable {
 
 	public int getVertexCount() {
 		return vertexCount;
+	}
+
+	public Faces getFaces() {
+		return faces;
 	}
 
 	public void onMouseScroll(float scroll) {

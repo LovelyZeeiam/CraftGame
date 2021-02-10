@@ -1,4 +1,4 @@
-package xueli.gamengine.utils;
+package xueli.gamengine.utils.store;
 
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NanoVG;

@@ -1,7 +1,7 @@
 package xueli.gamengine.view;
 
-import xueli.gamengine.utils.Shader;
 import xueli.gamengine.utils.Time;
+import xueli.gamengine.utils.resource.Shader;
 
 public class GUIFader {
 

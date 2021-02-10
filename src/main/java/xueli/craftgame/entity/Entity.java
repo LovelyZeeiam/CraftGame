@@ -1,11 +1,10 @@
 package xueli.craftgame.entity;
 
 import org.lwjgl.util.vector.Vector3f;
-
 import xueli.craftgame.world.World;
 import xueli.gamengine.physics.AABB;
 import xueli.gamengine.utils.Time;
-import xueli.gamengine.utils.Vector;
+import xueli.gamengine.utils.vector.Vector;
 
 public abstract class Entity {
 

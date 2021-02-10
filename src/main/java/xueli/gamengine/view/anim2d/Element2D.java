@@ -1,6 +1,6 @@
 package xueli.gamengine.view.anim2d;
 
-import xueli.gamengine.utils.EvalableFloat;
+import xueli.gamengine.utils.evalable.EvalableFloat;
 
 public abstract class Element2D {
 
