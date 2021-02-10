@@ -82,7 +82,7 @@ public class WorldLogic implements Runnable {
 			Logger.error(new Throwable("[GUI] Emm, You don't want a game without gui, do u?"));
 		}
 
-		if (nvgCreateFont(nvg, "game", "res/fonts/Minecraft.ttf") == -1) {
+		if (nvgCreateFont(nvg, "game", "res/fonts/Minecraft-Ascii.ttf") == -1) {
 			Logger.error("[Font] Can't create font!");
 		}
 
@@ -225,18 +225,12 @@ public class WorldLogic implements Runnable {
 
 		setNormalViewPort();
 
+		GL11.glDepthFunc(GL11.GL_LEQUAL);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 
 		{
 			// 首先绘制天空 ta担任了清空颜色的重要使命
-
-			// 透明材质
-			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			GL11.glEnable(GL11.GL_BLEND);
-
 			world.drawSky();
-
-			GL11.glDisable(GL11.GL_BLEND);
 
 		}
 

@@ -1,6 +1,6 @@
 {
-  "sun_distance": 100,
-  "sun_size": 30,
+  "sun_distance": 32768,
+  "sun_size": 10000,
   "sun_shader_name": "sky",
 
   "sun_sky_color_day": [ 0.5, 0.8, 1.0 ],
@@ -9,6 +9,12 @@
   "sun_sky_color_night": [ 0.09, 0, 0.199 ],
 
   "sky_day_depth": 1.0,
-  "sky_night_depth": 0.4
+  "sky_night_depth": 0.4,
+
+  "cloud_shader_name": "clouds",
+
+  "sky_cloud_size": 16386,
+  "sky_cloud_above": 512,
+  "sky_cloud_move_speed": 0.03
 
 }

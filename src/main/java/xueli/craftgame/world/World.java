@@ -205,7 +205,7 @@ public class World {
 		}*/
 
 		// 一秒大概20tick
-		time += Time.deltaTime / 50.0f;
+		time += Time.deltaTime / 50.0f * 100.0f;
 		while(time >= 24000)
 			time -= 24000;
 
