@@ -2,7 +2,6 @@ package xueli.craftgame.entity;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import xueli.craftgame.world.CubeWorldCollider;
 import xueli.craftgame.world.World;
 import xueli.gamengine.physics.AABB;
 import xueli.gamengine.utils.Time;
@@ -11,8 +10,12 @@ import xueli.gamengine.utils.Vector;
 public abstract class Entity {
 
 	public Vector pos;
+	
 	// TODO: For entity bones
-	public Vector3f speed = new Vector3f();
+	
+	
+	Vector3f speed = new Vector3f();
+	public Vector3f acceleration = new Vector3f();
 	// 实体所在的世界
 	protected World world;
 	
@@ -36,7 +39,7 @@ public abstract class Entity {
 	
 	protected void gravity() {
 		if(!isOnGround) {
-			speed.y -= 0.4f * Time.deltaTime;
+			acceleration.y -= 4f * Time.deltaTime;
 			
 			if(speed.y <= -5.0f)
 				speed.y = -5.0f;
@@ -44,11 +47,13 @@ public abstract class Entity {
 		}
 		
 	}
-	
-	// 不管因为什么原因 达到200的y都会抑制y更新
 
 	protected void updatePos() {
 		isOnGround = false;
+		
+		speed.x += acceleration.x * Time.deltaTime / 1000.0f;
+		speed.y += acceleration.y * Time.deltaTime / 1000.0f;
+		speed.z += acceleration.z * Time.deltaTime / 1000.0f;
 		
 		Vector3f deltaPos = new Vector3f(speed.x * Time.deltaTime / 1000.0f, speed.y * Time.deltaTime / 1000.0f, speed.z * Time.deltaTime / 1000.0f);
 		
@@ -56,10 +61,12 @@ public abstract class Entity {
 		 * pos.x += deltaPos.x; pos.y += deltaPos.y; pos.z += deltaPos.z;
 		 */
 		collider.entityCollide(this, deltaPos);
-
-		speed.x *= 0.1f;
-		speed.y *= 0.1f;
-		speed.z *= 0.1f;
+		
+		speed.x *= 0.8f;
+		speed.y *= 0.8f;
+		speed.z *= 0.8f;
+		
+		acceleration.x = acceleration.y = acceleration.z = 0;
 		
 	}
 

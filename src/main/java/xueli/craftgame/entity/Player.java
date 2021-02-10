@@ -54,41 +54,46 @@ public class Player extends Entity {
 
 	@Override
 	public void tick() {
-		if(world.getChunk((int)pos.x >> Chunk.size_yiwei, (int)pos.z >> Chunk.size_yiwei) != null)
-			gravity();
+		// 刚开始进游戏的时候 可能会因为重力穿过方块向下掉
+		gravity();
+		
+		// 同上面的解决方案
+		if(pos.y < -10)
+			pos.y = 10;
 
 		Display display = Display.currentDisplay;
 
 		if (display.mouseGrabbed) {
 			if (KeyCallback.keys[GLFW.GLFW_KEY_W]) {
 				if (KeyCallback.keys[GLFW.GLFW_KEY_R]) {
-					speed.x -= this.getSpeed() * 2f * (float) Math.sin(Math.toRadians(-pos.rotY));
-					speed.z -= this.getSpeed() * 2f * (float) Math.cos(Math.toRadians(-pos.rotY));
+					acceleration.x -= this.getSpeed() * 2f * (float) Math.sin(Math.toRadians(-pos.rotY));
+					acceleration.z -= this.getSpeed() * 2f * (float) Math.cos(Math.toRadians(-pos.rotY));
 				} else {
-					speed.x -= this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY));
-					speed.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY));
+					acceleration.x -= this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY));
+					acceleration.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY));
 				}
 			}
 			if (KeyCallback.keys[GLFW.GLFW_KEY_S]) {
-				speed.x += this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY));
-				speed.z += this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY));
+				acceleration.x += this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY));
+				acceleration.z += this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY));
 			}
 			if (KeyCallback.keys[GLFW.GLFW_KEY_A]) {
-				speed.x -= this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY + 90));
-				speed.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY + 90));
+				acceleration.x -= this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY + 90));
+				acceleration.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY + 90));
 			}
 			if (KeyCallback.keys[GLFW.GLFW_KEY_D]) {
-				speed.x -= this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY - 90));
-				speed.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY - 90));
+				acceleration.x -= this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY - 90));
+				acceleration.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY - 90));
 			}
 
+			// TODO: 跳跃不真实
 			if (KeyCallback.keys[GLFW.GLFW_KEY_SPACE]) {
 				if(isOnGround)
-					speed.y += this.getSpeed() * 20f;
+					acceleration.y += this.getSpeed() * 20f;
 			}
 
 			if (KeyCallback.keys[GLFW.GLFW_KEY_LEFT_SHIFT]) {
-				speed.y -= this.getSpeed() * 0.5f;
+				acceleration.y -= this.getSpeed() * 0.5f;
 			}
 
 			if (display.isMouseDown(0) & block_select != null & Time.thisTime - placeTimeCount > placeBlockDuration) {
@@ -162,7 +167,7 @@ public class Player extends Entity {
 
 	@Override
 	public float getSpeed() {
-		return 3.0f;
+		return 70.0f;
 	}
 
 	@Override

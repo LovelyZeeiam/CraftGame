@@ -7,6 +7,7 @@ import java.util.HashMap;
 import org.lwjgl.util.vector.Vector3i;
 
 import xueli.craftgame.block.Tile;
+import xueli.craftgame.entity.CubeWorldCollider;
 import xueli.craftgame.entity.Player;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.MathUtils;

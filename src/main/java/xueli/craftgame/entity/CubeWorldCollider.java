@@ -1,9 +1,9 @@
-package xueli.craftgame.world;
+package xueli.craftgame.entity;
 
 import org.lwjgl.util.vector.Vector3f;
 
 import xueli.craftgame.block.Tile;
-import xueli.craftgame.entity.Entity;
+import xueli.craftgame.world.World;
 import xueli.gamengine.physics.AABB;
 
 public class CubeWorldCollider {
@@ -18,6 +18,7 @@ public class CubeWorldCollider {
 	/**
 	 * 首先 达成效果
 	 * 代码借鉴: https://github.com/Hopson97/MineCraft-One-Week-Challenge/blob/9bb62f2bb8f1d72b3dae7e4fbc8d067b8965c7da/Source/Player/Player.cpp
+	 * TODO：当y的速度过大时，有可能会穿过方块掉落
 	 */
 	public void entityCollide(Entity e, Vector3f deltaPos) {
 		e.pos.x += deltaPos.x;
