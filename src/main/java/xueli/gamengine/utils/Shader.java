@@ -155,10 +155,10 @@ public class Shader {
 	}
 
 	public static void setProjectionMatrix(IGame game, Shader shader) {
-		setProjectionMatrix(game, shader, game.getDisplay().getWidth(), game.getDisplay().getHeight(), 90.0f);
+		setProjectionMatrix(shader, game.getDisplay().getWidth(), game.getDisplay().getHeight(), 90.0f);
 	}
 
-	public static void setProjectionMatrix(IGame game, Shader shader, float width, float height, float fov) {
+	public static void setProjectionMatrix(Shader shader, float width, float height, float fov) {
 		shader.use();
 		shader.setUniformMatrix(shader.getUnifromLocation("projMatrix"),
 				MatrixHelper.perspecive(width, height, fov, 0.01f, 114514.0f));

@@ -5,9 +5,11 @@ import org.lwjgl.opengl.GL11;
 public class GLHelper {
 
 	public static void checkGLError(String state) {
-		int error = GL11.glGetError();
-		if (error != 0) {
-			System.out.println("[" + state + "] OpenGL Error: " + error);
+		int error = -1;
+		while (error != 0) {
+			error = GL11.glGetError();
+			if(error != 0)
+				System.out.println("[" + state + "] OpenGL Error: " + error);
 		}
 	}
 

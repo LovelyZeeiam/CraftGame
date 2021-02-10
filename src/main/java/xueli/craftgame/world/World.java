@@ -3,12 +3,14 @@ package xueli.craftgame.world;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.lwjgl.util.vector.Vector3i;
 
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.entity.CubeWorldCollider;
 import xueli.craftgame.entity.Player;
+import xueli.craftgame.world.renderer.SkyRenderer;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.MathUtils;
 import xueli.gamengine.utils.MatrixHelper;
@@ -19,10 +21,13 @@ public class World {
 	private static Chunk tempChunk;
 	private WorldLogic worldLogic;
 	private ChunkGeneratorMaster gen;
-	volatile HashMap<Long, Chunk> chunks = new HashMap<Long, Chunk>();
+	volatile ConcurrentHashMap<Long, Chunk> chunks = new ConcurrentHashMap<Long, Chunk>();
 
 	private CubeWorldCollider collider;
 	private WorldIO io;
+	
+	private SkyRenderer skyRenderer;
+	public float time = 0;
 
 	public World(WorldLogic worldLogic) {
 		this.worldLogic = worldLogic;
@@ -30,7 +35,9 @@ public class World {
 		collider = new CubeWorldCollider(this);
 		io = new WorldIO(this);
 		gen = new ChunkGeneratorMaster(this);
-
+		
+		worldLogic.getCg().queueRunningInMainThread.add(() -> skyRenderer = new SkyRenderer(this));
+		
 		for(int i = 0;i < 4;i++)
 		for(int m = 0;m < 4;m++)
 			requireGenChunk(i,m);
@@ -199,6 +206,11 @@ public class World {
 
 		}*/
 
+		// 一秒大概20tick
+		time += Time.deltaTime / 50.0f;
+		while(time >= 24000)
+			time -= 24000;
+
 	}
 
 	private ArrayList<Long> chunkThatHasRequired = new ArrayList<>();
@@ -256,6 +268,15 @@ public class World {
 
 		return vertCount;
 	}
+	
+	public void drawSky() {
+		if(skyRenderer != null) {
+			skyRenderer.size();
+			skyRenderer.render();
+
+		}
+		
+	}
 
 	public void saveAndLoad() {
 		io.checkSave();
@@ -267,6 +288,8 @@ public class World {
 	}
 
 	public void close() {
+		skyRenderer.close();
+
 		chunks.forEach((n, c) -> {
 			c.close();
 			io.saveChunk(c);

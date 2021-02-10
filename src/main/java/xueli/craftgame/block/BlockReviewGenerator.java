@@ -41,7 +41,7 @@ public class BlockReviewGenerator {
 	public static void generate(long nvg, CraftGame cg, TextureAtlas blockAtlasTexture) {
 		Shader shader = cg.getShaderResource().get("world");
 		shader.use();
-		Shader.setProjectionMatrix(cg, shader, size, size, 1.0f);
+		Shader.setProjectionMatrix(shader, size, size, 1.0f);
 		Shader.setViewMatrix(new Vector(-55f, 56f, -55f, 144.735f, -45.005f, 0), shader);
 		shader.unbind();
 

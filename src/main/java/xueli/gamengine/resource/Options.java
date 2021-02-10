@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
@@ -32,12 +33,7 @@ public class Options extends IResource {
 
 	public void load() {
 		File file = new File(real_path);
-		for (File f : file.listFiles(new FileFilter() {
-			@Override
-			public boolean accept(File pathname) {
-				return pathname.getName().endsWith(".json");
-			}
-		})) {
+		for (File f : Objects.requireNonNull(file.listFiles(pathname -> pathname.getName().endsWith(".json")))) {
 			try {
 				options.putAll(gson.fromJson(new FileReader(f.getPath()), type));
 			} catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
@@ -47,12 +43,7 @@ public class Options extends IResource {
 	}
 
 	public void load(GUITextView textView, GUIProgressBar progressBar, float startValue, float endValue) {
-		File[] files = new File(real_path).listFiles(new FileFilter() {
-			@Override
-			public boolean accept(File pathname) {
-				return pathname.getName().endsWith(".json");
-			}
-		});
+		File[] files = new File(real_path).listFiles(pathname -> pathname.getName().endsWith(".json"));
 
 		int count = 0;
 		float progressPerElement = (endValue - startValue) / files.length;

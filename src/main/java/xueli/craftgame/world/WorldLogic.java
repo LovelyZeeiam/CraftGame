@@ -29,6 +29,7 @@ import xueli.craftgame.view.InGameView;
 import xueli.craftgame.view.InventoryView;
 import xueli.craftgame.world.renderer.Renderer;
 import xueli.craftgame.world.renderer.ShadowMapper;
+import xueli.gamengine.resource.Texture;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.Display;
 import xueli.gamengine.utils.GLHelper;
@@ -223,9 +224,20 @@ public class WorldLogic implements Runnable {
 
 		setNormalViewPort();
 
-		// 清空颜色
-		GL11.glClearColor(0.5f, 0.8f, 1.0f, 1.0f);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
+
+		{
+			// 首先绘制天空 ta担任了清空颜色的重要使命
+
+			// 透明材质
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			GL11.glEnable(GL11.GL_BLEND);
+
+			world.drawSky();
+
+			GL11.glDisable(GL11.GL_BLEND);
+
+		}
 
 		{
 			GL11.glEnable(GL11.GL_CULL_FACE);
@@ -314,7 +326,7 @@ public class WorldLogic implements Runnable {
 		}
 
 		// 接触绑定 (束缚 真)
-		blockTextureAtlas.unbind();
+		Texture.unbind();
 		blockRenderShader.unbind();
 
 		normalRenderer.postDraw();

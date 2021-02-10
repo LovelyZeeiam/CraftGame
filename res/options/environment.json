@@ -1,0 +1,14 @@
+{
+  "sun_distance": 100,
+  "sun_size": 30,
+  "sun_shader_name": "sky",
+
+  "sun_sky_color_day": [ 0.5, 0.8, 1.0 ],
+  "sun_sky_color_day_to_night_duration": [ 11000, 13000 ],
+  "sun_sky_color_night_to_day_duration": [ 22000, 24000 ],
+  "sun_sky_color_night": [ 0.09, 0, 0.199 ],
+
+  "sky_day_depth": 1.0,
+  "sky_night_depth": 0.4
+
+}
