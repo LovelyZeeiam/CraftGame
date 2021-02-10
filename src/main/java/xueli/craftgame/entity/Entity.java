@@ -39,10 +39,7 @@ public abstract class Entity {
 	
 	protected void gravity() {
 		if(!isOnGround) {
-			acceleration.y -= 4f * Time.deltaTime;
-			
-			if(speed.y <= -5.0f)
-				speed.y = -5.0f;
+			// TODO
 			
 		}
 		

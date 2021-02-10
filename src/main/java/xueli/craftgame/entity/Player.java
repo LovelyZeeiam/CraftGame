@@ -11,7 +11,6 @@ import xueli.craftgame.block.BlockResource;
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.block.data.BlockFace;
 import xueli.craftgame.block.data.SlabAndStairData;
-import xueli.craftgame.world.Chunk;
 import xueli.craftgame.world.World;
 import xueli.gamengine.physics.AABB;
 import xueli.gamengine.utils.Display;
@@ -54,20 +53,13 @@ public class Player extends Entity {
 
 	@Override
 	public void tick() {
-		// 刚开始进游戏的时候 可能会因为重力穿过方块向下掉
-		gravity();
-		
-		// 同上面的解决方案
-		if(pos.y < -10)
-			pos.y = 10;
-
 		Display display = Display.currentDisplay;
 
 		if (display.mouseGrabbed) {
 			if (KeyCallback.keys[GLFW.GLFW_KEY_W]) {
 				if (KeyCallback.keys[GLFW.GLFW_KEY_R]) {
-					acceleration.x -= this.getSpeed() * 2f * (float) Math.sin(Math.toRadians(-pos.rotY));
-					acceleration.z -= this.getSpeed() * 2f * (float) Math.cos(Math.toRadians(-pos.rotY));
+					acceleration.x -= this.getSpeed() * 4f * (float) Math.sin(Math.toRadians(-pos.rotY));
+					acceleration.z -= this.getSpeed() * 4f * (float) Math.cos(Math.toRadians(-pos.rotY));
 				} else {
 					acceleration.x -= this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY));
 					acceleration.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY));
@@ -88,12 +80,12 @@ public class Player extends Entity {
 
 			// TODO: 跳跃不真实
 			if (KeyCallback.keys[GLFW.GLFW_KEY_SPACE]) {
-				if(isOnGround)
-					acceleration.y += this.getSpeed() * 20f;
+				//if(isOnGround)
+					acceleration.y += this.getSpeed() * 2.0f;
 			}
 
 			if (KeyCallback.keys[GLFW.GLFW_KEY_LEFT_SHIFT]) {
-				acceleration.y -= this.getSpeed() * 0.5f;
+				acceleration.y -= this.getSpeed() * 2.0f;
 			}
 
 			if (display.isMouseDown(0) & block_select != null & Time.thisTime - placeTimeCount > placeBlockDuration) {
@@ -167,7 +159,7 @@ public class Player extends Entity {
 
 	@Override
 	public float getSpeed() {
-		return 70.0f;
+		return 80.0f;
 	}
 
 	@Override

@@ -19,6 +19,8 @@ import xueli.gamengine.utils.FloatList;
 import xueli.gamengine.utils.vector.Vector2s;
 
 public abstract class IModel {
+	
+	// TODO: Plain World and stand on 27,6,43 then world rendering will make its problem appear
 
     private static ArrayList<AABB> aabbs = new ArrayList<>();
 
