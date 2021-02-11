@@ -1,21 +1,22 @@
 package xueli.craftgame.block;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 import com.flowpowered.nbt.CompoundMap;
 import com.flowpowered.nbt.CompoundTag;
 import com.flowpowered.nbt.StringTag;
 import com.google.gson.Gson;
+
+import xueli.craftgame.WorldLogic;
 import xueli.craftgame.block.rendercontrol.model.IModel;
 import xueli.craftgame.interfaces.Saveable;
 import xueli.craftgame.world.Chunk;
 import xueli.craftgame.world.World;
-import xueli.craftgame.world.WorldLogic;
 import xueli.gamengine.physics.AABB;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.Logger;
 import xueli.gamengine.utils.store.FloatList;
-
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class Tile implements Saveable {
 

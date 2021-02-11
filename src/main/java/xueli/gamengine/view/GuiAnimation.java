@@ -1,14 +1,15 @@
 package xueli.gamengine.view;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
 import xueli.gamengine.utils.Logger;
 import xueli.gamengine.utils.Time;
 import xueli.gamengine.utils.evalable.EvalableFloat;
 import xueli.gamengine.view.anim2d.Constant;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class GuiAnimation extends IAnimation {
 

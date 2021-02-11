@@ -8,7 +8,7 @@ public class GLHelper {
 		int error = -1;
 		while (error != 0) {
 			error = GL11.glGetError();
-			if(error != 0)
+			if (error != 0)
 				System.out.println("[" + state + "] OpenGL Error: " + error);
 		}
 	}

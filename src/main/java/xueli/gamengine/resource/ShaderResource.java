@@ -1,12 +1,12 @@
 package xueli.gamengine.resource;
 
-import xueli.gamengine.utils.resource.Shader;
-import xueli.gamengine.view.GUIProgressBar;
-import xueli.gamengine.view.GUITextView;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.util.HashMap;
+
+import xueli.gamengine.utils.resource.Shader;
+import xueli.gamengine.view.GUIProgressBar;
+import xueli.gamengine.view.GUITextView;
 
 public class ShaderResource extends IResource {
 

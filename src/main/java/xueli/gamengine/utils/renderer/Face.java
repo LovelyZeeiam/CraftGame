@@ -1,26 +1,30 @@
 package xueli.gamengine.utils.renderer;
 
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.*;
-
 import java.nio.IntBuffer;
+
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
+import org.lwjgl.opengl.GL15;
+import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL30;
 
 /**
  * 默认都是绘制矩形的面
  */
 public class Face {
-	
+
 	private static IntBuffer texCoordBuffer;
-	
+
 	static {
 		texCoordBuffer = BufferUtils.createIntBuffer(8);
 		texCoordBuffer.put(new int[] { 1, 1, 1, 0, 0, 0, 0, 1, });
 		texCoordBuffer.flip();
-		
+
 	}
 
 	private int textureID;
-	
+
 	private int vao;
 	private int vbo;
 	private int tbo;
@@ -37,13 +41,13 @@ public class Face {
 	public Face(int textureID, float[] data) {
 		this.textureID = textureID;
 		dataStoreIntoVao(data);
-		
+
 	}
-	
+
 	private void dataStoreIntoVao(float[] data) {
 		this.vao = GL30.glGenVertexArrays();
 		GL30.glBindVertexArray(this.vao);
-		
+
 		this.vbo = GL30.glGenBuffers();
 		GL30.glBindBuffer(GL30.GL_ARRAY_BUFFER, this.vbo);
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, data, GL15.GL_STATIC_DRAW);
@@ -57,9 +61,9 @@ public class Face {
 		GL30.glBindBuffer(GL30.GL_ARRAY_BUFFER, 0);
 
 		GL30.glBindVertexArray(0);
-		
+
 	}
-	
+
 	public void draw() {
 		GL30.glBindVertexArray(this.vao);
 
@@ -69,16 +73,14 @@ public class Face {
 		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 
 		GL30.glBindVertexArray(0);
-		
+
 	}
-	
+
 	public void release() {
 		GL30.glDeleteBuffers(this.vbo);
 		GL30.glDeleteBuffers(this.tbo);
 		GL30.glDeleteVertexArrays(this.vao);
 
-
 	}
-	
 
 }

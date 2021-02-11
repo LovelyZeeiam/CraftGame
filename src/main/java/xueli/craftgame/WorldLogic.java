@@ -1,37 +1,47 @@
-package xueli.craftgame.world;
+package xueli.craftgame;
 
-import org.lwjgl.glfw.GLFW;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL13;
-import org.lwjgl.util.vector.Matrix4f;
-import xueli.craftgame.CraftGame;
-import xueli.craftgame.State;
-import xueli.craftgame.block.Blocks;
-import xueli.craftgame.entity.Player;
-import xueli.craftgame.view.HUDView;
-import xueli.craftgame.view.InGameView;
-import xueli.craftgame.view.InventoryView;
-import xueli.craftgame.world.renderer.Renderer;
-import xueli.craftgame.world.renderer.ShadowMapper;
-import xueli.gamengine.resource.Texture;
-import xueli.gamengine.resource.TextureAtlas;
-import xueli.gamengine.utils.GLHelper;
-import xueli.gamengine.utils.Logger;
-import xueli.gamengine.utils.callbacks.KeyCallback;
-import xueli.gamengine.utils.math.MatrixHelper;
-import xueli.gamengine.utils.Display;
-import xueli.gamengine.utils.renderer.Faces;
-import xueli.gamengine.utils.resource.Shader;
-import xueli.gamengine.view.GUIProgressBar;
-import xueli.gamengine.view.View;
+import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
+import static org.lwjgl.nanovg.NanoVG.nvgCreateFont;
+import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
+import static org.lwjgl.nanovg.NanoVGGL3.NVG_ANTIALIAS;
+import static org.lwjgl.nanovg.NanoVGGL3.NVG_DEBUG;
+import static org.lwjgl.nanovg.NanoVGGL3.NVG_STENCIL_STROKES;
+import static org.lwjgl.nanovg.NanoVGGL3.nvgCreate;
+import static org.lwjgl.nanovg.NanoVGGL3.nvglCreateImageFromHandle;
+import static org.lwjgl.opengl.GL11.glViewport;
 
 import java.nio.ByteBuffer;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 
-import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.nanovg.NanoVGGL3.*;
-import static org.lwjgl.opengl.GL11.glViewport;
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
+import org.lwjgl.util.vector.Matrix4f;
+
+import xueli.craftgame.block.Blocks;
+import xueli.craftgame.entity.Player;
+import xueli.craftgame.particles.ParticleTest;
+import xueli.craftgame.view.HUDView;
+import xueli.craftgame.view.InGameView;
+import xueli.craftgame.view.InventoryView;
+import xueli.craftgame.world.World;
+import xueli.craftgame.world.WorldGLData;
+import xueli.craftgame.world.renderer.ShadowMapper;
+import xueli.gamengine.particle.ParticleManager;
+import xueli.gamengine.resource.Texture;
+import xueli.gamengine.resource.TextureAtlas;
+import xueli.gamengine.utils.Display;
+import xueli.gamengine.utils.GLHelper;
+import xueli.gamengine.utils.Logger;
+import xueli.gamengine.utils.callbacks.KeyCallback;
+import xueli.gamengine.utils.math.MatrixHelper;
+import xueli.gamengine.utils.renderer.Faces;
+import xueli.gamengine.utils.renderer.Renderer;
+import xueli.gamengine.utils.resource.Shader;
+import xueli.gamengine.view.GUIProgressBar;
+import xueli.gamengine.view.View;
 
 public class WorldLogic implements Runnable {
 
@@ -61,6 +71,8 @@ public class WorldLogic implements Runnable {
 
 	private Renderer normalRenderer;
 	private ShadowMapper shadowMapper;
+	
+	private ParticleManager particleManager;
 
 	private Faces faces;
 
@@ -68,13 +80,16 @@ public class WorldLogic implements Runnable {
 	public WorldLogic(CraftGame cg) {
 		this.cg = cg;
 
-		normalRenderer = new Renderer(cg, this);
+		normalRenderer = new Renderer();
 		faces = new Faces(this);
 		shadowMapper = new ShadowMapper(cg, this);
 
 		blockRenderShader = cg.getShaderResource().get("world");
 		
 		this.shadowMapper.setDepthMap(blockRenderShader);
+		
+		this.particleManager = new ParticleManager(cg, cg.getShaderResource().get("particle"));
+		this.particleManager.addParticle(new ParticleTest(cg));
 
 		// 游戏内gui绘制
 		nvg = nvgCreate(NVG_STENCIL_STROKES | NVG_ANTIALIAS | NVG_DEBUG);
@@ -167,12 +182,19 @@ public class WorldLogic implements Runnable {
 	public long getNvg() {
 		return nvg;
 	}
+	
+	public ParticleManager getParticleManager() {
+		return particleManager;
+	}
 
 	public void size() {
 		Shader.setProjectionMatrix(cg, blockRenderShader);
 
 		if (gameGui != null)
 			gameGui.size();
+		
+		if(particleManager != null)
+			particleManager.size();
 
 	}
 
@@ -330,8 +352,13 @@ public class WorldLogic implements Runnable {
 		GL11.glDisable(GL11.GL_CULL_FACE);
 
 		{
-			faces.render();
+			// faces.render();
 
+		}
+		
+		{
+			particleManager.draw(player.pos);
+			
 		}
 
 		// shadowMapper.renderToDepthBuffer(normalRenderer);

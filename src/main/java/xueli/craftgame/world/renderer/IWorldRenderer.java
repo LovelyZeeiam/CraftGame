@@ -1,6 +1,7 @@
 package xueli.craftgame.world.renderer;
 
 import xueli.craftgame.world.World;
+import xueli.gamengine.utils.renderer.Renderer;
 
 public abstract class IWorldRenderer {
 	
@@ -9,7 +10,7 @@ public abstract class IWorldRenderer {
 	
 	public IWorldRenderer(World world, int bufferSize, int bufferType) {
 		this.world = world;
-		this.renderer = new Renderer(world.getWorldLogic().getCg(), world.getWorldLogic(), bufferSize, bufferType);
+		this.renderer = new Renderer(bufferSize, bufferType);
 		
 	}
 	

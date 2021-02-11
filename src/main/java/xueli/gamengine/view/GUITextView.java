@@ -1,9 +1,14 @@
 package xueli.gamengine.view;
 
-import org.lwjgl.nanovg.NVGColor;
-import xueli.gamengine.utils.evalable.EvalableFloat;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
+import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
+import static org.lwjgl.nanovg.NanoVG.nvgText;
+import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
 
-import static org.lwjgl.nanovg.NanoVG.*;
+import org.lwjgl.nanovg.NVGColor;
+
+import xueli.gamengine.utils.evalable.EvalableFloat;
 
 public class GUITextView extends ViewWidget {
 

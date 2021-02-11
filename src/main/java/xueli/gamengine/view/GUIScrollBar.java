@@ -1,11 +1,15 @@
 package xueli.gamengine.view;
 
+import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgFill;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgRect;
+
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGColor;
-import xueli.gamengine.utils.evalable.EvalableFloat;
-import xueli.gamengine.utils.Display;
 
-import static org.lwjgl.nanovg.NanoVG.*;
+import xueli.gamengine.utils.Display;
+import xueli.gamengine.utils.evalable.EvalableFloat;
 
 public class GUIScrollBar extends ViewWidget implements ViewWidget.OnClickListener {
 

@@ -1,26 +1,20 @@
-package xueli.craftgame.world.renderer;
+package xueli.gamengine.utils.renderer;
+
+import java.nio.ByteBuffer;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
-import xueli.craftgame.CraftGame;
-import xueli.craftgame.world.WorldLogic;
+
 import xueli.gamengine.utils.GLHelper;
 import xueli.gamengine.utils.Logger;
 
-import java.nio.ByteBuffer;
-
 public class Renderer {
 
-	private final CraftGame cg;
-	private final WorldLogic logic;
 	private final int vao, vbo;
 
-	public Renderer(CraftGame cg, WorldLogic logic) {
-		this.cg = cg;
-		this.logic = logic;
-
+	public Renderer() {
 		// 注册vao, vbo
 		vao = GL30.glGenVertexArrays();
 		GL30.glBindVertexArray(vao);
@@ -29,26 +23,15 @@ public class Renderer {
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo);
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, 671088640, GL15.GL_DYNAMIC_DRAW);
 
-		// UV
-		GL20.glVertexAttribPointer(1, 2, GL11.GL_FLOAT, false, 8 * 4, 0);
-		GL20.glEnableVertexAttribArray(1);
-		// 颜色
-		GL20.glVertexAttribPointer(2, 3, GL11.GL_FLOAT, false, 8 * 4, 2 * 4);
-		GL20.glEnableVertexAttribArray(2);
-		// 坐标
-		GL20.glVertexAttribPointer(0, 3, GL11.GL_FLOAT, false, 8 * 4, 5 * 4);
-		GL20.glEnableVertexAttribArray(0);
+		registerVertex();
 
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 
 		GL30.glBindVertexArray(0);
 
 	}
-	
-	public Renderer(CraftGame cg, WorldLogic logic, int bufferSize, int bufferType) {
-		this.cg = cg;
-		this.logic = logic;
 
+	public Renderer(int bufferSize, int bufferType) {
 		// 注册vao, vbo
 		vao = GL30.glGenVertexArrays();
 		GL30.glBindVertexArray(vao);
@@ -57,6 +40,15 @@ public class Renderer {
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo);
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, bufferSize, bufferType);
 
+		registerVertex();
+
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+
+		GL30.glBindVertexArray(0);
+
+	}
+
+	protected void registerVertex() {
 		// UV
 		GL20.glVertexAttribPointer(1, 2, GL11.GL_FLOAT, false, 8 * 4, 0);
 		GL20.glEnableVertexAttribArray(1);
@@ -66,10 +58,6 @@ public class Renderer {
 		// 坐标
 		GL20.glVertexAttribPointer(0, 3, GL11.GL_FLOAT, false, 8 * 4, 5 * 4);
 		GL20.glEnableVertexAttribArray(0);
-
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
-
-		GL30.glBindVertexArray(0);
 
 	}
 
@@ -97,7 +85,7 @@ public class Renderer {
 	public void draw(int vertCount) {
 		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, vertCount);
 	}
-	
+
 	public void draw(int type, int offset, int vertCount) {
 		GL11.glDrawArrays(type, offset, vertCount);
 	}

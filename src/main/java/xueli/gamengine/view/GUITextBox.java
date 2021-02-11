@@ -1,14 +1,30 @@
 package xueli.gamengine.view;
 
-import org.lwjgl.nanovg.NVGColor;
-import org.lwjgl.nanovg.NVGGlyphPosition;
-import xueli.gamengine.utils.evalable.EvalableFloat;
-import xueli.gamengine.view.text.KeyType;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_LEFT;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_MIDDLE;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgFill;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
+import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
+import static org.lwjgl.nanovg.NanoVG.nvgMoveTo;
+import static org.lwjgl.nanovg.NanoVG.nvgRect;
+import static org.lwjgl.nanovg.NanoVG.nvgRestore;
+import static org.lwjgl.nanovg.NanoVG.nvgSave;
+import static org.lwjgl.nanovg.NanoVG.nvgScissor;
+import static org.lwjgl.nanovg.NanoVG.nvgText;
+import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
+import static org.lwjgl.nanovg.NanoVG.nvgTextGlyphPositions;
+import static org.lwjgl.nanovg.NanoVG.nvgTextMetrics;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.lwjgl.nanovg.NanoVG.*;
+import org.lwjgl.nanovg.NVGColor;
+import org.lwjgl.nanovg.NVGGlyphPosition;
+
+import xueli.gamengine.utils.evalable.EvalableFloat;
+import xueli.gamengine.view.text.KeyType;
 
 @Deprecated
 public class GUITextBox extends ViewWidget {

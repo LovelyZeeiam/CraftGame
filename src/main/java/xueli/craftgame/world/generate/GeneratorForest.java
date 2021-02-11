@@ -1,11 +1,11 @@
 package xueli.craftgame.world.generate;
 
+import java.util.ArrayList;
+
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.world.Chunk;
 import xueli.craftgame.world.World;
 import xueli.gamengine.utils.vector.Vector2i;
-
-import java.util.ArrayList;
 
 public class GeneratorForest implements IChunkGenerator {
 

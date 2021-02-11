@@ -1,26 +1,46 @@
 package xueli.gamengine.tool.view;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.util.concurrent.TimeUnit;
+
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.SwingUtilities;
+import javax.swing.border.EtchedBorder;
+import javax.swing.filechooser.FileFilter;
+
 import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.awt.AWTGLCanvas;
 import org.lwjgl.opengl.awt.GLData;
-import xueli.gamengine.resource.*;
+
+import xueli.gamengine.resource.GuiResource;
+import xueli.gamengine.resource.LangManager;
+import xueli.gamengine.resource.Options;
+import xueli.gamengine.resource.ShaderResource;
+import xueli.gamengine.resource.TextureManager;
+import xueli.gamengine.utils.Display;
 import xueli.gamengine.utils.GLHelper;
 import xueli.gamengine.utils.Logger;
-import xueli.gamengine.utils.Display;
 import xueli.gamengine.utils.resource.Shader;
 import xueli.gamengine.view.ViewManager;
-
-import javax.swing.*;
-import javax.swing.border.EtchedBorder;
-import javax.swing.filechooser.FileFilter;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.File;
-import java.util.concurrent.TimeUnit;
 
 public class ViewMonitor {
 

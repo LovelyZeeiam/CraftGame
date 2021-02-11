@@ -42,7 +42,9 @@
 		},
 		
 		"environment.sun_moon": "textures/environment/sun_moon.png",
-		"environment.clouds": "textures/environment/clouds.png"
+		"environment.clouds": "textures/environment/clouds.png",
+		
+		"particle.test_particle": "textures/particles/test_particle.jpg"
 
 		
 		
