@@ -26,7 +26,9 @@ public class ItemFirework extends ItemData {
 
 	@Override
 	public LeftClick onLeftClick(World world, Player player) {
-		System.out.println("Oops! Feels painful!");
+		world.getWorldLogic().getCg().timerQueue.addQueue(1000, () -> System.out.println("Oops! Feels painful!"));
+		world.getWorldLogic().getCg().timerQueue.addQueue(2000, () -> System.out.println("Oops! Feels painful!"));
+		world.getWorldLogic().getCg().timerQueue.addQueue(3000, () -> System.out.println("Oops! Feels painful!"));
 
 		return LeftClick.DONT_DESTROY_BLOCK_WHEN_LEFT_CLICK;
 	}

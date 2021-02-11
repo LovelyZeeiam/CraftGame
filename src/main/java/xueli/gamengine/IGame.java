@@ -13,6 +13,7 @@ import xueli.gamengine.resource.Options;
 import xueli.gamengine.resource.ShaderResource;
 import xueli.gamengine.resource.TextureManager;
 import xueli.gamengine.utils.Display;
+import xueli.gamengine.utils.TimerQueue;
 import xueli.gamengine.utils.callbacks.CharCallback;
 import xueli.gamengine.utils.callbacks.CursorPosCallback;
 import xueli.gamengine.utils.callbacks.DisplaySizedCallback;
@@ -34,6 +35,8 @@ public abstract class IGame implements Runnable {
 	}
 
 	public Queue<Runnable> queueRunningInMainThread = new LinkedList<Runnable>();
+	public TimerQueue timerQueue = new TimerQueue();
+	
 	protected LangManager langManager;
 	protected String game_name;
 	protected Options options;
@@ -214,6 +217,7 @@ public abstract class IGame implements Runnable {
 	public void runQueueList() {
 		if (!queueRunningInMainThread.isEmpty())
 			queueRunningInMainThread.poll().run();
+		timerQueue.tick();
 
 	}
 
