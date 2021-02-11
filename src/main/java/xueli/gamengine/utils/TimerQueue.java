@@ -5,7 +5,7 @@ import java.util.TreeSet;
 
 public class TimerQueue {
 	
-	private static class Task {
+	public static class Task {
 		
 		private long executeTime;
 		private Runnable runnable;
@@ -35,6 +35,13 @@ public class TimerQueue {
 	public void addQueue(int time, Runnable runnable) {
 		Task task = new Task(Time.thisTime + time, runnable);
 		runnables.add(task);
+		
+	}
+	
+	public void addAll(TreeSet<Task> tasks) {
+		for (Task task : tasks) {
+			runnables.add(new Task(task.executeTime + Time.thisTime, task.runnable));
+		}
 		
 	}
 

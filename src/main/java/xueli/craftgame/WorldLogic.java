@@ -91,7 +91,6 @@ public class WorldLogic implements Runnable {
 		this.shadowMapper.setDepthMap(blockRenderShader);
 
 		this.particleManager = new ParticleManager(cg, cg.getShaderResource().get("particle"));
-		this.particleManager.addParticle(new ParticleTest(cg));
 
 		// 游戏内gui绘制
 		nvg = nvgCreate(NVG_STENCIL_STROKES | NVG_ANTIALIAS | NVG_DEBUG);

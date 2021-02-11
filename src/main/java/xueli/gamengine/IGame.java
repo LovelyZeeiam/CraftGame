@@ -1,17 +1,13 @@
 package xueli.gamengine;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
-import xueli.gamengine.resource.DataResource;
-import xueli.gamengine.resource.GuiResource;
-import xueli.gamengine.resource.LangManager;
-import xueli.gamengine.resource.Options;
-import xueli.gamengine.resource.ShaderResource;
-import xueli.gamengine.resource.TextureManager;
+import xueli.gamengine.resource.*;
 import xueli.gamengine.utils.Display;
 import xueli.gamengine.utils.TimerQueue;
 import xueli.gamengine.utils.callbacks.CharCallback;
@@ -46,6 +42,7 @@ public abstract class IGame implements Runnable {
 	protected TextureManager textureManager;
 	protected GuiResource guiResource;
 	protected DataResource dataResource;
+	protected AudioResource audioResource;
 	private String resPath;
 
 	public IGame(String resPath) {
@@ -91,6 +88,16 @@ public abstract class IGame implements Runnable {
 
 	protected void loadData() {
 		dataResource = new DataResource(resPath);
+
+	}
+
+	protected void loadAudio() {
+		this.audioResource = new AudioResource(resPath);
+		try {
+			this.audioResource.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -172,6 +179,7 @@ public abstract class IGame implements Runnable {
 		loadShader();
 		loadTexture();
 		loadGui();
+		loadAudio();
 
 		// For Linux
 		display.getSizedCallback().invoke(0, width, height);
@@ -224,6 +232,11 @@ public abstract class IGame implements Runnable {
 	protected void releaseAll() {
 		display.destroy();
 		langManager.close();
+		try {
+			audioResource.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		if (options != null)
 			options.close();
 		if (shaderResource != null)
