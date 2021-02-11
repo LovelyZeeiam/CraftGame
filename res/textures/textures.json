@@ -9,6 +9,8 @@
 
 		"ingame.hud.crossbar": "textures/gui/ingame/hud/cross.png",
 		"ingame.gui.block_message": "textures/gui/ingame/block_message_view.png",
+		"ingame.gui.inventory": "textures/gui/ingame/hud/inventory.png",
+		"ingame.gui.inventory.chosen": "textures/gui/ingame/hud/inventory_chosen.png",
 		
 		"blocks": {
 			"block.unknown": "textures/blocks/bug_block.png",

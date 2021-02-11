@@ -1,0 +1,29 @@
+#version 330
+
+layout (location = 0) in vec3 pos;
+layout (location = 1) in vec3 color;
+
+uniform mat4 projMatrix;
+uniform mat4 viewMatrix;
+
+out vec2 otexPos;
+out vec3 ocolor;
+out vec3 normal;
+
+uniform mat4 lightDirectionMatrix;
+uniform mat4 lightTransMatrix;
+out vec4 FragPosLightSpace;
+
+uniform float point_size;
+
+void main(){
+	gl_Position = projMatrix * viewMatrix * vec4(pos ,1.0);
+	
+	FragPosLightSpace = lightDirectionMatrix * lightTransMatrix * vec4(pos, 1.0); 
+	
+	gl_PointSize = point_size -gl_Position.z;
+	
+	ocolor = color;
+	
+}
+

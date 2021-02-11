@@ -4,13 +4,9 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector3i;
 
-import xueli.craftgame.block.BlockData;
-import xueli.craftgame.block.BlockListener;
-import xueli.craftgame.block.BlockParameters;
-import xueli.craftgame.block.BlockResource;
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.block.data.BlockFace;
-import xueli.craftgame.block.data.SlabAndStairData;
+import xueli.craftgame.client.inventory.Inventory;
 import xueli.craftgame.world.World;
 import xueli.gamengine.physics.AABB;
 import xueli.gamengine.utils.Display;
@@ -32,25 +28,19 @@ public class Player extends Entity {
 	public float resistant = 0.0005f;
 	public float sensivity = 0.05f;
 
-	public BlockData handBlockData;
+	private Inventory inventory;
 
 	public Player(float x, float y, float z, World world) {
 		super(x, y, z, world);
-		defaultBlockData();
+		inventory = new Inventory(world, this);
 
 	}
 
 	public Player(float x, float y, float z, float rotX, float rotY, float rotZ, World world) {
 		super(x, y, z, rotX, rotY, rotZ, world);
-		defaultBlockData();
+		inventory = new Inventory(world, this);
 
 	}
-
-	private void defaultBlockData() {
-		handBlockData = BlockResource.blockDatas.get("craftgame:dirt");
-
-	}
-
 	@Override
 	public void tick() {
 		Display display = Display.currentDisplay;
@@ -89,22 +79,12 @@ public class Player extends Entity {
 			}
 
 			if (display.isMouseDown(0) & block_select != null & Time.thisTime - placeTimeCount > placeBlockDuration) {
-				Tile tile = world.getBlock(block_select.getX(), block_select.getY(), block_select.getZ());
-				tile.getListener().onLeftClick(block_select.getX(), block_select.getY(), block_select.getZ(), world);
-
+				inventory.onLeftClick();
 				placeTimeCount = Time.thisTime;
 			}
 
 			if (display.isMouseDown(1) & block_select != null & Time.thisTime - placeTimeCount > placeBlockDuration) {
-				Tile tile = world.getBlock(block_select.getX(), block_select.getY(), block_select.getZ());
-				if (tile.getListener().onRightClick(block_select.getX(), block_select.getY(), block_select.getZ(),
-						world) == BlockListener.RightClick.PLACE_BLOCK_WHEN_RIGHT_CLICK) {
-					BlockParameters parameters = new BlockParameters();
-					parameters.slabOrStairData = last_time_ray_end.getY() - last_block_select.getY() > 0.5f ? SlabAndStairData.UP : SlabAndStairData.DOWN;
-					parameters.faceTo = place_block_face_to;
-					
-					world.setBlock(last_block_select, new Tile(handBlockData,parameters, world.getWorldLogic()));
-				}
+				inventory.onRightClick();
 				placeTimeCount = Time.thisTime;
 			}
 		}
@@ -155,6 +135,42 @@ public class Player extends Entity {
 			last_block_select = searching_block_pos;
 			last_time_ray_end = searching_ray_end;
 		}
+	}
+	
+	public Vector3i getBlock_select() {
+		return block_select;
+	}
+
+	public Vector3f getLast_time_ray_end() {
+		return last_time_ray_end;
+	}
+
+	public void setLast_time_ray_end(Vector3f last_time_ray_end) {
+		this.last_time_ray_end = last_time_ray_end;
+	}
+
+	public Vector3i getLast_block_select() {
+		return last_block_select;
+	}
+
+	public void setLast_block_select(Vector3i last_block_select) {
+		this.last_block_select = last_block_select;
+	}
+
+	public byte getPlace_block_face_to() {
+		return place_block_face_to;
+	}
+
+	public void setPlace_block_face_to(byte place_block_face_to) {
+		this.place_block_face_to = place_block_face_to;
+	}
+
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
 	}
 
 	@Override

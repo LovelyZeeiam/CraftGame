@@ -152,14 +152,12 @@ public class WorldLogic implements Runnable {
 		GUIProgressBar world_loading_progressBar = (GUIProgressBar) (cg.getGuiResource()
 				.getGui("world_loading.json").widgets.get("loading_bar"));
 
-		loadLevel();
-
-		world_loading_progressBar.setProgress(1.0f);
-
 		cg.queueRunningInMainThread.add(this::size);
 
 		world_loading_progressBar.waitUtilProgressFull();
 
+		loadLevel();
+		
 		this.state = State.INGAME;
 
 		cg.queueRunningInMainThread.add(() -> {
@@ -167,7 +165,9 @@ public class WorldLogic implements Runnable {
 			cg.getDisplay().toggleMouseGrabbed();
 
 		});
-
+		
+		world_loading_progressBar.setProgress(1.0f);
+		
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {

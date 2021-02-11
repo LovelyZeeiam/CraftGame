@@ -1,6 +1,8 @@
 package xueli.craftgame.block;
 
 import xueli.craftgame.CraftGame;
+import xueli.craftgame.client.inventory.BlockInventoryItem;
+import xueli.craftgame.client.inventory.Inventory;
 import xueli.gamengine.resource.TextureAtlas;
 
 public class Blocks {
@@ -18,6 +20,7 @@ public class Blocks {
 
 		// 生成方块预览图
 		context.queueRunningInMainThread.add(() -> BlockReviewGenerator.generate(nvg, context, blockTextureAtlas));
+		BlockResource.blockDatas.forEach((s, b) -> Inventory.inventoryItems.add(new BlockInventoryItem(b)));
 
 	}
 

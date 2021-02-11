@@ -4,6 +4,8 @@ import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
 import static org.lwjgl.nanovg.NanoVG.nvgCircle;
 import static org.lwjgl.nanovg.NanoVG.nvgFill;
 import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
+import static org.lwjgl.nanovg.NanoVG.nvgImagePattern;
 import static org.lwjgl.nanovg.NanoVG.nvgRect;
 
 import org.lwjgl.nanovg.NVGColor;
@@ -69,6 +71,14 @@ public abstract class InGameView extends View {
 		nvgFillColor(nvg, inboxColor);
 		nvgFill(nvg);
 
+	}
+
+	protected void drawImage(float x, float y, float width, float height, int imageID, long nvg) {
+		nvgImagePattern(nvg, x, y, width, height, 0, imageID, 1, paint);
+		nvgBeginPath(nvg);
+		nvgRect(nvg, x, y, width, height);
+		nvgFillPaint(nvg, paint);
+		nvgFill(nvg);
 	}
 
 	protected void drawBox(float width, float height, NVGColor lineColor, NVGColor inboxColor, float lineWidth,
