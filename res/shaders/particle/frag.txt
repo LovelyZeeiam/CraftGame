@@ -1,7 +1,8 @@
 #version 330
 
 in vec2 otexPos;
-in vec3 ocolor;
+in vec4 ocolor;
+in vec2 otex;
 in vec4 FragPosLightSpace;
 
 uniform sampler2D texSampler;
@@ -23,7 +24,9 @@ float shadowCalculation() {
 
 void main(){
 	float shadow = shadowCalculation();
-	out_color = texture(texSampler, gl_PointCoord) * vec4(ocolor, 1.0);
-
+	if(otex.x != 114514)
+		out_color = texture(texSampler, otex) * ocolor;
+	else
+		out_color = texture(texSampler, gl_PointCoord) * ocolor;
 	
 }

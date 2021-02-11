@@ -1,11 +1,12 @@
 package xueli.gamengine.resource;
 
-import com.google.gson.JsonObject;
-import xueli.gamengine.utils.Logger;
-import xueli.gamengine.utils.resource.SoundManager;
-
 import java.io.FileReader;
 import java.io.IOException;
+
+import com.google.gson.JsonObject;
+
+import xueli.gamengine.utils.Logger;
+import xueli.gamengine.utils.resource.SoundManager;
 
 public class AudioResource extends IResource {
 

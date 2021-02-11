@@ -48,7 +48,8 @@
 		"environment.sun_moon": "textures/environment/sun_moon.png",
 		"environment.clouds": "textures/environment/clouds.png",
 		
-		"particle.test_particle": "textures/particles/test_particle.jpg"
+		"particle.test_particle": "textures/particles/test_particle.png",
+		"particle.firework": "textures/particles/firework_particle.png"
 
 		
 		

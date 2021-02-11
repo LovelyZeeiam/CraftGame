@@ -29,7 +29,7 @@ public class Item {
 	}
 
 	public void release(WorldLogic logic) {
-		NanoVG.nnvgDeleteImage(logic.getNvg(), nvgTexture);
+		
 
 	}
 

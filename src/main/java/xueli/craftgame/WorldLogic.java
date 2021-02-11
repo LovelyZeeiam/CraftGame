@@ -8,7 +8,6 @@ import static org.lwjgl.nanovg.NanoVGGL3.NVG_ANTIALIAS;
 import static org.lwjgl.nanovg.NanoVGGL3.NVG_DEBUG;
 import static org.lwjgl.nanovg.NanoVGGL3.NVG_STENCIL_STROKES;
 import static org.lwjgl.nanovg.NanoVGGL3.nvgCreate;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgDelete;
 import static org.lwjgl.nanovg.NanoVGGL3.nvglCreateImageFromHandle;
 import static org.lwjgl.opengl.GL11.glViewport;
 
@@ -24,7 +23,6 @@ import org.lwjgl.util.vector.Matrix4f;
 import xueli.craftgame.block.Blocks;
 import xueli.craftgame.entity.Player;
 import xueli.craftgame.item.Items;
-import xueli.craftgame.particles.ParticleTest;
 import xueli.craftgame.view.HUDView;
 import xueli.craftgame.view.InGameView;
 import xueli.craftgame.view.InventoryView;
@@ -66,7 +64,20 @@ public class WorldLogic implements Runnable {
 
 	private Matrix4f playerMatrix = new Matrix4f();
 
-	private long nvg;
+	private static long nvg;
+	
+	static {
+		nvg = nvgCreate(NVG_STENCIL_STROKES | NVG_ANTIALIAS | NVG_DEBUG);
+		if (nvg == 0) {
+			Logger.error(new Throwable("[GUI] Emm, You don't want a game without gui, do u?"));
+		}
+
+		if (nvgCreateFont(nvg, "game", "res/fonts/Minecraft-Ascii.ttf") == -1) {
+			Logger.error("[Font] Can't create font!");
+		}
+		
+	}
+	
 	private HashMap<String, Integer> nvgTextures = new HashMap<>();
 
 	private InGameView ingameView;
@@ -93,14 +104,6 @@ public class WorldLogic implements Runnable {
 		this.particleManager = new ParticleManager(cg, cg.getShaderResource().get("particle"));
 
 		// 游戏内gui绘制
-		nvg = nvgCreate(NVG_STENCIL_STROKES | NVG_ANTIALIAS | NVG_DEBUG);
-		if (nvg == 0) {
-			Logger.error(new Throwable("[GUI] Emm, You don't want a game without gui, do u?"));
-		}
-
-		if (nvgCreateFont(nvg, "game", "res/fonts/Minecraft-Ascii.ttf") == -1) {
-			Logger.error("[Font] Can't create font!");
-		}
 
 		cg.getTextureManager().getTextures().forEach((e, t) -> {
 			if (e.startsWith("ingame.")) {
@@ -359,7 +362,13 @@ public class WorldLogic implements Runnable {
 		}
 
 		{
+			// 透明材质
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			GL11.glEnable(GL11.GL_BLEND);
+						
 			particleManager.draw(player.pos);
+			
+			GL11.glDisable(GL11.GL_BLEND);
 
 		}
 
@@ -381,6 +390,12 @@ public class WorldLogic implements Runnable {
 
 			nvgEndFrame(nvg);
 
+		}
+		
+		// TODO: 调试方便
+		if(KeyCallback.keysOnce[GLFW.GLFW_KEY_P]) {
+			world.time = 13000;
+			
 		}
 
 	}
@@ -466,7 +481,8 @@ public class WorldLogic implements Runnable {
 		try {
 			isClosing = true;
 			Items.release(this);
-			nvgDelete(nvg);
+			nvgTextures.clear();
+			//nvgDelete(nvg);
 			normalRenderer.delete();
 			closeLevel();
 		} catch (ConcurrentModificationException e) {

@@ -34,6 +34,7 @@ public class SkyRenderer extends IWorldRenderer {
 	private int cloud_texture_size;
 	private int cloud_above;
 	private float cloud_move_speed;
+	private float cloud_day_alpha, cloud_night_alpha;
 
 	private final HashMap<String, Texture> environmentTextures = new HashMap<>();
 
@@ -42,9 +43,10 @@ public class SkyRenderer extends IWorldRenderer {
 
 	private Shader shader, cloudShader;
 	private int loc_viewMatrix, loc_modelMatrix;
-	private int loc_cloud_model_matrix, loc_cloud_view_matrix;
+	private int loc_cloud_model_matrix, loc_cloud_view_matrix, loc_cloud_alpha;
 
 	private float[] sky_color = new float[3];
+	private float cloud_alpha;
 
 	public SkyRenderer(World world) {
 		// 只需要一个矩形的顶点: 4 * 8 * sizeof(float)
@@ -95,6 +97,8 @@ public class SkyRenderer extends IWorldRenderer {
 
 		cloud_texture_size = options.get("sky_cloud_size").getAsInt();
 		cloud_above = options.get("sky_cloud_above").getAsInt();
+		cloud_day_alpha = options.get("sky_cloud_day_alpha").getAsFloat();
+		cloud_night_alpha = options.get("sky_cloud_night_alpha").getAsFloat();
 
 		sunVertices = new float[] {
 				// sun
@@ -141,6 +145,7 @@ public class SkyRenderer extends IWorldRenderer {
 		this.cloudShader.use();
 		loc_cloud_model_matrix = this.cloudShader.getUnifromLocation("modelMatrix");
 		loc_cloud_view_matrix = this.cloudShader.getUnifromLocation("viewMatrix");
+		loc_cloud_alpha = this.cloudShader.getUnifromLocation("cloud_alpha");
 
 		this.cloudShader.unbind();
 
@@ -168,12 +173,14 @@ public class SkyRenderer extends IWorldRenderer {
 			sky_color[0] = day_color[0];
 			sky_color[1] = day_color[1];
 			sky_color[2] = day_color[2];
-			// System.out.println("day: " + time);
+			cloud_alpha = cloud_day_alpha;
+			
 		} else if (time >= day_to_night_duration[1] && time <= night_to_day_duration[0]) {
 			sky_color[0] = night_color[0];
 			sky_color[1] = night_color[1];
 			sky_color[2] = night_color[2];
-			// System.out.println("night: " + time);
+			cloud_alpha = cloud_night_alpha;
+
 		} else if (time >= day_to_night_duration[0] && time <= day_to_night_duration[1]) {
 			sky_color[0] = day_color[0] + (night_color[0] - day_color[0]) * (time - day_to_night_duration[0])
 					/ (day_to_night_duration[1] - day_to_night_duration[0]);
@@ -181,7 +188,9 @@ public class SkyRenderer extends IWorldRenderer {
 					/ (day_to_night_duration[1] - day_to_night_duration[0]);
 			sky_color[2] = day_color[2] + (night_color[2] - day_color[2]) * (time - day_to_night_duration[0])
 					/ (day_to_night_duration[1] - day_to_night_duration[0]);
-			// System.out.println("day->night: " + time);
+			cloud_alpha = cloud_day_alpha + (cloud_night_alpha - cloud_day_alpha) * (time - day_to_night_duration[0])
+					/ (day_to_night_duration[1] - day_to_night_duration[0]);
+
 		} else {
 			sky_color[0] = night_color[0] + (day_color[0] - night_color[0]) * (time - night_to_day_duration[0])
 					/ (night_to_day_duration[1] - night_to_day_duration[0]);
@@ -189,7 +198,9 @@ public class SkyRenderer extends IWorldRenderer {
 					/ (night_to_day_duration[1] - night_to_day_duration[0]);
 			sky_color[2] = night_color[2] + (day_color[2] - night_color[2]) * (time - night_to_day_duration[0])
 					/ (night_to_day_duration[1] - night_to_day_duration[0]);
-			// System.out.println("night->day: " + time);
+			cloud_alpha = cloud_night_alpha + (cloud_day_alpha - cloud_night_alpha) * (time - night_to_day_duration[0])
+					/ (night_to_day_duration[1] - night_to_day_duration[0]);
+
 		}
 
 	}
@@ -244,6 +255,8 @@ public class SkyRenderer extends IWorldRenderer {
 
 			this.cloudShader.setUniformMatrix(loc_cloud_view_matrix,
 					MatrixHelper.player(world.getWorldLogic().getClientPlayer().pos));
+			
+			this.cloudShader.setFloat(loc_cloud_alpha, cloud_alpha);
 
 			environmentTextures.get("environment.clouds").bind();
 			renderer.draw(GL11.GL_TRIANGLE_STRIP, 8, 4);

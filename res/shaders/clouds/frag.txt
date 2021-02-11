@@ -4,11 +4,12 @@ in vec2 otexPos;
 in vec3 ocolor;
 
 uniform sampler2D texSampler;
+uniform float cloud_alpha;
 
 out vec4 out_color;
 
 void main(){
-	out_color = texture(texSampler, otexPos) * vec4(ocolor, 0.5);
+	out_color = texture(texSampler, otexPos) * vec4(ocolor, cloud_alpha);
 
 	
 }

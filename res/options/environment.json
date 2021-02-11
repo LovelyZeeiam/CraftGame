@@ -15,6 +15,9 @@
 
   "sky_cloud_size": 16384,
   "sky_cloud_above": 512,
-  "sky_cloud_move_speed": 0.03
+  "sky_cloud_move_speed": 0.03,
+  
+  "sky_cloud_day_alpha": 0.4,
+  "sky_cloud_night_alpha": 0.15
 
 }

@@ -9,7 +9,6 @@ uniform mat4 viewMatrix;
 
 out vec2 otexPos;
 out vec3 ocolor;
-out vec3 normal;
 
 uniform mat4 lightDirectionMatrix;
 uniform mat4 lightTransMatrix;

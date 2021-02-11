@@ -23,5 +23,10 @@ public class Blocks {
 		BlockResource.blockDatas.forEach((s, b) -> Inventory.inventoryItems.add(new BlockInventoryItem(b)));
 
 	}
+	
+	public static void release() {
+		BlockResource.blockDatas.clear();
+		
+	}
 
 }

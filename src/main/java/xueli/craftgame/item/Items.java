@@ -25,6 +25,7 @@ public class Items {
 
 	public static void release(WorldLogic logic) {
 		items.forEach((s, i) -> i.release(logic));
+		Inventory.inventoryItems.clear();
 
 	}
 
