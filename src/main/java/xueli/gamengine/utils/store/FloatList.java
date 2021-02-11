@@ -59,11 +59,11 @@ public class FloatList {
 	public FloatList put(Vector3f v) {
 		return put(v.x).put(v.y).put(v.z);
 	}
-	
+
 	public FloatList put(Vector2f v) {
 		return put(v.x).put(v.y);
 	}
-	
+
 	public int getPointer() {
 		return pointer;
 	}

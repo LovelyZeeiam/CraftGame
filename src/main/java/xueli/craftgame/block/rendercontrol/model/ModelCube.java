@@ -12,15 +12,15 @@ import xueli.gamengine.view.GuiColor;
 
 public class ModelCube extends IModel {
 
-    public ModelCube(JsonObject renderArgs) {
-        super(renderArgs);
+	public ModelCube(JsonObject renderArgs) {
+		super(renderArgs);
 
-    }
+	}
 
-    @Override
-    public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
-                                 TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
-        return super.getRenderCubeData(buffer, data, x, y, z, face, blockTextureAtlas, chunk, world, GuiColor.WHITE);
-    }
+	@Override
+	public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
+			TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
+		return super.getRenderCubeData(buffer, data, x, y, z, face, blockTextureAtlas, chunk, world, GuiColor.WHITE);
+	}
 
 }

@@ -25,7 +25,7 @@ public class World {
 
 	private CubeWorldCollider collider;
 	private WorldIO io;
-	
+
 	private SkyRenderer skyRenderer;
 	public float time = 0;
 
@@ -35,32 +35,32 @@ public class World {
 		collider = new CubeWorldCollider(this);
 		io = new WorldIO(this);
 		gen = new ChunkGeneratorMaster(this);
-		
+
 		worldLogic.getCg().queueRunningInMainThread.add(() -> skyRenderer = new SkyRenderer(this));
-		
-		for(int i = 0;i < 4;i++)
-		for(int m = 0;m < 4;m++)
-			requireGenChunk(i,m);
+
+		for (int i = 0; i < 4; i++)
+			for (int m = 0; m < 4; m++)
+				requireGenChunk(i, m);
 
 	}
 
 	public World() {
 		gen = new ChunkGeneratorMaster(this);
 		io = new WorldIO(this);
-		
+
 	}
 
 	public void requireGenChunk(int x, int z) {
-		if(chunks.containsKey(MathUtils.vert2ToLong(x, z)))
+		if (chunks.containsKey(MathUtils.vert2ToLong(x, z)))
 			return;
-		io.readChunk(x,z);
+		io.readChunk(x, z);
 
 	}
 
 	public void requireGenChunkSync(int x, int z) {
-		io.readChunkSync(x,z);
+		io.readChunkSync(x, z);
 	}
-	
+
 	public CubeWorldCollider getCollider() {
 		return collider;
 	}
@@ -125,7 +125,7 @@ public class World {
 
 	public void setBlock(Vector3i p, Tile b) {
 		if (p == null)
-		return;
+			return;
 		setBlock(p.getX(), p.getY(), p.getZ(), b);
 	}
 
@@ -183,32 +183,26 @@ public class World {
 
 	public void tick(Player player) {
 		synchronized (chunkThatNeedAdd) {
-			for(Chunk c : chunkThatNeedAdd) {
+			for (Chunk c : chunkThatNeedAdd) {
 				this.chunks.put(MathUtils.vert2ToLong(c.chunkX, c.chunkZ), c);
-				if(chunkThatHasRequired.contains(MathUtils.vert2ToLong(c.chunkX, c.chunkZ))) {
+				if (chunkThatHasRequired.contains(MathUtils.vert2ToLong(c.chunkX, c.chunkZ))) {
 					chunkThatHasRequired.remove(MathUtils.vert2ToLong(c.chunkX, c.chunkZ));
 				}
 			}
 			chunkThatNeedAdd.clear();
 		}
-		/*synchronized (chunkThatNeedRemove) {
-			for(Long c : chunkThatNeedRemove) {
-				if(this.chunks.containsKey(c)) {
-					this.chunks.get(c).close();
-					this.chunks.remove(c);
-				}
-			}
-			chunkThatNeedRemove.clear();
-		}
-		if(Time.thisTime - lastSaveTime > 10000) {
-			lastSaveTime = Time.thisTime;
-			io.checkSave();
-
-		}*/
+		/*
+		 * synchronized (chunkThatNeedRemove) { for(Long c : chunkThatNeedRemove) {
+		 * if(this.chunks.containsKey(c)) { this.chunks.get(c).close();
+		 * this.chunks.remove(c); } } chunkThatNeedRemove.clear(); } if(Time.thisTime -
+		 * lastSaveTime > 10000) { lastSaveTime = Time.thisTime; io.checkSave();
+		 * 
+		 * }
+		 */
 
 		// 一秒大概20tick
 		time += Time.deltaTime / 50.0f;
-		while(time >= 24000)
+		while (time >= 24000)
 			time -= 24000;
 
 	}
@@ -222,60 +216,62 @@ public class World {
 		// 将要绘制的区块成列表
 		ArrayList<Chunk> drawChunk = new ArrayList<>();
 
-			for (int x = chunkPos.getX() - draw_distance; x < chunkPos.getX() + draw_distance; x++) {
-				for (int z = chunkPos.getZ() - draw_distance; z < chunkPos.getZ() + draw_distance; z++) {
-					// long key = MathUtils.vert2ToLong(x, z);
-					if (MatrixHelper.isChunkInFrustum(x, Chunk.height, z)) {
-						Chunk chunk = getChunk(x, z);
-						if (chunk != null) {
-							drawChunk.add(chunk);
-						} else if (!chunkThatHasRequired.contains(MathUtils.vert2ToLong(x, z))) {
-							/*int finalX = x;
-							int finalZ = z;
-							worldLogic.getCg().queueRunningInMainThread.add(() -> chunkThatNeedAdd.add(requireGenChunk(finalX, finalZ)));
-							chunkThatHasRequired.add(MathUtils.vert2ToLong(x, z));*/
+		for (int x = chunkPos.getX() - draw_distance; x < chunkPos.getX() + draw_distance; x++) {
+			for (int z = chunkPos.getZ() - draw_distance; z < chunkPos.getZ() + draw_distance; z++) {
+				// long key = MathUtils.vert2ToLong(x, z);
+				if (MatrixHelper.isChunkInFrustum(x, Chunk.height, z)) {
+					Chunk chunk = getChunk(x, z);
+					if (chunk != null) {
+						drawChunk.add(chunk);
+					} else if (!chunkThatHasRequired.contains(MathUtils.vert2ToLong(x, z))) {
+						/*
+						 * int finalX = x; int finalZ = z;
+						 * worldLogic.getCg().queueRunningInMainThread.add(() ->
+						 * chunkThatNeedAdd.add(requireGenChunk(finalX, finalZ)));
+						 * chunkThatHasRequired.add(MathUtils.vert2ToLong(x, z));
+						 */
 
-						}
 					}
 				}
 			}
+		}
 
 		return drawChunk;
 	}
 
 	public int draw(TextureAtlas textureAtlas, Player player, FloatBuffer drawData, int draw_distance) {
 		int vertCount = 0;
-			ArrayList<Chunk> drawChunk = getDrawChunks(player, draw_distance);
+		ArrayList<Chunk> drawChunk = getDrawChunks(player, draw_distance);
 
-			for (Chunk chunk : drawChunk) {
-				chunk.update(textureAtlas);
-				vertCount += chunk.getVertCount();
-				drawData.put(chunk.getDrawBuffer().getData());
-			}
+		for (Chunk chunk : drawChunk) {
+			chunk.update(textureAtlas);
+			vertCount += chunk.getVertCount();
+			drawData.put(chunk.getDrawBuffer().getData());
+		}
 
 		return vertCount;
 	}
 
 	public int drawAlpha(TextureAtlas textureAtlas, Player player, FloatBuffer drawData, int draw_distance) {
 		int vertCount = 0;
-			ArrayList<Chunk> drawChunk = getDrawChunks(player, draw_distance);
+		ArrayList<Chunk> drawChunk = getDrawChunks(player, draw_distance);
 
-			for (Chunk chunk : drawChunk) {
-				chunk.update(textureAtlas);
-				vertCount += chunk.getVertCountForAlphaDraw();
-				drawData.put(chunk.getBufferForAlphaDraw().getData());
-			}
+		for (Chunk chunk : drawChunk) {
+			chunk.update(textureAtlas);
+			vertCount += chunk.getVertCountForAlphaDraw();
+			drawData.put(chunk.getBufferForAlphaDraw().getData());
+		}
 
 		return vertCount;
 	}
-	
+
 	public void drawSky() {
-		if(skyRenderer != null) {
+		if (skyRenderer != null) {
 			skyRenderer.size();
 			skyRenderer.render();
 
 		}
-		
+
 	}
 
 	public void saveAndLoad() {

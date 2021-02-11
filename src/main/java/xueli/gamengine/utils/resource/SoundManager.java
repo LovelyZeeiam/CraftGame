@@ -89,7 +89,7 @@ public class SoundManager {
 	public static void tick() {
 		ArrayList<Integer> speakerToDispose = new ArrayList<>();
 		speakers.forEach(s -> {
-			if(alGetSourcei(s, AL_SOURCE_STATE) == AL_STOPPED) {
+			if (alGetSourcei(s, AL_SOURCE_STATE) == AL_STOPPED) {
 				speakerToDispose.add(s);
 				alDeleteSources(s);
 			}
@@ -102,7 +102,7 @@ public class SoundManager {
 
 	public static void release() {
 		speakers.forEach(s -> {
-			if(alGetSourcei(s, AL_SOURCE_STATE) == AL_PLAYING) {
+			if (alGetSourcei(s, AL_SOURCE_STATE) == AL_PLAYING) {
 				alSourceStop(s);
 			}
 			alDeleteSources(s);

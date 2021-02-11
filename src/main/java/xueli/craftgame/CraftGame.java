@@ -221,8 +221,6 @@ public class CraftGame extends IGame {
 			resource = new BlockResource("res/", langManager, textureManager);
 			resource.load(loading_TextView, loading_ProgressBar, 0.25f, 0.5f);
 
-			// 加载物品
-
 			// 加载生物群系
 			queueRunningInMainThread.add(() -> loading_TextView.setText("Loading biomes..."));
 			new BiomeResource("res/", cg.getLangManager()).load();
@@ -233,6 +231,8 @@ public class CraftGame extends IGame {
 				loading_TextView.setText("Loading...");
 
 			});
+
+			loading_ProgressBar.setProgress(1.0f);
 
 			waitingForLove = true;
 			sleeping = true;

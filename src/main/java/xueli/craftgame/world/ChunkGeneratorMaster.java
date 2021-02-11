@@ -28,13 +28,13 @@ public class ChunkGeneratorMaster {
 				for (int y = 0; y < 4; y++) {
 					Tile block = new Tile("stone", world.getWorldLogic());
 					// block.pos = new BlockPos(x, y, z);
-					chunk.setBlock(x,y,z,block);
+					chunk.setBlock(x, y, z, block);
 
 				}
 
 				Tile block = new Tile("grass_block", world.getWorldLogic());
 				// block.pos = new BlockPos(x, 4, z);
-				chunk.setBlock(x,4,z,block);
+				chunk.setBlock(x, 4, z, block);
 
 				chunk.heightMap[x][z] = 4;
 			}
@@ -50,7 +50,8 @@ public class ChunkGeneratorMaster {
 	private float generateChunkCornerHeight(int chunkX, int chunkZ) {
 		if (heightMaps.containsKey(MathUtils.vert2ToLong(chunkX, chunkZ)))
 			return heightMaps.get(MathUtils.vert2ToLong(chunkX, chunkZ));
-		double perlinNoise = (SimplexNoise.noise(chunkX + ((seed >> 16) & 0xFFFF) / 1238921f,chunkZ + (seed & 0xFFFF) / 209302f) + 1) / 2f;
+		double perlinNoise = (SimplexNoise.noise(chunkX + ((seed >> 16) & 0xFFFF) / 1238921f,
+				chunkZ + (seed & 0xFFFF) / 209302f) + 1) / 2f;
 		int allCount = BiomeResource.biomes.size();
 		int chosenId = (int) (allCount * perlinNoise);
 		if (chosenId >= allCount)
@@ -93,24 +94,24 @@ public class ChunkGeneratorMaster {
 
 				for (int y = 0; y < bedrock_height; y++) {
 					Tile block = new Tile(biome.getBlocks()[3], world.getWorldLogic());
-					chunk.setBlock(x,y,z,block);
+					chunk.setBlock(x, y, z, block);
 
 				}
 
 				for (int y = bedrock_height; y < y_max - dirt_height; y++) {
 					Tile block = new Tile(biome.getBlocks()[2], world.getWorldLogic());
-					chunk.setBlock(x,y,z,block);
+					chunk.setBlock(x, y, z, block);
 
 				}
 
 				for (int y = y_max - dirt_height; y < y_max; y++) {
 					Tile block = new Tile(biome.getBlocks()[1], world.getWorldLogic());
-					chunk.setBlock(x,y,z,block);
+					chunk.setBlock(x, y, z, block);
 
 				}
 
 				Tile block = new Tile(biome.getBlocks()[0], world.getWorldLogic());
-				chunk.setBlock(x,y_max,z,block);
+				chunk.setBlock(x, y_max, z, block);
 
 				chunk.heightMap[x][z] = y_max;
 

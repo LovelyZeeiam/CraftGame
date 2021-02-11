@@ -82,8 +82,8 @@ public class Tile implements Saveable {
 		return data.getDrawData(buffer, this.data, x, y, z, face, blockTextureAtlas, params, chunk, world);
 	}
 
-	public ArrayList<AABB> getAabbs(BlockParameters params,World world,int x, int y, int z) {
-		return data.getAabbs(params,world,x,y,z);
+	public ArrayList<AABB> getAabbs(BlockParameters params, World world, int x, int y, int z) {
+		return data.getAabbs(params, world, x, y, z);
 	}
 
 	@Override
@@ -95,13 +95,13 @@ public class Tile implements Saveable {
 	}
 
 	@Override
-	public void setSaveData(CompoundTag data,WorldLogic logic) {
+	public void setSaveData(CompoundTag data, WorldLogic logic) {
 		CompoundMap rootData = data.getValue();
 		String namespace = (String) rootData.get("namespace").getValue();
 		String paramJson = (String) rootData.get("param").getValue();
 
 		this.data = BlockResource.blockDatas.get(namespace);
-		if(this.data == null) {
+		if (this.data == null) {
 			Logger.warn("Oops! We've found an unknown block: " + namespace);
 			this.data = BlockResource.blockDatas.get("unknown_block");
 			this.params = new BlockParameters();
@@ -117,8 +117,10 @@ public class Tile implements Saveable {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 		Tile tile = (Tile) o;
 		return Objects.equals(data, tile.data) && Objects.equals(params, tile.params);
 	}

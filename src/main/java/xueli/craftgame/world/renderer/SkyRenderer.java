@@ -25,7 +25,7 @@ public class SkyRenderer extends IWorldRenderer {
 
 	private float sun_distance;
 	private float sun_size;
-	private String shaderName,cloud_shader_name;
+	private String shaderName, cloud_shader_name;
 	private float[] day_color;
 	private int[] day_to_night_duration;
 	private float[] night_color;
@@ -39,13 +39,13 @@ public class SkyRenderer extends IWorldRenderer {
 
 	private float[] sunVertices, cloudVertices;
 	private double sun_angle = 0;
-	
+
 	private Shader shader, cloudShader;
 	private int loc_viewMatrix, loc_modelMatrix;
 	private int loc_cloud_model_matrix, loc_cloud_view_matrix;
 
 	private float[] sky_color = new float[3];
-	
+
 	public SkyRenderer(World world) {
 		// 只需要一个矩形的顶点: 4 * 8 * sizeof(float)
 		super(world, 768, GL15.GL_STATIC_DRAW);
@@ -61,11 +61,11 @@ public class SkyRenderer extends IWorldRenderer {
 		prepareVertex();
 
 		world.getWorldLogic().getCg().getTextureManager().getTextures().forEach((namespace, t) -> {
-			if(namespace.startsWith("environment.")) {
+			if (namespace.startsWith("environment.")) {
 				environmentTextures.put(namespace, t);
 			}
 		});
-		
+
 	}
 
 	private void prepareJson() {
@@ -78,65 +78,54 @@ public class SkyRenderer extends IWorldRenderer {
 		cloud_move_speed = options.get("sky_cloud_move_speed").getAsFloat();
 
 		JsonArray sun_sky_color_day_array = options.get("sun_sky_color_day").getAsJsonArray();
-		day_color = new float[] {
-				sun_sky_color_day_array.get(0).getAsFloat(),
-				sun_sky_color_day_array.get(1).getAsFloat(),
-				sun_sky_color_day_array.get(2).getAsFloat(),
-		};
+		day_color = new float[] { sun_sky_color_day_array.get(0).getAsFloat(),
+				sun_sky_color_day_array.get(1).getAsFloat(), sun_sky_color_day_array.get(2).getAsFloat(), };
 		JsonArray sun_sky_color_night_array = options.get("sun_sky_color_night").getAsJsonArray();
-		night_color = new float[] {
-				sun_sky_color_night_array.get(0).getAsFloat(),
-				sun_sky_color_night_array.get(1).getAsFloat(),
-				sun_sky_color_night_array.get(2).getAsFloat(),
-		};
+		night_color = new float[] { sun_sky_color_night_array.get(0).getAsFloat(),
+				sun_sky_color_night_array.get(1).getAsFloat(), sun_sky_color_night_array.get(2).getAsFloat(), };
 
-		JsonArray sun_sky_color_day_to_night_duration_array = options.get("sun_sky_color_day_to_night_duration").getAsJsonArray();
-		day_to_night_duration = new int[] {
-				sun_sky_color_day_to_night_duration_array.get(0).getAsInt(),
-				sun_sky_color_day_to_night_duration_array.get(1).getAsInt(),
-		};
-		JsonArray sun_sky_color_night_to_day_duration_array = options.get("sun_sky_color_night_to_day_duration").getAsJsonArray();
-		night_to_day_duration = new int[] {
-				sun_sky_color_night_to_day_duration_array.get(0).getAsInt(),
-				sun_sky_color_night_to_day_duration_array.get(1).getAsInt(),
-		};
+		JsonArray sun_sky_color_day_to_night_duration_array = options.get("sun_sky_color_day_to_night_duration")
+				.getAsJsonArray();
+		day_to_night_duration = new int[] { sun_sky_color_day_to_night_duration_array.get(0).getAsInt(),
+				sun_sky_color_day_to_night_duration_array.get(1).getAsInt(), };
+		JsonArray sun_sky_color_night_to_day_duration_array = options.get("sun_sky_color_night_to_day_duration")
+				.getAsJsonArray();
+		night_to_day_duration = new int[] { sun_sky_color_night_to_day_duration_array.get(0).getAsInt(),
+				sun_sky_color_night_to_day_duration_array.get(1).getAsInt(), };
 
 		cloud_texture_size = options.get("sky_cloud_size").getAsInt();
 		cloud_above = options.get("sky_cloud_above").getAsInt();
-		
+
 		sunVertices = new float[] {
 				// sun
-				/*  uv  */ /*    color    */  /*       vertices      */
-				0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, sun_distance,
-				0.5f, 1.0f, 1.0f, 1.0f, 1.0f, sun_size, 0.0f, sun_distance,
-				0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, sun_size, sun_distance,
-				0.5f, 0.0f, 1.0f, 1.0f, 1.0f, sun_size, sun_size, sun_distance,
+				/* uv */ /* color */ /* vertices */
+				0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, sun_distance, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f, sun_size, 0.0f,
+				sun_distance, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, sun_size, sun_distance, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
+				sun_size, sun_size, sun_distance,
 
 				// moon
-				/*  uv  */ /*    color    */  /*       vertices      */
-				0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, -sun_distance,
-				1.0f, 1.0f, 1.0f, 1.0f, 1.0f, sun_size, 0.0f, -sun_distance,
-				0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, sun_size, -sun_distance,
-				1.0f, 0.0f, 1.0f, 1.0f, 1.0f, sun_size, sun_size, -sun_distance,
+				/* uv */ /* color */ /* vertices */
+				0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, -sun_distance, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, sun_size, 0.0f,
+				-sun_distance, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, sun_size, -sun_distance, 1.0f, 0.0f, 1.0f, 1.0f,
+				1.0f, sun_size, sun_size, -sun_distance,
 
 				// clouds
-				0.0f, 1.0f, 1.0f, 1.0f, 1.0f, -cloud_texture_size, cloud_above, -cloud_texture_size,
-				1.0f, 1.0f, 1.0f, 1.0f, 1.0f, cloud_texture_size, cloud_above, -cloud_texture_size,
-				0.0f, 0.0f, 1.0f, 1.0f, 1.0f, -cloud_texture_size, cloud_above, cloud_texture_size,
-				1.0f, 0.0f, 1.0f, 1.0f, 1.0f, cloud_texture_size, cloud_above, cloud_texture_size,
+				0.0f, 1.0f, 1.0f, 1.0f, 1.0f, -cloud_texture_size, cloud_above, -cloud_texture_size, 1.0f, 1.0f, 1.0f,
+				1.0f, 1.0f, cloud_texture_size, cloud_above, -cloud_texture_size, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+				-cloud_texture_size, cloud_above, cloud_texture_size, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, cloud_texture_size,
+				cloud_above, cloud_texture_size,
 
 				// clouds
-				0.0f, 1.0f, 1.0f, 1.0f, 1.0f, cloud_texture_size, cloud_above, -cloud_texture_size,
-				1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 3 * cloud_texture_size, cloud_above, -cloud_texture_size,
-				0.0f, 0.0f, 1.0f, 1.0f, 1.0f, cloud_texture_size, cloud_above, cloud_texture_size,
-				1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 3 * cloud_texture_size, cloud_above, cloud_texture_size,
+				0.0f, 1.0f, 1.0f, 1.0f, 1.0f, cloud_texture_size, cloud_above, -cloud_texture_size, 1.0f, 1.0f, 1.0f,
+				1.0f, 1.0f, 3 * cloud_texture_size, cloud_above, -cloud_texture_size, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+				cloud_texture_size, cloud_above, cloud_texture_size, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+				3 * cloud_texture_size, cloud_above, cloud_texture_size,
 
 				// clouds
-				0.0f, 1.0f, 1.0f, 1.0f, 1.0f, -3 * cloud_texture_size, cloud_above, -cloud_texture_size,
-				1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -cloud_texture_size, cloud_above, -cloud_texture_size,
-				0.0f, 0.0f, 1.0f, 1.0f, 1.0f, -3 * cloud_texture_size, cloud_above, cloud_texture_size,
-				1.0f, 0.0f, 1.0f, 1.0f, 1.0f, -cloud_texture_size, cloud_above, cloud_texture_size,
-
+				0.0f, 1.0f, 1.0f, 1.0f, 1.0f, -3 * cloud_texture_size, cloud_above, -cloud_texture_size, 1.0f, 1.0f,
+				1.0f, 1.0f, 1.0f, -cloud_texture_size, cloud_above, -cloud_texture_size, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+				-3 * cloud_texture_size, cloud_above, cloud_texture_size, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+				-cloud_texture_size, cloud_above, cloud_texture_size,
 
 		};
 
@@ -156,47 +145,51 @@ public class SkyRenderer extends IWorldRenderer {
 		this.cloudShader.unbind();
 
 	}
-	
+
 	private void prepareVertex() {
 		this.renderer.initDraw();
 
 		ByteBuffer byteBuffer = this.renderer.mapBuffer();
-		if(byteBuffer == null) {
+		if (byteBuffer == null) {
 			Logger.error(new Exception("[Sky Renderer] Can't init buffer!"));
 		}
 		FloatBuffer buffer = byteBuffer.asFloatBuffer();
 		buffer.put(sunVertices);
 		this.renderer.unmap();
-		
+
 		this.renderer.postDraw();
-		
+
 	}
 
 	private void calculateSkyColor() {
 		float time = world.time;
 
-		if(time <= day_to_night_duration[0]) {
+		if (time <= day_to_night_duration[0]) {
 			sky_color[0] = day_color[0];
 			sky_color[1] = day_color[1];
 			sky_color[2] = day_color[2];
-			//System.out.println("day: " + time);
-		}
-		else if(time >= day_to_night_duration[1] && time <= night_to_day_duration[0]) {
+			// System.out.println("day: " + time);
+		} else if (time >= day_to_night_duration[1] && time <= night_to_day_duration[0]) {
 			sky_color[0] = night_color[0];
 			sky_color[1] = night_color[1];
 			sky_color[2] = night_color[2];
-			//System.out.println("night: " + time);
-		}
-		else if(time >= day_to_night_duration[0] && time <= day_to_night_duration[1]) {
-			sky_color[0] = day_color[0] + (night_color[0] - day_color[0]) * (time - day_to_night_duration[0]) / (day_to_night_duration[1] - day_to_night_duration[0]);
-			sky_color[1] = day_color[1] + (night_color[1] - day_color[1]) * (time - day_to_night_duration[0]) / (day_to_night_duration[1] - day_to_night_duration[0]);
-			sky_color[2] = day_color[2] + (night_color[2] - day_color[2]) * (time - day_to_night_duration[0]) / (day_to_night_duration[1] - day_to_night_duration[0]);
-			//System.out.println("day->night: " + time);
+			// System.out.println("night: " + time);
+		} else if (time >= day_to_night_duration[0] && time <= day_to_night_duration[1]) {
+			sky_color[0] = day_color[0] + (night_color[0] - day_color[0]) * (time - day_to_night_duration[0])
+					/ (day_to_night_duration[1] - day_to_night_duration[0]);
+			sky_color[1] = day_color[1] + (night_color[1] - day_color[1]) * (time - day_to_night_duration[0])
+					/ (day_to_night_duration[1] - day_to_night_duration[0]);
+			sky_color[2] = day_color[2] + (night_color[2] - day_color[2]) * (time - day_to_night_duration[0])
+					/ (day_to_night_duration[1] - day_to_night_duration[0]);
+			// System.out.println("day->night: " + time);
 		} else {
-			sky_color[0] = night_color[0] + (day_color[0] - night_color[0]) * (time - night_to_day_duration[0]) / (night_to_day_duration[1] - night_to_day_duration[0]);
-			sky_color[1] = night_color[1] + (day_color[1] - night_color[1]) * (time - night_to_day_duration[0]) / (night_to_day_duration[1] - night_to_day_duration[0]);
-			sky_color[2] = night_color[2] + (day_color[2] - night_color[2]) * (time - night_to_day_duration[0]) / (night_to_day_duration[1] - night_to_day_duration[0]);
-			//System.out.println("night->day: " + time);
+			sky_color[0] = night_color[0] + (day_color[0] - night_color[0]) * (time - night_to_day_duration[0])
+					/ (night_to_day_duration[1] - night_to_day_duration[0]);
+			sky_color[1] = night_color[1] + (day_color[1] - night_color[1]) * (time - night_to_day_duration[0])
+					/ (night_to_day_duration[1] - night_to_day_duration[0]);
+			sky_color[2] = night_color[2] + (day_color[2] - night_color[2]) * (time - night_to_day_duration[0])
+					/ (night_to_day_duration[1] - night_to_day_duration[0]);
+			// System.out.println("night->day: " + time);
 		}
 
 	}
@@ -208,13 +201,13 @@ public class SkyRenderer extends IWorldRenderer {
 		sun_angle = world.time / 24000.0 * 360.0;
 
 		calculateSkyColor();
-		GL11.glClearColor(sky_color[0],sky_color[1],sky_color[2],1.0f);
+		GL11.glClearColor(sky_color[0], sky_color[1], sky_color[2], 1.0f);
 
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glEnable(GL11.GL_BLEND);
-			
+
 		renderer.initDraw();
-		
+
 		{
 			this.shader.use();
 
@@ -236,12 +229,12 @@ public class SkyRenderer extends IWorldRenderer {
 			this.shader.unbind();
 
 		}
-		
+
 		{
 			cloud_offset += Time.deltaTime * cloud_move_speed;
 			if (cloud_offset >= cloud_texture_size)
 				cloud_offset = -cloud_texture_size;
-			
+
 			cloudShader.use();
 
 			Matrix4f cloud_translate_matrix = new Matrix4f();
@@ -249,7 +242,8 @@ public class SkyRenderer extends IWorldRenderer {
 			Matrix4f.translate(new Vector3f(cloud_offset, 0, 0), cloud_translate_matrix, cloud_translate_matrix);
 			this.cloudShader.setUniformMatrix(loc_cloud_model_matrix, cloud_translate_matrix);
 
-			this.cloudShader.setUniformMatrix(loc_cloud_view_matrix, MatrixHelper.player(world.getWorldLogic().getClientPlayer().pos));
+			this.cloudShader.setUniformMatrix(loc_cloud_view_matrix,
+					MatrixHelper.player(world.getWorldLogic().getClientPlayer().pos));
 
 			environmentTextures.get("environment.clouds").bind();
 			renderer.draw(GL11.GL_TRIANGLE_STRIP, 8, 4);
@@ -262,17 +256,17 @@ public class SkyRenderer extends IWorldRenderer {
 		}
 
 		renderer.postDraw();
-		
+
 		GL11.glDisable(GL11.GL_BLEND);
 
 		GLHelper.checkGLError("Sky Renderer");
-		
+
 	}
-	
+
 	@Override
 	public void size() {
 		this.shader.use();
-		
+
 		Shader.setProjectionMatrix(world.getWorldLogic().getCg(), this.shader);
 		Shader.setProjectionMatrix(world.getWorldLogic().getCg(), this.cloudShader);
 

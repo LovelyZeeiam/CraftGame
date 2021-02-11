@@ -50,7 +50,7 @@ public class Shader {
 		GL20.glValidateProgram(this.shaderID);
 
 	}
-	
+
 	public static int getShader(String vertCode, String fragCode) {
 		int vertID = GL20.glCreateShader(GL20.GL_VERTEX_SHADER);
 		GL20.glShaderSource(vertID, vertCode);

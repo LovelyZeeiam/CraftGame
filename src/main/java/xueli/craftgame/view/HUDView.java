@@ -47,8 +47,8 @@ public class HUDView extends InGameView {
 
 	@Override
 	public void onScroll(float x, float y, float scroll) {
-		player.getInventory().setHandInSlot(player.getInventory().getHandInSlot() - (int)scroll);
-		
+		player.getInventory().setHandInSlot(player.getInventory().getHandInSlot() - (int) scroll);
+
 	}
 
 	@Override
@@ -153,40 +153,45 @@ public class HUDView extends InGameView {
 		/**
 		 * 沉底的物品栏
 		 */
-		
+
 		float realSizePerSlot = InventoryView.sizePerSlot * display.getScale();
 		float slotsWidth = Inventory.DISPLAY_SLOT_COUNT * realSizePerSlot;
 		float slotsHeight = realSizePerSlot;
 		float slotsY = display.getHeight() - realSizePerSlot - InventoryView.blockMargin;
 		float slotsX = (display.getWidth() - slotsWidth) / 2.0f;
 		float realMarginPerSlot = InventoryView.marginPerSlot * display.getScale();
-		
+
 		super.drawImage(slotsX, slotsY, slotsWidth, slotsHeight, logic.getNvgTextures().get("ingame.gui.inventory"),
 				nvg);
-		
+
 		// 选中一格的物品栏
-		if(player != null) {
-			float chosenX = slotsX + (realSizePerSlot - 0.6f * display.getScale()) * player.getInventory().getHandInSlot() - 3.0f * display.getScale();
+		if (player != null) {
+			float chosenX = slotsX
+					+ (realSizePerSlot - 0.6f * display.getScale()) * player.getInventory().getHandInSlot()
+					- 3.0f * display.getScale();
 			float chosenY = slotsY - 3.0f;
-			
-			super.drawImage(chosenX, chosenY, realSizePerSlot + 13f * display.getScale(), realSizePerSlot + 7f * display.getScale(), logic.getNvgTextures().get("ingame.gui.inventory.chosen"), nvg);
-			
+
+			super.drawImage(chosenX, chosenY, realSizePerSlot + 13f * display.getScale(),
+					realSizePerSlot + 7f * display.getScale(),
+					logic.getNvgTextures().get("ingame.gui.inventory.chosen"), nvg);
+
 		}
-		
+
 		for (int i = 0; i < Inventory.DISPLAY_SLOT_COUNT; i++) {
 			// 绘制物品栏里面的东西
-			float pX = slotsX + (realSizePerSlot - 0.5f * display.getScale()) * i + realMarginPerSlot + 2.0f * display.getScale();
+			float pX = slotsX + (realSizePerSlot - 0.5f * display.getScale()) * i + realMarginPerSlot
+					+ 2.0f * display.getScale();
 			float pY = slotsY + realMarginPerSlot;
 			float pWidth = realSizePerSlot - realMarginPerSlot * 2;
 			float pHeight = realSizePerSlot - realMarginPerSlot * 2;
 
-			if(player != null) {
+			if (player != null) {
 				InventoryItem inventoryItem = player.getInventory().getSlot(i);
 				if (inventoryItem != null)
 					super.drawImage(pX, pY, pWidth, pHeight, inventoryItem.getReviewTexture(), nvg);
-				
+
 			}
-			
+
 		}
 
 		/**

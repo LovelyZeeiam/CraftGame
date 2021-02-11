@@ -11,11 +11,11 @@ public class Blocks {
 		// 方块监听
 		// TODO: 半砖补全！
 		BlockResource.blockDatas.forEach((namespace, data) -> {
-			if(namespace.endsWith(".slab")) {
+			if (namespace.endsWith(".slab")) {
 				String originNamespace = namespace.substring(0, namespace.length() - 4);
 
 			}
-			
+
 		});
 
 		// 生成方块预览图

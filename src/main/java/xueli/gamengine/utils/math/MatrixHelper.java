@@ -29,21 +29,21 @@ public class MatrixHelper {
 		lastTimeProjMatrix = projectionMatrix;
 		return projectionMatrix;
 	}
-	
+
 	public static Matrix4f ortho(float left, float right, float bottom, float top, float near, float far) {
 		Matrix4f matrix = new Matrix4f();
 		matrix.setIdentity();
-		
+
 		matrix.m00 = 2.0f / (right - left);
 		matrix.m11 = 2.0f / (top - bottom);
 		matrix.m22 = -2.0f / (far - near);
 		matrix.m30 = -(right + left) / (right - left);
 		matrix.m31 = -(top + bottom) / (top - bottom);
 		matrix.m32 = -(far + near) / (far - near);
-		
+
 		return matrix;
 	}
-	
+
 	public static Matrix4f rotate(float rotX, float rotY, float rotZ) {
 		Matrix4f src = new Matrix4f();
 		src.setIdentity();

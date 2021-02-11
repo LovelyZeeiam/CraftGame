@@ -43,6 +43,8 @@
 
 		},
 		
+		"item.firework": "textures/items/firework.png",
+		
 		"environment.sun_moon": "textures/environment/sun_moon.png",
 		"environment.clouds": "textures/environment/clouds.png",
 		

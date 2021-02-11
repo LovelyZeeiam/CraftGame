@@ -8,6 +8,7 @@ import static org.lwjgl.nanovg.NanoVGGL3.NVG_ANTIALIAS;
 import static org.lwjgl.nanovg.NanoVGGL3.NVG_DEBUG;
 import static org.lwjgl.nanovg.NanoVGGL3.NVG_STENCIL_STROKES;
 import static org.lwjgl.nanovg.NanoVGGL3.nvgCreate;
+import static org.lwjgl.nanovg.NanoVGGL3.nvgDelete;
 import static org.lwjgl.nanovg.NanoVGGL3.nvglCreateImageFromHandle;
 import static org.lwjgl.opengl.GL11.glViewport;
 
@@ -22,6 +23,7 @@ import org.lwjgl.util.vector.Matrix4f;
 
 import xueli.craftgame.block.Blocks;
 import xueli.craftgame.entity.Player;
+import xueli.craftgame.item.Items;
 import xueli.craftgame.particles.ParticleTest;
 import xueli.craftgame.view.HUDView;
 import xueli.craftgame.view.InGameView;
@@ -71,7 +73,7 @@ public class WorldLogic implements Runnable {
 
 	private Renderer normalRenderer;
 	private ShadowMapper shadowMapper;
-	
+
 	private ParticleManager particleManager;
 
 	private Faces faces;
@@ -85,9 +87,9 @@ public class WorldLogic implements Runnable {
 		shadowMapper = new ShadowMapper(cg, this);
 
 		blockRenderShader = cg.getShaderResource().get("world");
-		
+
 		this.shadowMapper.setDepthMap(blockRenderShader);
-		
+
 		this.particleManager = new ParticleManager(cg, cg.getShaderResource().get("particle"));
 		this.particleManager.addParticle(new ParticleTest(cg));
 
@@ -102,12 +104,13 @@ public class WorldLogic implements Runnable {
 		}
 
 		cg.getTextureManager().getTextures().forEach((e, t) -> {
-			if(e.startsWith("ingame.")) {
+			if (e.startsWith("ingame.")) {
 				nvgTextures.put(e, nvglCreateImageFromHandle(nvg, t.id, t.width, t.height, NVG_IMAGE_NEAREST));
 			}
 		});
 
 		Blocks.init(nvg, cg, (TextureAtlas) cg.getTextureManager().getTexture("blocks"));
+		Items.init(this);
 
 		ingameView = new HUDView(this);
 
@@ -157,7 +160,7 @@ public class WorldLogic implements Runnable {
 		world_loading_progressBar.waitUtilProgressFull();
 
 		loadLevel();
-		
+
 		this.state = State.INGAME;
 
 		cg.queueRunningInMainThread.add(() -> {
@@ -165,9 +168,9 @@ public class WorldLogic implements Runnable {
 			cg.getDisplay().toggleMouseGrabbed();
 
 		});
-		
+
 		world_loading_progressBar.setProgress(1.0f);
-		
+
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
@@ -182,7 +185,7 @@ public class WorldLogic implements Runnable {
 	public long getNvg() {
 		return nvg;
 	}
-	
+
 	public ParticleManager getParticleManager() {
 		return particleManager;
 	}
@@ -192,8 +195,8 @@ public class WorldLogic implements Runnable {
 
 		if (gameGui != null)
 			gameGui.size();
-		
-		if(particleManager != null)
+
+		if (particleManager != null)
 			particleManager.size();
 
 	}
@@ -227,9 +230,9 @@ public class WorldLogic implements Runnable {
 
 	public void setNormalViewPort() {
 		glViewport(0, 0, cg.getDisplay().getWidth(), cg.getDisplay().getHeight());
-		
+
 	}
-	
+
 	public void draw() {
 		// Blocks.init(nvg, cg, (TextureAtlas)
 		// cg.getTextureManager().getTexture("blocks"));
@@ -271,11 +274,11 @@ public class WorldLogic implements Runnable {
 
 			// 将方块材质加入到OpenGL娘的首个材质槽里面
 			blockTextureAtlas.bind();
-			
+
 			// 阴影映射加入到第二个材质槽里面
 			GL13.glActiveTexture(GL13.GL_TEXTURE1);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, shadowMapper.getBuffer().getTbo_depth());
-			
+
 			GLHelper.checkGLError("World: Bind Texture");
 
 			// 将着色器放到OpenGL娘的着色器槽里面
@@ -288,7 +291,7 @@ public class WorldLogic implements Runnable {
 
 			// 让OpenGL娘去绘制叭~
 			normalRenderer.draw(vertexCount);
-			
+
 			normalRenderer.postDraw();
 
 			GLHelper.checkGLError("World: Drawer");
@@ -296,14 +299,14 @@ public class WorldLogic implements Runnable {
 			blockRenderShader.unbind();
 
 			GL11.glDisable(GL11.GL_CULL_FACE);
-			
+
 		}
-		
+
 		shadowMapper.bindBuffer();
 		shadowMapper.clearBuffer();
 		shadowMapper.renderToDepthBuffer(normalRenderer);
 		shadowMapper.unbindBuffer();
-		
+
 		setNormalViewPort();
 
 		{
@@ -314,7 +317,7 @@ public class WorldLogic implements Runnable {
 			// TODO: 透明物体“两面派”
 
 			normalRenderer.initDraw();
-			
+
 			mappedBuffer = normalRenderer.mapBuffer();
 			vertexCount = world.drawAlpha(blockTextureAtlas, player, mappedBuffer.asFloatBuffer(), drawDistance);
 			normalRenderer.unmap();
@@ -334,7 +337,7 @@ public class WorldLogic implements Runnable {
 			GLHelper.checkGLError("World Alpha: Drawer");
 
 			blockRenderShader.unbind();
-			
+
 			normalRenderer.postDraw();
 
 			// 透明材质
@@ -355,10 +358,10 @@ public class WorldLogic implements Runnable {
 			// faces.render();
 
 		}
-		
+
 		{
 			particleManager.draw(player.pos);
-			
+
 		}
 
 		// shadowMapper.renderToDepthBuffer(normalRenderer);
@@ -463,6 +466,8 @@ public class WorldLogic implements Runnable {
 	public void delete() {
 		try {
 			isClosing = true;
+			Items.release(this);
+			nvgDelete(nvg);
 			normalRenderer.delete();
 			closeLevel();
 		} catch (ConcurrentModificationException e) {

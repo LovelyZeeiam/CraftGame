@@ -162,13 +162,14 @@ public class InventoryView extends InGameView {
 		slotsY = display.getHeight() - realSizePerSlot - blockMargin;
 		slotsX = (display.getWidth() - slotsWidth) / 2.0f;
 		float realMarginPerSlot = marginPerSlot * display.getScale();
-		
+
 		super.drawImage(slotsX, slotsY, slotsWidth, slotsHeight, logic.getNvgTextures().get("ingame.gui.inventory"),
 				nvg);
 
 		for (int i = 0; i < Inventory.DISPLAY_SLOT_COUNT; i++) {
 			// 绘制物品栏里面的东西
-			float pX = slotsX + (realSizePerSlot - 0.5f * display.getScale()) * i + realMarginPerSlot + 2.0f * display.getScale();
+			float pX = slotsX + (realSizePerSlot - 0.5f * display.getScale()) * i + realMarginPerSlot
+					+ 2.0f * display.getScale();
 			float pY = slotsY + realMarginPerSlot;
 			float pWidth = realSizePerSlot - realMarginPerSlot * 2;
 			float pHeight = realSizePerSlot - realMarginPerSlot * 2;

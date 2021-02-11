@@ -33,7 +33,7 @@ public class ParticleManager {
 		GL20.glPointParameterf(GL20.GL_POINT_FADE_THRESHOLD_SIZE, 60.0f);
 		GL20.glPointParameterf(GL20.GL_POINT_SIZE_MIN, 13.0f);
 		GL20.glPointParameterf(GL20.GL_POINT_SIZE_MAX, 15.f);
-		
+
 	}
 
 	public void addParticle(Particle particle) {
@@ -53,7 +53,7 @@ public class ParticleManager {
 		particles.removeAll(particlesThatNeedDeleting);
 
 		shader.unbind();
-		
+
 		GLHelper.checkGLError("Particle Renderer");
 
 	}

@@ -211,8 +211,7 @@ public class TextureManager implements Closeable {
 			Texture texture = null;
 			if (!isAtlas) {
 				texture = new Texture(id, preload, false);
-			}
-			else {
+			} else {
 				texture = new TextureAtlas(atlas, length, length, id, preload, false);
 			}
 			texture.width = width;
@@ -251,6 +250,5 @@ public class TextureManager implements Closeable {
 	public HashMap<String, Texture> getTextures() {
 		return textures;
 	}
-
 
 }

@@ -38,17 +38,17 @@ public class ModelStair extends IModel {
 			if (params.slabOrStairData == SlabAndStairData.DOWN) {
 				switch (params.faceTo) {
 				case BlockFace.FRONT:
-					if(stat != null) {
-						if(stat.getRotateSection() == BlockFace.RIGHT) {
-							if(stat.getRotateTo() == BlockFace.LEFT) {
+					if (stat != null) {
+						if (stat.getRotateSection() == BlockFace.RIGHT) {
+							if (stat.getRotateTo() == BlockFace.LEFT) {
 								targetModel = new ModelStairBottomCornerFrontLeft();
-							} else if(stat.getRotateTo() == BlockFace.RIGHT) {
+							} else if (stat.getRotateTo() == BlockFace.RIGHT) {
 								targetModel = new ModelStairBottomAroundFrontRight();
 							}
-						} else if(stat.getRotateSection() == BlockFace.LEFT) {
-							if(stat.getRotateTo() == BlockFace.LEFT) {
+						} else if (stat.getRotateSection() == BlockFace.LEFT) {
+							if (stat.getRotateTo() == BlockFace.LEFT) {
 								targetModel = new ModelStairBottomAroundFrontLeft();
-							} else if(stat.getRotateTo() == BlockFace.RIGHT) {
+							} else if (stat.getRotateTo() == BlockFace.RIGHT) {
 								targetModel = new ModelStairBottomCornerFrontRight();
 							}
 						}
@@ -56,17 +56,17 @@ public class ModelStair extends IModel {
 						targetModel = new ModelStairBottomFacingFront();
 					break;
 				case BlockFace.BACK:
-					if(stat != null) {
-						if(stat.getRotateSection() == BlockFace.RIGHT) {
-							if(stat.getRotateTo() == BlockFace.RIGHT) {
+					if (stat != null) {
+						if (stat.getRotateSection() == BlockFace.RIGHT) {
+							if (stat.getRotateTo() == BlockFace.RIGHT) {
 								targetModel = new ModelStairBottomCornerBackRight();
-							} else if(stat.getRotateTo() == BlockFace.LEFT) {
+							} else if (stat.getRotateTo() == BlockFace.LEFT) {
 								targetModel = new ModelStairBottomAroundBackLeft();
 							}
-						} else if(stat.getRotateSection() == BlockFace.LEFT) {
-							if(stat.getRotateTo() == BlockFace.LEFT) {
+						} else if (stat.getRotateSection() == BlockFace.LEFT) {
+							if (stat.getRotateTo() == BlockFace.LEFT) {
 								targetModel = new ModelStairBottomCornerBackLeft();
-							} else if(stat.getRotateTo() == BlockFace.RIGHT) {
+							} else if (stat.getRotateTo() == BlockFace.RIGHT) {
 								targetModel = new ModelStairBottomAroundBackRight();
 							}
 						}
@@ -74,17 +74,17 @@ public class ModelStair extends IModel {
 						targetModel = new ModelStairBottomFacingBack();
 					break;
 				case BlockFace.LEFT:
-					if(stat != null) {
-						if(stat.getRotateSection() == BlockFace.RIGHT) {
-							if(stat.getRotateTo() == BlockFace.FRONT) {
+					if (stat != null) {
+						if (stat.getRotateSection() == BlockFace.RIGHT) {
+							if (stat.getRotateTo() == BlockFace.FRONT) {
 								targetModel = new ModelStairBottomAroundFrontLeft();
-							} else if(stat.getRotateTo() == BlockFace.BACK) {
+							} else if (stat.getRotateTo() == BlockFace.BACK) {
 								targetModel = new ModelStairBottomCornerBackLeft();
 							}
-						} else if(stat.getRotateSection() == BlockFace.LEFT) {
-							if(stat.getRotateTo() == BlockFace.FRONT) {
+						} else if (stat.getRotateSection() == BlockFace.LEFT) {
+							if (stat.getRotateTo() == BlockFace.FRONT) {
 								targetModel = new ModelStairBottomCornerFrontLeft();
-							} else if(stat.getRotateTo() == BlockFace.BACK) {
+							} else if (stat.getRotateTo() == BlockFace.BACK) {
 								targetModel = new ModelStairBottomAroundBackLeft();
 							}
 						}
@@ -92,17 +92,17 @@ public class ModelStair extends IModel {
 						targetModel = new ModelStairBottomFacingLeft();
 					break;
 				case BlockFace.RIGHT:
-					if(stat != null) {
-						if(stat.getRotateSection() == BlockFace.RIGHT) {
-							if(stat.getRotateTo() == BlockFace.FRONT) {
+					if (stat != null) {
+						if (stat.getRotateSection() == BlockFace.RIGHT) {
+							if (stat.getRotateTo() == BlockFace.FRONT) {
 								targetModel = new ModelStairBottomCornerFrontRight();
-							} else if(stat.getRotateTo() == BlockFace.BACK) {
+							} else if (stat.getRotateTo() == BlockFace.BACK) {
 								targetModel = new ModelStairBottomAroundBackRight();
 							}
-						} else if(stat.getRotateSection() == BlockFace.LEFT) {
-							if(stat.getRotateTo() == BlockFace.FRONT) {
+						} else if (stat.getRotateSection() == BlockFace.LEFT) {
+							if (stat.getRotateTo() == BlockFace.FRONT) {
 								targetModel = new ModelStairBottomAroundFrontRight();
-							} else if(stat.getRotateTo() == BlockFace.BACK) {
+							} else if (stat.getRotateTo() == BlockFace.BACK) {
 								targetModel = new ModelStairBottomCornerBackRight();
 							}
 						}
@@ -113,17 +113,17 @@ public class ModelStair extends IModel {
 			} else if (params.slabOrStairData == SlabAndStairData.UP) {
 				switch (params.faceTo) {
 				case BlockFace.FRONT:
-					if(stat != null) {
-						if(stat.getRotateSection() == BlockFace.RIGHT) {
-							if(stat.getRotateTo() == BlockFace.LEFT) {
+					if (stat != null) {
+						if (stat.getRotateSection() == BlockFace.RIGHT) {
+							if (stat.getRotateTo() == BlockFace.LEFT) {
 								targetModel = new ModelStairUpCornerFrontLeft();
-							} else if(stat.getRotateTo() == BlockFace.RIGHT) {
+							} else if (stat.getRotateTo() == BlockFace.RIGHT) {
 								targetModel = new ModelStairUpAroundFrontRight();
 							}
-						} else if(stat.getRotateSection() == BlockFace.LEFT) {
-							if(stat.getRotateTo() == BlockFace.LEFT) {
+						} else if (stat.getRotateSection() == BlockFace.LEFT) {
+							if (stat.getRotateTo() == BlockFace.LEFT) {
 								targetModel = new ModelStairUpAroundFrontLeft();
-							} else if(stat.getRotateTo() == BlockFace.RIGHT) {
+							} else if (stat.getRotateTo() == BlockFace.RIGHT) {
 								targetModel = new ModelStairUpCornerFrontRight();
 							}
 						}
@@ -131,17 +131,17 @@ public class ModelStair extends IModel {
 						targetModel = new ModelStairUpFacingFront();
 					break;
 				case BlockFace.BACK:
-					if(stat != null) {
-						if(stat.getRotateSection() == BlockFace.RIGHT) {
-							if(stat.getRotateTo() == BlockFace.RIGHT) {
+					if (stat != null) {
+						if (stat.getRotateSection() == BlockFace.RIGHT) {
+							if (stat.getRotateTo() == BlockFace.RIGHT) {
 								targetModel = new ModelStairUpCornerBackRight();
-							} else if(stat.getRotateTo() == BlockFace.LEFT) {
+							} else if (stat.getRotateTo() == BlockFace.LEFT) {
 								targetModel = new ModelStairUpAroundBackLeft();
 							}
-						} else if(stat.getRotateSection() == BlockFace.LEFT) {
-							if(stat.getRotateTo() == BlockFace.LEFT) {
+						} else if (stat.getRotateSection() == BlockFace.LEFT) {
+							if (stat.getRotateTo() == BlockFace.LEFT) {
 								targetModel = new ModelStairUpCornerBackLeft();
-							} else if(stat.getRotateTo() == BlockFace.RIGHT) {
+							} else if (stat.getRotateTo() == BlockFace.RIGHT) {
 								targetModel = new ModelStairUpAroundBackRight();
 							}
 						}
@@ -149,17 +149,17 @@ public class ModelStair extends IModel {
 						targetModel = new ModelStairUpFacingBack();
 					break;
 				case BlockFace.LEFT:
-					if(stat != null) {
-						if(stat.getRotateSection() == BlockFace.RIGHT) {
-							if(stat.getRotateTo() == BlockFace.FRONT) {
+					if (stat != null) {
+						if (stat.getRotateSection() == BlockFace.RIGHT) {
+							if (stat.getRotateTo() == BlockFace.FRONT) {
 								targetModel = new ModelStairUpAroundFrontLeft();
-							} else if(stat.getRotateTo() == BlockFace.BACK) {
+							} else if (stat.getRotateTo() == BlockFace.BACK) {
 								targetModel = new ModelStairUpCornerBackLeft();
 							}
-						} else if(stat.getRotateSection() == BlockFace.LEFT) {
-							if(stat.getRotateTo() == BlockFace.FRONT) {
+						} else if (stat.getRotateSection() == BlockFace.LEFT) {
+							if (stat.getRotateTo() == BlockFace.FRONT) {
 								targetModel = new ModelStairUpCornerFrontLeft();
-							} else if(stat.getRotateTo() == BlockFace.BACK) {
+							} else if (stat.getRotateTo() == BlockFace.BACK) {
 								targetModel = new ModelStairUpAroundBackLeft();
 							}
 						}
@@ -167,17 +167,17 @@ public class ModelStair extends IModel {
 						targetModel = new ModelStairUpFacingLeft();
 					break;
 				case BlockFace.RIGHT:
-					if(stat != null) {
-						if(stat.getRotateSection() == BlockFace.RIGHT) {
-							if(stat.getRotateTo() == BlockFace.FRONT) {
+					if (stat != null) {
+						if (stat.getRotateSection() == BlockFace.RIGHT) {
+							if (stat.getRotateTo() == BlockFace.FRONT) {
 								targetModel = new ModelStairUpCornerFrontRight();
-							} else if(stat.getRotateTo() == BlockFace.BACK) {
+							} else if (stat.getRotateTo() == BlockFace.BACK) {
 								targetModel = new ModelStairUpAroundBackRight();
 							}
-						} else if(stat.getRotateSection() == BlockFace.LEFT) {
-							if(stat.getRotateTo() == BlockFace.FRONT) {
+						} else if (stat.getRotateSection() == BlockFace.LEFT) {
+							if (stat.getRotateTo() == BlockFace.FRONT) {
 								targetModel = new ModelStairUpAroundFrontRight();
-							} else if(stat.getRotateTo() == BlockFace.BACK) {
+							} else if (stat.getRotateTo() == BlockFace.BACK) {
 								targetModel = new ModelStairUpCornerBackRight();
 							}
 						}
@@ -188,7 +188,7 @@ public class ModelStair extends IModel {
 			}
 		}
 
-		if(targetModel == null)
+		if (targetModel == null)
 			return 0;
 		return targetModel.getRenderCubeData(buffer, data, x, y, z, face, blockTextureAtlas, params, chunk, world);
 	}
@@ -360,7 +360,7 @@ public class ModelStair extends IModel {
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
 
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
@@ -369,77 +369,77 @@ public class ModelStair extends IModel {
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u3, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z + 0.5f),
+						new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z + 0.5f),
+						new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z + 0.5f),
+						new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z + 0.5f),
+						new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 1), new Vector2f(u1, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1),
+						new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 1),
+						new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1),
+						new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 1),
+						new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 1), new Vector2f(u2, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
-	
+
 	private static class ModelStairBottomFacingBack extends IModel {
 
 		public ModelStairBottomFacingBack() {
@@ -450,7 +450,7 @@ public class ModelStair extends IModel {
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
 
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
@@ -459,77 +459,77 @@ public class ModelStair extends IModel {
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u3, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y + 0.5f, z + 0.5f),
+						new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 0.5f),
+						new Vector2f(u3, v3), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 0.5f),
+						new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 0.5f),
+						new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 1, z), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u2, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z), new Vector2f(u2, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z), new Vector2f(u2, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
-	
+
 	private static class ModelStairBottomFacingLeft extends IModel {
 
 		public ModelStairBottomFacingLeft() {
@@ -540,7 +540,7 @@ public class ModelStair extends IModel {
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
 
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
@@ -549,77 +549,77 @@ public class ModelStair extends IModel {
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 1, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y + 0.5f, z),
+						new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z),
+						new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 1, z),
+						new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z),
+						new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y + 0.5f, z + 1),
+						new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1),
+						new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 1, z + 1),
+						new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 1),
+						new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y + 0.5f, z),
+						new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z),
+						new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z + 1),
+						new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z + 1),
+						new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
-	
+
 	private static class ModelStairBottomFacingRight extends IModel {
 
 		public ModelStairBottomFacingRight() {
@@ -630,7 +630,7 @@ public class ModelStair extends IModel {
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
 
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
@@ -639,170 +639,170 @@ public class ModelStair extends IModel {
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x + 1, y, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f,0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x, y + 1, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f,0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u2, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u2, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y + 0.5f, z),
+						new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z),
+						new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z + 1),
+						new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z + 1),
+						new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v2), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
-	
+
 	private static class ModelStairBottomCornerFrontLeft extends IModel {
-	
+
 		public ModelStairBottomCornerFrontLeft() {
 			super(null);
 		}
-	
+
 		@Override
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
-	
+
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
 			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
 			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	            		new Vector3f(x, y, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	            		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u3, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 1, z + 0.5f),
+						new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y + 0.5f, z + 1),
+						new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1),
+						new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 1, z + 1),
+						new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 1),
+						new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	             		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	             		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z + 1),
+						new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z + 1),
+						new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	             		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	             		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1),
+						new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 1),
+						new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-	             		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f));
-				vertCount += drawQuadFacingTop(buffer,
-	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u1, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u2, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-	             		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
 
 	private static class ModelStairBottomCornerFrontRight extends IModel {
@@ -815,7 +815,7 @@ public class ModelStair extends IModel {
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
 
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
@@ -824,82 +824,83 @@ public class ModelStair extends IModel {
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u3, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z + 0.5f),
+						new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+						new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u2, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1),
+						new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 1),
+						new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z + 1),
+						new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z + 1),
+						new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f));
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u1, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 1), new Vector2f(u2, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u2, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
-	
+
 	private static class ModelStairBottomCornerBackRight extends IModel {
 
 		public ModelStairBottomCornerBackRight() {
@@ -910,7 +911,7 @@ public class ModelStair extends IModel {
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
 
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
@@ -919,82 +920,84 @@ public class ModelStair extends IModel {
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x + 1, y, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f,0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x, y + 1, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f,0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u2, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y + 0.5f, z + 0.5f),
+						new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+						new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y + 0.5f, z),
+						new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z),
+						new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+						new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f));
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u2, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
-	
+
 	private static class ModelStairBottomCornerBackLeft extends IModel {
 
 		public ModelStairBottomCornerBackLeft() {
@@ -1005,7 +1008,7 @@ public class ModelStair extends IModel {
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
 
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
@@ -1014,82 +1017,83 @@ public class ModelStair extends IModel {
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 1, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y + 0.5f, z),
+						new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z),
+						new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 1, z),
+						new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z),
+						new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 1, z + 0.5f),
+						new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y + 0.5f, z),
+						new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z),
+						new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+						new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f));
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
-	
+
 	private static class ModelStairBottomAroundFrontLeft extends IModel {
 
 		public ModelStairBottomAroundFrontLeft() {
@@ -1100,7 +1104,7 @@ public class ModelStair extends IModel {
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
 
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
@@ -1109,87 +1113,89 @@ public class ModelStair extends IModel {
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 1, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y + 0.5f, z),
+						new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z),
+						new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 1, z),
+						new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z),
+						new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z + 0.5f),
+						new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+						new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 1), new Vector2f(u1, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1),
+						new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 1),
+						new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y + 0.5f, z),
+						new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z),
+						new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+						new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 1), new Vector2f(u2, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
-	
+
 	private static class ModelStairBottomAroundFrontRight extends IModel {
 
 		public ModelStairBottomAroundFrontRight() {
@@ -1200,7 +1206,7 @@ public class ModelStair extends IModel {
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
 
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
@@ -1209,87 +1215,88 @@ public class ModelStair extends IModel {
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 1, z + 0.5f),
+						new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u2, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 1), new Vector2f(u1, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y + 0.5f, z + 0.5f),
+						new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 0.5f),
+						new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1),
+						new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 1),
+						new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y + 0.5f, z),
+						new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z),
+						new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
+						new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
-				vertCount += drawQuadFacingTop(buffer,	
-                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 1), new Vector2f(u2, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z), new Vector2f(u1, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
-	
+
 	private static class ModelStairBottomAroundBackRight extends IModel {
 
 		public ModelStairBottomAroundBackRight() {
@@ -1300,7 +1307,7 @@ public class ModelStair extends IModel {
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
 
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
@@ -1309,87 +1316,87 @@ public class ModelStair extends IModel {
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x + 1, y, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f,0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z), new Vector2f(u3, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u2, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 1, z + 0.5f),
+						new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z + 1),
+						new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z + 1),
+						new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u2, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u2, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 1), new Vector2f(u2, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u2, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u1, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
-	
+
 	private static class ModelStairBottomAroundBackLeft extends IModel {
 
 		public ModelStairBottomAroundBackLeft() {
@@ -1400,7 +1407,7 @@ public class ModelStair extends IModel {
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
 
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
@@ -1409,86 +1416,87 @@ public class ModelStair extends IModel {
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z), new Vector2f(u3, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y + 0.5f, z + 1),
+						new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1),
+						new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 1, z + 1),
+						new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 1),
+						new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y + 0.5f, z + 0.5f),
+						new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+						new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z + 1),
+						new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 1, z + 1),
+						new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y, z), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-                break;
+				drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z), new Vector2f(u3, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 1), new Vector2f(u1, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v2), new Vector3f(1.0f, 1.0f, 1.0f));
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 1, z + 1), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 0.5f, z + 1),
+						new Vector2f(u2, v2), new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 0.5f, z + 1),
+						new Vector2f(u2, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z), new Vector2f(u1, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 0.5f, y + 1, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
-	
+
 	private static class ModelStairUpFacingFront extends IModel {
 
 		public ModelStairUpFacingFront() {
@@ -1499,7 +1507,7 @@ public class ModelStair extends IModel {
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
 
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
@@ -1508,77 +1516,77 @@ public class ModelStair extends IModel {
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x, y + 1, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u1, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 1), new Vector2f(u1, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f));
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
-	
+
 	private static class ModelStairUpFacingBack extends IModel {
 
 		public ModelStairUpFacingBack() {
@@ -1589,7 +1597,7 @@ public class ModelStair extends IModel {
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
 
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
@@ -1598,78 +1606,78 @@ public class ModelStair extends IModel {
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u3, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u3, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u3, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f));
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
-				
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
+
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
-	
+
 	private static class ModelStairUpFacingLeft extends IModel {
 
 		public ModelStairUpFacingLeft() {
@@ -1680,7 +1688,7 @@ public class ModelStair extends IModel {
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
 
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
@@ -1689,77 +1697,77 @@ public class ModelStair extends IModel {
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z), new Vector2f(u2, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u1, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.4f, 0.4f, 0.4f));
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
-	
+
 	private static class ModelStairUpFacingRight extends IModel {
 
 		public ModelStairUpFacingRight() {
@@ -1770,7 +1778,7 @@ public class ModelStair extends IModel {
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
 
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
@@ -1779,655 +1787,660 @@ public class ModelStair extends IModel {
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f,0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x + 0.5f, y, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f,0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y, z), new Vector2f(u2, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 1), new Vector2f(u1, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u2, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.4f, 0.4f, 0.4f));
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
 
 	private static class ModelStairUpCornerFrontLeft extends IModel {
-	
+
 		public ModelStairUpCornerFrontLeft() {
 			super(null);
 		}
-	
+
 		@Override
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
-	
+
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
 			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
 			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	            		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x, y + 1, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	            		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y, z + 0.5f),
+						new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+						new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	            		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	            		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u1, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+						new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	             		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v2), new Vector3f(0.4f, 0.4f, 0.4f));
-				vertCount += drawQuadFacingBottom(buffer,
-	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u1, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u2, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
 
 	private static class ModelStairUpCornerFrontRight extends IModel {
-	
+
 		public ModelStairUpCornerFrontRight() {
 			super(null);
 		}
-	
+
 		@Override
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
-	
+
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
 			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
 			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	            		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x, y + 1, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	            		new Vector3f(x, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	            		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	            		new Vector3f(x, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 1), new Vector2f(u1, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u2, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	             		new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+						new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-	             		new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u2, v2), new Vector3f(0.4f, 0.4f, 0.4f));
-				vertCount += drawQuadFacingBottom(buffer,
-	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u1, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 1), new Vector2f(u2, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u2, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
 
 	private static class ModelStairUpCornerBackRight extends IModel {
-	
+
 		public ModelStairUpCornerBackRight() {
 			super(null);
 		}
-	
+
 		@Override
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
-	
+
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
 			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
 			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	            		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f,0.7f),
-	            		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f,0.7f),
-	            		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f,0.7f),
-	            		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f,0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	            		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f,0.7f),
-	            		new Vector3f(x + 0.5f, y, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f,0.7f),
-	            		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f,0.7f),
-	            		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f,0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y, z), new Vector2f(u2, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	            		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	            		new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	             		new Vector3f(x, y, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	             		new Vector3f(x + 0.5f, y, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y, z), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-	             		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.4f, 0.4f, 0.4f));
-				vertCount += drawQuadFacingBottom(buffer,
-	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
 
 	private static class ModelStairUpCornerBackLeft extends IModel {
-	
+
 		public ModelStairUpCornerBackLeft() {
 			super(null);
 		}
-	
+
 		@Override
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
-	
+
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
 			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
 			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	            		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	            		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z), new Vector2f(u2, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	            		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	            		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y, z + 0.5f),
+						new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+						new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	             		new Vector3f(x + 0.5f, y, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y, z), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	             		new Vector3f(x + 1, y, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-	             		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v3), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v3), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.4f,0.4f,0.4f));
-				vertCount += drawQuadFacingBottom(buffer,
-	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.4f,0.4f,0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
 
 	private static class ModelStairUpAroundFrontLeft extends IModel {
-	
+
 		public ModelStairUpAroundFrontLeft() {
 			super(null);
 		}
-	
+
 		@Override
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
-	
+
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
 			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
 			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	            		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	            		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y, z), new Vector2f(u2, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	            		new Vector3f(x, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z), new Vector2f(u2, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	            		new Vector3f(x, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 1), new Vector2f(u1, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	             		new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	             		new Vector3f(x + 0.5f, y, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y, z), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	             		new Vector3f(x + 1, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-	             		new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v3), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v1), new Vector3f(0.4f,0.4f,0.4f));
-				vertCount += drawQuadFacingBottom(buffer,
-	             		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v2), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f,0.4f,0.4f));
-				vertCount += drawQuadFacingBottom(buffer,
-	             		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f,0.4f,0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 1), new Vector2f(u2, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
 
 	private static class ModelStairUpAroundFrontRight extends IModel {
-	
+
 		public ModelStairUpAroundFrontRight() {
 			super(null);
 		}
-	
+
 		@Override
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
-	
+
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
 			float v1 = (float) (textureVector2s.y) / blockTextureAtlas.height;
 			float u2 = (float) (textureVector2s.x + 0.5f) / blockTextureAtlas.width;
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	            		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	            		new Vector3f(x, y, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 0.5f, y, z), new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.7f, 0.7f, 0.7f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	            		new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-	            		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y, z + 0.5f),
+						new Vector2f(u3, v2), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.7f, 0.7f, 0.7f),
+						new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y, z), new Vector2f(u2, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u2, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u3, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	            		new Vector3f(x, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-	            		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 1), new Vector2f(u1, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-	             		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	             		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-	             		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-	             		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-	             		new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v3), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v1), new Vector3f(0.4f,0.4f,0.4f));
-				vertCount += drawQuadFacingBottom(buffer,	
-	             		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v1), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f,0.4f,0.4f));
-				vertCount += drawQuadFacingBottom(buffer,
-	             		new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.4f,0.4f,0.4f),
-	             		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f,0.4f,0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 1), new Vector2f(u2, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x + 0.5f, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
 
 	private static class ModelStairUpAroundBackRight extends IModel {
@@ -2440,7 +2453,7 @@ public class ModelStair extends IModel {
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
 
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
@@ -2449,87 +2462,89 @@ public class ModelStair extends IModel {
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x + 1, y, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f,0.7f),
-                		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f,0.7f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z), new Vector2f(u3, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
 				break;
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 1), new Vector2f(u1, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u2, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y, z + 0.5f),
+						new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f),
+						new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+						new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f));
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y, z + 1), new Vector2f(u2, v2), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f));
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 1), new Vector2f(u2, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u2, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y + 0.5f, z + 0.5f),
+						new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y + 0.5f, z + 1),
+						new Vector2f(u2, v2), new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y + 0.5f, z + 1),
+						new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
-	
+
 	private static class ModelStairUpAroundBackLeft extends IModel {
 
 		public ModelStairUpAroundBackLeft() {
@@ -2540,7 +2555,7 @@ public class ModelStair extends IModel {
 		public int getRenderCubeData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
 				TextureAtlas blockTextureAtlas, BlockParameters params, Chunk chunk, World world) {
 			int vertCount = 0;
-			
+
 			Vector2s textureVector2s = data.getTextures()[face];
 
 			float u1 = (float) (textureVector2s.x) / blockTextureAtlas.width;
@@ -2549,86 +2564,85 @@ public class ModelStair extends IModel {
 			float v2 = (float) (textureVector2s.y + 0.5f) / blockTextureAtlas.height;
 			float u3 = (float) (textureVector2s.x + 1) / blockTextureAtlas.width;
 			float v3 = (float) (textureVector2s.y + 1) / blockTextureAtlas.height;
-			
+
 			switch (face) {
 			case BlockFace.FRONT:
-				drawQuadFacingFrontOrLeft(buffer,
-                		new Vector3f(x, y, z), new Vector2f(u1, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y, z), new Vector2f(u3, v3), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.7f, 0.7f, 0.7f),
-                		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.7f, 0.7f, 0.7f));
+				drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y, z), new Vector2f(u3, v3),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1),
+						new Vector3f(0.7f, 0.7f, 0.7f));
 			case BlockFace.BACK:
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v3), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f));
-				vertCount += drawQuadFacingBackOrRight(buffer,
-                		new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.5f, 0.5f, 0.5f),
-                		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 1, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u1, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y, z + 1), new Vector2f(u2, v3),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 1, y + 0.5f, z + 1), new Vector2f(u2, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f));
+				vertCount += drawQuadFacingBackOrRight(buffer, new Vector3f(x, y, z + 0.5f), new Vector2f(u1, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v1),
+						new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u2, v1), new Vector3f(0.5f, 0.5f, 0.5f));
 				break;
 			case BlockFace.LEFT:
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y, z + 0.5f), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-				vertCount += drawQuadFacingFrontOrLeft(buffer,
-                 		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y + 0.5f, z), new Vector2f(u1, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x, y, z), new Vector2f(u2, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y, z + 0.5f), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				vertCount += drawQuadFacingFrontOrLeft(buffer, new Vector3f(x + 0.5f, y, z + 0.5f),
+						new Vector2f(u2, v2), new Vector3f(0.6f, 0.6f, 0.6f),
+						new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
 				break;
 			case BlockFace.RIGHT:
-				drawQuadFacingBackOrRight(buffer,
-                 		new Vector3f(x + 1, y, z), new Vector2f(u3, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u1, v3), new Vector3f(0.6f, 0.6f, 0.6f),
-                 		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u1, v1), new Vector3f(0.6f, 0.6f, 0.6f));
-                break;
+				drawQuadFacingBackOrRight(buffer, new Vector3f(x + 1, y, z), new Vector2f(u3, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z), new Vector2f(u3, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y, z + 1), new Vector2f(u1, v3),
+						new Vector3f(0.6f, 0.6f, 0.6f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u1, v1),
+						new Vector3f(0.6f, 0.6f, 0.6f));
+				break;
 			case BlockFace.TOP:
-				vertCount += drawQuadFacingTop(buffer,
-	             		new Vector3f(x, y + 1, z), new Vector2f(u1, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3), new Vector3f(1.0f, 1.0f, 1.0f),
-	             		new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1), new Vector3f(1.0f, 1.0f, 1.0f));
+				vertCount += drawQuadFacingTop(buffer, new Vector3f(x, y + 1, z), new Vector2f(u1, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z), new Vector2f(u1, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x, y + 1, z + 1), new Vector2f(u3, v3),
+						new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(x + 1, y + 1, z + 1), new Vector2f(u3, v1),
+						new Vector3f(1.0f, 1.0f, 1.0f));
 				break;
 			case BlockFace.BOTTOM:
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v3), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2), new Vector3f(0.4f, 0.4f, 0.4f));
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y + 0.5f, z + 1), new Vector2f(u2, v2), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 0.5f, y + 0.5f, z + 1), new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f));
-				vertCount += drawQuadFacingBottom(buffer,
-                 		new Vector3f(x, y, z), new Vector2f(u1, v2), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v2), new Vector3f(0.4f, 0.4f, 0.4f),
-                 		new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y, z + 1), new Vector2f(u3, v3),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 1, y, z + 1), new Vector2f(u3, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y + 0.5f, z + 0.5f), new Vector2f(u1, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y + 0.5f, z + 0.5f),
+						new Vector2f(u1, v1), new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y + 0.5f, z + 1),
+						new Vector2f(u2, v2), new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y + 0.5f, z + 1),
+						new Vector2f(u2, v1), new Vector3f(0.4f, 0.4f, 0.4f));
+				vertCount += drawQuadFacingBottom(buffer, new Vector3f(x, y, z), new Vector2f(u1, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y, z), new Vector2f(u1, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x, y, z + 0.5f), new Vector2f(u2, v2),
+						new Vector3f(0.4f, 0.4f, 0.4f), new Vector3f(x + 0.5f, y, z + 0.5f), new Vector2f(u2, v1),
+						new Vector3f(0.4f, 0.4f, 0.4f));
 				break;
 			}
-			
+
 			return vertCount;
 		}
-		
+
 	}
-	
-	
-	
+
 }

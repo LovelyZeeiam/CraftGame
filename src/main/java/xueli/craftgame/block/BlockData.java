@@ -36,7 +36,6 @@ public class BlockData {
 		this.textures = textures;
 		this.model = model;
 		this.mapColor = new Color(mapColor);
-		
 
 	}
 
@@ -67,11 +66,11 @@ public class BlockData {
 	public NVGColor getMapColorNVG() {
 		return mapColor.getNVGColor();
 	}
-	
+
 	public Color getMapColor() {
 		return mapColor;
 	}
-	
+
 	public byte[] getColorArray() {
 		return mapColor.getColor();
 	}
@@ -85,8 +84,8 @@ public class BlockData {
 
 	}
 
-	public ArrayList<AABB> getAabbs(BlockParameters params, World world,int x,int y,int z) {
-		return model.getAabbs(params, world,x,y,z);
+	public ArrayList<AABB> getAabbs(BlockParameters params, World world, int x, int y, int z) {
+		return model.getAabbs(params, world, x, y, z);
 	}
 
 	public int getDrawData(FloatList buffer, BlockData data, int x, int y, int z, byte face,
@@ -96,8 +95,10 @@ public class BlockData {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 		BlockData blockData = (BlockData) o;
 		return namespace.equals(blockData.namespace) && listener.equals(blockData.listener);
 	}

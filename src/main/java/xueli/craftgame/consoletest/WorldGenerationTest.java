@@ -28,32 +28,30 @@ public class WorldGenerationTest implements Runnable {
 
 		BlockResource blockRes = new BlockResource("res/", lang);
 		blockRes.load();
-		
+
 		BiomeResource biomeRes = new BiomeResource("res/", lang);
 		biomeRes.load();
-		
+
 		World world = new World();
 		world.requireGenChunkSync(0, 0);
-		Chunk chunk = world.getChunk(0,0);
+		Chunk chunk = world.getChunk(0, 0);
 		chunk.generateMap();
 		Color[][] map = chunk.getColorMap();
-		
-		BufferedImage image = new BufferedImage(Chunk.size,Chunk.size,BufferedImage.TYPE_3BYTE_BGR);
-		for(int u = 0; u < Chunk.size; u++) {
-			for(int v = 0; v < Chunk.size; v++) {
+
+		BufferedImage image = new BufferedImage(Chunk.size, Chunk.size, BufferedImage.TYPE_3BYTE_BGR);
+		for (int u = 0; u < Chunk.size; u++) {
+			for (int v = 0; v < Chunk.size; v++) {
 				byte[] color = map[u][v].getColor();
-				image.setRGB(v, u, 
-					color[2] << 16 | color[1] << 8 | color[0]
-				);
+				image.setRGB(v, u, color[2] << 16 | color[1] << 8 | color[0]);
 			}
 		}
-		
+
 		try {
 			ImageIO.write(image, "png", new File("map.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		world.close();
 
 	}

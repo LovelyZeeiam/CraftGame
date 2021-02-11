@@ -27,8 +27,8 @@ public class ShadowMapper {
 	private Shader depthShader;
 
 	private int loc_projMatrix, loc_viewMatrix;
-	private Matrix4f projMatrix4f,viewMatrix4f;
-	
+	private Matrix4f projMatrix4f, viewMatrix4f;
+
 	private float lightDirectionX = 135;
 	private float lightDirectionZ = -45;
 
@@ -43,37 +43,36 @@ public class ShadowMapper {
 		this.depthShader.use();
 		loc_projMatrix = this.depthShader.getUnifromLocation("projMatrix");
 		loc_viewMatrix = this.depthShader.getUnifromLocation("viewMatrix");
-		
+
 		float lightAngleX = (float) Math.toDegrees(Math.acos(lightDirectionZ));
 		float lightAngleY = (float) Math.toDegrees(Math.asin(lightDirectionX));
 		float lightAngleZ = 0;
-		
+
 		projMatrix4f = MatrixHelper.ortho(-1000.0f, 1000.0f, -1000.0f, 1000.0f, 0.1f, 100000.0f);
 		viewMatrix4f = MatrixHelper.player(new Vector(0, 200, 0, lightAngleX, lightAngleY, lightAngleZ));
 		depthShader.setUniformMatrix(loc_projMatrix, projMatrix4f);
 		depthShader.setUniformMatrix(loc_viewMatrix, viewMatrix4f);
-		
+
 		this.depthShader.unbind();
-		
+
 	}
-	
+
 	public FrameBufferDepth getBuffer() {
 		return buffer;
 	}
-	
+
 	public void bindBuffer() {
 		buffer.bind();
-		
+
 	}
-	
+
 	public void clearBuffer() {
 		glClear(GL_DEPTH_BUFFER_BIT);
-	
+
 	}
-	
+
 	/**
-	 * 设置材质槽位为1
-	 * 然后在绘制时就将1槽位的材质变为depth buffer的材质id
+	 * 设置材质槽位为1 然后在绘制时就将1槽位的材质变为depth buffer的材质id
 	 */
 	public void setDepthMap(Shader worldShader) {
 		worldShader.use();
@@ -81,11 +80,11 @@ public class ShadowMapper {
 		worldShader.setUniformMatrix(worldShader.getUnifromLocation("lightDirectionMatrix"), viewMatrix4f);
 		worldShader.setUniformMatrix(worldShader.getUnifromLocation("lightTransMatrix"), viewMatrix4f);
 		worldShader.unbind();
-		
+
 	}
 
 	public void renderToDepthBuffer(Renderer normalRenderer) {
-		glViewport(0, 0, SHADOW_MAPPER_SIZE, SHADOW_MAPPER_SIZE);	
+		glViewport(0, 0, SHADOW_MAPPER_SIZE, SHADOW_MAPPER_SIZE);
 
 		normalRenderer.initDraw();
 		depthShader.use();
@@ -94,17 +93,16 @@ public class ShadowMapper {
 		normalRenderer.postDraw();
 
 		GLHelper.checkGLError("World: ShadowMapper");
-		
-		if(KeyCallback.keysOnce[GLFW.GLFW_KEY_K]) {
+
+		if (KeyCallback.keysOnce[GLFW.GLFW_KEY_K]) {
 			buffer.save("output/save.png");
 		}
-		
 
 	}
-	
+
 	public void unbindBuffer() {
 		buffer.unbind();
-		
+
 	}
 
 }

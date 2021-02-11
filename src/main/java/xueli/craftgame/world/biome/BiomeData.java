@@ -19,9 +19,9 @@ public class BiomeData {
 	byte[] map_color = new byte[3];
 	byte[] water_color = new byte[3];
 	byte[] leaves_color = new byte[3];
-	
+
 	Color map_color_wrapper, water_color_wrapper, leaves_color_wrapper;
-	
+
 	private IChunkGenerator generator;
 
 	public int[] getHeight() {

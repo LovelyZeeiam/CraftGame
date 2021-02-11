@@ -72,7 +72,7 @@ public class MusicJson {
 			float rate = (float) Math.pow(2, (note) / 12.0);
 
 			Note n = new Note(type, rate);
-			if(!notes.containsKey(time))
+			if (!notes.containsKey(time))
 				notes.put(time, new ArrayList<>());
 			notes.get(time).add(n);
 
@@ -94,10 +94,10 @@ public class MusicJson {
 
 		int lastTimeNote = 0;
 
-		a: while(true) {
+		a: while (true) {
 			int duration = (int) (System.currentTimeMillis() - startTime);
 
-			for(int time = lastTimeNote + 1; time <= duration; time++) {
+			for (int time = lastTimeNote + 1; time <= duration; time++) {
 				ArrayList<Note> tickNotes = notes.get(time);
 
 				if (tickNotes != null) {
@@ -110,10 +110,10 @@ public class MusicJson {
 
 			lastTimeNote = duration;
 
-			if(duration > maxTime + 1000)
+			if (duration > maxTime + 1000)
 				break;
 
-			if(duration % 1000 < 10) {
+			if (duration % 1000 < 10) {
 				SoundManager.tick();
 
 			}

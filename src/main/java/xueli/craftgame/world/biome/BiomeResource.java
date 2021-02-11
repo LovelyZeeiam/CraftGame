@@ -45,7 +45,7 @@ public class BiomeResource extends IResource {
 		data.leaves_color_wrapper = new Color(data.leaves_color);
 		data.map_color_wrapper = new Color(data.map_color);
 		data.water_color_wrapper = new Color(data.water_color);
-		
+
 		biomes.put(namespace, data);
 		Logger.info("Biomes: read Biome Defination file: " + f.getName());
 

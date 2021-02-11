@@ -20,7 +20,7 @@ public abstract class Particle {
 
 	protected void setPointSize(Shader shader, float pointSize) {
 		shader.setFloat(shader.getUnifromLocation("point_size"), pointSize);
-		
+
 	}
-	
+
 }

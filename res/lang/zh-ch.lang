@@ -47,6 +47,8 @@ tile.stair.cobblestone_mossy.name=Mossy Cobblestone Stair
 tile.stair.oak_log.name=Mossy Cobblestone Stair
 tile.stair.brick.name=Mossy Cobblestone Stair
 
+# Item Name
+item.firework.name=Firework
 
 # Block Message
 tile.unknown.message=What Happened to My Computer?\nYour important blocks are encrypted.\nMany of your documents, photos, videos, game levels and other files are no longer accessible because they have been encrypted. Maybe you are busy looking for a way to recover your files, but do not waste your time. Nobody can recover your files without our decryption service.

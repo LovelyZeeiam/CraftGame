@@ -22,7 +22,7 @@ public class TextureAtlas extends Texture {
 	public void bind() {
 		super.bind();
 	}
-	
+
 	@Override
 	public void bind(int textureID) {
 		super.bind(textureID);
