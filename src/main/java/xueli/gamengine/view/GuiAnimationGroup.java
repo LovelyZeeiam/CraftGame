@@ -1,9 +1,9 @@
 package xueli.gamengine.view;
 
+import xueli.gamengine.view.anim2d.Constant;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import xueli.gamengine.view.anim2d.Constant;
 
 public class GuiAnimationGroup extends IAnimation {
 

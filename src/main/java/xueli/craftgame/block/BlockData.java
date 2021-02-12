@@ -1,10 +1,6 @@
 package xueli.craftgame.block;
 
-import java.util.ArrayList;
-import java.util.Objects;
-
 import org.lwjgl.nanovg.NVGColor;
-
 import xueli.craftgame.block.rendercontrol.model.IModel;
 import xueli.craftgame.world.Chunk;
 import xueli.craftgame.world.World;
@@ -13,6 +9,9 @@ import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.store.Color;
 import xueli.gamengine.utils.store.FloatList;
 import xueli.gamengine.utils.vector.Vector2s;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class BlockData {
 

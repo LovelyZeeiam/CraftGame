@@ -1,10 +1,10 @@
 package xueli.gamengine.utils;
 
-import java.nio.FloatBuffer;
-
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
+
+import java.nio.FloatBuffer;
 
 public class FloatBufferWrapper {
 	

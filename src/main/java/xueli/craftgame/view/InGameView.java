@@ -1,21 +1,14 @@
 package xueli.craftgame.view;
 
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgCircle;
-import static org.lwjgl.nanovg.NanoVG.nvgFill;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
-import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
-import static org.lwjgl.nanovg.NanoVG.nvgImagePattern;
-import static org.lwjgl.nanovg.NanoVG.nvgRect;
-
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NanoVG;
-
 import xueli.craftgame.CraftGame;
 import xueli.craftgame.WorldLogic;
 import xueli.gamengine.utils.Display;
 import xueli.gamengine.view.View;
+
+import static org.lwjgl.nanovg.NanoVG.*;
 
 public abstract class InGameView extends View {
 

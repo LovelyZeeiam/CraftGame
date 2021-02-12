@@ -1,10 +1,10 @@
 package xueli.craftgame.client.inventory;
 
-import java.util.ArrayList;
-
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.entity.Player;
 import xueli.craftgame.world.World;
+
+import java.util.ArrayList;
 
 public class Inventory {
 

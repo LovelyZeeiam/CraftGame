@@ -8,7 +8,7 @@ public class Logger {
 	public static boolean debug = true;
 	private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
 
-	private static void printDate() {
+	private static synchronized void printDate() {
 		System.out.print(format.format(new Date()));
 
 		// 上上一级方法der~
@@ -19,26 +19,26 @@ public class Logger {
 
 	}
 
-	public static void info(Object o) {
+	public static synchronized void info(Object o) {
 		printDate();
 		System.out.println("[Info] " + o);
 	}
 
-	public static void warn(Object o) {
+	public static synchronized void warn(Object o) {
 		printDate();
 		System.out.println("[Warn] " + o);
 	}
 
-	public static void error(Object o) {
+	public static synchronized void error(Object o) {
 		printDate();
 		System.out.println("[Error] " + o);
 	}
 
-	public static void error(Throwable throwable) {
+	public static synchronized void error(Throwable throwable) {
 		throw new RuntimeException(throwable);
 	}
 
-	public static void checkNullAndThrow(Object o, String message) {
+	public static synchronized void checkNullAndThrow(Object o, String message) {
 		if (o == null)
 			error(new Exception(message));
 	}

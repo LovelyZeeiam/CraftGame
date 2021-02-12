@@ -1,28 +1,8 @@
 package xueli.craftgame.block;
 
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
-import static org.lwjgl.opengl.GL11.glBindTexture;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glDrawArrays;
-import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glViewport;
-
-import java.util.HashMap;
-
 import org.lwjgl.nanovg.NanoVG;
 import org.lwjgl.nanovg.NanoVGGL2;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL13;
-import org.lwjgl.opengl.GL15;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
-
+import org.lwjgl.opengl.*;
 import xueli.craftgame.CraftGame;
 import xueli.craftgame.world.WorldGLData;
 import xueli.gamengine.resource.TextureAtlas;
@@ -30,6 +10,10 @@ import xueli.gamengine.utils.framebuffer.FrameBuffer;
 import xueli.gamengine.utils.resource.Shader;
 import xueli.gamengine.utils.store.FloatList;
 import xueli.gamengine.utils.vector.Vector;
+
+import java.util.HashMap;
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class BlockReviewGenerator {
 

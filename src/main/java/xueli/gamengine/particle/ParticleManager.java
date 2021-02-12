@@ -1,15 +1,14 @@
 package xueli.gamengine.particle;
 
-import java.util.ArrayList;
-
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
-
 import xueli.gamengine.IGame;
 import xueli.gamengine.data.WhenComponentComeToEnd;
 import xueli.gamengine.utils.GLHelper;
 import xueli.gamengine.utils.resource.Shader;
 import xueli.gamengine.utils.vector.Vector;
+
+import java.util.ArrayList;
 
 public class ParticleManager {
 

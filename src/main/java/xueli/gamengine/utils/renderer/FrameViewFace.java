@@ -1,13 +1,9 @@
 package xueli.gamengine.utils.renderer;
 
-import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
-import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgluBindFramebuffer;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgluCreateFramebuffer;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgluDeleteFramebuffer;
-
 import org.lwjgl.nanovg.NVGLUFramebuffer;
+
+import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.nanovg.NanoVGGL3.*;
 
 public abstract class FrameViewFace extends Face {
 

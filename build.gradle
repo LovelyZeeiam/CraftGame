@@ -68,7 +68,6 @@ dependencies {
     
     compile group: 'org.lwjgl', name: 'lwjgl-openal', version: lwjgl_version, changing: true
     compile group: 'org.lwjgl', name: 'lwjgl-openal', version: lwjgl_version, changing: true, classifier: 'natives-windows'
-    compile group: 'org.lwjgl', name: 'lwjgl-openal', version: lwjgl_version, changing: true, classifier: 'natives-linux'
     compile group: 'org.lwjgl', name: 'lwjgl-openal', version: lwjgl_version, changing: true, classifier: 'natives-macos'
     
  	compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true
@@ -88,8 +87,6 @@ dependencies {
 
     compile group: 'org.iq80.leveldb', name: 'leveldb', version: '0.12'
     compile 'com.flowpowered:flow-nbt:1.0.0'
-
-
 
 }
 

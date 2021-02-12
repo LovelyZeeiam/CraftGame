@@ -1,26 +1,12 @@
 package xueli.craftgame;
 
-import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
-import static org.lwjgl.nanovg.NanoVG.nvgCreateFont;
-import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_ANTIALIAS;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_DEBUG;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_STENCIL_STROKES;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgCreate;
-import static org.lwjgl.nanovg.NanoVGGL3.nvglCreateImageFromHandle;
-import static org.lwjgl.opengl.GL11.glViewport;
-
-import java.nio.ByteBuffer;
-import java.util.ConcurrentModificationException;
-import java.util.HashMap;
-
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.util.vector.Matrix4f;
-
 import xueli.craftgame.block.Blocks;
+import xueli.craftgame.command.Commands;
+import xueli.craftgame.command.ConsoleCommandParser;
 import xueli.craftgame.entity.Player;
 import xueli.craftgame.item.Items;
 import xueli.craftgame.view.HUDView;
@@ -43,6 +29,14 @@ import xueli.gamengine.utils.resource.Shader;
 import xueli.gamengine.view.GUIProgressBar;
 import xueli.gamengine.view.View;
 
+import java.nio.ByteBuffer;
+import java.util.ConcurrentModificationException;
+import java.util.HashMap;
+
+import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.nanovg.NanoVGGL3.*;
+import static org.lwjgl.opengl.GL11.glViewport;
+
 public class WorldLogic implements Runnable {
 
 	private final CraftGame cg;
@@ -55,7 +49,7 @@ public class WorldLogic implements Runnable {
 	private Player player;
 	private TextureAtlas blockTextureAtlas;
 	private Shader blockRenderShader;
-
+	
 	private int drawDistance = 8;
 
 	/**
@@ -88,6 +82,9 @@ public class WorldLogic implements Runnable {
 	private ParticleManager particleManager;
 
 	private Faces faces;
+	
+	private Commands commands;
+	private ConsoleCommandParser consoleCommandParser;
 
 	@WorldGLData
 	public WorldLogic(CraftGame cg) {
@@ -113,6 +110,9 @@ public class WorldLogic implements Runnable {
 
 		Blocks.init(nvg, cg, (TextureAtlas) cg.getTextureManager().getTexture("blocks"));
 		Items.init(this);
+		
+		commands = new Commands(world);
+		consoleCommandParser = new ConsoleCommandParser(commands, world);
 
 		ingameView = new HUDView(this);
 
@@ -172,6 +172,8 @@ public class WorldLogic implements Runnable {
 		});
 
 		world_loading_progressBar.setProgress(1.0f);
+
+		consoleCommandParser.start();
 
 		try {
 			Thread.sleep(100);
@@ -398,6 +400,8 @@ public class WorldLogic implements Runnable {
 			
 		}
 
+
+
 	}
 
 	public int getVertexCount() {
@@ -479,6 +483,9 @@ public class WorldLogic implements Runnable {
 
 	public void delete() {
 		try {
+			consoleCommandParser.stopstopstop();
+			consoleCommandParser.interrupt();
+
 			isClosing = true;
 			Items.release(this);
 			nvgTextures.clear();

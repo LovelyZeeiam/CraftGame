@@ -2,7 +2,6 @@ package xueli.gamengine.particle;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
-
 import xueli.gamengine.utils.renderer.Renderer;
 
 public class ParticleRenderer extends Renderer {

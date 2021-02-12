@@ -1,9 +1,9 @@
 package xueli.gamengine.utils.store;
 
-import java.util.Arrays;
-
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+
+import java.util.Arrays;
 
 public class FloatList {
 

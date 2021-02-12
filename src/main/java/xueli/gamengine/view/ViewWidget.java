@@ -1,17 +1,13 @@
 package xueli.gamengine.view;
 
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgFill;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
-import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
-
 import org.lwjgl.nanovg.NVGColor;
-
 import xueli.gamengine.utils.Display;
 import xueli.gamengine.utils.evalable.EvalableFloat;
 import xueli.gamengine.view.anim2d.Constant;
 import xueli.gamengine.view.text.KeyDesc;
 import xueli.gamengine.view.text.KeyType;
+
+import static org.lwjgl.nanovg.NanoVG.*;
 
 public abstract class ViewWidget implements AutoCloseable {
 

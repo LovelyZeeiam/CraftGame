@@ -1,8 +1,8 @@
 package xueli.gamengine.utils.evalable;
 
-import javax.script.ScriptException;
-
 import xueli.gamengine.utils.Display;
+
+import javax.script.ScriptException;
 
 public class EvalableFloat {
 
