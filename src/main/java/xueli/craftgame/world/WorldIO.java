@@ -1,5 +1,6 @@
 package xueli.craftgame.world;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,9 +38,8 @@ public class WorldIO {
 	private ExecutorService service = Executors.newFixedThreadPool(10);
 
 	public void readChunk(int x, int z) {
-		service.submit(() -> {
 			try {
-				NBTInputStream in = new NBTInputStream(new FileInputStream(path + getChunkSaveName(x, z)), false,
+				NBTInputStream in = new NBTInputStream(new BufferedInputStream(new FileInputStream(path + getChunkSaveName(x, z))), false,
 						ByteOrder.LITTLE_ENDIAN);
 				CompoundTag tag = (CompoundTag) in.readTag();
 				in.close();
@@ -47,8 +47,10 @@ public class WorldIO {
 				world.chunks.put(MathUtils.vert2ToLong(x, z), new Chunk(x, z, world, tag));
 
 			} catch (Throwable e) {
-				Logger.warn(e.getClass().getName() + ": " + e.getMessage());
+				//Logger.warn(e.getClass().getName() + ": " + e.getMessage());
 
+				e.printStackTrace();
+				
 				// 生成新的区块
 				world.chunks.put(MathUtils.vert2ToLong(x, z), world.getGen().superflat(x, z));
 
@@ -56,7 +58,6 @@ public class WorldIO {
 				System.gc();
 
 			}
-		});
 
 	}
 

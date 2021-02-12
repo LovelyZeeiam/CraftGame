@@ -59,15 +59,37 @@ public class ChunkGrid implements Saveable {
 		}
 		rootTag.put(new ListTag<>("blockStates", CompoundTag.class, tilesTag));
 
-		ArrayList<IntTag> data = new ArrayList<>(Chunk.size * Chunk.size * Chunk.height);
-		for (int i = 0; i < Chunk.size; i++) {
-			for (int q = 0; q < Chunk.size; q++) {
-				for (int m = 0; m < Chunk.height; m++) {
-					data.add(new IntTag("", states[i][m][q]));
+		// 用到一种简单的压缩算法
+		ArrayList<IntTag> saveData = new ArrayList<IntTag>();
+		
+		int stateToSave = -1;
+		int stateRepeatNum = 0;
+		
+		for (int m = 0; m < Chunk.height; m++) {
+			for (int i = 0; i < Chunk.size; i++) {
+				for (int q = 0; q < Chunk.size; q++) {
+					int state = states[i][m][q];
+					
+					if(stateToSave == state) {
+						stateRepeatNum++;
+						
+					} else {
+						saveData.add(new IntTag("", stateToSave));
+						saveData.add(new IntTag("", stateRepeatNum));
+						
+						stateToSave = state;
+						stateRepeatNum = 1;
+						
+					}
+					
 				}
 			}
 		}
-		rootTag.put(new ListTag<>("blocks", IntTag.class, data));
+		
+		saveData.add(new IntTag("", stateToSave));
+		saveData.add(new IntTag("", stateRepeatNum));
+		
+		rootTag.put(new ListTag<IntTag>("grid", IntTag.class, saveData));
 
 		return new CompoundTag("", rootTag);
 	}
@@ -85,16 +107,27 @@ public class ChunkGrid implements Saveable {
 					tiles.add(new Tile(tag, logic));
 			}
 
-			List<IntTag> blocks = (List<IntTag>) rootTag.get("blocks").getValue();
-			for (int i = 0; i < Chunk.size * Chunk.size * Chunk.height; i++) {
-				int value = blocks.get(i).getValue();
-
-				int x = i / Chunk.size / Chunk.height;
-				int z = (i - x * Chunk.size * Chunk.height) / Chunk.height;
-				int y = i - x * Chunk.size * Chunk.height - z * Chunk.height;
-
-				this.states[x][y][z] = value;
-
+			List<IntTag> gridCompressList = (List<IntTag>) rootTag.get("grid").getValue();
+			
+			int pointer = 0;
+			int allCount = Chunk.size * Chunk.size * Chunk.height;
+			
+			int compressListCount = 0;
+			
+			while(pointer < allCount) {
+				int state = gridCompressList.get(compressListCount).getValue();
+				int repeatCount = gridCompressList.get(compressListCount + 1).getValue();
+				compressListCount += 2;
+				
+				for(int i = 0; i < repeatCount; i++) {
+					int y = pointer / Chunk.size / Chunk.size;
+					int x = (pointer - y * Chunk.size * Chunk.size) / Chunk.size;
+					int z = pointer - y * Chunk.size * Chunk.size - x * Chunk.size;
+					
+					states[x][y][z] = state;
+					pointer++;
+				}
+				
 			}
 
 		}
