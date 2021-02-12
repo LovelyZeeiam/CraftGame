@@ -1,10 +1,10 @@
 package xueli.gamengine.musicjson;
 
-import xueli.gamengine.utils.resource.SoundManager;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+
+import xueli.gamengine.utils.resource.SoundManager;
 
 public class NoteType {
 

@@ -1,9 +1,12 @@
 package xueli.craftgame.particles;
 
+import java.nio.FloatBuffer;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
+
 import xueli.gamengine.IGame;
 import xueli.gamengine.data.WhenComponentComeToEnd;
 import xueli.gamengine.particle.Particle;
@@ -12,8 +15,6 @@ import xueli.gamengine.resource.Texture;
 import xueli.gamengine.utils.FloatBufferWrapper;
 import xueli.gamengine.utils.Time;
 import xueli.gamengine.utils.resource.Shader;
-
-import java.nio.FloatBuffer;
 
 public class ParticleFirework extends Particle {
 

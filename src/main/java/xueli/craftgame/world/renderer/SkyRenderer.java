@@ -1,10 +1,16 @@
 package xueli.craftgame.world.renderer;
 
-import com.google.gson.JsonArray;
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
+import java.util.HashMap;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
+
+import com.google.gson.JsonArray;
+
 import xueli.craftgame.world.World;
 import xueli.gamengine.resource.Options;
 import xueli.gamengine.resource.Texture;
@@ -14,10 +20,6 @@ import xueli.gamengine.utils.Time;
 import xueli.gamengine.utils.math.MatrixHelper;
 import xueli.gamengine.utils.resource.Shader;
 import xueli.gamengine.utils.vector.Vector;
-
-import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
-import java.util.HashMap;
 
 public class SkyRenderer extends IWorldRenderer {
 
@@ -220,7 +222,7 @@ public class SkyRenderer extends IWorldRenderer {
 		{
 			this.shader.use();
 
-			Vector vector = world.getWorldLogic().getClientPlayer().pos;
+			Vector vector = world.getWorldLogic().getCameraPos();
 			Matrix4f viewMatrix = MatrixHelper.player(new Vector(0, 0, 0, vector.rotX, vector.rotY, vector.rotZ));
 			this.shader.setUniformMatrix(loc_viewMatrix, viewMatrix);
 
@@ -252,7 +254,7 @@ public class SkyRenderer extends IWorldRenderer {
 			this.cloudShader.setUniformMatrix(loc_cloud_model_matrix, cloud_translate_matrix);
 
 			this.cloudShader.setUniformMatrix(loc_cloud_view_matrix,
-					MatrixHelper.player(world.getWorldLogic().getClientPlayer().pos));
+					MatrixHelper.player(world.getWorldLogic().getCameraPos()));
 			
 			this.cloudShader.setFloat(loc_cloud_alpha, cloud_alpha);
 

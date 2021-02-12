@@ -1,9 +1,9 @@
 package xueli.gamengine.view;
 
+import java.util.HashMap;
+
 import xueli.gamengine.utils.Time;
 import xueli.gamengine.view.anim2d.Constant;
-
-import java.util.HashMap;
 
 public abstract class IAnimation {
 

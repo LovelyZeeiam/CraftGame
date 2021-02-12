@@ -1,6 +1,7 @@
 package xueli.craftgame.entity;
 
 import org.lwjgl.util.vector.Vector3f;
+
 import xueli.craftgame.world.World;
 import xueli.gamengine.physics.AABB;
 import xueli.gamengine.utils.Time;
@@ -75,5 +76,9 @@ public abstract class Entity {
 	public abstract float getSpeed();
 
 	public abstract AABB getOriginAABB();
+	
+	public World getWorld() {
+		return world;
+	}
 
 }

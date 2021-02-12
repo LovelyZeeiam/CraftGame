@@ -11,6 +11,13 @@ public class Vector3i {
 		this.y = y;
 		this.z = z;
 	}
+	
+	public Vector3i(Vector3f floatVector) {
+		this.x = (int) Math.floor(floatVector.x);
+		this.y = (int) Math.floor(floatVector.y);
+		this.z = (int) Math.floor(floatVector.z);
+		
+	}
 
 	public int getX() {
 		return x;
@@ -26,7 +33,7 @@ public class Vector3i {
 
 	@Override
 	public String toString() {
-		return x + "," + y + "," + z;
+		return x + ", " + y + ", " + z;
 	}
 
 	@Override

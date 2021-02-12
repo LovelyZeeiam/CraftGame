@@ -1,9 +1,9 @@
 package xueli.gamengine.tool.view;
 
+import java.io.File;
+
 import org.apache.commons.io.monitor.FileAlterationListenerAdaptor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
-
-import java.io.File;
 
 public class FileListener extends FileAlterationListenerAdaptor {
 

@@ -1,13 +1,14 @@
 package xueli.gamengine.utils.renderer;
 
+import java.nio.ByteBuffer;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
+
 import xueli.gamengine.utils.GLHelper;
 import xueli.gamengine.utils.Logger;
-
-import java.nio.ByteBuffer;
 
 public class Renderer {
 

@@ -3,6 +3,7 @@ package xueli.craftgame.entity;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector3i;
+
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.block.data.BlockFace;
 import xueli.craftgame.client.inventory.Inventory;
@@ -22,11 +23,8 @@ public class Player extends Entity {
 
 	private long placeTimeCount = 0;
 	private static AABB originAABB = new AABB(-0.5f, 0.5f, -1.5f, 0.5f, -0.5f, 0.5f);
-	public int gamemode = 1;
-	public int health = 20;
-	public float resistant = 0.0005f;
-	public float sensivity = 0.05f;
-
+	public float sensivity = 0.1f;
+	
 	private Inventory inventory;
 
 	public Player(float x, float y, float z, World world) {

@@ -1,10 +1,28 @@
 package xueli.craftgame;
 
+import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
+import static org.lwjgl.nanovg.NanoVG.nvgCreateFont;
+import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
+import static org.lwjgl.nanovg.NanoVGGL3.NVG_ANTIALIAS;
+import static org.lwjgl.nanovg.NanoVGGL3.NVG_DEBUG;
+import static org.lwjgl.nanovg.NanoVGGL3.NVG_STENCIL_STROKES;
+import static org.lwjgl.nanovg.NanoVGGL3.nvgCreate;
+import static org.lwjgl.nanovg.NanoVGGL3.nvglCreateImageFromHandle;
+import static org.lwjgl.opengl.GL11.glViewport;
+
+import java.nio.ByteBuffer;
+import java.util.ConcurrentModificationException;
+import java.util.HashMap;
+
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.util.vector.Matrix4f;
+
 import xueli.craftgame.block.Blocks;
+import xueli.craftgame.client.camera.Camera;
+import xueli.craftgame.command.CommandParseException;
 import xueli.craftgame.command.Commands;
 import xueli.craftgame.command.ConsoleCommandParser;
 import xueli.craftgame.entity.Player;
@@ -26,16 +44,9 @@ import xueli.gamengine.utils.math.MatrixHelper;
 import xueli.gamengine.utils.renderer.Faces;
 import xueli.gamengine.utils.renderer.Renderer;
 import xueli.gamengine.utils.resource.Shader;
+import xueli.gamengine.utils.vector.Vector;
 import xueli.gamengine.view.GUIProgressBar;
 import xueli.gamengine.view.View;
-
-import java.nio.ByteBuffer;
-import java.util.ConcurrentModificationException;
-import java.util.HashMap;
-
-import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.nanovg.NanoVGGL3.*;
-import static org.lwjgl.opengl.GL11.glViewport;
 
 public class WorldLogic implements Runnable {
 
@@ -85,6 +96,9 @@ public class WorldLogic implements Runnable {
 	
 	private Commands commands;
 	private ConsoleCommandParser consoleCommandParser;
+	
+	private Camera camera;
+	private Vector cameraPos;
 
 	@WorldGLData
 	public WorldLogic(CraftGame cg) {
@@ -100,8 +114,6 @@ public class WorldLogic implements Runnable {
 
 		this.particleManager = new ParticleManager(cg, cg.getShaderResource().get("particle"));
 
-		// 游戏内gui绘制
-
 		cg.getTextureManager().getTextures().forEach((e, t) -> {
 			if (e.startsWith("ingame.")) {
 				nvgTextures.put(e, nvglCreateImageFromHandle(nvg, t.id, t.width, t.height, NVG_IMAGE_NEAREST));
@@ -110,12 +122,11 @@ public class WorldLogic implements Runnable {
 
 		Blocks.init(nvg, cg, (TextureAtlas) cg.getTextureManager().getTexture("blocks"));
 		Items.init(this);
-		
-		commands = new Commands(world);
-		consoleCommandParser = new ConsoleCommandParser(commands, world);
 
 		ingameView = new HUDView(this);
 
+		this.running = true;
+		
 	}
 
 	public void loadLevel() {
@@ -173,7 +184,11 @@ public class WorldLogic implements Runnable {
 
 		world_loading_progressBar.setProgress(1.0f);
 
+		commands = new Commands(world);
+		consoleCommandParser = new ConsoleCommandParser(commands, world);
 		consoleCommandParser.start();
+		
+		camera = new Camera(player);
 
 		try {
 			Thread.sleep(100);
@@ -207,6 +222,14 @@ public class WorldLogic implements Runnable {
 
 	public Player getClientPlayer() {
 		return player;
+	}
+	
+	public Camera getCamera() {
+		return camera;
+	}
+	
+	public Matrix4f getPlayerMatrix() {
+		return playerMatrix;
 	}
 
 	public Shader getBlockRenderShader() {
@@ -246,7 +269,8 @@ public class WorldLogic implements Runnable {
 		player.tick();
 		world.tick(player);
 		// 生成玩家视角的视角矩阵
-		playerMatrix = MatrixHelper.player(player.pos);
+		cameraPos = camera.getViewVectotVector();
+		playerMatrix = MatrixHelper.player(cameraPos);
 		MatrixHelper.calculateFrustumPlane();
 
 		// 玩家指针指向方块的更新
@@ -400,8 +424,6 @@ public class WorldLogic implements Runnable {
 			
 		}
 
-
-
 	}
 
 	public int getVertexCount() {
@@ -469,6 +491,15 @@ public class WorldLogic implements Runnable {
 		if (this.state == State.ESC_MENU)
 			ingameView = null;
 
+		if(KeyCallback.keysOnce[GLFW.GLFW_KEY_F5]) {
+			camera.toggleCamState();
+			
+		}
+		
+	}
+	
+	public Vector getCameraPos() {
+		return cameraPos;
 	}
 
 	public CraftGame getCg() {
@@ -477,6 +508,21 @@ public class WorldLogic implements Runnable {
 
 	public World getWorld() {
 		return world;
+	}
+
+	public Commands getCommands() {
+		return commands;
+	}
+
+	public synchronized void executeCommands(String commands) {
+		try {
+			this.commands.parse(commands);
+		} catch (CommandParseException e) {
+			Logger.error("Command Error: " + e.getMessage());
+		} catch(Exception ignored) {
+			ignored.printStackTrace();
+		}
+
 	}
 
 	private volatile boolean isClosing = false;
@@ -492,6 +538,9 @@ public class WorldLogic implements Runnable {
 			//nvgDelete(nvg);
 			normalRenderer.delete();
 			closeLevel();
+			
+			running = false;
+			
 		} catch (ConcurrentModificationException e) {
 		}
 

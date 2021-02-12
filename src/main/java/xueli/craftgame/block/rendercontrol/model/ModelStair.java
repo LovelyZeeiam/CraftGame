@@ -1,9 +1,13 @@
 package xueli.craftgame.block.rendercontrol.model;
 
-import com.google.gson.JsonObject;
+import java.util.ArrayList;
+
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector3i;
+
+import com.google.gson.JsonObject;
+
 import xueli.craftgame.block.BlockData;
 import xueli.craftgame.block.BlockParameters;
 import xueli.craftgame.block.Tile;
@@ -15,8 +19,6 @@ import xueli.gamengine.physics.AABB;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.store.FloatList;
 import xueli.gamengine.utils.vector.Vector2s;
-
-import java.util.ArrayList;
 
 public class ModelStair extends IModel {
 

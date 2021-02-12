@@ -1,11 +1,13 @@
 package xueli.craftgame.command;
 
+import java.util.HashMap;
+
+import xueli.craftgame.command.parsers.CommandFunction;
 import xueli.craftgame.command.parsers.CommandPlaysound;
 import xueli.craftgame.command.parsers.CommandSay;
+import xueli.craftgame.command.parsers.CommandSchedule;
 import xueli.craftgame.world.World;
 import xueli.gamengine.utils.Logger;
-
-import java.util.HashMap;
 
 public class Commands {
 	
@@ -21,7 +23,9 @@ public class Commands {
 	private void init() {
 		register(new CommandSay());
 		register(new CommandPlaysound());
-		
+		register(new CommandSchedule());
+		register(new CommandFunction());
+
 	}
 
 	private void register(CommandParser parser) {
@@ -30,7 +34,7 @@ public class Commands {
 	}
 
 	public void parse(String command) throws CommandParseException {
-		if(!command.startsWith("/"))
+		if(command == null || !command.startsWith("/"))
 			return;
 		String realCommand = command.substring(1);
 

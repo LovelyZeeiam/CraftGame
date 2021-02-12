@@ -1,21 +1,20 @@
 package xueli.craftgame.command;
 
-import xueli.craftgame.world.World;
-import xueli.gamengine.utils.Logger;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import xueli.craftgame.world.World;
 
 public class ConsoleCommandParser extends Thread {
 
-    private BufferedReader scanner;
+    private Scanner scanner;
     private Commands commands;
     private World world;
 
     private boolean stop = false;
 
     public ConsoleCommandParser(Commands commands, World world) {
-        this.scanner = new BufferedReader(new InputStreamReader(System.in));
+        this.scanner = new Scanner(System.in);
         this.commands = commands;
         this.world = world;
 
@@ -24,12 +23,15 @@ public class ConsoleCommandParser extends Thread {
     @Override
     public void run() {
         while(!stop) {
+            String command = null;
             try {
-                String command = scanner.readLine();
-                commands.parse(command);
-            } catch (CommandParseException e) {
-                Logger.error("Command Error: " + e.getMessage());
-            } catch(Exception ignored) {}
+            	command = scanner.nextLine();
+            } catch (NoSuchElementException e) {
+				xueli.gamengine.utils.Logger.warn("Wanna use Ctrl-Z to crash the game~");
+				System.exit(114514);
+			}
+            world.getWorldLogic().executeCommands(command);
+
 
         }
 

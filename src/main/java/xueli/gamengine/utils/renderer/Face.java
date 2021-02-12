@@ -1,9 +1,13 @@
 package xueli.gamengine.utils.renderer;
 
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.*;
-
 import java.nio.IntBuffer;
+
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
+import org.lwjgl.opengl.GL15;
+import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL30;
 
 /**
  * 默认都是绘制矩形的面

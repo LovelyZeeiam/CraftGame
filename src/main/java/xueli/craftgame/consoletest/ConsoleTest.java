@@ -1,8 +1,8 @@
 package xueli.craftgame.consoletest;
 
-import xueli.gamengine.utils.Logger;
-
 import java.util.ArrayList;
+
+import xueli.gamengine.utils.Logger;
 
 public class ConsoleTest implements Runnable {
 
