@@ -70,8 +70,8 @@ public class Chunk implements Saveable {
 			if (bufferForAlphaDraw == null)
 				bufferForAlphaDraw = new FloatList(5000);
 
-			int offset_x = chunkX << size_yiwei;
-			int offset_z = chunkZ << size_yiwei;
+			int offset_x = chunkX * Chunk.size;
+			int offset_z = chunkZ * Chunk.size;
 
 			vertCount = 0;
 			vertCountForAlphaDraw = 0;
@@ -86,6 +86,8 @@ public class Chunk implements Saveable {
 						if (block != null) {
 							BlockParameters params = block.getParams();
 							if (block.getModel().isAlpha(world)) {
+								//System.out.println((x + offset_x) + ", " + (y) + ", " + (z + offset_z));
+								
 								vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z,
 										BlockFace.LEFT, blockTextureAtlas, bufferForAlphaDraw, params, world, this);
 								vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z,
@@ -96,8 +98,8 @@ public class Chunk implements Saveable {
 										BlockFace.BACK, blockTextureAtlas, bufferForAlphaDraw, params, world, this);
 								vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z,
 										BlockFace.BOTTOM, blockTextureAtlas, bufferForAlphaDraw, params, world, this);
-								vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.TOP,
-										blockTextureAtlas, bufferForAlphaDraw, params, world, this);
+								vertCountForAlphaDraw += block.getDrawData(x + offset_x, y, z + offset_z, 
+										BlockFace.TOP,  blockTextureAtlas, bufferForAlphaDraw, params, world, this);
 
 							} else if (!block.getModel().isCompleteBlock(world)) {
 								vertCount += block.getDrawData(x + offset_x, y, z + offset_z, BlockFace.LEFT,
@@ -193,6 +195,10 @@ public class Chunk implements Saveable {
 					}
 				}
 			}
+			
+			//System.out.println(chunkX + "," + chunkZ + ": " + bufferForAlphaDraw.toString());
+			//System.out.println(chunkX + "," + chunkZ + ": " + vertCountForAlphaDraw);
+			
 		}
 
 		needRebuild = false;

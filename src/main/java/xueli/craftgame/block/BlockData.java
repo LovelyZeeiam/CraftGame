@@ -108,4 +108,9 @@ public class BlockData {
 		return Objects.hash(namespace, listener);
 	}
 
+	@Override
+	public String toString() {
+		return "BlockData [namespace=" + namespace + ", blockName=" + blockName + "]";
+	}
+	
 }

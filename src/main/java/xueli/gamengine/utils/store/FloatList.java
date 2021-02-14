@@ -35,6 +35,7 @@ public class FloatList {
 	public void clear() {
 		this.pointer = 0;
 		this.size = 0;
+		this.hasChanged = true;
 
 	}
 
@@ -84,6 +85,7 @@ public class FloatList {
 			System.arraycopy(data, 0, realData, 0, size);
 			this.realDataCache = realData;
 			hasChanged = false;
+			
 		}
 		return this.realDataCache;
 	}

@@ -260,6 +260,7 @@ public class World {
 			chunk.update(textureAtlas);
 			vertCount += chunk.getVertCountForAlphaDraw();
 			drawData.put(chunk.getBufferForAlphaDraw().getData());
+			
 		}
 
 		return vertCount;

@@ -130,4 +130,9 @@ public class Tile implements Saveable {
 		return Objects.hash(data, params);
 	}
 
+	@Override
+	public String toString() {
+		return "Tile [data=" + data + ", params=" + params + "]";
+	}
+	
 }

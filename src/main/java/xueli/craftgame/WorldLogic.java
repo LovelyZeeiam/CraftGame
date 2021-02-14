@@ -40,7 +40,6 @@ import xueli.gamengine.utils.Display;
 import xueli.gamengine.utils.GLHelper;
 import xueli.gamengine.utils.callbacks.KeyCallback;
 import xueli.gamengine.utils.math.MatrixHelper;
-import xueli.gamengine.utils.renderer.Faces;
 import xueli.gamengine.utils.renderer.Renderer;
 import xueli.gamengine.utils.resource.Shader;
 import xueli.gamengine.utils.vector.Vector;
@@ -92,7 +91,6 @@ public class WorldLogic implements Runnable {
 
 	private ParticleManager particleManager;
 
-	private Faces faces;
 	
 	private Commands commands;
 	private ConsoleCommandParser consoleCommandParser;
@@ -105,7 +103,6 @@ public class WorldLogic implements Runnable {
 		this.cg = cg;
 
 		normalRenderer = new Renderer();
-		faces = new Faces(this);
 		shadowMapper = new ShadowMapper(cg, this);
 
 		blockRenderShader = cg.getShaderResource().get("world");
@@ -330,10 +327,6 @@ public class WorldLogic implements Runnable {
 
 		}
 
-		shadowMapper.bindBuffer();
-		shadowMapper.clearBuffer();
-		shadowMapper.renderToDepthBuffer(normalRenderer);
-		shadowMapper.unbindBuffer();
 
 		setNormalViewPort();
 
@@ -428,10 +421,6 @@ public class WorldLogic implements Runnable {
 
 	public int getVertexCount() {
 		return vertexCount;
-	}
-
-	public Faces getFaces() {
-		return faces;
 	}
 
 	public void onMouseScroll(float scroll) {
