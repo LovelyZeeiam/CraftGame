@@ -19,7 +19,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
 import xueli.gamengine.utils.IOUtils;
-import xueli.gamengine.utils.Logger;
 import xueli.gamengine.utils.evalable.EvalableFloat;
 import xueli.gamengine.view.AnimationWait;
 import xueli.gamengine.view.GUIBackground;
@@ -34,6 +33,7 @@ import xueli.gamengine.view.GuiAnimation;
 import xueli.gamengine.view.GuiAnimationGroup;
 import xueli.gamengine.view.IAnimation;
 import xueli.gamengine.view.View;
+import xueli.utils.Logger;
 
 public class GuiResource extends IResource {
 

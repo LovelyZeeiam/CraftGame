@@ -1,6 +1,6 @@
 package xueli.gamengine.view.anim2d;
 
-import xueli.gamengine.utils.Logger;
+import xueli.utils.Logger;
 
 @ComponentType(type = "text_changing")
 public class ComponentChangeText implements AnimComponent {

@@ -17,10 +17,10 @@ import xueli.gamengine.resource.IResource;
 import xueli.gamengine.resource.LangManager;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.resource.TextureManager;
-import xueli.gamengine.utils.Logger;
 import xueli.gamengine.utils.vector.Vector2s;
 import xueli.gamengine.view.GUIProgressBar;
 import xueli.gamengine.view.GUITextView;
+import xueli.utils.Logger;
 
 public class BlockResource extends IResource {
 

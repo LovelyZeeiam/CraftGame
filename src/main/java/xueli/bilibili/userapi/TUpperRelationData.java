@@ -1,4 +1,4 @@
-package xueli.utils.bilibili;
+package xueli.bilibili.userapi;
 
 public class TUpperRelationData {
 

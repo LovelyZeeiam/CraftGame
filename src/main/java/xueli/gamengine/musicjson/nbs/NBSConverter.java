@@ -19,8 +19,8 @@ public class NBSConverter {
 	private static final Gson gson = new Gson();
 
 	public static void main(String[] args) throws IOException {
-		convert("D:\\eclipse-java-workspace\\CraftGame\\res\\music\\One Summer Day.nbs",
-				"D:\\eclipse-java-workspace\\CraftGame\\res\\music\\One Summer Day.json");
+		convert("D:\\eclipse-java-workspace\\CraftGame\\res\\music\\pay no mind x easy.nbs",
+				"D:\\eclipse-java-workspace\\CraftGame\\res\\music\\pay no mind x easy.json");
 
 	}
 

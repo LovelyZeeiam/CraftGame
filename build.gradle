@@ -87,6 +87,8 @@ dependencies {
 
     compile group: 'org.iq80.leveldb', name: 'leveldb', version: '0.12'
     compile 'com.flowpowered:flow-nbt:1.0.0'
+    
+    compile 'org.java-websocket:Java-WebSocket:1.4.0'
 
 }
 

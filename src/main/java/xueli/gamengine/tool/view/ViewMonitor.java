@@ -38,9 +38,9 @@ import xueli.gamengine.resource.ShaderResource;
 import xueli.gamengine.resource.TextureManager;
 import xueli.gamengine.utils.Display;
 import xueli.gamengine.utils.GLHelper;
-import xueli.gamengine.utils.Logger;
 import xueli.gamengine.utils.resource.Shader;
 import xueli.gamengine.view.ViewManager;
+import xueli.utils.Logger;
 
 public class ViewMonitor {
 

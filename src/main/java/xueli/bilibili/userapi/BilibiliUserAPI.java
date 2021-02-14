@@ -1,4 +1,4 @@
-package xueli.utils.bilibili;
+package xueli.bilibili.userapi;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,9 +7,9 @@ import java.net.URL;
 
 import com.google.gson.Gson;
 
-import xueli.utils.bilibili.gsonTemplate.TUpperRelation;
+import xueli.bilibili.userapi.data.TUpperRelation;
 
-public class BilibiliAPI {
+public class BilibiliUserAPI {
 
 	public static Gson gson = new Gson();
 
@@ -19,7 +19,7 @@ public class BilibiliAPI {
 	private static final Thread realtimeGetFans = new Thread(() -> {
 		while (realtimeGetFansRunning) {
 			try {
-				follower = BilibiliAPI.getBilibiliUpperFollower(157262276);
+				follower = BilibiliUserAPI.getBilibiliUpperFollower(157262276);
 				System.out.println("宁的粉丝数: " + follower);
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {

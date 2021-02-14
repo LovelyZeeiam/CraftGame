@@ -15,8 +15,8 @@ import xueli.craftgame.world.Chunk;
 import xueli.craftgame.world.World;
 import xueli.gamengine.physics.AABB;
 import xueli.gamengine.resource.TextureAtlas;
-import xueli.gamengine.utils.Logger;
 import xueli.gamengine.utils.store.FloatList;
+import xueli.utils.Logger;
 
 public class Tile implements Saveable {
 

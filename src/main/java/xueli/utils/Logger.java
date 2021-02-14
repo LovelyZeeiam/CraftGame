@@ -1,4 +1,4 @@
-package xueli.gamengine.utils;
+package xueli.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

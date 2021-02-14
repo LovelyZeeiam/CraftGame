@@ -23,12 +23,12 @@ import org.lwjgl.util.vector.Vector2f;
 import xueli.gamengine.resource.GuiResource;
 import xueli.gamengine.resource.Options;
 import xueli.gamengine.utils.Display;
-import xueli.gamengine.utils.Logger;
 import xueli.gamengine.utils.framebuffer.FrameBuffer;
 import xueli.gamengine.utils.resource.Shader;
 import xueli.gamengine.view.GUIFader.Fader;
 import xueli.gamengine.view.text.KeyDesc;
 import xueli.gamengine.view.text.KeyType;
+import xueli.utils.Logger;
 
 public class ViewManager {
 

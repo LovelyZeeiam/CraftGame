@@ -11,8 +11,8 @@ import com.google.gson.JsonObject;
 
 import xueli.gamengine.resource.IResource;
 import xueli.gamengine.resource.LangManager;
-import xueli.gamengine.utils.Logger;
 import xueli.gamengine.utils.store.Color;
+import xueli.utils.Logger;
 
 public class BiomeResource extends IResource {
 

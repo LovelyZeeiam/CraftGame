@@ -35,7 +35,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import xueli.gamengine.utils.Logger;
+import xueli.utils.Logger;
 
 public class FrameBuffer {
 

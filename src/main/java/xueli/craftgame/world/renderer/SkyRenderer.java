@@ -15,11 +15,11 @@ import xueli.craftgame.world.World;
 import xueli.gamengine.resource.Options;
 import xueli.gamengine.resource.Texture;
 import xueli.gamengine.utils.GLHelper;
-import xueli.gamengine.utils.Logger;
 import xueli.gamengine.utils.Time;
 import xueli.gamengine.utils.math.MatrixHelper;
 import xueli.gamengine.utils.resource.Shader;
 import xueli.gamengine.utils.vector.Vector;
+import xueli.utils.Logger;
 
 public class SkyRenderer extends IWorldRenderer {
 

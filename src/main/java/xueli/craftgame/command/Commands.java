@@ -7,7 +7,7 @@ import xueli.craftgame.command.parsers.CommandPlaysound;
 import xueli.craftgame.command.parsers.CommandSay;
 import xueli.craftgame.command.parsers.CommandSchedule;
 import xueli.craftgame.world.World;
-import xueli.gamengine.utils.Logger;
+import xueli.utils.Logger;
 
 public class Commands {
 	

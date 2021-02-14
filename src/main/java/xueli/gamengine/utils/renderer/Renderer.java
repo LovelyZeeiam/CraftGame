@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 import xueli.gamengine.utils.GLHelper;
-import xueli.gamengine.utils.Logger;
+import xueli.utils.Logger;
 
 public class Renderer {
 

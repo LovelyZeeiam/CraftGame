@@ -17,11 +17,11 @@ import xueli.gamengine.data.Author;
 import xueli.gamengine.resource.GuiResource;
 import xueli.gamengine.utils.ClassFinder;
 import xueli.gamengine.utils.Display;
-import xueli.gamengine.utils.Logger;
 import xueli.gamengine.utils.UseReflect;
 import xueli.gamengine.utils.evalable.EvalableFloat;
 import xueli.gamengine.view.GuiColor;
 import xueli.gamengine.view.View;
+import xueli.utils.Logger;
 
 public class Anim2DView extends View {
 

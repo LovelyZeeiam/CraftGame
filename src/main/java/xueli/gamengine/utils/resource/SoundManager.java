@@ -38,7 +38,7 @@ import org.lwjgl.openal.ALC;
 import org.lwjgl.openal.ALCCapabilities;
 import org.newdawn.slick.openal.WaveData;
 
-import xueli.gamengine.utils.Logger;
+import xueli.utils.Logger;
 
 public class SoundManager {
 

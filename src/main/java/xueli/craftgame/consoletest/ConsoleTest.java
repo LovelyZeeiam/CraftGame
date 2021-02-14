@@ -2,7 +2,7 @@ package xueli.craftgame.consoletest;
 
 import java.util.ArrayList;
 
-import xueli.gamengine.utils.Logger;
+import xueli.utils.Logger;
 
 public class ConsoleTest implements Runnable {
 

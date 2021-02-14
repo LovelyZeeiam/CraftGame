@@ -7,7 +7,7 @@ import xueli.gamengine.utils.IOUtils;
 public class MusicJsonMain {
 
 	public static void main(String[] args) throws IOException {
-		String data = IOUtils.readFully("res/music/thief.json");
+		String data = IOUtils.readFully("res/music/pay no mind x easy.json");
 		MusicJson mj = new MusicJson(data);
 		mj.play();
 		mj.release();

@@ -5,8 +5,8 @@ import java.io.IOException;
 
 import com.google.gson.JsonObject;
 
-import xueli.gamengine.utils.Logger;
 import xueli.gamengine.utils.resource.SoundManager;
+import xueli.utils.Logger;
 
 public class AudioResource extends IResource {
 

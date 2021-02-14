@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 
-import xueli.gamengine.utils.Logger;
+import xueli.utils.Logger;
 
 public abstract class MouseButtonCallback extends GLFWMouseButtonCallback {
 

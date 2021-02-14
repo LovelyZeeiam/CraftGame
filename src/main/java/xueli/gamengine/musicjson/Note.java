@@ -1,6 +1,6 @@
 package xueli.gamengine.musicjson;
 
-public class Note extends INoteCommand {
+public class Note {
 
 	private String type;
 	private float rate;

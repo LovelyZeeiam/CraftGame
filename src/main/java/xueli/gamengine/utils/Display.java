@@ -56,6 +56,7 @@ import xueli.gamengine.utils.callbacks.DisplaySizedCallback;
 import xueli.gamengine.utils.callbacks.KeyCallback;
 import xueli.gamengine.utils.callbacks.MouseButtonCallback;
 import xueli.gamengine.utils.callbacks.MouseScrollCallback;
+import xueli.utils.Logger;
 
 public class Display {
 

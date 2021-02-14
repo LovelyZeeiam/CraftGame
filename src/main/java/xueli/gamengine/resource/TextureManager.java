@@ -28,9 +28,9 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
-import xueli.gamengine.utils.Logger;
 import xueli.gamengine.utils.vector.Vector2s;
 import xueli.gamengine.view.ViewManager;
+import xueli.utils.Logger;
 
 public class TextureManager implements Closeable {
 

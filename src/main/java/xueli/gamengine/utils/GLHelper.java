@@ -2,6 +2,8 @@ package xueli.gamengine.utils;
 
 import org.lwjgl.opengl.GL11;
 
+import xueli.utils.Logger;
+
 public class GLHelper {
 
 	public static void checkGLError(String state) {

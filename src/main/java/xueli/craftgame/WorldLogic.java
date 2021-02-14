@@ -38,7 +38,6 @@ import xueli.gamengine.resource.Texture;
 import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.Display;
 import xueli.gamengine.utils.GLHelper;
-import xueli.gamengine.utils.Logger;
 import xueli.gamengine.utils.callbacks.KeyCallback;
 import xueli.gamengine.utils.math.MatrixHelper;
 import xueli.gamengine.utils.renderer.Faces;
@@ -47,6 +46,7 @@ import xueli.gamengine.utils.resource.Shader;
 import xueli.gamengine.utils.vector.Vector;
 import xueli.gamengine.view.GUIProgressBar;
 import xueli.gamengine.view.View;
+import xueli.utils.Logger;
 
 public class WorldLogic implements Runnable {
 

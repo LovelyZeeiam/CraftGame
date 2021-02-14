@@ -11,8 +11,8 @@ import xueli.craftgame.world.Chunk;
 import xueli.craftgame.world.World;
 import xueli.craftgame.world.biome.BiomeResource;
 import xueli.gamengine.resource.LangManager;
-import xueli.gamengine.utils.Logger;
 import xueli.gamengine.utils.store.Color;
+import xueli.utils.Logger;
 
 public class WorldGenerationTest implements Runnable {
 

@@ -27,7 +27,7 @@ public class ConsoleCommandParser extends Thread {
             try {
             	command = scanner.nextLine();
             } catch (NoSuchElementException e) {
-				xueli.gamengine.utils.Logger.warn("Wanna use Ctrl-Z to crash the game~");
+				xueli.utils.Logger.warn("Wanna use Ctrl-Z to crash the game~");
 				System.exit(114514);
 			}
             world.getWorldLogic().executeCommands(command);

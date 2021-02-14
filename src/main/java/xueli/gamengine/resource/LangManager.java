@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.HashMap;
 
-import xueli.gamengine.utils.Logger;
+import xueli.utils.Logger;
 
 public class LangManager extends IResource {
 

@@ -1,4 +1,4 @@
-package xueli.utils.bilibili.gsonTemplate;
+package xueli.bilibili.userapi;
 
 public class TUpperRelation {
 
