@@ -156,7 +156,7 @@ public class CraftGame extends IGame {
 			queueRunningInMainThread.add(() -> loading_gui.setAnimation("loading"));
 
 			// 加载GUI
-			guiResource.loadGui(langManager, loading_TextView, loading_ProgressBar, 0.00f, 0.25f);
+			guiResource.loadGui(langManager, loading_TextView, loading_ProgressBar, 0.00f, 1.00f);
 
 			loading_TextView.setText(loading_messageString);
 
@@ -193,10 +193,6 @@ public class CraftGame extends IGame {
 			esc_menu.widgets.get("back_to_game_button").onClickListener = (button, action, offsetX, offsetY) -> {
 				if (action == GLFW.GLFW_RELEASE) {
 					// 从esc界面回到游戏中
-					viewManager.setGui((View) null);
-					worldLogic.gameGui = null;
-					worldLogic.state = State.INGAME;
-					worldLogic.toggleGuiExit();
 
 				}
 
@@ -216,16 +212,6 @@ public class CraftGame extends IGame {
 				}
 
 			};
-
-			// 加载方块
-			resource = new BlockResource("res/", langManager, textureManager);
-			resource.load(loading_TextView, loading_ProgressBar, 0.25f, 0.5f);
-
-			// 加载生物群系
-			queueRunningInMainThread.add(() -> loading_TextView.setText("Loading biomes..."));
-			new BiomeResource("res/", cg.getLangManager()).load();
-			Biomes.init();
-			queueRunningInMainThread.add(() -> loading_ProgressBar.setProgress(0.75f));
 
 			queueRunningInMainThread.add(() -> {
 				loading_TextView.setText("Loading...");
