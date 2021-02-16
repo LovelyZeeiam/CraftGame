@@ -7,6 +7,8 @@ public class Logger {
 
 	public static boolean debug = true;
 	private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
+	
+	private static String lastLogString = null;
 
 	private static synchronized void printDate() {
 		System.out.print(format.format(new Date()));
@@ -21,17 +23,20 @@ public class Logger {
 
 	public static synchronized void info(Object o) {
 		printDate();
-		System.out.println("[Info] " + o);
+		lastLogString = "[Info] " + o;
+		System.out.println(lastLogString);
 	}
 
 	public static synchronized void warn(Object o) {
 		printDate();
-		System.out.println("[Warn] " + o);
+		lastLogString = "[Warn] " + o;
+		System.out.println(lastLogString);
 	}
 
 	public static synchronized void error(Object o) {
 		printDate();
-		System.out.println("[Error] " + o);
+		lastLogString = "[Error] " + o;
+		System.out.println(lastLogString);
 	}
 
 	public static synchronized void error(Throwable throwable) {
@@ -43,4 +48,8 @@ public class Logger {
 			error(new Exception(message));
 	}
 
+	public static String getLastLogString() {
+		return lastLogString;
+	}
+	
 }

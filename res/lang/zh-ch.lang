@@ -15,6 +15,10 @@ esc_menu.quit=Save And Quit
 # World Loading
 world_loading.loading_terrain_message=Loading world
 
+# Connect Failed
+server_connect_failed.message=Connection Failed!
+server_connect_failed.return=Take my hand and reload~
+
 # HUD
 hud.ingame.position=Position:
 hud.ingame.fps=FPS:

@@ -2,13 +2,9 @@ package xueli.craftgame;
 
 import org.lwjgl.glfw.GLFW;
 
-import xueli.craftgame.block.BlockResource;
-import xueli.craftgame.world.biome.BiomeResource;
-import xueli.craftgame.world.biome.Biomes;
 import xueli.gamengine.IGame;
 import xueli.gamengine.utils.resource.TaskManager;
 import xueli.gamengine.view.GUIFader.Faders;
-import xueli.gamengine.view.GUIImageView;
 import xueli.gamengine.view.GUIProgressBar;
 import xueli.gamengine.view.GUITextView;
 import xueli.gamengine.view.View;
@@ -123,14 +119,11 @@ public class CraftGame extends IGame {
 		boolean waitingForLove = false;
 		boolean sleeping = false;
 
-		BlockResource resource;
-
 		private CraftGame cg;
 
 		// 这些东西在构造函数初始化 不然有可能会抛空指针
 		/* 资源加载 */
 		private View loading_gui;
-		private GUIImageView loading_imageView;
 		private GUIProgressBar loading_ProgressBar;
 		private GUITextView loading_TextView;
 
@@ -139,7 +132,6 @@ public class CraftGame extends IGame {
 
 			/* 资源加载 */
 			loading_gui = guiResource.getGui("game_loading.json");
-			loading_imageView = (GUIImageView) loading_gui.widgets.get("loading_splash");
 			loading_ProgressBar = (GUIProgressBar) loading_gui.widgets.get("loading_progress_bar");
 			loading_TextView = (GUITextView) loading_gui.widgets.get("loading_message");
 
@@ -149,69 +141,94 @@ public class CraftGame extends IGame {
 
 		@Override
 		public void run() {
-			/* 资源加载 */
-			String loading_messageString = loading_TextView.getText();
-
-			// 设置加载动画
-			queueRunningInMainThread.add(() -> loading_gui.setAnimation("loading"));
-
-			// 加载GUI
-			guiResource.loadGui(langManager, loading_TextView, loading_ProgressBar, 0.00f, 1.00f);
-
-			loading_TextView.setText(loading_messageString);
-
-			// 设置监听
-			View mainMenuGui = guiResource.getGui("main_menu.json");
-
-			mainMenuGui.widgets.get("single_player_button").onClickListener = (button, action, offsetX, offsetY) -> {
-				if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT & action == GLFW.GLFW_RELEASE) {
-					waitingForLove = false;
-
-					queueRunningInMainThread.add(() -> viewManager.setGui("world_loading.json"));
-
-					System.gc();
-
-					worldLogic = new WorldLogic(cg);
-					worldLogic.running = true;
-					new Thread(worldLogic).start();
-
-				}
-
-			};
-
-			mainMenuGui.widgets.get("multi_player_button").onClickListener = (button, action, offsetX, offsetY) -> {
-
-			};
-			mainMenuGui.widgets.get("setting_button").onClickListener = (button, action, offsetX, offsetY) -> {
-				if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT & action == GLFW.GLFW_RELEASE) {
-					queueRunningInMainThread.add(() -> viewManager.setGui("game_setting.json"));
-
-				}
-			};
-
-			View esc_menu = cg.getGuiResource().getGui("game_esc_menu.json");
-			esc_menu.widgets.get("back_to_game_button").onClickListener = (button, action, offsetX, offsetY) -> {
-				if (action == GLFW.GLFW_RELEASE) {
-					// 从esc界面回到游戏中
-
-				}
-
-			};
-
-			esc_menu.widgets.get("quit_button").onClickListener = (button, action, offsetX, offsetY) -> {
-				if (action == GLFW.GLFW_RELEASE) {
-					inWorld = false;
-					worldLogic.delete();
-					worldLogic = null;
-					viewManager.setGui("main_menu.json");
-
-					guiResource.loadGui("world_loading.json", langManager, true);
-
-					System.gc();
-
-				}
-
-			};
+			boolean loadingSuccess = false;
+			String[] failedMessage = new String[1];
+			
+			try {
+				/* 资源加载 */
+				String loading_messageString = loading_TextView.getText();
+	
+				// 设置加载动画
+				queueRunningInMainThread.add(() -> loading_gui.setAnimation("loading"));
+	
+				// 加载GUI
+				guiResource.loadGui(langManager, loading_TextView, loading_ProgressBar, 0.00f, 1.00f);
+	
+				loading_TextView.setText(loading_messageString);
+	
+				// 设置监听
+				View mainMenuGui = guiResource.getGui("main_menu.json");
+	
+				mainMenuGui.widgets.get("single_player_button").onClickListener = (button, action, offsetX, offsetY) -> {
+					if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT & action == GLFW.GLFW_RELEASE) {
+						waitingForLove = false;
+	
+						queueRunningInMainThread.add(() -> viewManager.setGui("world_loading.json"));
+	
+						System.gc();
+	
+						worldLogic = new WorldLogic(cg);
+						worldLogic.running = true;
+						new Thread(worldLogic).start();
+	
+					}
+	
+				};
+	
+				mainMenuGui.widgets.get("multi_player_button").onClickListener = (button, action, offsetX, offsetY) -> {
+	
+				};
+				mainMenuGui.widgets.get("setting_button").onClickListener = (button, action, offsetX, offsetY) -> {
+					if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT & action == GLFW.GLFW_RELEASE) {
+						queueRunningInMainThread.add(() -> viewManager.setGui("game_setting.json"));
+	
+					}
+				};
+	
+				View esc_menu = cg.getGuiResource().getGui("game_esc_menu.json");
+				esc_menu.widgets.get("back_to_game_button").onClickListener = (button, action, offsetX, offsetY) -> {
+					if (action == GLFW.GLFW_RELEASE) {
+						// 从esc界面回到游戏中
+	
+					}
+	
+				};
+	
+				esc_menu.widgets.get("quit_button").onClickListener = (button, action, offsetX, offsetY) -> {
+					if (action == GLFW.GLFW_RELEASE) {
+						inWorld = false;
+						worldLogic.delete();
+						worldLogic = null;
+						viewManager.setGui("main_menu.json");
+	
+						guiResource.loadGui("world_loading.json", langManager, true);
+	
+						System.gc();
+	
+					}
+	
+				};
+				
+				View failedView = cg.getGuiResource().getGui("server_connect_failed.json");
+				
+				failedView.widgets.get("return_button").onClickListener = (button, action, offsetX, offsetY) -> {
+					if(action == GLFW.GLFW_RELEASE) {
+						worldLogic = null;
+						viewManager.setGui("main_menu.json");
+						guiResource.loadGui("world_loading.json", langManager, true);
+	
+						System.gc();
+						
+					}
+				};
+			
+				
+				loadingSuccess = true;
+			} catch (Exception e) {
+				failedMessage[0] = e.getClass().getName() + ": " + e.getMessage();
+				loadingSuccess = false;
+				
+			}
 
 			queueRunningInMainThread.add(() -> {
 				loading_TextView.setText("Loading...");
@@ -225,17 +242,27 @@ public class CraftGame extends IGame {
 
 			// 等待直到进度条到底
 			loading_ProgressBar.waitUtilProgressFull();
-
+			
 			sleeping = false;
 			waitingForLove = false;
 
-			queueRunningInMainThread.add(() -> {
-				loading_TextView.setText("Loaded successfully~");
-
-				// 换界面!
-				viewManager.setFadeinGui("main_menu.json", Faders.LINEAR.fader);
-
-			});
+			if(loadingSuccess) {
+				queueRunningInMainThread.add(() -> {
+					loading_TextView.setText("Loaded successfully~");
+	
+					// 换界面!
+					viewManager.setFadeinGui("main_menu.json", Faders.LINEAR.fader);
+	
+				});
+				
+			} else {
+				queueRunningInMainThread.add(() -> {
+					display.setSubtitle("Loading failed");
+					loading_TextView.setText("Loaded failed, please check console: " + failedMessage[0]);
+	
+				});
+				
+			}
 
 		}
 

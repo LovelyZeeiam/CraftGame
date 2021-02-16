@@ -248,26 +248,30 @@ public class ViewMonitor {
 
 			@Override
 			public void paintGL() {
-				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
-				GL11.glClearColor(0, 0, 0, 1);
-
-				GL11.glViewport(0, 0, getWidth(), getHeight());
-				viewManager.size();
-
-				if (attachedFile != null) {
-					if (needReload) {
-						guiResource.loadGui(attachedFile.getName(), langManager, true);
-						viewManager.setGui(attachedFile.getName());
-						needReload = false;
+				try {
+					GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
+					GL11.glClearColor(0, 0, 0, 1);
+	
+					GL11.glViewport(0, 0, getWidth(), getHeight());
+					viewManager.size();
+	
+					if (attachedFile != null) {
+						if (needReload) {
+							guiResource.loadGui(attachedFile.getName(), langManager, true);
+							viewManager.setGui(attachedFile.getName());
+							needReload = false;
+						}
+	
+						viewManager.draw();
+	
 					}
-
-					viewManager.draw();
-
+	
+					GLHelper.checkGLError("GUI Render");
+	
+					swapBuffers();
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-
-				GLHelper.checkGLError("GUI Render");
-
-				swapBuffers();
 			}
 
 		};
