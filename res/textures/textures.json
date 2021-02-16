@@ -6,7 +6,11 @@
 			"path": "textures/gui/options_background.png",
 			"flag": [ "nearest", "repeat_x", "repeat_y" ]
 		},
-
+		
+		"gui.main_menu.single_player": "textures/gui/main_menu/single_player.png",
+		"gui.main_menu.multi_player": "textures/gui/main_menu/multi_player.png",
+		"gui.main_menu.setting": "textures/gui/main_menu/settings.png",
+		
 		"ingame.hud.crossbar": "textures/gui/ingame/hud/cross.png",
 		"ingame.gui.block_message": "textures/gui/ingame/block_message_view.png",
 		"ingame.gui.inventory": "textures/gui/ingame/hud/inventory.png",

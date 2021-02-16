@@ -6,6 +6,6 @@ build
 
 bin
 
-# Ignore level directory and debug output
-level
+# Ignore working directory and debug output
 output
+.craftgame

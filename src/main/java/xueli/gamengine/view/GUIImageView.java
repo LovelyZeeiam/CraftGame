@@ -21,6 +21,7 @@ public class GUIImageView extends ViewWidget {
 	}
 
 	protected int textureID;
+	private boolean alwaysShowOutLine = false;
 
 	public GUIImageView(EvalableFloat x, EvalableFloat y, EvalableFloat width, EvalableFloat height, int textureID) {
 		super(x, y, width, height);
@@ -28,9 +29,10 @@ public class GUIImageView extends ViewWidget {
 	}
 
 	public GUIImageView(EvalableFloat x, EvalableFloat y, EvalableFloat width, EvalableFloat height, int textureID,
-			NVGColor borderColor, int borderWidth) {
+			NVGColor borderColor, int borderWidth, boolean alwaysShowOutline) {
 		super(x, y, width, height, borderColor, borderWidth);
 		this.textureID = textureID;
+		this.alwaysShowOutLine = alwaysShowOutline;
 
 	}
 
@@ -39,8 +41,11 @@ public class GUIImageView extends ViewWidget {
 		paint.clear();
 
 		super.anim_tick();
-		super.drawBorder(nvg);
-
+		
+		if(alwaysShowOutLine || isMouseHover()) {
+			super.drawBorder(nvg);
+		}
+			
 		nvgImagePattern(nvg, x.getValue(), y.getValue(), width.getValue(), height.getValue(), 0, textureID, 1, paint);
 		nvgBeginPath(nvg);
 		nvgRoundedRect(nvg, x.getValue(), y.getValue(), width.getValue(), height.getValue(), 0);

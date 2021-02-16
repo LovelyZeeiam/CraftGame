@@ -1,30 +1,57 @@
 package xueli.craftgame;
 
-import org.lwjgl.glfw.GLFW;
+import java.io.File;
+import java.io.IOException;
 
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.nanovg.NanoVG;
+
+import xueli.craftgame.player.PlayerStat;
+import xueli.craftgame.view.widget.WidgetNicknameView;
 import xueli.gamengine.IGame;
+import xueli.gamengine.resource.GuiResource;
 import xueli.gamengine.utils.resource.TaskManager;
 import xueli.gamengine.view.GUIFader.Faders;
 import xueli.gamengine.view.GUIProgressBar;
 import xueli.gamengine.view.GUITextView;
 import xueli.gamengine.view.View;
+import xueli.utils.Files;
+import xueli.utils.Logger;
 
 public class CraftGame extends IGame {
 
 	private static int width = 800, height = 600;
 	public boolean inWorld = false;
 	private WorldLogic worldLogic;
+	
+	private File workingDirectory;
+	
+	public static CraftGame INSTACE_CRAFT_GAME;
+	
+	private PlayerStat playerStat;
 
 	public CraftGame() {
 		super("res/");
+		
+		INSTACE_CRAFT_GAME = this;
 
 	}
-
+	
 	@Override
 	protected void onCreate() {
+		GuiResource.addWidget("name_view", WidgetNicknameView.class);
+		
 		// 游戏引擎本身的初始化
 		initAll(width, height);
-
+		
+		this.workingDirectory = new File(
+				this.getOptions().get("working_directory").getAsString()
+			);
+		if(!this.workingDirectory.exists()) {
+			Logger.error(new ExceptionInInitializerError("Working directory doesn't exist: " + this.workingDirectory.getAbsolutePath()));
+		}
+		Logger.info("Working directory: " + workingDirectory.getAbsolutePath());
+		
 		// 在另一个线程线程初始化在游戏加载时可以初始化的游戏资源
 		GameLoader gameLoader = new GameLoader(this);
 		Thread gameLoaderThread = new Thread(gameLoader);
@@ -37,7 +64,25 @@ public class CraftGame extends IGame {
 
 		// 启动游戏加载的线程
 		gameLoaderThread.start();
+		
+		try {
+			String nickname = Files.readAllString(new File(workingDirectory.getAbsolutePath() + "/player/player_name.txt"));
+			int playerIcon = getViewManager().loadTexture(workingDirectory.getAbsolutePath() + "/player/player_icon.jpg", NanoVG.NVG_IMAGE_GENERATE_MIPMAPS);
+			this.playerStat = new PlayerStat(nickname, playerIcon);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 
+	}
+	
+	public File getWorkingDirectory() {
+		return workingDirectory;
+	}
+	
+	public PlayerStat getPlayerStat() {
+		return playerStat;
 	}
 
 	@Override
@@ -178,12 +223,15 @@ public class CraftGame extends IGame {
 				mainMenuGui.widgets.get("multi_player_button").onClickListener = (button, action, offsetX, offsetY) -> {
 	
 				};
-				mainMenuGui.widgets.get("setting_button").onClickListener = (button, action, offsetX, offsetY) -> {
-					if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT & action == GLFW.GLFW_RELEASE) {
-						queueRunningInMainThread.add(() -> viewManager.setGui("game_setting.json"));
-	
-					}
-				};
+				
+				/*
+				 * mainMenuGui.widgets.get("setting_button").onClickListener = (button, action,
+				 * offsetX, offsetY) -> { if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT & action ==
+				 * GLFW.GLFW_RELEASE) { queueRunningInMainThread.add(() ->
+				 * viewManager.setGui("game_setting.json"));
+				 * 
+				 * } };
+				 */
 	
 				View esc_menu = cg.getGuiResource().getGui("game_esc_menu.json");
 				esc_menu.widgets.get("back_to_game_button").onClickListener = (button, action, offsetX, offsetY) -> {

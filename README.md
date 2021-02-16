@@ -5,6 +5,14 @@ The game is in beta now. So if you have some suggestion, just leave in the comme
 
 # How to Test the Game
 
+#### Prepare
+
+##### Player Status
+
+1. First, open `.\res\options` and change param "working_directory" in "working.json" to your prefered game working directory.
+2. Having ensure the working directory exists, you need to create a new directory named "player" in the working directory.
+3. Open "player" directory, and add an jpeg format image named "player_icon.jpg" and a text file containing your nickname named "player_name.txt"。
+
 #### Windows
 
 To build, just type
@@ -28,7 +36,7 @@ but I'm convinced it be able to run by typing the following 3 commands.
 
 ### Have fun!
 
-# Develop Logs
+# Develop Logs： rewrite world to adapt to multi-player
 
 #### Added
 

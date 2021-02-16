@@ -31,6 +31,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.awt.AWTGLCanvas;
 import org.lwjgl.opengl.awt.GLData;
 
+import xueli.craftgame.view.widget.WidgetNicknameView;
 import xueli.gamengine.resource.GuiResource;
 import xueli.gamengine.resource.LangManager;
 import xueli.gamengine.resource.Options;
@@ -42,6 +43,10 @@ import xueli.gamengine.utils.resource.Shader;
 import xueli.gamengine.view.ViewManager;
 import xueli.utils.Logger;
 
+/**
+ * 这是一个不支持自定义控件的ViewMonitor
+ * 除非自己添加
+ */
 public class ViewMonitor {
 
 	private static AWTGLCanvas canvas;
@@ -224,6 +229,8 @@ public class ViewMonitor {
 
 			@Override
 			public void initGL() {
+				GuiResource.addWidget("name_view", WidgetNicknameView.class);
+				
 				GL.createCapabilities();
 				GLHelper.printDeviceInfo();
 

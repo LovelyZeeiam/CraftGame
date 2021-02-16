@@ -7,6 +7,9 @@ import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
 
 import org.lwjgl.nanovg.NVGColor;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import xueli.gamengine.utils.Display;
 import xueli.gamengine.utils.evalable.EvalableFloat;
 import xueli.gamengine.view.anim2d.Constant;
@@ -19,7 +22,7 @@ public abstract class ViewWidget implements AutoCloseable {
 	protected boolean hasBorder = false;
 	protected NVGColor borderColor;
 	protected int borderWidth;
-	EvalableFloat x, y, width, height;
+	protected EvalableFloat x, y, width, height;
 	boolean isSelectedLastTime = false;
 	private WidgetAnimation currentAnimation = null;
 
@@ -43,6 +46,17 @@ public abstract class ViewWidget implements AutoCloseable {
 		this.borderColor = borderColor;
 		this.borderWidth = border_width;
 
+	}
+	
+	public ViewWidget(JsonObject object) {
+		JsonArray widgetPosJsonArray = object.get("pos").getAsJsonArray();
+		this.x = new EvalableFloat(widgetPosJsonArray.get(0).getAsString());
+		this.y = new EvalableFloat(widgetPosJsonArray.get(1).getAsString());
+		
+		JsonArray widgetSizeJsonArray = object.get("size").getAsJsonArray();
+		this.width = new EvalableFloat(widgetSizeJsonArray.get(0).getAsString());
+		this.height = new EvalableFloat(widgetSizeJsonArray.get(1).getAsString());
+		
 	}
 
 	protected void drawBorder(long nvg) {

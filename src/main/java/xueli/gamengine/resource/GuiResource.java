@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,9 +35,33 @@ import xueli.gamengine.view.GuiAnimation;
 import xueli.gamengine.view.GuiAnimationGroup;
 import xueli.gamengine.view.IAnimation;
 import xueli.gamengine.view.View;
+import xueli.gamengine.view.ViewWidget;
 import xueli.utils.Logger;
 
 public class GuiResource extends IResource {
+	
+	private static HashMap<String, Class<? extends ViewWidget>> diyWidget = new HashMap<String, Class<? extends ViewWidget>>();
+	
+	public static void addWidget(String name, Class<? extends ViewWidget> clazz) {
+		diyWidget.put(name, clazz);
+		
+	}
+	
+	private static ViewWidget getWidgetInstance(String name, JsonObject obj) {
+		Class<? extends ViewWidget> clazz = diyWidget.get(name);
+		if(clazz == null) {
+			Logger.error("[DIYWidget] Can't find widget: " + name);
+			return null;
+		}
+		
+		try {
+			Constructor<? extends ViewWidget> constructor = clazz.getConstructor(JsonObject.class);
+			return constructor.newInstance(obj);
+		} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public HashMap<String, View> guisHashMap = new HashMap<String, View>();
 	private TextureManager textureManager;
@@ -242,11 +268,20 @@ public class GuiResource extends IResource {
 				}
 
 				int textureID = textureManager.getTexture(textureString).id;
+				
+				boolean alwaysShowOutline = true;
+				if(borderJsonElement != null) {
+					JsonObject border = borderJsonElement.getAsJsonObject();
+					if(border.has("alwaysShow"))
+						alwaysShowOutline = border.get("alwaysShow").getAsBoolean();
+					
+				}
+				
 				GUIImageView imageView;
 
 				if (borderFlag)
 					imageView = new GUIImageView(widgetPosX, widgetPosY, widgetWidth, widgetHeight, textureID,
-							borderColor, borderWidth);
+							borderColor, borderWidth, alwaysShowOutline);
 				else
 					imageView = new GUIImageView(widgetPosX, widgetPosY, widgetWidth, widgetHeight, textureID);
 				gui.widgets.put(nameString, imageView);
@@ -388,8 +423,6 @@ public class GuiResource extends IResource {
 
 				break;
 			case "scroll_bar":
-				// TODO: 将参数与Options的json文件勾连起来
-
 				if (!widgetJsonObject.has("default_value")) {
 					Logger.error(
 							"[GUI] Couldn't find float param in " + nameString + " in " + filename + ": default_value");
@@ -501,7 +534,10 @@ public class GuiResource extends IResource {
 
 				break;
 			default:
-				break;
+				// 自定义控件 (上面一大堆懒得改,,,
+				ViewWidget widget = getWidgetInstance(widgetTypeString, widgetJsonObject);
+				gui.widgets.put(nameString, widget);
+				
 			}
 
 		}
