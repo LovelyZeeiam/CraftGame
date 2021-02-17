@@ -47,16 +47,16 @@ public abstract class ViewWidget implements AutoCloseable {
 		this.borderWidth = border_width;
 
 	}
-	
+
 	public ViewWidget(JsonObject object) {
 		JsonArray widgetPosJsonArray = object.get("pos").getAsJsonArray();
 		this.x = new EvalableFloat(widgetPosJsonArray.get(0).getAsString());
 		this.y = new EvalableFloat(widgetPosJsonArray.get(1).getAsString());
-		
+
 		JsonArray widgetSizeJsonArray = object.get("size").getAsJsonArray();
 		this.width = new EvalableFloat(widgetSizeJsonArray.get(0).getAsString());
 		this.height = new EvalableFloat(widgetSizeJsonArray.get(1).getAsString());
-		
+
 	}
 
 	protected void drawBorder(long nvg) {

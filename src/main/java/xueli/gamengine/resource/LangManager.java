@@ -53,9 +53,4 @@ public class LangManager extends IResource {
 		return valueString == null ? name : valueString;
 	}
 
-	@Override
-	public void close() {
-
-	}
-
 }

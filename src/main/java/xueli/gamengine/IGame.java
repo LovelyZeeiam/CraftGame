@@ -38,7 +38,7 @@ public abstract class IGame implements Runnable {
 
 	public Queue<Runnable> queueRunningInMainThread = new LinkedList<Runnable>();
 	public TimerQueue timerQueue = new TimerQueue();
-	
+
 	protected LangManager langManager;
 	protected String game_name;
 	protected Options options;
@@ -84,7 +84,7 @@ public abstract class IGame implements Runnable {
 
 	}
 
-	protected void loadGui() {
+	protected void loadStartingGui() {
 		guiResource = new GuiResource(resPath, textureManager);
 		guiResource.loadGui("game_loading.json", langManager, false);
 		viewManager.setResourceSource(guiResource);
@@ -184,7 +184,7 @@ public abstract class IGame implements Runnable {
 		createDisplay(width, height);
 		loadShader();
 		loadTexture();
-		loadGui();
+		loadStartingGui();
 		loadAudio();
 
 		// For Linux
@@ -237,20 +237,15 @@ public abstract class IGame implements Runnable {
 
 	protected void releaseAll() {
 		display.destroy();
-		langManager.close();
 		try {
 			audioResource.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (options != null)
-			options.close();
 		if (shaderResource != null)
 			shaderResource.close();
 		if (textureManager != null)
 			textureManager.close();
-		if (guiResource != null)
-			guiResource.close();
 
 	}
 

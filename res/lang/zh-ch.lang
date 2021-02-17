@@ -14,6 +14,8 @@ esc_menu.quit=Save And Quit
 
 # World Loading
 world_loading.loading_terrain_message=Loading world
+# World Saving
+world_saving.save_terrain_message=Saving world
 
 # Connect Failed
 server_connect_failed.message=Connection Failed!

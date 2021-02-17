@@ -5,6 +5,9 @@ import java.util.Arrays;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+/**
+ * 经过测试，性能没有直接的floatBuffer高， 但是还是挺好用的 因为floatBuffer大小已经限制死了
+ */
 public class FloatList {
 
 	private float[] data;
@@ -85,7 +88,7 @@ public class FloatList {
 			System.arraycopy(data, 0, realData, 0, size);
 			this.realDataCache = realData;
 			hasChanged = false;
-			
+
 		}
 		return this.realDataCache;
 	}

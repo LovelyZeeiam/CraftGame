@@ -39,25 +39,26 @@ import xueli.gamengine.view.ViewWidget;
 import xueli.utils.Logger;
 
 public class GuiResource extends IResource {
-	
+
 	private static HashMap<String, Class<? extends ViewWidget>> diyWidget = new HashMap<String, Class<? extends ViewWidget>>();
-	
+
 	public static void addWidget(String name, Class<? extends ViewWidget> clazz) {
 		diyWidget.put(name, clazz);
-		
+
 	}
-	
+
 	private static ViewWidget getWidgetInstance(String name, JsonObject obj) {
 		Class<? extends ViewWidget> clazz = diyWidget.get(name);
-		if(clazz == null) {
+		if (clazz == null) {
 			Logger.error("[DIYWidget] Can't find widget: " + name);
 			return null;
 		}
-		
+
 		try {
 			Constructor<? extends ViewWidget> constructor = clazz.getConstructor(JsonObject.class);
 			return constructor.newInstance(obj);
-		} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+		} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -268,15 +269,15 @@ public class GuiResource extends IResource {
 				}
 
 				int textureID = textureManager.getTexture(textureString).id;
-				
+
 				boolean alwaysShowOutline = true;
-				if(borderJsonElement != null) {
+				if (borderJsonElement != null) {
 					JsonObject border = borderJsonElement.getAsJsonObject();
-					if(border.has("alwaysShow"))
+					if (border.has("alwaysShow"))
 						alwaysShowOutline = border.get("alwaysShow").getAsBoolean();
-					
+
 				}
-				
+
 				GUIImageView imageView;
 
 				if (borderFlag)
@@ -537,7 +538,7 @@ public class GuiResource extends IResource {
 				// 自定义控件 (上面一大堆懒得改,,,
 				ViewWidget widget = getWidgetInstance(widgetTypeString, widgetJsonObject);
 				gui.widgets.put(nameString, widget);
-				
+
 			}
 
 		}
@@ -600,11 +601,6 @@ public class GuiResource extends IResource {
 			Logger.error("Can't find Gui: " + name);
 		}
 		return view;
-	}
-
-	@Override
-	public void close() {
-
 	}
 
 }

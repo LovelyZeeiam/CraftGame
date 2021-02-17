@@ -6,6 +6,8 @@ import java.io.IOException;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NanoVG;
 
+import xueli.craftgame.block.BlockResource;
+import xueli.craftgame.block.model.ModelManager;
 import xueli.craftgame.player.PlayerStat;
 import xueli.craftgame.view.widget.WidgetNicknameView;
 import xueli.gamengine.IGame;
@@ -20,38 +22,42 @@ import xueli.utils.Logger;
 
 public class CraftGame extends IGame {
 
-	private static int width = 800, height = 600;
+	private static final int WIDTH = 800, HEIGHT = 600;
+	public static final int GAME_VERSION = 0;
+
 	public boolean inWorld = false;
 	private WorldLogic worldLogic;
-	
+
 	private File workingDirectory;
-	
-	public static CraftGame INSTACE_CRAFT_GAME;
-	
+
+	public static CraftGame INSTANCE_CRAFT_GAME;
+
 	private PlayerStat playerStat;
+
+	private BlockResource blockResource;
+	private ModelManager modelManager;
 
 	public CraftGame() {
 		super("res/");
-		
-		INSTACE_CRAFT_GAME = this;
+
+		INSTANCE_CRAFT_GAME = this;
 
 	}
-	
+
 	@Override
 	protected void onCreate() {
 		GuiResource.addWidget("name_view", WidgetNicknameView.class);
-		
+
 		// 游戏引擎本身的初始化
-		initAll(width, height);
-		
-		this.workingDirectory = new File(
-				this.getOptions().get("working_directory").getAsString()
-			);
-		if(!this.workingDirectory.exists()) {
-			Logger.error(new ExceptionInInitializerError("Working directory doesn't exist: " + this.workingDirectory.getAbsolutePath()));
+		initAll(WIDTH, HEIGHT);
+
+		this.workingDirectory = new File(this.getOptions().get("working_directory").getAsString());
+		if (!this.workingDirectory.exists()) {
+			Logger.error(new ExceptionInInitializerError(
+					"Working directory doesn't exist: " + this.workingDirectory.getAbsolutePath()));
 		}
 		Logger.info("Working directory: " + workingDirectory.getAbsolutePath());
-		
+
 		// 在另一个线程线程初始化在游戏加载时可以初始化的游戏资源
 		GameLoader gameLoader = new GameLoader(this);
 		Thread gameLoaderThread = new Thread(gameLoader);
@@ -64,25 +70,34 @@ public class CraftGame extends IGame {
 
 		// 启动游戏加载的线程
 		gameLoaderThread.start();
-		
+
 		try {
-			String nickname = Files.readAllString(new File(workingDirectory.getAbsolutePath() + "/player/player_name.txt"));
-			int playerIcon = getViewManager().loadTexture(workingDirectory.getAbsolutePath() + "/player/player_icon.jpg", NanoVG.NVG_IMAGE_GENERATE_MIPMAPS);
+			String nickname = Files
+					.readAllString(new File(workingDirectory.getAbsolutePath() + "/player/player_name.txt"));
+			int playerIcon = getViewManager().loadTexture(
+					workingDirectory.getAbsolutePath() + "/player/player_icon.jpg", NanoVG.NVG_IMAGE_GENERATE_MIPMAPS);
 			this.playerStat = new PlayerStat(nickname, playerIcon);
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 
 	}
-	
+
 	public File getWorkingDirectory() {
 		return workingDirectory;
 	}
-	
+
 	public PlayerStat getPlayerStat() {
 		return playerStat;
+	}
+
+	public BlockResource getBlockResource() {
+		return blockResource;
+	}
+
+	public ModelManager getModelManager() {
+		return modelManager;
 	}
 
 	@Override
@@ -188,42 +203,43 @@ public class CraftGame extends IGame {
 		public void run() {
 			boolean loadingSuccess = false;
 			String[] failedMessage = new String[1];
-			
+
 			try {
 				/* 资源加载 */
 				String loading_messageString = loading_TextView.getText();
-	
+
 				// 设置加载动画
 				queueRunningInMainThread.add(() -> loading_gui.setAnimation("loading"));
-	
+
 				// 加载GUI
 				guiResource.loadGui(langManager, loading_TextView, loading_ProgressBar, 0.00f, 1.00f);
-	
+
 				loading_TextView.setText(loading_messageString);
-	
+
 				// 设置监听
 				View mainMenuGui = guiResource.getGui("main_menu.json");
-	
-				mainMenuGui.widgets.get("single_player_button").onClickListener = (button, action, offsetX, offsetY) -> {
+
+				mainMenuGui.widgets.get("single_player_button").onClickListener = (button, action, offsetX,
+						offsetY) -> {
 					if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT & action == GLFW.GLFW_RELEASE) {
 						waitingForLove = false;
-	
+
 						queueRunningInMainThread.add(() -> viewManager.setGui("world_loading.json"));
-	
+
 						System.gc();
-	
+
 						worldLogic = new WorldLogic(cg);
 						worldLogic.running = true;
 						new Thread(worldLogic).start();
-	
+
 					}
-	
+
 				};
-	
+
 				mainMenuGui.widgets.get("multi_player_button").onClickListener = (button, action, offsetX, offsetY) -> {
-	
+
 				};
-				
+
 				/*
 				 * mainMenuGui.widgets.get("setting_button").onClickListener = (button, action,
 				 * offsetX, offsetY) -> { if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT & action ==
@@ -232,50 +248,55 @@ public class CraftGame extends IGame {
 				 * 
 				 * } };
 				 */
-	
+
 				View esc_menu = cg.getGuiResource().getGui("game_esc_menu.json");
 				esc_menu.widgets.get("back_to_game_button").onClickListener = (button, action, offsetX, offsetY) -> {
 					if (action == GLFW.GLFW_RELEASE) {
 						// 从esc界面回到游戏中
-	
+
 					}
-	
+
 				};
-	
+
 				esc_menu.widgets.get("quit_button").onClickListener = (button, action, offsetX, offsetY) -> {
 					if (action == GLFW.GLFW_RELEASE) {
-						inWorld = false;
 						worldLogic.delete();
 						worldLogic = null;
-						viewManager.setGui("main_menu.json");
-	
+
 						guiResource.loadGui("world_loading.json", langManager, true);
-	
+
 						System.gc();
-	
+
 					}
-	
+
 				};
-				
+
 				View failedView = cg.getGuiResource().getGui("server_connect_failed.json");
-				
+
 				failedView.widgets.get("return_button").onClickListener = (button, action, offsetX, offsetY) -> {
-					if(action == GLFW.GLFW_RELEASE) {
+					if (action == GLFW.GLFW_RELEASE) {
 						worldLogic = null;
 						viewManager.setGui("main_menu.json");
 						guiResource.loadGui("world_loading.json", langManager, true);
-	
+
 						System.gc();
-						
+
 					}
 				};
-			
-				
+
+				modelManager = new ModelManager();
+				modelManager.init();
+
+				blockResource = new BlockResource("res/");
+				blockResource.load();
+
 				loadingSuccess = true;
 			} catch (Exception e) {
 				failedMessage[0] = e.getClass().getName() + ": " + e.getMessage();
 				loadingSuccess = false;
-				
+
+				e.printStackTrace();
+
 			}
 
 			queueRunningInMainThread.add(() -> {
@@ -290,26 +311,26 @@ public class CraftGame extends IGame {
 
 			// 等待直到进度条到底
 			loading_ProgressBar.waitUtilProgressFull();
-			
+
 			sleeping = false;
 			waitingForLove = false;
 
-			if(loadingSuccess) {
+			if (loadingSuccess) {
 				queueRunningInMainThread.add(() -> {
 					loading_TextView.setText("Loaded successfully~");
-	
+
 					// 换界面!
 					viewManager.setFadeinGui("main_menu.json", Faders.LINEAR.fader);
-	
+
 				});
-				
+
 			} else {
 				queueRunningInMainThread.add(() -> {
 					display.setSubtitle("Loading failed");
 					loading_TextView.setText("Loaded failed, please check console: " + failedMessage[0]);
-	
+
 				});
-				
+
 			}
 
 		}

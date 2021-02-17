@@ -36,6 +36,15 @@ but I'm convinced it be able to run by typing the following 3 commands.
 
 ### Have fun!
 
+# Game Technique Intention
+
+### Server
+
+When connected, client will send its player name and icon.
+Then client must send a heartbeat packet every 30 seconds, after which the server will also send a heartbeat packet.
+If the server doesn't recieve heartbeat packet on time, the server will regard the player lost_connection, when the client won't recieve any packet and the player will stay still, not recieving other player's attack or pushing. If not recieved for 1 minute, the server will kick the player off.
+If the client doesn't recieve, it will also kick the player off the server.
+
 # Develop Logs： rewrite world to adapt to multi-player
 
 #### Added

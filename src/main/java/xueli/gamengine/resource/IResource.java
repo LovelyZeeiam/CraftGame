@@ -1,7 +1,6 @@
 package xueli.gamengine.resource;
 
 import java.io.BufferedReader;
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,7 +8,7 @@ import java.util.ArrayList;
 
 import com.google.gson.Gson;
 
-public abstract class IResource implements Closeable {
+public abstract class IResource {
 
 	public static Gson gson = new Gson();
 	protected String pathString;

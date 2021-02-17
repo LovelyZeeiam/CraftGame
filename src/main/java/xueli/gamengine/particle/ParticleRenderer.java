@@ -26,7 +26,7 @@ public class ParticleRenderer extends Renderer {
 		// uv
 		GL20.glVertexAttribPointer(2, 2, GL11.GL_FLOAT, false, 9 * 4, 7 * 4);
 		GL20.glEnableVertexAttribArray(2);
-		
+
 	}
 
 }

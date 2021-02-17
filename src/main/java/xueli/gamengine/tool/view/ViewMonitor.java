@@ -44,8 +44,7 @@ import xueli.gamengine.view.ViewManager;
 import xueli.utils.Logger;
 
 /**
- * 这是一个不支持自定义控件的ViewMonitor
- * 除非自己添加
+ * 这是一个不支持自定义控件的ViewMonitor 除非自己添加
  */
 public class ViewMonitor {
 
@@ -230,7 +229,7 @@ public class ViewMonitor {
 			@Override
 			public void initGL() {
 				GuiResource.addWidget("name_view", WidgetNicknameView.class);
-				
+
 				GL.createCapabilities();
 				GLHelper.printDeviceInfo();
 
@@ -258,23 +257,23 @@ public class ViewMonitor {
 				try {
 					GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
 					GL11.glClearColor(0, 0, 0, 1);
-	
+
 					GL11.glViewport(0, 0, getWidth(), getHeight());
 					viewManager.size();
-	
+
 					if (attachedFile != null) {
 						if (needReload) {
 							guiResource.loadGui(attachedFile.getName(), langManager, true);
 							viewManager.setGui(attachedFile.getName());
 							needReload = false;
 						}
-	
+
 						viewManager.draw();
-	
+
 					}
-	
+
 					GLHelper.checkGLError("GUI Render");
-	
+
 					swapBuffers();
 				} catch (Exception e) {
 					e.printStackTrace();

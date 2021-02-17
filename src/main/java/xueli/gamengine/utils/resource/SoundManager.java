@@ -72,8 +72,8 @@ public class SoundManager {
 	}
 
 	public static void play(String name, float volume, float pitch) {
-		if(!sounds.containsKey(name)) {
-			Logger.error( new Exception("Can't find sound: " + name));
+		if (!sounds.containsKey(name)) {
+			Logger.error(new Exception("Can't find sound: " + name));
 			return;
 		}
 

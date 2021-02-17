@@ -2,32 +2,31 @@ package xueli.gamengine.utils;
 
 import java.nio.FloatBuffer;
 
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
-
 public class FloatBufferWrapper {
-	
+
 	private FloatBuffer buffer;
-	
+
 	public FloatBufferWrapper(FloatBuffer buffer) {
 		this.buffer = buffer;
-		
+
 	}
-	
-	public FloatBufferWrapper putVector3f(Vector3f v) {
-		buffer.put(v.x).put(v.y).put(v.z);
-		return this;
+
+	public void putVector3f(float x, float y, float z) {
+		buffer.put(x);
+		buffer.put(y);
+		buffer.put(z);
 	}
-	
-	public FloatBufferWrapper putVector4f(Vector4f v) {
-		buffer.put(v.x).put(v.y).put(v.z).put(v.w);
-		return this;
+
+	public void putVector4f(float x, float y, float z, float w) {
+		buffer.put(x);
+		buffer.put(y);
+		buffer.put(z);
+		buffer.put(w);
 	}
-	
-	public FloatBufferWrapper putVector2f(Vector2f v) {
-		buffer.put(v.x).put(v.y);
-		return this;
+
+	public void putVector2f(float x, float y) {
+		buffer.put(x);
+		buffer.put(y);
 	}
 
 }

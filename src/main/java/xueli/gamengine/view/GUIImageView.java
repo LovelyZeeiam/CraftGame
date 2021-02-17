@@ -41,11 +41,11 @@ public class GUIImageView extends ViewWidget {
 		paint.clear();
 
 		super.anim_tick();
-		
-		if(alwaysShowOutLine || isMouseHover()) {
+
+		if (alwaysShowOutLine || isMouseHover()) {
 			super.drawBorder(nvg);
 		}
-			
+
 		nvgImagePattern(nvg, x.getValue(), y.getValue(), width.getValue(), height.getValue(), 0, textureID, 1, paint);
 		nvgBeginPath(nvg);
 		nvgRoundedRect(nvg, x.getValue(), y.getValue(), width.getValue(), height.getValue(), 0);

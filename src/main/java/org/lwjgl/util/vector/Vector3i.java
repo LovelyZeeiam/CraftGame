@@ -11,12 +11,12 @@ public class Vector3i {
 		this.y = y;
 		this.z = z;
 	}
-	
+
 	public Vector3i(Vector3f floatVector) {
 		this.x = (int) Math.floor(floatVector.x);
 		this.y = (int) Math.floor(floatVector.y);
 		this.z = (int) Math.floor(floatVector.z);
-		
+
 	}
 
 	public int getX() {

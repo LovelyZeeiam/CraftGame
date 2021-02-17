@@ -7,7 +7,7 @@ public class Logger {
 
 	public static boolean debug = true;
 	private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
-	
+
 	private static String lastLogString = null;
 
 	private static synchronized void printDate() {
@@ -36,7 +36,7 @@ public class Logger {
 	public static synchronized void error(Object o) {
 		printDate();
 		lastLogString = "[Error] " + o;
-		System.out.println(lastLogString);
+		System.err.println(lastLogString);
 	}
 
 	public static synchronized void error(Throwable throwable) {
@@ -51,5 +51,5 @@ public class Logger {
 	public static String getLastLogString() {
 		return lastLogString;
 	}
-	
+
 }

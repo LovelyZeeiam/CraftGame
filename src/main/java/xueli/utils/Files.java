@@ -30,7 +30,7 @@ public class Files {
 		new File(path).mkdirs();
 
 	}
-	
+
 	public static String readAllString(File file) throws IOException {
 		BufferedInputStream reader = new BufferedInputStream(new FileInputStream(file));
 		byte[] all = new byte[reader.available()];

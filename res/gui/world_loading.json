@@ -52,6 +52,23 @@
 				127,
 				255
 			]
+		},
+		"user_name_view": {
+			"type": "name_view",
+			"pos": [
+				"win_width - 20 * scale",
+				"20.0 * scale"
+			],
+			"size": [
+				"0.0",
+				"10.0 * scale"
+			],
+			"text_color": [
+				190,
+				190,
+				250,
+				255
+			]
 		}
 	}
 }

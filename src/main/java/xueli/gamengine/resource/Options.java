@@ -70,9 +70,4 @@ public class Options extends IResource {
 		return options.get(key);
 	}
 
-	@Override
-	public void close() {
-
-	}
-
 }

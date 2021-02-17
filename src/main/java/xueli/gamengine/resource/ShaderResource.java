@@ -101,7 +101,6 @@ public class ShaderResource extends IResource {
 		return shaders.get(key);
 	}
 
-	@Override
 	public void close() {
 		for (Shader s : shaders.values()) {
 			s.release();
