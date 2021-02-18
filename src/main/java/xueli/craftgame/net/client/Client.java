@@ -10,6 +10,7 @@ import xueli.craftgame.net.message.Message;
 import xueli.craftgame.net.message.MessageDefine;
 import xueli.craftgame.net.server.Server;
 import xueli.utils.Logger;
+import xueli.utils.Waiter;
 
 public class Client extends WebSocketClient {
 
@@ -43,7 +44,15 @@ public class Client extends WebSocketClient {
 
 			this.send(
 					Message.generateMessage(new Message(MessageDefine.PREPARE_SPAWN_POINT, Integer.toString(this.id))));
-
+			
+			break;
+		case MessageDefine.PREPARE_SPAWN_POINT_OK:
+			Logger.info("[Client] Prepare spawnpoint map ok.");
+			synchronized (Waiter.waitObject) {
+				Waiter.waitObject.notify();
+				
+			}
+			
 			break;
 
 		}

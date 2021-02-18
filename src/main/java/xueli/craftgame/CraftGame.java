@@ -72,10 +72,11 @@ public class CraftGame extends IGame {
 		gameLoaderThread.start();
 
 		try {
+			// 这里得用getPath 并且不能有中文的名字
 			String nickname = Files
-					.readAllString(new File(workingDirectory.getAbsolutePath() + "/player/player_name.txt"));
+					.readAllString(new File(workingDirectory.getPath() + "/player/player_name.txt"));
 			int playerIcon = getViewManager().loadTexture(
-					workingDirectory.getAbsolutePath() + "/player/player_icon.jpg", NanoVG.NVG_IMAGE_GENERATE_MIPMAPS);
+					workingDirectory.getPath() + "/player/player_icon.jpg", NanoVG.NVG_IMAGE_GENERATE_MIPMAPS);
 			this.playerStat = new PlayerStat(nickname, playerIcon);
 
 		} catch (IOException e) {
@@ -163,13 +164,17 @@ public class CraftGame extends IGame {
 	protected void onExit() {
 		if (inWorld) {
 			worldLogic.running = false;
+			
+		}
+		
+		if(worldLogic != null) {
+			worldLogic.delete();
+			
 		}
 
 		TaskManager.stopListener();
 
 		releaseAll();
-
-		System.exit(0);
 
 	}
 

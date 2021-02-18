@@ -591,6 +591,8 @@ public class GuiResource extends IResource {
 
 		}
 
+		Logger.info("[GUI] read Gui: " + filename);
+		
 		guisHashMap.put(filename, gui);
 		return gui;
 	}

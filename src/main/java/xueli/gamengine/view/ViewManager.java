@@ -110,7 +110,11 @@ public class ViewManager {
 	}
 
 	public int loadTexture(String path, int flag) {
-		return nvgCreateImage(nvg, path, flag);
+		int image = nvgCreateImage(nvg, path, flag);
+		if(image == 0) {
+			Logger.warn("[GUI] Load image failed: " + path);
+		}
+		return image;
 	}
 
 	public void setResourceSource(GuiResource resource) {
