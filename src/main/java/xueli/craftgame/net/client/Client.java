@@ -1,14 +1,17 @@
 package xueli.craftgame.net.client;
 
 import java.net.URI;
+import java.util.Base64;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
 import xueli.craftgame.WorldLogic;
+import xueli.craftgame.net.message.HandshakeMessages;
 import xueli.craftgame.net.message.Message;
-import xueli.craftgame.net.message.MessageDefine;
 import xueli.craftgame.net.server.Server;
+import xueli.gamengine.utils.vector.Vector;
+import xueli.utils.Bytes;
 import xueli.utils.Logger;
 import xueli.utils.Waiter;
 
@@ -36,24 +39,42 @@ public class Client extends WebSocketClient {
 
 	@Override
 	public void onMessage(String message) {
-		Message m = Message.getMessage(message.getBytes(MessageDefine.STANDARD_CHARSET));
+		Message m = Message.getMessage(message.getBytes(HandshakeMessages.STANDARD_CHARSET));
 		switch (m.getId()) {
-		case MessageDefine.PLAYER_CONNECT:
+		case HandshakeMessages.PLAYER_CONNECT: {
 			this.id = Integer.parseInt(m.getMessage());
 			Logger.info("[Client] " + logic.getCg().getPlayerStat().getName() + " join the game: " + id);
 
-			this.send(
-					Message.generateMessage(new Message(MessageDefine.PREPARE_SPAWN_POINT, Integer.toString(this.id))));
-			
+			this.send(Message
+					.generateMessage(new Message(HandshakeMessages.PREPARE_SPAWN_POINT, Integer.toString(this.id))));
+
 			break;
-		case MessageDefine.PREPARE_SPAWN_POINT_OK:
+		}
+		case HandshakeMessages.PREPARE_SPAWN_POINT_OK: {
 			Logger.info("[Client] Prepare spawnpoint map ok.");
+			this.send(Message.generateMessage(
+					new Message(HandshakeMessages.CLIENT_REQUEST_PLAYER_POSITION, Integer.toString(id))));
+
+			break;
+		}
+		case HandshakeMessages.SERVER_ANSWER_PLAYER_POSITION: {
+			String base64PosData = m.getMessage();
+			byte[] posObjData = Base64.getDecoder().decode(base64PosData);
+			Vector playerPos = (Vector) Bytes.getObject(posObjData);
+
+			if (playerPos == null) {
+				return;
+			}
+
+			Logger.info("[Client] Get Player Position: " + playerPos.toString());
+			logic.setPlayerPos(playerPos);
+
 			synchronized (Waiter.waitObject) {
 				Waiter.waitObject.notify();
-				
 			}
-			
+
 			break;
+		}
 
 		}
 

@@ -1,6 +1,6 @@
 package xueli.craftgame.world;
 
-import xueli.craftgame.block.BlockData;
+import xueli.craftgame.block.Block;
 import xueli.craftgame.player.PlayerStat;
 
 public class Chunk {
@@ -38,7 +38,7 @@ public class Chunk {
 
 	}
 
-	public BlockData getBlock(int x, int y, int z) {
+	public Block getBlock(int x, int y, int z) {
 		int subChunkY = y >> 4; // 相当于除以16
 		SubChunk subChunk = subChunks[subChunkY];
 
@@ -47,19 +47,7 @@ public class Chunk {
 		}
 
 		int y_in_subchunk = y % 16;
-		return subChunk.getBlockData(x, y_in_subchunk, z);
-	}
-
-	public long getDetail(int x, int y, int z) {
-		int subChunkY = y >> 4; // 相当于除以16
-		SubChunk subChunk = subChunks[subChunkY];
-
-		if (subChunk == null) {
-			return 0;
-		}
-
-		int y_in_subchunk = y % 16;
-		return subChunk.getDetails(x, y_in_subchunk, z);
+		return subChunk.getBlock(x, y_in_subchunk, z);
 	}
 
 	public ChunkMeshBuilder getMeshBuilder() {

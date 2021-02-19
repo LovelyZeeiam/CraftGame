@@ -29,7 +29,7 @@ public class Message {
 	public static String generateMessage(Message message) {
 		ByteArrayBuilder builder = new ByteArrayBuilder();
 		builder.put(message.getId()).putString(message.getMessage());
-		return new String(builder.get(), MessageDefine.STANDARD_CHARSET);
+		return new String(builder.get(), HandshakeMessages.STANDARD_CHARSET);
 	}
 
 	@Override

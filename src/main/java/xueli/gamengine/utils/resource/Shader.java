@@ -171,6 +171,7 @@ public class Shader {
 	public static void setViewMatrix(Vector cam, Shader shader) {
 		shader.use();
 		shader.setUniformMatrix(shader.getUnifromLocation("viewMatrix"), MatrixHelper.player(cam));
+		MatrixHelper.calculateFrustumPlane();
 		shader.unbind();
 
 	}

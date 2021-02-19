@@ -2,16 +2,14 @@ package xueli.craftgame.world;
 
 import java.util.ArrayList;
 
-import xueli.craftgame.CraftGame;
-import xueli.craftgame.block.BlockData;
+import xueli.craftgame.block.Block;
 
 public class SubChunk {
 
-	private static final int AIR = -1;
+	private static final int AIR = 0;
 
-	ArrayList<String> namespaces = new ArrayList<String>();
+	ArrayList<Block> namespaces = new ArrayList<Block>();
 	int[][][] grid = new int[16][16][16];
-	long[][][] details = new long[16][16][16];
 
 	int[][] heightMap = new int[16][16];
 
@@ -22,33 +20,39 @@ public class SubChunk {
 		this.belongChunk = chunk;
 		this.y = y;
 
+		this.namespaces.add(null);
+
 	}
 
-	public BlockData getBlockData(int x, int y, int z) {
+	public Block getBlock(int x, int y, int z) {
 		int i = grid[x][y][z];
 		if (i == AIR)
 			return null;
-		return CraftGame.INSTANCE_CRAFT_GAME.getBlockResource().getBlockData(namespaces.get(i));
-	}
-
-	public long getDetails(int x, int y, int z) {
-		return details[x][y][z];
+		return namespaces.get(i);
 	}
 
 	public void setBlock(int x, int y, int z, String namespace, long detail) {
-		int i = namespaces.indexOf(namespace);
+		if (namespace == null) {
+			this.setBlock(x, y, z, null);
+		} else {
+			this.setBlock(x, y, z, new Block(namespace, detail));
+		}
+	}
+
+	public void setBlock(int x, int y, int z, Block block) {
+		int i = namespaces.indexOf(block);
 		if (i == -1) {
 			i = namespaces.size();
-			namespaces.add(namespace);
+			namespaces.add(block);
+
 		}
 
 		grid[x][y][z] = i;
-		details[x][y][z] = detail;
 
 		if (y > heightMap[x][z]) {
-			if (namespace == null) {
+			if (block == null) {
 				for (int yy = y; yy >= 0; yy--) {
-					if (this.getBlockData(x, yy, z) != null) {
+					if (this.getBlock(x, yy, z) != null) {
 						heightMap[x][z] = yy;
 						break;
 					}

@@ -1,6 +1,7 @@
 package xueli.craftgame.world;
 
 import xueli.craftgame.CraftGame;
+import xueli.craftgame.block.Block;
 import xueli.craftgame.block.BlockData;
 import xueli.craftgame.block.data.BlockFace;
 import xueli.craftgame.block.model.IModel;
@@ -37,7 +38,7 @@ public class ChunkMeshBuilder {
 		this.needRebuild = true;
 
 	}
-	
+
 	public void postReadyDrawcall() {
 		if (buffer == null) {
 			buffer = new FloatList(100000);
@@ -45,9 +46,9 @@ public class ChunkMeshBuilder {
 		if (buffer_alpha == null) {
 			buffer_alpha = new FloatList(50000);
 		}
-		
+
 	}
-	
+
 	public void postUnload() {
 		if (buffer != null) {
 			buffer.postDispose();
@@ -57,10 +58,10 @@ public class ChunkMeshBuilder {
 			buffer_alpha.postDispose();
 			buffer_alpha = null;
 		}
-		
+
 	}
 
-	public void update() {
+	public void drawUpdate() {
 		if (needRebuild) {
 			int offset_x = chunkX << 4;
 			int offset_z = chunkZ << 4;
@@ -84,71 +85,91 @@ public class ChunkMeshBuilder {
 					for (int x = 0; x < 16; x++) {
 						for (int z = 0; z < 16; z++) {
 							int height = subChunk.heightMap[x][z];
-							for (int y = 0; y < height; y++) {
+							for (int y = 0; y <= height; y++) {
 								int realX = x + offset_x;
 								int realY = y + offset_y;
 								int realZ = z + offset_z;
 
-								BlockData data = subChunk.getBlockData(x, y, z);
-								if (data != null) {
-									long detail = subChunk.getDetails(x, y, z);
+								Block block = subChunk.getBlock(x, y, z);
+
+								if (block != null) {
+									BlockData data = block.getData();
+									long detail = block.getDetails();
 									IModel model = data.getModel();
 
 									if (model.isAlpha(realX, realY, realZ, world)) {
-										vertCount_alpha += model.getRenderData(buffer, realX, realY, realZ,
-												BlockFace.JUST_DRAW_ALL_DONT_CARE_ABOUT_THIS, detail, data,
-												blockTextureAtlas, world);
+										vertCount_alpha += model.getRenderData(buffer_alpha, realX, realY, realZ,
+												BlockFace.LEFT, detail, data, blockTextureAtlas, world);
+										vertCount_alpha += model.getRenderData(buffer_alpha, realX, realY, realZ,
+												BlockFace.RIGHT, detail, data, blockTextureAtlas, world);
+										vertCount_alpha += model.getRenderData(buffer_alpha, realX, realY, realZ,
+												BlockFace.TOP, detail, data, blockTextureAtlas, world);
+										vertCount_alpha += model.getRenderData(buffer_alpha, realX, realY, realZ,
+												BlockFace.BOTTOM, detail, data, blockTextureAtlas, world);
+										vertCount_alpha += model.getRenderData(buffer_alpha, realX, realY, realZ,
+												BlockFace.FRONT, detail, data, blockTextureAtlas, world);
+										vertCount_alpha += model.getRenderData(buffer_alpha, realX, realY, realZ,
+												BlockFace.BACK, detail, data, blockTextureAtlas, world);
 
-									} else if (model.isCompleteBlock(realX, realY, realZ, world)) {
-										vertCount += model.getRenderData(buffer, realX, realY, realZ,
-												BlockFace.JUST_DRAW_ALL_DONT_CARE_ABOUT_THIS, detail, data,
-												blockTextureAtlas, world);
+									} else if (!model.isCompleteBlock(realX, realY, realZ, world)) {
+										vertCount += model.getRenderData(buffer, realX, realY, realZ, BlockFace.LEFT,
+												detail, data, blockTextureAtlas, world);
+										vertCount += model.getRenderData(buffer, realX, realY, realZ, BlockFace.RIGHT,
+												detail, data, blockTextureAtlas, world);
+										vertCount += model.getRenderData(buffer, realX, realY, realZ, BlockFace.TOP,
+												detail, data, blockTextureAtlas, world);
+										vertCount += model.getRenderData(buffer, realX, realY, realZ, BlockFace.BOTTOM,
+												detail, data, blockTextureAtlas, world);
+										vertCount += model.getRenderData(buffer, realX, realY, realZ, BlockFace.FRONT,
+												detail, data, blockTextureAtlas, world);
+										vertCount += model.getRenderData(buffer, realX, realY, realZ, BlockFace.BACK,
+												detail, data, blockTextureAtlas, world);
 
 									} else {
 										if ((world.getBlock(realX - 1, realY, realZ) == null
-												|| world.getBlock(realX - 1, realY, realZ).getModel().isAlpha(realX,
-														realY, realZ, world)
-												|| !world.getBlock(realX - 1, realY, realZ).getModel()
+												|| world.getBlock(realX - 1, realY, realZ).getData().getModel()
+														.isAlpha(realX, realY, realZ, world)
+												|| !world.getBlock(realX - 1, realY, realZ).getData().getModel()
 														.isCompleteBlock(realX, realY, realZ, world))) {
 											vertCount += model.getRenderData(buffer, realX, realY, realZ,
 													BlockFace.LEFT, detail, data, blockTextureAtlas, world);
 										}
 										if ((world.getBlock(realX + 1, realY, realZ) == null
-												|| world.getBlock(realX + 1, realY, realZ).getModel().isAlpha(realX,
-														realY, realZ, world)
-												|| !world.getBlock(realX + 1, realY, realZ).getModel()
+												|| world.getBlock(realX + 1, realY, realZ).getData().getModel()
+														.isAlpha(realX, realY, realZ, world)
+												|| !world.getBlock(realX + 1, realY, realZ).getData().getModel()
 														.isCompleteBlock(realX, realY, realZ, world))) {
 											vertCount += model.getRenderData(buffer, realX, realY, realZ,
 													BlockFace.RIGHT, detail, data, blockTextureAtlas, world);
 										}
 										if ((world.getBlock(realX, realY, realZ - 1) == null
-												|| world.getBlock(realX, realY, realZ - 1).getModel().isAlpha(realX,
-														realY, realZ, world)
-												|| !world.getBlock(realX, realY, realZ - 1).getModel()
+												|| world.getBlock(realX, realY, realZ - 1).getData().getModel()
+														.isAlpha(realX, realY, realZ, world)
+												|| !world.getBlock(realX, realY, realZ - 1).getData().getModel()
 														.isCompleteBlock(realX, realY, realZ, world))) {
 											vertCount += model.getRenderData(buffer, realX, realY, realZ,
 													BlockFace.FRONT, detail, data, blockTextureAtlas, world);
 										}
 										if ((world.getBlock(realX, realY, realZ + 1) == null
-												|| world.getBlock(realX, realY, realZ + 1).getModel().isAlpha(realX,
-														realY, realZ, world)
-												|| !world.getBlock(realX, realY, realZ + 1).getModel()
+												|| world.getBlock(realX, realY, realZ + 1).getData().getModel()
+														.isAlpha(realX, realY, realZ, world)
+												|| !world.getBlock(realX, realY, realZ + 1).getData().getModel()
 														.isCompleteBlock(realX, realY, realZ, world))) {
 											vertCount += model.getRenderData(buffer, realX, realY, realZ,
 													BlockFace.BACK, detail, data, blockTextureAtlas, world);
 										}
 										if ((world.getBlock(realX, y - 1, realZ) == null
-												|| world.getBlock(realX, y - 1, realZ).getModel().isAlpha(realX, realY,
-														realZ, world)
-												|| !world.getBlock(realX, y - 1, realZ).getModel()
+												|| world.getBlock(realX, y - 1, realZ).getData().getModel()
+														.isAlpha(realX, realY, realZ, world)
+												|| !world.getBlock(realX, y - 1, realZ).getData().getModel()
 														.isCompleteBlock(realX, realY, realZ, world))) {
 											vertCount += model.getRenderData(buffer, realX, realY, realZ,
 													BlockFace.BOTTOM, detail, data, blockTextureAtlas, world);
 										}
 										if ((world.getBlock(realX, y + 1, realZ) == null
-												|| world.getBlock(realX, y + 1, realZ).getModel().isAlpha(realX, realY,
-														realZ, world)
-												|| !world.getBlock(realX, y + 1, realZ).getModel()
+												|| world.getBlock(realX, y + 1, realZ).getData().getModel()
+														.isAlpha(realX, realY, realZ, world)
+												|| !world.getBlock(realX, y + 1, realZ).getData().getModel()
 														.isCompleteBlock(realX, realY, realZ, world))) {
 											vertCount += model.getRenderData(buffer, realX, realY, realZ, BlockFace.TOP,
 													detail, data, blockTextureAtlas, world);

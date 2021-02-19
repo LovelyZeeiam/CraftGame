@@ -3,7 +3,7 @@ package xueli.craftgame.net;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import xueli.craftgame.net.message.MessageDefine;
+import xueli.craftgame.net.message.HandshakeMessages;
 
 public class ByteArrayBuilder {
 
@@ -23,7 +23,7 @@ public class ByteArrayBuilder {
 			return this;
 
 		try {
-			outputStream.write(i.getBytes(MessageDefine.STANDARD_CHARSET));
+			outputStream.write(i.getBytes(HandshakeMessages.STANDARD_CHARSET));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

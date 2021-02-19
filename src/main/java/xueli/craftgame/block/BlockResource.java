@@ -98,7 +98,7 @@ public class BlockResource extends IResource {
 			}
 
 			BlockData blockData = new BlockData(namespace, name, CraftGame.INSTANCE_CRAFT_GAME == null ? null
-					: CraftGame.INSTANCE_CRAFT_GAME.getModelManager().getModel(modelName));
+					: CraftGame.INSTANCE_CRAFT_GAME.getModelManager().getModel(modelName), textures);
 			dataMap.put(namespace, blockData);
 
 			Logger.info("Blocks: read Block Defination File: " + file.getName());

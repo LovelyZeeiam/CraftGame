@@ -16,7 +16,7 @@ public abstract class Particle {
 
 	}
 
-	public abstract WhenComponentComeToEnd tickAndDraw(Shader shader, ParticleRenderer renderer);
+	public abstract WhenComponentComeToEnd tickAndDraw(Shader shader, VertexPointerParticle renderer);
 
 	protected void setPointSize(Shader shader, float pointSize) {
 		shader.setFloat(shader.getUnifromLocation("point_size"), pointSize);

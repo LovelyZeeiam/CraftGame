@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import xueli.craftgame.block.BlockData;
+import xueli.craftgame.block.Block;
 import xueli.gamengine.utils.math.MathUtils;
 import xueli.gamengine.utils.vector.Vector;
 import xueli.gamengine.utils.vector.Vector2i;
@@ -13,9 +13,9 @@ import xueli.gamengine.utils.vector.Vector2i;
 public class World {
 
 	public static final int RENDER_DISTANCE = 5;
-	
+
 	private ConcurrentHashMap<Long, Chunk> chunksHashMap = new ConcurrentHashMap<Long, Chunk>();
-	private Vector3f defaultSpawnpoint = new Vector3f(0, 0, 0);
+	private Vector3f defaultSpawnpoint = new Vector3f(20, 12, 20);
 
 	private HashMap<String, Vector> playerPos = new HashMap<String, Vector>();
 
@@ -33,21 +33,17 @@ public class World {
 		}
 
 		chunksHashMap.put(MathUtils.vert2ToLong(x, z), chunk);
+
 		return chunk;
 	}
 
-	public BlockData getBlock(int x, int y, int z) {
+	public Block getBlock(int x, int y, int z) {
 		int chunkX = x >> 4;
 		int chunkZ = z >> 4;
 		Chunk chunk = chunksHashMap.get(MathUtils.vert2ToLong(chunkX, chunkZ));
-		return chunk.getBlock(x % 16, y, z % 16);
-	}
-
-	public long getDetail(int x, int y, int z) {
-		int chunkX = x >> 4;
-		int chunkZ = z >> 4;
-		Chunk chunk = chunksHashMap.get(MathUtils.vert2ToLong(chunkX, chunkZ));
-		return chunk.getDetail(x % 16, y, z % 16);
+		if (chunk == null)
+			return null;
+		return chunk.getBlock(x - chunkX * 16, y, z - chunkZ * 16);
 	}
 
 	public Vector3f getDefaultSpawnpoint() {
@@ -59,52 +55,56 @@ public class World {
 	}
 
 	public Vector getPlayer(String name) {
-		if(!playerPos.containsKey(name)) {
+		if (!playerPos.containsKey(name)) {
 			playerPos.put(name, new Vector(defaultSpawnpoint.x, defaultSpawnpoint.y, defaultSpawnpoint.z));
 		}
 		return playerPos.get(name);
 	}
-	
+
 	public void generateChunkAccordingToPlayerPos(Vector playerPos) {
 		Vector2i playerInChunkPos = World.getChunkPosFromBlock((int) playerPos.x, (int) playerPos.y);
-		for(int chunkX = playerInChunkPos.x - RENDER_DISTANCE; chunkX < playerInChunkPos.x + RENDER_DISTANCE; chunkX++) {
-			for(int chunkZ = playerInChunkPos.y - RENDER_DISTANCE; chunkZ < playerInChunkPos.y + RENDER_DISTANCE; chunkZ++) {
-				if(!this.hasChunk(chunkX, chunkZ)) {
+		for (int chunkX = playerInChunkPos.x - RENDER_DISTANCE; chunkX <= playerInChunkPos.x
+				+ RENDER_DISTANCE; chunkX++) {
+			for (int chunkZ = playerInChunkPos.y - RENDER_DISTANCE; chunkZ <= playerInChunkPos.y
+					+ RENDER_DISTANCE; chunkZ++) {
+				if (!this.hasChunk(chunkX, chunkZ)) {
 					this.requestGenChunk(chunkX, chunkZ);
 				}
 			}
 		}
-		
+
 	}
-	
+
 	public boolean hasChunk(int chunkX, int chunkZ) {
-		return chunksHashMap.contains(MathUtils.vert2ToLong(chunkX, chunkZ));
+		return chunksHashMap.containsKey(MathUtils.vert2ToLong(chunkX, chunkZ));
 	}
-	
+
 	public Chunk getChunk(int chunkX, int chunkZ) {
 		return chunksHashMap.get(MathUtils.vert2ToLong(chunkX, chunkZ));
 	}
-	
+
 	public static Vector2i getChunkPosFromBlock(int x, int z) {
 		int chunkX = x >> 4;
 		int chunkZ = z >> 4;
 		return new Vector2i(chunkX, chunkZ);
 	}
-	
+
 	public void readyDrawcall(Vector playerPos) {
 		Vector2i playerInChunkPos = World.getChunkPosFromBlock((int) playerPos.x, (int) playerPos.y);
-		for(int chunkX = playerInChunkPos.x - RENDER_DISTANCE; chunkX < playerInChunkPos.x + RENDER_DISTANCE; chunkX++) {
-			for(int chunkZ = playerInChunkPos.y - RENDER_DISTANCE; chunkZ < playerInChunkPos.y + RENDER_DISTANCE; chunkZ++) {
-				if(this.hasChunk(chunkX, chunkZ)) {
+		for (int chunkX = playerInChunkPos.x - RENDER_DISTANCE; chunkX <= playerInChunkPos.x
+				+ RENDER_DISTANCE; chunkX++) {
+			for (int chunkZ = playerInChunkPos.y - RENDER_DISTANCE; chunkZ <= playerInChunkPos.y
+					+ RENDER_DISTANCE; chunkZ++) {
+				if (this.hasChunk(chunkX, chunkZ)) {
 					Chunk chunk = this.getChunk(chunkX, chunkZ);
-					chunk.getMeshBuilder().postReadyDrawcall();
-					
+					chunk.getMeshBuilder().drawUpdate();
+
 				}
 			}
 		}
-		
+
 	}
-	
+
 	/*
 	 * public byte[] packChunk(int chunkX, int chunkZ) {
 	 * 

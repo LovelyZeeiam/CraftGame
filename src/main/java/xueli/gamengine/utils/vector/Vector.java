@@ -1,6 +1,10 @@
 package xueli.gamengine.utils.vector;
 
-public class Vector {
+import java.io.Serializable;
+
+public class Vector implements Serializable {
+
+	private static final long serialVersionUID = 1957284979693368762L;
 
 	public float x;
 	public float y;
@@ -25,6 +29,12 @@ public class Vector {
 		this.rotX = rotX;
 		this.rotY = rotY;
 		this.rotZ = rotZ;
+	}
+
+	@Override
+	public String toString() {
+		return "Vector [x=" + x + ", y=" + y + ", z=" + z + ", rotX=" + rotX + ", rotY=" + rotY + ", rotZ=" + rotZ
+				+ "]";
 	}
 
 }

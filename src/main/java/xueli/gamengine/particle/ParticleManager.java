@@ -8,24 +8,35 @@ import org.lwjgl.opengl.GL20;
 import xueli.gamengine.IGame;
 import xueli.gamengine.data.WhenComponentComeToEnd;
 import xueli.gamengine.utils.GLHelper;
+import xueli.gamengine.utils.renderer.IRenderer;
 import xueli.gamengine.utils.resource.Shader;
 import xueli.gamengine.utils.vector.Vector;
 
-public class ParticleManager {
+public class ParticleManager implements IRenderer {
 
 	private IGame ctxGame;
-	private ParticleRenderer renderer;
+	private VertexPointerParticle pointer;
 	private Shader shader;
 
 	private ArrayList<Particle> particles = new ArrayList<Particle>();
 
 	public ParticleManager(IGame game, Shader particleShader) {
-		this.renderer = new ParticleRenderer(65536, GL15.GL_DYNAMIC_DRAW);
+		this.pointer = new VertexPointerParticle(65536, GL15.GL_DYNAMIC_DRAW, this);
 		this.shader = particleShader;
 		this.ctxGame = game;
 
 		size();
+		init();
 
+	}
+
+	public void addParticle(Particle particle) {
+		particles.add(particle);
+
+	}
+
+	@Override
+	public void init() {
 		// Opengl点参数
 		GL20.glEnable(GL20.GL_VERTEX_PROGRAM_POINT_SIZE);
 		float quadratic[] = { 1.0f, 0.0f, 0.01f };
@@ -36,18 +47,14 @@ public class ParticleManager {
 
 	}
 
-	public void addParticle(Particle particle) {
-		particles.add(particle);
-
-	}
-
-	public void draw(Vector camPos) {
+	@Override
+	public void render(Vector camPos) {
 		Shader.setViewMatrix(camPos, shader);
 		shader.use();
 
 		ArrayList<Particle> particlesThatNeedDeleting = new ArrayList<Particle>();
 		particles.forEach(p -> {
-			if (p.tickAndDraw(shader, renderer) == WhenComponentComeToEnd.ITS_TIME_TO_DISPOSE)
+			if (p.tickAndDraw(shader, pointer) == WhenComponentComeToEnd.ITS_TIME_TO_DISPOSE)
 				particlesThatNeedDeleting.add(p);
 		});
 		particles.removeAll(particlesThatNeedDeleting);
@@ -58,12 +65,17 @@ public class ParticleManager {
 
 	}
 
+	@Override
 	public void size() {
 		shader.use();
-
 		Shader.setProjectionMatrix(ctxGame, shader);
-
 		shader.unbind();
+
+	}
+
+	@Override
+	public void release() {
+		this.pointer.release();
 
 	}
 
