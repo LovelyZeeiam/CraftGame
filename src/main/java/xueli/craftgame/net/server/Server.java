@@ -59,13 +59,14 @@ public class Server extends WebSocketServer {
 	public void onMessage(WebSocket conn, String message) {
 		Message m = Message.getMessage(message.getBytes(HandshakeMessages.STANDARD_CHARSET));
 		switch (m.getId()) {
-		case HandshakeMessages.PLAYER_CONNECT: {
+		case HandshakeMessages.PLAYER_CONNECT_AND_WAIT_POSITION: {
 			if (!clientIdNamesHashMap.containsValue(m.getMessage())) {
 				int id = idCount;
 				Logger.info("[Server] " + m.getMessage() + " join the game: " + id);
 
 				clientIdNamesHashMap.put(id, m.getMessage());
-				conn.send(Message.generateMessage(new Message(HandshakeMessages.PLAYER_CONNECT, Integer.toString(id))));
+				conn.send(Message.generateMessage(
+						new Message(HandshakeMessages.SERVER_RESPONSE_PLAYER_CONNECT, Integer.toString(id))));
 
 			} else {
 				Logger.warn("[Server] The client named " + m.getMessage()
@@ -109,7 +110,7 @@ public class Server extends WebSocketServer {
 			// 如果直接以字符串的形式发送就会出现invalid stream header: EFBFBDEF 所以转换为base64先
 			String dataBase64 = Base64.getEncoder().encodeToString(playerPosData);
 			conn.send(Message.generateMessage(
-					new Message(HandshakeMessages.HANDSHAKE_SERVER_ANSWER_PLAYER_POSITION, dataBase64)));
+					new Message(HandshakeMessages.HANDSHAKE_SERVER_ANSWER_PLAYER_POSITION_AND_NOTIFY, dataBase64)));
 
 			break;
 		}

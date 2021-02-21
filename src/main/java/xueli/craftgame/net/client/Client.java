@@ -43,7 +43,7 @@ public class Client extends WebSocketClient {
 	public void onMessage(String message) {
 		Message m = Message.getMessage(message.getBytes(HandshakeMessages.STANDARD_CHARSET));
 		switch (m.getId()) {
-		case HandshakeMessages.PLAYER_CONNECT: {
+		case HandshakeMessages.SERVER_RESPONSE_PLAYER_CONNECT: {
 			this.id = Integer.parseInt(m.getMessage());
 			Logger.info("[Client] " + logic.getCg().getPlayerStat().getName() + " join the game: " + id);
 
@@ -59,7 +59,7 @@ public class Client extends WebSocketClient {
 
 			break;
 		}
-		case HandshakeMessages.HANDSHAKE_SERVER_ANSWER_PLAYER_POSITION: {
+		case HandshakeMessages.HANDSHAKE_SERVER_ANSWER_PLAYER_POSITION_AND_NOTIFY: {
 			String base64PosData = m.getMessage();
 			byte[] posObjData = Base64.getDecoder().decode(base64PosData);
 			Vector playerPos = (Vector) Bytes.getObject(posObjData);

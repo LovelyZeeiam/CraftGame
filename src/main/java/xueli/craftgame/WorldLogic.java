@@ -135,7 +135,7 @@ public class WorldLogic implements Runnable {
 
 		// 第二步 生成出生点区块
 
-		client.send(Message.generateMessage(new Message(HandshakeMessages.PLAYER_CONNECT,
+		client.send(Message.generateMessage(new Message(HandshakeMessages.PLAYER_CONNECT_AND_WAIT_POSITION,
 				CraftGame.INSTANCE_CRAFT_GAME.getPlayerStat().getName())));
 
 		synchronized (Waiter.waitObject) {
