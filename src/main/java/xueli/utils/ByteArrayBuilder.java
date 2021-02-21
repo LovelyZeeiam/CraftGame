@@ -1,4 +1,4 @@
-package xueli.craftgame.net;
+package xueli.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

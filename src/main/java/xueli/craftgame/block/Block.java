@@ -1,8 +1,12 @@
 package xueli.craftgame.block;
 
+import java.io.Serializable;
+
 import xueli.craftgame.CraftGame;
 
-public class Block {
+public class Block implements Serializable {
+
+	private static final long serialVersionUID = -6740824912132308081L;
 
 	private BlockData data;
 	private long details = 0;

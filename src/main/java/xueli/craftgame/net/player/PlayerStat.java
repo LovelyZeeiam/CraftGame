@@ -1,6 +1,10 @@
 package xueli.craftgame.net.player;
 
-public class PlayerStat {
+import java.io.Serializable;
+
+public class PlayerStat implements Serializable {
+
+	private static final long serialVersionUID = -3317283467437134144L;
 
 	private String name;
 	private int iconTexture;

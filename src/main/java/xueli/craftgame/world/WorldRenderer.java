@@ -4,6 +4,7 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Matrix4f;
 
 import xueli.craftgame.CraftGame;
 import xueli.gamengine.resource.Texture;
@@ -23,6 +24,8 @@ public class WorldRenderer implements IRenderer {
 
 	private final Shader shader;
 	private final TextureAtlas blockTextureAtlas;
+
+	private Matrix4f projMatrix, viewMatrix;
 
 	public WorldRenderer(World world) {
 		super();
@@ -45,7 +48,7 @@ public class WorldRenderer implements IRenderer {
 	@Override
 	public void size() {
 		shader.use();
-		Shader.setProjectionMatrix(CraftGame.INSTANCE_CRAFT_GAME, shader);
+		this.projMatrix = Shader.setProjectionMatrix(CraftGame.INSTANCE_CRAFT_GAME, shader);
 		shader.unbind();
 
 	}
@@ -76,7 +79,7 @@ public class WorldRenderer implements IRenderer {
 	public void render(Vector camPos) {
 		GL11.glEnable(GL11.GL_CULL_FACE);
 
-		Shader.setViewMatrix(camPos, shader);
+		this.viewMatrix = Shader.setViewMatrix(camPos, shader);
 		shader.use();
 		pointer.initDraw();
 
@@ -114,6 +117,14 @@ public class WorldRenderer implements IRenderer {
 
 		GL11.glDisable(GL11.GL_CULL_FACE);
 
+	}
+
+	public Matrix4f getProjMatrix() {
+		return projMatrix;
+	}
+
+	public Matrix4f getViewMatrix() {
+		return viewMatrix;
 	}
 
 	@Override

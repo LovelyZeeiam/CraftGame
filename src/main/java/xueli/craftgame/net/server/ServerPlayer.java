@@ -2,6 +2,7 @@ package xueli.craftgame.net.server;
 
 import java.io.Serializable;
 
+import xueli.craftgame.net.player.PlayerState;
 import xueli.gamengine.utils.vector.Vector;
 
 public class ServerPlayer implements Serializable {

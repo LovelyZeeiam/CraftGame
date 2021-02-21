@@ -1,4 +1,4 @@
-package xueli.craftgame.net.server;
+package xueli.craftgame.net.player;
 
 public enum PlayerState {
 

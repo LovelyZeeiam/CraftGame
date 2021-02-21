@@ -19,6 +19,7 @@ public class ClientPlayer {
 	private final Client client;
 	private final WorldLogic logic;
 	private final Display display;
+	private final PlayerPicker picker;
 
 	private Vector clientPlayerPos;
 	private Vector3f acceleration = new Vector3f();
@@ -29,6 +30,7 @@ public class ClientPlayer {
 		this.client = logic.getClient();
 		this.clientPlayerPos = playerPos;
 		this.display = logic.getCg().getDisplay();
+		this.picker = new PlayerPicker(this);
 
 	}
 
@@ -52,8 +54,7 @@ public class ClientPlayer {
 		clientPlayerPos.rotX += drx;
 		clientPlayerPos.rotY += dry;
 
-		EventPlayerTurn turnEvent = new EventPlayerTurn(drx, dry, client.getId(),
-				logic.getCg().getPlayerStat().getName());
+		EventPlayerTurn turnEvent = new EventPlayerTurn(drx, dry, client.getId(), logic.getCg().getPlayerStat());
 		client.send(Message.generateEventMessage(turnEvent));
 
 		if (display.mouseGrabbed) {
@@ -79,9 +80,7 @@ public class ClientPlayer {
 				acceleration.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-clientPlayerPos.rotY - 90));
 			}
 
-			// TODO: 跳跃不真实
 			if (KeyCallback.keys[GLFW.GLFW_KEY_SPACE]) {
-				// if(isOnGround)
 				acceleration.y += this.getSpeed() * 2.0f;
 			}
 
@@ -109,8 +108,18 @@ public class ClientPlayer {
 		acceleration.x = acceleration.y = acceleration.z = 0;
 
 		EventPlayerMove moveEvent = new EventPlayerMove(deltaPos.x, deltaPos.y, deltaPos.z, client.getId(),
-				logic.getCg().getPlayerStat().getName());
+				logic.getCg().getPlayerStat());
 		client.send(Message.generateEventMessage(moveEvent));
+
+		if (display.isMouseDown(0)) {
+			picker.onLeftClick();
+		}
+
+		if (display.isMouseDown(1)) {
+			picker.onRightClick();
+		}
+
+		picker.pickTick();
 
 	}
 

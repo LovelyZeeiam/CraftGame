@@ -183,6 +183,10 @@ public class WorldLogic implements Runnable {
 		return server;
 	}
 
+	public WorldRenderer getWorldRenderer() {
+		return worldRenderer;
+	}
+
 	public void setPlayerPos(Vector playerPos) {
 		this.clientPlayerPos.x = playerPos.x;
 		this.clientPlayerPos.y = playerPos.y;
@@ -224,8 +228,6 @@ public class WorldLogic implements Runnable {
 
 		}
 
-		player.tick();
-
 		GL11.glClearColor(0.03f, 0.03f, 0.3f, 1.0f);
 
 		GL11.glDepthFunc(GL11.GL_LEQUAL);
@@ -234,6 +236,8 @@ public class WorldLogic implements Runnable {
 		worldRenderer.render(clientPlayerPos);
 
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
+
+		player.tick();
 
 	}
 

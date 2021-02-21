@@ -1,5 +1,7 @@
 package xueli.craftgame.block.model;
 
+import java.io.Serializable;
+
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
@@ -11,7 +13,9 @@ import xueli.gamengine.resource.TextureAtlas;
 import xueli.gamengine.utils.store.FloatList;
 import xueli.gamengine.utils.vector.Vector2s;
 
-public abstract class IModel {
+public abstract class IModel implements Serializable {
+
+	private static final long serialVersionUID = 7763918314675459449L;
 
 	public IModel() {
 

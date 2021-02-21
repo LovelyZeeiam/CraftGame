@@ -1,6 +1,7 @@
 package xueli.craftgame.net.event;
 
 import xueli.craftgame.net.client.Client;
+import xueli.craftgame.net.player.PlayerStat;
 import xueli.craftgame.net.server.Server;
 import xueli.craftgame.net.server.ServerPlayer;
 import xueli.gamengine.utils.vector.Vector;
@@ -11,8 +12,8 @@ public class EventPlayerTurn extends Event {
 
 	private float rotX, rotY;
 
-	public EventPlayerTurn(float rotX, float rotY, int clientId, String playerName) {
-		super(clientId, playerName);
+	public EventPlayerTurn(float rotX, float rotY, int clientId, PlayerStat stat) {
+		super(clientId, stat);
 
 		this.rotX = rotX;
 		this.rotY = rotY;
@@ -21,7 +22,7 @@ public class EventPlayerTurn extends Event {
 
 	@Override
 	public void invokeServer(Server server) {
-		ServerPlayer player = server.getWorld().getPlayer(playerName);
+		ServerPlayer player = server.getWorld().getPlayer(playerStat.getName());
 		Vector playerPos = player.getPlayerPos();
 		playerPos.rotX += rotX;
 		playerPos.rotY += rotY;
@@ -34,7 +35,7 @@ public class EventPlayerTurn extends Event {
 		if (client.getId() == this.clientId)
 			return;
 
-		ServerPlayer player = client.getWorld().getPlayer(playerName);
+		ServerPlayer player = client.getWorld().getPlayer(playerStat.getName());
 		Vector playerPos = player.getPlayerPos();
 		playerPos.rotX += rotX;
 		playerPos.rotY += rotY;

@@ -1,8 +1,8 @@
 package xueli.craftgame.net.message;
 
-import xueli.craftgame.net.ByteArrayBuilder;
 import xueli.craftgame.net.event.Event;
 import xueli.craftgame.net.event.EventEncoder;
+import xueli.utils.ByteArrayBuilder;
 
 public class Message {
 

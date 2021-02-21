@@ -38,6 +38,22 @@ public class Chunk {
 
 	}
 
+	public void setBlock(int x, int y, int z, Block block, PlayerStat playerStat) {
+		int subChunkY = y >> 4; // 相当于除以16
+		SubChunk subChunk = subChunks[subChunkY];
+
+		if (subChunk == null) {
+			subChunk = new SubChunk(this, subChunkY);
+			subChunks[subChunkY] = subChunk;
+		}
+
+		int y_in_subchunk = y % 16;
+		subChunk.setBlock(x, y_in_subchunk, z, block);
+
+		meshBuilder.postRebuild();
+
+	}
+
 	public Block getBlock(int x, int y, int z) {
 		int subChunkY = y >> 4; // 相当于除以16
 		SubChunk subChunk = subChunks[subChunkY];

@@ -8,6 +8,7 @@ import org.lwjgl.util.vector.Vector3f;
 import xueli.craftgame.CraftGame;
 import xueli.craftgame.WorldLogic;
 import xueli.craftgame.block.Block;
+import xueli.craftgame.net.player.PlayerStat;
 import xueli.craftgame.net.server.ServerPlayer;
 import xueli.gamengine.utils.math.MathUtils;
 import xueli.gamengine.utils.vector.Vector;
@@ -51,6 +52,10 @@ public class World {
 		if (chunk == null)
 			return null;
 		return chunk.getBlock(x - chunkX * 16, y, z - chunkZ * 16);
+	}
+
+	public boolean hasBlock(int x, int y, int z) {
+		return getBlock(x, y, z) != null;
 	}
 
 	public Vector3f getDefaultSpawnpoint() {
@@ -125,6 +130,19 @@ public class World {
 		int chunkX = x >> 4;
 		int chunkZ = z >> 4;
 		return new Vector2i(chunkX, chunkZ);
+	}
+
+	public void setBlock(int x, int y, int z, Block block, PlayerStat stat) {
+		Vector2i cp = getChunkPosFromBlock(x, z);
+
+		long key = MathUtils.vert2ToLong(cp.x, cp.y);
+		Chunk chunk = chunksHashMap.get(key);
+		if (chunk == null)
+			return;
+
+		int xInChunk = x - (cp.x << 4);
+		int zInChunk = z - (cp.y << 4);
+		chunk.setBlock(xInChunk, y, zInChunk, block, stat);
 	}
 
 	public void readyDrawcall(Vector playerPos) {

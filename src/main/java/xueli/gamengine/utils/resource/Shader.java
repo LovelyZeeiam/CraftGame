@@ -156,24 +156,26 @@ public class Shader {
 		GL20.glDeleteShader(fragID);
 	}
 
-	public static void setProjectionMatrix(IGame game, Shader shader) {
-		setProjectionMatrix(shader, game.getDisplay().getWidth(), game.getDisplay().getHeight(), 90.0f);
+	public static Matrix4f setProjectionMatrix(IGame game, Shader shader) {
+		return setProjectionMatrix(shader, game.getDisplay().getWidth(), game.getDisplay().getHeight(), 90.0f);
 	}
 
-	public static void setProjectionMatrix(Shader shader, float width, float height, float fov) {
+	public static Matrix4f setProjectionMatrix(Shader shader, float width, float height, float fov) {
+		Matrix4f matrix = MatrixHelper.perspecive(width, height, fov, 0.01f, 114514.0f);
 		shader.use();
-		shader.setUniformMatrix(shader.getUnifromLocation("projMatrix"),
-				MatrixHelper.perspecive(width, height, fov, 0.01f, 114514.0f));
+		shader.setUniformMatrix(shader.getUnifromLocation("projMatrix"), matrix);
 		shader.unbind();
+		return matrix;
 
 	}
 
-	public static void setViewMatrix(Vector cam, Shader shader) {
+	public static Matrix4f setViewMatrix(Vector cam, Shader shader) {
+		Matrix4f matrix = MatrixHelper.player(cam);
 		shader.use();
-		shader.setUniformMatrix(shader.getUnifromLocation("viewMatrix"), MatrixHelper.player(cam));
+		shader.setUniformMatrix(shader.getUnifromLocation("viewMatrix"), matrix);
 		MatrixHelper.calculateFrustumPlane();
 		shader.unbind();
-
+		return matrix;
 	}
 
 }

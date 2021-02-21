@@ -1,10 +1,12 @@
 package xueli.craftgame.block;
 
+import java.io.Serializable;
+
 import xueli.craftgame.block.data.LeftClick;
 import xueli.craftgame.block.data.RightClick;
 import xueli.craftgame.world.World;
 
-public class BlockListener {
+public class BlockListener implements Serializable {
 
 	public void onCreate(int x, int y, int z, World world) {
 	}
