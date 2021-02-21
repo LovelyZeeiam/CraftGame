@@ -1,4 +1,4 @@
-package xueli.craftgame.player;
+package xueli.craftgame.net.player;
 
 public class PlayerStat {
 

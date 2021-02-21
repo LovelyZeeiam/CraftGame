@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import org.lwjgl.opengl.GL11;
 
 import xueli.craftgame.net.client.Client;
+import xueli.craftgame.net.client.ClientPlayer;
 import xueli.craftgame.net.message.HandshakeMessages;
 import xueli.craftgame.net.message.Message;
 import xueli.craftgame.net.server.Server;
@@ -33,13 +34,14 @@ public class WorldLogic implements Runnable {
 	private final World world;
 	private final WorldRenderer worldRenderer;
 
-	private Vector clientPlayerPos;
+	private ClientPlayer player;
+	private Vector clientPlayerPos = new Vector();
 
 	public WorldLogic(CraftGame cg) {
 		this.cg = cg;
 		this.isRemote = false;
 
-		this.world = new World();
+		this.world = new World(this);
 		this.worldRenderer = new WorldRenderer(world);
 
 		this.server = new Server(this);
@@ -55,7 +57,7 @@ public class WorldLogic implements Runnable {
 		this.cg = cg;
 		this.isRemote = true;
 
-		this.world = new World();
+		this.world = new World(this);
 		this.worldRenderer = new WorldRenderer(world);
 
 		try {
@@ -148,17 +150,21 @@ public class WorldLogic implements Runnable {
 		progressBar.setProgress(0.5f);
 
 		// 第三步 准备区块绘制
+		this.player = new ClientPlayer(this, clientPlayerPos);
+		Logger.info("[Client] Player: " + this.player.toString());
+
 		world.readyDrawcall(clientPlayerPos);
 
 		progressBar.setProgress(1.0f);
 		progressBar.waitUtilProgressFull();
 
+		this.client.send(Message.generateMessage(
+				new Message(HandshakeMessages.CLIENT_ENTER_GAMEPLAY, Integer.toString(this.client.getId()))));
+
+		cg.queueRunningInMainThread.add(() -> cg.getDisplay().setSubtitle(null));
 		cg.inWorld = true;
+		cg.queueRunningInMainThread.add(() -> cg.getDisplay().setMouseGrabbed(true));
 
-	}
-
-	public void setPlayerPos(Vector vector) {
-		this.clientPlayerPos = vector;
 	}
 
 	public CraftGame getCg() {
@@ -167,6 +173,21 @@ public class WorldLogic implements Runnable {
 
 	public World getWorld() {
 		return world;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public Server getServer() {
+		return server;
+	}
+
+	public void setPlayerPos(Vector playerPos) {
+		this.clientPlayerPos.x = playerPos.x;
+		this.clientPlayerPos.y = playerPos.y;
+		this.clientPlayerPos.z = playerPos.z;
+
 	}
 
 	public void size() {
@@ -193,6 +214,18 @@ public class WorldLogic implements Runnable {
 	}
 
 	public void draw() {
+		if (!isRemote) {
+			this.server.onTick();
+
+		}
+
+		if (this.client.isClosed()) {
+			this.delete();
+
+		}
+
+		player.tick();
+
 		GL11.glClearColor(0.03f, 0.03f, 0.3f, 1.0f);
 
 		GL11.glDepthFunc(GL11.GL_LEQUAL);

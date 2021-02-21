@@ -1,7 +1,7 @@
 package xueli.craftgame.world;
 
 import xueli.craftgame.block.Block;
-import xueli.craftgame.player.PlayerStat;
+import xueli.craftgame.net.player.PlayerStat;
 
 public class Chunk {
 

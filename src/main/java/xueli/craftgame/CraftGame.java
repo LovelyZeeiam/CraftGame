@@ -8,7 +8,7 @@ import org.lwjgl.nanovg.NanoVG;
 
 import xueli.craftgame.block.BlockResource;
 import xueli.craftgame.block.model.ModelManager;
-import xueli.craftgame.player.PlayerStat;
+import xueli.craftgame.net.player.PlayerStat;
 import xueli.craftgame.view.widget.WidgetNicknameView;
 import xueli.gamengine.IGame;
 import xueli.gamengine.resource.GuiResource;

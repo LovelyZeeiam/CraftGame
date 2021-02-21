@@ -29,6 +29,12 @@ public abstract class CursorPosCallback extends GLFWCursorPosCallback {
 
 	}
 
+	public void tick() {
+		this.mouseDX = 0;
+		this.mouseDY = 0;
+
+	}
+
 	public abstract void invoke();
 
 }

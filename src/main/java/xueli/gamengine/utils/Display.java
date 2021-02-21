@@ -261,11 +261,19 @@ public class Display {
 		return keyCallback;
 	}
 
+	public void setMouseGrabbed(boolean grabbed) {
+		if (!useGLFW)
+			Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
+		glfwSetInputMode(window, GLFW_CURSOR, grabbed ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+		mouseGrabbed = grabbed;
+		cursorPosCallback.shouldNotProcessMouseThisTime = true;
+	}
+
 	public void toggleMouseGrabbed() {
 		if (!useGLFW)
 			Logger.error(new UnsupportedOperationException("This method is supported when GLFW is used!"));
-		glfwSetInputMode(window, GLFW_CURSOR, mouseGrabbed ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_DISABLED);
 		mouseGrabbed = !mouseGrabbed;
+		glfwSetInputMode(window, GLFW_CURSOR, mouseGrabbed ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
 		cursorPosCallback.shouldNotProcessMouseThisTime = true;
 	}
 
@@ -285,6 +293,7 @@ public class Display {
 
 		KeyCallback.tick();
 		MouseButtonCallback.tick();
+		cursorPosCallback.tick();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

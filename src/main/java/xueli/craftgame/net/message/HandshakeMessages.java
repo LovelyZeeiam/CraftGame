@@ -19,14 +19,12 @@ public class HandshakeMessages {
 	public static final byte PLAYER_RECONNECT = 4;
 	public static final byte PLAYER_DISCONNECT = 5;
 
-	public static final byte CLIENT_REQUEST_PLAYER_POSITION = 10;
-	public static final byte SERVER_ANSWER_PLAYER_POSITION = 11;
+	public static final byte HANDSHAKE_CLIENT_REQUEST_PLAYER_POSITION = 10;
+	public static final byte HANDSHAKE_SERVER_ANSWER_PLAYER_POSITION = 11;
 
 	public static final byte EVENT = 9;
 
 	public static final byte CLIENT_ENTER_GAMEPLAY = 12;
-	public static final byte CLIENT_HEARTBEAT = 6;
-	public static final byte SERVER_HEARTBEAT = 7;
 	public static final byte CLIENT_END_GAMEPLAY = 13;
 
 	public static final byte SERVER_CLOSE = 8;

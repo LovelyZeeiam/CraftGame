@@ -1,6 +1,8 @@
 package xueli.craftgame.net.message;
 
 import xueli.craftgame.net.ByteArrayBuilder;
+import xueli.craftgame.net.event.Event;
+import xueli.craftgame.net.event.EventEncoder;
 
 public class Message {
 
@@ -30,6 +32,17 @@ public class Message {
 		ByteArrayBuilder builder = new ByteArrayBuilder();
 		builder.put(message.getId()).putString(message.getMessage());
 		return new String(builder.get(), HandshakeMessages.STANDARD_CHARSET);
+	}
+
+	public static String generateEventMessage(Event event) {
+		return generateMessage(new Message(HandshakeMessages.EVENT, EventEncoder.eventEncode(event)));
+	}
+
+	public static Event getEvent(byte[] message) {
+		Message m = getMessage(message);
+		if (m.getId() != HandshakeMessages.EVENT)
+			return null;
+		return EventEncoder.eventDecode(m.getMessage());
 	}
 
 	@Override

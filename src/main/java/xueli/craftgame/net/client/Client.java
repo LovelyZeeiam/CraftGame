@@ -7,9 +7,11 @@ import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
 import xueli.craftgame.WorldLogic;
+import xueli.craftgame.net.event.Event;
 import xueli.craftgame.net.message.HandshakeMessages;
 import xueli.craftgame.net.message.Message;
 import xueli.craftgame.net.server.Server;
+import xueli.craftgame.world.World;
 import xueli.gamengine.utils.vector.Vector;
 import xueli.utils.Bytes;
 import xueli.utils.Logger;
@@ -53,11 +55,11 @@ public class Client extends WebSocketClient {
 		case HandshakeMessages.PREPARE_SPAWN_POINT_OK: {
 			Logger.info("[Client] Prepare spawnpoint map ok.");
 			this.send(Message.generateMessage(
-					new Message(HandshakeMessages.CLIENT_REQUEST_PLAYER_POSITION, Integer.toString(id))));
+					new Message(HandshakeMessages.HANDSHAKE_CLIENT_REQUEST_PLAYER_POSITION, Integer.toString(id))));
 
 			break;
 		}
-		case HandshakeMessages.SERVER_ANSWER_PLAYER_POSITION: {
+		case HandshakeMessages.HANDSHAKE_SERVER_ANSWER_PLAYER_POSITION: {
 			String base64PosData = m.getMessage();
 			byte[] posObjData = Base64.getDecoder().decode(base64PosData);
 			Vector playerPos = (Vector) Bytes.getObject(posObjData);
@@ -66,12 +68,17 @@ public class Client extends WebSocketClient {
 				return;
 			}
 
-			Logger.info("[Client] Get Player Position: " + playerPos.toString());
 			logic.setPlayerPos(playerPos);
 
 			synchronized (Waiter.waitObject) {
 				Waiter.waitObject.notify();
 			}
+
+			break;
+		}
+		case HandshakeMessages.EVENT: {
+			Event event = Message.getEvent(message.getBytes(HandshakeMessages.STANDARD_CHARSET));
+			event.invokeClient(this);
 
 			break;
 		}
@@ -82,6 +89,7 @@ public class Client extends WebSocketClient {
 
 	@Override
 	public void onClose(int code, String reason, boolean remote) {
+		Logger.info("[Client] Client closed: " + code + ", " + reason + ", remote: " + remote);
 
 	}
 
@@ -90,6 +98,18 @@ public class Client extends WebSocketClient {
 		Logger.error("[Client] Exception!");
 		ex.printStackTrace();
 
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public WorldLogic getLogic() {
+		return logic;
+	}
+
+	public World getWorld() {
+		return logic.getWorld();
 	}
 
 }

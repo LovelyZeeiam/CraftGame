@@ -5,21 +5,28 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import xueli.craftgame.CraftGame;
+import xueli.craftgame.WorldLogic;
 import xueli.craftgame.block.Block;
+import xueli.craftgame.net.server.ServerPlayer;
 import xueli.gamengine.utils.math.MathUtils;
 import xueli.gamengine.utils.vector.Vector;
 import xueli.gamengine.utils.vector.Vector2i;
+import xueli.utils.Logger;
 
 public class World {
 
 	public static final int RENDER_DISTANCE = 5;
 
+	private final WorldLogic logic;
+
 	private ConcurrentHashMap<Long, Chunk> chunksHashMap = new ConcurrentHashMap<Long, Chunk>();
 	private Vector3f defaultSpawnpoint = new Vector3f(20, 12, 20);
 
-	private HashMap<String, Vector> playerPos = new HashMap<String, Vector>();
+	private HashMap<String, ServerPlayer> players = new HashMap<String, ServerPlayer>();
 
-	public World() {
+	public World(WorldLogic logic) {
+		this.logic = logic;
 
 	}
 
@@ -54,11 +61,42 @@ public class World {
 		this.defaultSpawnpoint = defaultSpawnpoint;
 	}
 
-	public Vector getPlayer(String name) {
-		if (!playerPos.containsKey(name)) {
-			playerPos.put(name, new Vector(defaultSpawnpoint.x, defaultSpawnpoint.y, defaultSpawnpoint.z));
+	public ServerPlayer getPlayer(String name) {
+		if (!players.containsKey(name)) {
+			players.put(name,
+					new ServerPlayer(name, new Vector(defaultSpawnpoint.x, defaultSpawnpoint.y, defaultSpawnpoint.z)));
 		}
-		return playerPos.get(name);
+		return players.get(name);
+	}
+
+	public HashMap<String, ServerPlayer> getPlayers() {
+		return players;
+	}
+
+	public void correctPlayers(HashMap<String, ServerPlayer> players) {
+		players.forEach((name, player) -> {
+			if (!this.players.containsKey(name)) {
+				Logger.warn("[Client] Server has sent a unknown player message: " + name + ". ignore.");
+				return;
+			}
+
+			ServerPlayer thisPlayer = this.players.get(name);
+			thisPlayer.setState(player.getState());
+
+			Vector thisPlayerPos = thisPlayer.getPlayerPos();
+			Vector remotePlayerPos = player.getPlayerPos();
+
+			thisPlayerPos.x = remotePlayerPos.x;
+			thisPlayerPos.y = remotePlayerPos.y;
+			thisPlayerPos.z = remotePlayerPos.z;
+
+			if (name.equals(CraftGame.INSTANCE_CRAFT_GAME.getPlayerStat().getName())) {
+				// 本地玩家
+				logic.setPlayerPos(player.getPlayerPos());
+
+			}
+
+		});
 	}
 
 	public void generateChunkAccordingToPlayerPos(Vector playerPos) {

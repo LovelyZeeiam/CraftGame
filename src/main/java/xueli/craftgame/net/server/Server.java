@@ -9,6 +9,8 @@ import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
 import xueli.craftgame.WorldLogic;
+import xueli.craftgame.net.event.Event;
+import xueli.craftgame.net.event.EventServerCorrectPlayerPos;
 import xueli.craftgame.net.message.HandshakeMessages;
 import xueli.craftgame.net.message.Message;
 import xueli.craftgame.world.World;
@@ -82,7 +84,7 @@ public class Server extends WebSocketServer {
 				break;
 			}
 			// TODO: 根据玩家的位置生成地图
-			Vector playerPos = world.getPlayer(clientIdNamesHashMap.get(clientID));
+			Vector playerPos = world.getPlayer(clientIdNamesHashMap.get(clientID)).getPlayerPos();
 			world.generateChunkAccordingToPlayerPos(playerPos);
 
 			// TODO: 如果是单纯的服务端，此时就需要给client发地图了
@@ -93,7 +95,7 @@ public class Server extends WebSocketServer {
 			conn.send(Message.generateMessage(new Message(HandshakeMessages.PREPARE_SPAWN_POINT_OK, null)));
 			break;
 		}
-		case HandshakeMessages.CLIENT_REQUEST_PLAYER_POSITION: {
+		case HandshakeMessages.HANDSHAKE_CLIENT_REQUEST_PLAYER_POSITION: {
 			int clientId = Integer.parseInt(m.getMessage());
 			String name = clientIdNamesHashMap.get(clientId);
 			if (name == null) {
@@ -102,14 +104,36 @@ public class Server extends WebSocketServer {
 				break;
 			}
 
-			Vector playerPos = world.getPlayer(name);
+			Vector playerPos = world.getPlayer(name).getPlayerPos();
 			byte[] playerPosData = Bytes.getBytes(playerPos);
 			// 如果直接以字符串的形式发送就会出现invalid stream header: EFBFBDEF 所以转换为base64先
 			String dataBase64 = Base64.getEncoder().encodeToString(playerPosData);
-			conn.send(
-					Message.generateMessage(new Message(HandshakeMessages.SERVER_ANSWER_PLAYER_POSITION, dataBase64)));
+			conn.send(Message.generateMessage(
+					new Message(HandshakeMessages.HANDSHAKE_SERVER_ANSWER_PLAYER_POSITION, dataBase64)));
 
 			break;
+		}
+		case HandshakeMessages.CLIENT_ENTER_GAMEPLAY: {
+			int clientId = Integer.parseInt(m.getMessage());
+			String name = clientIdNamesHashMap.get(clientId);
+			if (name == null) {
+				Logger.warn("[Server] A client sent an ID that doesn't exist in id_name map. Ignore: "
+						+ conn.getRemoteSocketAddress());
+				break;
+			}
+
+			world.getPlayer(name).setState(PlayerState.ALIVE);
+
+			break;
+		}
+		case HandshakeMessages.EVENT: {
+			Event event = Message.getEvent(message.getBytes(HandshakeMessages.STANDARD_CHARSET));
+			event.invokeServer(this);
+
+			this.broadcast(message);
+
+			break;
+
 		}
 
 		}
@@ -132,6 +156,18 @@ public class Server extends WebSocketServer {
 
 	}
 
+	private long lastTimePosCorrect = System.currentTimeMillis();
+
+	public void onTick() {
+		if (System.currentTimeMillis() - lastTimePosCorrect > 5000) {
+			EventServerCorrectPlayerPos event = new EventServerCorrectPlayerPos(world.getPlayers());
+			this.broadcast(Message.generateEventMessage(event));
+
+			lastTimePosCorrect = System.currentTimeMillis();
+		}
+
+	}
+
 	@Override
 	public void onStart() {
 		Logger.info("[Server] Server started~");
@@ -148,6 +184,14 @@ public class Server extends WebSocketServer {
 	 */
 	public Exception getException() {
 		return exception;
+	}
+
+	public HashMap<Integer, String> getClientIdNamesHashMap() {
+		return clientIdNamesHashMap;
+	}
+
+	public World getWorld() {
+		return world;
 	}
 
 	public static void main(String[] args) {
