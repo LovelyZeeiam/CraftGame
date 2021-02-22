@@ -232,7 +232,11 @@ public class TextureManager implements Closeable {
 	}
 
 	public Texture getTexture(String name) {
-		return textures.get(name);
+		Texture texture = textures.get(name);
+		if (texture == null) {
+			Logger.error("Texture: Unknown texture name: " + name);
+		}
+		return texture;
 	}
 
 	@Override

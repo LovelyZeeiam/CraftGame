@@ -1,0 +1,18 @@
+#version 330
+
+layout (location = 0) in vec3 pos;
+layout (location = 1) in vec2 texPos;
+
+uniform mat4 projMatrix;
+uniform mat4 viewMatrix;
+uniform mat4 transMatrix;
+uniform mat4 boneMatrix;
+
+out vec2 otexPos;
+
+void main(){
+	gl_Position = projMatrix * viewMatrix * transMatrix * boneMatrix * vec4(pos, 1.0);
+	otexPos = texPos;
+	
+}
+

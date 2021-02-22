@@ -7,6 +7,13 @@ import xueli.gamengine.utils.vector.Vector;
 
 public class MatrixHelper {
 
+	public static Matrix4f initMatrix = new Matrix4f();
+
+	static {
+		initMatrix.setIdentity();
+
+	}
+
 	public static Matrix4f lastTimeProjMatrix, lastTimeViewMatrix;
 	public static float[][] frustumPlane = new float[6][4];
 

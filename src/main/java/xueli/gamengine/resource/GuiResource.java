@@ -50,7 +50,7 @@ public class GuiResource extends IResource {
 	private static ViewWidget getWidgetInstance(String name, JsonObject obj) {
 		Class<? extends ViewWidget> clazz = diyWidget.get(name);
 		if (clazz == null) {
-			Logger.error("[DIYWidget] Can't find widget: " + name);
+			Logger.error("DIYWidget: Can't find widget: " + name);
 			return null;
 		}
 
@@ -190,7 +190,7 @@ public class GuiResource extends IResource {
 		try {
 			backgroundObj = jsonObject.get("background").getAsJsonObject();
 		} catch (NullPointerException e) {
-			Logger.error("[GUI] Couldn't find param in " + filename + ": background");
+			Logger.error("GUI: Couldn't find param in " + filename + ": background");
 			return null;
 		}
 		if (backgroundObj.has("color")) {
@@ -203,7 +203,7 @@ public class GuiResource extends IResource {
 			gui.background = new GUIBackground(textureID, imageParam.get(0).getAsInt(), imageParam.get(1).getAsInt(),
 					imageParam.get(2).getAsInt(), imageParam.get(3).getAsInt());
 		} else {
-			Logger.error("[GUI] Couldn't find param of background in " + filename);
+			Logger.error("GUI: Couldn't find param of background in " + filename);
 			return null;
 		}
 		// 控件们
@@ -211,7 +211,7 @@ public class GuiResource extends IResource {
 		try {
 			guiwidgetsJsonObject = jsonObject.get("widgets").getAsJsonObject();
 		} catch (NullPointerException e) {
-			Logger.error("[GUI] Couldn't find param in " + filename + ": widgets");
+			Logger.error("GUI: Couldn't find param in " + filename + ": widgets");
 			return null;
 		}
 		for (Entry<String, JsonElement> e : guiwidgetsJsonObject.entrySet()) {
@@ -222,7 +222,7 @@ public class GuiResource extends IResource {
 			try {
 				widgetPosJsonArray = widgetJsonObject.get("pos").getAsJsonArray();
 			} catch (NullPointerException e2) {
-				Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": pos");
+				Logger.error("GUI: Couldn't find param in " + nameString + " in " + filename + ": pos");
 				continue;
 			}
 			EvalableFloat widgetPosX = new EvalableFloat(widgetPosJsonArray.get(0).getAsString());
@@ -232,7 +232,7 @@ public class GuiResource extends IResource {
 			try {
 				widgetSizeJsonArray = widgetJsonObject.get("size").getAsJsonArray();
 			} catch (NullPointerException e2) {
-				Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": size");
+				Logger.error("GUI: Couldn't find param in " + nameString + " in " + filename + ": size");
 				continue;
 			}
 			EvalableFloat widgetWidth = new EvalableFloat(widgetSizeJsonArray.get(0).getAsString());
@@ -255,7 +255,7 @@ public class GuiResource extends IResource {
 			try {
 				widgetTypeString = widgetJsonObject.get("type").getAsString();
 			} catch (NullPointerException e2) {
-				Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": type");
+				Logger.error("GUI: Couldn't find param in " + nameString + " in " + filename + ": type");
 				continue;
 			}
 			switch (widgetTypeString) {
@@ -264,7 +264,7 @@ public class GuiResource extends IResource {
 				try {
 					textureString = widgetJsonObject.get("texture").getAsString();
 				} catch (NullPointerException e2) {
-					Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": texture");
+					Logger.error("GUI: Couldn't find param in " + nameString + " in " + filename + ": texture");
 					continue;
 				}
 
@@ -303,19 +303,19 @@ public class GuiResource extends IResource {
 				// 按钮的选中框
 				JsonElement chosenBorderJsonElement = widgetJsonObject.get("outline");
 				if (chosenBorderJsonElement == null) {
-					Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": outline");
+					Logger.error("GUI: Couldn't find param in " + nameString + " in " + filename + ": outline");
 					continue;
 				}
 				JsonObject chosenBorderJsonObject = chosenBorderJsonElement.getAsJsonObject();
 
 				if (!chosenBorderJsonObject.has("color") || !chosenBorderJsonObject.get("color").isJsonArray()) {
-					Logger.error("[GUI] Couldn't find array param in 'outline' in " + nameString + " in " + filename
+					Logger.error("GUI: Couldn't find array param in 'outline' in " + nameString + " in " + filename
 							+ ": color");
 					continue;
 				}
 				if (!chosenBorderJsonObject.has("width")) {
 					Logger.error(
-							"[GUI] Couldn't find param in 'outline' in " + nameString + " in " + filename + ": width");
+							"GUI: Couldn't find param in 'outline' in " + nameString + " in " + filename + ": width");
 					continue;
 				}
 
@@ -337,7 +337,7 @@ public class GuiResource extends IResource {
 				try {
 					backColorArray = widgetJsonObject.get("back_color").getAsJsonArray();
 				} catch (NullPointerException e2) {
-					Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": back_color");
+					Logger.error("GUI: Couldn't find param in " + nameString + " in " + filename + ": back_color");
 					continue;
 				}
 				NVGColor backColor = loadColor(backColorArray);
@@ -346,7 +346,7 @@ public class GuiResource extends IResource {
 				try {
 					progressColorArray = widgetJsonObject.get("progress_color").getAsJsonArray();
 				} catch (NullPointerException e2) {
-					Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": progress_color");
+					Logger.error("GUI: Couldn't find param in " + nameString + " in " + filename + ": progress_color");
 					continue;
 				}
 				NVGColor progressColor = loadColor(progressColorArray);
@@ -367,7 +367,7 @@ public class GuiResource extends IResource {
 				try {
 					textSizeString = widgetJsonObject.get("text_size").getAsString();
 				} catch (NullPointerException e2) {
-					Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": text_size");
+					Logger.error("GUI: Couldn't find param in " + nameString + " in " + filename + ": text_size");
 					continue;
 				}
 				EvalableFloat textSize1 = new EvalableFloat(textSizeString);
@@ -376,7 +376,7 @@ public class GuiResource extends IResource {
 				try {
 					textColorJsonArray = widgetJsonObject.get("text_color").getAsJsonArray();
 				} catch (NullPointerException e2) {
-					Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": text_color");
+					Logger.error("GUI: Couldn't find param in " + nameString + " in " + filename + ": text_color");
 					continue;
 				}
 				NVGColor textColor1 = loadColor(textColorJsonArray);
@@ -388,7 +388,7 @@ public class GuiResource extends IResource {
 				try {
 					textString = widgetJsonObject.get("text").getAsString();
 				} catch (NullPointerException e2) {
-					Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": text");
+					Logger.error("GUI: Couldn't find param in " + nameString + " in " + filename + ": text");
 					continue;
 				}
 				if (textString.startsWith("@")) {
@@ -398,7 +398,7 @@ public class GuiResource extends IResource {
 					try {
 						randomTexts = IOUtils.readLines(getPathString() + "text/" + textsPath);
 					} catch (IOException e1) {
-						Logger.error("[GUI] texts '" + nameString + "' path of a random textview exception: "
+						Logger.error("GUI: texts '" + nameString + "' path of a random textview exception: "
 								+ e1.getLocalizedMessage());
 						continue;
 					}
@@ -426,14 +426,14 @@ public class GuiResource extends IResource {
 			case "scroll_bar":
 				if (!widgetJsonObject.has("default_value")) {
 					Logger.error(
-							"[GUI] Couldn't find float param in " + nameString + " in " + filename + ": default_value");
+							"GUI: Couldn't find float param in " + nameString + " in " + filename + ": default_value");
 					continue;
 				}
 				float defaultValue = widgetJsonObject.get("default_value").getAsFloat();
 
 				if (!widgetJsonObject.has("background_color")
 						|| !widgetJsonObject.get("background_color").isJsonArray()) {
-					Logger.error("[GUI] Couldn't find array param in " + nameString + " in " + filename
+					Logger.error("GUI: Couldn't find array param in " + nameString + " in " + filename
 							+ ": background_color");
 					continue;
 				}
@@ -441,7 +441,7 @@ public class GuiResource extends IResource {
 
 				if (!widgetJsonObject.has("scrollbar_color")
 						|| !widgetJsonObject.get("scrollbar_color").isJsonArray()) {
-					Logger.error("[GUI] Couldn't find array param in " + nameString + " in " + filename
+					Logger.error("GUI: Couldn't find array param in " + nameString + " in " + filename
 							+ ": scrollbar_color");
 					continue;
 				}
@@ -449,19 +449,19 @@ public class GuiResource extends IResource {
 
 				JsonElement outlineElement = widgetJsonObject.get("outline");
 				if (outlineElement == null) {
-					Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": outline");
+					Logger.error("GUI: Couldn't find param in " + nameString + " in " + filename + ": outline");
 					continue;
 				}
 				JsonObject outlineObject = outlineElement.getAsJsonObject();
 
 				if (!outlineObject.has("color") || !outlineObject.get("color").isJsonArray()) {
-					Logger.error("[GUI] Couldn't find array param in 'outline' in " + nameString + " in " + filename
+					Logger.error("GUI: Couldn't find array param in 'outline' in " + nameString + " in " + filename
 							+ ": color");
 					continue;
 				}
 				if (!outlineObject.has("width")) {
 					Logger.error(
-							"[GUI] Couldn't find param in 'outline' in " + nameString + " in " + filename + ": width");
+							"GUI: Couldn't find param in 'outline' in " + nameString + " in " + filename + ": width");
 					continue;
 				}
 
@@ -476,19 +476,19 @@ public class GuiResource extends IResource {
 			case "textbox":
 				JsonElement outlineElement1 = widgetJsonObject.get("outline");
 				if (outlineElement1 == null) {
-					Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": outline");
+					Logger.error("GUI: Couldn't find param in " + nameString + " in " + filename + ": outline");
 					continue;
 				}
 				JsonObject outlineObject1 = outlineElement1.getAsJsonObject();
 
 				if (!outlineObject1.has("color") || !outlineObject1.get("color").isJsonArray()) {
-					Logger.error("[GUI] Couldn't find array param in 'outline' in " + nameString + " in " + filename
+					Logger.error("GUI: Couldn't find array param in 'outline' in " + nameString + " in " + filename
 							+ ": color");
 					continue;
 				}
 				if (!outlineObject1.has("width")) {
 					Logger.error(
-							"[GUI] Couldn't find param in 'outline' in " + nameString + " in " + filename + ": width");
+							"GUI: Couldn't find param in 'outline' in " + nameString + " in " + filename + ": width");
 					continue;
 				}
 
@@ -497,7 +497,7 @@ public class GuiResource extends IResource {
 
 				if (!widgetJsonObject.has("background_color")
 						|| !widgetJsonObject.get("background_color").isJsonArray()) {
-					Logger.error("[GUI] Couldn't find array param in " + nameString + " in " + filename
+					Logger.error("GUI: Couldn't find array param in " + nameString + " in " + filename
 							+ ": background_color");
 					continue;
 				}
@@ -515,7 +515,7 @@ public class GuiResource extends IResource {
 				try {
 					textSizeString = widgetJsonObject.get("text_size").getAsString();
 				} catch (NullPointerException e2) {
-					Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": text_size");
+					Logger.error("GUI: Couldn't find param in " + nameString + " in " + filename + ": text_size");
 					continue;
 				}
 				textSize1 = new EvalableFloat(textSizeString);
@@ -524,7 +524,7 @@ public class GuiResource extends IResource {
 				try {
 					textColorJsonArray = widgetJsonObject.get("text_color").getAsJsonArray();
 				} catch (NullPointerException e2) {
-					Logger.error("[GUI] Couldn't find param in " + nameString + " in " + filename + ": text_color");
+					Logger.error("GUI: Couldn't find param in " + nameString + " in " + filename + ": text_color");
 					continue;
 				}
 				NVGColor textColor2 = loadColor(textColorJsonArray);
@@ -591,7 +591,7 @@ public class GuiResource extends IResource {
 
 		}
 
-		Logger.info("[GUI] read Gui: " + filename);
+		Logger.info("GUI: read Gui: " + filename);
 
 		guisHashMap.put(filename, gui);
 		return gui;

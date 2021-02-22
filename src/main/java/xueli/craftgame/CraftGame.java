@@ -49,7 +49,7 @@ public class CraftGame extends IGame {
 		GuiResource.addWidget("name_view", WidgetNicknameView.class);
 
 		// 游戏引擎本身的初始化
-		initAll(WIDTH, HEIGHT);
+		initAll(WIDTH, HEIGHT, null);
 
 		this.workingDirectory = new File(this.getOptions().get("working_directory").getAsString());
 		if (!this.workingDirectory.exists()) {

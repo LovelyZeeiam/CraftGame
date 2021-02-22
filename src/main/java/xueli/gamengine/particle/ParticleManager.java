@@ -21,7 +21,7 @@ public class ParticleManager implements IRenderer {
 	private ArrayList<Particle> particles = new ArrayList<Particle>();
 
 	public ParticleManager(IGame game, Shader particleShader) {
-		this.pointer = new VertexPointerParticle(65536, GL15.GL_DYNAMIC_DRAW, this);
+		this.pointer = new VertexPointerParticle(65536, GL15.GL_DYNAMIC_DRAW);
 		this.shader = particleShader;
 		this.ctxGame = game;
 

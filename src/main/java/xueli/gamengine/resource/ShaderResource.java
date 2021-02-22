@@ -7,6 +7,7 @@ import java.util.HashMap;
 import xueli.gamengine.utils.resource.Shader;
 import xueli.gamengine.view.GUIProgressBar;
 import xueli.gamengine.view.GUITextView;
+import xueli.utils.Logger;
 
 public class ShaderResource extends IResource {
 
@@ -98,7 +99,11 @@ public class ShaderResource extends IResource {
 	}
 
 	public Shader get(String key) {
-		return shaders.get(key);
+		Shader shader = shaders.get(key);
+		if (shader == null) {
+			Logger.error("Shader: Unknown shader name: " + key);
+		}
+		return shader;
 	}
 
 	public void close() {

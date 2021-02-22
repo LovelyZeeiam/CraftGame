@@ -28,7 +28,6 @@ public class WorldRenderer implements IRenderer {
 	private Matrix4f projMatrix, viewMatrix;
 
 	public WorldRenderer(World world) {
-		super();
 		this.world = world;
 		this.pointer = new VertexPointer();
 
@@ -47,9 +46,7 @@ public class WorldRenderer implements IRenderer {
 
 	@Override
 	public void size() {
-		shader.use();
 		this.projMatrix = Shader.setProjectionMatrix(CraftGame.INSTANCE_CRAFT_GAME, shader);
-		shader.unbind();
 
 	}
 

@@ -7,11 +7,8 @@ import xueli.gamengine.utils.renderer.VertexPointer;
 
 public class VertexPointerParticle extends VertexPointer {
 
-	private ParticleManager manager;
-
-	public VertexPointerParticle(int bufferSize, int bufferType, ParticleManager manager) {
+	public VertexPointerParticle(int bufferSize, int bufferType) {
 		super(bufferSize, bufferType);
-		this.manager = manager;
 
 	}
 

@@ -53,7 +53,9 @@
 		"environment.clouds": "textures/environment/clouds.png",
 		
 		"particle.test_particle": "textures/particles/test_particle.png",
-		"particle.firework": "textures/particles/firework_particle.png"
+		"particle.firework": "textures/particles/firework_particle.png",
+		
+		"entity.player": "textures/entity/player.png"
 
 		
 		

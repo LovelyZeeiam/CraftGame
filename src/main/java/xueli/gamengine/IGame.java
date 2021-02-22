@@ -107,11 +107,14 @@ public abstract class IGame implements Runnable {
 
 	}
 
-	protected void createDisplay(int width, int height) {
+	protected void createDisplay(int width, int height, String windowTitle) {
 		display = new Display();
 		display.setDefaultWindowHints();
 		display.setResizable(GLFW.GLFW_TRUE);
-		display.create(width, height, game_name);
+		if (windowTitle == null)
+			display.create(width, height, game_name);
+		else
+			display.create(width, height, windowTitle);
 		display.setIcon(resPath);
 
 		display.setSizedCallback(new DisplaySizedCallback() {
@@ -178,10 +181,10 @@ public abstract class IGame implements Runnable {
 
 	}
 
-	protected void initAll(int width, int height) {
+	protected void initAll(int width, int height, String windowTitle) {
 		loadLang();
 		loadOptions();
-		createDisplay(width, height);
+		createDisplay(width, height, windowTitle);
 		loadShader();
 		loadTexture();
 		loadStartingGui();
@@ -247,6 +250,10 @@ public abstract class IGame implements Runnable {
 		if (textureManager != null)
 			textureManager.close();
 
+	}
+
+	public void postExit() {
+		display.running = false;
 	}
 
 	@Override

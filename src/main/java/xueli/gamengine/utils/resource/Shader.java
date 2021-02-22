@@ -178,4 +178,10 @@ public class Shader {
 		return matrix;
 	}
 
+	public static void setMvpMatrixIdentify(Shader shader) {
+		shader.use();
+		shader.setUniformMatrix(shader.getUnifromLocation("mvpMatrix"), MatrixHelper.initMatrix);
+		shader.unbind();
+	}
+
 }

@@ -89,6 +89,9 @@ dependencies {
     compile 'com.flowpowered:flow-nbt:1.0.0'
     
     compile 'org.java-websocket:Java-WebSocket:1.4.0'
+    
+    implementation group: 'net.java.dev.jna', name: 'jna-platform', version: '5.7.0'
+    
 
 }
 
