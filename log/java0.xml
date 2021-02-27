@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-02-27T15:48:28.558062600Z</date>
+  <millis>1614440908558</millis>
+  <nanos>62600</nanos>
+  <sequence>0</sequence>
+  <logger>sun.awt.windows.WToolkit</logger>
+  <level>FINE</level>
+  <class>sun.awt.windows.WToolkit</class>
+  <method>&lt;clinit&gt;</method>
+  <thread>14</thread>
+  <message>Win version: 0x47bb000a = 1203437578 (Windows Vista)</message>
+</record>
+<record>
+  <date>2021-02-27T15:48:28.797080800Z</date>
+  <millis>1614440908797</millis>
+  <nanos>80800</nanos>
+  <sequence>1</sequence>
+  <logger>sun.awt.multiscreen.SunDisplayChanger</logger>
+  <level>FINER</level>
+  <class>sun.awt.SunDisplayChanger</class>
+  <method>add</method>
+  <thread>14</thread>
+  <message>Adding listener: D3DGraphicsConfig[dev=null,pixfmt=0]</message>
+</record>
+<record>
+  <date>2021-02-27T15:48:29.087111300Z</date>
+  <millis>1614440909087</millis>
+  <nanos>111300</nanos>
+  <sequence>2</sequence>
+  <logger>xueli.game</logger>
+  <level>FINE</level>
+  <class>xueli.game.display.Display</class>
+  <method>create</method>
+  <thread>14</thread>
+  <message>Window created!</message>
+</record>
+<record>
+  <date>2021-02-27T15:48:29.096103700Z</date>
+  <millis>1614440909096</millis>
+  <nanos>103700</nanos>
+  <sequence>3</sequence>
+  <logger>xueli.game</logger>
+  <level>INFO</level>
+  <class>xueli.game.utils.GLHelper</class>
+  <method>printDeviceInfo</method>
+  <thread>14</thread>
+  <message>OpenGL: ATI Technologies Inc., AMD Radeon(TM) Vega 8 Graphics, 3.2.13596 Core Profile Forward-Compatible Context 20.10.12.03 27.20.1012.3004</message>
+</record>
+</log>

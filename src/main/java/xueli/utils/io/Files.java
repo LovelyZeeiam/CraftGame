@@ -1,4 +1,4 @@
-package xueli.utils;
+package xueli.utils.io;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

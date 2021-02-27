@@ -556,7 +556,7 @@ public class LWJGLUtil {
 	 */
 
 	public static Map<Integer, String> getClassTokens(final TokenFilter filter, final Map<Integer, String> target,
-			final Class... tokenClasses) {
+			final Class<?>... tokenClasses) {
 		return getClassTokens(filter, target, Arrays.asList(tokenClasses));
 	}
 
@@ -575,13 +575,13 @@ public class LWJGLUtil {
 	 * @return the token map
 	 */
 	public static Map<Integer, String> getClassTokens(final TokenFilter filter, Map<Integer, String> target,
-			final Iterable<Class> tokenClasses) {
+			final Iterable<Class<?>> tokenClasses) {
 		if (target == null)
 			target = new HashMap<Integer, String>();
 
 		final int TOKEN_MODIFIERS = Modifier.PUBLIC | Modifier.STATIC | Modifier.FINAL;
 
-		for (final Class tokenClass : tokenClasses) {
+		for (final Class<?> tokenClass : tokenClasses) {
 			for (final Field field : tokenClass.getDeclaredFields()) {
 				// Get only <public static final int> fields.
 				if ((field.getModifiers() & TOKEN_MODIFIERS) == TOKEN_MODIFIERS && field.getType() == int.class) {
