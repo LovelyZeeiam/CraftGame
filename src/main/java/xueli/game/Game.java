@@ -1,5 +1,8 @@
 package xueli.game;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import org.lwjgl.opengl.GL11;
 
 import xueli.game.display.Display;
@@ -13,6 +16,8 @@ public abstract class Game implements Runnable {
 
 	private Display display;
 	protected final String workingDirectory;
+
+	private Queue<Runnable> queueInMainThread = new LinkedList<>();
 
 	private RendererManager manager = new RendererManager();
 
@@ -38,6 +43,11 @@ public abstract class Game implements Runnable {
 			GLHelper.checkGLError("[Renderer]");
 			display.update();
 			Time.tick();
+
+			if (!queueInMainThread.isEmpty()) {
+				queueInMainThread.poll().run();
+			}
+
 		}
 
 		onrelease();
@@ -66,6 +76,22 @@ public abstract class Game implements Runnable {
 
 	public float getHeight() {
 		return display.getHeight();
+	}
+
+	public float getDisplayScale() {
+		return display.getDisplayScale();
+	}
+
+	public float getCursorX() {
+		return display.getCursorX();
+	}
+
+	public float getCursorY() {
+		return display.getCursorY();
+	}
+
+	public void addTaskForMainThread(Runnable run) {
+		this.queueInMainThread.add(run);
 	}
 
 }

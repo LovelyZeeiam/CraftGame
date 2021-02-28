@@ -1,5 +1,8 @@
 package xueli.game.utils.renderer;
 
+import xueli.game.Game;
+import xueli.utils.io.Log;
+
 public class RendererManager implements Renderer {
 
 	public Renderer current;
@@ -9,10 +12,13 @@ public class RendererManager implements Renderer {
 	}
 
 	public void setCurrentRenderer(Renderer renderer) {
-		if (this.current != null) {
-			this.current.release();
-		}
-		this.current = renderer;
+		Game.INSTANCE_GAME.addTaskForMainThread(() -> {
+			if (this.current != null) {
+				this.current.release();
+			}
+			this.current = renderer;
+			Log.logger.finer("[Renderer] change renderer: " + renderer.getClass().getName());
+		});
 
 	}
 

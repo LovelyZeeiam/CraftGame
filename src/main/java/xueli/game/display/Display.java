@@ -12,6 +12,7 @@ import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
 import static org.lwjgl.glfw.GLFW.glfwInit;
 import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
+import static org.lwjgl.glfw.GLFW.glfwSetCursorPosCallback;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback;
 import static org.lwjgl.glfw.GLFW.glfwShowWindow;
@@ -23,6 +24,7 @@ import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
@@ -35,6 +37,9 @@ import xueli.utils.io.Log;
 public class Display {
 
 	private int width, height;
+	private float display_scale;
+
+	private float cursor_x, cursor_y;
 
 	private long window;
 	private boolean running = false;
@@ -42,12 +47,27 @@ public class Display {
 
 	private GLFWWindowSizeCallback windowSizeCallback = new GLFWWindowSizeCallback() {
 
+		public float getScale(int width, int height) {
+			return Math.min(width, height) / 400.0f * 0.6f;
+		}
+
 		@Override
 		public void invoke(long window, int w, int h) {
 			width = w;
 			height = h;
+			display_scale = getScale(w, h);
 			Game.INSTANCE_GAME.onSize(width, height);
 
+		}
+
+	};
+
+	private GLFWCursorPosCallback cursorPosCallback = new GLFWCursorPosCallback() {
+
+		@Override
+		public void invoke(long window, double xpos, double ypos) {
+			cursor_x = (float) xpos;
+			cursor_y = (float) ypos;
 		}
 
 	};
@@ -91,8 +111,9 @@ public class Display {
 		glfwSwapInterval(1);
 
 		glfwSetWindowSizeCallback(window, windowSizeCallback);
+		glfwSetCursorPosCallback(window, cursorPosCallback);
 
-		Log.logger.fine("[Display] Window created!");
+		Log.logger.finer("[Display] Window created!");
 
 		GLHelper.printDeviceInfo();
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
@@ -124,6 +145,18 @@ public class Display {
 
 	public int getHeight() {
 		return height;
+	}
+
+	public float getCursorX() {
+		return cursor_x;
+	}
+
+	public float getCursorY() {
+		return cursor_y;
+	}
+
+	public float getDisplayScale() {
+		return display_scale;
 	}
 
 }

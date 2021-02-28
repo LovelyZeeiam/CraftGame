@@ -1,0 +1,10 @@
+# Game Start
+game.version=alpha
+game.copyright=Licensed under AGPL 3.0
+
+# Main Menu
+main_menu.single_player=Single Player
+main_menu.multi_player=Multiplayer
+main_menu.setting=Setting
+esc_menu.back_to_game=Back To Game
+esc_menu.quit=Save And Quit

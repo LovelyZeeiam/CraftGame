@@ -11,7 +11,7 @@ public class ModManager {
 	public void register(IMod mod) {
 		mod.onInit();
 		mods.put(mod.name, mod);
-		Log.logger.fine("[Mod] Register mod: " + mod.name);
+		Log.logger.finer("[Mod] Register mod: " + mod.name);
 
 	}
 

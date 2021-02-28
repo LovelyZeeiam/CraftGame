@@ -27,7 +27,9 @@ public class EvalableFloat {
 
 		String newExpressionString = expression
 				.replaceAll("win_width", Float.valueOf(Game.INSTANCE_GAME.getWidth()).toString())
-				.replaceAll("win_height", Float.valueOf(Game.INSTANCE_GAME.getHeight()).toString());
+				.replaceAll("win_height", Float.valueOf(Game.INSTANCE_GAME.getHeight()).toString())
+				.replaceAll("scale", Float.valueOf(Game.INSTANCE_GAME.getDisplayScale()).toString());
+
 		try {
 			this.value = Evaler.evalToFloat(newExpressionString);
 		} catch (ScriptException e) {
