@@ -13,6 +13,7 @@ import static org.lwjgl.glfw.GLFW.glfwInit;
 import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback;
 import static org.lwjgl.glfw.GLFW.glfwShowWindow;
 import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
@@ -23,9 +24,11 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
+import xueli.game.Game;
 import xueli.game.utils.GLHelper;
 import xueli.utils.io.Log;
 
@@ -37,6 +40,18 @@ public class Display {
 	private boolean running = false;
 	private String mainTitle;
 
+	private GLFWWindowSizeCallback windowSizeCallback = new GLFWWindowSizeCallback() {
+
+		@Override
+		public void invoke(long window, int w, int h) {
+			width = w;
+			height = h;
+			Game.INSTANCE_GAME.onSize(width, height);
+
+		}
+
+	};
+
 	public Display(int width, int height, String title) {
 		this.width = width;
 		this.height = height;
@@ -47,7 +62,7 @@ public class Display {
 	public void create() {
 		GLFWErrorCallback.createPrint(System.err).set();
 		if (!glfwInit()) {
-			Log.logger.severe("Can't init GLFW!");
+			Log.logger.severe("[Display] Can't init GLFW!");
 			return;
 		}
 
@@ -61,7 +76,7 @@ public class Display {
 		window = glfwCreateWindow(width, height, mainTitle, 0, 0);
 
 		if (window == 0) {
-			Log.logger.severe("Can't create window!");
+			Log.logger.severe("[Display] Can't create window!");
 			return;
 		}
 
@@ -75,10 +90,13 @@ public class Display {
 
 		glfwSwapInterval(1);
 
-		Log.logger.fine("Window created!");
+		glfwSetWindowSizeCallback(window, windowSizeCallback);
+
+		Log.logger.fine("[Display] Window created!");
 
 		GLHelper.printDeviceInfo();
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
+
 	}
 
 	public void show() {
@@ -98,6 +116,14 @@ public class Display {
 
 	public boolean isRunning() {
 		return running;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
 	}
 
 }

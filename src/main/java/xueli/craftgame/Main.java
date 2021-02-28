@@ -1,4 +1,4 @@
-package xueli.craftgame.core;
+package xueli.craftgame;
 
 public class Main {
 

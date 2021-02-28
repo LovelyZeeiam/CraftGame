@@ -9,3 +9,4 @@ bin
 # Ignore working directory and debug output
 output
 .craftgame
+log
