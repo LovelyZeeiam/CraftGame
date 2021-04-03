@@ -10,3 +10,6 @@ bin
 output
 .craftgame
 log
+
+.idea
+.settings

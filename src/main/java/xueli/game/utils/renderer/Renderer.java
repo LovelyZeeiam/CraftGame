@@ -7,5 +7,5 @@ public interface Renderer {
 	public void size(int w, int h);
 
 	public void release();
-
+	
 }

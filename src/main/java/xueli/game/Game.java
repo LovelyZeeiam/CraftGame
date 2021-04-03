@@ -13,19 +13,19 @@ import xueli.game.utils.renderer.RendererManager;
 public abstract class Game implements Runnable {
 
 	public static Game INSTANCE_GAME;
-
+	public static final String DEFAULT_RES_DIRECTORY_STRING = "./res/";
+	public static final String DEFAULT_WORKING_DIRECTORY_STRING = "./.cg/";
+	
 	private Display display;
-	protected final String workingDirectory;
 
 	private Queue<Runnable> queueInMainThread = new LinkedList<>();
 
-	private RendererManager manager = new RendererManager();
+	protected RendererManager rendererManager = new RendererManager();
 
-	public Game(int width, int height, String windowTitle, String workingDirectory) {
+	public Game(int width, int height, String windowTitle) {
 		INSTANCE_GAME = this;
 
 		this.display = new Display(width, height, windowTitle);
-		this.workingDirectory = workingDirectory;
 
 	}
 
@@ -39,7 +39,7 @@ public abstract class Game implements Runnable {
 
 		while (display.isRunning()) {
 			ontick();
-			manager.render();
+			rendererManager.render();
 			GLHelper.checkGLError("[Renderer]");
 			display.update();
 			Time.tick();
@@ -60,14 +60,14 @@ public abstract class Game implements Runnable {
 
 	public void onSize(int width, int height) {
 		GL11.glViewport(0, 0, width, height);
-		manager.size(width, height);
+		rendererManager.size(width, height);
 
 	}
 
 	public abstract void onrelease();
 
-	public RendererManager getManager() {
-		return manager;
+	public Display getDisplay() {
+		return display;
 	}
 
 	public float getWidth() {
@@ -88,6 +88,10 @@ public abstract class Game implements Runnable {
 
 	public float getCursorY() {
 		return display.getCursorY();
+	}
+
+	public RendererManager getRendererManager() {
+		return rendererManager;
 	}
 
 	public void addTaskForMainThread(Runnable run) {

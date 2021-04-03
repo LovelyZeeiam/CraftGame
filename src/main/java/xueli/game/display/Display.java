@@ -6,6 +6,8 @@ import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
 import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_CORE_PROFILE;
 import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_FORWARD_COMPAT;
 import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
+import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
 import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
 import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
@@ -13,6 +15,8 @@ import static org.lwjgl.glfw.GLFW.glfwInit;
 import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 import static org.lwjgl.glfw.GLFW.glfwSetCursorPosCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback;
 import static org.lwjgl.glfw.GLFW.glfwShowWindow;
@@ -23,9 +27,12 @@ import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWKeyCallback;
+import org.lwjgl.glfw.GLFWMouseButtonCallback;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
@@ -36,14 +43,19 @@ import xueli.utils.io.Log;
 
 public class Display {
 
+	private long window;
+	private boolean running = false;
+	private String mainTitle;
+
 	private int width, height;
 	private float display_scale;
 
 	private float cursor_x, cursor_y;
 
-	private long window;
-	private boolean running = false;
-	private String mainTitle;
+	private boolean[] mouse_buttons = new boolean[8];
+
+	private boolean[] keyboard_keys = new boolean[65536];
+	private ArrayList<Integer> last_press_keys = new ArrayList<>();
 
 	private GLFWWindowSizeCallback windowSizeCallback = new GLFWWindowSizeCallback() {
 
@@ -53,10 +65,13 @@ public class Display {
 
 		@Override
 		public void invoke(long window, int w, int h) {
-			width = w;
-			height = h;
-			display_scale = getScale(w, h);
-			Game.INSTANCE_GAME.onSize(width, height);
+			if (w != 0 || h != 0) {
+				width = w;
+				height = h;
+				display_scale = getScale(w, h);
+				Game.INSTANCE_GAME.onSize(width, height);
+
+			}
 
 		}
 
@@ -68,6 +83,33 @@ public class Display {
 		public void invoke(long window, double xpos, double ypos) {
 			cursor_x = (float) xpos;
 			cursor_y = (float) ypos;
+		}
+
+	};
+
+	private GLFWMouseButtonCallback mouseButtonCallback = new GLFWMouseButtonCallback() {
+
+		@Override
+		public void invoke(long window, int button, int action, int mods) {
+			if (button >= 0 && action == GLFW_RELEASE) {
+				mouse_buttons[button] = true;
+
+			}
+
+		}
+
+	};
+
+	private GLFWKeyCallback keyCallback = new GLFWKeyCallback() {
+
+		@Override
+		public void invoke(long window, int key, int scancode, int action, int mods) {
+			if (key >= 0 && action == GLFW_PRESS) {
+				keyboard_keys[key] = true;
+				last_press_keys.add(key);
+
+			}
+
 		}
 
 	};
@@ -112,6 +154,8 @@ public class Display {
 
 		glfwSetWindowSizeCallback(window, windowSizeCallback);
 		glfwSetCursorPosCallback(window, cursorPosCallback);
+		glfwSetMouseButtonCallback(window, mouseButtonCallback);
+		glfwSetKeyCallback(window, keyCallback);
 
 		Log.logger.finer("[Display] Window created!");
 
@@ -126,7 +170,18 @@ public class Display {
 
 	}
 
+	private void callbackTick() {
+		for (int i = 0; i < 8; i++)
+			mouse_buttons[i] = false;
+
+		for (Integer r : last_press_keys)
+			keyboard_keys[r] = false;
+		last_press_keys.clear();
+
+	}
+
 	public void update() {
+		callbackTick();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
@@ -157,6 +212,14 @@ public class Display {
 
 	public float getDisplayScale() {
 		return display_scale;
+	}
+
+	public boolean isKeyDownOnce(int key) {
+		return keyboard_keys[key];
+	}
+
+	public boolean isMouseDownOnce(int mouse) {
+		return mouse_buttons[mouse];
 	}
 
 }

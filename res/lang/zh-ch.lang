@@ -8,3 +8,17 @@ main_menu.multi_player=Multiplayer
 main_menu.setting=Setting
 esc_menu.back_to_game=Back To Game
 esc_menu.quit=Save And Quit
+
+# Select World Menu
+world_select_menu.text=Select World
+world_select_menu.play=Play
+world_select_menu.edit=Edit
+world_select_menu.delete=Delete
+world_select_menu.cancel=Cancel
+world_select_menu.create=Create
+
+# World Loading
+world_loading.text=Loading Level...
+
+# World Saving
+world_saving.text=Saving Level...

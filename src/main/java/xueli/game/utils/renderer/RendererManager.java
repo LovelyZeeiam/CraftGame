@@ -17,6 +17,7 @@ public class RendererManager implements Renderer {
 				this.current.release();
 			}
 			this.current = renderer;
+			this.current.size((int) Game.INSTANCE_GAME.getWidth(), (int) Game.INSTANCE_GAME.getHeight());
 			Log.logger.finer("[Renderer] change renderer: " + renderer.getClass().getName());
 		});
 

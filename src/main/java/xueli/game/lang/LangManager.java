@@ -36,6 +36,8 @@ public class LangManager {
 
 		}
 
+		setLang("zh-ch.lang");
+
 	}
 
 	public void setLang(String name) {
