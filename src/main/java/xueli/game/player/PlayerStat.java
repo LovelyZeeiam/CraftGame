@@ -22,8 +22,6 @@ public class PlayerStat {
 		this.iconPath = iconPath;
 	}
 
-
-
 	public String getName() {
 		return name;
 	}

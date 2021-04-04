@@ -53,8 +53,7 @@ public class EventProcessor {
 
 	public static Event decodeEvent(byte[] message, int offset, int length) {
 		try {
-			byte[] originData = Base64.getDecoder()
-					.decode(new String(message, offset, length, StandardCharsets.UTF_8));
+			byte[] originData = Base64.getDecoder().decode(new String(message, offset, length, StandardCharsets.UTF_8));
 			ByteArrayInputStream inputStream = new ByteArrayInputStream(originData);
 
 			ObjectInputStream objIn = new ObjectInputStream(inputStream);
@@ -68,5 +67,5 @@ public class EventProcessor {
 		}
 
 	}
-	
+
 }

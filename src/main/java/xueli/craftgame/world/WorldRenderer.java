@@ -5,17 +5,16 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
+import org.newdawn.slick.opengl.Texture;
 
 import xueli.craftgame.CraftGame;
-import xueli.gamengine.resource.Texture;
-import xueli.gamengine.resource.TextureAtlas;
-import xueli.gamengine.utils.GLHelper;
-import xueli.gamengine.utils.math.MatrixHelper;
+import xueli.game.utils.GLHelper;
+import xueli.game.utils.TextureAtlas;
+import xueli.game.utils.math.MatrixHelper;
+import xueli.game.utils.vector.Vector2i;
 import xueli.gamengine.utils.renderer.IRenderer;
 import xueli.gamengine.utils.renderer.VertexPointer;
 import xueli.gamengine.utils.resource.Shader;
-import xueli.gamengine.utils.vector.Vector;
-import xueli.gamengine.utils.vector.Vector2i;
 
 public class WorldRenderer implements IRenderer {
 

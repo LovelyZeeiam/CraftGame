@@ -8,19 +8,19 @@ public class EventPlayerConnected implements Event {
 
 	private String name;
 	private byte[] icon;
-	
+
 	public EventPlayerConnected(String name, byte[] icon) {
 		this.name = name;
 		this.icon = icon;
-		
+
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public byte[] getIcon() {
 		return icon;
 	}
-	
+
 }

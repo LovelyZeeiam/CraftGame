@@ -17,6 +17,16 @@ world_select_menu.delete=Delete
 world_select_menu.cancel=Cancel
 world_select_menu.create=Create
 
+# Select Server Menu
+server_select_menu.text=Select Server
+server_select_menu.join=Join Server
+server_select_menu.direct=Direct Connect
+server_select_menu.add=Add Server
+server_select_menu.edit=Edit
+server_select_menu.delete=Delete
+server_select_menu.refresh=Refresh
+server_select_menu.cancel=Cancel
+
 # World Loading
 world_loading.text=Loading Level...
 

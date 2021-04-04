@@ -13,38 +13,38 @@ import xueli.game.utils.vector.Vector2s;
 public abstract class Block {
 
 	private String namespace;
-	
+
 	public Block(String namespace) {
-		this.namespace = namespace;	
-		
+		this.namespace = namespace;
+
 	}
-	
+
 	public String getNamespace() {
 		return namespace;
 	}
-	
+
 	public abstract String getName();
-	
+
 	public void onInit() {
-		
+
 	}
-	
+
 	public BlockCallbackType onLeftClick(int x, int y, int z, World world) {
 		return BlockCallbackType.OPERATE;
 	}
-	
-	public BlockCallbackType onRightClick(int x , int y, int z, World world) {
+
+	public BlockCallbackType onRightClick(int x, int y, int z, World world) {
 		return BlockCallbackType.NOT_OPERATE;
 	}
-	
+
 	public void onLookAt(int x, int y, int z) {
-		
+
 	}
-	
+
 	public void onPlace(int x, int y, int z) {
-		
+
 	}
-	
+
 	protected int getRenderCubeData(FloatList buffer, Block data, int x, int y, int z, byte face,
 			TextureAtlas blockTextureAtlas, World world, NVGColor multiplyColor) {
 		Vector2s textureVector2s = data.getTextures()[face];
@@ -105,18 +105,11 @@ public abstract class Block {
 
 		return 6;
 	}
-	
+
 	/**
 	 * The following method should be always given vertex from little to big for
-	 * instance: 
-	 * ^
-	 * *--------------*
-	 * |-v3---------v4- 
-	 * |--------------- 
-	 * |---------------
-	 * |---------------
-	 * |-v1---------v2-
-	 * *-------------*-->
+	 * instance: ^ *--------------* |-v3---------v4- |---------------
+	 * |--------------- |--------------- |-v1---------v2- *-------------*-->
 	 */
 
 	/**
@@ -174,5 +167,5 @@ public abstract class Block {
 		buffer.put(t3).put(c3).put(v3);
 		return 6;
 	}
-	
+
 }

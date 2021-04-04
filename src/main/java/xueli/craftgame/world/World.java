@@ -8,7 +8,6 @@ import org.lwjgl.util.vector.Vector3i;
 
 import com.flowpowered.nbt.CompoundTag;
 
-import xueli.craftgame.CraftGame;
 import xueli.craftgame.block.Block;
 import xueli.game.player.PlayerStat;
 import xueli.game.utils.math.MathUtils;
@@ -23,10 +22,9 @@ public class World {
 	private Vector3f defaultSpawnpoint = new Vector3f(20, 12, 20);
 
 	private HashMap<Vector3i, CompoundTag> blockData = new HashMap<>();
-	
+
 	public World() {
-		
-		
+
 	}
 
 	public Chunk requestGenChunk(int x, int z) {
@@ -124,5 +122,5 @@ public class World {
 	public CompoundTag getBlockData(int x, int y, int z) {
 		return blockData.get(new Vector3i(x, y, z));
 	}
-	
+
 }

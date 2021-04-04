@@ -30,7 +30,7 @@ public class Files {
 		out.flush();
 		out.close();
 	}
-	
+
 	public static void fileOutput(String name, int[] bytes) throws IOException {
 		File file = new File(name);
 		if (!file.exists())
@@ -57,37 +57,37 @@ public class Files {
 		reader.close();
 		return new String(all);
 	}
-	
+
 	public static byte[] readAllByte(File file) throws IOException {
 		BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
 		byte[] data = new byte[in.available()];
 		in.read(data);
 		return data;
 	}
-	
+
 	public static ArrayList<File> getAllFiles(File file) {
 		ArrayList<File> files = new ArrayList<>();
-		
-		if(file.isDirectory()) {
+
+		if (file.isDirectory()) {
 			File[] allFiles = file.listFiles();
 			for (int i = 0; i < allFiles.length; i++) {
 				File f = allFiles[i];
 				files.addAll(getAllFiles(f));
-				
+
 			}
-			
-		} else if(file.isFile()) {
+
+		} else if (file.isFile()) {
 			files.add(file);
-			
+
 		}
-		
+
 		return files;
 	}
-	
+
 	public static ArrayList<File> getAllFiles(String path) {
 		return getAllFiles(new File(path));
 	}
-	
+
 	public static int[] readImageAndReturnRawData(String path) {
 		BufferedImage image = null;
 		try {

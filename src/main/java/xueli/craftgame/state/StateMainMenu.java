@@ -315,6 +315,9 @@ public class StateMainMenu extends NVGRenderer {
 			if (single_player_button_hover) {
 				game.getRendererManager().setCurrentRenderer(new StateWorldSelect());
 
+			} else if (multi_player_button_hover) {
+				game.getRendererManager().setCurrentRenderer(new StateServerSelect());
+
 			}
 
 		}

@@ -18,5 +18,5 @@ public class Evaler {
 		else
 			return ((Double) result).floatValue();
 	}
-
+	
 }

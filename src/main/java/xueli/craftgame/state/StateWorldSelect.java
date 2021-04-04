@@ -24,8 +24,6 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGColor;
 
 import xueli.craftgame.CraftGame;
-import xueli.craftgame.DataFolder;
-import xueli.game.Game;
 import xueli.game.display.DisplayUtils;
 import xueli.game.utils.NVGColors;
 import xueli.game.utils.renderer.NVGRenderer;
@@ -355,11 +353,11 @@ public class StateWorldSelect extends NVGRenderer {
 			if (cancel_button_enable && cancel_button_hover) {
 				game.getRendererManager().setCurrentRenderer(new StateMainMenu());
 
-			}else if(create_button_enable && create_button_hover) {
-				game.getRendererManager().setCurrentRenderer(new StateWorldLoading("test", Game.DEFAULT_WORKING_DIRECTORY_STRING + DataFolder.SAVES));
-				
+			} else if (create_button_enable && create_button_hover) {
+				// game.getRendererManager().setCurrentRenderer(new StateWorldLoading("test",
+				// Game.DEFAULT_WORKING_DIRECTORY_STRING + DataFolder.SAVES));
+
 			}
-			
 
 		}
 

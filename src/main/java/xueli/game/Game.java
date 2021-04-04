@@ -15,7 +15,7 @@ public abstract class Game implements Runnable {
 	public static Game INSTANCE_GAME;
 	public static final String DEFAULT_RES_DIRECTORY_STRING = "./res/";
 	public static final String DEFAULT_WORKING_DIRECTORY_STRING = "./.cg/";
-	
+
 	private Display display;
 
 	private Queue<Runnable> queueInMainThread = new LinkedList<>();

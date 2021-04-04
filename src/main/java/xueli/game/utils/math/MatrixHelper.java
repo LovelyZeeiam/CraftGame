@@ -5,7 +5,6 @@ import org.lwjgl.util.vector.Vector3f;
 
 import xueli.game.utils.vector.Vector;
 
-
 public class MatrixHelper {
 
 	public static Matrix4f initMatrix = new Matrix4f();

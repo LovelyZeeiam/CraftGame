@@ -6,7 +6,6 @@ import org.lwjgl.util.vector.Vector4f;
 
 import xueli.game.utils.vector.Vector;
 
-
 public class MousePicker {
 
 	private final Matrix4f projMatrix, viewMatrix;

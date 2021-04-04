@@ -30,7 +30,7 @@ public abstract class Server {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			Event event = EventProcessor.decodeEvent(pkg.getData(),0,pkg.getLength());
+			Event event = EventProcessor.decodeEvent(pkg.getData(), 0, pkg.getLength());
 			onRecieveEvent(event, pkg);
 
 		}
