@@ -1,12 +1,7 @@
-package xueli.game.utils.renderer;
+package xueli.game.renderer;
 
-import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
-import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_ANTIALIAS;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_DEBUG;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_STENCIL_STROKES;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgCreate;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgDelete;
+import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.nanovg.NanoVGGL3.*;
 
 import org.lwjgl.nanovg.NVGPaint;
 
@@ -44,6 +39,10 @@ public abstract class NVGRenderer implements Renderer {
 	}
 
 	public abstract void stroke();
+	
+	protected float measureTextWidth(float size, String text) {
+		return nvgText(nvg, 0, -10000000, text);
+	}
 
 	@Override
 	public void size(int w, int h) {

@@ -1,4 +1,4 @@
-package xueli.game.utils.renderer;
+package xueli.game.renderer;
 
 public interface Renderer {
 

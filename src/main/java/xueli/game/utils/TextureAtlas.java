@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import org.lwjgl.opengl.GL11;
 
-import xueli.game.utils.vector.Vector2s;
+import xueli.game.vector.Vector2s;
 
 public class TextureAtlas {
 

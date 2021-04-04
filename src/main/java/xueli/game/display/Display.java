@@ -1,29 +1,6 @@
 package xueli.game.display;
 
-import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MAJOR;
-import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MINOR;
-import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
-import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_CORE_PROFILE;
-import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_FORWARD_COMPAT;
-import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_PROFILE;
-import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
-import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
-import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
-import static org.lwjgl.glfw.GLFW.glfwInit;
-import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
-import static org.lwjgl.glfw.GLFW.glfwPollEvents;
-import static org.lwjgl.glfw.GLFW.glfwSetCursorPosCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback;
-import static org.lwjgl.glfw.GLFW.glfwShowWindow;
-import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
-import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
-import static org.lwjgl.glfw.GLFW.glfwWindowHint;
-import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
+import static org.lwjgl.glfw.GLFW.*;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -33,6 +10,7 @@ import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
+import org.lwjgl.glfw.GLFWScrollCallback;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
@@ -51,6 +29,9 @@ public class Display {
 	private float display_scale;
 
 	private float cursor_x, cursor_y;
+	private float cursor_dx = 0, cursor_dy = 0;
+	
+	private double wheel_delta;
 
 	private boolean[] mouse_buttons = new boolean[8];
 
@@ -81,8 +62,12 @@ public class Display {
 
 		@Override
 		public void invoke(long window, double xpos, double ypos) {
+			cursor_dx = (float) (xpos - cursor_x);
+			cursor_dy = (float) (ypos - cursor_y);
+			
 			cursor_x = (float) xpos;
 			cursor_y = (float) ypos;
+			
 		}
 
 	};
@@ -112,6 +97,14 @@ public class Display {
 
 		}
 
+	};
+	
+	private GLFWScrollCallback scrollCallback = new GLFWScrollCallback() {
+		@Override
+		public void invoke(long window, double xoffset, double yoffset) {
+			wheel_delta = yoffset;
+			
+		}
 	};
 
 	public Display(int width, int height, String title) {
@@ -156,6 +149,7 @@ public class Display {
 		glfwSetCursorPosCallback(window, cursorPosCallback);
 		glfwSetMouseButtonCallback(window, mouseButtonCallback);
 		glfwSetKeyCallback(window, keyCallback);
+		glfwSetScrollCallback(window, scrollCallback);
 
 		Log.logger.finer("[Display] Window created!");
 
@@ -177,17 +171,26 @@ public class Display {
 		for (Integer r : last_press_keys)
 			keyboard_keys[r] = false;
 		last_press_keys.clear();
+		
+		wheel_delta = 0;
+		cursor_dx = 0;
+		cursor_dy = 0;
 
 	}
 
 	public void update() {
 		callbackTick();
+		
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
 		if (glfwWindowShouldClose(window))
 			running = false;
 
+	}
+	
+	public double getWheelDelta() {
+		return wheel_delta;
 	}
 
 	public boolean isRunning() {
@@ -209,6 +212,14 @@ public class Display {
 	public float getCursorY() {
 		return cursor_y;
 	}
+	
+	public float getCurson_dx() {
+		return cursor_dx;
+	}
+	
+	public float getCursor_dy() {
+		return cursor_dy;
+	}
 
 	public float getDisplayScale() {
 		return display_scale;
@@ -220,6 +231,10 @@ public class Display {
 
 	public boolean isMouseDownOnce(int mouse) {
 		return mouse_buttons[mouse];
+	}
+	
+	public boolean isMouseDown(int mouse) {
+		return glfwGetMouseButton(window, mouse) == GLFW_PRESS;
 	}
 
 }

@@ -19,8 +19,8 @@ import static org.lwjgl.nanovg.NanoVG.nvgText;
 import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
 
 import xueli.craftgame.CraftGame;
+import xueli.game.renderer.NVGRenderer;
 import xueli.game.utils.NVGColors;
-import xueli.game.utils.renderer.NVGRenderer;
 import xueli.utils.eval.EvalableFloat;
 
 public class StateSingleLine extends NVGRenderer {

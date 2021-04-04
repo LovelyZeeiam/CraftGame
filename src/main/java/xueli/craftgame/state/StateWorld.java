@@ -1,8 +1,8 @@
 package xueli.craftgame.state;
 
 import xueli.game.Game;
-import xueli.game.utils.renderer.NVGRenderer;
-import xueli.game.utils.renderer.Renderer;
+import xueli.game.renderer.NVGRenderer;
+import xueli.game.renderer.Renderer;
 
 public class StateWorld implements Renderer {
 

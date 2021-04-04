@@ -40,6 +40,7 @@ public class ClazzUtils {
 				continue;
 
 			String realPath = file.getPath().substring(path.length() - 1);
+			// the file path separater might be only useful in Windows
 			String packageName = realPath.substring(0, realPath.length() - ".class".length()).replace('\\', '.');
 
 			Class<?> clazz = null;

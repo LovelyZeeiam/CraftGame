@@ -1,4 +1,4 @@
-package xueli.game.utils.renderer.widgets;
+package xueli.game.renderer.widgets;
 
 import java.text.MessageFormat;
 
@@ -6,7 +6,6 @@ import xueli.utils.eval.EvalableFloat;
 
 public class ButtonGroup extends IWidget {
 
-	private EvalableFloat x, y, width, height;
 	private EvalableFloat margin;
 
 	private Button[][] grid;
@@ -49,7 +48,7 @@ public class ButtonGroup extends IWidget {
 						MessageFormat.format("({0}) + ({1}) * ({2}) + (({1}) - 1) * ({3})", this.x.getExpression(), x,
 								perWidth.getExpression(), margin.getExpression()));
 
-				this.grid[y][x] = new Button(x_pointer, y_pointer, perWidth, perHeight, string, fontName, fontSize,
+				this.grid[y][x] = new Button(x_pointer, y_pointer, perWidth, perHeight, string, fontSize,
 						false);
 
 			}
@@ -58,11 +57,11 @@ public class ButtonGroup extends IWidget {
 
 	}
 
-	public void stroke(long nvg) {
+	public void stroke(long nvg, String fontName) {
 		for (Button[] buttons : grid) {
 			for (Button button : buttons) {
 				if (button != null) {
-					button.stroke(nvg);
+					button.stroke(nvg,fontName);
 
 				}
 

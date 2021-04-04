@@ -6,9 +6,9 @@ import java.util.Queue;
 import org.lwjgl.opengl.GL11;
 
 import xueli.game.display.Display;
+import xueli.game.renderer.RendererManager;
 import xueli.game.utils.GLHelper;
 import xueli.game.utils.Time;
-import xueli.game.utils.renderer.RendererManager;
 
 public abstract class Game implements Runnable {
 
@@ -20,7 +20,7 @@ public abstract class Game implements Runnable {
 
 	private Queue<Runnable> queueInMainThread = new LinkedList<>();
 
-	protected RendererManager rendererManager = new RendererManager();
+	protected RendererManager rendererManager;
 
 	public Game(int width, int height, String windowTitle) {
 		INSTANCE_GAME = this;
@@ -33,6 +33,7 @@ public abstract class Game implements Runnable {
 	public void run() {
 		display.create();
 		Time.tick();
+		rendererManager = new RendererManager();
 
 		oncreate();
 		display.show();

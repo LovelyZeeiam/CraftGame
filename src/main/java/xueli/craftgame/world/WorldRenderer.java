@@ -11,7 +11,7 @@ import xueli.craftgame.CraftGame;
 import xueli.game.utils.GLHelper;
 import xueli.game.utils.TextureAtlas;
 import xueli.game.utils.math.MatrixHelper;
-import xueli.game.utils.vector.Vector2i;
+import xueli.game.vector.Vector2i;
 import xueli.gamengine.utils.renderer.IRenderer;
 import xueli.gamengine.utils.renderer.VertexPointer;
 import xueli.gamengine.utils.resource.Shader;

@@ -4,7 +4,7 @@ import java.net.InetAddress;
 
 import xueli.craftgame.level.Level;
 import xueli.game.net.Client;
-import xueli.game.utils.renderer.NVGRenderer;
+import xueli.game.renderer.NVGRenderer;
 
 public class StateWorldIngame extends NVGRenderer {
 

@@ -11,8 +11,8 @@ import com.flowpowered.nbt.CompoundTag;
 import xueli.craftgame.block.Block;
 import xueli.game.player.PlayerStat;
 import xueli.game.utils.math.MathUtils;
-import xueli.game.utils.vector.Vector;
-import xueli.game.utils.vector.Vector2i;
+import xueli.game.vector.Vector;
+import xueli.game.vector.Vector2i;
 
 public class World {
 

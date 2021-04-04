@@ -1,15 +1,19 @@
-package xueli.game.utils.renderer;
+package xueli.game.renderer;
 
 import xueli.game.Game;
+import xueli.game.renderer.Toasts.Type;
 import xueli.utils.io.Log;
 
 public class RendererManager implements Renderer {
 
-	public Renderer current;
-	public Renderer popout;
-
+	private Renderer current;
+	private Renderer popout;
+	
+	private Toasts toasts;
+	
 	public RendererManager() {
-
+		this.toasts = new Toasts();
+		
 	}
 
 	public void setCurrentRenderer(Renderer renderer) {
@@ -34,6 +38,11 @@ public class RendererManager implements Renderer {
 			Log.logger.finer("[Renderer] pop out: " + popout.getClass().getName());
 		});
 	}
+	
+	public void message(String title, String message, Type type) {
+		toasts.submit(title, message, type);
+		
+	}
 
 	@Override
 	public void render() {
@@ -43,6 +52,8 @@ public class RendererManager implements Renderer {
 		if(this.popout != null) {
 			this.popout.render();
 		}
+		toasts.render();
+		
 	}
 
 	@Override
@@ -53,6 +64,8 @@ public class RendererManager implements Renderer {
 		if(this.popout != null) {
 			this.popout.size(w, h);
 		}
+		toasts.size(w, h);
+		
 	}
 
 	@Override
@@ -63,6 +76,8 @@ public class RendererManager implements Renderer {
 		if(this.popout != null) {
 			this.popout.release();
 		}
+		toasts.release();
+		
 	}
 
 }

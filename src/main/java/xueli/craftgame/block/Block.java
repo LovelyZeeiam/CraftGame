@@ -8,7 +8,7 @@ import xueli.craftgame.block.data.BlockFace;
 import xueli.craftgame.world.World;
 import xueli.game.utils.FloatList;
 import xueli.game.utils.TextureAtlas;
-import xueli.game.utils.vector.Vector2s;
+import xueli.game.vector.Vector2s;
 
 public abstract class Block {
 

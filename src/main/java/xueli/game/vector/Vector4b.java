@@ -1,4 +1,4 @@
-package xueli.game.utils.vector;
+package xueli.game.vector;
 
 public class Vector4b {
 

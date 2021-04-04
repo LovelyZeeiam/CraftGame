@@ -1,4 +1,4 @@
-package xueli.game.utils.renderer.widgets;
+package xueli.game.renderer.widgets;
 
 import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_CENTER;
 import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_MIDDLE;
@@ -39,24 +39,20 @@ public class Button extends IWidget {
 	}
 
 	private boolean enable;
-	private EvalableFloat x, y, width, height;
 
-	private String fontName;
 	private EvalableFloat fontSize;
 	private String text;
 
-	public Button(EvalableFloat x, EvalableFloat y, EvalableFloat width, EvalableFloat height, String text,
-			String fontName, EvalableFloat fontSize, boolean enable) {
+	public Button(EvalableFloat x, EvalableFloat y, EvalableFloat width, EvalableFloat height, String text, EvalableFloat fontSize, boolean enable) {
 		super(x, y, width, height);
 		this.enable = enable;
 		this.text = text;
-		this.fontName = fontName;
 		this.fontSize = fontSize;
 		this.enable = enable;
 
 	}
 
-	public void stroke(long nvg) {
+	public void stroke(long nvg, String fontName) {
 		boolean isHover = isMouseHover();
 
 		nvgBeginPath(nvg);

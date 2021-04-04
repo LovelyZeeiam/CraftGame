@@ -24,8 +24,8 @@ import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
 import org.lwjgl.nanovg.NVGColor;
 
 import xueli.craftgame.CraftGame;
+import xueli.game.renderer.NVGRenderer;
 import xueli.game.utils.NVGColors;
-import xueli.game.utils.renderer.NVGRenderer;
 import xueli.utils.eval.EvalableFloat;
 
 public class StateSplash extends NVGRenderer {
