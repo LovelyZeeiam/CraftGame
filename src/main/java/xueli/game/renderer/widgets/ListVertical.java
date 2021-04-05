@@ -118,13 +118,14 @@ public class ListVertical extends IWidget {
 			
 		} 
 		
-		if(this.wheel_offset < 0) this.wheel_offset = 0;
+		if(this.max_height.getValue() <= height.getValue()) this.wheel_offset = 0;
+		else if(this.wheel_offset < 0) this.wheel_offset = 0;
 		else if(this.wheel_offset > (max_height.getValue() - height.getValue())) this.wheel_offset = max_height.getValue() - height.getValue();
 		
 		if(isMouseHover() && !(isMouseInWheel || isDragWheel)) {
 			hover_entry_id = (int) ((this.wheel_offset + Game.INSTANCE_GAME.getCursorY() - y.getValue()) / (entry_height.getValue() + margin.getValue()));
 			
-			if(Game.INSTANCE_GAME.getDisplay().isMouseDownOnce(GLFW.GLFW_MOUSE_BUTTON_LEFT) && (hover_entry_id > 0 && hover_entry_id < entries.size())) {
+			if(Game.INSTANCE_GAME.getDisplay().isMouseDownOnce(GLFW.GLFW_MOUSE_BUTTON_LEFT) && (hover_entry_id >= 0 && hover_entry_id < entries.size())) {
 				chosen_entry_id = hover_entry_id;
 				
 				Game.INSTANCE_GAME.getRendererManager().message("Test!", String.valueOf(chosen_entry_id), Type.FINE);
