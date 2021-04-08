@@ -34,6 +34,7 @@ import xueli.craftgame.state.serverselect.ListEntryServer;
 import xueli.game.renderer.NVGRenderer;
 import xueli.game.renderer.Toasts.Type;
 import xueli.game.renderer.widgets.ButtonGroup;
+import xueli.game.renderer.widgets.IListEntry;
 import xueli.game.renderer.widgets.ListVertical;
 import xueli.game.utils.NVGColors;
 import xueli.utils.eval.EvalableFloat;
@@ -115,30 +116,6 @@ public class StateServerSelect extends NVGRenderer {
 		
 		
 	}
-	
-	private void readServerList() {
-		Gson gson = new Gson();
-		try {
-			JsonObject object = gson.fromJson(new FileReader(new File(CraftGame.DEFAULT_WORKING_DIRECTORY_STRING + "/serverlist.json")), JsonObject.class);
-			object.entrySet().forEach(e -> {
-				String name = e.getKey();
-				JsonObject addressObj = e.getValue().getAsJsonObject();
-				
-				String addr = addressObj.get("addr").getAsString();
-				int port = addressObj.get("port").getAsInt();
-				
-				ListEntryServer entry = new ListEntryServer(name, addr, port);
-				serverList.addElement(entry);
-				
-			});
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			game.getRendererManager().message("Read Server List Failed!", "Please check console: " + e.getClass().getName(), Type.ERROR);
-			return;
-		}
-		
-	}
 
 	@Override
 	public void stroke() {
@@ -212,10 +189,14 @@ public class StateServerSelect extends NVGRenderer {
 
 		if (game.getDisplay().isMouseDownOnce(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
 			// cancel button
-			if(buttonGroup.getButton(1, 3).isEnable() && buttonGroup.getButton(1, 3).isMouseHover()) {
+			if(buttonGroup.getButton(1, 3).canBePressed()) {
 				game.getRendererManager().setCurrentRenderer(new StateMainMenu());
 				
 			}
+			
+			// edit button
+			
+			
 			
 		}
 
@@ -251,6 +232,57 @@ public class StateServerSelect extends NVGRenderer {
 		serverList.size(w, h);
 		
 
+	}
+	
+	@Override
+	public void release() {
+		super.release();
+		
+		saveServerList();
+		
+	}
+	
+	private void readServerList() {
+		Gson gson = new Gson();
+		try {
+			JsonObject object = gson.fromJson(new FileReader(new File(CraftGame.DEFAULT_WORKING_DIRECTORY_STRING + "/serverlist.json")), JsonObject.class);
+			object.entrySet().forEach(e -> {
+				String name = e.getKey();
+				JsonObject addressObj = e.getValue().getAsJsonObject();
+				
+				String addr = addressObj.get("addr").getAsString();
+				int port = addressObj.get("port").getAsInt();
+				
+				ListEntryServer entry = new ListEntryServer(name, addr, port);
+				serverList.addElement(entry);
+				
+			});
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			game.getRendererManager().message("Read Server List Failed!", "Please check console: " + e.getClass().getName(), Type.ERROR);
+			return;
+		}
+		
+	}
+	
+	private void saveServerList() {
+		Gson gson = new Gson();
+		try {
+			ArrayList<IListEntry> entries = serverList.getEntries();
+			for(IListEntry entry : entries) {
+				ListEntryServer server = (ListEntryServer) entry;
+				
+				
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			game.getRendererManager().message("Save Server List Failed!", "Please check console: " + e.getClass().getName(), Type.ERROR);
+			return;
+		}
+		
 	}
 
 }

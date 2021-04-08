@@ -41,6 +41,7 @@ public class RendererManager implements Renderer {
 	
 	public void message(String title, String message, Type type) {
 		toasts.submit(title, message, type);
+		Log.logger.info("[Message " + type.toString() + ": " + title + "] " + message);
 		
 	}
 

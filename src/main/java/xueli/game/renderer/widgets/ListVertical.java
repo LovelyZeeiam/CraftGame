@@ -60,6 +60,10 @@ public class ListVertical extends IWidget {
 		
 	}
 	
+	public ArrayList<IListEntry> getEntries() {
+		return entries;
+	}
+	
 	private void calculateBoundaries() {
 		if(entries.size() != 0) {
 			entries_boundary = new ArrayList<>();

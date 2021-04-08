@@ -98,5 +98,9 @@ public class Button extends IWidget {
 	public boolean isEnable() {
 		return enable;
 	}
+	
+	public boolean canBePressed() {
+		return enable && isMouseHover();
+	}
 
 }
