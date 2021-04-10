@@ -69,6 +69,11 @@ public class StateSingleLine extends NVGRenderer {
 	}
 
 	@Override
+	public void update() {
+
+	}
+
+	@Override
 	public void size(int w, int h) {
 		super.size(w, h);
 

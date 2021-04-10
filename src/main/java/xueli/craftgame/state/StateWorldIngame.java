@@ -10,15 +10,11 @@ public class StateWorldIngame extends NVGRenderer {
 	private boolean isMultiPlayer = false;
 	private Client client;
 
-	
-
 	public StateWorldIngame(String path) {
-		
 
 	}
 
 	public StateWorldIngame(String name, String path) {
-		
 
 	}
 
@@ -42,6 +38,11 @@ public class StateWorldIngame extends NVGRenderer {
 	@Override
 	public void render() {
 		super.render();
+
+	}
+
+	@Override
+	public void update() {
 
 	}
 

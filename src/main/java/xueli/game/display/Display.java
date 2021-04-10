@@ -30,7 +30,7 @@ public class Display {
 
 	private float cursor_x, cursor_y;
 	private float cursor_dx = 0, cursor_dy = 0;
-	
+
 	private double wheel_delta;
 
 	private boolean[] mouse_buttons = new boolean[8];
@@ -64,10 +64,10 @@ public class Display {
 		public void invoke(long window, double xpos, double ypos) {
 			cursor_dx = (float) (xpos - cursor_x);
 			cursor_dy = (float) (ypos - cursor_y);
-			
+
 			cursor_x = (float) xpos;
 			cursor_y = (float) ypos;
-			
+
 		}
 
 	};
@@ -98,12 +98,12 @@ public class Display {
 		}
 
 	};
-	
+
 	private GLFWScrollCallback scrollCallback = new GLFWScrollCallback() {
 		@Override
 		public void invoke(long window, double xoffset, double yoffset) {
 			wheel_delta = yoffset;
-			
+
 		}
 	};
 
@@ -171,7 +171,7 @@ public class Display {
 		for (Integer r : last_press_keys)
 			keyboard_keys[r] = false;
 		last_press_keys.clear();
-		
+
 		wheel_delta = 0;
 		cursor_dx = 0;
 		cursor_dy = 0;
@@ -180,7 +180,7 @@ public class Display {
 
 	public void update() {
 		callbackTick();
-		
+
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
@@ -188,7 +188,7 @@ public class Display {
 			running = false;
 
 	}
-	
+
 	public double getWheelDelta() {
 		return wheel_delta;
 	}
@@ -212,11 +212,11 @@ public class Display {
 	public float getCursorY() {
 		return cursor_y;
 	}
-	
+
 	public float getCurson_dx() {
 		return cursor_dx;
 	}
-	
+
 	public float getCursor_dy() {
 		return cursor_dy;
 	}
@@ -232,7 +232,7 @@ public class Display {
 	public boolean isMouseDownOnce(int mouse) {
 		return mouse_buttons[mouse];
 	}
-	
+
 	public boolean isMouseDown(int mouse) {
 		return glfwGetMouseButton(window, mouse) == GLFW_PRESS;
 	}

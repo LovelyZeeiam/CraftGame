@@ -43,7 +43,8 @@ public class Button extends IWidget {
 	private EvalableFloat fontSize;
 	private String text;
 
-	public Button(EvalableFloat x, EvalableFloat y, EvalableFloat width, EvalableFloat height, String text, EvalableFloat fontSize, boolean enable) {
+	public Button(EvalableFloat x, EvalableFloat y, EvalableFloat width, EvalableFloat height, String text,
+			EvalableFloat fontSize, boolean enable) {
 		super(x, y, width, height);
 		this.enable = enable;
 		this.text = text;
@@ -52,17 +53,14 @@ public class Button extends IWidget {
 
 	}
 
-	public void stroke(long nvg, String fontName) {
-		boolean isHover = isMouseHover();
+	private NVGColor currentButtonColor, currentTextColor;
 
+	public void stroke(long nvg, String fontName) {
 		nvgBeginPath(nvg);
 		nvgRect(nvg, x.getValue() - button_border_width.getValue(), y.getValue() - button_border_width.getValue(),
 				width.getValue() + 2 * button_border_width.getValue(),
 				height.getValue() + 2 * button_border_width.getValue());
-		if (enable && isHover)
-			nvgFillColor(nvg, gray);
-		else
-			nvgFillColor(nvg, NVGColors.BLACK);
+		nvgFillColor(nvg, currentButtonColor);
 		nvgFill(nvg);
 
 		nvgBeginPath(nvg);
@@ -76,11 +74,24 @@ public class Button extends IWidget {
 		nvgFontSize(nvg, fontSize.getValue());
 		nvgFontFace(nvg, fontName);
 		nvgTextAlign(nvg, NVG_ALIGN_MIDDLE | NVG_ALIGN_CENTER);
-		if (enable && isHover)
-			nvgFillColor(nvg, button_text_color_hover);
-		else
-			nvgFillColor(nvg, button_text_color);
+		nvgFillColor(nvg, currentTextColor);
 		nvgText(nvg, x.getValue() + width.getValue() / 2, y.getValue() + height.getValue() / 2, text);
+
+	}
+
+	@Override
+	public void update() {
+		boolean isHover = isMouseHover();
+
+		if (enable && isHover)
+			currentButtonColor = gray;
+		else
+			currentButtonColor = NVGColors.BLACK;
+
+		if (enable && isHover)
+			currentTextColor = button_text_color_hover;
+		else
+			currentTextColor = button_text_color;
 
 	}
 
@@ -88,6 +99,7 @@ public class Button extends IWidget {
 		super.size(w, h);
 
 		button_border_width.needEvalAgain();
+		fontSize.needEvalAgain();
 
 	}
 
@@ -98,7 +110,7 @@ public class Button extends IWidget {
 	public boolean isEnable() {
 		return enable;
 	}
-	
+
 	public boolean canBePressed() {
 		return enable && isMouseHover();
 	}

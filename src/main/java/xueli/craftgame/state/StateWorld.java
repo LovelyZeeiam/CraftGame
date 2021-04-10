@@ -54,6 +54,7 @@ public class StateWorld implements Renderer {
 	public void render() {
 		switch (state) {
 		case LOAD: {
+			nvgState.update();
 			nvgState.render();
 			if (!worldInitProcessThread.isAlive()) {
 				if (thread_operate_code == 0) {
@@ -66,6 +67,7 @@ public class StateWorld implements Renderer {
 			break;
 		}
 		case QUIT: {
+			nvgState.update();
 			nvgState.render();
 			if (!worldInitProcessThread.isAlive()) {
 				if (thread_operate_code == 0) {
@@ -85,6 +87,11 @@ public class StateWorld implements Renderer {
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + state);
 		}
+
+	}
+
+	@Override
+	public void update() {
 
 	}
 

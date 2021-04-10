@@ -6,14 +6,14 @@ import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Scriptable;
 
 public class Evaler {
-	
+
 	private static Context context;
 	private static Scriptable scriptable;
-	
+
 	static {
 		context = Context.enter();
 		scriptable = context.initStandardObjects();
-		
+
 	}
 
 	public static float evalToFloat(String evalString) throws ScriptException {
@@ -24,5 +24,5 @@ public class Evaler {
 		else
 			return ((Double) result).floatValue();
 	}
-	
+
 }

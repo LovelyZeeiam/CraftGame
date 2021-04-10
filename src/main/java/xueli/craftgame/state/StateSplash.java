@@ -98,6 +98,10 @@ public class StateSplash extends NVGRenderer {
 		nvgFillColor(nvg, NVGColors.BLACK);
 		nvgText(nvg, loading_message_x.getValue(), loading_message_y.getValue(), "Loading~");
 
+	}
+
+	@Override
+	public void update() {
 		if (((CraftGame) game).initComplete)
 			game.getRendererManager().setCurrentRenderer(new StateMainMenu());
 

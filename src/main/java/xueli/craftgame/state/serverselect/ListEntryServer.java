@@ -9,7 +9,7 @@ import xueli.game.renderer.widgets.IListEntry;
 import xueli.game.utils.NVGColors;
 
 public class ListEntryServer implements IListEntry {
-	
+
 	private static float border_width = 2.0f;
 	private static float margin = 5.0f;
 
@@ -26,7 +26,7 @@ public class ListEntryServer implements IListEntry {
 		nvgRGBAf(0.1f, 0.1f, 0.1f, 1.0f, chosen_background);
 
 		nvgRGBAf(0.5f, 0.5f, 0.5f, 1.0f, entry_status_text_color);
-		
+
 		nvgRGBAf(0.33f, 0.33f, 0.33f, 0.8f, address_text_color);
 
 	}
@@ -59,14 +59,15 @@ public class ListEntryServer implements IListEntry {
 			boolean hover, boolean chosen) {
 		float scale = Game.INSTANCE_GAME.getDisplayScale();
 
-		if (chosen){
+		if (chosen) {
 			nvgBeginPath(nvg);
 			nvgRect(nvg, 0, 0, entry_width, entry_height);
 			nvgFillColor(nvg, NVGColors.WHITE);
 			nvgFill(nvg);
-			
+
 			nvgBeginPath(nvg);
-			nvgRect(nvg, border_width * scale, border_width * scale, entry_width - 2 * border_width * scale, entry_height - 2 * border_width * scale);
+			nvgRect(nvg, border_width * scale, border_width * scale, entry_width - 2 * border_width * scale,
+					entry_height - 2 * border_width * scale);
 			nvgFillColor(nvg, chosen_background);
 			nvgFill(nvg);
 
@@ -78,7 +79,7 @@ public class ListEntryServer implements IListEntry {
 			else
 				nvgFillColor(nvg, background);
 			nvgFill(nvg);
-			
+
 		}
 
 		// Server Name

@@ -311,9 +311,18 @@ public class StateMainMenu extends NVGRenderer {
 
 		}
 
+	}
+
+	@Override
+	public void update() {
+		boolean single_player_button_hover = DisplayUtils.isMouseInBorder(single_button_x.getValue(),
+				single_button_y.getValue(), button_width.getValue(), button_height.getValue());
+		boolean multi_player_button_hover = DisplayUtils.isMouseInBorder(multi_button_x.getValue(),
+				multi_button_y.getValue(), button_width.getValue(), button_height.getValue());
+
 		if (game.getDisplay().isMouseDownOnce(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
 			if (single_player_button_hover) {
-				game.getRendererManager().setCurrentRenderer(new StateWorldSelect());
+				// game.getRendererManager().setCurrentRenderer(new StateWorldSelect());
 
 			} else if (multi_player_button_hover) {
 				game.getRendererManager().setCurrentRenderer(new StateServerSelect());

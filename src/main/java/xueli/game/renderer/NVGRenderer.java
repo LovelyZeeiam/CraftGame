@@ -39,7 +39,7 @@ public abstract class NVGRenderer implements Renderer {
 	}
 
 	public abstract void stroke();
-	
+
 	protected float measureTextWidth(float size, String text) {
 		return nvgText(nvg, 0, -10000000, text);
 	}
