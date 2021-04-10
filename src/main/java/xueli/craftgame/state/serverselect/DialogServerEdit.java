@@ -28,7 +28,7 @@ public class DialogServerEdit extends IWidget {
 		this.state = state;
 		this.entry = (ListEntryServer) entry;
 		
-		testButton = new Button(test_button_x, test_button_y, test_button_width, test_button_height, "Exit", new EvalableFloat("10.0 * scale"), true);
+		testButton = new Button(test_button_x, test_button_y, test_button_width, test_button_height, "Exit~", new EvalableFloat("10.0 * scale"), true);
 		
 	}
 
