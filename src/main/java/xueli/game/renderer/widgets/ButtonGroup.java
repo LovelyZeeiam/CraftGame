@@ -83,14 +83,14 @@ public class ButtonGroup extends IWidget {
 
 	}
 
-	public void size(int w, int h) {
-		super.size(w, h);
+	public void size() {
+		super.size();
 
 		margin.needEvalAgain();
 
 		for (Button[] buttons : grid) {
 			for (Button button : buttons) {
-				button.size(w, h);
+				button.size();
 
 			}
 		}

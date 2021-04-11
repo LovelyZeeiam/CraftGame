@@ -334,8 +334,8 @@ public class StateMainMenu extends NVGRenderer {
 	}
 
 	@Override
-	public void size(int w, int h) {
-		super.size(w, h);
+	public void size() {
+		super.size();
 
 		logo_x.needEvalAgain();
 		logo_y.needEvalAgain();

@@ -16,17 +16,16 @@ import xueli.craftgame.CraftGame;
 import xueli.craftgame.state.serverselect.DialogServerEdit;
 import xueli.craftgame.state.serverselect.ListEntryServer;
 import xueli.game.renderer.NVGRenderer;
-import xueli.game.renderer.Toasts.Type;
 import xueli.game.renderer.widgets.ButtonGroup;
+import xueli.game.renderer.widgets.DialogManager;
 import xueli.game.renderer.widgets.IListEntry;
 import xueli.game.renderer.widgets.IWidget;
 import xueli.game.renderer.widgets.ListVertical;
+import xueli.game.renderer.widgets.Toasts.Type;
 import xueli.game.utils.NVGColors;
 import xueli.utils.eval.EvalableFloat;
 
 public class StateServerSelect extends NVGRenderer {
-
-	public static StateServerSelect INSTANCE;
 
 	private static final String fontName = "GAME";
 
@@ -75,14 +74,11 @@ public class StateServerSelect extends NVGRenderer {
 
 	private ButtonGroup buttonGroup;
 	private ListVertical serverList;
-	
-	private IWidget dialog;
-	private boolean shouldHandleDialogExit = false;
-	private Object dialogExitData;
+
+	private DialogManager dialogManager;
 
 	public StateServerSelect() {
 		super();
-		INSTANCE = this;
 
 		nvgCreateFont(nvg, fontName, CraftGame.DEFAULT_RES_DIRECTORY_STRING + "/fonts/Minecraft-Ascii.ttf");
 		this.tex_back = nvgCreateImage(nvg, CraftGame.DEFAULT_RES_DIRECTORY_STRING + "/gui/options_background.png",
@@ -101,6 +97,8 @@ public class StateServerSelect extends NVGRenderer {
 
 		serverList = new ListVertical(list_x, list_y, list_width, list_entry_height, list_height, new ArrayList<>());
 		readServerList();
+
+		dialogManager = new DialogManager();
 
 	}
 
@@ -156,74 +154,59 @@ public class StateServerSelect extends NVGRenderer {
 		}
 
 		serverList.stroke(nvg, fontName);
-		
-		if(this.dialog != null) {
-			this.dialog.stroke(nvg, fontName);
-			
-		}
+
+		dialogManager.stroke(nvg, fontName);
 
 	}
 
 	@Override
 	public void update() {
-		shouldHandleDialogExit = false;
-		
-		// button group
-					buttonGroup.getButton(0, 1).setEnable(true);
-					buttonGroup.getButton(0, 2).setEnable(true);
-					buttonGroup.getButton(1, 2).setEnable(true);
-					buttonGroup.getButton(1, 3).setEnable(true);
+		dialogManager.update();
+		if (dialogManager.hasDialog())
+			return;
 
-					if (serverList.getChoosenEntryID() != -1) {
-						buttonGroup.getButton(0, 0).setEnable(true);
-						buttonGroup.getButton(0, 1).setEnable(true);
-						buttonGroup.getButton(1, 0).setEnable(true);
-						buttonGroup.getButton(1, 1).setEnable(true);
-
-					} else {
-						buttonGroup.getButton(0, 0).setEnable(false);
-						buttonGroup.getButton(0, 1).setEnable(false);
-						buttonGroup.getButton(1, 0).setEnable(false);
-						buttonGroup.getButton(1, 1).setEnable(false);
-
-					}
-		
 		if (game.getDisplay().isMouseDownOnce(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
 			// cancel button
-			if (buttonGroup.getButton(1, 3).canBePressed() && this.dialog == null) {
+			if (buttonGroup.getButton(1, 3).canBePressed()) {
 				game.getRendererManager().setCurrentRenderer(new StateMainMenu());
-				
+
 			}
 
 			// edit button
-			if(buttonGroup.getButton(1, 0).canBePressed() && this.dialog == null) {
-				setDialog(new DialogServerEdit(this, serverList.getEntries().get(serverList.getChoosenEntryID())));
-				
+			if (buttonGroup.getButton(1, 0).canBePressed()) {
+				dialogManager.dialog(new DialogServerEdit(serverList.getEntries().get(serverList.getChoosenEntryID()),
+						dialogManager, nvg, lang));
+
 			}
 
 		}
-		
-		if(this.dialog != null) {
-			this.dialog.update();
-			
+		buttonGroup.getButton(0, 1).setEnable(true);
+		buttonGroup.getButton(0, 2).setEnable(true);
+		buttonGroup.getButton(1, 2).setEnable(true);
+		buttonGroup.getButton(1, 3).setEnable(true);
+
+		if (serverList.getChoosenEntryID() != -1) {
+			buttonGroup.getButton(0, 0).setEnable(true);
+			buttonGroup.getButton(0, 1).setEnable(true);
+			buttonGroup.getButton(1, 0).setEnable(true);
+			buttonGroup.getButton(1, 1).setEnable(true);
+
 		} else {
-			buttonGroup.update();
-			serverList.update();
-			
+			buttonGroup.getButton(0, 0).setEnable(false);
+			buttonGroup.getButton(0, 1).setEnable(false);
+			buttonGroup.getButton(1, 0).setEnable(false);
+			buttonGroup.getButton(1, 1).setEnable(false);
+
 		}
-		
-		// dialog
-		if(shouldHandleDialogExit) {
-			System.out.println(dialogExitData);
-			
-		}
-		
+
+		buttonGroup.update();
+		serverList.update();
 
 	}
 
 	@Override
-	public void size(int w, int h) {
-		super.size(w, h);
+	public void size() {
+		super.size();
 
 		select_text_x.needEvalAgain();
 		select_text_y.needEvalAgain();
@@ -247,13 +230,9 @@ public class StateServerSelect extends NVGRenderer {
 		list_y.needEvalAgain();
 		list_entry_height.needEvalAgain();
 
-		buttonGroup.size(w, h);
-		serverList.size(w, h);
-		
-		if(this.dialog != null) {
-			this.dialog.size(w, h);
-			
-		}
+		buttonGroup.size();
+		serverList.size();
+		dialogManager.size();
 
 	}
 
@@ -263,21 +242,6 @@ public class StateServerSelect extends NVGRenderer {
 
 		saveServerList();
 
-	}
-	
-	public void setDialog(IWidget widget) {
-		if(widget == null)
-			dialogExit(null);
-		else
-			this.dialog = widget;
-		
-	}
-	
-	public void dialogExit(Object exitData) {
-		this.dialog = null;
-		this.dialogExitData = exitData;
-		shouldHandleDialogExit = true;
-		
 	}
 
 	private void readServerList() {

@@ -10,7 +10,7 @@ import org.lwjgl.nanovg.NVGColor;
 
 import xueli.game.Game;
 import xueli.game.display.DisplayUtils;
-import xueli.game.renderer.Toasts.Type;
+import xueli.game.renderer.widgets.Toasts.Type;
 import xueli.utils.eval.EvalableFloat;
 
 public class ListVertical extends IWidget {
@@ -132,7 +132,7 @@ public class ListVertical extends IWidget {
 		nvgRestore(nvg);
 
 	}
-	
+
 	@Override
 	public void update() {
 		{
@@ -159,7 +159,7 @@ public class ListVertical extends IWidget {
 			}
 
 		}
-		
+
 		if (isMouseHover()) {
 			this.wheel_offset -= Game.INSTANCE_GAME.getDisplay().getWheelDelta() * 10.0f;
 
@@ -171,7 +171,7 @@ public class ListVertical extends IWidget {
 			this.wheel_offset = 0;
 		else if (this.wheel_offset > (max_height.getValue() - height.getValue()))
 			this.wheel_offset = max_height.getValue() - height.getValue();
-		
+
 		if (isMouseHover() && !(isMouseInWheel || isDragWheel)) {
 			hover_entry_id = (int) ((this.wheel_offset + Game.INSTANCE_GAME.getCursorY() - y.getValue())
 					/ (entry_height.getValue() + margin.getValue()));
@@ -188,7 +188,7 @@ public class ListVertical extends IWidget {
 			hover_entry_id = -1;
 
 		}
-		
+
 	}
 
 	public int getChoosenEntryID() {
@@ -200,8 +200,8 @@ public class ListVertical extends IWidget {
 	}
 
 	@Override
-	public void size(int w, int h) {
-		super.size(w, h);
+	public void size() {
+		super.size();
 
 		margin.needEvalAgain();
 		calculateBoundaries();

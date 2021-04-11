@@ -110,8 +110,8 @@ public class StateWorldSelect extends NVGRenderer {
 	}
 
 	@Override
-	public void size(int w, int h) {
-		super.size(w, h);
+	public void size() {
+		super.size();
 
 		select_text_x.needEvalAgain();
 		select_text_y.needEvalAgain();

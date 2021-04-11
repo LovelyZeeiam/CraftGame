@@ -24,7 +24,7 @@ public class EventProcessor {
 			objOut.writeObject(event);
 			objOut.close();
 
-			return Base64.getEncoder().encodeToString(out.toByteArray()).getBytes(StandardCharsets.UTF_8);
+			return Base64.getEncoder().encode(out.toByteArray());
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;

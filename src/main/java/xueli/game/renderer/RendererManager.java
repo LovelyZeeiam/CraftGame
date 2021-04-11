@@ -1,7 +1,8 @@
 package xueli.game.renderer;
 
 import xueli.game.Game;
-import xueli.game.renderer.Toasts.Type;
+import xueli.game.renderer.widgets.Toasts;
+import xueli.game.renderer.widgets.Toasts.Type;
 import xueli.utils.io.Log;
 
 public class RendererManager {
@@ -9,6 +10,7 @@ public class RendererManager {
 	private Renderer current;
 
 	private Toasts toasts;
+
 	public RendererManager() {
 		this.toasts = new Toasts();
 
@@ -20,7 +22,7 @@ public class RendererManager {
 				this.current.release();
 			}
 			this.current = renderer;
-			this.current.size((int) Game.INSTANCE_GAME.getWidth(), (int) Game.INSTANCE_GAME.getHeight());
+			this.current.size();
 			Log.logger.finer("[Renderer] change renderer: " + renderer.getClass().getName());
 		});
 
@@ -44,9 +46,9 @@ public class RendererManager {
 
 	public void size(int w, int h) {
 		if (this.current != null) {
-			this.current.size(w, h);
+			this.current.size();
 		}
-		toasts.size(w, h);
+		toasts.size();
 
 	}
 

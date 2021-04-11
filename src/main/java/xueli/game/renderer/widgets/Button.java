@@ -53,7 +53,7 @@ public class Button extends IWidget {
 
 	}
 
-	private NVGColor currentButtonColor, currentTextColor;
+	private NVGColor currentButtonColor = gray, currentTextColor = button_text_color;
 
 	public void stroke(long nvg, String fontName) {
 		nvgBeginPath(nvg);
@@ -95,8 +95,9 @@ public class Button extends IWidget {
 
 	}
 
-	public void size(int w, int h) {
-		super.size(w, h);
+	@Override
+	public void size() {
+		super.size();
 
 		button_border_width.needEvalAgain();
 		fontSize.needEvalAgain();

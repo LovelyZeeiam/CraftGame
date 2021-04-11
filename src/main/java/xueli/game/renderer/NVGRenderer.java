@@ -45,7 +45,7 @@ public abstract class NVGRenderer implements Renderer {
 	}
 
 	@Override
-	public void size(int w, int h) {
+	public void size() {
 
 	}
 

@@ -6,7 +6,7 @@ public interface Renderer {
 
 	public void update();
 
-	public void size(int w, int h);
+	public void size();
 
 	public void release();
 

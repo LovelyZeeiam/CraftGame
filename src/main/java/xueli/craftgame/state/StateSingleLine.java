@@ -74,8 +74,8 @@ public class StateSingleLine extends NVGRenderer {
 	}
 
 	@Override
-	public void size(int w, int h) {
-		super.size(w, h);
+	public void size() {
+		super.size();
 
 		text_size.needEvalAgain();
 

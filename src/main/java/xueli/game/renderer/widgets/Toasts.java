@@ -1,4 +1,4 @@
-package xueli.game.renderer;
+package xueli.game.renderer.widgets;
 
 import static org.lwjgl.nanovg.NanoVG.*;
 
@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import org.lwjgl.nanovg.NVGColor;
 
 import xueli.craftgame.CraftGame;
+import xueli.game.renderer.NVGRenderer;
 import xueli.game.utils.Time;
 
 public class Toasts extends NVGRenderer {
@@ -231,8 +232,8 @@ public class Toasts extends NVGRenderer {
 	}
 
 	@Override
-	public void size(int w, int h) {
-		super.size(w, h);
+	public void size() {
+		super.size();
 
 		calculateScreen();
 

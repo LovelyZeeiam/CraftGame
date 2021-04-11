@@ -20,7 +20,7 @@ public abstract class IWidget {
 		this.y = new EvalableFloat(y.toString());
 		this.width = new EvalableFloat(width.toString());
 		this.height = new EvalableFloat(height.toString());
-				
+
 	}
 
 	public EvalableFloat getX() {
@@ -59,7 +59,7 @@ public abstract class IWidget {
 
 	public abstract void update();
 
-	public void size(int w, int h) {
+	public void size() {
 		x.needEvalAgain();
 		y.needEvalAgain();
 		width.needEvalAgain();

@@ -26,6 +26,14 @@ server_select_menu.edit=Edit
 server_select_menu.delete=Delete
 server_select_menu.refresh=Refresh
 server_select_menu.cancel=Cancel
+server_select_edit_dialog.title=Edit External Server
+server_select_edit_dialog.name=Server Name
+server_select_edit_dialog.name.hint=Please enter server name
+server_select_edit_dialog.addr=Server Address
+server_select_edit_dialog.addr.hint=Please enter IP or Address
+server_select_edit_dialog.port=Port
+server_select_edit_dialog.remove=Remove
+server_select_edit_dialog.save=Save
 
 # World Loading
 world_loading.text=Loading Level...
