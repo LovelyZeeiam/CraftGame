@@ -1,10 +1,36 @@
 package xueli.game.display;
 
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MAJOR;
+import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MINOR;
+import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_CORE_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_FORWARD_COMPAT;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
+import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
+import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
+import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
+import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
+import static org.lwjgl.glfw.GLFW.glfwGetMouseButton;
+import static org.lwjgl.glfw.GLFW.glfwInit;
+import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
+import static org.lwjgl.glfw.GLFW.glfwPollEvents;
+import static org.lwjgl.glfw.GLFW.glfwSetCursorPosCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetScrollCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback;
+import static org.lwjgl.glfw.GLFW.glfwShowWindow;
+import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
+import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
+import static org.lwjgl.glfw.GLFW.glfwWindowHint;
+import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -17,7 +43,6 @@ import org.lwjgl.opengl.GL11;
 
 import xueli.game.Game;
 import xueli.game.utils.GLHelper;
-import xueli.utils.io.Log;
 
 public class Display {
 
@@ -117,7 +142,7 @@ public class Display {
 	public void create() {
 		GLFWErrorCallback.createPrint(System.err).set();
 		if (!glfwInit()) {
-			Log.logger.severe("[Display] Can't init GLFW!");
+			Logger.getLogger(getClass().getName()).severe("[Display] Can't init GLFW!");
 			return;
 		}
 
@@ -131,7 +156,7 @@ public class Display {
 		window = glfwCreateWindow(width, height, mainTitle, 0, 0);
 
 		if (window == 0) {
-			Log.logger.severe("[Display] Can't create window!");
+			Logger.getLogger(getClass().getName()).severe("[Display] Can't create window!");
 			return;
 		}
 
@@ -151,7 +176,7 @@ public class Display {
 		glfwSetKeyCallback(window, keyCallback);
 		glfwSetScrollCallback(window, scrollCallback);
 
-		Log.logger.finer("[Display] Window created!");
+		Logger.getLogger(getClass().getName()).finer("[Display] Window created!");
 
 		GLHelper.printDeviceInfo();
 		GL11.glEnable(GL11.GL_TEXTURE_2D);

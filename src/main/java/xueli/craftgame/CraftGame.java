@@ -1,11 +1,12 @@
 package xueli.craftgame;
 
+import java.util.logging.Logger;
+
 import org.lwjgl.opengl.GL11;
 
 import xueli.craftgame.state.StateSplash;
 import xueli.game.Game;
 import xueli.game.player.PlayerStat;
-import xueli.utils.io.Log;
 
 public class CraftGame extends Game {
 
@@ -20,7 +21,7 @@ public class CraftGame extends Game {
 
 	@Override
 	public void oncreate() {
-		Log.logger.finer("[Player]" + player.toString());
+		Logger.getLogger(this.getClass().getName()).finer("[Player]" + player.toString());
 
 		this.rendererManager.setCurrentRenderer(new StateSplash());
 

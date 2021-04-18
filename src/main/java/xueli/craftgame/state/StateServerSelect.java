@@ -1,6 +1,23 @@
 package xueli.craftgame.state;
 
-import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_BOTTOM;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_CENTER;
+import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
+import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_REPEATX;
+import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_REPEATY;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgCreateFont;
+import static org.lwjgl.nanovg.NanoVG.nvgCreateImage;
+import static org.lwjgl.nanovg.NanoVG.nvgFill;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
+import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
+import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
+import static org.lwjgl.nanovg.NanoVG.nvgImagePattern;
+import static org.lwjgl.nanovg.NanoVG.nvgRGBAf;
+import static org.lwjgl.nanovg.NanoVG.nvgRect;
+import static org.lwjgl.nanovg.NanoVG.nvgText;
+import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
 
 import java.io.File;
 import java.io.FileReader;
@@ -19,7 +36,6 @@ import xueli.game.renderer.NVGRenderer;
 import xueli.game.renderer.widgets.ButtonGroup;
 import xueli.game.renderer.widgets.DialogManager;
 import xueli.game.renderer.widgets.IListEntry;
-import xueli.game.renderer.widgets.IWidget;
 import xueli.game.renderer.widgets.ListVertical;
 import xueli.game.renderer.widgets.Toasts.Type;
 import xueli.game.utils.NVGColors;
@@ -178,6 +194,12 @@ public class StateServerSelect extends NVGRenderer {
 						dialogManager, nvg, lang));
 
 			}
+			
+			// play button
+			if(buttonGroup.getButton(0, 0).canBePressed()) {
+				
+				
+			}
 
 		}
 		buttonGroup.getButton(0, 1).setEnable(true);
@@ -272,6 +294,8 @@ public class StateServerSelect extends NVGRenderer {
 	}
 
 	private void saveServerList() {
+		// TODO: CHANGE SERVER LIST
+		
 		Gson gson = new Gson();
 		try {
 			ArrayList<IListEntry> entries = serverList.getEntries();

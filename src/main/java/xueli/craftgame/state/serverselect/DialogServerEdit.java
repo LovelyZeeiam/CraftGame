@@ -1,7 +1,26 @@
 package xueli.craftgame.state.serverselect;
 
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_LEFT;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_TOP;
+import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgCreateImage;
+import static org.lwjgl.nanovg.NanoVG.nvgFill;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
+import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
+import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
+import static org.lwjgl.nanovg.NanoVG.nvgImagePattern;
+import static org.lwjgl.nanovg.NanoVG.nvgRGBAf;
+import static org.lwjgl.nanovg.NanoVG.nvgRect;
+import static org.lwjgl.nanovg.NanoVG.nvgText;
+import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
+
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.nanovg.NVGColor;
+import org.lwjgl.nanovg.NVGPaint;
+
 import xueli.craftgame.CraftGame;
-import xueli.craftgame.state.StateServerSelect;
 import xueli.game.Game;
 import xueli.game.display.DisplayUtils;
 import xueli.game.lang.LangManager;
@@ -9,13 +28,9 @@ import xueli.game.renderer.widgets.Button;
 import xueli.game.renderer.widgets.Dialog;
 import xueli.game.renderer.widgets.DialogManager;
 import xueli.game.renderer.widgets.IListEntry;
+import xueli.game.renderer.widgets.TextBox;
 import xueli.game.utils.NVGColors;
 import xueli.utils.eval.EvalableFloat;
-
-import static org.lwjgl.nanovg.NanoVG.*;
-
-import org.lwjgl.glfw.GLFW;
-import org.lwjgl.nanovg.NVGPaint;
 
 public class DialogServerEdit extends Dialog {
 
@@ -44,15 +59,34 @@ public class DialogServerEdit extends Dialog {
 	private static EvalableFloat button_height = new EvalableFloat("60 * 1.1 * scale");
 	private static EvalableFloat button_font_size = new EvalableFloat("1.1 * scale * 14");
 
-	private ListEntryServer entry;
-
+	private static EvalableFloat content_x = new EvalableFloat("(win_width - 632 * 1.1 * scale) / 2 + 1.1 * scale * 20");
+	private static EvalableFloat content_width = new EvalableFloat("1.1 * scale * 589");
+	private static EvalableFloat content_font_size = new EvalableFloat("1.1 * scale * 13");
+	private static EvalableFloat content_text_box_height = new EvalableFloat("1.1 * scale * 49");
+	private static EvalableFloat content_text_1_y = new EvalableFloat("(win_height - 358 * 1.1 * scale) / 2 + 1.1 * scale * 50");
+	private static EvalableFloat content_textbox_1_y = new EvalableFloat("(win_height - 358 * 1.1 * scale) / 2 + 1.1 * scale * 68");
+	private static EvalableFloat content_text_2_y = new EvalableFloat("(win_height - 358 * 1.1 * scale) / 2 + 1.1 * scale * 126");
+	private static EvalableFloat content_textbox_2_y = new EvalableFloat("(win_height - 358 * 1.1 * scale) / 2 + 1.1 * scale * 144");
+	private static EvalableFloat content_text_3_y = new EvalableFloat("(win_height - 358 * 1.1 * scale) / 2 + 1.1 * scale * 202");
+	private static EvalableFloat content_textbox_3_y = new EvalableFloat("(win_height - 358 * 1.1 * scale) / 2 + 1.1 * scale * 220");
+	
 	private static NVGPaint paint = NVGPaint.create();
+	
+	private static NVGColor content_textColor = NVGColor.create();
+	
+	static {
+		nvgRGBAf(0.8f, 0.8f, 0.8f, 1.0f, content_textColor);
+		
+	}
+	
+	private ListEntryServer entry;
 
 	private LangManager langManager;
 	private int tex_background;
 	private int tex_close, tex_chosen_close;
 
 	private Button removeButton, saveButton;
+	private TextBox nameTextBox, addrTextBox, portTextBox;
 
 	public DialogServerEdit(IListEntry entry, DialogManager manager, long nvg, LangManager langManager) {
 		super(manager);
@@ -70,7 +104,13 @@ public class DialogServerEdit extends Dialog {
 				langManager.getStringFromLangMap("#server_select_edit_dialog.remove"), button_font_size, true);
 		this.saveButton = new Button(save_button_x, button_y, button_width, button_height,
 				langManager.getStringFromLangMap("#server_select_edit_dialog.save"), button_font_size, true);
-
+		
+		this.nameTextBox = new TextBox(content_x, content_textbox_1_y, content_width, content_text_box_height, langManager.getStringFromLangMap("#server_select_edit_dialog.name.hint"), nvg);
+		this.addrTextBox = new TextBox(content_x, content_textbox_2_y, content_width, content_text_box_height, langManager.getStringFromLangMap("#server_select_edit_dialog.addr.hint"), nvg);
+		this.portTextBox = new TextBox(content_x, content_textbox_3_y, content_width, content_text_box_height, null, nvg);
+		
+		
+		
 	}
 
 	@Override
@@ -115,6 +155,27 @@ public class DialogServerEdit extends Dialog {
 
 		this.removeButton.stroke(nvg, fontName);
 		this.saveButton.stroke(nvg, fontName);
+		
+		// texts
+		{
+			nvgFontSize(nvg, content_font_size.getValue());
+			nvgFontFace(nvg, fontName);
+			nvgTextAlign(nvg, NVG_ALIGN_TOP | NVG_ALIGN_LEFT);
+			nvgFillColor(nvg, content_textColor);
+			nvgText(nvg, content_x.getValue(), content_text_1_y.getValue(),
+					langManager.getStringFromLangMap("#server_select_edit_dialog.name"));
+			nvgText(nvg, content_x.getValue(), content_text_2_y.getValue(),
+					langManager.getStringFromLangMap("#server_select_edit_dialog.addr"));
+			nvgText(nvg, content_x.getValue(), content_text_3_y.getValue(),
+					langManager.getStringFromLangMap("#server_select_edit_dialog.port"));
+			
+		}
+		
+		this.nameTextBox.stroke(nvg, fontName);
+		this.addrTextBox.stroke(nvg, fontName);
+		this.portTextBox.stroke(nvg, fontName);
+		
+		
 
 	}
 
@@ -123,6 +184,10 @@ public class DialogServerEdit extends Dialog {
 		this.removeButton.update();
 		this.saveButton.update();
 
+		this.nameTextBox.update();
+		this.addrTextBox.update();
+		this.portTextBox.update();
+		
 		if (Game.INSTANCE_GAME.getDisplay().isMouseDownOnce(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
 			if (DisplayUtils.isMouseInBorder(close_button_x.getValue(), close_button_y.getValue(),
 					close_button_size.getValue(), close_button_size.getValue())) {
@@ -156,6 +221,21 @@ public class DialogServerEdit extends Dialog {
 
 		this.removeButton.size();
 		this.saveButton.size();
+		
+		content_x.needEvalAgain();
+		content_width.needEvalAgain();
+		content_font_size.needEvalAgain();
+		content_text_box_height.needEvalAgain();
+		content_text_1_y.needEvalAgain();
+		content_textbox_1_y.needEvalAgain();
+		content_text_2_y.needEvalAgain();
+		content_textbox_2_y.needEvalAgain();
+		content_text_3_y.needEvalAgain();
+		content_textbox_3_y.needEvalAgain();
+		
+		this.nameTextBox.size();
+		this.addrTextBox.size();
+		this.portTextBox.size();
 
 	}
 

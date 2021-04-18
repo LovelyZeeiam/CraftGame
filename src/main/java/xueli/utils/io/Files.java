@@ -62,6 +62,7 @@ public class Files {
 		BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
 		byte[] data = new byte[in.available()];
 		in.read(data);
+		in.close();
 		return data;
 	}
 

@@ -1,8 +1,8 @@
 package xueli.game.utils;
 
-import org.lwjgl.opengl.GL11;
+import java.util.logging.Logger;
 
-import xueli.utils.io.Log;
+import org.lwjgl.opengl.GL11;
 
 public class GLHelper {
 
@@ -20,7 +20,7 @@ public class GLHelper {
 		String platform = GL11.glGetString(GL11.GL_RENDERER);
 		String glVersion = GL11.glGetString(GL11.GL_VERSION);
 
-		Log.logger.info("OpenGL: " + nameString + ", " + platform + ", " + glVersion);
+		Logger.getLogger(GLHelper.class.getName()).info("OpenGL: " + nameString + ", " + platform + ", " + glVersion);
 
 	}
 

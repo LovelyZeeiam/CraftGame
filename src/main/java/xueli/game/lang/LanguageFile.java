@@ -7,8 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-
-import xueli.utils.io.Log;
+import java.util.logging.Logger;
 
 public class LanguageFile {
 
@@ -53,7 +52,7 @@ public class LanguageFile {
 				int findEqual = line.indexOf('=');
 				if (findEqual == -1) {
 					// 本条数据无效
-					Log.logger.warning("Lang: File " + file.getName() + ": " + lineNum + " Data Error! Ignore.");
+					Logger.getLogger(getClass().getName()).warning("Lang: File " + file.getName() + ": " + lineNum + " Data Error! Ignore.");
 					continue;
 				}
 				String key = line.substring(0, findEqual);

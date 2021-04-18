@@ -1,11 +1,11 @@
 package xueli.utils;
 
+import java.util.logging.Logger;
+
 import org.lwjgl.util.vector.Vector3f;
 
 import com.sun.jna.platform.win32.Advapi32Util;
 import com.sun.jna.platform.win32.WinReg;
-
-import xueli.utils.io.Log;
 
 public class WindowUtils {
 
@@ -22,7 +22,7 @@ public class WindowUtils {
 			float g = (int) ((color >> 8) & 0xFF);
 			float b = (int) (color & 0xFF);
 
-			Log.logger.info("Windows 10! Set background color to theme color: " + r + ", " + g + ", " + b);
+			Logger.getLogger(WindowUtils.class.getName()).info("Windows 10! Set background color to theme color: " + r + ", " + g + ", " + b);
 			return new Vector3f(r / 255 * 0.62f, g / 255 * 0.71f, b / 255 * 0.66f);
 
 		}

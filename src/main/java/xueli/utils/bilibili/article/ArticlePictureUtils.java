@@ -1,4 +1,4 @@
-package xueli.bilibili.article;
+package xueli.utils.bilibili.article;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -12,6 +12,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -22,7 +23,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import xueli.utils.io.Files;
-import xueli.utils.io.Log;
 
 public class ArticlePictureUtils {
 
@@ -38,7 +38,7 @@ public class ArticlePictureUtils {
 			return;
 		}
 
-		Log.logger.info("Get Bilibili CV page: " + cvId);
+		Logger.getLogger(ArticlePictureUtils.class.getName()).info("Get Bilibili CV page: " + cvId);
 
 		Elements picElements = doc.select("img[data-src]");
 
@@ -109,7 +109,7 @@ public class ArticlePictureUtils {
 
 				int code = pageUrlJsonObject.get("code").getAsInt();
 				if (code != 0) {
-					Log.logger.warning(
+					Logger.getLogger(ArticlePictureUtils.class.getName()).warning(
 							"Article Search Failed: " + pageUrlJsonObject.get("message").getAsString() + ", " + key);
 					return null;
 				}
@@ -118,7 +118,7 @@ public class ArticlePictureUtils {
 
 			}
 
-			Log.logger.fine("Bilibili Article Search: " + key + ", " + pageCount);
+			Logger.getLogger(ArticlePictureUtils.class.getName()).fine("Bilibili Article Search: " + key + ", " + pageCount);
 
 			// 获取专栏
 			for (int i = 1; i <= pageCount; i++) {
@@ -132,7 +132,7 @@ public class ArticlePictureUtils {
 
 				int code = pageJsonObject.get("code").getAsInt();
 				if (code != 0) {
-					Log.logger.warning(
+					Logger.getLogger(ArticlePictureUtils.class.getName()).warning(
 							"Article Search Failed: " + pageJsonObject.get("message").getAsString() + ", " + key);
 					continue;
 				}

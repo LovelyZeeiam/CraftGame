@@ -1,17 +1,18 @@
 package xueli.game.renderer.widgets;
 
+import static org.lwjgl.nanovg.NanoVG.nvgResetTransform;
+import static org.lwjgl.nanovg.NanoVG.nvgTranslate;
+
 import java.util.LinkedList;
 
 import xueli.game.Game;
 import xueli.game.utils.Time;
 
-import static org.lwjgl.nanovg.NanoVG.*;
-
 public class DialogManager {
 
 	public static final Object FORCE_EXIT = "FORCE";
 
-	private static final long dialog_fade_in_out_time = 500;
+	private static final long dialog_fade_in_out_time = 300;
 
 	private LinkedList<DialogLife> dialogs = new LinkedList<>();
 	private LinkedList<DialogExitData> exitDatas = new LinkedList<>();

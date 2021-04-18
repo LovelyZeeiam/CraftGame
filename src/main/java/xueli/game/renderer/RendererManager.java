@@ -1,9 +1,10 @@
 package xueli.game.renderer;
 
+import java.util.logging.Logger;
+
 import xueli.game.Game;
 import xueli.game.renderer.widgets.Toasts;
 import xueli.game.renderer.widgets.Toasts.Type;
-import xueli.utils.io.Log;
 
 public class RendererManager {
 
@@ -23,14 +24,14 @@ public class RendererManager {
 			}
 			this.current = renderer;
 			this.current.size();
-			Log.logger.finer("[Renderer] change renderer: " + renderer.getClass().getName());
+			Logger.getLogger(getClass().getName()).finer("[Renderer] change renderer: " + renderer.getClass().getName());
 		});
 
 	}
 
 	public void message(String title, String message, Type type) {
 		toasts.submit(title, message, type);
-		Log.logger.info("[Message " + type.toString() + ": " + title + "] " + message);
+		Logger.getLogger(getClass().getName()).info("[Message " + type.toString() + ": " + title + "] " + message);
 
 	}
 

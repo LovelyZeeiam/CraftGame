@@ -1,13 +1,20 @@
 package xueli.game.renderer;
 
-import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.nanovg.NanoVGGL3.*;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
+import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
+import static org.lwjgl.nanovg.NanoVG.nvgText;
+import static org.lwjgl.nanovg.NanoVGGL3.NVG_ANTIALIAS;
+import static org.lwjgl.nanovg.NanoVGGL3.NVG_DEBUG;
+import static org.lwjgl.nanovg.NanoVGGL3.NVG_STENCIL_STROKES;
+import static org.lwjgl.nanovg.NanoVGGL3.nvgCreate;
+import static org.lwjgl.nanovg.NanoVGGL3.nvgDelete;
+
+import java.util.logging.Logger;
 
 import org.lwjgl.nanovg.NVGPaint;
 
 import xueli.game.Game;
 import xueli.game.lang.LangManager;
-import xueli.utils.io.Log;
 
 public abstract class NVGRenderer implements Renderer {
 
@@ -25,7 +32,7 @@ public abstract class NVGRenderer implements Renderer {
 
 		this.nvg = nvgCreate(NVG_STENCIL_STROKES | NVG_ANTIALIAS | NVG_DEBUG);
 		if (this.nvg == 0) {
-			Log.logger.severe("[GUI] Can't create NVG!");
+			Logger.getLogger(getClass().getName()).severe("[GUI] Can't create NVG!");
 		}
 
 	}

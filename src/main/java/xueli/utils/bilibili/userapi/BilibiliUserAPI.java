@@ -1,4 +1,4 @@
-package xueli.bilibili.userapi;
+package xueli.utils.bilibili.userapi;
 
 import java.io.IOException;
 import java.io.InputStream;
