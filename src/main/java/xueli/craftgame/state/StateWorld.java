@@ -1,18 +1,10 @@
 package xueli.craftgame.state;
 
-import xueli.game.renderer.Renderer;
+import xueli.game.renderer.NVGRenderer;
 
-public class StateWorld implements Renderer {
-	
-	
-	
-	public StateWorld(String addr, int port) {
-		
-		
-	}
+public class StateWorld extends NVGRenderer {
 
-	@Override
-	public void render() {
+	public StateWorld() {
 		
 		
 	}
@@ -24,15 +16,17 @@ public class StateWorld implements Renderer {
 	}
 
 	@Override
-	public void size() {
+	public void stroke() {
 		
 		
 	}
-
+	
 	@Override
-	public void release() {
+	public void render() {
 		
 		
+		
+		super.render();
 	}
 
 }

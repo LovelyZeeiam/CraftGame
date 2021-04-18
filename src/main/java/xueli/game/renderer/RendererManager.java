@@ -3,17 +3,12 @@ package xueli.game.renderer;
 import java.util.logging.Logger;
 
 import xueli.game.Game;
-import xueli.game.renderer.widgets.Toasts;
-import xueli.game.renderer.widgets.Toasts.Type;
 
 public class RendererManager {
 
 	private Renderer current;
 
-	private Toasts toasts;
-
 	public RendererManager() {
-		this.toasts = new Toasts();
 
 	}
 
@@ -29,19 +24,11 @@ public class RendererManager {
 
 	}
 
-	public void message(String title, String message, Type type) {
-		toasts.submit(title, message, type);
-		Logger.getLogger(getClass().getName()).info("[Message " + type.toString() + ": " + title + "] " + message);
-
-	}
-
 	public void render() {
 		if (this.current != null) {
 			this.current.update();
 			this.current.render();
 		}
-		toasts.update();
-		toasts.render();
 
 	}
 
@@ -49,7 +36,6 @@ public class RendererManager {
 		if (this.current != null) {
 			this.current.size();
 		}
-		toasts.size();
 
 	}
 
@@ -57,7 +43,6 @@ public class RendererManager {
 		if (this.current != null) {
 			this.current.release();
 		}
-		toasts.release();
 
 	}
 
