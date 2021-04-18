@@ -27,11 +27,11 @@ public class Message implements Serializable {
 	}
 
 	public void onRecieve(Server server, ChannelHandlerContext ctx) {
-
+		
 	}
 
 	public void onRecieve(Client client) {
-
+		
 	}
 
 	@Override

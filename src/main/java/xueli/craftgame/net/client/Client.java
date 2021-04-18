@@ -1,7 +1,7 @@
 package xueli.craftgame.net.client;
 
-import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.logging.Logger;
 
@@ -14,9 +14,9 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import xueli.craftgame.net.interchange.Message;
-import xueli.craftgame.net.interchange.MessageChat;
 import xueli.craftgame.net.interchange.MessageClose;
-import xueli.craftgame.net.server.Server;
+import xueli.craftgame.net.interchange.MessagePlayerConnect;
+import xueli.game.player.PlayerStat;
 
 @Sharable
 public class Client extends SimpleChannelInboundHandler<Message> {
@@ -26,9 +26,12 @@ public class Client extends SimpleChannelInboundHandler<Message> {
 	private String addr;
 	private int port;
 	
-	public Client(String addr, int port) {
+	private PlayerStat stat;
+	
+	public Client(String addr, int port, PlayerStat stat) {
 		this.addr = addr;
 		this.port = port;
+		this.stat = stat;
 		
 	}
 
@@ -39,10 +42,13 @@ public class Client extends SimpleChannelInboundHandler<Message> {
 	public int getPort() {
 		return port;
 	}
+	
+	private ConcurrentLinkedQueue<Message> messagesToBeProcessed = new ConcurrentLinkedQueue<>();
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Message msg) throws Exception {
-		System.out.println(msg);
+		logger.info("Recieve Event: " + msg.toString());
+		messagesToBeProcessed.add(msg);
 		
 	}
 	
@@ -74,6 +80,8 @@ public class Client extends SimpleChannelInboundHandler<Message> {
             
             logger.info("Connected Server: " + addr + ":" + port);
             
+            sendMessage(new MessagePlayerConnect(stat.getName()));
+            
             while(running) {
 				Message message = messagesToBeSent.take();
 				if(message instanceof MessageClose)
@@ -95,6 +103,14 @@ public class Client extends SimpleChannelInboundHandler<Message> {
 		
 	}
 	
+	public void updateWhenMainThread() {
+		while(!messagesToBeProcessed.isEmpty()) {
+			messagesToBeProcessed.poll().onRecieve(this);
+			
+		}
+		
+	}
+	
 	public void sendMessage(Message message) {
 		messagesToBeSent.add(message);
 		
@@ -106,28 +122,8 @@ public class Client extends SimpleChannelInboundHandler<Message> {
 		
 	}
 	
-	public static void main(String[] args) {
-		Client client = new Client("localhost", Server.PORT);
-		Thread thread = new Thread(() -> {
-			try {
-				client.run();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-		thread.start();
-		
-		Scanner scanner = new Scanner(System.in);
-		while(true) {
-			String input = scanner.nextLine();
-			if("q".equals(input)) break;
-			client.sendMessage(new MessageChat(input));
-			
-		}
-		scanner.close();
-		
-		client.closeClient();
-		
+	public boolean connected() {
+		return channel != null && channel.isActive();
 	}
 
 }

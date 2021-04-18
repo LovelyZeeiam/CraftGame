@@ -1,6 +1,7 @@
 package xueli.craftgame.net.server;
 
-import java.util.Scanner;
+import java.net.SocketAddress;
+import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
@@ -19,18 +20,18 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import xueli.craftgame.net.interchange.Message;
-import xueli.craftgame.net.interchange.MessageChat;
 import xueli.craftgame.net.interchange.MessageClose;
+import xueli.craftgame.net.interchange.MessagePlayerConnect;
 
 @Sharable
-public class Server extends SimpleChannelInboundHandler<Message> {
+public abstract class Server extends SimpleChannelInboundHandler<Message> implements Runnable {
 
 	public static final int PORT = 19100;
-
+	
 	private static Logger logger = Logger.getLogger(Server.class.getName());
 
 	private ServerBean bean;
-	public boolean running = true;
+	public boolean running = false;
 
 	public Server() {
 		this.bean = new ServerBean("Test Server", "This is a server being tested out~");
@@ -39,6 +40,13 @@ public class Server extends SimpleChannelInboundHandler<Message> {
 
 	public ServerBean getBean() {
 		return bean;
+	}
+	
+	private HashMap<SocketAddress, String> playerNames = new HashMap<>();
+	
+	public void addPlayer(String name, SocketAddress addr) {
+		playerNames.put(addr, name);
+		
 	}
 	
 	private static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
@@ -124,12 +132,13 @@ public class Server extends SimpleChannelInboundHandler<Message> {
 	
 	private final BlockingQueue<Message> messageToBeSentForAll = new LinkedBlockingQueue<>();
 
-	public void run() throws Exception {
+	private void runServer() throws Exception {
 		initServer();
 		try {
 			startServer();
 			logger.info("Server start in " + PORT + ".");
-
+			running = true;
+			
 			while(running) {
 				Message message = messageToBeSentForAll.take();
 				if(message instanceof MessageClose)
@@ -143,7 +152,7 @@ public class Server extends SimpleChannelInboundHandler<Message> {
 			
 		} finally {
 			shutdownGracefully();
-
+			
 		}
 
 	}
@@ -167,28 +176,32 @@ public class Server extends SimpleChannelInboundHandler<Message> {
 		messageToBeSentForAll.add(message);
 		
 	}
-
-	public static void main(String[] args) throws Exception {
-		Server server = new Server();
+	
+	@Override
+	public void run() {
 		Thread thread = new Thread(() -> {
 			try {
-				server.run();
+				runServer();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		});
+		
+		onInit();
 		thread.start();
 		
-		Scanner scanner = new Scanner(System.in);
-		while(true) {
-			String input = scanner.nextLine();
-			if("q".equals(input)) break;
-			server.addMessageToAll(new MessageChat("[Server] " + input));
-			
+		while(running) {
+			onUpdate();
 		}
-		scanner.close();
-		server.closeServer();
-
+		
+		onExit();
+		
 	}
+	
+	public abstract void onInit();
+	
+	public abstract void onUpdate();
+	
+	public abstract void onExit();
 
 }
