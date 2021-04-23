@@ -52,7 +52,8 @@ public class LanguageFile {
 				int findEqual = line.indexOf('=');
 				if (findEqual == -1) {
 					// 本条数据无效
-					Logger.getLogger(getClass().getName()).warning("Lang: File " + file.getName() + ": " + lineNum + " Data Error! Ignore.");
+					Logger.getLogger(getClass().getName())
+							.warning("Lang: File " + file.getName() + ": " + lineNum + " Data Error! Ignore.");
 					continue;
 				}
 				String key = line.substring(0, findEqual);

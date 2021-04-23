@@ -5,14 +5,14 @@ import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-public class LangManager {
+public class FiledLangManager {
 
 	private String pathString;
 
 	private static HashMap<String, LanguageFile> langFileMap = new HashMap<String, LanguageFile>();
 	private LanguageFile currentLanguageFile;
 
-	public LangManager(String pathString) {
+	public FiledLangManager(String pathString) {
 		this.pathString = pathString;
 
 	}

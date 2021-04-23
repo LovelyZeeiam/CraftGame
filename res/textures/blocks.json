@@ -1,0 +1,10 @@
+{ 
+	"blocks": {
+		"cg:grass_block_top": "grass_block_top.png",
+		"cg:grass_block_side": "grass_block_side.png",
+		"cg:dirt": "dirt.png",
+		
+		"cg:stone": "stone.png"
+		
+	}
+}

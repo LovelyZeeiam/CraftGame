@@ -1,31 +1,6 @@
 package xueli.game.display;
 
-import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MAJOR;
-import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MINOR;
-import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
-import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_CORE_PROFILE;
-import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_FORWARD_COMPAT;
-import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_PROFILE;
-import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
-import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
-import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
-import static org.lwjgl.glfw.GLFW.glfwGetMouseButton;
-import static org.lwjgl.glfw.GLFW.glfwInit;
-import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
-import static org.lwjgl.glfw.GLFW.glfwPollEvents;
-import static org.lwjgl.glfw.GLFW.glfwSetCursorPosCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetScrollCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback;
-import static org.lwjgl.glfw.GLFW.glfwShowWindow;
-import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
-import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
-import static org.lwjgl.glfw.GLFW.glfwWindowHint;
-import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
+import static org.lwjgl.glfw.GLFW.*;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -60,8 +35,11 @@ public class Display {
 
 	private boolean[] mouse_buttons = new boolean[8];
 
+	private boolean[] keys = new boolean[65536];
 	private boolean[] keyboard_keys = new boolean[65536];
 	private ArrayList<Integer> last_press_keys = new ArrayList<>();
+	
+	private boolean mouseGrabbed = false;
 
 	private GLFWWindowSizeCallback windowSizeCallback = new GLFWWindowSizeCallback() {
 
@@ -117,8 +95,8 @@ public class Display {
 			if (key >= 0 && action == GLFW_PRESS) {
 				keyboard_keys[key] = true;
 				last_press_keys.add(key);
-
 			}
+			keys[key] = action != GLFW_RELEASE;
 
 		}
 
@@ -213,6 +191,11 @@ public class Display {
 			running = false;
 
 	}
+	
+	public void setMouseGrabbed(boolean mouseGrabbed) {
+		glfwSetInputMode(window, GLFW_CURSOR, mouseGrabbed ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+		this.mouseGrabbed = mouseGrabbed;
+	}
 
 	public double getWheelDelta() {
 		return wheel_delta;
@@ -249,6 +232,10 @@ public class Display {
 	public float getDisplayScale() {
 		return display_scale;
 	}
+	
+	public boolean isKeyDown(int key) {
+		return keys[key];
+	}
 
 	public boolean isKeyDownOnce(int key) {
 		return keyboard_keys[key];
@@ -256,6 +243,10 @@ public class Display {
 
 	public boolean isMouseDownOnce(int mouse) {
 		return mouse_buttons[mouse];
+	}
+	
+	public boolean isMouseGrabbed() {
+		return mouseGrabbed;
 	}
 
 	public boolean isMouseDown(int mouse) {

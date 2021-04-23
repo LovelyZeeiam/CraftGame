@@ -1,5 +1,6 @@
 package xueli.game.utils;
 
+import java.nio.FloatBuffer;
 import java.util.Arrays;
 
 import org.lwjgl.util.vector.Vector2f;
@@ -45,10 +46,10 @@ public class FloatList {
 	public FloatList put(float v) {
 		data[pointer] = v;
 		pointer++;
-		size++;
+		size = Math.max(pointer, size);
 
 		if (pointer == data.length) {
-			this.capacity += 32;
+			this.capacity += 4096;
 			float[] data2 = new float[this.capacity];
 			System.arraycopy(data, 0, data2, 0, data.length);
 			this.data = data2;
@@ -91,6 +92,10 @@ public class FloatList {
 
 		}
 		return this.realDataCache;
+	}
+	
+	public void storeInBuffer(FloatBuffer buffer) {
+		buffer.put(data, 0, size);
 	}
 
 	public void postDispose() {

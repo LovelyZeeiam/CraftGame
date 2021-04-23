@@ -180,30 +180,30 @@ public class MatrixHelper {
 		return true;
 	}
 
-	public static boolean isChunkInFrustum(int x, int heightMap, int z) {
+	public static boolean isChunkInFrustum(int x, int y, int z) {
 		for (int p = 0; p < 6; p++) {
-			if (frustumPlane[p][0] * x * 16 + frustumPlane[p][1] * 0 + frustumPlane[p][2] * z * 16
+			if (frustumPlane[p][0] * x * 16 + frustumPlane[p][1] * y * 16 + frustumPlane[p][2] * z * 16
 					+ frustumPlane[p][3] > 0)
 				continue;
-			if (frustumPlane[p][0] * (x + 1) * 16 + frustumPlane[p][1] * 0 + frustumPlane[p][2] * z * 16
+			if (frustumPlane[p][0] * (x + 1) * 16 + frustumPlane[p][1] * y * 16 + frustumPlane[p][2] * z * 16
 					+ frustumPlane[p][3] > 0)
 				continue;
-			if (frustumPlane[p][0] * x * 16 + frustumPlane[p][1] * heightMap + frustumPlane[p][2] * z * 16
+			if (frustumPlane[p][0] * x * 16 + frustumPlane[p][1] * (y + 1) * 16 + frustumPlane[p][2] * z * 16
 					+ frustumPlane[p][3] > 0)
 				continue;
-			if (frustumPlane[p][0] * (x + 1) * 16 + frustumPlane[p][1] * heightMap + frustumPlane[p][2] * z * 16
+			if (frustumPlane[p][0] * (x + 1) * 16 + frustumPlane[p][1] * (y + 1) * 16 + frustumPlane[p][2] * z * 16
 					+ frustumPlane[p][3] > 0)
 				continue;
-			if (frustumPlane[p][0] * x * 16 + frustumPlane[p][1] * 0 + frustumPlane[p][2] * (z + 1) * 16
+			if (frustumPlane[p][0] * x * 16 + frustumPlane[p][1] * y * 16 + frustumPlane[p][2] * (z + 1) * 16
 					+ frustumPlane[p][3] > 0)
 				continue;
-			if (frustumPlane[p][0] * (x + 1) * 16 + frustumPlane[p][1] * 0 + frustumPlane[p][2] * (z + 1) * 16
+			if (frustumPlane[p][0] * (x + 1) * 16 + frustumPlane[p][1] * y * 16 + frustumPlane[p][2] * (z + 1) * 16
 					+ frustumPlane[p][3] > 0)
 				continue;
-			if (frustumPlane[p][0] * x * 16 + frustumPlane[p][1] * heightMap + frustumPlane[p][2] * (z + 1) * 16
+			if (frustumPlane[p][0] * x * 16 + frustumPlane[p][1] * (y + 1) * 16 + frustumPlane[p][2] * (z + 1) * 16
 					+ frustumPlane[p][3] > 0)
 				continue;
-			if (frustumPlane[p][0] * (x + 1) * 16 + frustumPlane[p][1] * heightMap + frustumPlane[p][2] * (z + 1) * 16
+			if (frustumPlane[p][0] * (x + 1) * 16 + frustumPlane[p][1] * (y + 1) * 16 + frustumPlane[p][2] * (z + 1) * 16
 					+ frustumPlane[p][3] > 0)
 				continue;
 			return false;

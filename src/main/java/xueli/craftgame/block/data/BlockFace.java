@@ -9,7 +9,4 @@ public class BlockFace {
 	public static final byte TOP = 4;
 	public static final byte BOTTOM = 5;
 
-	private BlockFace() {
-	}
-
 }

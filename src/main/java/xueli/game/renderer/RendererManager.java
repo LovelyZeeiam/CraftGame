@@ -19,7 +19,8 @@ public class RendererManager {
 			}
 			this.current = renderer;
 			this.current.size();
-			Logger.getLogger(getClass().getName()).finer("[Renderer] change renderer: " + renderer.getClass().getName());
+			Logger.getLogger(getClass().getName())
+					.finer("[Renderer] change renderer: " + renderer.getClass().getName());
 		});
 
 	}
