@@ -13,8 +13,9 @@ public class BlockDirt extends BlockBase {
 
 		// TODO: Dynamic Loading for Language File
 		this.nameInternational = "Dirt";
-		
-		model = TexturedModel.getFullCubeModel(StateWorld.getInstance().getBlocksTextureAtlas().getTextureHolder("cg:dirt"));
+
+		model = TexturedModel
+				.getFullCubeModel(StateWorld.getInstance().getBlocksTextureAtlas().getTextureHolder("cg:dirt"));
 
 	}
 

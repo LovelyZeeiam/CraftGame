@@ -13,17 +13,15 @@ public class BlockGrass extends BlockBase {
 
 		// TODO: Dynamic Loading for Language File
 		this.nameInternational = "Grass Block";
-		
+
 		model = TexturedModel.getFullCubeModel(
 				StateWorld.getInstance().getBlocksTextureAtlas().getTextureHolder("cg:grass_block_side"),
 				StateWorld.getInstance().getBlocksTextureAtlas().getTextureHolder("cg:grass_block_side"),
 				StateWorld.getInstance().getBlocksTextureAtlas().getTextureHolder("cg:grass_block_side"),
 				StateWorld.getInstance().getBlocksTextureAtlas().getTextureHolder("cg:grass_block_side"),
 				StateWorld.getInstance().getBlocksTextureAtlas().getTextureHolder("cg:grass_block_top"),
-				StateWorld.getInstance().getBlocksTextureAtlas().getTextureHolder("cg:dirt")
-		);
+				StateWorld.getInstance().getBlocksTextureAtlas().getTextureHolder("cg:dirt"));
 
-		
 	}
 
 }

@@ -1,5 +1,6 @@
 package xueli.utils.mojang;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,7 +15,7 @@ import xueli.utils.io.Files;
 
 public class SkinGetter {
 
-	public static void saveSkin(String playerName, String path) {
+	public static boolean saveSkin(String playerName, String path) {
 		try {
 			URL uuidUrl = new URL("https://api.mojang.com/users/profiles/minecraft/" + playerName);
 			InputStream uuidIn = uuidUrl.openStream();
@@ -22,7 +23,7 @@ public class SkinGetter {
 			uuidIn.close();
 			if (uuidObj == null) {
 				Logger.getLogger(SkinGetter.class.getName()).severe("Found no player named: " + playerName);
-				return;
+				return false;
 			}
 			String uuid = uuidObj.get("id").getAsString();
 
@@ -37,15 +38,22 @@ public class SkinGetter {
 			JsonObject textureJson = new Gson().fromJson(decodedTextureJson, JsonObject.class);
 			String textureUrlString = textureJson.get("textures").getAsJsonObject().get("SKIN").getAsJsonObject()
 					.get("url").getAsString();
+			Logger.getLogger(SkinGetter.class.getName()).info("Get player skin path: " + textureUrlString);
 			URL textureUrl = new URL(textureUrlString);
 			InputStream textureIn = textureUrl.openStream();
-			byte[] data = new byte[textureIn.available()];
-			textureIn.read(data);
+			
+			ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+			int data = 0;
+			while((data = textureIn.read()) != -1) {
+				byteOut.write(data);
+			}
 
-			Files.fileOutput(path, data);
-
+			Files.fileOutput(path, byteOut.toByteArray());
+			
+			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 

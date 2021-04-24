@@ -15,7 +15,7 @@ public class Model {
 	public String getNamespace() {
 		return namespace;
 	}
-	
+
 	public ArrayList<Cube> getCubes() {
 		return cubes;
 	}

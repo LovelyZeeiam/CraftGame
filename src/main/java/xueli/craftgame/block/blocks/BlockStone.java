@@ -13,11 +13,10 @@ public class BlockStone extends BlockBase {
 
 		// TODO: Dynamic Loading for Language File
 		this.nameInternational = "Stone";
-		
-		model = TexturedModel.getFullCubeModel(
-				StateWorld.getInstance().getBlocksTextureAtlas().getTextureHolder("cg:stone")
-		);
-		
+
+		model = TexturedModel
+				.getFullCubeModel(StateWorld.getInstance().getBlocksTextureAtlas().getTextureHolder("cg:stone"));
+
 	}
 
 }

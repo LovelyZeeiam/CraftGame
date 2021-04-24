@@ -15,10 +15,10 @@ public class TexturedModel {
 		this.namespace = namespace;
 		this.cubes = cubes;
 	}
-	
+
 	public TexturedModel(String namespace, TexturedCube cube) {
 		this.namespace = namespace;
-		
+
 		this.cubes = new ArrayList<>();
 		this.cubes.add(cube);
 	}
@@ -34,7 +34,7 @@ public class TexturedModel {
 		}
 		return vertCount;
 	}
-	
+
 	// A fully complete normal
 	public static TexturedModel getFullCubeModel(AtlasTextureHolder... faces) {
 		TexturedCube cube = new TexturedCube(Cube.FULL_CUBE, faces);

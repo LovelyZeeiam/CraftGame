@@ -31,7 +31,7 @@ public class WorldMain extends Game {
 	}
 
 	public static void main(String[] args) {
-		new Thread(new WorldMain()).run();
+		new Thread(new WorldMain()).start();
 
 	}
 

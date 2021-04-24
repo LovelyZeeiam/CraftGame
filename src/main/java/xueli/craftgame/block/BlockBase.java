@@ -16,7 +16,7 @@ public class BlockBase {
 	protected TexturedModel model;
 	protected boolean isAlpha = false;
 	protected boolean isComplete = true;
-	
+
 	protected IBlockListener listener = IBlockListener.EMPTY;
 
 	public BlockBase() {

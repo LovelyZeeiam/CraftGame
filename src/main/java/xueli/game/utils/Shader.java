@@ -168,9 +168,23 @@ public class Shader {
 
 	}
 
+	public static void setProjectionMatrix(Shader shader, Matrix4f mat) {
+		shader.use();
+		shader.setUniformMatrix(shader.getUnifromLocation("projMatrix"), mat);
+		shader.unbind();
+
+	}
+
 	public static void setViewMatrix(Vector cam, Shader shader) {
 		shader.use();
 		shader.setUniformMatrix(shader.getUnifromLocation("viewMatrix"), MatrixHelper.player(cam));
+		shader.unbind();
+
+	}
+
+	public static void setViewMatrix(Matrix4f mat, Shader shader) {
+		shader.use();
+		shader.setUniformMatrix(shader.getUnifromLocation("viewMatrix"), mat);
 		shader.unbind();
 
 	}

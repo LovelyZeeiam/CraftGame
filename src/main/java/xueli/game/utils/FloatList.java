@@ -93,7 +93,7 @@ public class FloatList {
 		}
 		return this.realDataCache;
 	}
-	
+
 	public void storeInBuffer(FloatBuffer buffer) {
 		buffer.put(data, 0, size);
 	}

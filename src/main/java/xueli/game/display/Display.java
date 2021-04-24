@@ -38,7 +38,7 @@ public class Display {
 	private boolean[] keys = new boolean[65536];
 	private boolean[] keyboard_keys = new boolean[65536];
 	private ArrayList<Integer> last_press_keys = new ArrayList<>();
-	
+
 	private boolean mouseGrabbed = false;
 
 	private GLFWWindowSizeCallback windowSizeCallback = new GLFWWindowSizeCallback() {
@@ -96,7 +96,8 @@ public class Display {
 				keyboard_keys[key] = true;
 				last_press_keys.add(key);
 			}
-			keys[key] = action != GLFW_RELEASE;
+			if(key >= 0)
+				keys[key] = action != GLFW_RELEASE;
 
 		}
 
@@ -191,7 +192,7 @@ public class Display {
 			running = false;
 
 	}
-	
+
 	public void setMouseGrabbed(boolean mouseGrabbed) {
 		glfwSetInputMode(window, GLFW_CURSOR, mouseGrabbed ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
 		this.mouseGrabbed = mouseGrabbed;
@@ -221,7 +222,7 @@ public class Display {
 		return cursor_y;
 	}
 
-	public float getCurson_dx() {
+	public float getCursor_dx() {
 		return cursor_dx;
 	}
 
@@ -232,7 +233,7 @@ public class Display {
 	public float getDisplayScale() {
 		return display_scale;
 	}
-	
+
 	public boolean isKeyDown(int key) {
 		return keys[key];
 	}
@@ -244,7 +245,7 @@ public class Display {
 	public boolean isMouseDownOnce(int mouse) {
 		return mouse_buttons[mouse];
 	}
-	
+
 	public boolean isMouseGrabbed() {
 		return mouseGrabbed;
 	}

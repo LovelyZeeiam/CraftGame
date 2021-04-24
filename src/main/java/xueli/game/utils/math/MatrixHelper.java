@@ -48,6 +48,7 @@ public class MatrixHelper {
 		matrix.m31 = -(top + bottom) / (top - bottom);
 		matrix.m32 = -(far + near) / (far - near);
 
+		lastTimeProjMatrix = matrix;
 		return matrix;
 	}
 
@@ -71,6 +72,38 @@ public class MatrixHelper {
 
 		lastTimeViewMatrix = viewMatrix;
 		return viewMatrix;
+	}
+
+	public static Matrix4f lookAt(Vector3f eye, Vector3f center, Vector3f up) {
+		Matrix4f mat = new Matrix4f();
+		mat.setIdentity();
+
+		Vector3f f = new Vector3f();
+		Vector3f.sub(center, eye, f);
+		f.normalise();
+
+		Vector3f s = new Vector3f();
+		Vector3f.cross(f, up, s);
+		s.normalise();
+
+		Vector3f u = new Vector3f();
+		Vector3f.cross(s, f, u);
+
+		mat.m00 = s.x;
+		mat.m10 = s.y;
+		mat.m20 = s.z;
+		mat.m01 = u.x;
+		mat.m11 = u.y;
+		mat.m21 = u.z;
+		mat.m02 = -f.x;
+		mat.m12 = -f.y;
+		mat.m22 = -f.z;
+		mat.m30 = -Vector3f.dot(s, eye);
+		mat.m31 = -Vector3f.dot(u, eye);
+		mat.m32 = Vector3f.dot(f, eye);
+
+		lastTimeViewMatrix = mat;
+		return mat;
 	}
 
 	public static void calculateFrustumPlane() {
@@ -203,8 +236,8 @@ public class MatrixHelper {
 			if (frustumPlane[p][0] * x * 16 + frustumPlane[p][1] * (y + 1) * 16 + frustumPlane[p][2] * (z + 1) * 16
 					+ frustumPlane[p][3] > 0)
 				continue;
-			if (frustumPlane[p][0] * (x + 1) * 16 + frustumPlane[p][1] * (y + 1) * 16 + frustumPlane[p][2] * (z + 1) * 16
-					+ frustumPlane[p][3] > 0)
+			if (frustumPlane[p][0] * (x + 1) * 16 + frustumPlane[p][1] * (y + 1) * 16
+					+ frustumPlane[p][2] * (z + 1) * 16 + frustumPlane[p][3] > 0)
 				continue;
 			return false;
 		}
