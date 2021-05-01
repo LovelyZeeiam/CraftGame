@@ -54,6 +54,9 @@ public class Dimension {
 	}
 
 	public void close() {
+		for (Vector3i v : chunks.keySet()) {
+			this.provider.save(v.getX(), v.getY(), v.getZ());
+		}
 		this.provider.release();
 	}
 
