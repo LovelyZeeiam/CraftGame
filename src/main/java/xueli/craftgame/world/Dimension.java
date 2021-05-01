@@ -5,26 +5,27 @@ import java.util.HashMap;
 import org.lwjgl.util.vector.Vector3i;
 
 import xueli.craftgame.block.Tile;
+import xueli.craftgame.init.Blocks;
 import xueli.craftgame.renderer.world.WorldRenderer;
 import xueli.game.vector.Vector;
 
 public class Dimension {
 
-	private HashMap<Vector3i, Chunk> chunks = new HashMap<>();
+	HashMap<Vector3i, Chunk> chunks = new HashMap<>();
 
-	private ChunkGenerator generator;
+	private ChunkProvider provider;
 	private WorldRenderer renderer;
 
-	public Dimension() {
-		this.generator = new ChunkGenerator(this);
-		this.renderer = new WorldRenderer(this);
+	Blocks blocks;
+
+	public Dimension(boolean isToBeRenderer, Blocks blocks) {
+		this.blocks = blocks;
+		if (isToBeRenderer)
+			this.renderer = new WorldRenderer(this);
+		this.provider = new ChunkProvider(this);
 
 	}
-
-	public void requireGenChunk(int x, int y, int z) {
-		this.chunks.put(new Vector3i(x, y, z), generator.genChunk(x, y, z));
-	}
-
+	
 	public Tile getBlock(int x, int y, int z) {
 		Chunk chunk = chunks.get(new Vector3i(x >> 4, y >> 4, z >> 4));
 		if (chunk == null)
@@ -45,6 +46,15 @@ public class Dimension {
 
 	public void draw(Vector playerPos) {
 		renderer.draw(playerPos);
+	}
+
+	public void tick(Vector playerPos) {
+		this.provider.tick(playerPos);
+
+	}
+	
+	public void close() {
+		this.provider.release();
 	}
 
 	public WorldRenderer getRenderer() {

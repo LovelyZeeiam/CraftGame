@@ -41,15 +41,15 @@ public class SkinGetter {
 			Logger.getLogger(SkinGetter.class.getName()).info("Get player skin path: " + textureUrlString);
 			URL textureUrl = new URL(textureUrlString);
 			InputStream textureIn = textureUrl.openStream();
-			
+
 			ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
 			int data = 0;
-			while((data = textureIn.read()) != -1) {
+			while ((data = textureIn.read()) != -1) {
 				byteOut.write(data);
 			}
 
 			Files.fileOutput(path, byteOut.toByteArray());
-			
+
 			return true;
 		} catch (IOException e) {
 			e.printStackTrace();

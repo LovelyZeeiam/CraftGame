@@ -48,15 +48,8 @@ public class StateWorld extends NVGRenderer {
 		this.blocks = new Blocks();
 		this.blocks.searchForAllBlock();
 
-		this.dimension = new Dimension();
+		this.dimension = new Dimension(true, blocks);
 		this.worldRenderer = this.dimension.getRenderer();
-		for (int i = -3; i < 3; i++) {
-			for (int w = -3; w < 3; w++) {
-				for (int k = -3; k < 3; k++) {
-					dimension.requireGenChunk(i, w, k);
-				}
-			}
-		}
 
 		this.player = new Player(dimension);
 
@@ -76,6 +69,8 @@ public class StateWorld extends NVGRenderer {
 		if (game.getDisplay().isKeyDownOnce(GLFW.GLFW_KEY_ESCAPE))
 			game.getDisplay().setMouseGrabbed(!game.getDisplay().isMouseGrabbed());
 
+		this.dimension.tick(player.getPos());
+		
 	}
 
 	@Override
@@ -140,6 +135,8 @@ public class StateWorld extends NVGRenderer {
 		blocksTextureAtlas.release();
 
 		worldRenderer.release();
+		
+		this.dimension.close();
 
 	}
 

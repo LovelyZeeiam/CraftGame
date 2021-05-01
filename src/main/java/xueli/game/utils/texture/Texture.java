@@ -12,45 +12,45 @@ import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL13;
 
 public class Texture {
-	
+
 	public static final Texture NULL = new Texture(0, 0, 0);
 
 	private int id, width, height;
-	
+
 	public Texture(int id, int imageWidth, int imageHeight) {
 		this.id = id;
 		this.width = imageWidth;
 		this.height = imageHeight;
-		
+
 	}
-	
+
 	public int getId() {
 		return id;
 	}
-	
+
 	public int getHeight() {
 		return height;
 	}
-	
+
 	public int getWidth() {
 		return width;
 	}
-	
+
 	public void bind() {
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
 	}
-	
+
 	public void unbind() {
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 	}
-	
+
 	public static Texture loadTexture(String path) throws IOException {
 		BufferedImage image = ImageIO.read(new File(path));
-		if(image == null) {
+		if (image == null) {
 			Logger.getLogger(Texture.class.getName()).warning("Can't read skin file: " + path);
 			return Texture.NULL;
 		}
-		
+
 		int[] pixels = new int[image.getWidth() * image.getHeight()];
 		image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth());
 
@@ -71,9 +71,9 @@ public class Texture {
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_BASE_LEVEL, 0);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_MAX_LEVEL, 4);
-		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, image.getWidth(), image.getHeight(), 0,
-				GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, data);
-		
+		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, image.getWidth(), image.getHeight(), 0, GL11.GL_RGBA,
+				GL11.GL_UNSIGNED_BYTE, data);
+
 		return new Texture(id, image.getWidth(), image.getHeight());
 	}
 

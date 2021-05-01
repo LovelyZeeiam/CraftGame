@@ -2,7 +2,6 @@ package xueli.craftgame.world;
 
 import xueli.craftgame.block.Tile;
 import xueli.craftgame.init.Blocks;
-import xueli.craftgame.state.StateWorld;
 
 public class ChunkGenerator {
 
@@ -11,7 +10,7 @@ public class ChunkGenerator {
 
 	public ChunkGenerator(Dimension dimension) {
 		this.dimension = dimension;
-		this.blocks = StateWorld.getInstance().getBlocks();
+		this.blocks = dimension.blocks;
 
 	}
 

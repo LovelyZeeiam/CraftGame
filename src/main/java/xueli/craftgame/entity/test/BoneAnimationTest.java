@@ -47,9 +47,9 @@ public class BoneAnimationTest extends Game {
 	}
 
 	@Override
-	public void onSize(int width,int height) {
-		super.onSize(width,height);
-		
+	public void onSize(int width, int height) {
+		super.onSize(width, height);
+
 		if (this.renderer != null) {
 			this.renderer.size();
 
@@ -100,13 +100,13 @@ public class BoneAnimationTest extends Game {
 		}
 
 	}
-	
+
 	@Override
 	public void onrelease() {
 		getDisplay().setMouseGrabbed(false);
 		this.controlWindow.dispose();
 		this.renderer.release();
-		
+
 	}
 
 	public static void main(String[] args) {

@@ -27,7 +27,7 @@ public class WorldMain extends Game {
 
 	@Override
 	public void onrelease() {
-
+		
 	}
 
 	public static void main(String[] args) {

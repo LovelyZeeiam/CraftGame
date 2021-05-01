@@ -36,8 +36,7 @@ public class BlockBase {
 	}
 
 	public boolean checkInvaildBlockbase() {
-		return Objects.nonNull(namespace) && Objects.nonNull(nameInternational) && Objects.nonNull(model)
-				&& Objects.nonNull(listener);
+		return Objects.nonNull(namespace) && Objects.nonNull(nameInternational) && Objects.nonNull(listener);
 	}
 
 	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Color color) {

@@ -15,15 +15,15 @@ import xueli.game.vector.Vector;
 import xueli.utils.mojang.SkinGetter;
 
 public class EntityPlayer extends Entity {
-	
+
 	private String name;
 
 	private Texture texture;
-	
+
 	public EntityPlayer(String name) {
 		super();
 		this.name = name;
-		
+
 		getTexture();
 
 	}
@@ -31,14 +31,14 @@ public class EntityPlayer extends Entity {
 	public EntityPlayer(Vector position, String name) {
 		super(position);
 		this.name = name;
-		
+
 		getTexture();
-		
+
 	}
-	
+
 	private void getTexture() {
 		String skinPath = "temp/skins/" + name + ".png";
-		if(!SkinGetter.saveSkin(name, skinPath)) {
+		if (!SkinGetter.saveSkin(name, skinPath)) {
 			texture = Texture.NULL;
 		} else {
 			try {
@@ -47,7 +47,7 @@ public class EntityPlayer extends Entity {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -647,7 +647,7 @@ public class EntityPlayer extends Entity {
 		this.boneParameters.put("left_leg_rot_x", 0.0f);
 		this.boneParameters.put("left_leg_rot_y", 0.0f);
 		this.boneParameters.put("left_leg_rot_z", 0.0f);
-		
+
 		this.boneParameters.put("body_offset_x", 0.0f);
 		this.boneParameters.put("body_offset_y", 0.0f);
 		this.boneParameters.put("body_offset_z", 0.0f);
@@ -694,7 +694,8 @@ public class EntityPlayer extends Entity {
 
 		Matrix4f bodyBoneMatrix = new Matrix4f();
 		bodyBoneMatrix.setIdentity();
-		Matrix4f.translate(new Vector3f(boneParameters.get("body_offset_x"), boneParameters.get("body_offset_y"), boneParameters.get("body_offset_z")), bodyBoneMatrix, bodyBoneMatrix);
+		Matrix4f.translate(new Vector3f(boneParameters.get("body_offset_x"), boneParameters.get("body_offset_y"),
+				boneParameters.get("body_offset_z")), bodyBoneMatrix, bodyBoneMatrix);
 		Matrix4f.rotate((float) Math.toRadians(boneParameters.get("body_rot_x")), new Vector3f(1, 0, 0), bodyBoneMatrix,
 				bodyBoneMatrix);
 		Matrix4f.rotate((float) Math.toRadians(boneParameters.get("body_rot_y")), new Vector3f(0, 1, 0), bodyBoneMatrix,
@@ -844,7 +845,7 @@ public class EntityPlayer extends Entity {
 		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 212, 4);
 
 		texture.unbind();
-		
+
 		this.pointer.postDraw();
 
 	}

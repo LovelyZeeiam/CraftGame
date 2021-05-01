@@ -50,7 +50,8 @@ public abstract class Game implements Runnable {
 			}
 
 		}
-
+		
+		rendererManager.release();
 		onrelease();
 
 	}

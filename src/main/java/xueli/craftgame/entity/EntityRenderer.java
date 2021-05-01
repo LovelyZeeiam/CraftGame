@@ -17,9 +17,9 @@ public class EntityRenderer {
 
 	public EntityRenderer(Game game) {
 		this.game = game;
-		
+
 		this.shader = new Shader("res/shaders/entity/vert.txt", "res/shaders/entity/frag.txt");
-		
+
 		size();
 
 	}
@@ -49,9 +49,9 @@ public class EntityRenderer {
 		GLHelper.checkGLError("Entity Renderer");
 
 	}
-	
+
 	public void update() {
-		
+
 	}
 
 	public void release() {

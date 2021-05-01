@@ -96,7 +96,7 @@ public class Display {
 				keyboard_keys[key] = true;
 				last_press_keys.add(key);
 			}
-			if(key >= 0)
+			if (key >= 0)
 				keys[key] = action != GLFW_RELEASE;
 
 		}

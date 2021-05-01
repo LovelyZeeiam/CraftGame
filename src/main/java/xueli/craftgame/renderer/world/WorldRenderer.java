@@ -16,12 +16,12 @@ import xueli.craftgame.world.Dimension;
 
 public class WorldRenderer {
 
-	private static int DRAW_DISTANCE = 10;
+	public static int DRAW_DISTANCE = 3;
 
 	private Dimension dimension;
 
 	private VertexPointer pointer;
-	
+
 	private Shader shader;
 
 	public WorldRenderer(Dimension dimension) {
@@ -29,10 +29,9 @@ public class WorldRenderer {
 		this.pointer = new VertexPointer();
 
 		this.shader = new Shader("res/shaders/world/vert.txt", "res/shaders/world/frag.txt");
-		
-		
+
 	}
-	
+
 	private int vertCount = 0;
 
 	public void draw(Vector playerPos) {
@@ -70,30 +69,30 @@ public class WorldRenderer {
 
 	public void render(TextureAtlas atlas, Player player) {
 		GLHelper.checkGLError("Pre-renderer");
-		
+
 		shader.use();
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		atlas.bind();
 		draw(player.getPos());
 		atlas.unbind();
 		shader.unbind();
-		
+
 		GLHelper.checkGLError("post-renderer");
-		
+
 	}
 
 	public void update(Player player) {
 		GLHelper.checkGLError("Pre-update");
-		
+
 		Shader.setViewMatrix(player.getPos(), shader);
-		
+
 		GLHelper.checkGLError("Post-update");
-		
+
 	}
 
 	public void size() {
 		Shader.setProjectionMatrix(Game.INSTANCE_GAME, shader);
-		
+
 	}
 
 	public void release() {
