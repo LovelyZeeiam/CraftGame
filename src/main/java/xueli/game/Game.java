@@ -52,7 +52,8 @@ public abstract class Game implements Runnable {
 			}
 
 		}
-
+		
+		display.hide();
 		rendererManager.release();
 		onrelease();
 

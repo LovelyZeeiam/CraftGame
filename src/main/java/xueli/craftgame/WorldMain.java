@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import xueli.craftgame.state.StateWorld;
 import xueli.game.Game;
+import xueli.utils.io.Files;
 
 public class WorldMain extends Game {
 
@@ -14,6 +15,8 @@ public class WorldMain extends Game {
 
 	@Override
 	public void oncreate() {
+		System.setProperty("java.util.logging.config.file", Files.getResourcePackedInJar("logging.properties").getPath());
+		
 		rendererManager.setCurrentRenderer(new StateWorld());
 
 	}

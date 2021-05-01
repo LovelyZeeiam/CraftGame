@@ -1,7 +1,5 @@
 package xueli.craftgame.state;
 
-import java.io.IOException;
-
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import xueli.craftgame.Player;
@@ -136,6 +134,7 @@ public class StateWorld extends NVGRenderer {
 		worldRenderer.release();
 
 		this.dimension.close();
+		this.player.close();
 
 	}
 

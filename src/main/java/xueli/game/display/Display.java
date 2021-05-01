@@ -168,6 +168,11 @@ public class Display {
 		this.running = true;
 
 	}
+	
+	public void hide() {
+		glfwHideWindow(window);
+		
+	}
 
 	private void callbackTick() {
 		for (int i = 0; i < 8; i++)

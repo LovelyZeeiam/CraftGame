@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector3i;
 
 import xueli.craftgame.block.Tile;
+import xueli.craftgame.inventory.Inventory;
 import xueli.craftgame.world.Dimension;
 import xueli.game.Game;
 import xueli.game.display.Display;
@@ -130,8 +131,11 @@ public class Player {
 			lastRayVector = new Vector3i(p);
 		}
 
-		// System.out.println(selectedBlock);
-
+	}
+	
+	public void close() {
+		this.inventory.close();
+		
 	}
 
 	public float getSpeed() {

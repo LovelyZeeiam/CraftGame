@@ -23,6 +23,18 @@ public class BlockBase {
 
 	}
 
+	public BlockBase(String namespace, String nameInternational, TexturedModel model, boolean isAlpha,
+			boolean isComplete, IBlockListener listener) {
+		this();
+		this.namespace = namespace;
+		this.nameInternational = nameInternational;
+		this.model = model;
+		this.isAlpha = isAlpha;
+		this.isComplete = isComplete;
+		this.listener = listener;
+		
+	}
+
 	public String getNamespace() {
 		return namespace;
 	}

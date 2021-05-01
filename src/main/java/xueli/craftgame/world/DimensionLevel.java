@@ -18,7 +18,7 @@ public class DimensionLevel {
 	private static Options options = new Options();
 	static {
 		options.createIfMissing(true);
-		options.blockSize(1024 * 4);
+		options.blockSize(1024 * 1024 * 4);
 		options.compressionType(CompressionType.NONE);
 
 	}

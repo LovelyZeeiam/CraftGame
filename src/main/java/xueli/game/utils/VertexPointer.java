@@ -17,7 +17,7 @@ public class VertexPointer {
 
 		vbo = GL15.glGenBuffers();
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo);
-		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, 167772160, GL15.GL_DYNAMIC_DRAW);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, 16777216, GL15.GL_DYNAMIC_DRAW);
 
 		registerVertex();
 

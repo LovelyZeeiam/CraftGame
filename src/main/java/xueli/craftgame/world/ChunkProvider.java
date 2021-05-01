@@ -45,7 +45,7 @@ public class ChunkProvider {
 	}
 
 	void load(int x, int y, int z) {
-		logger.fine(MessageFormat.format("[World] Load: {0}, {1}, {2}", x, y, z));
+		logger.info(MessageFormat.format("[World] Load: {0}, {1}, {2}", x, y, z));
 		if (level.checkChunkExist(x, y, z)) {
 			this.dimension.chunks.put(new Vector3i(x, y, z), level.getChunk(x, y, z));
 		} else {
@@ -55,7 +55,7 @@ public class ChunkProvider {
 	}
 
 	void save(int x, int y, int z) {
-		logger.fine(MessageFormat.format("[World] Save: {0}, {1}, {2}", x, y, z));
+		logger.info(MessageFormat.format("[World] Save: {0}, {1}, {2}", x, y, z));
 		this.level.writeChunk(this.dimension.chunks.get(new Vector3i(x, y, z)));
 
 	}
