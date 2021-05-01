@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,7 +17,9 @@ import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL13;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 
 import xueli.game.vector.Vector2i;
@@ -63,9 +66,14 @@ public class TextureAtlas {
 		return new AtlasTextureHolder(key, this);
 	}
 
-	public static TextureAtlas generateAtlas(String defineJsonPath, String textureFolderString) throws IOException {
-		JsonObject obj = new Gson().fromJson(new JsonReader(new BufferedReader(new FileReader(defineJsonPath))),
-				JsonObject.class);
+	public static TextureAtlas generateAtlas(String defineJsonPath, String textureFolderString) {
+		JsonObject obj = null;
+		try {
+			obj = new Gson().fromJson(new JsonReader(new BufferedReader(new FileReader(defineJsonPath))),
+					JsonObject.class);
+		} catch (JsonIOException | JsonSyntaxException | FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
 		JsonObject blocksObj = obj.get("blocks").getAsJsonObject();
 
 		String[] names = new String[blocksObj.entrySet().size()];
@@ -74,21 +82,25 @@ public class TextureAtlas {
 		int per_width = 0, per_height = 0;
 
 		int count = 0;
-		for (Entry<String, JsonElement> e : blocksObj.entrySet()) {
-			String name = e.getKey();
-			String imgPath = e.getValue().getAsString();
-
-			File imgFile = new File(textureFolderString + File.separator + imgPath);
-			BufferedImage image = ImageIO.read(imgFile);
-			per_width = Math.max(per_width, image.getWidth());
-			per_height = Math.max(per_height, image.getHeight());
-
-			names[count] = name;
-			images[count] = image;
-			count++;
-
+		try {
+			for (Entry<String, JsonElement> e : blocksObj.entrySet()) {
+				String name = e.getKey();
+				String imgPath = e.getValue().getAsString();
+	
+				File imgFile = new File(textureFolderString + File.separator + imgPath);
+				BufferedImage image = ImageIO.read(imgFile);
+				per_width = Math.max(per_width, image.getWidth());
+				per_height = Math.max(per_height, image.getHeight());
+	
+				names[count] = name;
+				images[count] = image;
+				count++;
+	
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-
+		
 		int size = (int) Math.ceil(Math.sqrt(images.length));
 
 		HashMap<String, Vector2i> atlas = new HashMap<>();
@@ -109,7 +121,11 @@ public class TextureAtlas {
 		}
 
 		g2d.dispose();
-		ImageIO.write(atlasImage, "png", new File("temp/atlas.png"));
+		try {
+			ImageIO.write(atlasImage, "png", new File("temp/atlas.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		int[] pixels = new int[atlasImage.getWidth() * atlasImage.getHeight()];
 		atlasImage.getRGB(0, 0, atlasImage.getWidth(), atlasImage.getHeight(), pixels, 0, atlasImage.getWidth());

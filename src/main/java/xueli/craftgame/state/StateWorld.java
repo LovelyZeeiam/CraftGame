@@ -13,6 +13,7 @@ import xueli.game.utils.NVGColors;
 import xueli.game.utils.Time;
 import xueli.game.utils.math.MatrixHelper;
 import xueli.game.utils.texture.TextureAtlas;
+import xueli.utils.io.Files;
 
 import static org.lwjgl.nanovg.NanoVG.*;
 
@@ -36,11 +37,7 @@ public class StateWorld extends NVGRenderer {
 		super();
 		INSTANCE = this;
 
-		try {
-			this.blocksTextureAtlas = TextureAtlas.generateAtlas("res/textures/blocks.json", "res/textures/blocks/");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.blocksTextureAtlas = TextureAtlas.generateAtlas(Files.getResourcePackedInJar("textures/blocks.json").getPath(), Files.getResourcePackedInJar("textures/blocks/").getPath());
 
 		nvgCreateFont(nvg, FONT_NAME, "res/fonts/Minecraft-Ascii.ttf");
 		this.tex_cross = nvgCreateImage(nvg, "res/textures/hud/cross.png", NVG_IMAGE_NEAREST);

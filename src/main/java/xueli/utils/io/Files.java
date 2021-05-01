@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
@@ -99,6 +100,10 @@ public class Files {
 		int[] data = new int[image.getWidth() * image.getHeight()];
 		image.getRGB(0, 0, image.getWidth(), image.getHeight(), data, 0, image.getWidth());
 		return data;
+	}
+	
+	public static File getResourcePackedInJar(String path) {
+		return new File(URLDecoder.decode(Thread.currentThread().getContextClassLoader().getResource(path).getPath(), StandardCharsets.UTF_8));
 	}
 
 }
