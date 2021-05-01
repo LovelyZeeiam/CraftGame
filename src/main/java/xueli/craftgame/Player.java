@@ -5,7 +5,6 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector3i;
 
 import xueli.craftgame.block.Tile;
-import xueli.craftgame.state.StateWorld;
 import xueli.craftgame.world.Dimension;
 import xueli.game.Game;
 import xueli.game.display.Display;
@@ -24,10 +23,14 @@ public class Player {
 
 	private Dimension dimension;
 	private Display display;
+	
+	private Inventory inventory;
 
 	public Player(Dimension dimension) {
 		this.display = Game.INSTANCE_GAME.getDisplay();
 		this.dimension = dimension;
+		
+		this.inventory = new Inventory(dimension.getBlocks()); 
 
 	}
 
@@ -78,7 +81,7 @@ public class Player {
 			} else if (display.isMouseDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
 				if (lastSelectedBlock != null && Time.thisTime - lastTimeOperationBlock > 100) {
 					dimension.setBlock(lastSelectedBlock.getX(), lastSelectedBlock.getY(), lastSelectedBlock.getZ(),
-							new Tile(StateWorld.getInstance().getBlocks().getBlockBase("craftgame:stone")));
+							new Tile(this.inventory.getChosenBase()));
 					lastTimeOperationBlock = Time.thisTime;
 				}
 
@@ -104,6 +107,8 @@ public class Player {
 		speed.z *= 0.8f;
 
 		acceleration.x = acceleration.y = acceleration.z = 0;
+		
+		this.inventory.tick();
 
 	}
 
@@ -135,6 +140,10 @@ public class Player {
 
 	public Vector getPos() {
 		return pos;
+	}
+	
+	public Inventory getInventory() {
+		return inventory;
 	}
 
 }

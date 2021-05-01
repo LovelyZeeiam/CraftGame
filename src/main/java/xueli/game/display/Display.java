@@ -43,10 +43,6 @@ public class Display {
 
 	private GLFWWindowSizeCallback windowSizeCallback = new GLFWWindowSizeCallback() {
 
-		public float getScale(int width, int height) {
-			return Math.min(width, height) / 400.0f * 0.6f;
-		}
-
 		@Override
 		public void invoke(long window, int w, int h) {
 			if (w != 0 || h != 0) {
@@ -114,8 +110,13 @@ public class Display {
 	public Display(int width, int height, String title) {
 		this.width = width;
 		this.height = height;
+		display_scale = getScale(width, height);
 		this.mainTitle = title;
 
+	}
+	
+	private float getScale(int width, int height) {
+		return Math.min(width, height) / 400.0f * 0.6f;
 	}
 
 	public void create() {

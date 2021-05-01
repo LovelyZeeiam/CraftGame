@@ -25,7 +25,7 @@ public class Dimension {
 		this.provider = new ChunkProvider(this);
 
 	}
-	
+
 	public Tile getBlock(int x, int y, int z) {
 		Chunk chunk = chunks.get(new Vector3i(x >> 4, y >> 4, z >> 4));
 		if (chunk == null)
@@ -52,13 +52,17 @@ public class Dimension {
 		this.provider.tick(playerPos);
 
 	}
-	
+
 	public void close() {
 		this.provider.release();
 	}
 
 	public WorldRenderer getRenderer() {
 		return renderer;
+	}
+	
+	public Blocks getBlocks() {
+		return blocks;
 	}
 
 }
