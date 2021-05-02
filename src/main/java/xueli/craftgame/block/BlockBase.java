@@ -4,12 +4,11 @@ import java.awt.Color;
 import java.util.Objects;
 
 import xueli.craftgame.renderer.model.TexturedModel;
+import xueli.game.module.Module;
 import xueli.game.utils.FloatList;
 
-public class BlockBase {
+public class BlockBase extends Module {
 
-	// namespace
-	protected String namespace;
 	// name in language define
 	protected String nameInternational;
 
@@ -19,24 +18,20 @@ public class BlockBase {
 
 	protected IBlockListener listener = IBlockListener.EMPTY;
 
-	public BlockBase() {
+	public BlockBase(String namespace) {
+		super(namespace);
 
 	}
 
 	public BlockBase(String namespace, String nameInternational, TexturedModel model, boolean isAlpha,
 			boolean isComplete, IBlockListener listener) {
-		this();
-		this.namespace = namespace;
+		this(namespace);
 		this.nameInternational = nameInternational;
 		this.model = model;
 		this.isAlpha = isAlpha;
 		this.isComplete = isComplete;
 		this.listener = listener;
 		
-	}
-
-	public String getNamespace() {
-		return namespace;
 	}
 
 	public String getNameInternational() {
@@ -47,8 +42,9 @@ public class BlockBase {
 		return listener;
 	}
 
-	public boolean checkInvaildBlockbase() {
-		return Objects.nonNull(namespace) && Objects.nonNull(nameInternational) && Objects.nonNull(listener);
+	@Override
+	public boolean checkInvaild() {
+		return Objects.nonNull(getNamespace()) && Objects.nonNull(nameInternational) && Objects.nonNull(listener);
 	}
 
 	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Color color) {
@@ -57,7 +53,7 @@ public class BlockBase {
 
 	@Override
 	public String toString() {
-		return "BlockBase [namespace=" + namespace + ", nameInternational=" + nameInternational + ", model=" + model
+		return "BlockBase [namespace=" + getNamespace() + ", nameInternational=" + nameInternational + ", model=" + model
 				+ ", listener=" + listener + "]";
 	}
 

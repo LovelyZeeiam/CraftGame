@@ -63,7 +63,7 @@ public class ChunkIO {
 					int index = grid[count];
 					String namespace = ((StringTag) namespaces.get(index)).getValue();
 
-					Tile tile = namespace.equals(AIR) ? null : new Tile(dimension.blocks.getBlockBase(namespace));
+					Tile tile = namespace.equals(AIR) ? null : new Tile(dimension.blocks.getModule(namespace));
 
 					chunk.grid[x][y][z] = tile;
 

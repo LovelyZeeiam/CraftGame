@@ -4,6 +4,7 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import xueli.craftgame.Player;
 import xueli.craftgame.init.Blocks;
+import xueli.craftgame.init.Models;
 import xueli.craftgame.renderer.world.WorldRenderer;
 import xueli.craftgame.world.Dimension;
 import xueli.game.renderer.NVGRenderer;
@@ -23,6 +24,7 @@ public class StateWorld extends NVGRenderer {
 
 	private TextureAtlas blocksTextureAtlas;
 	private Blocks blocks;
+	private Models models;
 
 	private Player player;
 
@@ -40,6 +42,8 @@ public class StateWorld extends NVGRenderer {
 		nvgCreateFont(nvg, FONT_NAME, "res/fonts/Minecraft-Ascii.ttf");
 		this.tex_cross = nvgCreateImage(nvg, "res/textures/hud/cross.png", NVG_IMAGE_NEAREST);
 
+		this.models = new Models();
+		this.models.init();
 		this.blocks = new Blocks();
 		this.blocks.init();
 
@@ -148,6 +152,10 @@ public class StateWorld extends NVGRenderer {
 
 	public Blocks getBlocks() {
 		return blocks;
+	}
+	
+	public Models getModels() {
+		return models;
 	}
 
 }

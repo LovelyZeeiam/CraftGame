@@ -1,23 +1,26 @@
 package xueli.craftgame.renderer.model;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
-public class Model {
+import xueli.game.module.Module;
 
-	private String namespace;
-	private ArrayList<Cube> cubes;
+public class Model extends Module {
 
-	public Model(String namespace, ArrayList<Cube> cubes) {
-		this.namespace = namespace;
+	private HashMap<String,Cube> cubes;
+
+	public Model(String namespace, HashMap<String,Cube> cubes) {
+		super(namespace);
 		this.cubes = cubes;
 	}
 
-	public String getNamespace() {
-		return namespace;
+	public HashMap<String,Cube> getCubes() {
+		return cubes;
 	}
 
-	public ArrayList<Cube> getCubes() {
-		return cubes;
+	@Override
+	public boolean checkInvaild() {
+		return Objects.nonNull(cubes) && Objects.nonNull(getNamespace());
 	}
 
 	/*

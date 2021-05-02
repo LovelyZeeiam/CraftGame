@@ -34,7 +34,7 @@ public class Inventory {
 	}
 	
 	public BlockBase getChosenBase() {
-		return blocks.getBaseById(i);
+		return blocks.getById(i);
 	}
 	
 	public void setChosenIndex(int i) {

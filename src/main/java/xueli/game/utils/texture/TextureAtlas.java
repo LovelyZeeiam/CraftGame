@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
@@ -89,6 +90,10 @@ public class TextureAtlas {
 	
 				File imgFile = new File(textureFolderString + File.separator + imgPath);
 				BufferedImage image = ImageIO.read(imgFile);
+				if(image == null) {
+					Logger.getLogger(TextureAtlas.class.getName()).info("Can't read image: " + imgPath);
+					continue;
+				}
 				per_width = Math.max(per_width, image.getWidth());
 				per_height = Math.max(per_height, image.getHeight());
 	

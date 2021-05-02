@@ -20,9 +20,9 @@ public class ChunkGenerator {
 			for (int m = 0; m < 16; m++) {
 				for (int n = 0; n < 16; n++) {
 					chunk.heightmap[m][n] = 15;
-					chunk.grid[m][15][n] = new Tile(blocks.getBlockBase("craftgame:grass"));
+					chunk.grid[m][15][n] = new Tile(blocks.getModule("craftgame:grass"));
 					for (int j = 0; j < 15; j++)
-						chunk.grid[m][j][n] = new Tile(blocks.getBlockBase("craftgame:dirt"));
+						chunk.grid[m][j][n] = new Tile(blocks.getModule("craftgame:dirt"));
 				}
 			}
 		} else if (y < 0) {
@@ -30,7 +30,7 @@ public class ChunkGenerator {
 				for (int n = 0; n < 16; n++) {
 					chunk.heightmap[m][n] = 15;
 					for (int j = 0; j < 16; j++)
-						chunk.grid[m][j][n] = new Tile(blocks.getBlockBase("craftgame:stone"));
+						chunk.grid[m][j][n] = new Tile(blocks.getModule("craftgame:stone"));
 				}
 			}
 		}
