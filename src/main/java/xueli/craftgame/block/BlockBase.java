@@ -73,4 +73,53 @@ public class BlockBase extends Module {
 				+ model + ", listener=" + listener + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (isAlpha ? 1231 : 1237);
+		result = prime * result + (isComplete ? 1231 : 1237);
+		result = prime * result + ((listener == null) ? 0 : listener.hashCode());
+		result = prime * result + ((model == null) ? 0 : model.hashCode());
+		result = prime * result + ((nameInternational == null) ? 0 : nameInternational.hashCode());
+		result = prime * result + ((tags == null) ? 0 : tags.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BlockBase other = (BlockBase) obj;
+		if (isAlpha != other.isAlpha)
+			return false;
+		if (isComplete != other.isComplete)
+			return false;
+		if (listener == null) {
+			if (other.listener != null)
+				return false;
+		} else if (!listener.equals(other.listener))
+			return false;
+		if (model == null) {
+			if (other.model != null)
+				return false;
+		} else if (!model.equals(other.model))
+			return false;
+		if (nameInternational == null) {
+			if (other.nameInternational != null)
+				return false;
+		} else if (!nameInternational.equals(other.nameInternational))
+			return false;
+		if (tags == null) {
+			if (other.tags != null)
+				return false;
+		} else if (!tags.equals(other.tags))
+			return false;
+		return true;
+	}
+
 }

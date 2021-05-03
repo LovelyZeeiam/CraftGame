@@ -1,5 +1,6 @@
 package xueli.craftgame.init;
 
+import xueli.craftgame.block.AbstractAlphaBlock;
 import xueli.craftgame.block.AbstractBlock;
 import xueli.craftgame.block.AbstractSlab;
 import xueli.craftgame.block.AbstractStair;
@@ -36,6 +37,7 @@ public class Blocks extends Modules<BlockBase> {
 		add(new AbstractBlock("craftgame:oak_plank", "Oak Plank", "cg:planks_oak"));
 		add(new AbstractStair("craftgame:oak_stair", "Oak Stair", "cg:planks_oak"));
 		add(new AbstractSlab("craftgame:oak_slab", "Oak Slab", "cg:planks_oak"));
+		addColorfulAlphaBlock("craftgame:stained_glass_", "Colored Glass", "cg:glass_");
 		
 		
 		
@@ -44,6 +46,12 @@ public class Blocks extends Modules<BlockBase> {
 	public void addColorfulBlock(String namespaceTemplate, String name, String textureTemplate) {
 		for (String color : COLORS) {
 			add(new AbstractBlock(namespaceTemplate + color, name, textureTemplate + color));
+		}
+	}
+	
+	public void addColorfulAlphaBlock(String namespaceTemplate, String name, String textureTemplate) {
+		for (String color : COLORS) {
+			add(new AbstractAlphaBlock(namespaceTemplate + color, name, textureTemplate + color));
 		}
 	}
 

@@ -53,7 +53,7 @@ public class Player {
 			Vector3f lastRayVector = null;
 
 			MousePicker picker = new MousePicker(pos, MatrixHelper.lastTimeProjMatrix, MatrixHelper.lastTimeViewMatrix);
-			for (float d = 0; d <= MAX_TOUCH; d += 0.05f) {
+			for (float d = 0; d <= MAX_TOUCH; d += 0.1f) {
 				Vector3f p = picker.getPointOnRay(d);
 				Vector3i pb = new Vector3i(p);
 

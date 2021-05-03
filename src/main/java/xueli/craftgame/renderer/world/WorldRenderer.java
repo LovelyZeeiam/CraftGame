@@ -1,8 +1,15 @@
 package xueli.craftgame.renderer.world;
 
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
+import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector3i;
+
 import xueli.game.Game;
 import xueli.game.utils.GLHelper;
 import xueli.game.utils.Shader;
@@ -38,11 +45,8 @@ public class WorldRenderer {
 		int playerInChunkX = (int) playerPos.x >> 4;
 		int playerInChunkY = (int) playerPos.y >> 4;
 		int playerInChunkZ = (int) playerPos.z >> 4;
-
-		pointer.initDraw();
-
-		FloatBuffer buffer = pointer.mapBuffer().asFloatBuffer();
-		vertCount = 0;
+		
+		ArrayList<Chunk> chunks = new ArrayList<>();
 
 		for (int x = playerInChunkX - DRAW_DISTANCE; x < playerInChunkX + DRAW_DISTANCE; x++) {
 			for (int y = playerInChunkY - DRAW_DISTANCE; y < playerInChunkY + DRAW_DISTANCE; y++) {
@@ -52,17 +56,53 @@ public class WorldRenderer {
 					Chunk chunk = dimension.getChunk(x, y, z);
 					if (chunk == null)
 						continue;
-					chunk.updateBuffer();
-
-					chunk.getBuffer().storeInBuffer(buffer);
-					vertCount += chunk.getVertCount();
-
+					chunks.add(chunk);
 				}
 			}
 		}
+		
+		pointer.initDraw();
 
+		FloatBuffer buffer = pointer.mapBuffer().asFloatBuffer();
+		vertCount = 0;
+		for (Chunk chunk : chunks) {
+			chunk.getBuffer().updateBuffer(playerPos);
+			chunk.getBuffer().getBuffer().storeInBuffer(buffer);
+			vertCount += chunk.getBuffer().getVertCount();
+		}
 		pointer.unmap();
 		pointer.draw(vertCount);
+		
+		buffer = pointer.mapBuffer().asFloatBuffer();
+		vertCount = 0;
+		Collections.sort(chunks, new Comparator<Chunk>() {
+				@Override
+				public int compare(Chunk c1, Chunk c2) {
+					Vector3f o1 = new Vector3f(c1.getChunkX() * 16 + 8, c1.getChunkY() * 16 + 8, c1.getChunkZ() * 16 + 8);
+					Vector3f o2 = new Vector3f(c2.getChunkX() * 16 + 8, c2.getChunkY() * 16 + 8, c2.getChunkZ() * 16 + 8);
+					double d1 = Math.sqrt(
+								(o1.getX() - playerPos.x) * (o1.getX() - playerPos.x) +
+								(o1.getY() - playerPos.y) * (o1.getY() - playerPos.y) +
+								(o1.getZ() - playerPos.z) * (o1.getZ() - playerPos.z)
+							);
+					double d2 = Math.sqrt(
+							(o2.getX() - playerPos.x) * (o2.getX() - playerPos.x) +
+							(o2.getY() - playerPos.y) * (o2.getY() - playerPos.y) +
+							(o2.getZ() - playerPos.z) * (o2.getZ() - playerPos.z)
+						);
+					return d1 > d2 ? 0 : 1;
+				}
+			});
+		for (Chunk chunk : chunks) {
+			chunk.getBuffer().getBufferAlpha().storeInBuffer(buffer);
+			vertCount += chunk.getBuffer().getAlphaCount();
+		}
+		pointer.unmap();
+		GLHelper.enableBlend();
+		//GL11.glDepthMask(false);
+		pointer.draw(vertCount);
+		//GL11.glDepthMask(true);
+		GLHelper.disableBlend();
 		pointer.postDraw();
 
 	}
