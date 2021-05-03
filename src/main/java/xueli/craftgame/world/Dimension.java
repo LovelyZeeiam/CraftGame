@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import org.lwjgl.util.vector.Vector3i;
 
-import xueli.craftgame.block.Tile;
 import xueli.craftgame.init.Blocks;
 import xueli.craftgame.renderer.world.WorldRenderer;
 import xueli.game.vector.Vector;
@@ -63,7 +62,7 @@ public class Dimension {
 	public WorldRenderer getRenderer() {
 		return renderer;
 	}
-	
+
 	public Blocks getBlocks() {
 		return blocks;
 	}

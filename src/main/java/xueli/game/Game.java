@@ -37,7 +37,7 @@ public abstract class Game implements Runnable {
 
 		oncreate();
 		display.show();
-		
+
 		onSize((int) getWidth(), (int) getHeight());
 
 		while (display.isRunning()) {
@@ -52,7 +52,7 @@ public abstract class Game implements Runnable {
 			}
 
 		}
-		
+
 		display.hide();
 		rendererManager.release();
 		onrelease();

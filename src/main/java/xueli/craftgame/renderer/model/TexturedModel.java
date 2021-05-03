@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import xueli.game.module.Module;
 import xueli.game.utils.FloatList;
-import xueli.game.utils.texture.AtlasTextureHolder;
 
 public class TexturedModel extends Module {
 
@@ -32,12 +31,6 @@ public class TexturedModel extends Module {
 		return vertCount;
 	}
 
-	// A fully complete normal
-	public static TexturedModel getFullCubeModel(AtlasTextureHolder... faces) {
-		TexturedCube cube = new TexturedCube(Cube.FULL_CUBE, faces);
-		return new TexturedModel("CUBE", cube);
-	}
-	
 	@Override
 	public boolean checkInvaild() {
 		return Objects.nonNull(cubes) && Objects.nonNull(getNamespace());

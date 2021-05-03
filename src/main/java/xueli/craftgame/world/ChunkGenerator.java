@@ -1,6 +1,5 @@
 package xueli.craftgame.world;
 
-import xueli.craftgame.block.Tile;
 import xueli.craftgame.init.Blocks;
 
 public class ChunkGenerator {

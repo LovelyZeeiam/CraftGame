@@ -7,14 +7,14 @@ import xueli.game.module.Module;
 
 public class Model extends Module {
 
-	private HashMap<String,Cube> cubes;
+	private HashMap<String, Cube> cubes;
 
-	public Model(String namespace, HashMap<String,Cube> cubes) {
+	public Model(String namespace, HashMap<String, Cube> cubes) {
 		super(namespace);
 		this.cubes = cubes;
 	}
 
-	public HashMap<String,Cube> getCubes() {
+	public HashMap<String, Cube> getCubes() {
 		return cubes;
 	}
 

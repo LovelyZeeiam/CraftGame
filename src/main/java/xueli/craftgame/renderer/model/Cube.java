@@ -4,8 +4,6 @@ import org.lwjgl.util.vector.Vector3f;
 
 public class Cube {
 
-	public static final Cube FULL_CUBE = new Cube(new Vector3f(0, 0, 0), new Vector3f(1, 1, 1));
-
 	protected Vector3f from, to;
 
 	public Cube(Vector3f from, Vector3f to) {

@@ -114,7 +114,7 @@ public class Display {
 		this.mainTitle = title;
 
 	}
-	
+
 	private float getScale(int width, int height) {
 		return Math.min(width, height) / 400.0f * 0.6f;
 	}
@@ -168,10 +168,10 @@ public class Display {
 		this.running = true;
 
 	}
-	
+
 	public void hide() {
 		glfwHideWindow(window);
-		
+
 	}
 
 	private void callbackTick() {

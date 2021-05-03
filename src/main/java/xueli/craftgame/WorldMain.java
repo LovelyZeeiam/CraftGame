@@ -15,8 +15,9 @@ public class WorldMain extends Game {
 
 	@Override
 	public void oncreate() {
-		System.setProperty("java.util.logging.config.file", Files.getResourcePackedInJar("logging.properties").getPath());
-		
+		System.setProperty("java.util.logging.config.file",
+				Files.getResourcePackedInJar("logging.properties").getPath());
+
 		rendererManager.setCurrentRenderer(new StateWorld());
 
 	}
@@ -30,7 +31,7 @@ public class WorldMain extends Game {
 
 	@Override
 	public void onrelease() {
-		
+
 	}
 
 	public static void main(String[] args) {

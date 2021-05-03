@@ -10,7 +10,7 @@ import xueli.game.utils.VertexPointer;
 import xueli.game.utils.math.MatrixHelper;
 import xueli.game.utils.texture.TextureAtlas;
 import xueli.game.vector.Vector;
-import xueli.craftgame.Player;
+import xueli.craftgame.entity.Player;
 import xueli.craftgame.world.Chunk;
 import xueli.craftgame.world.Dimension;
 

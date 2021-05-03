@@ -16,6 +16,8 @@ import javax.imageio.ImageIO;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL13;
+import org.lwjgl.util.vector.Vector2f;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
@@ -67,6 +69,10 @@ public class TextureAtlas {
 		return new AtlasTextureHolder(key, this);
 	}
 
+	public AtlasTextureHolder getTextureHolder(String key, Vector2f offsetFrom, Vector2f offsetTo) {
+		return new AtlasTextureHolder(key, offsetFrom, offsetTo, this);
+	}
+
 	public static TextureAtlas generateAtlas(String defineJsonPath, String textureFolderString) {
 		JsonObject obj = null;
 		try {
@@ -87,25 +93,25 @@ public class TextureAtlas {
 			for (Entry<String, JsonElement> e : blocksObj.entrySet()) {
 				String name = e.getKey();
 				String imgPath = e.getValue().getAsString();
-	
+
 				File imgFile = new File(textureFolderString + File.separator + imgPath);
 				BufferedImage image = ImageIO.read(imgFile);
-				if(image == null) {
+				if (image == null) {
 					Logger.getLogger(TextureAtlas.class.getName()).info("Can't read image: " + imgPath);
 					continue;
 				}
 				per_width = Math.max(per_width, image.getWidth());
 				per_height = Math.max(per_height, image.getHeight());
-	
+
 				names[count] = name;
 				images[count] = image;
 				count++;
-	
+
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		int size = (int) Math.ceil(Math.sqrt(images.length));
 
 		HashMap<String, Vector2i> atlas = new HashMap<>();

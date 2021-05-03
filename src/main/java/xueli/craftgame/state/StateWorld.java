@@ -2,7 +2,8 @@ package xueli.craftgame.state;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
-import xueli.craftgame.Player;
+
+import xueli.craftgame.entity.Player;
 import xueli.craftgame.init.Blocks;
 import xueli.craftgame.init.Models;
 import xueli.craftgame.renderer.world.WorldRenderer;
@@ -37,7 +38,9 @@ public class StateWorld extends NVGRenderer {
 		super();
 		INSTANCE = this;
 
-		this.blocksTextureAtlas = TextureAtlas.generateAtlas(Files.getResourcePackedInJar("textures/blocks.json").getPath(), Files.getResourcePackedInJar("textures/blocks/").getPath());
+		this.blocksTextureAtlas = TextureAtlas.generateAtlas(
+				Files.getResourcePackedInJar("textures/blocks.json").getPath(),
+				Files.getResourcePackedInJar("textures/blocks/").getPath());
 
 		nvgCreateFont(nvg, FONT_NAME, "res/fonts/Minecraft-Ascii.ttf");
 		this.tex_cross = nvgCreateImage(nvg, "res/textures/hud/cross.png", NVG_IMAGE_NEAREST);
@@ -58,12 +61,10 @@ public class StateWorld extends NVGRenderer {
 
 	@Override
 	public void update() {
-		player.tick();
-
 		worldRenderer.update(player);
 		MatrixHelper.calculateFrustumPlane();
 
-		player.pickTick();
+		player.tick();
 
 		if (game.getDisplay().isKeyDownOnce(GLFW.GLFW_KEY_ESCAPE))
 			game.getDisplay().setMouseGrabbed(!game.getDisplay().isMouseGrabbed());
@@ -94,7 +95,8 @@ public class StateWorld extends NVGRenderer {
 
 		nvgFillColor(nvg, NVGColors.TRANSPARENT_BLACK);
 		nvgBeginPath(nvg);
-		nvgRect(nvg, 0, 0, 4.0f * game.getDisplayScale() + measuredTextLength, 8.0f * game.getDisplayScale() + 3 * fontSize);
+		nvgRect(nvg, 0, 0, 4.0f * game.getDisplayScale() + measuredTextLength,
+				8.0f * game.getDisplayScale() + 3 * fontSize);
 		nvgFill(nvg);
 
 		nvgFontSize(nvg, fontSize);
@@ -103,7 +105,8 @@ public class StateWorld extends NVGRenderer {
 		nvgTextAlign(nvg, NVG_ALIGN_LEFT | NVG_ALIGN_TOP);
 		nvgText(nvg, 2.0f * game.getDisplayScale(), 2.0f * game.getDisplayScale(), posTextString);
 		nvgText(nvg, 2.0f * game.getDisplayScale(), 4.0f * game.getDisplayScale() + fontSize, fpsTextString);
-		nvgText(nvg, 2.0f * game.getDisplayScale(), 6.0f * game.getDisplayScale() + 2 * fontSize, currentBlockInformation);
+		nvgText(nvg, 2.0f * game.getDisplayScale(), 6.0f * game.getDisplayScale() + 2 * fontSize,
+				currentBlockInformation);
 
 		nvgImagePattern(nvg, game.getWidth() / 2 - 5.0f * game.getDisplayScale(),
 				game.getHeight() / 2 - 5.0f * game.getDisplayScale(), 10.0f * game.getDisplayScale(),
@@ -153,7 +156,7 @@ public class StateWorld extends NVGRenderer {
 	public Blocks getBlocks() {
 		return blocks;
 	}
-	
+
 	public Models getModels() {
 		return models;
 	}

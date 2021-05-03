@@ -101,9 +101,10 @@ public class Files {
 		image.getRGB(0, 0, image.getWidth(), image.getHeight(), data, 0, image.getWidth());
 		return data;
 	}
-	
+
 	public static File getResourcePackedInJar(String path) {
-		return new File(URLDecoder.decode(Thread.currentThread().getContextClassLoader().getResource(path).getPath(), StandardCharsets.UTF_8));
+		return new File(URLDecoder.decode(Thread.currentThread().getContextClassLoader().getResource(path).getPath(),
+				StandardCharsets.UTF_8));
 	}
 
 }

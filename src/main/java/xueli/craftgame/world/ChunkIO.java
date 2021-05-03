@@ -15,7 +15,7 @@ import com.flowpowered.nbt.StringTag;
 import com.flowpowered.nbt.stream.NBTInputStream;
 import com.flowpowered.nbt.stream.NBTOutputStream;
 
-import xueli.craftgame.block.Tile;
+import xueli.utils.io.Files;
 
 public class ChunkIO {
 
@@ -72,6 +72,21 @@ public class ChunkIO {
 			}
 		}
 
+		if (chunkMap.containsKey("tags")) {
+			List<?> blockTags = ((ListTag<?>) chunkMap.get("tags")).getValue();
+			for (Object obj : blockTags) {
+				CompoundTag tag = (CompoundTag) obj;
+				CompoundMap tagMap = tag.getValue();
+				int x = ((IntTag) tagMap.get("x")).getValue();
+				int y = ((IntTag) tagMap.get("y")).getValue();
+				int z = ((IntTag) tagMap.get("z")).getValue();
+				CompoundMap tags = ((CompoundTag) tagMap.get("tags")).getValue();
+
+				chunk.grid[x][y][z].tags = tags;
+
+			}
+		}
+
 		return chunk;
 	}
 
@@ -88,6 +103,8 @@ public class ChunkIO {
 		int[] grid = new int[16 * 16 * 16];
 		int[] heightMap = new int[16 * 16];
 		ArrayList<String> namespaces = new ArrayList<>();
+
+		ArrayList<CompoundTag> blockTags = new ArrayList<>();
 
 		int count = 0;
 		int count2 = 0;
@@ -107,6 +124,16 @@ public class ChunkIO {
 
 					grid[count] = index;
 
+					if (tile != null && tile.getTags().size() != 0) {
+						CompoundMap tag = new CompoundMap();
+						tag.put(new IntTag("x", x));
+						tag.put(new IntTag("y", y));
+						tag.put(new IntTag("z", z));
+						tag.put(new CompoundTag("tags", tile.getTags()));
+						blockTags.add(new CompoundTag("", tag));
+
+					}
+
 					count++;
 				}
 			}
@@ -121,6 +148,8 @@ public class ChunkIO {
 			namespaceTags.add(new StringTag("", namespace));
 		}
 		gridMap.put(new ListTag<StringTag>("namespaces", StringTag.class, namespaceTags));
+		if (blockTags.size() != 0)
+			gridMap.put(new ListTag<CompoundTag>("tags", CompoundTag.class, blockTags));
 
 		map.put(new CompoundTag("chunkMap", gridMap));
 
@@ -128,6 +157,10 @@ public class ChunkIO {
 		nbtout.writeTag(new CompoundTag("", map));
 		nbtout.flush();
 		nbtout.close();
+
+		Files.fileOutput(
+				"temp/chunks/" + chunk.getChunkX() + "_" + chunk.getChunkY() + "_" + chunk.getChunkZ() + ".dat",
+				out.toByteArray());
 
 		return out.toByteArray();
 	}
