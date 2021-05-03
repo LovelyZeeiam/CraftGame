@@ -10,7 +10,7 @@ public class ChunkGenerator {
 	public ChunkGenerator(Dimension dimension) {
 		this.dimension = dimension;
 		this.blocks = dimension.blocks;
-		
+
 	}
 
 	public Chunk genChunk(int x, int y, int z) {

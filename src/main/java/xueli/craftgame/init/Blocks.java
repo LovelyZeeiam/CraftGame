@@ -2,6 +2,7 @@ package xueli.craftgame.init;
 
 import xueli.craftgame.block.AbstractAlphaBlock;
 import xueli.craftgame.block.AbstractBlock;
+import xueli.craftgame.block.AbstractPlant;
 import xueli.craftgame.block.AbstractSlab;
 import xueli.craftgame.block.AbstractStair;
 import xueli.craftgame.block.BlockBase;
@@ -38,6 +39,17 @@ public class Blocks extends Modules<BlockBase> {
 		add(new AbstractStair("craftgame:oak_stair", "Oak Stair", "cg:planks_oak"));
 		add(new AbstractSlab("craftgame:oak_slab", "Oak Slab", "cg:planks_oak"));
 		addColorfulAlphaBlock("craftgame:stained_glass_", "Colored Glass", "cg:glass_");
+		add(new AbstractPlant("craftgame:plant_grass", "Grass", "cg:double_plant_grass_carried"));
+		add(new AbstractPlant("craftgame:flower_allium", "Allium", "cg:flower_allium"));
+		add(new AbstractPlant("craftgame:flower_blue_orchid", "Blue Orchid", "cg:flower_blue_orchid"));
+		add(new AbstractPlant("craftgame:flower_cornflower", "Cornflower", "cg:flower_cornflower"));
+		add(new AbstractPlant("craftgame:flower_dandelion", "Dandelion", "cg:flower_dandelion"));
+		add(new AbstractPlant("craftgame:flower_houstonia", "Houstonia", "cg:flower_houstonia"));
+		add(new AbstractPlant("craftgame:flower_lily_of_the_valley", "Lily of the valley", "cg:flower_lily_of_the_valley"));
+		add(new AbstractPlant("craftgame:flower_rose", "Rose", "cg:flower_rose"));
+		add(new AbstractPlant("craftgame:flower_rose_blue", "Blue Rose", "cg:flower_rose_blue"));
+		
+		
 		
 		
 		

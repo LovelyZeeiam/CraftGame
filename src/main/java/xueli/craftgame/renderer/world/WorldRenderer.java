@@ -8,8 +8,6 @@ import java.util.Comparator;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector3i;
-
 import xueli.game.Game;
 import xueli.game.utils.GLHelper;
 import xueli.game.utils.Shader;
@@ -100,7 +98,9 @@ public class WorldRenderer {
 		pointer.unmap();
 		GLHelper.enableBlend();
 		//GL11.glDepthMask(false);
+		GL11.glDisable(GL11.GL_CULL_FACE);
 		pointer.draw(vertCount);
+		GL11.glDisable(GL11.GL_CULL_FACE);
 		//GL11.glDepthMask(true);
 		GLHelper.disableBlend();
 		pointer.postDraw();
