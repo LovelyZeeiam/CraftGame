@@ -1,4 +1,4 @@
-package xueli.craftgame.block.blocks;
+package xueli.craftgame.block;
 
 import java.awt.Color;
 import java.util.HashMap;

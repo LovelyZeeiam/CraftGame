@@ -1,8 +1,9 @@
 package xueli.craftgame.init;
 
+import xueli.craftgame.block.AbstractBlock;
+import xueli.craftgame.block.AbstractSlab;
+import xueli.craftgame.block.AbstractStair;
 import xueli.craftgame.block.BlockBase;
-import xueli.craftgame.block.blocks.AbstractBlock;
-import xueli.craftgame.block.blocks.AbstractStair;
 import xueli.game.module.Modules;
 
 public class Blocks extends Modules<BlockBase> {
@@ -34,7 +35,10 @@ public class Blocks extends Modules<BlockBase> {
 		addColorfulBlock("craftgame:hardened_clay_stained_", "Colored Hardened Clay", "cg:hardened_clay_stained_");
 		add(new AbstractBlock("craftgame:oak_plank", "Oak Plank", "cg:planks_oak"));
 		add(new AbstractStair("craftgame:oak_stair", "Oak Stair", "cg:planks_oak"));
-
+		add(new AbstractSlab("craftgame:oak_slab", "Oak Slab", "cg:planks_oak"));
+		
+		
+		
 	}
 
 	public void addColorfulBlock(String namespaceTemplate, String name, String textureTemplate) {
