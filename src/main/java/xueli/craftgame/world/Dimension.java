@@ -1,6 +1,6 @@
 package xueli.craftgame.world;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.lwjgl.util.vector.Vector3i;
 
@@ -10,7 +10,7 @@ import xueli.game.vector.Vector;
 
 public class Dimension {
 
-	HashMap<Vector3i, Chunk> chunks = new HashMap<>();
+	ConcurrentHashMap<Vector3i, Chunk> chunks = new ConcurrentHashMap<>();
 
 	private ChunkProvider provider;
 	private WorldRenderer renderer;
@@ -22,6 +22,7 @@ public class Dimension {
 		if (isToBeRenderer)
 			this.renderer = new WorldRenderer(this);
 		this.provider = new ChunkProvider(this);
+		this.provider.start();
 
 	}
 

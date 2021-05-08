@@ -1,29 +1,29 @@
 package xueli.craftgame.world;
 
 import java.text.MessageFormat;
-import java.util.LinkedList;
 import java.util.logging.Logger;
 
 import org.lwjgl.util.vector.Vector3i;
 
 import xueli.craftgame.renderer.world.WorldRenderer;
+import xueli.game.utils.ThreadTask;
 import xueli.game.utils.Time;
 import xueli.game.utils.math.MatrixHelper;
 import xueli.game.vector.Vector;
 
-public class ChunkProvider {
+public class ChunkProvider extends ThreadTask {
 
 	private static Logger logger = Logger.getLogger(ChunkProvider.class.getName());
 
 	private Dimension dimension;
 
 	private ChunkGenerator generator;
-	private LinkedList<Operation> operations = new LinkedList<>();
 
 	private String regionPath = ".cg/saves/Test/regions/";
 	private DimensionLevel level;
 
 	public ChunkProvider(Dimension dimension) {
+		super("ChunkProvider");
 		this.dimension = dimension;
 		this.generator = new ChunkGenerator(dimension);
 		this.level = new DimensionLevel(regionPath, dimension);
@@ -31,67 +31,38 @@ public class ChunkProvider {
 	}
 
 	public void requireLoad(int x, int y, int z) {
-		Operation operation = new Operation(OperationType.LOAD, x, y, z);
-		if (operations.indexOf(operation) < 0)
-			operations.add(operation);
+		addTask(new RunnableLoad(x, y, z));
 
 	}
 
 	public void requireSave(int x, int y, int z) {
-		Operation operation = new Operation(OperationType.SAVE, x, y, z);
-		if (operations.indexOf(operation) < 0)
-			operations.add(operation);
+		addTask(new RunnableSave(x, y, z));
 
 	}
-
+	
 	void load(int x, int y, int z) {
-		logger.info(MessageFormat.format("[World] Load: {0}, {1}, {2}", x, y, z));
-		if (level.checkChunkExist(x, y, z)) {
-			this.dimension.chunks.put(new Vector3i(x, y, z), level.getChunk(x, y, z));
-		} else {
-			this.dimension.chunks.put(new Vector3i(x, y, z), generator.genChunk(x, y, z));
-		}
-
+		new RunnableLoad(x, y, z).run();
 	}
-
+	
 	void save(int x, int y, int z) {
-		logger.info(MessageFormat.format("[World] Save: {0}, {1}, {2}", x, y, z));
-		this.level.writeChunk(this.dimension.chunks.get(new Vector3i(x, y, z)));
-
+		new RunnableSave(x, y, z).run();
 	}
 
 	private long time0 = System.currentTimeMillis();
 
 	public void tick(Vector playerPos) {
-		Operation operation = null;
-		if ((operation = operations.poll()) != null) {
-			switch (operation.type) {
-			case LOAD: {
-				load(operation.x, operation.y, operation.z);
-				break;
-			}
-			case SAVE: {
-				save(operation.x, operation.y, operation.z);
-				this.dimension.chunks.remove(new Vector3i(operation.x, operation.y, operation.z));
-				break;
-			}
-			default:
-				break;
-			}
-		}
-
-		if (Time.thisTime - time0 > 1000) {
+		if (Time.thisTime - time0 > 200) {
 			for (Vector3i v : dimension.chunks.keySet()) {
 				int x = v.getX() << 4;
 				int y = v.getY() << 4;
 				int z = v.getZ() << 4;
 
-				boolean xOutside = x > playerPos.x + (WorldRenderer.DRAW_DISTANCE << 4) + 100
-						|| x < playerPos.x - (WorldRenderer.DRAW_DISTANCE << 4) - 100;
-				boolean yOutside = y > playerPos.y + (WorldRenderer.DRAW_DISTANCE << 4) + 100
-						|| y < playerPos.y - (WorldRenderer.DRAW_DISTANCE << 4) - 100;
-				boolean zOutside = z > playerPos.z + (WorldRenderer.DRAW_DISTANCE << 4) + 100
-						|| z < playerPos.z - (WorldRenderer.DRAW_DISTANCE << 4) - 100;
+				boolean xOutside = x > playerPos.x + (WorldRenderer.DRAW_DISTANCE << 4) + 50
+						|| x < playerPos.x - (WorldRenderer.DRAW_DISTANCE << 4) - 50;
+				boolean yOutside = y > playerPos.y + (WorldRenderer.DRAW_DISTANCE << 4) + 50
+						|| y < playerPos.y - (WorldRenderer.DRAW_DISTANCE << 4) - 50;
+				boolean zOutside = z > playerPos.z + (WorldRenderer.DRAW_DISTANCE << 4) + 50
+						|| z < playerPos.z - (WorldRenderer.DRAW_DISTANCE << 4) - 50;
 
 				if (xOutside || yOutside || zOutside) {
 					requireSave(v.getX(), v.getY(), v.getZ());
@@ -127,26 +98,40 @@ public class ChunkProvider {
 	}
 
 	public void release() {
+		stopThread();
 		this.level.close();
 
 	}
+	
+	private class RunnableLoad implements Runnable {
+		int x, y, z;
 
-	private static class Operation {
-		private OperationType type;
-		private int x, y, z;
-
-		public Operation(OperationType type, int x, int y, int z) {
-			this.type = type;
+		public RunnableLoad(int x, int y, int z) {
 			this.x = x;
 			this.y = y;
 			this.z = z;
+		}
+		
+		@Override
+		public void run() {
+			logger.info(MessageFormat.format("[World] Load: {0}, {1}, {2}", x, y, z));
+			
+			Vector3i v = new Vector3i(x, y, z);
+			if(dimension.chunks.containsKey(v))
+				return;
+			
+			if (level.checkChunkExist(x, y, z)) {
+				dimension.chunks.put(new Vector3i(x, y, z), level.getChunk(x, y, z));
+			} else {
+				dimension.chunks.put(new Vector3i(x, y, z), generator.genChunk(x, y, z));
+			}
+			
 		}
 
 		@Override
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + ((type == null) ? 0 : type.hashCode());
 			result = prime * result + x;
 			result = prime * result + y;
 			result = prime * result + z;
@@ -161,9 +146,7 @@ public class ChunkProvider {
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			Operation other = (Operation) obj;
-			if (type != other.type)
-				return false;
+			RunnableLoad other = (RunnableLoad) obj;
 			if (x != other.x)
 				return false;
 			if (y != other.y)
@@ -172,11 +155,58 @@ public class ChunkProvider {
 				return false;
 			return true;
 		}
-
+		
 	}
+	
+	private class RunnableSave implements Runnable {
+		int x, y, z;
 
-	private static enum OperationType {
-		LOAD, SAVE;
+		public RunnableSave(int x, int y, int z) {
+			this.x = x;
+			this.y = y;
+			this.z = z;
+		}
+		
+		@Override
+		public void run() {
+			logger.info(MessageFormat.format("[World] Save: {0}, {1}, {2}", x, y, z));
+			
+			Vector3i v = new Vector3i(x, y, z);
+			Chunk c = dimension.chunks.get(v);
+			if(c == null) return;
+			level.writeChunk(c);
+			dimension.chunks.remove(new Vector3i(x, y, z));
+			
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + x;
+			result = prime * result + y;
+			result = prime * result + z;
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			RunnableSave other = (RunnableSave) obj;
+			if (x != other.x)
+				return false;
+			if (y != other.y)
+				return false;
+			if (z != other.z)
+				return false;
+			return true;
+		}
+		
 	}
 
 }
