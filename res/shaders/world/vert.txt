@@ -10,10 +10,19 @@ uniform mat4 viewMatrix;
 out vec2 otexPos;
 out vec3 ocolor;
 
+const float density = 0.05;
+const float gradient = 4;
+out float visibility;
+
 void main(){
-	gl_Position = projMatrix * viewMatrix * vec4(pos ,1.0);
+	vec4 posCam = viewMatrix * vec4(pos ,1.0);
+	gl_Position = projMatrix * posCam;
 	otexPos = texPos;
 	ocolor = color;
+	
+	float distance = length(posCam.xyz);
+	visibility = exp(-pow(distance * density, gradient));
+	visibility = clamp(visibility, 0.0, 1.0);
 	
 }
 

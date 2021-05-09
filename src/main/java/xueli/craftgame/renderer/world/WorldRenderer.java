@@ -12,12 +12,14 @@ import xueli.game.utils.math.MatrixHelper;
 import xueli.game.utils.texture.TextureAtlas;
 import xueli.game.vector.Vector;
 import xueli.craftgame.entity.Player;
+import xueli.craftgame.renderer.sky.SkyRenderer;
 import xueli.craftgame.world.Chunk;
 import xueli.craftgame.world.Dimension;
 
 public class WorldRenderer {
 
-	public static int DRAW_DISTANCE = 3;
+	public static int DRAW_DISTANCE = 4;
+	public static int DRAW_DISTANCE_Y = 4;
 
 	private Dimension dimension;
 
@@ -25,26 +27,30 @@ public class WorldRenderer {
 
 	private Shader shader;
 
+	private SkyRenderer skyRenderer;
+
 	public WorldRenderer(Dimension dimension) {
 		this.dimension = dimension;
 		this.pointer = new VertexPointer();
 
 		this.shader = new Shader("res/shaders/world/vert.txt", "res/shaders/world/frag.txt");
 
+		this.skyRenderer = new SkyRenderer(dimension);
+
 	}
 
 	private int vertCount = 0;
 	private ArrayList<Chunk> chunks = new ArrayList<>();
-	
+
 	public void draw(Vector playerPos) {
 		int playerInChunkX = (int) playerPos.x >> 4;
 		int playerInChunkY = (int) playerPos.y >> 4;
 		int playerInChunkZ = (int) playerPos.z >> 4;
-		
+
 		chunks.clear();
 
 		for (int x = playerInChunkX - DRAW_DISTANCE; x < playerInChunkX + DRAW_DISTANCE; x++) {
-			for (int y = playerInChunkY - DRAW_DISTANCE; y < playerInChunkY + DRAW_DISTANCE; y++) {
+			for (int y = playerInChunkY - DRAW_DISTANCE_Y; y < playerInChunkY + DRAW_DISTANCE_Y; y++) {
 				for (int z = playerInChunkZ - DRAW_DISTANCE; z < playerInChunkZ + DRAW_DISTANCE; z++) {
 					if (!MatrixHelper.isChunkInFrustum(x, y, z))
 						continue;
@@ -55,7 +61,7 @@ public class WorldRenderer {
 				}
 			}
 		}
-		
+
 		pointer.initDraw();
 
 		FloatBuffer buffer = pointer.mapBuffer().asFloatBuffer();
@@ -67,7 +73,7 @@ public class WorldRenderer {
 		}
 		pointer.unmap();
 		pointer.draw(vertCount);
-		
+
 		buffer = pointer.mapBuffer().asFloatBuffer();
 		vertCount = 0;
 		/*
@@ -85,30 +91,40 @@ public class WorldRenderer {
 		 * 1; } });
 		 */
 		for (Chunk chunk : chunks) {
+			if(chunk.getBuffer().hasPostRelease()) continue;
 			chunk.getBuffer().getBufferAlpha().storeInBuffer(buffer);
 			vertCount += chunk.getBuffer().getAlphaCount();
 		}
 		pointer.unmap();
 		GLHelper.enableBlend();
-		//GL11.glDepthMask(false);
+		// GL11.glDepthMask(false);
 		GL11.glDisable(GL11.GL_CULL_FACE);
 		pointer.draw(vertCount);
 		GL11.glDisable(GL11.GL_CULL_FACE);
-		//GL11.glDepthMask(true);
+		// GL11.glDepthMask(true);
 		GLHelper.disableBlend();
 		pointer.postDraw();
 
 	}
 
 	public void render(TextureAtlas atlas, Player player) {
+		skyRenderer.render();
+
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+
 		GLHelper.checkGLError("Pre-renderer");
 
 		shader.use();
+		shader.setUniformVector3(shader.getUnifromLocation("skyColor"), skyRenderer.getSkyColor());
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		atlas.bind();
 		draw(player.getPos());
 		atlas.unbind();
 		shader.unbind();
+
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		GL11.glDisable(GL11.GL_CULL_FACE);
 
 		GLHelper.checkGLError("post-renderer");
 
@@ -125,6 +141,7 @@ public class WorldRenderer {
 
 	public void size() {
 		Shader.setProjectionMatrix(Game.INSTANCE_GAME, shader);
+		skyRenderer.size();
 
 	}
 

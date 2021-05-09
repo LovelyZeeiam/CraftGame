@@ -10,7 +10,7 @@ import xueli.game.module.Modules;
 public class Models extends Modules<Model> {
 
 	public Models() {
-		
+
 	}
 
 	@Override
@@ -37,10 +37,11 @@ public class Models extends Modules<Model> {
 				.add("down", new Cube(new Vector3f(0.5f, 0, 0), new Vector3f(1, 0.5f, 1))).build());
 		add(new ModelBuilder("cg:stair_up_right").add("up", new Cube(new Vector3f(0, 0.5f, 0), new Vector3f(1, 1, 1)))
 				.add("down", new Cube(new Vector3f(0, 0, 0), new Vector3f(0.5f, 0.5f, 1))).build());
-		
-		add(new ModelBuilder("cg:slab_down").add("slab", new Cube(new Vector3f(0, 0, 0), new Vector3f(1, 0.5f, 1))).build());
-		add(new ModelBuilder("cg:slab_up").add("slab", new Cube(new Vector3f(0, 0.5f, 0), new Vector3f(1, 1, 1))).build());
-		
+
+		add(new ModelBuilder("cg:slab_down").add("slab", new Cube(new Vector3f(0, 0, 0), new Vector3f(1, 0.5f, 1)))
+				.build());
+		add(new ModelBuilder("cg:slab_up").add("slab", new Cube(new Vector3f(0, 0.5f, 0), new Vector3f(1, 1, 1)))
+				.build());
 
 	}
 

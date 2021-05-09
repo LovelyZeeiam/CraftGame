@@ -143,7 +143,7 @@ public class Shader {
 	public void setFloat(int loc, float v) {
 		GL20.glUniform1f(loc, v);
 	}
-
+	
 	public void unbind() {
 		GL20.glUseProgram(0);
 	}

@@ -1,8 +1,6 @@
 package xueli.craftgame.state;
 
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.opengl.GL11;
-
 import xueli.craftgame.entity.Player;
 import xueli.craftgame.init.Blocks;
 import xueli.craftgame.init.Models;
@@ -50,8 +48,8 @@ public class StateWorld extends NVGRenderer {
 		this.blocks = new Blocks();
 		this.blocks.init();
 
-		this.dimension = new Dimension(true, blocks);
-		this.worldRenderer = this.dimension.getRenderer();
+		this.dimension = new Dimension(blocks);
+		this.worldRenderer = new WorldRenderer(dimension);
 
 		this.player = new Player(dimension);
 
@@ -122,13 +120,7 @@ public class StateWorld extends NVGRenderer {
 
 	@Override
 	public void render() {
-		GL11.glEnable(GL11.GL_CULL_FACE);
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-
 		worldRenderer.render(blocksTextureAtlas, player);
-
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
-		GL11.glDisable(GL11.GL_CULL_FACE);
 
 		super.render();
 	}

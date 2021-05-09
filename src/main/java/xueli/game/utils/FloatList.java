@@ -95,6 +95,7 @@ public class FloatList {
 	}
 
 	public void storeInBuffer(FloatBuffer buffer) {
+		if(data == null) return;
 		buffer.put(data, 0, size);
 	}
 

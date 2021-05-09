@@ -5,7 +5,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.lwjgl.util.vector.Vector3i;
 
 import xueli.craftgame.init.Blocks;
-import xueli.craftgame.renderer.world.WorldRenderer;
 import xueli.game.vector.Vector;
 
 public class Dimension {
@@ -13,14 +12,12 @@ public class Dimension {
 	ConcurrentHashMap<Vector3i, Chunk> chunks = new ConcurrentHashMap<>();
 
 	private ChunkProvider provider;
-	private WorldRenderer renderer;
 
 	Blocks blocks;
 
-	public Dimension(boolean isToBeRenderer, Blocks blocks) {
+	public Dimension(Blocks blocks) {
 		this.blocks = blocks;
-		if (isToBeRenderer)
-			this.renderer = new WorldRenderer(this);
+
 		this.provider = new ChunkProvider(this);
 		this.provider.start();
 
@@ -44,10 +41,6 @@ public class Dimension {
 		return chunks.get(new Vector3i(x, y, z));
 	}
 
-	public void draw(Vector playerPos) {
-		renderer.draw(playerPos);
-	}
-
 	public void tick(Vector playerPos) {
 		this.provider.tick(playerPos);
 
@@ -58,10 +51,6 @@ public class Dimension {
 			this.provider.save(v.getX(), v.getY(), v.getZ());
 		}
 		this.provider.release();
-	}
-
-	public WorldRenderer getRenderer() {
-		return renderer;
 	}
 
 	public Blocks getBlocks() {

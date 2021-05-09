@@ -75,6 +75,8 @@ public class Chunk {
 
 		private int vertCount = 0, alphaCount = 0;
 		private boolean shouldRebuild = true;
+		
+		private boolean hasPostRelease = false;
 
 		public ChunkBuffer() {
 
@@ -130,7 +132,7 @@ public class Chunk {
 							int realX = x + (chunkX << 4);
 							int realY = y + (chunkY << 4);
 							int realZ = z + (chunkZ << 4);
-							
+
 							if (!tile.getBase().isAlpha()) {
 								if (dimension.getBlock(realX, realY + 1, realZ) == null
 										|| (!dimension.getBlock(realX, realY + 1, realZ).getBase().isComplete()
@@ -169,8 +171,8 @@ public class Chunk {
 											BlockFace.FRONT, Color.GRAY, dimension);
 								}
 							} else {
-								alphaCount += tile.getBase().getRenderCubeData(bufferAlpha, realX, realY, realZ, (byte) -1,
-										Color.WHITE, dimension);
+								alphaCount += tile.getBase().getRenderCubeData(bufferAlpha, realX, realY, realZ,
+										(byte) -1, Color.WHITE, dimension);
 							}
 
 						}
@@ -230,6 +232,16 @@ public class Chunk {
 			 * BlockFace.FRONT, Color.GRAY, dimension); } }
 			 * //System.out.println(alphaCount);
 			 */
+		}
+
+		public void postRelease() {
+			hasPostRelease = true;
+			this.buffer.postDispose();
+			this.bufferAlpha.postDispose();
+		}
+
+		public boolean hasPostRelease() {
+			return hasPostRelease;
 		}
 
 	}

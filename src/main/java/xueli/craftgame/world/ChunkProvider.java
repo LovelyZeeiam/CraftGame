@@ -1,8 +1,5 @@
 package xueli.craftgame.world;
 
-import java.text.MessageFormat;
-import java.util.logging.Logger;
-
 import org.lwjgl.util.vector.Vector3i;
 
 import xueli.craftgame.renderer.world.WorldRenderer;
@@ -13,7 +10,8 @@ import xueli.game.vector.Vector;
 
 public class ChunkProvider extends ThreadTask {
 
-	private static Logger logger = Logger.getLogger(ChunkProvider.class.getName());
+	// private static Logger logger =
+	// Logger.getLogger(ChunkProvider.class.getName());
 
 	private Dimension dimension;
 
@@ -23,7 +21,6 @@ public class ChunkProvider extends ThreadTask {
 	private DimensionLevel level;
 
 	public ChunkProvider(Dimension dimension) {
-		super("ChunkProvider");
 		this.dimension = dimension;
 		this.generator = new ChunkGenerator(dimension);
 		this.level = new DimensionLevel(regionPath, dimension);
@@ -39,11 +36,11 @@ public class ChunkProvider extends ThreadTask {
 		addTask(new RunnableSave(x, y, z));
 
 	}
-	
+
 	void load(int x, int y, int z) {
 		new RunnableLoad(x, y, z).run();
 	}
-	
+
 	void save(int x, int y, int z) {
 		new RunnableSave(x, y, z).run();
 	}
@@ -102,7 +99,7 @@ public class ChunkProvider extends ThreadTask {
 		this.level.close();
 
 	}
-	
+
 	private class RunnableLoad implements Runnable {
 		int x, y, z;
 
@@ -111,21 +108,21 @@ public class ChunkProvider extends ThreadTask {
 			this.y = y;
 			this.z = z;
 		}
-		
+
 		@Override
 		public void run() {
-			logger.info(MessageFormat.format("[World] Load: {0}, {1}, {2}", x, y, z));
-			
+			// logger.info(MessageFormat.format("[World] Load: {0}, {1}, {2}", x, y, z));
+
 			Vector3i v = new Vector3i(x, y, z);
-			if(dimension.chunks.containsKey(v))
+			if (dimension.chunks.containsKey(v))
 				return;
-			
+
 			if (level.checkChunkExist(x, y, z)) {
 				dimension.chunks.put(new Vector3i(x, y, z), level.getChunk(x, y, z));
 			} else {
 				dimension.chunks.put(new Vector3i(x, y, z), generator.genChunk(x, y, z));
 			}
-			
+
 		}
 
 		@Override
@@ -155,9 +152,9 @@ public class ChunkProvider extends ThreadTask {
 				return false;
 			return true;
 		}
-		
+
 	}
-	
+
 	private class RunnableSave implements Runnable {
 		int x, y, z;
 
@@ -166,17 +163,19 @@ public class ChunkProvider extends ThreadTask {
 			this.y = y;
 			this.z = z;
 		}
-		
+
 		@Override
 		public void run() {
-			logger.info(MessageFormat.format("[World] Save: {0}, {1}, {2}", x, y, z));
-			
+			// logger.info(MessageFormat.format("[World] Save: {0}, {1}, {2}", x, y, z));
+
 			Vector3i v = new Vector3i(x, y, z);
 			Chunk c = dimension.chunks.get(v);
-			if(c == null) return;
+			if (c == null)
+				return;
 			level.writeChunk(c);
+			c.getBuffer().postRelease();
 			dimension.chunks.remove(new Vector3i(x, y, z));
-			
+
 		}
 
 		@Override
@@ -206,7 +205,7 @@ public class ChunkProvider extends ThreadTask {
 				return false;
 			return true;
 		}
-		
+
 	}
 
 }

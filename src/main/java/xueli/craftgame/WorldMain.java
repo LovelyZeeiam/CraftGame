@@ -25,7 +25,6 @@ public class WorldMain extends Game {
 	@Override
 	public void ontick() {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
-		GL11.glClearColor(0.7f, 0.7f, 0.9f, 1.0f);
 
 	}
 

@@ -16,20 +16,19 @@ import xueli.game.utils.FloatList;
 import xueli.game.utils.texture.AtlasTextureHolder;
 
 public class AbstractSlab extends AbstractBlock {
-	
+
 	private TexturedModel up, down;
-	
+
 	public AbstractSlab(String namespace, String nameInternational, String... textureNames) {
 		super(namespace, nameInternational, textureNames);
-		
+
 		getTags().add(BlockTags.HAS_PART_UP_AND_PART_DOWN);
 		isComplete = false;
-		
+
 		init(textureNames);
-		
-		
+
 	}
-	
+
 	public void init(String[] textureNames) {
 		AtlasTextureHolder[] holders = new AtlasTextureHolder[6];
 		if (textureNames.length == 6)
@@ -45,34 +44,30 @@ public class AbstractSlab extends AbstractBlock {
 		}
 
 		Models models = StateWorld.getInstance().getModels();
-		down = new TexturedModelBuilder(models.getModule("cg:slab_down")).add("slab", 
-					holders[0].reTailor(new Vector2f(0, 0.5f), new Vector2f(1, 1)),
-					holders[1].reTailor(new Vector2f(0, 0.5f), new Vector2f(1, 1)),
-					holders[2].reTailor(new Vector2f(0, 0.5f), new Vector2f(1, 1)),
-					holders[3].reTailor(new Vector2f(0, 0.5f), new Vector2f(1, 1)),
-					holders[4],
-					holders[5]
-				)
+		down = new TexturedModelBuilder(models.getModule("cg:slab_down"))
+				.add("slab", holders[0].reTailor(new Vector2f(0, 0.5f), new Vector2f(1, 1)),
+						holders[1].reTailor(new Vector2f(0, 0.5f), new Vector2f(1, 1)),
+						holders[2].reTailor(new Vector2f(0, 0.5f), new Vector2f(1, 1)),
+						holders[3].reTailor(new Vector2f(0, 0.5f), new Vector2f(1, 1)), holders[4], holders[5])
 				.build("cg:slab_down");
-		up = new TexturedModelBuilder(models.getModule("cg:slab_up")).add("slab", 
-					holders[0].reTailor(new Vector2f(0, 0), new Vector2f(1, 0.5f)),
-					holders[1].reTailor(new Vector2f(0, 0), new Vector2f(1, 0.5f)),
-					holders[2].reTailor(new Vector2f(0, 0), new Vector2f(1, 0.5f)),
-					holders[3].reTailor(new Vector2f(0, 0), new Vector2f(1, 0.5f)),
-					holders[4],
-					holders[5]
-				)
+		up = new TexturedModelBuilder(models.getModule("cg:slab_up"))
+				.add("slab", holders[0].reTailor(new Vector2f(0, 0), new Vector2f(1, 0.5f)),
+						holders[1].reTailor(new Vector2f(0, 0), new Vector2f(1, 0.5f)),
+						holders[2].reTailor(new Vector2f(0, 0), new Vector2f(1, 0.5f)),
+						holders[3].reTailor(new Vector2f(0, 0), new Vector2f(1, 0.5f)), holders[4], holders[5])
 				.build("cg:slab_up");
-		
+
 	}
-	
+
 	@Override
 	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Color color, Dimension dimension) {
 		Tile tile = dimension.getBlock(x, y, z);
 		byte part = (byte) tile.getTags().get(BlockTags.TAG_NAME_PART).getValue();
-		
-		if(part == BlockFace.PART_DOWN) return down.getRenderData(x, y, z, face, color, buffer);
-		else if(part == BlockFace.PART_UP) return up.getRenderData(x, y, z, face, color, buffer);
+
+		if (part == BlockFace.PART_DOWN)
+			return down.getRenderData(x, y, z, face, color, buffer);
+		else if (part == BlockFace.PART_UP)
+			return up.getRenderData(x, y, z, face, color, buffer);
 		return 0;
 	}
 

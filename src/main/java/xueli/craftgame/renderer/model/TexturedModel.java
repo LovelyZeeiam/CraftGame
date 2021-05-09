@@ -30,11 +30,11 @@ public class TexturedModel extends Module {
 		}
 		return vertCount;
 	}
-	
+
 	public int getAllRenderData(int x, int y, int z, Color color, FloatList buffer) {
 		int vertCount = 0;
 		for (TexturedCube c : cubes) {
-			for(byte face = 0; face < 6; face++)
+			for (byte face = 0; face < 6; face++)
 				vertCount += c.getDrawData(x, y, z, face, color, buffer);
 		}
 		return vertCount;

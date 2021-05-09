@@ -24,7 +24,7 @@ public class ThreadTask extends Thread {
 	}
 
 	public void addTask(Runnable runnable) {
-		if(!this.queue.contains(runnable))
+		if (!this.queue.contains(runnable))
 			this.queue.add(runnable);
 	}
 
