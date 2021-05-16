@@ -39,9 +39,9 @@ public class WorldRenderer {
 		this.shader = new Shader("res/shaders/world/vert.txt", "res/shaders/world/frag.txt");
 		this.skyRenderer = new SkyRenderer(dimension);
 		
+		this.frameBuffer = new FrameBuffer();
 		this.quadRenderer = new ScreenQuadRenderer();
-		this.frameBuffer = new FrameBuffer((int)Game.INSTANCE_GAME.getWidth(), (int)Game.INSTANCE_GAME.getHeight());
-
+		
 	}
 
 	private int vertCount = 0;
@@ -113,17 +113,16 @@ public class WorldRenderer {
 	}
 
 	public void render(TextureAtlas atlas, Player player) {
+		
 		this.frameBuffer.use();
 		{
 			GLHelper.checkGLError("World - Pre-renderer");
-			
 			skyRenderer.render(player);
-			
 			GLHelper.checkGLError("World - Sky");
-	
+			
 			GL11.glEnable(GL11.GL_CULL_FACE);
 			GL11.glEnable(GL11.GL_DEPTH_TEST);
-	
+			
 			shader.use();
 			shader.setUniformVector3(shader.getUnifromLocation("skyColor"), skyRenderer.getSkyColor());
 			shader.setUniformVector3(shader.getUnifromLocation("sunDirection"), skyRenderer.getSunDirection());
@@ -132,7 +131,7 @@ public class WorldRenderer {
 			draw(player.getPos());
 			atlas.unbind();
 			shader.unbind();
-	
+			
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
 			GL11.glDisable(GL11.GL_CULL_FACE);
 	
@@ -141,11 +140,7 @@ public class WorldRenderer {
 		}
 		this.frameBuffer.unbind();
 		
-		{
-			this.quadRenderer.render(this.frameBuffer.getTbo_image());
-			
-			
-		}
+		this.quadRenderer.render(this.frameBuffer.getTbo_image(), this.frameBuffer.getTbo_depth());
 		
 	}
 
@@ -166,6 +161,7 @@ public class WorldRenderer {
 	}
 
 	public void release() {
+		this.frameBuffer.delete();
 		shader.release();
 
 	}

@@ -34,6 +34,7 @@ public class ShadowMappingTest extends Game {
 	private static final int SHADOW_SIZE = 4096;
 	private int fbo, f_tbo, f_tbo_image;
 
+	@SuppressWarnings("unused")
 	private Texture test_texture;
 
 	private Vector3f lightPosVector3f = new Vector3f(0, 100, 0);

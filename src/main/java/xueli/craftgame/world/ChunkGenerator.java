@@ -1,7 +1,5 @@
 package xueli.craftgame.world;
 
-import java.util.HashMap;
-
 import org.lwjgl.util.vector.Vector3i;
 
 import xueli.craftgame.init.Blocks;
@@ -20,15 +18,8 @@ public class ChunkGenerator {
 	private static final int GROUP_SIZE = 8, GROUP_HEIGHT = 6;
 
 	public void genChunk(int x, int y, int z) {
-		if (x % GROUP_SIZE != 0 || z % GROUP_SIZE != 0 || y % GROUP_HEIGHT != 0)
-			return;
-
-		ChunkGroup group = new ChunkGroup(x, y, z, GROUP_SIZE, GROUP_HEIGHT, dimension);
-
 		
 		
-		group.addToDimension();
-
 	}
 
 	public void genSuperFlat(int x, int y, int z) {
@@ -57,29 +48,6 @@ public class ChunkGenerator {
 
 	private void addChunk(Chunk chunk) {
 		dimension.chunks.put(new Vector3i(chunk.getChunkX(), chunk.getChunkY(), chunk.getChunkZ()), chunk);
-	}
-
-	private static class ChunkGroup {
-
-		private Dimension dimension;
-
-		private HashMap<Vector3i, Chunk> chunks = new HashMap<>();
-		private int x, y, z, size, height;
-
-		public ChunkGroup(int x, int y, int z, int size, int height, Dimension dimension) {
-			this.dimension = dimension;
-			this.x = x;
-			this.y = y;
-			this.z = z;
-			this.size = size;
-			this.height = height;
-
-		}
-
-		public void addToDimension() {
-			chunks.forEach((v, c) -> dimension.chunks.put(v, c));
-		}
-
 	}
 
 }

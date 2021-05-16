@@ -1,5 +1,18 @@
 package xueli.game.renderer;
 
+import static org.lwjgl.opengl.GL11.GL_DEPTH_COMPONENT;
+import static org.lwjgl.opengl.GL11.GL_FLOAT;
+import static org.lwjgl.opengl.GL11.GL_NEAREST;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_WRAP_S;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_WRAP_T;
+import static org.lwjgl.opengl.GL11.glBindTexture;
+import static org.lwjgl.opengl.GL11.glGenTextures;
+import static org.lwjgl.opengl.GL11.glTexImage2D;
+import static org.lwjgl.opengl.GL11.glTexParameteri;
+import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
 import static org.lwjgl.opengl.GL30.*;
 
 import xueli.game.Game;
@@ -8,7 +21,12 @@ public class FrameBuffer {
 
 	protected int width, height;
 	
-	private int fbo, tbo_image, rbo;
+	protected int fbo, tbo_image,tbo_depth, rbo;
+	
+	public FrameBuffer() {
+		this((int)Game.INSTANCE_GAME.getWidth(), (int)Game.INSTANCE_GAME.getHeight());
+		
+	}
 	
 	public FrameBuffer(int width, int height) {
 		this.width = width;
@@ -18,7 +36,7 @@ public class FrameBuffer {
 		
 	}
 	
-	private void create() {
+	protected void create() {
 		this.fbo = glGenFramebuffers();
 		
 		this.tbo_image = glGenTextures();
@@ -27,6 +45,15 @@ public class FrameBuffer {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glBindTexture(GL_TEXTURE_2D, 0);
+		
+		this.tbo_depth = glGenTextures();
+		glBindTexture(GL_TEXTURE_2D, tbo_depth);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
 		
 		this.rbo = glGenRenderbuffers();
 		glBindRenderbuffer(GL_RENDERBUFFER, rbo);
@@ -82,6 +109,10 @@ public class FrameBuffer {
 	
 	public int getTbo_image() {
 		return tbo_image;
+	}
+	
+	public int getTbo_depth() {
+		return tbo_depth;
 	}
 	
 	public int getFbo() {

@@ -29,12 +29,32 @@ public class ScreenQuadRenderer {
 		
 		shader = new Shader("res/shaders/screen_quad/vert.txt", "res/shaders/screen_quad/frag.txt");
 		
+		shader.use();
+		shader.setInt(shader.getUnifromLocation("tex"), 0);
+		shader.setInt(shader.getUnifromLocation("depth"), 1);
+		shader.unbind();
+		
 	}
 	
 	public void render(int textureId) {
 		shader.use();
 		pointer.initDraw();
 		GL30.glBindTexture(GL30.GL_TEXTURE_2D, textureId);
+		pointer.draw(GL30.GL_TRIANGLE_FAN, 0, 4);
+		pointer.postDraw();
+		shader.unbind();
+		
+	}
+	
+	public void render(int textureId, int depthTexID) {
+		shader.use();
+		pointer.initDraw();
+		
+		GL30.glActiveTexture(GL30.GL_TEXTURE0);
+		GL30.glBindTexture(GL30.GL_TEXTURE_2D, textureId);
+		GL30.glActiveTexture(GL30.GL_TEXTURE1);
+		GL30.glBindTexture(GL30.GL_TEXTURE_2D, depthTexID);
+		
 		pointer.draw(GL30.GL_TRIANGLE_FAN, 0, 4);
 		pointer.postDraw();
 		shader.unbind();
