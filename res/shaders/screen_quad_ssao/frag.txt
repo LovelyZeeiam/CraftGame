@@ -1,0 +1,51 @@
+#version 330
+
+const float shadowSize = 0.01f;
+const vec2 noiseScale = vec2(800.0f/4.0f, 600.0f/4.0f); 
+
+in vec2 otexPos;
+
+uniform sampler2D tex;
+uniform sampler2D noise;
+uniform sampler2D ssaoColor;
+uniform sampler2D normal;
+uniform sampler2D frag;
+uniform vec3 samplers[64];
+uniform mat4 projection;
+
+out vec4 out_color;
+
+float calculateSSAO() {
+	vec3 normal = texture(normal, otexPos).rgb;
+	vec3 randomVec = texture(noise, otexPos * noiseScale).xyz;
+	vec3 fragPos = texture(frag, otexPos).xyz;
+	
+	vec3 tangent = normalize(randomVec - normal * dot(randomVec, normal));
+	vec3 bitangent = cross(normal, tangent);
+	mat3 TBN = mat3(tangent, bitangent, normal);
+	
+	float occlusion = 0.0;
+	for(int i = 0; i < 64; ++i)
+	{
+	    vec3 sample = TBN * samplers[i];
+	    sample = fragPos + sample * 1; 
+	
+		vec4 offset = vec4(sample, 1.0);
+		offset = projection * offset;
+		offset.xyz /= offset.w;
+		offset.xyz = offset.xyz * 0.5 + 0.5;
+		
+		float sampleDepth = -texture(ssaoColor, offset.xy).w;
+		occlusion += (sampleDepth >= sample.z ? 1.0 : 0.0);
+	    
+	}
+	
+	return 1.0 - (occlusion / 64);
+}
+
+void main() {
+	float occlusion = calculateSSAO();
+	out_color = vec4(occlusion,occlusion,occlusion,1.0);
+	
+	
+}

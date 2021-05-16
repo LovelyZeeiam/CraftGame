@@ -6,6 +6,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import xueli.game.Game;
 import xueli.game.renderer.FrameBuffer;
+import xueli.game.renderer.SSAO;
 import xueli.game.renderer.ScreenQuadRenderer;
 import xueli.game.utils.GLHelper;
 import xueli.game.utils.Shader;
@@ -29,7 +30,7 @@ public class WorldRenderer {
 	private Shader shader;
 	private SkyRenderer skyRenderer;
 	
-	private FrameBuffer frameBuffer;
+	private FrameBuffer buffer;
 	private ScreenQuadRenderer quadRenderer;
 
 	public WorldRenderer(Dimension dimension) {
@@ -39,7 +40,7 @@ public class WorldRenderer {
 		this.shader = new Shader("res/shaders/world/vert.txt", "res/shaders/world/frag.txt");
 		this.skyRenderer = new SkyRenderer(dimension);
 		
-		this.frameBuffer = new FrameBuffer();
+		this.buffer = new FrameBuffer();
 		this.quadRenderer = new ScreenQuadRenderer();
 		
 	}
@@ -113,8 +114,7 @@ public class WorldRenderer {
 	}
 
 	public void render(TextureAtlas atlas, Player player) {
-		
-		this.frameBuffer.use();
+		this.buffer.use();
 		{
 			GLHelper.checkGLError("World - Pre-renderer");
 			skyRenderer.render(player);
@@ -138,9 +138,8 @@ public class WorldRenderer {
 			GLHelper.checkGLError("World - Post-renderer");
 		
 		}
-		this.frameBuffer.unbind();
-		
-		this.quadRenderer.render(this.frameBuffer.getTbo_image(), this.frameBuffer.getTbo_depth());
+		this.buffer.unbind();
+		this.quadRenderer.render(this.buffer.getTbo_image());
 		
 	}
 
@@ -156,12 +155,12 @@ public class WorldRenderer {
 	public void size() {
 		Shader.setProjectionMatrix(Game.INSTANCE_GAME, shader);
 		skyRenderer.size();
-		this.frameBuffer.resize();
+		this.buffer.resize();
 
 	}
 
 	public void release() {
-		this.frameBuffer.delete();
+		this.buffer.delete();
 		shader.release();
 
 	}

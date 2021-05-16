@@ -36,6 +36,18 @@ public class ScreenQuadRenderer {
 		
 	}
 	
+	public ScreenQuadRenderer(Shader shader) {
+		pointer = new ScreenQuadPointer();
+		
+		pointer.initDraw();
+		pointer.mapBuffer().asFloatBuffer().put(VERTICES);
+		pointer.unmap();
+		pointer.postDraw();
+		
+		this.shader = shader;
+		
+	}
+	
 	public void render(int textureId) {
 		shader.use();
 		pointer.initDraw();
@@ -61,11 +73,15 @@ public class ScreenQuadRenderer {
 		
 	}
 	
+	public ScreenQuadPointer getPointer() {
+		return pointer;
+	}
+	
 	public Shader getShader() {
 		return shader;
 	}
 	
-	private static class ScreenQuadPointer extends VertexPointer {
+	public static class ScreenQuadPointer extends VertexPointer {
 		
 		public ScreenQuadPointer() {
 			super(1024, GL30.GL_STATIC_DRAW);
