@@ -85,7 +85,7 @@ dependencies {
     compile group: 'org.iq80.leveldb', name: 'leveldb', version: '0.12'
     compile 'com.flowpowered:flow-nbt:1.0.0'
 
-
+	implementation group: 'io.netty', name: 'netty-all', version: '4.1.63.Final'
 
 }
 

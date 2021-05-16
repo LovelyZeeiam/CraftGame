@@ -1,0 +1,14 @@
+#version 330
+
+uniform sampler2D depthMap;
+uniform sampler2D viewTexture;
+
+in vec2 otexpos;
+
+out vec4 outcolor;
+
+void main(){
+	float depthValue = texture(depthMap, otexpos).r;
+    outcolor = texture(depthMap, otexpos) * vec4(vec3(1 - depthValue * 0.4), 1.0);
+	
+}

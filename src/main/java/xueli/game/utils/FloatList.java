@@ -6,6 +6,9 @@ import java.util.Arrays;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import xueli.game.vector.Vector3b;
+import xueli.game.vector.Vector4b;
+
 /**
  * 经过测试，性能没有直接的floatBuffer高， 但是还是挺好用的 因为floatBuffer大小已经限制死了
  */
@@ -60,7 +63,7 @@ public class FloatList {
 
 		return this;
 	}
-
+	
 	public FloatList put(Vector3f v) {
 		return put(v.x).put(v.y).put(v.z);
 	}

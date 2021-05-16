@@ -39,6 +39,7 @@ public abstract class Game implements Runnable {
 		display.show();
 
 		onSize((int) getWidth(), (int) getHeight());
+		Time.tick();
 
 		while (display.isRunning()) {
 			ontick();
@@ -63,8 +64,13 @@ public abstract class Game implements Runnable {
 
 	public abstract void ontick();
 
+	protected void defaultViewport() {
+		GL11.glViewport(0, 0, display.getWidth(), display.getHeight());
+		
+	}
+	
 	public void onSize(int width, int height) {
-		GL11.glViewport(0, 0, width, height);
+		defaultViewport();
 		rendererManager.size(width, height);
 
 	}

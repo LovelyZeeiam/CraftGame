@@ -4,8 +4,9 @@ import java.awt.Color;
 import java.util.ArrayList;
 import org.lwjgl.util.vector.Vector3i;
 
-import xueli.craftgame.block.data.BlockFace;
+import xueli.craftgame.block.BlockFace;
 import xueli.game.utils.FloatList;
+import xueli.game.utils.Light;
 import xueli.game.vector.Vector;
 
 public class Chunk {
@@ -14,8 +15,9 @@ public class Chunk {
 	private Dimension dimension;
 
 	Tile[][][] grid = new Tile[16][16][16];
+	Light[][][] light = new Light[16][16][16];
 	int[][] heightmap = new int[16][16];
-
+	
 	private ChunkBuffer buffer = new ChunkBuffer();
 
 	public Chunk(int x, int y, int z, Dimension dimension) {
@@ -46,6 +48,13 @@ public class Chunk {
 	public Tile getBlock(int x, int y, int z) {
 		return grid[x][y][z];
 	}
+	
+	public Light getLight(int x, int y, int z) {
+		Light light = this.light[x][y][z];
+		if(light != null)
+			return light;
+		return new Light(0.8f, Color.WHITE);
+	}
 
 	public int getChunkX() {
 		return chunkX;
@@ -68,7 +77,7 @@ public class Chunk {
 	}
 
 	public class ChunkBuffer {
-		private FloatList buffer = new FloatList(32768);
+		private FloatList buffer = new FloatList(32768 * 4);
 
 		private FloatList bufferAlpha = new FloatList(32768);
 		private ArrayList<Vector3i> alphaTiles = new ArrayList<>();

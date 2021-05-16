@@ -1,21 +1,36 @@
 #version 330
 
+const vec3 sunColor = vec3(1.0, 1.0, 1.0);
+
+in vec3 fragPos;
 in vec2 otexPos;
 in vec3 ocolor;
-
-uniform sampler2D texSampler;
-
+in float osunLight;
 in float visibility;
+in vec3 onormal;
+
 uniform vec3 skyColor;
+uniform vec3 sunDirection;
+uniform sampler2D texSampler;
 
 out vec4 out_color;
 
+float diff() {
+	vec3 norm = normalize(onormal);
+	vec3 lightDir = normalize(sunDirection);
+	return -max(dot(norm, lightDir), 0.0);
+}
+
 void main(){
-	vec4 color = texture(texSampler, otexPos) * vec4(ocolor, 1.0);
-	if(color.w == 0) discard;
-	out_color = color;
+	vec3 sunLightColor = sunColor * osunLight;
+	vec3 real_sun_color = mix(ocolor, sunLightColor, 1.0);
 	
-	out_color = mix(vec4(skyColor, 1.0), out_color, visibility);
+	vec4 ambient = texture(texSampler, otexPos);
+	if(ambient.w == 0) discard;
+	
+	vec3 color = ambient.xyz * vec3(mix(1.0,3.0,diff()));
+	
+	out_color = mix(vec4(skyColor, 1.0), vec4(color, 1.0), visibility);
 
 	
 }

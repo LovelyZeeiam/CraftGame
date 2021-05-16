@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.lwjgl.util.vector.Vector3i;
 
 import xueli.craftgame.init.Blocks;
+import xueli.game.utils.Light;
 import xueli.game.vector.Vector;
 
 public class Dimension {
@@ -39,6 +40,13 @@ public class Dimension {
 
 	public Chunk getChunk(int x, int y, int z) {
 		return chunks.get(new Vector3i(x, y, z));
+	}
+	
+	public Light getLight(int x, int y, int z) {
+		Chunk chunk = chunks.get(new Vector3i(x >> 4, y >> 4, z >> 4));
+		if (chunk == null)
+			return null;
+		return chunk.getLight(x - (chunk.getChunkX() << 4), y - (chunk.getChunkY() << 4), z - (chunk.getChunkZ() << 4));
 	}
 
 	public void tick(Vector playerPos) {

@@ -1,0 +1,11 @@
+#version 330
+
+in vec2 otexPos;
+uniform sampler2D texSampler;
+
+out vec4 out_color;
+
+void main(){
+	out_color = texture(texSampler, otexPos);
+	
+}

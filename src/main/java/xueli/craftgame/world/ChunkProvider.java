@@ -120,7 +120,7 @@ public class ChunkProvider extends ThreadTask {
 			if (level.checkChunkExist(x, y, z)) {
 				dimension.chunks.put(new Vector3i(x, y, z), level.getChunk(x, y, z));
 			} else {
-				dimension.chunks.put(new Vector3i(x, y, z), generator.genChunk(x, y, z));
+				generator.genChunk(x, y, z);
 			}
 
 		}

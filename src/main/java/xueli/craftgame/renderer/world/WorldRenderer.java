@@ -5,37 +5,42 @@ import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import xueli.game.Game;
+import xueli.game.renderer.FrameBuffer;
+import xueli.game.renderer.ScreenQuadRenderer;
 import xueli.game.utils.GLHelper;
 import xueli.game.utils.Shader;
-import xueli.game.utils.VertexPointer;
 import xueli.game.utils.math.MatrixHelper;
 import xueli.game.utils.texture.TextureAtlas;
 import xueli.game.vector.Vector;
 import xueli.craftgame.entity.Player;
+import xueli.craftgame.renderer.VertexPointer;
 import xueli.craftgame.renderer.sky.SkyRenderer;
 import xueli.craftgame.world.Chunk;
 import xueli.craftgame.world.Dimension;
 
 public class WorldRenderer {
 
-	public static int DRAW_DISTANCE = 4;
-	public static int DRAW_DISTANCE_Y = 4;
+	public static int DRAW_DISTANCE = 3;
+	public static int DRAW_DISTANCE_Y = 3;
 
 	private Dimension dimension;
 
 	private VertexPointer pointer;
-
 	private Shader shader;
-
 	private SkyRenderer skyRenderer;
+	
+	private FrameBuffer frameBuffer;
+	private ScreenQuadRenderer quadRenderer;
 
 	public WorldRenderer(Dimension dimension) {
 		this.dimension = dimension;
 		this.pointer = new VertexPointer();
 
 		this.shader = new Shader("res/shaders/world/vert.txt", "res/shaders/world/frag.txt");
-
 		this.skyRenderer = new SkyRenderer(dimension);
+		
+		this.quadRenderer = new ScreenQuadRenderer();
+		this.frameBuffer = new FrameBuffer((int)Game.INSTANCE_GAME.getWidth(), (int)Game.INSTANCE_GAME.getHeight());
 
 	}
 
@@ -108,26 +113,40 @@ public class WorldRenderer {
 	}
 
 	public void render(TextureAtlas atlas, Player player) {
-		skyRenderer.render();
-
-		GL11.glEnable(GL11.GL_CULL_FACE);
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-
-		GLHelper.checkGLError("Pre-renderer");
-
-		shader.use();
-		shader.setUniformVector3(shader.getUnifromLocation("skyColor"), skyRenderer.getSkyColor());
-		GL13.glActiveTexture(GL13.GL_TEXTURE0);
-		atlas.bind();
-		draw(player.getPos());
-		atlas.unbind();
-		shader.unbind();
-
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
-		GL11.glDisable(GL11.GL_CULL_FACE);
-
-		GLHelper.checkGLError("post-renderer");
-
+		this.frameBuffer.use();
+		{
+			GLHelper.checkGLError("World - Pre-renderer");
+			
+			skyRenderer.render(player);
+			
+			GLHelper.checkGLError("World - Sky");
+	
+			GL11.glEnable(GL11.GL_CULL_FACE);
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
+	
+			shader.use();
+			shader.setUniformVector3(shader.getUnifromLocation("skyColor"), skyRenderer.getSkyColor());
+			shader.setUniformVector3(shader.getUnifromLocation("sunDirection"), skyRenderer.getSunDirection());
+			GL13.glActiveTexture(GL13.GL_TEXTURE0);
+			atlas.bind();
+			draw(player.getPos());
+			atlas.unbind();
+			shader.unbind();
+	
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
+			GL11.glDisable(GL11.GL_CULL_FACE);
+	
+			GLHelper.checkGLError("World - Post-renderer");
+		
+		}
+		this.frameBuffer.unbind();
+		
+		{
+			this.quadRenderer.render(this.frameBuffer.getTbo_image());
+			
+			
+		}
+		
 	}
 
 	public void update(Player player) {
@@ -142,6 +161,7 @@ public class WorldRenderer {
 	public void size() {
 		Shader.setProjectionMatrix(Game.INSTANCE_GAME, shader);
 		skyRenderer.size();
+		this.frameBuffer.resize();
 
 	}
 

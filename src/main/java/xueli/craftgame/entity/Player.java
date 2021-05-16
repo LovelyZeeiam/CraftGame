@@ -6,8 +6,8 @@ import org.lwjgl.util.vector.Vector3i;
 
 import com.flowpowered.nbt.ByteTag;
 
-import xueli.craftgame.block.data.BlockFace;
-import xueli.craftgame.block.data.BlockTags;
+import xueli.craftgame.block.BlockFace;
+import xueli.craftgame.block.BlockTags;
 import xueli.craftgame.inventory.Inventory;
 import xueli.craftgame.world.Dimension;
 import xueli.craftgame.world.Tile;
@@ -26,9 +26,12 @@ public class Player {
 	Vector pos = new Vector(0, 30, 0);
 	Vector3f speed = new Vector3f();
 	private Vector3f acceleration = new Vector3f();
+	
+	boolean onGround = true;
 
 	private Dimension dimension;
-
+	private WorldCollider collider;
+	
 	private Display display;
 
 	private Inventory inventory;
@@ -36,13 +39,15 @@ public class Player {
 	public Player(Dimension dimension) {
 		this.display = Game.INSTANCE_GAME.getDisplay();
 		this.dimension = dimension;
+		this.collider = new WorldCollider(dimension);
 
-		this.inventory = new Inventory(dimension.getBlocks());
+		if(dimension != null)
+			this.inventory = new Inventory(dimension.getBlocks());
 
 	}
 
 	private long lastTimeOperationBlock = Time.thisTime;
-
+	
 	public void tick() {
 		if (display.isMouseGrabbed()) {
 			/**
@@ -116,13 +121,15 @@ public class Player {
 			}
 
 			if (display.isKeyDown(GLFW.GLFW_KEY_SPACE)) {
+				//acceleration.y += 1500;
 				acceleration.y += this.getSpeed() * 2.0f;
+				
 			}
 
 			if (display.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
 				acceleration.y -= this.getSpeed() * 2.0f;
 			}
-
+			
 			pos.rotX += display.getCursor_dy() * 0.08f;
 			pos.rotY += display.getCursor_dx() * 0.08f;
 
@@ -160,23 +167,28 @@ public class Player {
 			}
 
 		}
-
+	
+		// TODO: When deltaTime increase, player will jump higher
+		
 		speed.x += acceleration.x * Time.deltaTime / 1000.0f;
 		speed.y += acceleration.y * Time.deltaTime / 1000.0f;
 		speed.z += acceleration.z * Time.deltaTime / 1000.0f;
-
+		
 		Vector3f deltaPos = new Vector3f(speed.x * Time.deltaTime / 1000.0f, speed.y * Time.deltaTime / 1000.0f,
 				speed.z * Time.deltaTime / 1000.0f);
-		pos.x += deltaPos.x;
-		pos.y += deltaPos.y;
-		pos.z += deltaPos.z;
-
+		//pos.x += deltaPos.x;
+		//pos.y += deltaPos.y;
+		//pos.z += deltaPos.z;
+		onGround = false;
+		collider.entityCollide(this, deltaPos);
+		
 		speed.x *= 0.8f;
-		speed.y *= 0.8f;
+		speed.y *= 0.9f;
 		speed.z *= 0.8f;
-
+		
 		acceleration.x = acceleration.y = acceleration.z = 0;
-
+		//acceleration.y -= 98.0f;
+		
 		this.inventory.tick();
 
 	}

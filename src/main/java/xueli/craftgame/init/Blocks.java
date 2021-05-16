@@ -1,7 +1,10 @@
 package xueli.craftgame.init;
 
+import java.awt.Color;
+
 import xueli.craftgame.block.AbstractAlphaBlock;
 import xueli.craftgame.block.AbstractBlock;
+import xueli.craftgame.block.AbstractLightBlock;
 import xueli.craftgame.block.AbstractPlant;
 import xueli.craftgame.block.AbstractSlab;
 import xueli.craftgame.block.AbstractStair;
@@ -49,6 +52,19 @@ public class Blocks extends Modules<BlockBase> {
 				"cg:flower_lily_of_the_valley"));
 		add(new AbstractPlant("craftgame:flower_rose", "Rose", "cg:flower_rose"));
 		add(new AbstractPlant("craftgame:flower_rose_blue", "Blue Rose", "cg:flower_rose_blue"));
+		add(new AbstractBlock("craftgame:log_oak", "Oak Log", "cg:log_oak","cg:log_oak","cg:log_oak","cg:log_oak","cg:log_oak_top","cg:log_oak_top"));
+		add(new AbstractAlphaBlock("craftgame:leaves_oak", "Oak Leaves", "cg:leaves_oak_carried"));
+		add(new AbstractBlock("craftgame:obsidian", "Obsidian", "cg:obsidian"));
+		add(new AbstractBlock("craftgame:netherrack", "Netherrack", "cg:netherrack"));
+		add(new AbstractBlock("craftgame:nether_brick", "Nether Brick", "cg:nether_brick"));
+		add(new AbstractBlock("craftgame:red_nether_brick", "Red Nether Brick", "cg:red_nether_brick"));
+		add(new AbstractLightBlock("craftgame:glowstone", "Glowstone", new Color(250, 218, 141) , "cg:glowstone"));
+		add(new AbstractBlock("craftgame:sand", "Sand", "cg:sand"));
+		add(new AbstractBlock("craftgame:red_sand", "Red Sand", "cg:red_sand"));
+		add(new AbstractPlant("craftgame:sapling_oak", "Oak Sapling", "cg:sapling_oak"));
+		
+		
+		
 
 	}
 

@@ -5,8 +5,6 @@ import java.util.HashMap;
 
 import org.lwjgl.util.vector.Vector2f;
 
-import xueli.craftgame.block.data.BlockFace;
-import xueli.craftgame.block.data.BlockTags;
 import xueli.craftgame.init.Models;
 import xueli.craftgame.renderer.model.TexturedModel;
 import xueli.craftgame.renderer.model.TexturedModelBuilder;
@@ -14,6 +12,7 @@ import xueli.craftgame.state.StateWorld;
 import xueli.craftgame.world.Dimension;
 import xueli.craftgame.world.Tile;
 import xueli.game.utils.FloatList;
+import xueli.game.utils.Light;
 import xueli.game.utils.texture.AtlasTextureHolder;
 
 public class AbstractStair extends AbstractBlock {
@@ -170,24 +169,26 @@ public class AbstractStair extends AbstractBlock {
 
 		byte faceTo = (byte) tile.getTags().get(BlockTags.TAG_NAME_FACE_TO).getValue();
 		byte part = (byte) tile.getTags().get(BlockTags.TAG_NAME_PART).getValue();
+		
+		Light light = dimension.getLight(x, y, z);
 
 		// System.out.println(BlockFace.getFacingDescription(faceTo) + ", " +
 		// BlockFace.getPartDescription(part));
 
 		if (part == BlockFace.PART_DOWN) {
 			return switch (faceTo) {
-			case BlockFace.FRONT -> models.get("cg:stair_down_front").getRenderData(x, y, z, face, color, buffer);
-			case BlockFace.BACK -> models.get("cg:stair_down_back").getRenderData(x, y, z, face, color, buffer);
-			case BlockFace.LEFT -> models.get("cg:stair_down_left").getRenderData(x, y, z, face, color, buffer);
-			case BlockFace.RIGHT -> models.get("cg:stair_down_right").getRenderData(x, y, z, face, color, buffer);
+			case BlockFace.FRONT -> models.get("cg:stair_down_front").getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
+			case BlockFace.BACK -> models.get("cg:stair_down_back").getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
+			case BlockFace.LEFT -> models.get("cg:stair_down_left").getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
+			case BlockFace.RIGHT -> models.get("cg:stair_down_right").getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
 			default -> 0;
 			};
 		} else if (part == BlockFace.PART_UP) {
 			return switch (faceTo) {
-			case BlockFace.FRONT -> models.get("cg:stair_up_front").getRenderData(x, y, z, face, color, buffer);
-			case BlockFace.BACK -> models.get("cg:stair_up_back").getRenderData(x, y, z, face, color, buffer);
-			case BlockFace.LEFT -> models.get("cg:stair_up_left").getRenderData(x, y, z, face, color, buffer);
-			case BlockFace.RIGHT -> models.get("cg:stair_up_right").getRenderData(x, y, z, face, color, buffer);
+			case BlockFace.FRONT -> models.get("cg:stair_up_front").getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
+			case BlockFace.BACK -> models.get("cg:stair_up_back").getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
+			case BlockFace.LEFT -> models.get("cg:stair_up_left").getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
+			case BlockFace.RIGHT -> models.get("cg:stair_up_right").getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
 			default -> 0;
 			};
 		} else {

@@ -12,5 +12,7 @@ public class WorldUpdater extends ThreadTask {
 		this.dimension = dimension;
 
 	}
+	
+	
 
 }

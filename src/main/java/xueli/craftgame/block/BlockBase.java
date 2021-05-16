@@ -8,6 +8,7 @@ import xueli.craftgame.renderer.model.TexturedModel;
 import xueli.craftgame.world.Dimension;
 import xueli.game.module.Module;
 import xueli.game.utils.FloatList;
+import xueli.game.utils.Light;
 
 public class BlockBase extends Module {
 
@@ -64,7 +65,8 @@ public class BlockBase extends Module {
 	}
 
 	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Color color, Dimension dimension) {
-		return model.getRenderData(x, y, z, face, color, buffer);
+		Light light = dimension.getLight(x, y, z);
+		return model.getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
 	}
 
 	@Override
