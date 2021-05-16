@@ -15,8 +15,8 @@ out vec3 ocolor;
 out float osunLight;
 out vec3 onormal;
 
-const float density = 0.05;
-const float gradient = 4;
+const float density = 0.004;
+const float gradient = 6.0;
 out float visibility;
 
 void main(){

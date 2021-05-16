@@ -1,7 +1,10 @@
 package xueli.craftgame.world;
 
+import java.util.Random;
+
 import org.lwjgl.util.vector.Vector3i;
 
+import ch.project.inter.SimplexNoise;
 import xueli.craftgame.init.Blocks;
 
 public class ChunkGenerator {
@@ -12,13 +15,34 @@ public class ChunkGenerator {
 	public ChunkGenerator(Dimension dimension) {
 		this.dimension = dimension;
 		this.blocks = dimension.blocks;
-
-	}
-
-	private static final int GROUP_SIZE = 8, GROUP_HEIGHT = 6;
-
-	public void genChunk(int x, int y, int z) {
 		
+	}
+	
+	private void addChunk(Chunk chunk) {
+		dimension.chunks.put(new Vector3i(chunk.getChunkX(), chunk.getChunkY(), chunk.getChunkZ()), chunk);
+	}
+	
+	public void genChunk(int x, int y, int z) {
+		if(y == 0) {
+			Chunk chunk = new Chunk(x, y, z, dimension);
+			
+			for(int xInChunk = 0; xInChunk < 16; xInChunk++) {
+				for(int zInChunk = 0; zInChunk < 16; zInChunk++) {
+					int maxHeight = (int) ((SimplexNoise.noise((x * 16 + xInChunk) / 32.0f, (z * 16 + zInChunk) / 32.0f) + 1.0f) * 5.0f);
+					
+					chunk.grid[xInChunk][maxHeight][zInChunk] = new Tile(blocks.getModule("craftgame:dirt"));
+					chunk.heightmap[xInChunk][zInChunk] = maxHeight;
+					for(int i = 0; i < maxHeight; i++) {
+						chunk.grid[xInChunk][i][zInChunk] = new Tile(blocks.getModule("craftgame:dirt"));
+						
+					}
+					
+				}
+			}
+			
+			addChunk(chunk);
+		} else
+			genSuperFlat(x, y, z);
 		
 	}
 
@@ -44,10 +68,6 @@ public class ChunkGenerator {
 		}
 		addChunk(chunk);
 
-	}
-
-	private void addChunk(Chunk chunk) {
-		dimension.chunks.put(new Vector3i(chunk.getChunkX(), chunk.getChunkY(), chunk.getChunkZ()), chunk);
 	}
 
 }

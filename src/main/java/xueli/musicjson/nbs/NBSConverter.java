@@ -15,7 +15,7 @@ import com.google.gson.JsonObject;
 public class NBSConverter {
 
 	public static void main(String[] args) throws IOException {
-		
+		convert("D:\\eclipse-java-workspace\\CraftGame\\res\\music\\ok x lionhearted.nbs", "D:\\\\eclipse-java-workspace\\\\CraftGame\\\\res\\\\music\\\\ok x lionhearted.json");
 
 	}
 

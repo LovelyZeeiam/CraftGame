@@ -21,7 +21,7 @@ import xueli.craftgame.world.Dimension;
 public class WorldRenderer {
 
 	public static int DRAW_DISTANCE = 3;
-	public static int DRAW_DISTANCE_Y = 3;
+	public static int DRAW_DISTANCE_Y = 2;
 
 	private Dimension dimension;
 

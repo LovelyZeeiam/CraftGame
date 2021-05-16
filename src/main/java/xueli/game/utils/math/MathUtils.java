@@ -35,6 +35,10 @@ public class MathUtils {
 		float f = (float) (1f - Math.cos(theta)) * 0.5f;
 		return a * (1f - f) + b * f;
 	}
+	
+	public static float mixLinear(float a, float b, float blend) {
+		return blend * (b - a) + a;
+	}
 
 	public static double min(double... nums) {
 		double min = nums[0];

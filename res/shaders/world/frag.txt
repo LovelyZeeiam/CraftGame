@@ -28,7 +28,7 @@ void main(){
 	vec4 ambient = texture(texSampler, otexPos);
 	if(ambient.w == 0) discard;
 	
-	vec3 color = ambient.xyz * vec3(mix(1.0,3.0,diff()));
+	vec3 color = ambient.xyz * vec3(mix(0.8,2.0,diff()));
 	
 	out_color = mix(vec4(skyColor, 1.0), vec4(color, 1.0), visibility);
 

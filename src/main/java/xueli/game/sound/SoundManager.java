@@ -90,7 +90,7 @@ public class SoundManager {
 
 	public void play(String name, float volume, float pitch) {
 		if(!sounds.containsKey(name)) {
-			logger.severe("Can't find sound: " + name);
+			logger.severe("[Sound] Can't find sound: " + name);
 			return;
 		}
 
@@ -106,6 +106,8 @@ public class SoundManager {
 
 		speakers.add(src);
 
+		logger.info("[Sound] play: " + name + ", " + volume + ", " + pitch);
+		
 	}
 
 	public void tick() {

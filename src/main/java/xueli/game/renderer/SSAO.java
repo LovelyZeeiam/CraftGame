@@ -2,7 +2,36 @@ package xueli.game.renderer;
 
 import static org.lwjgl.opengl.GL30.*;
 
+import java.util.Random;
+
+import org.lwjgl.util.vector.Vector3f;
+
+import xueli.game.utils.math.MathUtils;
+
 public class SSAO extends FrameBuffer {
+	
+	private static Vector3f[] randomFloats = new Vector3f[64];
+	
+	
+	static {
+		Random random = new Random();
+		
+		for(int i = 0; i < 64; i++) {
+			randomFloats[i] = new Vector3f(
+				random.nextFloat() * 2 - 1,
+				random.nextFloat() * 2 - 1,
+				random.nextFloat()
+			);
+			randomFloats[i].normalise();
+			randomFloats[i].scale(random.nextFloat());
+			
+			float scale = i / 64.0f;
+			scale = MathUtils.mixLinear(0.1f, 1.0f, scale * scale);
+			
+			randomFloats[i].scale(scale);
+		}
+		
+	}
 
 	public SSAO() {
 		super();
