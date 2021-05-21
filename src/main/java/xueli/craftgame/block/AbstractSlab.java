@@ -71,5 +71,14 @@ public class AbstractSlab extends AbstractBlock {
 			return up.getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
 		return 0;
 	}
+	
+	@Override
+	public int getRenderModelViewData(FloatList buffer) {
+		int v = 0;
+		for(byte f = 0; f < 6; f++) {
+			v += down.getRenderData(0, 0.5f, 0, f, Color.WHITE, 15, buffer);
+		}
+		return v;
+	}
 
 }

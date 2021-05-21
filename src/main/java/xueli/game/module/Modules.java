@@ -6,8 +6,8 @@ import java.util.logging.Logger;
 
 public class Modules<T extends Module> {
 
-	private HashMap<String, T> modules = new HashMap<>();
-	private ArrayList<T> indices = new ArrayList<>();
+	protected HashMap<String, T> modules = new HashMap<>();
+	protected ArrayList<T> indices = new ArrayList<>();
 
 	public Modules() {
 

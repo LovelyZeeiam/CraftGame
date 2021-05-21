@@ -65,8 +65,16 @@ public class BlockBase extends Module {
 	}
 
 	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Color color, Dimension dimension) {
-		Light light = dimension.getLight(x, y, z);
+		Light light = dimension != null ? dimension.getLight(x, y, z) : new Light(15, Color.WHITE);
 		return model.getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
+	}
+	
+	public int getRenderModelViewData(FloatList buffer) {
+		int v = 0;
+		for(byte f = 0; f < 6; f++) {
+			v += getRenderCubeData(buffer, 0, 0, 0, f, Color.WHITE, null);
+		}
+		return v;
 	}
 
 	@Override

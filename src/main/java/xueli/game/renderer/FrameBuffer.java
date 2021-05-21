@@ -1,19 +1,12 @@
 package xueli.game.renderer;
 
-import static org.lwjgl.opengl.GL11.GL_DEPTH_COMPONENT;
-import static org.lwjgl.opengl.GL11.GL_FLOAT;
-import static org.lwjgl.opengl.GL11.GL_NEAREST;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_WRAP_S;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_WRAP_T;
-import static org.lwjgl.opengl.GL11.glBindTexture;
-import static org.lwjgl.opengl.GL11.glGenTextures;
-import static org.lwjgl.opengl.GL11.glTexImage2D;
-import static org.lwjgl.opengl.GL11.glTexParameteri;
-import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
 import static org.lwjgl.opengl.GL30.*;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import xueli.game.Game;
 
@@ -21,7 +14,7 @@ public class FrameBuffer {
 
 	protected int width, height;
 	
-	protected int fbo, tbo_image,tbo_depth, rbo;
+	protected int fbo, tbo_image, rbo;
 	
 	public FrameBuffer() {
 		this((int)Game.INSTANCE_GAME.getWidth(), (int)Game.INSTANCE_GAME.getHeight());
@@ -46,14 +39,6 @@ public class FrameBuffer {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glBindTexture(GL_TEXTURE_2D, 0);
 		
-		this.tbo_depth = glGenTextures();
-		glBindTexture(GL_TEXTURE_2D, tbo_depth);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		
 		this.rbo = glGenRenderbuffers();
 		glBindRenderbuffer(GL_RENDERBUFFER, rbo);
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
@@ -69,6 +54,25 @@ public class FrameBuffer {
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		
+	}
+	
+	// TODO: UPSIDE DOWN
+	public void save(String path) {
+		int[] data = new int[width * height];
+
+		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+		glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR_PRE);
+		image.setRGB(0, 0, width, height, data, 0, width);
+		
+		try {
+			ImageIO.write(image, "png", new File(path));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 	public void use() {
@@ -108,10 +112,6 @@ public class FrameBuffer {
 	
 	public int getTbo_image() {
 		return tbo_image;
-	}
-	
-	public int getTbo_depth() {
-		return tbo_depth;
 	}
 	
 	public int getFbo() {

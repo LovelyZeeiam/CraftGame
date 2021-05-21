@@ -28,7 +28,7 @@ public class AbstractPlant extends AbstractBlock {
 
 	@Override
 	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Color color, Dimension dimension) {
-		Light light = dimension.getLight(x, y, z);
+		Light light = dimension == null ? new Light(15, Color.WHITE) : dimension.getLight(x, y, z);
 		CubeDrawer.drawQuad(buffer, new Vector3f(x + 0.2f, y + 0.8f, z + 0.2f), holder.p_left_top,
 				new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),light.getSunLight(),
 				new Vector3f(x + 0.8f, y + 0.8f, z + 0.8f), holder.p_right_top,

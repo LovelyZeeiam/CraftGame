@@ -1,7 +1,5 @@
 package xueli.craftgame.world;
 
-import java.util.Random;
-
 import org.lwjgl.util.vector.Vector3i;
 
 import ch.project.inter.SimplexNoise;
@@ -30,7 +28,7 @@ public class ChunkGenerator {
 				for(int zInChunk = 0; zInChunk < 16; zInChunk++) {
 					int maxHeight = (int) ((SimplexNoise.noise((x * 16 + xInChunk) / 32.0f, (z * 16 + zInChunk) / 32.0f) + 1.0f) * 5.0f);
 					
-					chunk.grid[xInChunk][maxHeight][zInChunk] = new Tile(blocks.getModule("craftgame:dirt"));
+					chunk.grid[xInChunk][maxHeight][zInChunk] = new Tile(blocks.getModule("craftgame:grass"));
 					chunk.heightmap[xInChunk][zInChunk] = maxHeight;
 					for(int i = 0; i < maxHeight; i++) {
 						chunk.grid[xInChunk][i][zInChunk] = new Tile(blocks.getModule("craftgame:dirt"));

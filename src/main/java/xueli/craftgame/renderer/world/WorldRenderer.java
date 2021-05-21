@@ -2,11 +2,12 @@ package xueli.craftgame.renderer.world;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
+
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import xueli.game.Game;
 import xueli.game.renderer.FrameBuffer;
-import xueli.game.renderer.SSAO;
 import xueli.game.renderer.ScreenQuadRenderer;
 import xueli.game.utils.GLHelper;
 import xueli.game.utils.Shader;
@@ -116,7 +117,7 @@ public class WorldRenderer {
 	public void render(TextureAtlas atlas, Player player) {
 		this.buffer.use();
 		{
-			GLHelper.checkGLError("World - Pre-renderer");
+			GLHelper.checkGLError("World - Pre-render");
 			skyRenderer.render(player);
 			GLHelper.checkGLError("World - Sky");
 			
@@ -135,11 +136,16 @@ public class WorldRenderer {
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
 			GL11.glDisable(GL11.GL_CULL_FACE);
 	
-			GLHelper.checkGLError("World - Post-renderer");
+			GLHelper.checkGLError("World - Post-render");
 		
 		}
 		this.buffer.unbind();
+		
 		this.quadRenderer.render(this.buffer.getTbo_image());
+		
+		if(Game.INSTANCE_GAME.getDisplay().isKeyDownOnce(GLFW.GLFW_KEY_F4)) {
+			this.buffer.save("temp/screenshot.png");
+		}
 		
 	}
 

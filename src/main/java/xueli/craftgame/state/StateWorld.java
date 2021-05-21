@@ -4,6 +4,7 @@ import org.lwjgl.glfw.GLFW;
 import xueli.craftgame.entity.Player;
 import xueli.craftgame.init.Blocks;
 import xueli.craftgame.init.Models;
+import xueli.craftgame.inventory.InventoryRenderer;
 import xueli.craftgame.renderer.world.WorldRenderer;
 import xueli.craftgame.world.Dimension;
 import xueli.game.renderer.NVGRenderer;
@@ -26,7 +27,8 @@ public class StateWorld extends NVGRenderer {
 	private Models models;
 
 	private Player player;
-
+	private InventoryRenderer inventoryRenderer;
+	
 	private Dimension dimension;
 	private WorldRenderer worldRenderer;
 
@@ -45,13 +47,16 @@ public class StateWorld extends NVGRenderer {
 
 		this.models = new Models();
 		this.models.init();
+		
 		this.blocks = new Blocks();
 		this.blocks.init();
+		this.blocks.genModelView(blocksTextureAtlas);
 
 		this.dimension = new Dimension(blocks);
 		this.worldRenderer = new WorldRenderer(dimension);
 
 		this.player = new Player(dimension);
+		this.inventoryRenderer = new InventoryRenderer(this.player.getInventory());
 
 		game.getDisplay().setMouseGrabbed(true);
 
@@ -63,7 +68,8 @@ public class StateWorld extends NVGRenderer {
 		MatrixHelper.calculateFrustumPlane();
 
 		player.tick();
-
+		this.inventoryRenderer.update();
+		
 		if (game.getDisplay().isKeyDownOnce(GLFW.GLFW_KEY_ESCAPE))
 			game.getDisplay().setMouseGrabbed(!game.getDisplay().isMouseGrabbed());
 
@@ -76,6 +82,7 @@ public class StateWorld extends NVGRenderer {
 		super.size();
 
 		worldRenderer.size();
+		inventoryRenderer.size();
 
 	}
 
@@ -123,6 +130,8 @@ public class StateWorld extends NVGRenderer {
 		worldRenderer.render(blocksTextureAtlas, player);
 
 		super.render();
+		inventoryRenderer.render();
+		
 	}
 
 	@Override
@@ -134,6 +143,7 @@ public class StateWorld extends NVGRenderer {
 
 		this.dimension.close();
 		this.player.close();
+		inventoryRenderer.release();
 
 	}
 

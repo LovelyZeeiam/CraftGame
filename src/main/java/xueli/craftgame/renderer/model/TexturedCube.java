@@ -35,7 +35,7 @@ public class TexturedCube extends Cube {
 
 	}
 
-	public int getDrawData(int x, int y, int z, byte face, Color color, float skyColor , FloatList buffer) {
+	public int getDrawData(float x, float y, float z, byte face, Color color, float skyColor , FloatList buffer) {
 		switch (face) {
 		case BlockFace.FRONT: {
 			AtlasTextureHolder texHolder = this.faces[BlockFace.FRONT];

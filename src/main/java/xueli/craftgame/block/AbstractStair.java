@@ -172,9 +172,6 @@ public class AbstractStair extends AbstractBlock {
 		
 		Light light = dimension.getLight(x, y, z);
 
-		// System.out.println(BlockFace.getFacingDescription(faceTo) + ", " +
-		// BlockFace.getPartDescription(part));
-
 		if (part == BlockFace.PART_DOWN) {
 			return switch (faceTo) {
 			case BlockFace.FRONT -> models.get("cg:stair_down_front").getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
@@ -194,6 +191,17 @@ public class AbstractStair extends AbstractBlock {
 		} else {
 			return 0;
 		}
+	}
+	
+	@Override
+	public int getRenderModelViewData(FloatList buffer) {
+		int v = 0;
+		TexturedModel model = this.models.get("cg:stair_down_front");
+		for(byte f = 0; f < 6; f++) {
+			v += model.getRenderData(0, 0, 0, f, Color.WHITE, 15, buffer);
+		}
+		return v;
+		
 	}
 
 }
