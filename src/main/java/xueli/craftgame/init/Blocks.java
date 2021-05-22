@@ -110,7 +110,7 @@ public class Blocks extends Modules<BlockBase> {
 		Shader.setViewMatrix(MatrixHelper.lookAt(new Vector3f(4, 4, 4), new Vector3f(0, 0, 0), new Vector3f(0, 1, 0)), shader);
 		
 		shader.use();
-		shader.setUniformVector3(shader.getUnifromLocation("sunDirection"), new Vector3f(-10, -10, 10));
+		shader.setUniformVector3(shader.getUnifromLocation("sunDirection"), new Vector3f(7, -10, 10));
 		shader.unbind();
 		
 		modules.forEach((namespace, b) -> {

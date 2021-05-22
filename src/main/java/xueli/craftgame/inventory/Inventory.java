@@ -5,6 +5,8 @@ import xueli.craftgame.init.Blocks;
 
 public class Inventory {
 
+	private static final int SLOT_NUM = 9;
+	
 	private Blocks blocks;
 	private int i = 0;
 

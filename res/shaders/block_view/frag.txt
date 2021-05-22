@@ -17,7 +17,7 @@ float diff() {
 void main(){
 	vec4 ambient = texture(texSampler, otexPos);
 	if(ambient.w == 0) discard;
-	out_color = vec4(ambient.xyz * vec3(mix(0.8,1.2,diff())), ambient.w);
+	out_color = vec4(ambient.xyz * vec3(mix(0.87,1.4,diff())), ambient.w);
 
 	
 }
