@@ -33,6 +33,8 @@ public class StateWorld extends NVGRenderer {
 	private WorldRenderer worldRenderer;
 
 	private int tex_cross;
+	
+	public static String savePath = ".cg/saves/Test/";
 
 	public StateWorld() {
 		super();

@@ -1,4 +1,4 @@
-package xueli.craftgame.entity.test;
+package xueli.craftgame.entity.bonetest;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;

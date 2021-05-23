@@ -1,4 +1,4 @@
-package xueli.craftgame.entity.test;
+package xueli.craftgame.entity.bonetest;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;

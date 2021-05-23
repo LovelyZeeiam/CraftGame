@@ -3,6 +3,7 @@ package xueli.craftgame.world;
 import org.lwjgl.util.vector.Vector3i;
 
 import xueli.craftgame.renderer.world.WorldRenderer;
+import xueli.craftgame.state.StateWorld;
 import xueli.game.utils.ThreadTask;
 import xueli.game.utils.Time;
 import xueli.game.utils.math.MatrixHelper;
@@ -17,7 +18,7 @@ public class ChunkProvider extends ThreadTask {
 
 	private ChunkGenerator generator;
 
-	private String regionPath = ".cg/saves/Test/regions/";
+	private String regionPath = StateWorld.savePath + "/regions/";
 	private DimensionLevel level;
 
 	public ChunkProvider(Dimension dimension) {

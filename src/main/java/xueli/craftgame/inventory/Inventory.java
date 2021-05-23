@@ -90,6 +90,10 @@ public class Inventory {
 	public void close() {
 		
 	}
+	
+	public InventoryItem findBlockItem(String namespace) {
+		return items.get(items.indexOf(new BlockInventoryItem(new BlockBase(namespace))));
+	}
 
 	public void setChosenIndex(int i) {
 		this.chosenSlotId = i;

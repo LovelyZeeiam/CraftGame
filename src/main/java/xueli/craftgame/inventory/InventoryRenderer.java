@@ -204,6 +204,7 @@ public class InventoryRenderer extends NVGRenderer {
 				keyboardMapping.forEach((key, v) -> {
 					if(game.getDisplay().isKeyDownOnce(key)) {
 						InventoryItem item = itemPages.get(chosenViewPage).get(v.y, v.x);
+						if(item == null) return;
 						item.onHovered(inventory.getPlayer());
 						inventory.getSlots()[inventory.getChosenSlotId()] = item;
 						return;

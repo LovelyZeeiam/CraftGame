@@ -25,13 +25,15 @@ public class Player {
 	private WorldCollider collider;
 	
 	private Display display;
+	private PlayerProvider provider;
 
-	private Inventory inventory;
+	Inventory inventory;
 
 	public Player(Dimension dimension) {
 		this.display = Game.INSTANCE_GAME.getDisplay();
 		this.dimension = dimension;
 		this.collider = new WorldCollider(dimension);
+		this.provider = new PlayerProvider(this);
 
 		if(dimension != null) {
 			this.inventory = new Inventory(this,dimension.getBlocks());
@@ -39,6 +41,7 @@ public class Player {
 			
 		}
 		
+		this.provider.load();
 		
 	}
 
@@ -143,6 +146,7 @@ public class Player {
 	}
 
 	public void close() {
+		this.provider.save();
 		this.inventory.close();
 
 	}
