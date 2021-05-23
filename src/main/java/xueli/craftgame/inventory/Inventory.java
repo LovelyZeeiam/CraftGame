@@ -2,6 +2,10 @@ package xueli.craftgame.inventory;
 
 import java.util.ArrayList;
 
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.util.vector.Vector3i;
+
+import xueli.craftgame.block.BlockBase;
 import xueli.craftgame.entity.Player;
 import xueli.craftgame.entity.PlayerPicker;
 import xueli.craftgame.init.Blocks;
@@ -38,8 +42,31 @@ public class Inventory {
 			chosenSlotId -= (int) Game.INSTANCE_GAME.getDisplay().getWheelDelta();
 			chosenSlotId = Math.floorMod(chosenSlotId, SLOT_NUM);
 			
+			for(int key = GLFW.GLFW_KEY_1; key <= GLFW.GLFW_KEY_9; key++) {
+				if(Game.INSTANCE_GAME.getDisplay().isKeyDownOnce(key)) {
+					chosenSlotId = key - GLFW.GLFW_KEY_1;
+					return;
+				}
+			}
+			
+			Vector3i playerRayEndBlock = player.getPicker().getSelectedBlock();
+			if(Game.INSTANCE_GAME.getDisplay().isMouseDownOnce(GLFW.GLFW_MOUSE_BUTTON_MIDDLE) && playerRayEndBlock != null) {
+				BlockBase playerChosenBase = player.getDimension().getBlock(playerRayEndBlock.getX(), playerRayEndBlock.getY(), playerRayEndBlock.getZ()).getBase();
+				int chosenSlot = getWhatTheMostPreferredSlotToAddOnMiddleClickBlock(chosenSlotId, playerChosenBase);
+				slots[chosenSlot] = items.get(items.indexOf(new BlockInventoryItem(playerChosenBase)));
+				chosenSlotId = chosenSlot;
+			}
+			
 		}
 		
+	}
+	
+	private int getWhatTheMostPreferredSlotToAddOnMiddleClickBlock(int pre, BlockBase base) {
+		for(int i = 0; i < SLOT_NUM; i++) {
+			if(slots[i] == null) return i;
+			else if(slots[i] instanceof BlockInventoryItem && ((BlockInventoryItem) slots[i]).get().equals(base)) return i;
+		}
+		return pre;
 	}
 	
 	public void leftClick(Player player) {

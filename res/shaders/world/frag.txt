@@ -30,7 +30,7 @@ void main(){
 	
 	vec3 color = ambient.xyz * vec3(mix(0.8,2.0,diff()));
 	
-	out_color = mix(vec4(skyColor, 1.0), vec4(color, 1.0), visibility);
+	out_color = mix(vec4(skyColor, 1.0), vec4(color, ambient.w), visibility);
 
 	
 }

@@ -66,6 +66,10 @@ public class BlockInventoryItem extends InventoryItem {
 	public String getNamespace() {
 		return base.getNamespace();
 	}
+	
+	public BlockBase get() {
+		return base;
+	}
 
 	@Override
 	public void onLeftClick(Player player) {

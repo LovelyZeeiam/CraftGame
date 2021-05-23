@@ -36,8 +36,8 @@ public class InventoryRenderer extends NVGRenderer {
 	private static final EvalableFloat INV_HUD_WIDTH = new EvalableFloat("364 * scale");
 	private static final EvalableFloat INV_HUD_HEIGHT = new EvalableFloat("44 * scale");
 	private static final EvalableFloat INV_HUD_SLOT_OFFSET_Y = new EvalableFloat("6 * scale");
-	private static final EvalableFloat INV_HUD_FIRST_SLOT_OFFSET_X = new EvalableFloat("6 * scale");
-	private static final EvalableFloat INV_HUD_SLOT_SIZE = new EvalableFloat("32 * scale");
+	private static final EvalableFloat INV_HUD_FIRST_SLOT_OFFSET_X = new EvalableFloat("5 * scale");
+	private static final EvalableFloat INV_HUD_SLOT_SIZE = new EvalableFloat("34 * scale");
 	private static final EvalableFloat INV_HUD_POINTER_OFFSET = new EvalableFloat("40 * scale");
 	private static final EvalableFloat INV_HUD_CHOOSEN_SIZE_OFFSET = new EvalableFloat("-3.0 * scale");
 
