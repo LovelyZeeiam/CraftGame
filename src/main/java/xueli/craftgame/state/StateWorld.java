@@ -39,7 +39,7 @@ public class StateWorld extends NVGRenderer {
 		INSTANCE = this;
 
 		this.blocksTextureAtlas = TextureAtlas.generateAtlas(
-				Files.getResourcePackedInJar("textures/blocks.json").getPath(),
+				Files.getResourcePackedInJar("textures/blocks/atlas_definition.json").getPath(),
 				Files.getResourcePackedInJar("textures/blocks/").getPath());
 
 		nvgCreateFont(nvg, FONT_NAME, "res/fonts/Minecraft-Ascii.ttf");
@@ -50,7 +50,6 @@ public class StateWorld extends NVGRenderer {
 		
 		this.blocks = new Blocks();
 		this.blocks.init();
-		this.blocks.genModelView(blocksTextureAtlas);
 
 		this.dimension = new Dimension(blocks);
 		this.worldRenderer = new WorldRenderer(dimension);
@@ -91,17 +90,15 @@ public class StateWorld extends NVGRenderer {
 		String posTextString = "Position: " + (int) player.getPos().x + ", " + (int) player.getPos().y + ", "
 				+ (int) player.getPos().z;
 		String fpsTextString = "FPS: " + Time.fps;
-		String currentBlockInformation = "CurrentBlock: " + player.getInventory().getChosenBase().getNamespace();
 
 		float fontSize = 15.0f * game.getDisplayScale();
 		float measuredTextLength = Math.max(measureTextWidth(fontSize, posTextString),
 				measureTextWidth(fontSize, fpsTextString));
-		measuredTextLength = Math.max(measuredTextLength, measureTextWidth(fontSize, currentBlockInformation));
 
 		nvgFillColor(nvg, NVGColors.TRANSPARENT_BLACK);
 		nvgBeginPath(nvg);
 		nvgRect(nvg, 0, 0, 4.0f * game.getDisplayScale() + measuredTextLength,
-				8.0f * game.getDisplayScale() + 3 * fontSize);
+				8.0f * game.getDisplayScale() + 2 * fontSize);
 		nvgFill(nvg);
 
 		nvgFontSize(nvg, fontSize);
@@ -110,8 +107,6 @@ public class StateWorld extends NVGRenderer {
 		nvgTextAlign(nvg, NVG_ALIGN_LEFT | NVG_ALIGN_TOP);
 		nvgText(nvg, 2.0f * game.getDisplayScale(), 2.0f * game.getDisplayScale(), posTextString);
 		nvgText(nvg, 2.0f * game.getDisplayScale(), 4.0f * game.getDisplayScale() + fontSize, fpsTextString);
-		nvgText(nvg, 2.0f * game.getDisplayScale(), 6.0f * game.getDisplayScale() + 2 * fontSize,
-				currentBlockInformation);
 
 		nvgImagePattern(nvg, game.getWidth() / 2 - 5.0f * game.getDisplayScale(),
 				game.getHeight() / 2 - 5.0f * game.getDisplayScale(), 10.0f * game.getDisplayScale(),

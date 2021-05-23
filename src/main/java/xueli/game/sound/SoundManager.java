@@ -106,7 +106,7 @@ public class SoundManager {
 
 		speakers.add(src);
 
-		logger.info("[Sound] play: " + name + ", " + volume + ", " + pitch);
+		//logger.info("[Sound] play: " + name + ", " + volume + ", " + pitch);
 		
 	}
 

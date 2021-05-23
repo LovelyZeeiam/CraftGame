@@ -45,45 +45,44 @@ repositories {
 dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
 
-    compile group: 'org.mozilla', name: 'rhino', version: '1.7.13'
-	
-	compile group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true
-    runtime group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-windows'
-    runtime group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-linux'
-    runtime group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-macos'
+    implementation group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true
+    implementation group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    implementation group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-linux'
+    implementation group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-macos'
 
-    compile group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true
-    runtime group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true, classifier: 'natives-windows'
-    runtime group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true, classifier: 'natives-linux'
-    runtime group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true, classifier: 'natives-macos'
+    implementation group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true
+    implementation group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    implementation group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true, classifier: 'natives-linux'
+    implementation group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true, classifier: 'natives-macos'
 
-    compile group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true
-    compile group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true, classifier: 'natives-windows'
-    compile group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true, classifier: 'natives-linux'
-    compile group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true, classifier: 'natives-macos'
-    
-    compile group: 'org.lwjgl', name: 'lwjgl-openal', version: lwjgl_version, changing: true
-    compile group: 'org.lwjgl', name: 'lwjgl-openal', version: lwjgl_version, changing: true, classifier: 'natives-windows'
-    compile group: 'org.lwjgl', name: 'lwjgl-openal', version: lwjgl_version, changing: true, classifier: 'natives-macos'
-    compile group: 'org.lwjgl', name: 'lwjgl-openal', version: lwjgl_version, changing: true, classifier: 'natives-linux'
-    
- 	compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true
-    compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-windows'
-    compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-linux'
-    compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-macos'
-    
-    compile group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true
-    compile group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-windows'
-    compile group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-linux'
-    compile group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-macos'
+    implementation group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true
+    implementation group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    implementation group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true, classifier: 'natives-linux'
+    implementation group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true, classifier: 'natives-macos'
 
-    compile group: 'org.lwjgl', name: 'lwjgl-jawt', version: '3.2.3'
-    //compile group: 'org.lwjglx', name: 'lwjgl3-awt', version: '0.1.6'
+    implementation group: 'org.lwjgl', name: 'lwjgl-openal', version: lwjgl_version, changing: true
+    implementation group: 'org.lwjgl', name: 'lwjgl-openal', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    implementation group: 'org.lwjgl', name: 'lwjgl-openal', version: lwjgl_version, changing: true, classifier: 'natives-macos'
+    implementation group: 'org.lwjgl', name: 'lwjgl-openal', version: lwjgl_version, changing: true, classifier: 'natives-linux'
 
-    compile group: 'slick-util', name: 'slick-util', version: '1.0.0'
+    implementation group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true
+    implementation group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    implementation group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-linux'
+    implementation group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-macos'
 
-    compile group: 'org.iq80.leveldb', name: 'leveldb', version: '0.12'
-    compile 'com.flowpowered:flow-nbt:1.0.0'
+    implementation group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true
+    implementation group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    implementation group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-linux'
+    implementation group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-macos'
+
+    implementation group: 'org.mozilla', name: 'rhino', version: '1.7.13'
+
+    implementation group: 'org.lwjgl', name: 'lwjgl-jawt', version: '3.2.3'
+
+    implementation group: 'slick-util', name: 'slick-util', version: '1.0.0'
+
+    implementation group: 'org.iq80.leveldb', name: 'leveldb', version: '0.12'
+    implementation 'com.flowpowered:flow-nbt:1.0.0'
 
 	implementation group: 'io.netty', name: 'netty-all', version: '4.1.63.Final'
 

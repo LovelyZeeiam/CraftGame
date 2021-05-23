@@ -21,7 +21,7 @@ public class WorldCollider {
 
 		e.pos.y += deltaPos.y;
 		collide(e, new Vector3f(0, deltaPos.y, 0));
-
+		
 		e.pos.z += deltaPos.z;
 		collide(e, new Vector3f(0, 0, deltaPos.z));
 
@@ -62,6 +62,8 @@ public class WorldCollider {
 			}
 		}
 
+		//System.out.println(entity.pos.y);
+		
 	}
 
 }

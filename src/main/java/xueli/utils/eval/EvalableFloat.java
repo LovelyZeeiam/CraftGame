@@ -1,9 +1,5 @@
 package xueli.utils.eval;
 
-import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.script.ScriptException;
 
 import xueli.game.Game;
@@ -14,39 +10,9 @@ public class EvalableFloat {
 	private boolean needEval = true;
 	private float value = 0;
 
-	private HashMap<String, EvalableFloat> variables;
-
 	public EvalableFloat(String expressionString) {
 		this.expression = expressionString;
-		this.variables = new HashMap<>();
 		eval();
-
-	}
-
-	public EvalableFloat(String expressionString, HashMap<String, EvalableFloat> variables) {
-		this.expression = expressionString;
-		this.variables = variables;
-		eval();
-
-	}
-
-	@SafeVarargs
-	public EvalableFloat(String expressionString, Map.Entry<String, EvalableFloat>... variables) {
-		this.expression = expressionString;
-
-		this.variables = new HashMap<>();
-		for (int i = 0; i < variables.length; i++) {
-			Map.Entry<String, EvalableFloat> entry = variables[i];
-			this.variables.put(entry.getKey(), entry.getValue());
-
-		}
-
-		eval();
-
-	}
-
-	public void addVariables(HashMap<String, EvalableFloat> variables) {
-		this.variables.putAll(variables);
 
 	}
 
@@ -67,14 +33,6 @@ public class EvalableFloat {
 				.replaceAll("win_width", Float.valueOf(Game.INSTANCE_GAME.getWidth()).toString())
 				.replaceAll("win_height", Float.valueOf(Game.INSTANCE_GAME.getHeight()).toString())
 				.replaceAll("scale", Float.valueOf(Game.INSTANCE_GAME.getDisplayScale()).toString());
-
-		// Haven't been tested out
-		HashMap<String, Float> varValues = new HashMap<>();
-		variables.forEach((k, v) -> {
-			varValues.put(k, v.getValue());
-		});
-		varValues.forEach((k, v) -> newExpressionString.replaceAll(MessageFormat.format("${{{0}}}", k),
-				"(" + v.toString() + ")"));
 
 		try {
 			this.value = Evaler.evalToFloat(newExpressionString);
@@ -98,6 +56,20 @@ public class EvalableFloat {
 	public float getValue() {
 		eval();
 		return value;
+	}
+	
+	public float getValue(float win_width, float win_height, float scale) {
+		String newExpressionString = expression
+				.replaceAll("win_width", Float.valueOf(win_width).toString())
+				.replaceAll("win_height", Float.valueOf(win_height).toString())
+				.replaceAll("scale", Float.valueOf(scale).toString());
+
+		try {
+			return Evaler.evalToFloat(newExpressionString);
+		} catch (ScriptException e) {
+			e.printStackTrace();
+			return 0;
+		}
 	}
 
 	@Override

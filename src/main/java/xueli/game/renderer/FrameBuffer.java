@@ -103,8 +103,13 @@ public class FrameBuffer {
 	}
 
 	public void resize() {
-		this.width = (int) Game.INSTANCE_GAME.getWidth();
-		this.height = (int) Game.INSTANCE_GAME.getHeight();
+		resize((int) Game.INSTANCE_GAME.getWidth(), (int) Game.INSTANCE_GAME.getHeight());
+
+	}
+	
+	public void resize(int width, int height) {
+		this.width = width;
+		this.height = height;
 
 		delete();
 		create();

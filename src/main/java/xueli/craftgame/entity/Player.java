@@ -2,21 +2,12 @@ package xueli.craftgame.entity;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector3i;
-
-import com.flowpowered.nbt.ByteTag;
-
-import xueli.craftgame.block.BlockFace;
-import xueli.craftgame.block.BlockTags;
 import xueli.craftgame.inventory.Inventory;
 import xueli.craftgame.world.Dimension;
-import xueli.craftgame.world.Tile;
 import xueli.game.Game;
 import xueli.game.display.Display;
 import xueli.game.physics.AABB;
 import xueli.game.utils.Time;
-import xueli.game.utils.math.MatrixHelper;
-import xueli.game.utils.math.MousePicker;
 import xueli.game.vector.Vector;
 
 public class Player {
@@ -30,6 +21,7 @@ public class Player {
 	boolean onGround = true;
 
 	private Dimension dimension;
+	private PlayerPicker picker;
 	private WorldCollider collider;
 	
 	private Display display;
@@ -41,9 +33,13 @@ public class Player {
 		this.dimension = dimension;
 		this.collider = new WorldCollider(dimension);
 
-		if(dimension != null)
-			this.inventory = new Inventory(dimension.getBlocks());
-
+		if(dimension != null) {
+			this.inventory = new Inventory(this,dimension.getBlocks());
+			this.picker = new PlayerPicker(this, MAX_TOUCH);
+			
+		}
+		
+		
 	}
 
 	private long lastTimeOperationBlock = Time.thisTime;
@@ -51,49 +47,9 @@ public class Player {
 	public void tick() {
 		if (display.isMouseGrabbed()) {
 			/**
-			 * Mouse Pick
+			 * mouse picker
 			 */
-			Vector3i lastSelectedBlock = null, selectedBlock = null;
-			byte place_block_face_to = -1, place_block_part = -1;
-			Vector3f lastRayVector = null;
-
-			MousePicker picker = new MousePicker(pos, MatrixHelper.lastTimeProjMatrix, MatrixHelper.lastTimeViewMatrix);
-			for (float d = 0; d <= MAX_TOUCH; d += 0.1f) {
-				Vector3f p = picker.getPointOnRay(d);
-				Vector3i pb = new Vector3i(p);
-
-				if (dimension.getBlock(pb.getX(), pb.getY(), pb.getZ()) != null) {
-					selectedBlock = new Vector3i(p);
-					lastSelectedBlock = lastRayVector != null ? new Vector3i(lastRayVector) : null;
-
-					Tile tile = dimension.getBlock(selectedBlock.getX(), selectedBlock.getY(), selectedBlock.getZ());
-					tile.getBase().getListener().onLookAt(selectedBlock.getX(), selectedBlock.getY(),
-							selectedBlock.getZ(), tile, dimension, this);
-
-					if (lastRayVector != null) {
-						if (lastRayVector.getY() - lastSelectedBlock.getY() > 0.5f)
-							place_block_part = BlockFace.PART_UP;
-						else
-							place_block_part = BlockFace.PART_DOWN;
-					}
-
-					break;
-				}
-				lastRayVector = p;
-			}
-
-			if (pos.rotY >= 45 && pos.rotY <= 135)
-				place_block_face_to = BlockFace.LEFT;
-			else if (pos.rotY > 135 && pos.rotY < 225)
-				place_block_face_to = BlockFace.FRONT;
-			else if (pos.rotY >= 225 && pos.rotY <= 315)
-				place_block_face_to = BlockFace.RIGHT;
-			else
-				place_block_face_to = BlockFace.BACK;
-
-			// System.out.println("[Player] " +
-			// BlockFace.getPartDescription(place_block_part) + ", " +
-			// BlockFace.getFacingDescription(place_block_face_to));
+			this.picker.tick();
 
 			/**
 			 * Player move
@@ -145,20 +101,13 @@ public class Player {
 				pos.rotX = -90;
 
 			if (display.isMouseDown(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
-				if (selectedBlock != null && Time.thisTime - lastTimeOperationBlock > 500) {
-					dimension.setBlock(selectedBlock.getX(), selectedBlock.getY(), selectedBlock.getZ(), null);
+				if (Time.thisTime - lastTimeOperationBlock > 500) {
+					inventory.leftClick(this);
 					lastTimeOperationBlock = Time.thisTime;
 				}
 			} else if (display.isMouseDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
-				if (lastSelectedBlock != null && Time.thisTime - lastTimeOperationBlock > 500) {
-					Tile tile = new Tile(this.inventory.getChosenBase());
-					if (this.inventory.getChosenBase().getTags().contains(BlockTags.HAS_DIFFERENT_DIRECTION))
-						tile.getTags().put(new ByteTag(BlockTags.TAG_NAME_FACE_TO, place_block_face_to));
-					if (this.inventory.getChosenBase().getTags().contains(BlockTags.HAS_PART_UP_AND_PART_DOWN))
-						tile.getTags().put(new ByteTag(BlockTags.TAG_NAME_PART, place_block_part));
-
-					dimension.setBlock(lastSelectedBlock.getX(), lastSelectedBlock.getY(), lastSelectedBlock.getZ(),
-							tile);
+				if (Time.thisTime - lastTimeOperationBlock > 500) {
+					inventory.rightClick(this);
 					lastTimeOperationBlock = Time.thisTime;
 				}
 
@@ -203,7 +152,10 @@ public class Player {
 	}
 
 	public AABB getOriginAABB() {
-		return new AABB(-0.5f, 0.5f, -1.5f, 0.5f, -0.5f, 0.5f);
+		/**
+		 * When it comes to 0.4f in x, z value, the collision will not work perfectly.
+		 */
+		return new AABB(-0.36f, 0.36f, -1.51f, 0.1f, -0.36f, 0.36f);
 	}
 
 	public Vector getPos() {
@@ -212,6 +164,14 @@ public class Player {
 
 	public Inventory getInventory() {
 		return inventory;
+	}
+	
+	public Dimension getDimension() {
+		return dimension;
+	}
+	
+	public PlayerPicker getPicker() {
+		return picker;
 	}
 
 }

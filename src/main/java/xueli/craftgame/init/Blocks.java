@@ -1,11 +1,6 @@
 package xueli.craftgame.init;
 
 import java.awt.Color;
-import java.util.HashMap;
-
-import org.lwjgl.opengl.GL30;
-import org.lwjgl.util.vector.Vector3f;
-
 import xueli.craftgame.block.AbstractAlphaBlock;
 import xueli.craftgame.block.AbstractBlock;
 import xueli.craftgame.block.AbstractLightBlock;
@@ -13,20 +8,12 @@ import xueli.craftgame.block.AbstractPlant;
 import xueli.craftgame.block.AbstractSlab;
 import xueli.craftgame.block.AbstractStair;
 import xueli.craftgame.block.BlockBase;
-import xueli.craftgame.renderer.VertexPointer;
 import xueli.game.module.Modules;
-import xueli.game.renderer.FrameBuffer;
-import xueli.game.utils.FloatList;
-import xueli.game.utils.Shader;
-import xueli.game.utils.math.MatrixHelper;
-import xueli.game.utils.texture.TextureAtlas;
 
 public class Blocks extends Modules<BlockBase> {
 
 	private static final String[] COLORS = { "black", "blue", "brown", "cyan", "gray", "green", "light_blue", "lime",
 			"magenta", "orange", "pink", "purple", "red", "silver", "white", "yellow" };
-
-	private HashMap<String, FrameBuffer> blockModels = new HashMap<>();
 
 	public Blocks() {
 
@@ -93,55 +80,6 @@ public class Blocks extends Modules<BlockBase> {
 	@Override
 	public void add(BlockBase t) {
 		super.add(t);
-	}
-
-	public FrameBuffer getModel(String namespace) {
-		return blockModels.get(namespace);
-	}
-	
-	private static final int MODEL_VIEW_SIZE = 256;
-
-	public void genModelView(TextureAtlas blocksAtlas) {
-		VertexPointer pointer = new VertexPointer(16384, GL30.GL_STATIC_DRAW);
-		Shader shader = new Shader("res/shaders/block_view/vert.txt", "res/shaders/block_view/frag.txt");
-		FloatList buf = new FloatList(4096);
-		
-		Shader.setProjectionMatrix(shader, MatrixHelper.ortho(-0.9f, 0.9f, -0.9f, 0.9f, 0.01f, 1000000.0f));
-		Shader.setViewMatrix(MatrixHelper.lookAt(new Vector3f(4, 4, 4), new Vector3f(0, 0, 0), new Vector3f(0, 1, 0)), shader);
-		
-		shader.use();
-		shader.setUniformVector3(shader.getUnifromLocation("sunDirection"), new Vector3f(7, -10, 10));
-		shader.unbind();
-		
-		modules.forEach((namespace, b) -> {
-			FrameBuffer buffer = new FrameBuffer(MODEL_VIEW_SIZE,MODEL_VIEW_SIZE);
-			
-			buf.clear();
-			int vertCount = b.getRenderModelViewData(buf);
-			
-			GL30.glEnable(GL30.GL_DEPTH_TEST);
-			
-			shader.use();
-			buffer.use();
-			pointer.initDraw();
-			buf.storeInBuffer(pointer.mapBuffer().asFloatBuffer());
-			pointer.unmap();
-			blocksAtlas.bind();
-			pointer.draw(GL30.GL_TRIANGLES, 0, vertCount);
-			blocksAtlas.unbind();
-			pointer.postDraw();
-			buffer.unbind();
-			shader.unbind();
-			
-			GL30.glDisable(GL30.GL_DEPTH_TEST);
-			
-			buffer.save("temp/blocks/" + namespace.split(":")[1] + ".png");
-			
-			blockModels.put(namespace, buffer);
-			
-		});
-		
-		
 	}
 
 }
