@@ -1,6 +1,5 @@
 package xueli.craftgame.block;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -64,15 +63,15 @@ public class BlockBase extends Module {
 		return Objects.nonNull(getNamespace()) && Objects.nonNull(nameInternational) && Objects.nonNull(listener);
 	}
 
-	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Color color, Dimension dimension) {
-		Light light = dimension != null ? dimension.getLight(x, y, z) : new Light(15, Color.WHITE);
-		return model.getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
+	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Dimension dimension) {
+		Light light = dimension != null ? dimension.getLight(x, y, z) : Light.FULL_LIGHT;
+		return model.getRenderData(x, y, z, face,light, buffer);
 	}
 	
 	public int getRenderModelViewData(FloatList buffer) {
 		int v = 0;
 		for(byte f = 0; f < 6; f++) {
-			v += getRenderCubeData(buffer, 0, 0, 0, f, Color.WHITE, null);
+			v += getRenderCubeData(buffer, 0, 0, 0, f, null);
 		}
 		return v;
 	}

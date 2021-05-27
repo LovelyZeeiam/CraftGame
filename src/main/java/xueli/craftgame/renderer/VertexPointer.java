@@ -47,21 +47,22 @@ public class VertexPointer {
 	}
 
 	protected void registerVertex() {
-		// UV
-		GL20.glVertexAttribPointer(1, 2, GL11.GL_FLOAT, false, 12 * 4, 0);
-		GL20.glEnableVertexAttribArray(1);
-		// 颜色
-		GL20.glVertexAttribPointer(2, 3, GL11.GL_FLOAT, false, 12 * 4, 2 * 4);
-		GL20.glEnableVertexAttribArray(2);
-		// 阳光值
-		GL20.glVertexAttribPointer(3, 1, GL11.GL_FLOAT, false, 12 * 4, 5 * 4);
-		GL20.glEnableVertexAttribArray(3);
-		// normal
-		GL20.glVertexAttribPointer(4, 3, GL11.GL_FLOAT, false, 12 * 4, 9 * 4);
-		GL20.glEnableVertexAttribArray(4);
 		// 坐标
-		GL20.glVertexAttribPointer(0, 3, GL11.GL_FLOAT, false, 12 * 4, 6 * 4);
+		GL20.glVertexAttribPointer(0, 3, GL11.GL_FLOAT, false, 9 * 4, 0 * 4);
 		GL20.glEnableVertexAttribArray(0);
+		// UV
+		GL20.glVertexAttribPointer(1, 2, GL11.GL_FLOAT, false, 9 * 4, 3 * 4);
+		GL20.glEnableVertexAttribArray(1);
+		// normal
+		GL20.glVertexAttribPointer(2, 3, GL11.GL_FLOAT, false, 9 * 4, 5 * 4);
+		GL20.glEnableVertexAttribArray(2);
+		
+		// Lighting
+		// r,g,b,sun
+		// Separated by 15 level
+		GL20.glVertexAttribPointer(3, 4, GL11.GL_BYTE, false, 9 * 4, 8 * 4);
+		GL20.glEnableVertexAttribArray(3);
+		
 		
 	}
 

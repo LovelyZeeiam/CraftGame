@@ -1,11 +1,10 @@
 package xueli.craftgame.renderer.model;
 
-import java.awt.Color;
-
 import org.lwjgl.util.vector.Vector3f;
 
 import xueli.craftgame.block.BlockFace;
 import xueli.game.utils.FloatList;
+import xueli.game.utils.Light;
 import xueli.game.utils.texture.AtlasTextureHolder;
 
 public class TexturedCube extends Cube {
@@ -35,84 +34,82 @@ public class TexturedCube extends Cube {
 
 	}
 
-	public int getDrawData(float x, float y, float z, byte face, Color color, float skyColor , FloatList buffer) {
+	public int getDrawData(float x, float y, float z, byte face, Light light , FloatList buffer) {
 		switch (face) {
 		case BlockFace.FRONT: {
 			AtlasTextureHolder texHolder = this.faces[BlockFace.FRONT];
-			CubeDrawer.drawQuadFacingFront(buffer,
-					new Vector3f(x + from.getX(), y + from.getY(), z + from.getZ()), texHolder.p_left_down,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor,
+			CubeDrawer.drawQuadFacingFront(buffer, new Vector3f(x + from.getX(), y + from.getY(), z + from.getZ()),
+					texHolder.p_left_down, light.getLightBuffer(),
 					new Vector3f(x + to.getX(), y + from.getY(), z + from.getZ()), texHolder.p_right_down,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor,
-					new Vector3f(x + from.getX(), y + to.getY(), z + from.getZ()), texHolder.p_left_top,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor,
+					light.getLightBuffer(), new Vector3f(x + from.getX(), y + to.getY(), z + from.getZ()),
+					texHolder.p_left_top, light.getLightBuffer(),
 					new Vector3f(x + to.getX(), y + to.getY(), z + from.getZ()), texHolder.p_right_top,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor);
+					light.getLightBuffer());
 			break;
 		}
 		case BlockFace.RIGHT: {
 			AtlasTextureHolder texHolder = this.faces[BlockFace.RIGHT];
 			CubeDrawer.drawQuadFacingRight(buffer, new Vector3f(x + to.getX(), y + from.getY(), z + from.getZ()),
 					texHolder.p_right_down,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor,
+					light.getLightBuffer(),
 					new Vector3f(x + to.getX(), y + to.getY(), z + from.getZ()), texHolder.p_right_top,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor,
+					light.getLightBuffer(),
 					new Vector3f(x + to.getX(), y + from.getY(), z + to.getZ()), texHolder.p_left_down,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor,
+					light.getLightBuffer(),
 					new Vector3f(x + to.getX(), y + to.getY(), z + to.getZ()), texHolder.p_left_top,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor);
+					light.getLightBuffer());
 			break;
 		}
 		case BlockFace.BACK: {
 			AtlasTextureHolder texHolder = this.faces[BlockFace.BACK];
 			CubeDrawer.drawQuadFacingBack(buffer, new Vector3f(x + from.getX(), y + from.getY(), z + to.getZ()),
 					texHolder.p_left_down,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor,
+					light.getLightBuffer(),
 					new Vector3f(x + to.getX(), y + from.getY(), z + to.getZ()), texHolder.p_right_down,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor,
+					light.getLightBuffer(),
 					new Vector3f(x + from.getX(), y + to.getY(), z + to.getZ()), texHolder.p_left_top,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor,
+					light.getLightBuffer(),
 					new Vector3f(x + to.getX(), y + to.getY(), z + to.getZ()), texHolder.p_right_top,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor);
+					light.getLightBuffer());
 			break;
 		}
 		case BlockFace.LEFT: {
 			AtlasTextureHolder texHolder = this.faces[BlockFace.LEFT];
 			CubeDrawer.drawQuadFacingLeft(buffer,
 					new Vector3f(x + from.getX(), y + from.getY(), z + from.getZ()), texHolder.p_left_down,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor,
+					light.getLightBuffer(),
 					new Vector3f(x + from.getX(), y + to.getY(), z + from.getZ()), texHolder.p_left_top,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor,
+					light.getLightBuffer(),
 					new Vector3f(x + from.getX(), y + from.getY(), z + to.getZ()), texHolder.p_right_down,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor,
+					light.getLightBuffer(),
 					new Vector3f(x + from.getX(), y + to.getY(), z + to.getZ()), texHolder.p_right_top,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor);
+					light.getLightBuffer());
 			break;
 		}
 		case BlockFace.TOP: {
 			AtlasTextureHolder texHolder = this.faces[BlockFace.TOP];
 			CubeDrawer.drawQuadFacingTop(buffer, new Vector3f(x + from.getX(), y + to.getY(), z + from.getZ()),
 					texHolder.p_left_down,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor,
+					light.getLightBuffer(),
 					new Vector3f(x + to.getX(), y + to.getY(), z + from.getZ()), texHolder.p_left_top,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor,
+					light.getLightBuffer(),
 					new Vector3f(x + from.getX(), y + to.getY(), z + to.getZ()), texHolder.p_right_down,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor,
+					light.getLightBuffer(),
 					new Vector3f(x + to.getX(), y + to.getY(), z + to.getZ()), texHolder.p_right_top,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor);
+					light.getLightBuffer());
 			break;
 		}
 		case BlockFace.BOTTOM: {
 			AtlasTextureHolder texHolder = this.faces[BlockFace.BOTTOM];
 			CubeDrawer.drawQuadFacingBottom(buffer, new Vector3f(x + from.getX(), y + from.getY(), z + from.getZ()),
 					texHolder.p_left_down,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor,
+					light.getLightBuffer(),
 					new Vector3f(x + to.getX(), y + from.getY(), z + from.getZ()), texHolder.p_left_top,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor,
+					light.getLightBuffer(),
 					new Vector3f(x + from.getX(), y + from.getY(), z + to.getZ()), texHolder.p_right_down,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor,
+					light.getLightBuffer(),
 					new Vector3f(x + to.getX(), y + from.getY(), z + to.getZ()), texHolder.p_right_top,
-					new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),skyColor);
+					light.getLightBuffer());
 			break;
 		}
 		}

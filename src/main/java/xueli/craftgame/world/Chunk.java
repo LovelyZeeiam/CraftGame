@@ -1,6 +1,5 @@
 package xueli.craftgame.world;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import org.lwjgl.util.vector.Vector3i;
 
@@ -19,6 +18,16 @@ public class Chunk {
 	int[][] heightmap = new int[16][16];
 	
 	private ChunkBuffer buffer = new ChunkBuffer();
+	
+	{
+		for(int x = 0; x < 16; x++) {
+			for(int y = 0; y < 16; y++) {
+				for(int z = 0; z < 16; z++) {
+					light[x][y][z] = new Light((byte) 15, (byte) 15, (byte) 15, (byte) 15);
+				}
+			}
+		}
+	}
 
 	public Chunk(int x, int y, int z, Dimension dimension) {
 		this.chunkX = x;
@@ -50,10 +59,7 @@ public class Chunk {
 	}
 	
 	public Light getLight(int x, int y, int z) {
-		Light light = this.light[x][y][z];
-		if(light != null)
-			return light;
-		return new Light(0.8f, Color.WHITE);
+		return this.light[x][y][z];
 	}
 
 	public int getChunkX() {
@@ -137,7 +143,7 @@ public class Chunk {
 							Tile tile = grid[x][y][z];
 							if (tile == null)
 								continue;
-
+							
 							int realX = x + (chunkX << 4);
 							int realY = y + (chunkY << 4);
 							int realZ = z + (chunkZ << 4);
@@ -147,41 +153,41 @@ public class Chunk {
 										|| (!dimension.getBlock(realX, realY + 1, realZ).getBase().isComplete()
 												|| dimension.getBlock(realX, realY + 1, realZ).getBase().isAlpha())) {
 									vertCount += tile.getBase().getRenderCubeData(buffer, realX, realY, realZ,
-											BlockFace.TOP, Color.WHITE, dimension);
+											BlockFace.TOP, dimension);
 								}
 								if (dimension.getBlock(realX, realY - 1, realZ) == null
 										|| (!dimension.getBlock(realX, realY - 1, realZ).getBase().isComplete()
 												|| dimension.getBlock(realX, realY - 1, realZ).getBase().isAlpha())) {
 									vertCount += tile.getBase().getRenderCubeData(buffer, realX, realY, realZ,
-											BlockFace.BOTTOM, Color.DARK_GRAY, dimension);
+											BlockFace.BOTTOM, dimension);
 								}
 								if (dimension.getBlock(realX + 1, realY, realZ) == null
 										|| (!dimension.getBlock(realX + 1, realY, realZ).getBase().isComplete()
 												|| dimension.getBlock(realX + 1, realY, realZ).getBase().isAlpha())) {
 									vertCount += tile.getBase().getRenderCubeData(buffer, realX, realY, realZ,
-											BlockFace.RIGHT, Color.GRAY, dimension);
+											BlockFace.RIGHT, dimension);
 								}
 								if (dimension.getBlock(realX - 1, realY, realZ) == null
 										|| (!dimension.getBlock(realX - 1, realY, realZ).getBase().isComplete()
 												|| dimension.getBlock(realX - 1, realY, realZ).getBase().isAlpha())) {
 									vertCount += tile.getBase().getRenderCubeData(buffer, realX, realY, realZ,
-											BlockFace.LEFT, Color.GRAY, dimension);
+											BlockFace.LEFT, dimension);
 								}
 								if (dimension.getBlock(realX, realY, realZ + 1) == null
 										|| (!dimension.getBlock(realX, realY, realZ + 1).getBase().isComplete()
 												|| dimension.getBlock(realX, realY, realZ + 1).getBase().isAlpha())) {
 									vertCount += tile.getBase().getRenderCubeData(buffer, realX, realY, realZ,
-											BlockFace.BACK, Color.GRAY, dimension);
+											BlockFace.BACK, dimension);
 								}
 								if (dimension.getBlock(realX, realY, realZ - 1) == null
 										|| (!dimension.getBlock(realX, realY, realZ - 1).getBase().isComplete()
 												|| dimension.getBlock(realX, realY, realZ - 1).getBase().isAlpha())) {
 									vertCount += tile.getBase().getRenderCubeData(buffer, realX, realY, realZ,
-											BlockFace.FRONT, Color.GRAY, dimension);
+											BlockFace.FRONT, dimension);
 								}
 							} else {
 								alphaCount += tile.getBase().getRenderCubeData(bufferAlpha, realX, realY, realZ,
-										(byte) -1, Color.WHITE, dimension);
+										(byte) -1, dimension);
 							}
 
 						}

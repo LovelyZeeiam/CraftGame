@@ -38,7 +38,7 @@ public class WorldRenderer {
 		this.dimension = dimension;
 		this.pointer = new VertexPointer();
 
-		this.shader = new Shader("res/shaders/world/vert.txt", "res/shaders/world/frag.txt");
+		this.shader = new Shader("res/shaders/world/world.vert", "res/shaders/world/world.frag");
 		this.skyRenderer = new SkyRenderer(dimension);
 		
 		this.buffer = new FrameBuffer();

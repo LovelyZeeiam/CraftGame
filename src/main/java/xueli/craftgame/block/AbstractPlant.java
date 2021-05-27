@@ -1,7 +1,5 @@
 package xueli.craftgame.block;
 
-import java.awt.Color;
-
 import org.lwjgl.util.vector.Vector3f;
 
 import xueli.craftgame.renderer.model.CubeDrawer;
@@ -27,24 +25,24 @@ public class AbstractPlant extends AbstractBlock {
 	}
 
 	@Override
-	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Color color, Dimension dimension) {
-		Light light = dimension == null ? new Light(15, Color.WHITE) : dimension.getLight(x, y, z);
-		CubeDrawer.drawQuad(buffer, new Vector3f(x + 0.2f, y + 0.8f, z + 0.2f), holder.p_left_top,
-				new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),light.getSunLight(),
+	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Dimension dimension) {
+		Light light = dimension == null ? Light.FULL_LIGHT : dimension.getLight(x, y, z);
+		CubeDrawer.drawQuad(buffer,new Vector3f(-1, 0, 1), new Vector3f(x + 0.2f, y + 0.8f, z + 0.2f), holder.p_left_top,
+				light.getLightBuffer(),
 				new Vector3f(x + 0.8f, y + 0.8f, z + 0.8f), holder.p_right_top,
-				new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),light.getSunLight(),
+				light.getLightBuffer(),
 				new Vector3f(x + 0.2f, y + 0, z + 0.2f), holder.p_left_down,
-				new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),light.getSunLight(),
+				light.getLightBuffer(),
 				new Vector3f(x + 0.8f, y + 0, z + 0.8f), holder.p_right_down,
-				new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),light.getSunLight(), new Vector3f(-1, 0, 1));
-		CubeDrawer.drawQuad(buffer, new Vector3f(x + 0.8f, y + 0.8f, z + 0.2f), holder.p_left_top,
-				new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),light.getSunLight(),
+				light.getLightBuffer());
+		CubeDrawer.drawQuad(buffer,new Vector3f(1, 0, 1), new Vector3f(x + 0.8f, y + 0.8f, z + 0.2f), holder.p_left_top,
+				light.getLightBuffer(),
 				new Vector3f(x + 0.2f, y + 0.8f, z + 0.8f), holder.p_right_top,
-				new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),light.getSunLight(),
+				light.getLightBuffer(),
 				new Vector3f(x + 0.8f, y + 0, z + 0.2f), holder.p_left_down,
-				new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),light.getSunLight(),
+				light.getLightBuffer(),
 				new Vector3f(x + 0.2f, y + 0, z + 0.8f), holder.p_right_down,
-				new Vector3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f),light.getSunLight(), new Vector3f(1, 0, 1));
+				light.getLightBuffer());
 		return 12;
 	}
 

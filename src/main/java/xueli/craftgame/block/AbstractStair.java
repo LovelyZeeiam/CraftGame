@@ -1,6 +1,5 @@
 package xueli.craftgame.block;
 
-import java.awt.Color;
 import java.util.HashMap;
 
 import org.lwjgl.util.vector.Vector2f;
@@ -164,7 +163,7 @@ public class AbstractStair extends AbstractBlock {
 	}
 
 	@Override
-	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Color color, Dimension dimension) {
+	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Dimension dimension) {
 		Tile tile = dimension.getBlock(x, y, z);
 
 		byte faceTo = (byte) tile.getTags().get(BlockTags.TAG_NAME_FACE_TO).getValue();
@@ -174,18 +173,18 @@ public class AbstractStair extends AbstractBlock {
 
 		if (part == BlockFace.PART_DOWN) {
 			return switch (faceTo) {
-			case BlockFace.FRONT -> models.get("cg:stair_down_front").getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
-			case BlockFace.BACK -> models.get("cg:stair_down_back").getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
-			case BlockFace.LEFT -> models.get("cg:stair_down_left").getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
-			case BlockFace.RIGHT -> models.get("cg:stair_down_right").getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
+			case BlockFace.FRONT -> models.get("cg:stair_down_front").getRenderData(x, y, z, face, light, buffer);
+			case BlockFace.BACK -> models.get("cg:stair_down_back").getRenderData(x, y, z, face, light, buffer);
+			case BlockFace.LEFT -> models.get("cg:stair_down_left").getRenderData(x, y, z, face, light, buffer);
+			case BlockFace.RIGHT -> models.get("cg:stair_down_right").getRenderData(x, y, z, face, light, buffer);
 			default -> 0;
 			};
 		} else if (part == BlockFace.PART_UP) {
 			return switch (faceTo) {
-			case BlockFace.FRONT -> models.get("cg:stair_up_front").getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
-			case BlockFace.BACK -> models.get("cg:stair_up_back").getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
-			case BlockFace.LEFT -> models.get("cg:stair_up_left").getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
-			case BlockFace.RIGHT -> models.get("cg:stair_up_right").getRenderData(x, y, z, face, color,light.getSunLight(), buffer);
+			case BlockFace.FRONT -> models.get("cg:stair_up_front").getRenderData(x, y, z, face, light, buffer);
+			case BlockFace.BACK -> models.get("cg:stair_up_back").getRenderData(x, y, z, face, light, buffer);
+			case BlockFace.LEFT -> models.get("cg:stair_up_left").getRenderData(x, y, z, face, light, buffer);
+			case BlockFace.RIGHT -> models.get("cg:stair_up_right").getRenderData(x, y, z, face,light, buffer);
 			default -> 0;
 			};
 		} else {
@@ -198,7 +197,7 @@ public class AbstractStair extends AbstractBlock {
 		int v = 0;
 		TexturedModel model = this.models.get("cg:stair_down_front");
 		for(byte f = 0; f < 6; f++) {
-			v += model.getRenderData(0, 0, 0, f, Color.WHITE, 15, buffer);
+			v += model.getRenderData(0, 0, 0, f, Light.FULL_LIGHT, buffer);
 		}
 		return v;
 		

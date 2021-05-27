@@ -4,7 +4,6 @@ import xueli.game.utils.ThreadTask;
 
 public class WorldUpdater extends ThreadTask {
 
-	@SuppressWarnings("unused")
 	private Dimension dimension;
 
 	public WorldUpdater(Dimension dimension) {
@@ -13,6 +12,12 @@ public class WorldUpdater extends ThreadTask {
 
 	}
 	
-	
+	private static class LightUpdater {
+		
+		public LightUpdater() {
+			
+		}
+		
+	}
 
 }

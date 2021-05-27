@@ -13,6 +13,7 @@ public class Dimension {
 	ConcurrentHashMap<Vector3i, Chunk> chunks = new ConcurrentHashMap<>();
 
 	private ChunkProvider provider;
+	private WorldUpdater updater;
 
 	Blocks blocks;
 
@@ -21,6 +22,9 @@ public class Dimension {
 
 		this.provider = new ChunkProvider(this);
 		this.provider.start();
+		this.updater = new WorldUpdater(this);
+		this.updater.start();
+		
 
 	}
 
@@ -55,10 +59,18 @@ public class Dimension {
 	}
 
 	public void close() {
+		this.updater.stopThread();
+		try {
+			this.updater.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		for (Vector3i v : chunks.keySet()) {
 			this.provider.save(v.getX(), v.getY(), v.getZ());
 		}
 		this.provider.release();
+		
 	}
 
 	public Blocks getBlocks() {
