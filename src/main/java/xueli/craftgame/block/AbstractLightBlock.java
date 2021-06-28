@@ -1,21 +1,21 @@
 package xueli.craftgame.block;
 
-import java.awt.Color;
+import xueli.game.vector.Vector3b;
 
 public class AbstractLightBlock extends AbstractBlock {
 
-	private Color lightColor;
+	private Vector3b lightRGB;
 	
-	public AbstractLightBlock(String namespace, String nameInternational, Color lightColor, String... textureNames) {
+	public AbstractLightBlock(String namespace, String nameInternational, Vector3b lightRGB, String... textureNames) {
 		super(namespace, nameInternational, textureNames);
 		
 		getTags().add(BlockTags.LIGHT_BLOCK);
-		this.lightColor = lightColor;
+		this.lightRGB = lightRGB;
 		
 	}
 	
-	public Color getLightColor() {
-		return lightColor;
+	public Vector3b getLightRGB() {
+		return lightRGB;
 	}
 
 }

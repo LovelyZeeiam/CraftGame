@@ -26,6 +26,23 @@ public class ClazzUtils {
 		return clazzes;
 	}
 
+	public static <T> List<Class<? extends T>> getClassExtendedBy(Class<T> c) {
+		List<Class<? extends T>> clazzes = new ArrayList<>();
+
+		List<Class<?>> all = getAllClasses();
+		for (Class<?> clazz : all) {
+			try {
+				Class<? extends T> extended = clazz.asSubclass(c);
+				if (!extended.getName().equals(c.getName()))
+					clazzes.add(extended);
+			} catch (ClassCastException e) {
+				continue;
+			}
+		}
+
+		return clazzes;
+	}
+
 	public static List<Class<?>> getAllClasses() {
 		ArrayList<Class<?>> clazzes = new ArrayList<>();
 

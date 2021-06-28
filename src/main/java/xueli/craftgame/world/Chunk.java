@@ -39,7 +39,9 @@ public class Chunk {
 
 	public void setBlock(int x, int y, int z, Tile tile) {
 		grid[x][y][z] = tile;
+		
 		buffer.reportRebuild();
+		dimension.getUpdater().addTask(new WorldUpdater.LightUpdater(Chunk.this));
 
 		if (y > heightmap[x][z] && tile != null) {
 			heightmap[x][z] = y;
@@ -89,7 +91,7 @@ public class Chunk {
 		private ArrayList<Vector3i> alphaTiles = new ArrayList<>();
 
 		private int vertCount = 0, alphaCount = 0;
-		private boolean shouldRebuild = true;
+		boolean shouldRebuild = true;
 		
 		private boolean hasPostRelease = false;
 

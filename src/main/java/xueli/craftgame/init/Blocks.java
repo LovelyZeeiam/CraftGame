@@ -1,6 +1,5 @@
 package xueli.craftgame.init;
 
-import java.awt.Color;
 import xueli.craftgame.block.AbstractAlphaBlock;
 import xueli.craftgame.block.AbstractBlock;
 import xueli.craftgame.block.AbstractLightBlock;
@@ -9,6 +8,7 @@ import xueli.craftgame.block.AbstractSlab;
 import xueli.craftgame.block.AbstractStair;
 import xueli.craftgame.block.BlockBase;
 import xueli.game.module.Modules;
+import xueli.game.vector.Vector3b;
 
 public class Blocks extends Modules<BlockBase> {
 
@@ -58,7 +58,7 @@ public class Blocks extends Modules<BlockBase> {
 		add(new AbstractBlock("craftgame:netherrack", "Netherrack", "cg:netherrack"));
 		add(new AbstractBlock("craftgame:nether_brick", "Nether Brick", "cg:nether_brick"));
 		add(new AbstractBlock("craftgame:red_nether_brick", "Red Nether Brick", "cg:red_nether_brick"));
-		add(new AbstractLightBlock("craftgame:glowstone", "Glowstone", new Color(250, 218, 141), "cg:glowstone"));
+		add(new AbstractLightBlock("craftgame:glowstone", "Glowstone", new Vector3b((byte) 12, (byte) 4, (byte) 13), "cg:glowstone"));
 		add(new AbstractBlock("craftgame:sand", "Sand", "cg:sand"));
 		add(new AbstractBlock("craftgame:red_sand", "Red Sand", "cg:red_sand"));
 		add(new AbstractPlant("craftgame:sapling_oak", "Oak Sapling", "cg:sapling_oak"));

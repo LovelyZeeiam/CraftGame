@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -52,11 +53,11 @@ public class Files {
 	}
 
 	public static String readAllString(File file) throws IOException {
-		BufferedInputStream reader = new BufferedInputStream(new FileInputStream(file));
-		byte[] all = new byte[reader.available()];
-		reader.read(all);
-		reader.close();
-		return new String(all);
+		return new String(readAllByte(file));
+	}
+
+	public static String readAllStringFromIn(InputStream in) throws IOException {
+		return new String(in.readAllBytes(), StandardCharsets.UTF_8);
 	}
 
 	public static byte[] readAllByte(File file) throws IOException {

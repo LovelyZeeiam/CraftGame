@@ -157,7 +157,7 @@ public class Shader {
 	}
 
 	public static void setProjectionMatrix(Game game, Shader shader) {
-		setProjectionMatrix(shader, game.getDisplay().getWidth(), game.getDisplay().getHeight(), 90.0f);
+		setProjectionMatrix(shader, game.getDisplay().getWidth(), game.getDisplay().getHeight(), 110.0f);
 	}
 
 	public static void setProjectionMatrix(Shader shader, float width, float height, float fov) {

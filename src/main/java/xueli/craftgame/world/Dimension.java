@@ -76,5 +76,9 @@ public class Dimension {
 	public Blocks getBlocks() {
 		return blocks;
 	}
+	
+	public WorldUpdater getUpdater() {
+		return updater;
+	}
 
 }

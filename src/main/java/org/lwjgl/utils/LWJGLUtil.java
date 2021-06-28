@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2002-2008 LWJGL Project
  * All rights reserved.
@@ -30,7 +29,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.lwjgl;
+package org.lwjgl.utils;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -48,6 +47,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import org.lwjgl.BufferUtils;
+
 /**
  * <p>
  * Internal library methods
@@ -56,6 +57,7 @@ import java.util.StringTokenizer;
  * @author Brian Matzon <brian@matzon.dk>
  * @version $Revision$ $Id$
  */
+@SuppressWarnings({ "deprecation", "removal" })
 public class LWJGLUtil {
 	public static final int PLATFORM_LINUX = 1;
 	public static final int PLATFORM_MACOSX = 2;

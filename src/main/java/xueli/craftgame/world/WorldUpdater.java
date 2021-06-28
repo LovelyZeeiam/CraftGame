@@ -12,9 +12,17 @@ public class WorldUpdater extends ThreadTask {
 
 	}
 	
-	private static class LightUpdater {
+	public static class LightUpdater implements Runnable {
 		
-		public LightUpdater() {
+		private Chunk chunk;
+		
+		public LightUpdater(Chunk chunk) {
+			this.chunk = chunk;
+		}
+		
+		@Override
+		public void run() {
+			
 			
 		}
 		
