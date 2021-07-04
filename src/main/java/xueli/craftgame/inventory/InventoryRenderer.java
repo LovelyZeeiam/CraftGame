@@ -1,10 +1,29 @@
 package xueli.craftgame.inventory;
 
-import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.nanovg.NanoVGGL3.*;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_CENTER;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_MIDDLE;
+import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgCreateFont;
+import static org.lwjgl.nanovg.NanoVG.nvgCreateImage;
+import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
+import static org.lwjgl.nanovg.NanoVG.nvgFill;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
+import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
+import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
+import static org.lwjgl.nanovg.NanoVG.nvgImagePattern;
+import static org.lwjgl.nanovg.NanoVG.nvgRect;
+import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
+import static org.lwjgl.nanovg.NanoVG.nvgText;
+import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
+import static org.lwjgl.nanovg.NanoVGGL3.nvgluBindFramebuffer;
+import static org.lwjgl.nanovg.NanoVGGL3.nvgluCreateFramebuffer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGLUFramebuffer;
 import org.lwjgl.opengl.GL11;
@@ -32,7 +51,7 @@ public class InventoryRenderer extends NVGRenderer {
 	private static final EvalableFloat INV_VIEW_LETTER_HINT_SIZE = new EvalableFloat("18 * scale");
 	private static final EvalableFloat INV_VIEW_LETTER_HINT_BACKGROUND_SIZE_OFFSET = new EvalableFloat("-3.0 * scale");
 	private static final EvalableFloat INV_VIEW_ARROW_SIZE = new EvalableFloat("20.0 * scale");
-	
+
 	private static final EvalableFloat INV_HUD_WIDTH = new EvalableFloat("364 * scale");
 	private static final EvalableFloat INV_HUD_HEIGHT = new EvalableFloat("44 * scale");
 	private static final EvalableFloat INV_HUD_SLOT_OFFSET_Y = new EvalableFloat("6 * scale");
@@ -43,20 +62,20 @@ public class InventoryRenderer extends NVGRenderer {
 
 	private static final String FONT_NAME = "Inventory";
 
-	private Inventory inventory;
-	private ArrayList<NVGLUFramebuffer> pages = new ArrayList<>();
-	private ArrayList<Table<InventoryItem>> itemPages = new ArrayList<>();
+	private final Inventory inventory;
+	private final ArrayList<NVGLUFramebuffer> pages = new ArrayList<>();
+	private final ArrayList<Table<InventoryItem>> itemPages = new ArrayList<>();
 	private float page_width, page_height;
 
-	private HashMap<Integer, Vector2i> keyboardMapping = new HashMap<>();
-	private HashMap<Vector2i, String> mappedKeyboard = new HashMap<>();
-	
-	private boolean choosenViewVisible = false;
+	private final HashMap<Integer, Vector2i> keyboardMapping = new HashMap<>();
+	private final HashMap<Vector2i, String> mappedKeyboard = new HashMap<>();
+
+	private boolean chosenViewVisible = false;
 	private int chosenViewPage = 0;
 
-	private int tex_item_frame;
-	private int tex_inventory_tab, tex_inventory_tab_chosen;
-	private int tex_arrow_up, tex_arrow_down;
+	private final int tex_item_frame;
+	private final int tex_inventory_tab, tex_inventory_tab_chosen;
+	private final int tex_arrow_up, tex_arrow_down;
 
 	public InventoryRenderer(Inventory inventory) {
 		super();
@@ -74,7 +93,7 @@ public class InventoryRenderer extends NVGRenderer {
 				Files.getResourcePackedInJar("textures/hud/inventory/arrow_up.png").getPath(), NVG_IMAGE_NEAREST);
 		this.tex_arrow_down = nvgCreateImage(nvg,
 				Files.getResourcePackedInJar("textures/hud/inventory/arrow_down.png").getPath(), NVG_IMAGE_NEAREST);
-		
+
 		nvgCreateFont(nvg, FONT_NAME, "res/fonts/minecraft-ten.ttf");
 
 		// SEPARATE PAGES
@@ -191,26 +210,27 @@ public class InventoryRenderer extends NVGRenderer {
 	public void update() {
 		if (game.getDisplay().isMouseGrabbed()) {
 			if (game.getDisplay().isKeyDownOnce(GLFW.GLFW_KEY_E)) {
-				choosenViewVisible = !choosenViewVisible;
+				chosenViewVisible = !chosenViewVisible;
 			}
 
-			if (choosenViewVisible) {
+			if (chosenViewVisible) {
 				if (game.getDisplay().isKeyDownOnce(GLFW.GLFW_KEY_DOWN))
 					chosenViewPage++;
 				if (game.getDisplay().isKeyDownOnce(GLFW.GLFW_KEY_UP))
 					chosenViewPage--;
 				chosenViewPage = Math.floorMod(chosenViewPage, pages.size());
-				
+
 				keyboardMapping.forEach((key, v) -> {
-					if(game.getDisplay().isKeyDownOnce(key)) {
+					if (game.getDisplay().isKeyDownOnce(key)) {
 						InventoryItem item = itemPages.get(chosenViewPage).get(v.y, v.x);
-						if(item == null) return;
+						if (item == null)
+							return;
 						item.onHovered(inventory.getPlayer());
 						inventory.getSlots()[inventory.getChosenSlotId()] = item;
 						return;
 					}
 				});
-				
+
 			}
 
 		}
@@ -224,7 +244,7 @@ public class InventoryRenderer extends NVGRenderer {
 		 * inventory, but make it controlled by keyboard so that player can control
 		 * items when moving
 		 */
-		if (choosenViewVisible) {
+		if (chosenViewVisible) {
 			nvgImagePattern(nvg, game.getWidth() - INV_VIEW_PADDING.getValue() - page_width,
 					INV_VIEW_PADDING.getValue(), page_width, page_height, 0, pages.get(chosenViewPage).image(), 1,
 					paint);
@@ -233,19 +253,20 @@ public class InventoryRenderer extends NVGRenderer {
 					page_width, page_height, 0);
 			nvgFillPaint(nvg, paint);
 			nvgFill(nvg);
-			
+
 			nvgImagePattern(nvg, game.getWidth() - INV_VIEW_PADDING.getValue() - INV_VIEW_ARROW_SIZE.getValue(),
-					INV_VIEW_PADDING.getValue() + page_height - INV_VIEW_ARROW_SIZE.getValue(), INV_VIEW_ARROW_SIZE.getValue(), INV_VIEW_ARROW_SIZE.getValue(), 0, tex_arrow_down, 1,
-					paint);
+					INV_VIEW_PADDING.getValue() + page_height - INV_VIEW_ARROW_SIZE.getValue(),
+					INV_VIEW_ARROW_SIZE.getValue(), INV_VIEW_ARROW_SIZE.getValue(), 0, tex_arrow_down, 1, paint);
 			nvgBeginPath(nvg);
 			nvgRoundedRect(nvg, game.getWidth() - INV_VIEW_PADDING.getValue() - INV_VIEW_ARROW_SIZE.getValue(),
-					INV_VIEW_PADDING.getValue() + page_height - INV_VIEW_ARROW_SIZE.getValue(), INV_VIEW_ARROW_SIZE.getValue(), INV_VIEW_ARROW_SIZE.getValue(), 0);
+					INV_VIEW_PADDING.getValue() + page_height - INV_VIEW_ARROW_SIZE.getValue(),
+					INV_VIEW_ARROW_SIZE.getValue(), INV_VIEW_ARROW_SIZE.getValue(), 0);
 			nvgFillPaint(nvg, paint);
 			nvgFill(nvg);
-			
+
 			nvgImagePattern(nvg, game.getWidth() - INV_VIEW_PADDING.getValue() - INV_VIEW_ARROW_SIZE.getValue(),
-					INV_VIEW_PADDING.getValue(), INV_VIEW_ARROW_SIZE.getValue(), INV_VIEW_ARROW_SIZE.getValue(), 0, tex_arrow_up, 1,
-					paint);
+					INV_VIEW_PADDING.getValue(), INV_VIEW_ARROW_SIZE.getValue(), INV_VIEW_ARROW_SIZE.getValue(), 0,
+					tex_arrow_up, 1, paint);
 			nvgBeginPath(nvg);
 			nvgRoundedRect(nvg, game.getWidth() - INV_VIEW_PADDING.getValue() - INV_VIEW_ARROW_SIZE.getValue(),
 					INV_VIEW_PADDING.getValue(), INV_VIEW_ARROW_SIZE.getValue(), INV_VIEW_ARROW_SIZE.getValue(), 0);
@@ -276,11 +297,14 @@ public class InventoryRenderer extends NVGRenderer {
 		nvgRoundedRect(nvg, inv_chosen_x, inv_chosen_y, inv_chosen_width, inv_chosen_height, 0);
 		nvgFillPaint(nvg, paint);
 		nvgFill(nvg);
-		
-		for(int i = 0; i < Inventory.SLOT_NUM; i++) {
+
+		for (int i = 0; i < Inventory.SLOT_NUM; i++) {
 			InventoryItem item = inventory.getSlots()[i];
-			if(item != null) {
-				item.renderSlot(inv_hud_x + INV_HUD_FIRST_SLOT_OFFSET_X.getValue() + i * INV_HUD_POINTER_OFFSET.getValue(), inv_hud_y + INV_HUD_SLOT_OFFSET_Y.getValue(), INV_HUD_SLOT_SIZE.getValue(), INV_HUD_SLOT_SIZE.getValue(), nvg);
+			if (item != null) {
+				item.renderSlot(
+						inv_hud_x + INV_HUD_FIRST_SLOT_OFFSET_X.getValue() + i * INV_HUD_POINTER_OFFSET.getValue(),
+						inv_hud_y + INV_HUD_SLOT_OFFSET_Y.getValue(), INV_HUD_SLOT_SIZE.getValue(),
+						INV_HUD_SLOT_SIZE.getValue(), nvg);
 			}
 		}
 

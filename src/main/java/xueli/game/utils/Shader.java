@@ -11,9 +11,9 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL32;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.utils.vector.Matrix4f;
+import org.lwjgl.utils.vector.Vector2f;
+import org.lwjgl.utils.vector.Vector3f;
 
 import xueli.game.Game;
 import xueli.game.utils.math.MatrixHelper;
@@ -143,7 +143,7 @@ public class Shader {
 	public void setFloat(int loc, float v) {
 		GL20.glUniform1f(loc, v);
 	}
-	
+
 	public void unbind() {
 		GL20.glUseProgram(0);
 	}

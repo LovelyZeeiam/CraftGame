@@ -1,6 +1,6 @@
 package xueli.game.utils.texture;
 
-import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.utils.vector.Vector2f;
 
 import xueli.game.vector.Vector2i;
 

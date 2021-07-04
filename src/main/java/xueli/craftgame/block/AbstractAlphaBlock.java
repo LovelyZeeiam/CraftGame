@@ -17,35 +17,36 @@ public class AbstractAlphaBlock extends AbstractBlock {
 	@Override
 	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Dimension dimension) {
 		int vertCount = 0;
-		if(!Asserts.assertNull(dimension.getBlock(x - 1, y, z), this::assertDraw)) {
+		if (!Asserts.assertNull(dimension.getBlock(x - 1, y, z), this::assertDraw)) {
 			vertCount += super.getRenderCubeData(buffer, x, y, z, BlockFace.LEFT, dimension);
 		}
-		if(!Asserts.assertNull(dimension.getBlock(x + 1, y, z), this::assertDraw)) {
+		if (!Asserts.assertNull(dimension.getBlock(x + 1, y, z), this::assertDraw)) {
 			vertCount += super.getRenderCubeData(buffer, x, y, z, BlockFace.RIGHT, dimension);
 		}
-		if(!Asserts.assertNull(dimension.getBlock(x, y + 1, z), this::assertDraw)) {
+		if (!Asserts.assertNull(dimension.getBlock(x, y + 1, z), this::assertDraw)) {
 			vertCount += super.getRenderCubeData(buffer, x, y, z, BlockFace.TOP, dimension);
 		}
-		if(!Asserts.assertNull(dimension.getBlock(x, y - 1, z), this::assertDraw)) {
+		if (!Asserts.assertNull(dimension.getBlock(x, y - 1, z), this::assertDraw)) {
 			vertCount += super.getRenderCubeData(buffer, x, y, z, BlockFace.BOTTOM, dimension);
 		}
-		if(!Asserts.assertNull(dimension.getBlock(x, y, z + 1), this::assertDraw)) {
+		if (!Asserts.assertNull(dimension.getBlock(x, y, z + 1), this::assertDraw)) {
 			vertCount += super.getRenderCubeData(buffer, x, y, z, BlockFace.BACK, dimension);
 		}
-		if(!Asserts.assertNull(dimension.getBlock(x, y, z - 1), this::assertDraw)) {
+		if (!Asserts.assertNull(dimension.getBlock(x, y, z - 1), this::assertDraw)) {
 			vertCount += super.getRenderCubeData(buffer, x, y, z, BlockFace.FRONT, dimension);
 		}
 		return vertCount;
 	}
-	
+
 	private boolean assertDraw(Tile t) {
-		return !t.getBase().isAlpha || t.getBase().getNamespace().equals(this.getNamespace());
+		return (!t.getBase().isAlpha && t.getBase().isComplete)
+				|| t.getBase().getNamespace().equals(this.getNamespace());
 	}
-	
+
 	@Override
 	public int getRenderModelViewData(FloatList buffer) {
-		for(byte i = 0; i < 6; i++) {
-			super.getRenderCubeData(buffer, 0,0,0, i, null);
+		for (byte i = 0; i < 6; i++) {
+			super.getRenderCubeData(buffer, 0, 0, 0, i, null);
 		}
 		return 36;
 	}

@@ -11,7 +11,7 @@ import com.google.gson.JsonObject;
 import xueli.game.sound.SoundManager;
 
 public class MusicJson {
-	
+
 	private static Logger logger = Logger.getLogger(MusicJson.class.getName());
 
 	private static Gson gson = new Gson();
@@ -20,7 +20,7 @@ public class MusicJson {
 	static {
 		manager = new SoundManager();
 		manager.init();
-		
+
 	}
 
 	private String name;
@@ -127,19 +127,19 @@ public class MusicJson {
 		manager.release();
 
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public String[] getAuthors() {
 		return authors;
 	}
-	
+
 	public float getBpm() {
 		return bpm;
 	}
-	
+
 	public HashMap<Integer, ArrayList<Note>> getNotes() {
 		return notes;
 	}

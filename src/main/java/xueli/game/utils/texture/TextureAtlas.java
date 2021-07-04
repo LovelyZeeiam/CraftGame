@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL13;
-import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.utils.vector.Vector2f;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

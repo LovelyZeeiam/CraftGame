@@ -2,7 +2,7 @@ package xueli.craftgame.world;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.lwjgl.util.vector.Vector3i;
+import org.lwjgl.utils.vector.Vector3i;
 
 import xueli.craftgame.init.Blocks;
 import xueli.game.utils.Light;
@@ -24,7 +24,6 @@ public class Dimension {
 		this.provider.start();
 		this.updater = new WorldUpdater(this);
 		this.updater.start();
-		
 
 	}
 
@@ -45,7 +44,7 @@ public class Dimension {
 	public Chunk getChunk(int x, int y, int z) {
 		return chunks.get(new Vector3i(x, y, z));
 	}
-	
+
 	public Light getLight(int x, int y, int z) {
 		Chunk chunk = chunks.get(new Vector3i(x >> 4, y >> 4, z >> 4));
 		if (chunk == null)
@@ -65,18 +64,18 @@ public class Dimension {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 		for (Vector3i v : chunks.keySet()) {
 			this.provider.save(v.getX(), v.getY(), v.getZ());
 		}
 		this.provider.release();
-		
+
 	}
 
 	public Blocks getBlocks() {
 		return blocks;
 	}
-	
+
 	public WorldUpdater getUpdater() {
 		return updater;
 	}

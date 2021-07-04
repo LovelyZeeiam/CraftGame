@@ -3,7 +3,7 @@ package xueli.craftgame.inventory;
 import java.util.ArrayList;
 
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.util.vector.Vector3i;
+import org.lwjgl.utils.vector.Vector3i;
 
 import xueli.craftgame.block.BlockBase;
 import xueli.craftgame.entity.Player;
@@ -21,8 +21,8 @@ public class Inventory {
 	private ArrayList<InventoryItem> items = new ArrayList<>();
 	private InventoryItem[] slots = new InventoryItem[SLOT_NUM];
 	private int chosenSlotId = 0;
-	
-	public Inventory(Player player,Blocks blocks) {
+
+	public Inventory(Player player, Blocks blocks) {
 		this.blocks = blocks;
 		this.player = player;
 		init();
@@ -38,39 +38,44 @@ public class Inventory {
 	}
 
 	public void tick() {
-		if(Game.INSTANCE_GAME.getDisplay().isMouseGrabbed()) {
+		if (Game.INSTANCE_GAME.getDisplay().isMouseGrabbed()) {
 			chosenSlotId -= (int) Game.INSTANCE_GAME.getDisplay().getWheelDelta();
 			chosenSlotId = Math.floorMod(chosenSlotId, SLOT_NUM);
-			
-			for(int key = GLFW.GLFW_KEY_1; key <= GLFW.GLFW_KEY_9; key++) {
-				if(Game.INSTANCE_GAME.getDisplay().isKeyDownOnce(key)) {
+
+			for (int key = GLFW.GLFW_KEY_1; key <= GLFW.GLFW_KEY_9; key++) {
+				if (Game.INSTANCE_GAME.getDisplay().isKeyDownOnce(key)) {
 					chosenSlotId = key - GLFW.GLFW_KEY_1;
 					return;
 				}
 			}
-			
+
 			Vector3i playerRayEndBlock = player.getPicker().getSelectedBlock();
-			if(Game.INSTANCE_GAME.getDisplay().isMouseDownOnce(GLFW.GLFW_MOUSE_BUTTON_MIDDLE) && playerRayEndBlock != null) {
-				BlockBase playerChosenBase = player.getDimension().getBlock(playerRayEndBlock.getX(), playerRayEndBlock.getY(), playerRayEndBlock.getZ()).getBase();
+			if (Game.INSTANCE_GAME.getDisplay().isMouseDownOnce(GLFW.GLFW_MOUSE_BUTTON_MIDDLE)
+					&& playerRayEndBlock != null) {
+				BlockBase playerChosenBase = player.getDimension()
+						.getBlock(playerRayEndBlock.getX(), playerRayEndBlock.getY(), playerRayEndBlock.getZ())
+						.getBase();
 				int chosenSlot = getWhatTheMostPreferredSlotToAddOnMiddleClickBlock(chosenSlotId, playerChosenBase);
 				slots[chosenSlot] = items.get(items.indexOf(new BlockInventoryItem(playerChosenBase)));
 				chosenSlotId = chosenSlot;
 			}
-			
+
 		}
-		
+
 	}
-	
+
 	private int getWhatTheMostPreferredSlotToAddOnMiddleClickBlock(int pre, BlockBase base) {
-		for(int i = 0; i < SLOT_NUM; i++) {
-			if(slots[i] == null) return i;
-			else if(slots[i] instanceof BlockInventoryItem && ((BlockInventoryItem) slots[i]).get().equals(base)) return i;
+		for (int i = 0; i < SLOT_NUM; i++) {
+			if (slots[i] == null)
+				return i;
+			else if (slots[i] instanceof BlockInventoryItem && ((BlockInventoryItem) slots[i]).get().equals(base))
+				return i;
 		}
 		return pre;
 	}
-	
+
 	public void leftClick(Player player) {
-		if(slots[chosenSlotId] != null) {
+		if (slots[chosenSlotId] != null) {
 			slots[chosenSlotId].onLeftClick(player);
 		} else {
 			PlayerPicker picker = player.getPicker();
@@ -80,17 +85,17 @@ public class Inventory {
 			}
 		}
 	}
-	
+
 	public void rightClick(Player player) {
-		if(slots[chosenSlotId] != null) {
+		if (slots[chosenSlotId] != null) {
 			slots[chosenSlotId].onRightClick(player);
 		}
 	}
 
 	public void close() {
-		
+
 	}
-	
+
 	public InventoryItem findBlockItem(String namespace) {
 		return items.get(items.indexOf(new BlockInventoryItem(new BlockBase(namespace))));
 	}
@@ -110,11 +115,11 @@ public class Inventory {
 	public InventoryItem[] getSlots() {
 		return slots;
 	}
-	
+
 	public int getChosenSlotId() {
 		return chosenSlotId;
 	}
-	
+
 	public Player getPlayer() {
 		return player;
 	}

@@ -1,7 +1,7 @@
 package xueli.game.utils.math;
 
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.utils.vector.Matrix4f;
+import org.lwjgl.utils.vector.Vector3f;
 
 import xueli.game.vector.Vector;
 

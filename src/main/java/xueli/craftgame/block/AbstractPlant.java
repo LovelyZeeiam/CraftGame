@@ -1,8 +1,8 @@
 package xueli.craftgame.block;
 
-import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.utils.vector.Vector3f;
 
-import xueli.craftgame.renderer.model.CubeDrawer;
+import xueli.craftgame.model.CubeDrawer;
 import xueli.craftgame.state.StateWorld;
 import xueli.craftgame.world.Dimension;
 import xueli.game.utils.FloatList;
@@ -18,7 +18,7 @@ public class AbstractPlant extends AbstractBlock {
 				new String[] { textureName, textureName, textureName, textureName, textureName, textureName });
 
 		isComplete = false;
-		isAlpha = true;
+		isAlpha = false;
 
 		this.holder = StateWorld.getInstance().getBlocksTextureAtlas().getTextureHolder(textureName);
 
@@ -27,21 +27,15 @@ public class AbstractPlant extends AbstractBlock {
 	@Override
 	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Dimension dimension) {
 		Light light = dimension == null ? Light.FULL_LIGHT : dimension.getLight(x, y, z);
-		CubeDrawer.drawQuad(buffer,new Vector3f(-1, 0, 1), new Vector3f(x + 0.2f, y + 0.8f, z + 0.2f), holder.p_left_top,
-				light.getLightBuffer(),
-				new Vector3f(x + 0.8f, y + 0.8f, z + 0.8f), holder.p_right_top,
-				light.getLightBuffer(),
-				new Vector3f(x + 0.2f, y + 0, z + 0.2f), holder.p_left_down,
-				light.getLightBuffer(),
-				new Vector3f(x + 0.8f, y + 0, z + 0.8f), holder.p_right_down,
+		CubeDrawer.drawQuad(buffer, new Vector3f(-1, 0, 1), new Vector3f(x + 0.2f, y + 0.8f, z + 0.2f),
+				holder.p_left_top, light.getLightBuffer(), new Vector3f(x + 0.8f, y + 0.8f, z + 0.8f),
+				holder.p_right_top, light.getLightBuffer(), new Vector3f(x + 0.2f, y + 0, z + 0.2f), holder.p_left_down,
+				light.getLightBuffer(), new Vector3f(x + 0.8f, y + 0, z + 0.8f), holder.p_right_down,
 				light.getLightBuffer());
-		CubeDrawer.drawQuad(buffer,new Vector3f(1, 0, 1), new Vector3f(x + 0.8f, y + 0.8f, z + 0.2f), holder.p_left_top,
-				light.getLightBuffer(),
-				new Vector3f(x + 0.2f, y + 0.8f, z + 0.8f), holder.p_right_top,
-				light.getLightBuffer(),
-				new Vector3f(x + 0.8f, y + 0, z + 0.2f), holder.p_left_down,
-				light.getLightBuffer(),
-				new Vector3f(x + 0.2f, y + 0, z + 0.8f), holder.p_right_down,
+		CubeDrawer.drawQuad(buffer, new Vector3f(1, 0, 1), new Vector3f(x + 0.8f, y + 0.8f, z + 0.2f),
+				holder.p_left_top, light.getLightBuffer(), new Vector3f(x + 0.2f, y + 0.8f, z + 0.8f),
+				holder.p_right_top, light.getLightBuffer(), new Vector3f(x + 0.8f, y + 0, z + 0.2f), holder.p_left_down,
+				light.getLightBuffer(), new Vector3f(x + 0.2f, y + 0, z + 0.8f), holder.p_right_down,
 				light.getLightBuffer());
 		return 12;
 	}

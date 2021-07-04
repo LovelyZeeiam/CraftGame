@@ -58,7 +58,8 @@ public class Blocks extends Modules<BlockBase> {
 		add(new AbstractBlock("craftgame:netherrack", "Netherrack", "cg:netherrack"));
 		add(new AbstractBlock("craftgame:nether_brick", "Nether Brick", "cg:nether_brick"));
 		add(new AbstractBlock("craftgame:red_nether_brick", "Red Nether Brick", "cg:red_nether_brick"));
-		add(new AbstractLightBlock("craftgame:glowstone", "Glowstone", new Vector3b((byte) 12, (byte) 4, (byte) 13), "cg:glowstone"));
+		add(new AbstractLightBlock("craftgame:glowstone", "Glowstone", new Vector3b((byte) 12, (byte) 4, (byte) 13),
+				"cg:glowstone"));
 		add(new AbstractBlock("craftgame:sand", "Sand", "cg:sand"));
 		add(new AbstractBlock("craftgame:red_sand", "Red Sand", "cg:red_sand"));
 		add(new AbstractPlant("craftgame:sapling_oak", "Oak Sapling", "cg:sapling_oak"));

@@ -57,10 +57,9 @@ public class EvalableFloat {
 		eval();
 		return value;
 	}
-	
+
 	public float getValue(float win_width, float win_height, float scale) {
-		String newExpressionString = expression
-				.replaceAll("win_width", Float.valueOf(win_width).toString())
+		String newExpressionString = expression.replaceAll("win_width", Float.valueOf(win_width).toString())
 				.replaceAll("win_height", Float.valueOf(win_height).toString())
 				.replaceAll("scale", Float.valueOf(scale).toString());
 

@@ -9,17 +9,17 @@ public class AWTSwingRefresher extends Thread {
 	private ThreadTask taskManager;
 	private JComponent c;
 	private long refreshMills;
-	
+
 	private boolean running = true;
-	
-	public AWTSwingRefresher(ThreadTask taskManager ,JComponent c, long refreshMills) {
+
+	public AWTSwingRefresher(ThreadTask taskManager, JComponent c, long refreshMills) {
 		super("AWTSwingRefresher");
 		this.c = c;
 		this.refreshMills = refreshMills;
 		this.taskManager = taskManager;
-		
+
 	}
-	
+
 	@Override
 	public void run() {
 		try {
@@ -28,20 +28,20 @@ public class AWTSwingRefresher extends Thread {
 				synchronized (this) {
 					wait(refreshMills);
 				}
-				
-				if(nextTimeCheckShouldRun && !taskManager.hasTask()) {
+
+				if (nextTimeCheckShouldRun && !taskManager.hasTask()) {
 					c.updateUI();
 					System.gc();
 				}
-				
+
 				nextTimeCheckShouldRun = taskManager.hasTask();
-				
+
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void postExit() {
 		running = false;
 	}

@@ -16,9 +16,9 @@ public abstract class Game implements Runnable {
 	public static final String DEFAULT_RES_DIRECTORY_STRING = "./res/";
 	public static final String DEFAULT_WORKING_DIRECTORY_STRING = "./.cg/";
 
-	private Display display;
+	private final Display display;
 
-	private Queue<Runnable> queueInMainThread = new LinkedList<>();
+	private final Queue<Runnable> queueInMainThread = new LinkedList<>();
 
 	protected RendererManager rendererManager;
 
@@ -35,14 +35,14 @@ public abstract class Game implements Runnable {
 		Time.tick();
 		rendererManager = new RendererManager();
 
-		oncreate();
+		onCreate();
 		display.show();
 
 		onSize((int) getWidth(), (int) getHeight());
 		Time.tick();
 
 		while (display.isRunning()) {
-			ontick();
+			onTick();
 			rendererManager.render();
 			GLHelper.checkGLError("[Renderer]");
 			display.update();
@@ -56,26 +56,26 @@ public abstract class Game implements Runnable {
 
 		display.hide();
 		rendererManager.release();
-		onrelease();
+		onRelease();
 
 	}
 
-	public abstract void oncreate();
+	public abstract void onCreate();
 
-	public abstract void ontick();
+	public abstract void onTick();
 
 	protected void defaultViewport() {
 		GL11.glViewport(0, 0, display.getWidth(), display.getHeight());
-		
+
 	}
-	
+
 	public void onSize(int width, int height) {
 		defaultViewport();
 		rendererManager.size(width, height);
 
 	}
 
-	public abstract void onrelease();
+	public abstract void onRelease();
 
 	public Display getDisplay() {
 		return display;

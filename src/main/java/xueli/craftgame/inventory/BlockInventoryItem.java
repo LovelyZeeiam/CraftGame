@@ -1,5 +1,16 @@
 package xueli.craftgame.inventory;
 
+import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_FLIPY;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgDeleteImage;
+import static org.lwjgl.nanovg.NanoVG.nvgFill;
+import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
+import static org.lwjgl.nanovg.NanoVG.nvgImagePattern;
+import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
+
+import org.lwjgl.nanovg.NVGPaint;
+import org.lwjgl.nanovg.NanoVGGL3;
+
 import com.flowpowered.nbt.ByteTag;
 
 import xueli.craftgame.block.BlockBase;
@@ -10,10 +21,6 @@ import xueli.craftgame.entity.PlayerPicker;
 import xueli.craftgame.state.StateWorld;
 import xueli.craftgame.world.Tile;
 import xueli.game.renderer.FrameBuffer;
-import static org.lwjgl.nanovg.NanoVG.*;
-
-import org.lwjgl.nanovg.NVGPaint;
-import org.lwjgl.nanovg.NanoVGGL3;
 
 public class BlockInventoryItem extends InventoryItem {
 
@@ -66,7 +73,7 @@ public class BlockInventoryItem extends InventoryItem {
 	public String getNamespace() {
 		return base.getNamespace();
 	}
-	
+
 	public BlockBase get() {
 		return base;
 	}

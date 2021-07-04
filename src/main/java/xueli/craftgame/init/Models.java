@@ -1,10 +1,10 @@
 package xueli.craftgame.init;
 
-import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.utils.vector.Vector3f;
 
-import xueli.craftgame.renderer.model.Cube;
-import xueli.craftgame.renderer.model.Model;
-import xueli.craftgame.renderer.model.ModelBuilder;
+import xueli.craftgame.model.Cube;
+import xueli.craftgame.model.Model;
+import xueli.craftgame.model.ModelBuilder;
 import xueli.game.module.Modules;
 
 public class Models extends Modules<Model> {

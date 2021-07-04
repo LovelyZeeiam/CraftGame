@@ -35,14 +35,23 @@ repositories {
 
     mavenCentral()
 
-    jcenter()
-
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     
 }
 
 dependencies {
+    implementation group: 'org.bytedeco', name: 'javacv', version: '1.5.5'
+    implementation group: 'org.bytedeco', name: 'javacv-platform', version: '1.5.5'
+
+	implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+	implementation 'commons-codec:commons-codec:1.15'
+	implementation 'com.fasterxml.jackson.core:jackson-core:2.12.3'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
+	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.3'
+	implementation 'org.apache.commons:commons-compress:1.20'
+	implementation 'org.brotli:dec:0.1.2'
+	
     implementation 'com.google.code.gson:gson:2.8.6'
 
     implementation group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true
@@ -88,7 +97,7 @@ dependencies {
 
 }
 
-def releaseTime() {
+static def releaseTime() {
   return new Date().format("yyyyMMdd", TimeZone.getTimeZone("GMT+08:00"))
 }
 
@@ -97,7 +106,6 @@ jar {
         attributes 'Implementation-Title': 'CraftGame',
                 'Implementation-Version': "WorldAlpha-${releaseTime()}"
     }
-	
-	
+
 }
 

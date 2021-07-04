@@ -2,11 +2,11 @@ package xueli.craftgame.block;
 
 import java.util.HashMap;
 
-import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.utils.vector.Vector2f;
 
 import xueli.craftgame.init.Models;
-import xueli.craftgame.renderer.model.TexturedModel;
-import xueli.craftgame.renderer.model.TexturedModelBuilder;
+import xueli.craftgame.model.TexturedModel;
+import xueli.craftgame.model.TexturedModelBuilder;
 import xueli.craftgame.state.StateWorld;
 import xueli.craftgame.world.Dimension;
 import xueli.craftgame.world.Tile;
@@ -168,7 +168,7 @@ public class AbstractStair extends AbstractBlock {
 
 		byte faceTo = (byte) tile.getTags().get(BlockTags.TAG_NAME_FACE_TO).getValue();
 		byte part = (byte) tile.getTags().get(BlockTags.TAG_NAME_PART).getValue();
-		
+
 		Light light = dimension.getLight(x, y, z);
 
 		if (part == BlockFace.PART_DOWN) {
@@ -184,23 +184,23 @@ public class AbstractStair extends AbstractBlock {
 			case BlockFace.FRONT -> models.get("cg:stair_up_front").getRenderData(x, y, z, face, light, buffer);
 			case BlockFace.BACK -> models.get("cg:stair_up_back").getRenderData(x, y, z, face, light, buffer);
 			case BlockFace.LEFT -> models.get("cg:stair_up_left").getRenderData(x, y, z, face, light, buffer);
-			case BlockFace.RIGHT -> models.get("cg:stair_up_right").getRenderData(x, y, z, face,light, buffer);
+			case BlockFace.RIGHT -> models.get("cg:stair_up_right").getRenderData(x, y, z, face, light, buffer);
 			default -> 0;
 			};
 		} else {
 			return 0;
 		}
 	}
-	
+
 	@Override
 	public int getRenderModelViewData(FloatList buffer) {
 		int v = 0;
-		TexturedModel model = this.models.get("cg:stair_down_front");
-		for(byte f = 0; f < 6; f++) {
+		TexturedModel model = this.models.get("cg:stair_down_right");
+		for (byte f = 0; f < 6; f++) {
 			v += model.getRenderData(0, 0, 0, f, Light.FULL_LIGHT, buffer);
 		}
 		return v;
-		
+
 	}
 
 }

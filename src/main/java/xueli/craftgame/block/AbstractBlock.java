@@ -1,6 +1,6 @@
 package xueli.craftgame.block;
 
-import xueli.craftgame.renderer.model.TexturedModelBuilder;
+import xueli.craftgame.model.TexturedModelBuilder;
 import xueli.craftgame.state.StateWorld;
 import xueli.game.utils.texture.AtlasTextureHolder;
 

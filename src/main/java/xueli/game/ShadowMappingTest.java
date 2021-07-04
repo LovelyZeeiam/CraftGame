@@ -1,11 +1,46 @@
 package xueli.game;
 
-import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_COMPONENT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_FLOAT;
+import static org.lwjgl.opengl.GL11.GL_LINEAR;
+import static org.lwjgl.opengl.GL11.GL_NEAREST;
+import static org.lwjgl.opengl.GL11.GL_RGB;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_WRAP_S;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_WRAP_T;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLE_STRIP;
+import static org.lwjgl.opengl.GL11.GL_UNSIGNED_BYTE;
+import static org.lwjgl.opengl.GL11.glBindTexture;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glGenTextures;
+import static org.lwjgl.opengl.GL11.glTexImage2D;
+import static org.lwjgl.opengl.GL11.glTexParameteri;
+import static org.lwjgl.opengl.GL11.glViewport;
+import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
+import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
+import static org.lwjgl.opengl.GL13.glActiveTexture;
+import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
+import static org.lwjgl.opengl.GL30.GL_COLOR_ATTACHMENT0;
+import static org.lwjgl.opengl.GL30.GL_DEPTH_ATTACHMENT;
+import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
+import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER_COMPLETE;
+import static org.lwjgl.opengl.GL30.glBindFramebuffer;
+import static org.lwjgl.opengl.GL30.glCheckFramebufferStatus;
+import static org.lwjgl.opengl.GL30.glFramebufferTexture2D;
+import static org.lwjgl.opengl.GL30.glGenFramebuffers;
 
 import java.io.IOException;
 
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.utils.vector.Matrix4f;
+import org.lwjgl.utils.vector.Vector3f;
 
 import xueli.craftgame.renderer.VertexPointer;
 import xueli.game.player.FirstPersonCamera;
@@ -48,7 +83,7 @@ public class ShadowMappingTest extends Game {
 	}
 
 	@Override
-	public void oncreate() {
+	public void onCreate() {
 		this.shader = new Shader("res/shaders/test_shadow_mapping/vert.txt",
 				"res/shaders/test_shadow_mapping/frag.txt");
 		this.shader_depth = new Shader("res/shaders/test_shadow_mapping_depth/vert.txt",
@@ -130,7 +165,7 @@ public class ShadowMappingTest extends Game {
 	}
 
 	@Override
-	public void ontick() {
+	public void onTick() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.5f, 0.6f, 0.9f, 1.0f);
 
@@ -146,9 +181,9 @@ public class ShadowMappingTest extends Game {
 			Shader.setViewMatrix(lightLookAt, shader_depth);
 
 			shader_depth.use();
-			//glCullFace(GL_FRONT);
+			// glCullFace(GL_FRONT);
 			drawScene();
-			//glCullFace(GL_BACK);
+			// glCullFace(GL_BACK);
 			shader_depth.unbind();
 
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -198,7 +233,7 @@ public class ShadowMappingTest extends Game {
 	}
 
 	@Override
-	public void onrelease() {
+	public void onRelease() {
 
 	}
 

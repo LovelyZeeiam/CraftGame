@@ -5,8 +5,8 @@ import java.nio.FloatBuffer;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.utils.vector.Matrix4f;
+import org.lwjgl.utils.vector.Vector3f;
 
 import xueli.game.utils.FloatBufferWrapper;
 import xueli.game.utils.Shader;

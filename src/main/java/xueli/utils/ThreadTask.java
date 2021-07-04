@@ -6,13 +6,14 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 public class ThreadTask extends Thread {
 
-	private static final Task EMPTY = new Task(() -> {});
+	private static final Task EMPTY = new Task(() -> {
+	});
 
 	protected boolean running = false;
-	
+
 	protected LinkedBlockingDeque<Task> queue = new LinkedBlockingDeque<>();
 	protected HashMap<String, ArrayList<Task>> runnables = new HashMap<>();
-	
+
 	public ThreadTask() {
 		super();
 
@@ -22,39 +23,39 @@ public class ThreadTask extends Thread {
 		super(name);
 
 	}
-	
+
 	public void addTask(Runnable runnable, String tag) {
 		if (!this.queue.contains(new Task(runnable))) {
 			this.queue.add(new Task(runnable));
-		
-			if(!runnables.containsKey(tag))
+
+			if (!runnables.containsKey(tag))
 				runnables.put(tag, new ArrayList<>());
 			runnables.get(tag).add(new Task(runnable));
-			
+
 		}
-		
+
 	}
 
 	public void addTask(Runnable runnable) {
 		addTask(runnable, "bus");
 	}
-	
+
 	public void removeTasks(String tag) {
-		if(!runnables.containsKey(tag))
+		if (!runnables.containsKey(tag))
 			return;
-		
+
 		runnables.get(tag).forEach(t -> {
-			if(t.state == TaskState.WAIT_IN_LIST) {
+			if (t.state == TaskState.WAIT_IN_LIST) {
 				queue.remove(t);
 			}
 		});
-		
+
 	}
 
 	public boolean hasTask() {
 		return !queue.isEmpty();
 	}
-	
+
 	@Override
 	public void run() {
 		running = true;
@@ -76,12 +77,12 @@ public class ThreadTask extends Thread {
 		queue.add(EMPTY);
 
 	}
-	
+
 	private static class Task {
-		
+
 		public Runnable runnable;
 		public TaskState state = TaskState.WAIT_IN_LIST;
-		
+
 		public Task(Runnable runnable) {
 			this.runnable = runnable;
 		}
@@ -110,9 +111,9 @@ public class ThreadTask extends Thread {
 				return false;
 			return true;
 		}
-		
+
 	}
-	
+
 	private static enum TaskState {
 		WAIT_IN_LIST, RUNNING, DONE
 	}

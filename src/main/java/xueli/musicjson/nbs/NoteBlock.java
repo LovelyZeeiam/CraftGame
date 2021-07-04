@@ -8,7 +8,7 @@ public class NoteBlock {
 	private float velocity;
 	private float panning;
 	private float pitch;
-	
+
 	public NoteBlock(short tick, short layer, byte inst, byte key, byte velocity, byte panning, short pitch) {
 		this.tick = tick;
 		this.layer = layer;
@@ -17,7 +17,7 @@ public class NoteBlock {
 		this.velocity = velocity / 100.0f;
 		this.panning = panning / 100.0f;
 		this.pitch = pitch / 100.0f;
-		
+
 	}
 
 	private String convertToString(byte inst) {
@@ -80,7 +80,7 @@ public class NoteBlock {
 	public float getPanning() {
 		return panning;
 	}
-	
+
 	public float getPitch() {
 		return pitch;
 	}

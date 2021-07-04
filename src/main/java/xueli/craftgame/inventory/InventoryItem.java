@@ -50,6 +50,5 @@ public abstract class InventoryItem {
 			return false;
 		return true;
 	}
-	
-	
+
 }

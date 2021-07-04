@@ -3,8 +3,8 @@ package xueli.game.utils;
 import java.nio.FloatBuffer;
 import java.util.Arrays;
 
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.utils.vector.Vector2f;
+import org.lwjgl.utils.vector.Vector3f;
 
 import xueli.game.vector.Vector4b;
 
@@ -62,13 +62,12 @@ public class FloatList {
 
 		return this;
 	}
-	
+
 	public FloatList put(Vector4b v) {
 		int bits = (v.x << 24) | (v.y << 16) | (v.z << 8) | v.w;
 		return put(Float.intBitsToFloat(bits));
 	}
 
-	
 	public FloatList put(Vector3f v) {
 		return put(v.x).put(v.y).put(v.z);
 	}
@@ -103,7 +102,8 @@ public class FloatList {
 	}
 
 	public void storeInBuffer(FloatBuffer buffer) {
-		if(data == null) return;
+		if (data == null)
+			return;
 		buffer.put(data, 0, size);
 	}
 

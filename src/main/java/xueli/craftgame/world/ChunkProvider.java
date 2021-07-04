@@ -1,8 +1,8 @@
 package xueli.craftgame.world;
 
-import org.lwjgl.util.vector.Vector3i;
+import org.lwjgl.utils.vector.Vector3i;
 
-import xueli.craftgame.renderer.world.WorldRenderer;
+import xueli.craftgame.renderer.WorldRenderer;
 import xueli.craftgame.state.StateWorld;
 import xueli.game.utils.ThreadTask;
 import xueli.game.utils.Time;

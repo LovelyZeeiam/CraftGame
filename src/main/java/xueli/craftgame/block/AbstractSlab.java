@@ -1,10 +1,10 @@
 package xueli.craftgame.block;
 
-import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.utils.vector.Vector2f;
 
 import xueli.craftgame.init.Models;
-import xueli.craftgame.renderer.model.TexturedModel;
-import xueli.craftgame.renderer.model.TexturedModelBuilder;
+import xueli.craftgame.model.TexturedModel;
+import xueli.craftgame.model.TexturedModelBuilder;
 import xueli.craftgame.state.StateWorld;
 import xueli.craftgame.world.Dimension;
 import xueli.craftgame.world.Tile;
@@ -59,7 +59,7 @@ public class AbstractSlab extends AbstractBlock {
 	@Override
 	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Dimension dimension) {
 		Light light = dimension.getLight(x, y, z);
-		
+
 		Tile tile = dimension.getBlock(x, y, z);
 		byte part = (byte) tile.getTags().get(BlockTags.TAG_NAME_PART).getValue();
 
@@ -69,11 +69,11 @@ public class AbstractSlab extends AbstractBlock {
 			return up.getRenderData(x, y, z, face, light, buffer);
 		return 0;
 	}
-	
+
 	@Override
 	public int getRenderModelViewData(FloatList buffer) {
 		int v = 0;
-		for(byte f = 0; f < 6; f++) {
+		for (byte f = 0; f < 6; f++) {
 			v += down.getRenderData(0, 0.5f, 0, f, Light.FULL_LIGHT, buffer);
 		}
 		return v;

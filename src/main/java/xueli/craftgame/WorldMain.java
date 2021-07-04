@@ -14,7 +14,7 @@ public class WorldMain extends Game {
 	}
 
 	@Override
-	public void oncreate() {
+	public void onCreate() {
 		System.setProperty("java.util.logging.config.file",
 				Files.getResourcePackedInJar("logging.properties").getPath());
 
@@ -23,13 +23,13 @@ public class WorldMain extends Game {
 	}
 
 	@Override
-	public void ontick() {
+	public void onTick() {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
 
 	}
 
 	@Override
-	public void onrelease() {
+	public void onRelease() {
 
 	}
 

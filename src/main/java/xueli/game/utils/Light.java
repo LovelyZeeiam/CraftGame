@@ -3,10 +3,10 @@ package xueli.game.utils;
 import xueli.game.vector.Vector4b;
 
 public class Light {
-	
+
 	public static final Light FULL_LIGHT = new Light((byte) 15, (byte) 15, (byte) 15, (byte) 15);
 
-	private byte sun, r,g,b;
+	private byte sun, r, g, b;
 
 	public Light(byte sun, byte r, byte g, byte b) {
 		this.sun = sun;
@@ -46,7 +46,7 @@ public class Light {
 	public void setB(byte b) {
 		this.b = b;
 	}
-	
+
 	public Vector4b getLightBuffer() {
 		return new Vector4b(r, g, b, sun);
 	}

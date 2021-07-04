@@ -2,7 +2,7 @@ package xueli.craftgame.entity.bonetest;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.utils.vector.Vector3f;
 
 import xueli.craftgame.entity.EntityPlayer;
 import xueli.craftgame.entity.EntityRenderer;
@@ -29,7 +29,7 @@ public class BoneAnimationTest extends Game {
 	}
 
 	@Override
-	public void oncreate() {
+	public void onCreate() {
 		this.renderer = new EntityRenderer(this);
 		player = new EntityPlayer(new Vector(0, 0, 0), "LoveliZeeiam");
 		this.renderer.addEntity(player);
@@ -58,7 +58,7 @@ public class BoneAnimationTest extends Game {
 	}
 
 	@Override
-	public void ontick() {
+	public void onTick() {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
 		GL11.glClearColor(backgroundColor.x, backgroundColor.y, backgroundColor.z, 1.0f);
 
@@ -102,7 +102,7 @@ public class BoneAnimationTest extends Game {
 	}
 
 	@Override
-	public void onrelease() {
+	public void onRelease() {
 		getDisplay().setMouseGrabbed(false);
 		this.controlWindow.dispose();
 		this.renderer.release();

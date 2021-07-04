@@ -35,7 +35,7 @@ public class MathUtils {
 		float f = (float) (1f - Math.cos(theta)) * 0.5f;
 		return a * (1f - f) + b * f;
 	}
-	
+
 	public static float mixLinear(float a, float b, float blend) {
 		return blend * (b - a) + a;
 	}
@@ -47,7 +47,7 @@ public class MathUtils {
 		}
 		return min;
 	}
-	
+
 	public static int min(int... nums) {
 		int min = nums[0];
 		for (int i = 0; i < nums.length; i++) {
@@ -63,7 +63,7 @@ public class MathUtils {
 		}
 		return max;
 	}
-	
+
 	public static int max(int... nums) {
 		int max = nums[0];
 		for (int i = 0; i < nums.length; i++) {

@@ -20,13 +20,13 @@ import xueli.utils.io.Webs;
 public class NetResourceCache {
 
 	private String path;
-	
+
 	private HashMap<String, String> map = new HashMap<>();
 	private HashMap<String, byte[]> caches = new HashMap<>();
 
 	public NetResourceCache(String path) {
 		this.path = path;
-		
+
 		try {
 			readInfoFile();
 		} catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
@@ -41,27 +41,28 @@ public class NetResourceCache {
 		}));
 
 	}
-	
+
 	protected byte[] getWhenNotFoundInLocal(String url) throws IOException {
 		return Webs.readAllFromWeb(url);
 	}
-	
+
 	public byte[] get(String url) throws IOException {
-		if(map.containsKey(url)) {
-			if(caches.containsKey(url)) {
+		if (map.containsKey(url)) {
+			if (caches.containsKey(url)) {
 				return caches.get(url);
 			}
 			try {
 				byte[] b = Files.readAllByte(new File(path + "/" + map.get(url)));
 				caches.put(url, b);
 				return b;
-			} catch (IOException e) {}
+			} catch (IOException e) {
+			}
 		}
-		
+
 		byte[] all = getWhenNotFoundInLocal(url);
 		String name = getRandomString(30);
 		map.put(url, name);
-		
+
 		Files.fileOutput(path + "/" + name, all);
 		return all;
 	}
@@ -85,27 +86,27 @@ public class NetResourceCache {
 			String name = entry.get("name").getAsString();
 			String url = entry.get("url").getAsString();
 			map.put(url, name);
-			
+
 		});
-		
+
 	}
-	
+
 	private void saveInfoFile() throws IOException {
 		JsonObject obj = new JsonObject();
 		JsonArray array = new JsonArray();
-		
+
 		map.forEach((url, name) -> {
 			JsonObject entry = new JsonObject();
 			entry.add("name", new JsonPrimitive(name));
 			entry.add("url", new JsonPrimitive(url));
 			array.add(entry);
 		});
-		
+
 		obj.add("lists", array);
 		Files.fileOutput(path + "/info.json", obj.toString());
-		
+
 	}
-	
+
 	public void clearCacheInMemory() {
 		caches.clear();
 	}

@@ -1,7 +1,7 @@
 package xueli.craftgame.block;
 
 import org.lwjgl.opengl.GL30;
-import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.utils.vector.Vector3f;
 
 import xueli.craftgame.renderer.VertexPointer;
 import xueli.game.renderer.FrameBuffer;
@@ -23,10 +23,6 @@ public class BlockIconGenerator {
 		shader = new Shader("res/shaders/block_view/vert.txt", "res/shaders/block_view/frag.txt");
 
 		Shader.setProjectionMatrix(shader, MatrixHelper.ortho(-0.9f, 0.9f, -0.9f, 0.9f, 0.01f, 1000000.0f));
-
-		shader.use();
-		shader.setUniformVector3(shader.getUnifromLocation("sunDirection"), new Vector3f(7, -10, 10));
-		shader.unbind();
 
 	}
 

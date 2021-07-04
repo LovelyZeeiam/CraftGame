@@ -8,7 +8,7 @@ public class Concurrent extends ThreadTask {
 
 	private CopyOnWriteArrayList<Thread> summited = new CopyOnWriteArrayList<>();
 	private Runnable callbackWhenTaskEnds;
-	
+
 	private Thread demonstrator = new Thread() {
 		public void run() {
 			while (true) {
@@ -19,8 +19,8 @@ public class Concurrent extends ThreadTask {
 						e.printStackTrace();
 					}
 				}
-				
-				if(!summited.isEmpty()) {
+
+				if (!summited.isEmpty()) {
 					while (true) {
 						synchronized (this) {
 							try {
@@ -29,43 +29,43 @@ public class Concurrent extends ThreadTask {
 								e.printStackTrace();
 							}
 						}
-						
+
 						boolean threadEnded = true;
 						for (Thread thread : summited) {
-							if(thread.getState() != State.TERMINATED) {
+							if (thread.getState() != State.TERMINATED) {
 								threadEnded = false;
 								break;
 							}
 						}
-						
-						if(threadEnded) {
+
+						if (threadEnded) {
 							break;
 						}
 					}
-					
-					if(callbackWhenTaskEnds != null)
+
+					if (callbackWhenTaskEnds != null)
 						callbackWhenTaskEnds.run();
-					
+
 					summited.clear();
-					
+
 				}
-				
+
 			}
 		};
 	};
-	
+
 	public Concurrent() {
 		demonstrator.start();
-		
+
 	}
-	
+
 	public void summit(Runnable r) {
 		Thread thread = new Thread(r);
 		thread.start();
 		summited.add(thread);
-		
+
 	}
-	
+
 	public void setWhenTaskEndsCallback(Runnable callback) {
 		this.callbackWhenTaskEnds = callback;
 	}

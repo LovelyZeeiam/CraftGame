@@ -2,7 +2,7 @@ package xueli.craftgame.entity;
 
 import java.util.HashMap;
 
-import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.utils.vector.Vector3f;
 
 import xueli.game.utils.Time;
 import xueli.game.vector.Vector;
