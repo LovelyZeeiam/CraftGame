@@ -1,13 +1,12 @@
 package xueli.craftgame.world;
 
-import java.util.ArrayList;
-
 import org.lwjgl.utils.vector.Vector3i;
-
 import xueli.craftgame.block.BlockFace;
 import xueli.game.utils.FloatList;
 import xueli.game.utils.Light;
 import xueli.game.vector.Vector;
+
+import java.util.ArrayList;
 
 public class Chunk {
 
@@ -168,37 +167,37 @@ public class Chunk {
 							if (!tile.getBase().isAlpha()) {
 								if (dimension.getBlock(realX, realY + 1, realZ) == null
 										|| (!dimension.getBlock(realX, realY + 1, realZ).getBase().isComplete()
-												|| dimension.getBlock(realX, realY + 1, realZ).getBase().isAlpha())) {
+										|| dimension.getBlock(realX, realY + 1, realZ).getBase().isAlpha())) {
 									tempCount += tile.getBase().getRenderCubeData(target, realX, realY, realZ,
 											BlockFace.TOP, dimension);
 								}
 								if (dimension.getBlock(realX, realY - 1, realZ) == null
 										|| (!dimension.getBlock(realX, realY - 1, realZ).getBase().isComplete()
-												|| dimension.getBlock(realX, realY - 1, realZ).getBase().isAlpha())) {
+										|| dimension.getBlock(realX, realY - 1, realZ).getBase().isAlpha())) {
 									tempCount += tile.getBase().getRenderCubeData(target, realX, realY, realZ,
 											BlockFace.BOTTOM, dimension);
 								}
 								if (dimension.getBlock(realX + 1, realY, realZ) == null
 										|| (!dimension.getBlock(realX + 1, realY, realZ).getBase().isComplete()
-												|| dimension.getBlock(realX + 1, realY, realZ).getBase().isAlpha())) {
+										|| dimension.getBlock(realX + 1, realY, realZ).getBase().isAlpha())) {
 									tempCount += tile.getBase().getRenderCubeData(target, realX, realY, realZ,
 											BlockFace.RIGHT, dimension);
 								}
 								if (dimension.getBlock(realX - 1, realY, realZ) == null
 										|| (!dimension.getBlock(realX - 1, realY, realZ).getBase().isComplete()
-												|| dimension.getBlock(realX - 1, realY, realZ).getBase().isAlpha())) {
+										|| dimension.getBlock(realX - 1, realY, realZ).getBase().isAlpha())) {
 									tempCount += tile.getBase().getRenderCubeData(target, realX, realY, realZ,
 											BlockFace.LEFT, dimension);
 								}
 								if (dimension.getBlock(realX, realY, realZ + 1) == null
 										|| (!dimension.getBlock(realX, realY, realZ + 1).getBase().isComplete()
-												|| dimension.getBlock(realX, realY, realZ + 1).getBase().isAlpha())) {
+										|| dimension.getBlock(realX, realY, realZ + 1).getBase().isAlpha())) {
 									tempCount += tile.getBase().getRenderCubeData(target, realX, realY, realZ,
 											BlockFace.BACK, dimension);
 								}
 								if (dimension.getBlock(realX, realY, realZ - 1) == null
 										|| (!dimension.getBlock(realX, realY, realZ - 1).getBase().isComplete()
-												|| dimension.getBlock(realX, realY, realZ - 1).getBase().isAlpha())) {
+										|| dimension.getBlock(realX, realY, realZ - 1).getBase().isAlpha())) {
 									tempCount += tile.getBase().getRenderCubeData(target, realX, realY, realZ,
 											BlockFace.FRONT, dimension);
 								}

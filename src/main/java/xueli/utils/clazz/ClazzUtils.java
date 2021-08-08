@@ -1,12 +1,18 @@
 package xueli.utils.clazz;
 
+import xueli.utils.io.Files;
+
 import java.io.File;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import java.util.stream.Collectors;
-
-import xueli.utils.io.Files;
 
 public class ClazzUtils {
 
@@ -46,6 +52,7 @@ public class ClazzUtils {
 	public static List<Class<?>> getAllClasses() {
 		ArrayList<Class<?>> clazzes = new ArrayList<>();
 
+		// process current module
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		String path = loader.getResource("./").getPath();
 		ArrayList<File> allFiles = Files.getAllFiles(path);
@@ -71,7 +78,65 @@ public class ClazzUtils {
 
 		}
 
+		// process loaded JAR pack
+		ArrayList<File> allJarFiles = new ArrayList<>();
+
+		try {
+			String trigger = "META-INF";
+			Enumeration<URL> paths = loader.getResources("META-INF");
+
+			while (paths.hasMoreElements()) {
+				URL u = paths.nextElement();
+				URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{u}, Thread.currentThread().getContextClassLoader());
+
+				String p = u.getPath();
+				String jarpath = new File(p).getParent();
+				jarpath = jarpath.substring(!jarpath.contains("file:\\") ? 0 : "file:\\".length(), !jarpath.endsWith("!") ? jarpath.length() : jarpath.length() - 1);
+
+				JarFile file = new JarFile(jarpath);
+				Enumeration<JarEntry> entries = file.entries();
+				while (entries.hasMoreElements()) {
+					JarEntry e = entries.nextElement();
+					if (e.isDirectory()) continue;
+
+					String name = e.getName();
+					if (name.contains("META-INF")) continue;
+					if (name.contains("module-info")) continue;
+
+					if (name.endsWith(".class")) {
+						String className = name.substring(0, name.length() - ".class".length());
+						className = className.replaceAll("/", ".");
+						clazzes.add(urlClassLoader.loadClass(className));
+
+					}
+
+				}
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return clazzes;
+	}
+
+	public static Field[] getAllFields(Class<?> c) {
+		ArrayList<Field> fields = new ArrayList<>();
+		fields.addAll(List.of(c.getDeclaredFields()));
+
+		Class<?> s = c.getSuperclass();
+		if (s != null)
+			fields.addAll(List.of(getAllFields(s)));
+
+		return fields.toArray(new Field[0]);
+	}
+
+	public static void printAllSuperClass(Class<?> c) {
+		do {
+			System.out.println(c.getName());
+			c = c.getSuperclass();
+		} while (c != null);
 	}
 
 }

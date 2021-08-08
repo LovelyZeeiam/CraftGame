@@ -1,5 +1,7 @@
 package xueli.game.lang;
 
+import xueli.utils.logger.MyLogger;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.HashMap;
@@ -24,14 +26,14 @@ public class FiledLangManager {
 		FilenameFilter langFilenameFilter = (dir, name) -> name.endsWith(".lang");
 
 		File[] langFiles = new File(pathString + "/lang/").listFiles(langFilenameFilter);
-		Logger.getLogger(getClass().getName()).info("[Lang] find Lang File: " + langFiles.length);
+		MyLogger.getInstance().info("find Lang File: " + langFiles.length);
 		for (File langFile : langFiles) {
 			String name = langFile.getName();
 			LanguageFile languageFile = new LanguageFile(langFile);
 			languageFile.read();
 			languageFile.close();
 			langFileMap.put(name, languageFile);
-			Logger.getLogger(getClass().getName()).finer("[Lang] read Lang File: " + name);
+			MyLogger.getInstance().info("read Lang File: " + name);
 
 		}
 
@@ -41,12 +43,14 @@ public class FiledLangManager {
 
 	public void setLang(String name) {
 		LanguageFile languageFile = langFileMap.get(name);
+		MyLogger.getInstance().pushState("Lang");
 		if (languageFile == null)
-			Logger.getLogger(getClass().getName()).finer("[Lang] Failed to set Lang File: " + name + " Keep origin.");
+			MyLogger.getInstance().warning("Failed to set Lang File: " + name + " Keep origin.");
 		else {
-			Logger.getLogger(getClass().getName()).finer("[Lang] set Lang File: " + name);
+			MyLogger.getInstance().info("Set Lang File: " + name);
 			this.currentLanguageFile = languageFile;
 		}
+		MyLogger.getInstance().popState();
 	}
 
 	public String getStringFromLangMap(String name) {

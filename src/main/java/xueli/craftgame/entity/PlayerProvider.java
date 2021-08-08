@@ -1,25 +1,19 @@
 package xueli.craftgame.entity;
 
+import com.flowpowered.nbt.*;
+import com.flowpowered.nbt.stream.NBTInputStream;
+import com.flowpowered.nbt.stream.NBTOutputStream;
+import xueli.craftgame.inventory.BlockInventoryItem;
+import xueli.craftgame.inventory.Inventory;
+import xueli.craftgame.inventory.InventoryItem;
+import xueli.craftgame.state.StateWorld;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.flowpowered.nbt.CompoundMap;
-import com.flowpowered.nbt.CompoundTag;
-import com.flowpowered.nbt.FloatTag;
-import com.flowpowered.nbt.IntTag;
-import com.flowpowered.nbt.ListTag;
-import com.flowpowered.nbt.StringTag;
-import com.flowpowered.nbt.stream.NBTInputStream;
-import com.flowpowered.nbt.stream.NBTOutputStream;
-
-import xueli.craftgame.inventory.BlockInventoryItem;
-import xueli.craftgame.inventory.Inventory;
-import xueli.craftgame.inventory.InventoryItem;
-import xueli.craftgame.state.StateWorld;
 
 public class PlayerProvider {
 
@@ -48,12 +42,12 @@ public class PlayerProvider {
 			int version = (int) map.get("version").getValue();
 
 			switch (version) {
-			case 0:
-				loadVersion0(map);
-				break;
+				case 0:
+					loadVersion0(map);
+					break;
 
-			default:
-				return;
+				default:
+					return;
 			}
 
 		}

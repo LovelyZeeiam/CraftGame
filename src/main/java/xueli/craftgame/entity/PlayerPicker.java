@@ -2,7 +2,6 @@ package xueli.craftgame.entity;
 
 import org.lwjgl.utils.vector.Vector3f;
 import org.lwjgl.utils.vector.Vector3i;
-
 import xueli.craftgame.block.BlockFace;
 import xueli.craftgame.world.Dimension;
 import xueli.craftgame.world.Tile;
@@ -28,6 +27,9 @@ public class PlayerPicker {
 	}
 
 	public void tick() {
+		selectedBlock = null;
+		lastSelectedBlock = null;
+
 		MousePicker picker = new MousePicker(player.pos, MatrixHelper.lastTimeProjMatrix,
 				MatrixHelper.lastTimeViewMatrix);
 		for (float d = 0; d <= maxTouchDistance; d += 0.1f) {

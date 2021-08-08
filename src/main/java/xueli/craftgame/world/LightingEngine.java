@@ -1,28 +1,29 @@
 package xueli.craftgame.world;
 
+import xueli.craftgame.block.AbstractLightBlock;
+import xueli.craftgame.block.BlockBase;
+import xueli.game.vector.Vector3b;
+import xueli.utils.logger.MyLogger;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.logging.Logger;
 
-import xueli.craftgame.block.AbstractLightBlock;
-import xueli.craftgame.block.BlockBase;
-import xueli.game.vector.Vector3b;
-
 public class LightingEngine {
-
-	private final static Logger logger = Logger.getLogger(LightingEngine.class.getName());
 
 	public static void light(int x, int y, int z, Dimension dimension) {
 		Tile tile = dimension.getBlock(x, y, z);
+
+		MyLogger.getInstance().pushState("Lighting");
 		if (tile == null) {
-			logger.info("[Light] Error: Air block! " + x + ", " + y + ", " + z);
+			MyLogger.getInstance().error("Air block! " + x + ", " + y + ", " + z);
 			return;
 		}
 
 		BlockBase base = tile.getBase();
 		if (!(base instanceof AbstractLightBlock)) {
-			logger.info("[Light] Error: Not Light block! " + x + ", " + y + ", " + z);
+			MyLogger.getInstance().error("Not Light block! " + x + ", " + y + ", " + z);
 			return;
 		}
 		AbstractLightBlock lightBlock = (AbstractLightBlock) base;
@@ -36,9 +37,7 @@ public class LightingEngine {
 
 		nodesR.add(new LightNode(x, y, z, initialRGB.x));
 
-		while (true) {
-			if (nodesR.isEmpty())
-				break;
+		while (!nodesR.isEmpty()) {
 
 			LightNode nodeR = nodesR.poll();
 			if (nodeR.value != 0) {
@@ -81,6 +80,8 @@ public class LightingEngine {
 			if (c != null)
 				c.getBuffer().reportRebuild();
 		});
+
+		MyLogger.getInstance().popState();
 
 	}
 

@@ -1,9 +1,9 @@
 package xueli.craftgame.model;
 
+import xueli.game.module.Module;
+
 import java.util.HashMap;
 import java.util.Objects;
-
-import xueli.game.module.Module;
 
 public class Model extends Module {
 
@@ -28,10 +28,10 @@ public class Model extends Module {
 	 * JsonSyntaxException, FileNotFoundException { JsonObject object = new
 	 * Gson().fromJson(new JsonReader(new FileReader(new File(path))),
 	 * JsonObject.class); String namespace = object.get("namespace").getAsString();
-	 * 
+	 *
 	 * JsonObject modelJson = object.get("models").getAsJsonObject();
-	 * 
-	 * 
+	 *
+	 *
 	 * }
 	 */
 

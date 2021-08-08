@@ -2,7 +2,6 @@ package xueli.craftgame.entity;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.utils.vector.Vector3f;
-
 import xueli.craftgame.inventory.Inventory;
 import xueli.craftgame.world.Dimension;
 import xueli.game.Game;

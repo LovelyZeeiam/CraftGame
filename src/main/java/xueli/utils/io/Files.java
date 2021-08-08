@@ -1,19 +1,13 @@
 package xueli.utils.io;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Files {
 
@@ -106,6 +100,35 @@ public class Files {
 	public static File getResourcePackedInJar(String path) {
 		return new File(URLDecoder.decode(Thread.currentThread().getContextClassLoader().getResource(path).getPath(),
 				StandardCharsets.UTF_8));
+	}
+
+	public static void writeObject(Object obj, File file) throws Exception {
+		FileOutputStream out = new FileOutputStream(file);
+		ObjectOutputStream oo = new ObjectOutputStream(out);
+		oo.writeObject(obj);
+		oo.flush();
+		oo.close();
+	}
+
+	public static Object readObject(File file) throws Exception {
+		FileInputStream in = new FileInputStream(file);
+		ObjectInputStream oi = new ObjectInputStream(in);
+		Object o = oi.readObject();
+		oi.close();
+		return o;
+	}
+
+	public static String getNameExcludeSuffix(String fileName) {
+		int lastIndex = fileName.lastIndexOf('.');
+		if (lastIndex == -1)
+			return fileName;
+		return fileName.substring(0, lastIndex);
+	}
+
+	public static String getFileExtension(String path) {
+		String fileName = new File(path).getName();
+		int index = fileName.lastIndexOf('.');
+		return (index == -1) ? "" : fileName.substring(index + 1);
 	}
 
 }

@@ -1,5 +1,7 @@
 package xueli.game.module;
 
+import xueli.utils.logger.MyLogger;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -19,7 +21,7 @@ public class Modules<T extends Module> {
 
 	public void add(T t) {
 		if (!t.checkInvaild()) {
-			Logger.getLogger(getClass().getName()).warning("Not an invaild module: " + t.toString());
+			MyLogger.getInstance().error("Not an invaild module: " + t);
 			return;
 		}
 		modules.put(t.getNamespace(), t);
@@ -29,7 +31,7 @@ public class Modules<T extends Module> {
 	public T getModule(String namespace) {
 		T t = modules.get(namespace);
 		if (t == null) {
-			Logger.getLogger(getClass().getName()).warning("Found no module named: " + namespace);
+			MyLogger.getInstance().warning("Found no module named: " + namespace);
 			return null;
 		}
 		return t;

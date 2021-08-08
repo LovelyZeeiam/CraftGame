@@ -1,31 +1,21 @@
 package xueli.game.utils.texture;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map.Entry;
-import java.util.logging.Logger;
-
-import javax.imageio.ImageIO;
-
+import com.google.gson.*;
+import com.google.gson.stream.JsonReader;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.utils.vector.Vector2f;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.stream.JsonReader;
-
 import xueli.game.vector.Vector2i;
+import xueli.utils.logger.MyLogger;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.logging.Logger;
 
 public class TextureAtlas {
 
@@ -97,7 +87,7 @@ public class TextureAtlas {
 				File imgFile = new File(textureFolderString + File.separator + imgPath);
 				BufferedImage image = ImageIO.read(imgFile);
 				if (image == null) {
-					Logger.getLogger(TextureAtlas.class.getName()).info("Can't read image: " + imgPath);
+					MyLogger.getInstance().warning("Can't read image: " + imgPath);
 					continue;
 				}
 				per_width = Math.max(per_width, image.getWidth());

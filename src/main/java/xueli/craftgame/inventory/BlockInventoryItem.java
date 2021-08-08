@@ -1,18 +1,8 @@
 package xueli.craftgame.inventory;
 
-import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_FLIPY;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgDeleteImage;
-import static org.lwjgl.nanovg.NanoVG.nvgFill;
-import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
-import static org.lwjgl.nanovg.NanoVG.nvgImagePattern;
-import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
-
+import com.flowpowered.nbt.ByteTag;
 import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NanoVGGL3;
-
-import com.flowpowered.nbt.ByteTag;
-
 import xueli.craftgame.block.BlockBase;
 import xueli.craftgame.block.BlockIconGenerator;
 import xueli.craftgame.block.BlockTags;
@@ -21,6 +11,8 @@ import xueli.craftgame.entity.PlayerPicker;
 import xueli.craftgame.state.StateWorld;
 import xueli.craftgame.world.Tile;
 import xueli.game.renderer.FrameBuffer;
+
+import static org.lwjgl.nanovg.NanoVG.*;
 
 public class BlockInventoryItem extends InventoryItem {
 

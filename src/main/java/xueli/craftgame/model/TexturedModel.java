@@ -1,12 +1,12 @@
 package xueli.craftgame.model;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Objects;
-
 import xueli.game.module.Module;
 import xueli.game.utils.FloatList;
 import xueli.game.utils.Light;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class TexturedModel extends Module {
 

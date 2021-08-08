@@ -1,13 +1,12 @@
 package xueli.craftgame.renderer;
 
-import java.nio.ByteBuffer;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
-
 import xueli.game.utils.GLHelper;
+
+import java.nio.ByteBuffer;
 
 public class VertexPointer {
 

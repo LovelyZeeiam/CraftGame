@@ -2,7 +2,6 @@ package xueli.craftgame.block;
 
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.utils.vector.Vector3f;
-
 import xueli.craftgame.renderer.VertexPointer;
 import xueli.game.renderer.FrameBuffer;
 import xueli.game.utils.FloatList;
@@ -29,7 +28,7 @@ public class BlockIconGenerator {
 	public static FrameBuffer generate(BlockBase base, TextureAtlas blocksAtlas) {
 		// ADD SOME RANDOM
 		Shader.setViewMatrix(MatrixHelper.lookAt(new Vector3f(4 + (float) (Math.random() * 2.0f - 1.0f) * 0.4f,
-				3.5f + (float) (Math.random() * 2.0f - 1.0f) * 0.4f, 4 + (float) (Math.random() * 2.0f - 1.0f) * 0.4f),
+						3.5f + (float) (Math.random() * 2.0f - 1.0f) * 0.4f, 4 + (float) (Math.random() * 2.0f - 1.0f) * 0.4f),
 				new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(0, 1, 0)), shader);
 
 		FrameBuffer buffer = new FrameBuffer(MODEL_VIEW_SIZE, MODEL_VIEW_SIZE);

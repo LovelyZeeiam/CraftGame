@@ -1,22 +1,16 @@
 package xueli.musicjson.nbs;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import java.io.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class NBSConverter {
 
 	public static void main(String[] args) throws IOException {
-		convert("D:\\eclipse-java-workspace\\CraftGame\\res\\music\\ok x lionhearted.nbs",
-				"D:\\\\eclipse-java-workspace\\\\CraftGame\\\\res\\\\music\\\\ok x lionhearted.json");
+		convert("res/music/aurora.nbs", "res/music/aurora.json");
 
 	}
 

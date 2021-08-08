@@ -459,7 +459,7 @@ public class Matrix4f extends Matrix implements Serializable {
 	 */
 
 	private static float determinant3x3(float t00, float t01, float t02, float t10, float t11, float t12, float t20,
-			float t21, float t22) {
+										float t21, float t22) {
 		return t00 * (t11 * t22 - t12 * t21) + t01 * (t12 * t20 - t10 * t22) + t02 * (t10 * t21 - t11 * t20);
 	}
 

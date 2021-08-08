@@ -10,4 +10,10 @@ public class Asserts {
 		return ifNotNull.apply(t);
 	}
 
+	public static <T, R> R assertNullAndMethod(T t, Function<T, R> ifNotNull) {
+		if (t == null)
+			return null;
+		return ifNotNull.apply(t);
+	}
+
 }

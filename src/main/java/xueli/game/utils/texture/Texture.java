@@ -1,15 +1,15 @@
 package xueli.game.utils.texture;
 
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+import org.lwjgl.opengl.GL13;
+import xueli.utils.logger.MyLogger;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
-
-import javax.imageio.ImageIO;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-import org.lwjgl.opengl.GL13;
 
 public class Texture {
 
@@ -47,7 +47,7 @@ public class Texture {
 	public static Texture loadTexture(String path) throws IOException {
 		BufferedImage image = ImageIO.read(new File(path));
 		if (image == null) {
-			Logger.getLogger(Texture.class.getName()).warning("Can't read skin file: " + path);
+			MyLogger.getInstance().warning("Can't read image file: " + path);
 			return Texture.NULL;
 		}
 

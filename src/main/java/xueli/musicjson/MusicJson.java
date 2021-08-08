@@ -1,18 +1,22 @@
 package xueli.musicjson;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import xueli.game.sound.SoundManager;
+import xueli.utils.logger.MyLogger;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
-import xueli.game.sound.SoundManager;
-
 public class MusicJson {
 
-	private static Logger logger = Logger.getLogger(MusicJson.class.getName());
+	private static final MyLogger logger = new MyLogger();
+
+	static {
+		logger.pushState("MusicJson");
+	}
 
 	private static Gson gson = new Gson();
 	private static SoundManager manager;
@@ -35,12 +39,12 @@ public class MusicJson {
 		checkJsonHas("format_version", main_json);
 		int version = main_json.get("format_version").getAsInt();
 		switch (version) {
-		case 0:
-			read_version_0(main_json);
-			break;
-		default:
-			logger.severe("[MusicJson] Version " + version + " not supported!");
-			break;
+			case 0:
+				read_version_0(main_json);
+				break;
+			default:
+				logger.error("Version " + version + " not supported!");
+				break;
 		}
 
 	}
@@ -95,6 +99,8 @@ public class MusicJson {
 
 		int lastTimeNote = 0;
 
+		logger.info("Start play: " + name);
+
 		while (true) {
 			int duration = (int) (System.currentTimeMillis() - startTime);
 
@@ -120,6 +126,8 @@ public class MusicJson {
 			}
 
 		}
+
+		logger.info("Play end.");
 
 	}
 

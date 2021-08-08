@@ -1,19 +1,13 @@
 package xueli.craftgame.init;
 
-import xueli.craftgame.block.AbstractAlphaBlock;
-import xueli.craftgame.block.AbstractBlock;
-import xueli.craftgame.block.AbstractLightBlock;
-import xueli.craftgame.block.AbstractPlant;
-import xueli.craftgame.block.AbstractSlab;
-import xueli.craftgame.block.AbstractStair;
-import xueli.craftgame.block.BlockBase;
+import xueli.craftgame.block.*;
 import xueli.game.module.Modules;
 import xueli.game.vector.Vector3b;
 
 public class Blocks extends Modules<BlockBase> {
 
-	private static final String[] COLORS = { "black", "blue", "brown", "cyan", "gray", "green", "light_blue", "lime",
-			"magenta", "orange", "pink", "purple", "red", "silver", "white", "yellow" };
+	private static final String[] COLORS = {"black", "blue", "brown", "cyan", "gray", "green", "light_blue", "lime",
+			"magenta", "orange", "pink", "purple", "red", "silver", "white", "yellow"};
 
 	public Blocks() {
 

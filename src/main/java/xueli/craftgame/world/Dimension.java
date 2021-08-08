@@ -1,12 +1,11 @@
 package xueli.craftgame.world;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.lwjgl.utils.vector.Vector3i;
-
 import xueli.craftgame.init.Blocks;
 import xueli.game.utils.Light;
 import xueli.game.vector.Vector;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Dimension {
 

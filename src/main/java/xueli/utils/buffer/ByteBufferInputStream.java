@@ -6,7 +6,7 @@ import java.nio.ByteBuffer;
 
 public class ByteBufferInputStream extends InputStream {
 
-	private ByteBuffer in;
+	private final ByteBuffer in;
 
 	public ByteBufferInputStream(ByteBuffer in) {
 		this.in = in;

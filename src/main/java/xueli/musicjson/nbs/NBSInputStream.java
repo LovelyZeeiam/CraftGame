@@ -8,18 +8,25 @@ import java.util.List;
 
 public class NBSInputStream extends DataInputStream {
 
-	private short songLength;
-	private short songHeight;
-	private String name, author, originAuthor, desc;
-	private short tempo;
-	private byte autoSaving;
-	private byte autoSavingDuration;
-	private byte timeSign;
-	private int minSpent, leftClicks, rightClicks, blocksAdded, blocksRemoved;
-	private String filename;
-	private boolean loopOn;
-	private byte maxLoopCount;
-	private short loopStartTick;
+	private final short songLength;
+	private final short songHeight;
+	private final String name;
+	private final String author;
+	private final String originAuthor;
+	private final String desc;
+	private final short tempo;
+	private final byte autoSaving;
+	private final byte autoSavingDuration;
+	private final byte timeSign;
+	private final int minSpent;
+	private final int leftClicks;
+	private final int rightClicks;
+	private final int blocksAdded;
+	private final int blocksRemoved;
+	private final String filename;
+	private final boolean loopOn;
+	private final byte maxLoopCount;
+	private final short loopStartTick;
 
 	public NBSInputStream(InputStream in) throws IOException {
 		super(in);
@@ -51,18 +58,18 @@ public class NBSInputStream extends DataInputStream {
 	public List<NoteBlock> readNoteBlocks() throws IOException {
 		ArrayList<NoteBlock> blocks = new ArrayList<>();
 
+		short maxlayer = 0;
+
 		short tick = -1;
 		short jumps = 0;
 		while (true) {
 			jumps = Short.reverseBytes(readShort());
-			if (jumps == 0)
-				break;
+			if (jumps == 0) break;
 			tick += jumps;
 			short layer = -1;
 			while (true) {
 				jumps = Short.reverseBytes(readShort());
-				if (jumps == 0)
-					break;
+				if (jumps == 0) break;
 				layer += jumps;
 
 				byte inst = readByte();
@@ -71,10 +78,26 @@ public class NBSInputStream extends DataInputStream {
 				byte panning = readByte();
 				short pitch = Short.reverseBytes(readShort());
 
-				blocks.add(new NoteBlock(tick, layer, inst, key, velocity, panning, pitch));
+				if (layer > maxlayer)
+					maxlayer = layer;
+
+				blocks.add(new NoteBlock((short) (tick + 10), layer, inst, key, (float) velocity / 100.0f));
 
 			}
 		}
+
+		// layers
+		Layer[] layers = new Layer[maxlayer + 1];
+		for (int i = 0; i < layers.length; i++) {
+			String name = readString();
+			boolean locked = readBoolean();
+			float volume = readByte() / 100.0f;
+			float panning = (readByte() - 100.0f) / 100.0f;
+			layers[i] = new Layer(i, name, locked, volume, panning);
+
+		}
+
+		blocks.forEach(b -> b.setVolume(b.getVolume() * layers[b.getLayer()].getVolume()));
 
 		return blocks;
 	}

@@ -1,49 +1,31 @@
 package xueli.craftgame.inventory;
 
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_CENTER;
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_MIDDLE;
-import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgCreateFont;
-import static org.lwjgl.nanovg.NanoVG.nvgCreateImage;
-import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
-import static org.lwjgl.nanovg.NanoVG.nvgFill;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
-import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
-import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
-import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
-import static org.lwjgl.nanovg.NanoVG.nvgImagePattern;
-import static org.lwjgl.nanovg.NanoVG.nvgRect;
-import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
-import static org.lwjgl.nanovg.NanoVG.nvgText;
-import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgluBindFramebuffer;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgluCreateFramebuffer;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGLUFramebuffer;
 import org.lwjgl.opengl.GL11;
-
 import xueli.game.renderer.NVGRenderer;
 import xueli.game.utils.NVGColors;
 import xueli.game.utils.math.MathUtils;
 import xueli.game.vector.Vector2i;
 import xueli.utils.Codepoint;
-import xueli.utils.Table;
+import xueli.utils.collection.Table;
 import xueli.utils.eval.EvalableFloat;
 import xueli.utils.io.Files;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.nanovg.NanoVGGL3.nvgluBindFramebuffer;
+import static org.lwjgl.nanovg.NanoVGGL3.nvgluCreateFramebuffer;
 
 public class InventoryRenderer extends NVGRenderer {
 
 	// TODO: This type of value should be defined in external files, annotated to
 	// make it easier to be found and modified by the game
-	private static final int[] INV_VIEW_WIDTHS = { 6, 7, 6 };
-	private static final int[][] INV_CHOSEN_KEYBOARD_MAPPING = { { 'Y', 'U', 'I', 'O', 'P', '[' },
-			{ 'G', 'H', 'J', 'K', 'L', ';', '\'' }, { 'B', 'N', 'M', ',', '.', '/' }, };
+	private static final int[] INV_VIEW_WIDTHS = {6, 7, 6};
+	private static final int[][] INV_CHOSEN_KEYBOARD_MAPPING = {{'Y', 'U', 'I', 'O', 'P', '['},
+			{'G', 'H', 'J', 'K', 'L', ';', '\''}, {'B', 'N', 'M', ',', '.', '/'},};
 	private static final EvalableFloat INV_VIEW_ITEM_SIZE = new EvalableFloat("60.0 * scale");
 	private static final EvalableFloat INV_VIEW_PADDING = new EvalableFloat("4.5 * scale");
 	private static final EvalableFloat INV_VIEW_MARGIN = new EvalableFloat("5.0 * scale");

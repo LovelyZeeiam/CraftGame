@@ -1,5 +1,7 @@
 package xueli.utils.properties;
 
+import xueli.utils.logger.MyLogger;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.Field;
@@ -11,13 +13,21 @@ import java.util.logging.Logger;
 
 public class PropertiesReflection {
 
-	private static final Logger logger = Logger.getLogger(PropertiesReflection.class.getName());
+	private static HashMap<Class<?>, Parsable<?>> parsers = new HashMap<>();
+
+	public static <T> void registerParser(Parsable<T> parsable, Class<T> clazz) {
+		parsers.put(clazz, parsable);
+
+	}
 
 	public static void reflect(Object obj, File properties) throws Exception {
+		MyLogger.getInstance().pushState("Reflection");
+
 		Properties p = new Properties();
 		p.load(new FileInputStream(properties));
 
-		Class<?> objClazz = obj.getClass();
+		boolean instance = !(obj instanceof Class<?>);
+		Class<?> objClazz = instance ? obj.getClass() : (Class<?>) obj;
 		HashMap<String, ArrayList<Field>> annotations = new HashMap<>();
 		for (Field f : objClazz.getDeclaredFields()) {
 			Property property = f.getAnnotation(Property.class);
@@ -33,6 +43,8 @@ public class PropertiesReflection {
 
 		}
 
+		Object modifyTarget = instance ? obj : null;
+
 		for (Map.Entry<Object, Object> entry : p.entrySet()) {
 			String key = (String) entry.getKey();
 			String value = (String) entry.getValue();
@@ -44,30 +56,32 @@ public class PropertiesReflection {
 			for (Field field : fields) {
 				Class<?> fieldClazz = field.getType();
 				if (String.class.equals(fieldClazz)) {
-					field.set(obj, value);
+					field.set(modifyTarget, value);
 				} else if (int.class.equals(fieldClazz)) {
-					field.setInt(obj, Integer.parseInt(value));
+					field.setInt(modifyTarget, Integer.parseInt(value));
 				} else if (long.class.equals(fieldClazz)) {
-					field.setLong(obj, Long.parseLong(value));
+					field.setLong(modifyTarget, Long.parseLong(value));
 				} else if (float.class.equals(fieldClazz)) {
-					field.setFloat(obj, Float.parseFloat(value));
+					field.setFloat(modifyTarget, Float.parseFloat(value));
 				} else if (double.class.equals(fieldClazz)) {
-					field.setDouble(obj, Double.parseDouble(value));
+					field.setDouble(modifyTarget, Double.parseDouble(value));
 				} else if (boolean.class.equals(fieldClazz)) {
-					field.setBoolean(obj, Boolean.parseBoolean(value));
+					field.setBoolean(modifyTarget, Boolean.parseBoolean(value));
 				} else if (short.class.equals(fieldClazz)) {
-					field.setShort(obj, Short.parseShort(value));
+					field.setShort(modifyTarget, Short.parseShort(value));
 				} else if (byte.class.equals(fieldClazz)) {
-					field.setByte(obj, Byte.parseByte(value));
-				} else if (Parsable.class.equals(fieldClazz) && (obj instanceof Parsable<?>)) {
-					Parsable<?> parser = (Parsable<?>) obj;
-					field.set(obj, parser.parse(value));
+					field.setByte(modifyTarget, Byte.parseByte(value));
+				} else if (parsers.containsKey(fieldClazz)) {
+					Parsable<?> parser = parsers.get(fieldClazz);
+					field.set(modifyTarget, parser.parse(value));
 				} else {
-					logger.warning("Not supported field type \"" + fieldClazz.getName() + "\" when setting key \"" + key
+					MyLogger.getInstance().warning("Not supported field type \"" + fieldClazz.getName() + "\" when setting key \"" + key
 							+ "\" in field \"" + field.getName() + "\"");
 				}
 
 			}
+
+			MyLogger.getInstance().popState();
 
 		}
 

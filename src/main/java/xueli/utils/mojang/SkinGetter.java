@@ -1,5 +1,10 @@
 package xueli.utils.mojang;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import xueli.utils.io.Files;
+import xueli.utils.logger.MyLogger;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,21 +13,19 @@ import java.net.URL;
 import java.util.Base64;
 import java.util.logging.Logger;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
-import xueli.utils.io.Files;
-
 public class SkinGetter {
 
 	public static boolean saveSkin(String playerName, String path) {
+		MyLogger logger = new MyLogger();
+		logger.pushState("SkinSave");
+
 		try {
 			URL uuidUrl = new URL("https://api.mojang.com/users/profiles/minecraft/" + playerName);
 			InputStream uuidIn = uuidUrl.openStream();
 			JsonObject uuidObj = new Gson().fromJson(new InputStreamReader(uuidIn), JsonObject.class);
 			uuidIn.close();
 			if (uuidObj == null) {
-				Logger.getLogger(SkinGetter.class.getName()).severe("Found no player named: " + playerName);
+				logger.error("Found no player named: " + playerName);
 				return false;
 			}
 			String uuid = uuidObj.get("id").getAsString();
@@ -38,7 +41,7 @@ public class SkinGetter {
 			JsonObject textureJson = new Gson().fromJson(decodedTextureJson, JsonObject.class);
 			String textureUrlString = textureJson.get("textures").getAsJsonObject().get("SKIN").getAsJsonObject()
 					.get("url").getAsString();
-			Logger.getLogger(SkinGetter.class.getName()).info("Get player skin path: " + textureUrlString);
+			logger.info("Get player skin path: " + textureUrlString);
 			URL textureUrl = new URL(textureUrlString);
 			InputStream textureIn = textureUrl.openStream();
 

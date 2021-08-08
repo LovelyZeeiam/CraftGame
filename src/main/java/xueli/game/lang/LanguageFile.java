@@ -1,10 +1,8 @@
 package xueli.game.lang;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import xueli.utils.logger.MyLogger;
+
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -52,8 +50,7 @@ public class LanguageFile {
 				int findEqual = line.indexOf('=');
 				if (findEqual == -1) {
 					// 本条数据无效
-					Logger.getLogger(getClass().getName())
-							.warning("Lang: File " + file.getName() + ": " + lineNum + " Data Error! Ignore.");
+					MyLogger.getInstance().warning("File " + file.getName() + ": " + lineNum + " Data Error! Ignore.");
 					continue;
 				}
 				String key = line.substring(0, findEqual);

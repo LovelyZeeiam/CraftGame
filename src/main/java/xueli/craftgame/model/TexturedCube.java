@@ -1,7 +1,6 @@
 package xueli.craftgame.model;
 
 import org.lwjgl.utils.vector.Vector3f;
-
 import xueli.craftgame.block.BlockFace;
 import xueli.game.utils.FloatList;
 import xueli.game.utils.Light;
@@ -25,7 +24,7 @@ public class TexturedCube extends Cube {
 
 	private void processAtlasTextureHolder(AtlasTextureHolder... faces) {
 		if (faces.length == 1) {
-			this.faces = new AtlasTextureHolder[] { faces[0], faces[0], faces[0], faces[0], faces[0], faces[0], };
+			this.faces = new AtlasTextureHolder[]{faces[0], faces[0], faces[0], faces[0], faces[0], faces[0],};
 		} else if (faces.length != 6) {
 			throw new RuntimeException("Please input 6 vertices or 1 vertex for all faces!");
 		} else {
@@ -36,72 +35,72 @@ public class TexturedCube extends Cube {
 
 	public int getDrawData(float x, float y, float z, byte face, Light light, FloatList buffer) {
 		switch (face) {
-		case BlockFace.FRONT: {
-			AtlasTextureHolder texHolder = this.faces[BlockFace.FRONT];
-			CubeDrawer.drawQuadFacingFront(buffer, new Vector3f(x + from.getX(), y + from.getY(), z + from.getZ()),
-					texHolder.p_left_down, light.getLightBuffer(),
-					new Vector3f(x + to.getX(), y + from.getY(), z + from.getZ()), texHolder.p_right_down,
-					light.getLightBuffer(), new Vector3f(x + from.getX(), y + to.getY(), z + from.getZ()),
-					texHolder.p_left_top, light.getLightBuffer(),
-					new Vector3f(x + to.getX(), y + to.getY(), z + from.getZ()), texHolder.p_right_top,
-					light.getLightBuffer());
-			break;
-		}
-		case BlockFace.RIGHT: {
-			AtlasTextureHolder texHolder = this.faces[BlockFace.RIGHT];
-			CubeDrawer.drawQuadFacingRight(buffer, new Vector3f(x + to.getX(), y + from.getY(), z + from.getZ()),
-					texHolder.p_right_down, light.getLightBuffer(),
-					new Vector3f(x + to.getX(), y + to.getY(), z + from.getZ()), texHolder.p_right_top,
-					light.getLightBuffer(), new Vector3f(x + to.getX(), y + from.getY(), z + to.getZ()),
-					texHolder.p_left_down, light.getLightBuffer(),
-					new Vector3f(x + to.getX(), y + to.getY(), z + to.getZ()), texHolder.p_left_top,
-					light.getLightBuffer());
-			break;
-		}
-		case BlockFace.BACK: {
-			AtlasTextureHolder texHolder = this.faces[BlockFace.BACK];
-			CubeDrawer.drawQuadFacingBack(buffer, new Vector3f(x + from.getX(), y + from.getY(), z + to.getZ()),
-					texHolder.p_left_down, light.getLightBuffer(),
-					new Vector3f(x + to.getX(), y + from.getY(), z + to.getZ()), texHolder.p_right_down,
-					light.getLightBuffer(), new Vector3f(x + from.getX(), y + to.getY(), z + to.getZ()),
-					texHolder.p_left_top, light.getLightBuffer(),
-					new Vector3f(x + to.getX(), y + to.getY(), z + to.getZ()), texHolder.p_right_top,
-					light.getLightBuffer());
-			break;
-		}
-		case BlockFace.LEFT: {
-			AtlasTextureHolder texHolder = this.faces[BlockFace.LEFT];
-			CubeDrawer.drawQuadFacingLeft(buffer, new Vector3f(x + from.getX(), y + from.getY(), z + from.getZ()),
-					texHolder.p_left_down, light.getLightBuffer(),
-					new Vector3f(x + from.getX(), y + to.getY(), z + from.getZ()), texHolder.p_left_top,
-					light.getLightBuffer(), new Vector3f(x + from.getX(), y + from.getY(), z + to.getZ()),
-					texHolder.p_right_down, light.getLightBuffer(),
-					new Vector3f(x + from.getX(), y + to.getY(), z + to.getZ()), texHolder.p_right_top,
-					light.getLightBuffer());
-			break;
-		}
-		case BlockFace.TOP: {
-			AtlasTextureHolder texHolder = this.faces[BlockFace.TOP];
-			CubeDrawer.drawQuadFacingTop(buffer, new Vector3f(x + from.getX(), y + to.getY(), z + from.getZ()),
-					texHolder.p_left_down, light.getLightBuffer(),
-					new Vector3f(x + to.getX(), y + to.getY(), z + from.getZ()), texHolder.p_left_top,
-					light.getLightBuffer(), new Vector3f(x + from.getX(), y + to.getY(), z + to.getZ()),
-					texHolder.p_right_down, light.getLightBuffer(),
-					new Vector3f(x + to.getX(), y + to.getY(), z + to.getZ()), texHolder.p_right_top,
-					light.getLightBuffer());
-			break;
-		}
-		case BlockFace.BOTTOM: {
-			AtlasTextureHolder texHolder = this.faces[BlockFace.BOTTOM];
-			CubeDrawer.drawQuadFacingBottom(buffer, new Vector3f(x + from.getX(), y + from.getY(), z + from.getZ()),
-					texHolder.p_left_down, light.getLightBuffer(),
-					new Vector3f(x + to.getX(), y + from.getY(), z + from.getZ()), texHolder.p_left_top,
-					light.getLightBuffer(), new Vector3f(x + from.getX(), y + from.getY(), z + to.getZ()),
-					texHolder.p_right_down, light.getLightBuffer(),
-					new Vector3f(x + to.getX(), y + from.getY(), z + to.getZ()), texHolder.p_right_top,
-					light.getLightBuffer());
-			break;
-		}
+			case BlockFace.FRONT: {
+				AtlasTextureHolder texHolder = this.faces[BlockFace.FRONT];
+				CubeDrawer.drawQuadFacingFront(buffer, new Vector3f(x + from.getX(), y + from.getY(), z + from.getZ()),
+						texHolder.p_left_down, light.getLightBuffer(),
+						new Vector3f(x + to.getX(), y + from.getY(), z + from.getZ()), texHolder.p_right_down,
+						light.getLightBuffer(), new Vector3f(x + from.getX(), y + to.getY(), z + from.getZ()),
+						texHolder.p_left_top, light.getLightBuffer(),
+						new Vector3f(x + to.getX(), y + to.getY(), z + from.getZ()), texHolder.p_right_top,
+						light.getLightBuffer());
+				break;
+			}
+			case BlockFace.RIGHT: {
+				AtlasTextureHolder texHolder = this.faces[BlockFace.RIGHT];
+				CubeDrawer.drawQuadFacingRight(buffer, new Vector3f(x + to.getX(), y + from.getY(), z + from.getZ()),
+						texHolder.p_right_down, light.getLightBuffer(),
+						new Vector3f(x + to.getX(), y + to.getY(), z + from.getZ()), texHolder.p_right_top,
+						light.getLightBuffer(), new Vector3f(x + to.getX(), y + from.getY(), z + to.getZ()),
+						texHolder.p_left_down, light.getLightBuffer(),
+						new Vector3f(x + to.getX(), y + to.getY(), z + to.getZ()), texHolder.p_left_top,
+						light.getLightBuffer());
+				break;
+			}
+			case BlockFace.BACK: {
+				AtlasTextureHolder texHolder = this.faces[BlockFace.BACK];
+				CubeDrawer.drawQuadFacingBack(buffer, new Vector3f(x + from.getX(), y + from.getY(), z + to.getZ()),
+						texHolder.p_left_down, light.getLightBuffer(),
+						new Vector3f(x + to.getX(), y + from.getY(), z + to.getZ()), texHolder.p_right_down,
+						light.getLightBuffer(), new Vector3f(x + from.getX(), y + to.getY(), z + to.getZ()),
+						texHolder.p_left_top, light.getLightBuffer(),
+						new Vector3f(x + to.getX(), y + to.getY(), z + to.getZ()), texHolder.p_right_top,
+						light.getLightBuffer());
+				break;
+			}
+			case BlockFace.LEFT: {
+				AtlasTextureHolder texHolder = this.faces[BlockFace.LEFT];
+				CubeDrawer.drawQuadFacingLeft(buffer, new Vector3f(x + from.getX(), y + from.getY(), z + from.getZ()),
+						texHolder.p_left_down, light.getLightBuffer(),
+						new Vector3f(x + from.getX(), y + to.getY(), z + from.getZ()), texHolder.p_left_top,
+						light.getLightBuffer(), new Vector3f(x + from.getX(), y + from.getY(), z + to.getZ()),
+						texHolder.p_right_down, light.getLightBuffer(),
+						new Vector3f(x + from.getX(), y + to.getY(), z + to.getZ()), texHolder.p_right_top,
+						light.getLightBuffer());
+				break;
+			}
+			case BlockFace.TOP: {
+				AtlasTextureHolder texHolder = this.faces[BlockFace.TOP];
+				CubeDrawer.drawQuadFacingTop(buffer, new Vector3f(x + from.getX(), y + to.getY(), z + from.getZ()),
+						texHolder.p_left_down, light.getLightBuffer(),
+						new Vector3f(x + to.getX(), y + to.getY(), z + from.getZ()), texHolder.p_left_top,
+						light.getLightBuffer(), new Vector3f(x + from.getX(), y + to.getY(), z + to.getZ()),
+						texHolder.p_right_down, light.getLightBuffer(),
+						new Vector3f(x + to.getX(), y + to.getY(), z + to.getZ()), texHolder.p_right_top,
+						light.getLightBuffer());
+				break;
+			}
+			case BlockFace.BOTTOM: {
+				AtlasTextureHolder texHolder = this.faces[BlockFace.BOTTOM];
+				CubeDrawer.drawQuadFacingBottom(buffer, new Vector3f(x + from.getX(), y + from.getY(), z + from.getZ()),
+						texHolder.p_left_down, light.getLightBuffer(),
+						new Vector3f(x + to.getX(), y + from.getY(), z + from.getZ()), texHolder.p_left_top,
+						light.getLightBuffer(), new Vector3f(x + from.getX(), y + from.getY(), z + to.getZ()),
+						texHolder.p_right_down, light.getLightBuffer(),
+						new Vector3f(x + to.getX(), y + from.getY(), z + to.getZ()), texHolder.p_right_top,
+						light.getLightBuffer());
+				break;
+			}
 		}
 
 		return 6;

@@ -1,7 +1,6 @@
 package xueli.craftgame.block;
 
 import org.lwjgl.utils.vector.Vector3f;
-
 import xueli.craftgame.model.CubeDrawer;
 import xueli.craftgame.state.StateWorld;
 import xueli.craftgame.world.Dimension;
@@ -15,7 +14,7 @@ public class AbstractPlant extends AbstractBlock {
 
 	public AbstractPlant(String namespace, String nameInternational, String textureName) {
 		super(namespace, nameInternational,
-				new String[] { textureName, textureName, textureName, textureName, textureName, textureName });
+				new String[]{textureName, textureName, textureName, textureName, textureName, textureName});
 
 		isComplete = false;
 		isAlpha = false;

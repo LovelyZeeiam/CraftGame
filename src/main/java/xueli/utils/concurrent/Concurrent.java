@@ -1,8 +1,8 @@
 package xueli.utils.concurrent;
 
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import xueli.utils.ThreadTask;
+
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Concurrent extends ThreadTask {
 
@@ -51,7 +51,9 @@ public class Concurrent extends ThreadTask {
 				}
 
 			}
-		};
+		}
+
+		;
 	};
 
 	public Concurrent() {

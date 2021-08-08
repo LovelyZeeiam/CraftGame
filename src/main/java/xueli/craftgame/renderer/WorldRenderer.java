@@ -1,12 +1,8 @@
 package xueli.craftgame.renderer;
 
-import java.nio.FloatBuffer;
-import java.util.ArrayList;
-
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
-
 import xueli.craftgame.entity.Player;
 import xueli.craftgame.renderer.sky.SkyRenderer;
 import xueli.craftgame.world.Chunk;
@@ -19,6 +15,9 @@ import xueli.game.utils.Shader;
 import xueli.game.utils.math.MatrixHelper;
 import xueli.game.utils.texture.TextureAtlas;
 import xueli.game.vector.Vector;
+
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
 
 public class WorldRenderer {
 

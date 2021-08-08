@@ -22,39 +22,39 @@ public class BlockFace {
 
 	public static String getFacingDescription(byte i) {
 		return switch (i) {
-		case FRONT: {
-			yield "FRONT";
-		}
-		case BACK: {
-			yield "BACK";
-		}
-		case LEFT: {
-			yield "LEFT";
-		}
-		case RIGHT: {
-			yield "RIGHT";
-		}
-		case TOP: {
-			yield "TOP";
-		}
-		case BOTTOM: {
-			yield "BOTTOM";
-		}
-		default:
-			yield "UNKNOWN";
+			case FRONT: {
+				yield "FRONT";
+			}
+			case BACK: {
+				yield "BACK";
+			}
+			case LEFT: {
+				yield "LEFT";
+			}
+			case RIGHT: {
+				yield "RIGHT";
+			}
+			case TOP: {
+				yield "TOP";
+			}
+			case BOTTOM: {
+				yield "BOTTOM";
+			}
+			default:
+				yield "UNKNOWN";
 		};
 	}
 
 	public static String getPartDescription(byte i) {
 		return switch (i) {
-		case PART_UP: {
-			yield "PART_UP";
-		}
-		case PART_DOWN: {
-			yield "PART_DOWN";
-		}
-		default:
-			yield "UNKNOWN";
+			case PART_UP: {
+				yield "PART_UP";
+			}
+			case PART_DOWN: {
+				yield "PART_DOWN";
+			}
+			default:
+				yield "UNKNOWN";
 		};
 	}
 

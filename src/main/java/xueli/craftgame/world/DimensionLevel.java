@@ -1,21 +1,20 @@
 package xueli.craftgame.world;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Logger;
-
 import org.iq80.leveldb.CompressionType;
 import org.iq80.leveldb.DB;
 import org.iq80.leveldb.DBException;
 import org.iq80.leveldb.Options;
 import org.iq80.leveldb.impl.Iq80DBFactory;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Logger;
+
 @SuppressWarnings("unused")
 public class DimensionLevel {
 
-	private static Logger logger = Logger.getLogger(DimensionLevel.class.getName());
-
 	private static Options options = new Options();
+
 	static {
 		options.createIfMissing(true);
 		options.blockSize(1024 * 1024 * 4);

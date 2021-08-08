@@ -3,13 +3,12 @@ package xueli.game.renderer;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
-
 import xueli.craftgame.renderer.VertexPointer;
 import xueli.game.utils.Shader;
 
 public class ScreenQuadRenderer {
 
-	private static final float[] VERTICES = new float[] { -1, -1, 0, 0, -1, 1, 0, 1, 1, 1, 1, 1, 1, -1, 1, 0 };
+	private static final float[] VERTICES = new float[]{-1, -1, 0, 0, -1, 1, 0, 1, 1, 1, 1, 1, 1, -1, 1, 0};
 
 	private ScreenQuadPointer pointer;
 	private Shader shader;

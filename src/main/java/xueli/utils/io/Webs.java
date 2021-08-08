@@ -29,7 +29,8 @@ public class Webs {
 
 		c.connect();
 		InputStream in = c.getInputStream();
-		// ConwidDownloadProgressbar progressbar = new ConwidDownloadProgressbar("Download");
+		// ConwidDownloadProgressbar progressbar = new
+		// ConwidDownloadProgressbar("Download");
 
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		final int cacheSize = 1024;
@@ -63,7 +64,7 @@ public class Webs {
 
 		return all;
 	}
-	
+
 	public static String readAllFromWebString(String url, ConnectionCreatedCallback callback) throws IOException {
 		return new String(readAllFromWeb(url, callback), StandardCharsets.UTF_8);
 	}

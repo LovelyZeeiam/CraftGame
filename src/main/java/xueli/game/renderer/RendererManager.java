@@ -1,8 +1,9 @@
 package xueli.game.renderer;
 
-import java.util.logging.Logger;
-
 import xueli.game.Game;
+import xueli.utils.logger.MyLogger;
+
+import java.util.logging.Logger;
 
 public class RendererManager {
 
@@ -14,13 +15,14 @@ public class RendererManager {
 
 	public void setCurrentRenderer(Renderer renderer) {
 		Game.INSTANCE_GAME.addTaskForMainThread(() -> {
+			MyLogger.getInstance().pushState("Renderer");
 			if (this.current != null) {
 				this.current.release();
 			}
 			this.current = renderer;
 			this.current.size();
-			Logger.getLogger(getClass().getName())
-					.finer("[Renderer] change renderer: " + renderer.getClass().getName());
+			MyLogger.getInstance().info("Change renderer: " + renderer.getClass().getName());
+			MyLogger.getInstance().popState();
 		});
 
 	}
