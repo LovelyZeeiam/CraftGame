@@ -1,9 +1,9 @@
 package xueli.craftgame.model;
 
-import xueli.game.module.Module;
-
 import java.util.HashMap;
 import java.util.Objects;
+
+import xueli.game.module.Module;
 
 public class Model extends Module {
 

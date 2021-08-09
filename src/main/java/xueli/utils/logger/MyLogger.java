@@ -1,12 +1,12 @@
 package xueli.utils.logger;
 
-import org.fusesource.jansi.Ansi;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Stack;
 import java.util.logging.Level;
+
+import org.fusesource.jansi.Ansi;
 
 public class MyLogger {
 
@@ -56,12 +56,15 @@ public class MyLogger {
 		StackTraceElement ste = es[3];
 
 		Ansi.Color color = textColor.get(l);
-		if (color == null) color = Ansi.Color.DEFAULT;
+		if (color == null)
+			color = Ansi.Color.DEFAULT;
 
 		Ansi a = Ansi.ansi();
-		a.a(DATE_FORMATTER.format(new Date(System.currentTimeMillis()))).a(" ").a(Ansi.Attribute.INTENSITY_BOLD).fg(STATE_COLOR);
+		a.a(DATE_FORMATTER.format(new Date(System.currentTimeMillis()))).a(" ").a(Ansi.Attribute.INTENSITY_BOLD)
+				.fg(STATE_COLOR);
 		a.a("[").a(stackOut()).a("]");
-		a.a(Ansi.Attribute.RESET).fgDefault().a(" ").a(ste.getClassName()).a(":").a(String.valueOf(ste.getLineNumber())).a(" ");
+		a.a(Ansi.Attribute.RESET).fgDefault().a(" ").a(ste.getClassName()).a(":").a(String.valueOf(ste.getLineNumber()))
+				.a(" ");
 		a.fg(color).a(Ansi.Attribute.INTENSITY_BOLD).a(String.valueOf(s)).a(Ansi.Attribute.RESET).fgDefault();
 
 		System.out.println(a);

@@ -1,11 +1,14 @@
 package xueli.game.lang;
 
-import xueli.utils.logger.MyLogger;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.logging.Logger;
+
+import xueli.utils.logger.MyLogger;
 
 public class LanguageFile {
 

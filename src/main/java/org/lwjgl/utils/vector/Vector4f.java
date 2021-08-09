@@ -68,6 +68,10 @@ public class Vector4f extends Vector implements Serializable, ReadableVector4f, 
 		set(x, y, z, w);
 	}
 
+	public Vector4f(float f) {
+		this(f, f, f, f);
+	}
+
 	/**
 	 * Add a vector to another vector and place the result in a destination vector.
 	 *

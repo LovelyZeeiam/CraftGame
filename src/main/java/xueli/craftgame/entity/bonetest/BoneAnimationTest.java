@@ -3,6 +3,7 @@ package xueli.craftgame.entity.bonetest;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.utils.vector.Vector3f;
+
 import xueli.craftgame.entity.EntityPlayer;
 import xueli.craftgame.entity.EntityRenderer;
 import xueli.game.Game;
@@ -14,8 +15,7 @@ public class BoneAnimationTest extends Game {
 	private static final float camMoveSpeed = 0.07f;
 	private static final float camSensitive = 0.08f;
 
-	private Vector3f backgroundColor = new Vector3f(0.1f, 0.1f, 0.5f);
-	;
+	private Vector3f backgroundColor = new Vector3f(0.1f, 0.1f, 0.5f);;
 
 	private EntityRenderer renderer;
 	private Vector camPos = new Vector(0, 0, 60);

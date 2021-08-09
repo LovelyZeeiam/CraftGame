@@ -1,9 +1,9 @@
 package xueli.craftgame.model;
 
-import xueli.game.utils.texture.AtlasTextureHolder;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import xueli.game.utils.texture.AtlasTextureHolder;
 
 public class TexturedModelBuilder {
 

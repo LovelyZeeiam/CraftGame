@@ -1,6 +1,7 @@
 package xueli.craftgame.init;
 
 import org.lwjgl.utils.vector.Vector3f;
+
 import xueli.craftgame.model.Cube;
 import xueli.craftgame.model.Model;
 import xueli.craftgame.model.ModelBuilder;

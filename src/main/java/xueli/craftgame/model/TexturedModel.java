@@ -1,12 +1,11 @@
 package xueli.craftgame.model;
 
-import xueli.game.module.Module;
-import xueli.game.utils.FloatList;
-import xueli.game.utils.Light;
-
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Objects;
+
+import xueli.game.module.Module;
+import xueli.game.utils.FloatList;
 
 public class TexturedModel extends Module {
 
@@ -24,19 +23,19 @@ public class TexturedModel extends Module {
 		this.cubes.add(cube);
 	}
 
-	public int getRenderData(float x, float y, float z, byte face, Light light, FloatList buffer) {
+	public int getRenderData(float x, float y, float z, byte face, FloatList buffer) {
 		int vertCount = 0;
 		for (TexturedCube c : cubes) {
-			vertCount += c.getDrawData(x, y, z, face, light, buffer);
+			vertCount += c.getDrawData(x, y, z, face, buffer);
 		}
 		return vertCount;
 	}
 
-	public int getAllRenderData(int x, int y, int z, Color color, Light light, FloatList buffer) {
+	public int getAllRenderData(int x, int y, int z, Color color, FloatList buffer) {
 		int vertCount = 0;
 		for (TexturedCube c : cubes) {
 			for (byte face = 0; face < 6; face++)
-				vertCount += c.getDrawData(x, y, z, face, light, buffer);
+				vertCount += c.getDrawData(x, y, z, face, buffer);
 		}
 		return vertCount;
 	}

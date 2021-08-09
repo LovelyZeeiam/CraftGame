@@ -3,8 +3,6 @@ package xueli.game.renderer;
 import xueli.game.Game;
 import xueli.utils.logger.MyLogger;
 
-import java.util.logging.Logger;
-
 public class RendererManager {
 
 	private Renderer current;

@@ -1,14 +1,5 @@
 package xueli.utils.collection;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
 
 public class Table<T> extends HashMap<Integer, HashMap<Integer, T>> {
@@ -32,34 +23,6 @@ public class Table<T> extends HashMap<Integer, HashMap<Integer, T>> {
 		if (map == null)
 			return null;
 		return map.get(y);
-	}
-
-	public void saveToExcel(File f) throws IOException {
-		Workbook b = new HSSFWorkbook();
-		Sheet s = b.createSheet();
-
-		for (int x = 0; x <= maxX; x++) {
-			for (int y = 0; y <= maxY; y++) {
-				setValue(y, x, get(x, y).toString(), s);
-			}
-		}
-
-		FileOutputStream o = new FileOutputStream(f);
-		b.write(o);
-		o.flush();
-		o.close();
-
-	}
-
-	private static void setValue(int row, int cell, String v, Sheet s) {
-		Row r = s.getRow(row);
-		if (r == null)
-			r = s.createRow(row);
-		Cell c = r.getCell(cell);
-		if (c == null)
-			c = r.createCell(cell);
-		c.setCellValue(v);
-
 	}
 
 }

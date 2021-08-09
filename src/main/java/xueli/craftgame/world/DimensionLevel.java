@@ -1,14 +1,13 @@
 package xueli.craftgame.world;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.iq80.leveldb.CompressionType;
 import org.iq80.leveldb.DB;
 import org.iq80.leveldb.DBException;
 import org.iq80.leveldb.Options;
 import org.iq80.leveldb.impl.Iq80DBFactory;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Logger;
 
 @SuppressWarnings("unused")
 public class DimensionLevel {

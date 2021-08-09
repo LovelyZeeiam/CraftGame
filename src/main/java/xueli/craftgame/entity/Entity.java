@@ -1,10 +1,11 @@
 package xueli.craftgame.entity;
 
+import java.util.HashMap;
+
 import org.lwjgl.utils.vector.Vector3f;
+
 import xueli.game.utils.Time;
 import xueli.game.vector.Vector;
-
-import java.util.HashMap;
 
 public abstract class Entity {
 

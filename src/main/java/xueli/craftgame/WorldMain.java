@@ -1,6 +1,7 @@
 package xueli.craftgame;
 
 import org.lwjgl.opengl.GL11;
+
 import xueli.craftgame.state.StateWorld;
 import xueli.game.Game;
 

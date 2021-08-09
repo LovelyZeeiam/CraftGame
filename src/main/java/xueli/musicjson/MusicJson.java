@@ -1,14 +1,14 @@
 package xueli.musicjson;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
 import xueli.game.sound.SoundManager;
 import xueli.utils.logger.MyLogger;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.logging.Logger;
 
 public class MusicJson {
 
@@ -39,12 +39,12 @@ public class MusicJson {
 		checkJsonHas("format_version", main_json);
 		int version = main_json.get("format_version").getAsInt();
 		switch (version) {
-			case 0:
-				read_version_0(main_json);
-				break;
-			default:
-				logger.error("Version " + version + " not supported!");
-				break;
+		case 0:
+			read_version_0(main_json);
+			break;
+		default:
+			logger.error("Version " + version + " not supported!");
+			break;
 		}
 
 	}

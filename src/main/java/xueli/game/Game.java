@@ -1,14 +1,15 @@
 package xueli.game;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import org.lwjgl.opengl.GL11;
+
 import xueli.game.display.Display;
 import xueli.game.renderer.RendererManager;
 import xueli.game.utils.GLHelper;
 import xueli.game.utils.Time;
 import xueli.utils.logger.MyLogger;
-
-import java.util.LinkedList;
-import java.util.Queue;
 
 public abstract class Game implements Runnable {
 

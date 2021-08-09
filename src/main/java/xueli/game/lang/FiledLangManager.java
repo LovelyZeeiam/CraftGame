@@ -1,11 +1,10 @@
 package xueli.game.lang;
 
-import xueli.utils.logger.MyLogger;
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.HashMap;
-import java.util.logging.Logger;
+
+import xueli.utils.logger.MyLogger;
 
 public class FiledLangManager {
 

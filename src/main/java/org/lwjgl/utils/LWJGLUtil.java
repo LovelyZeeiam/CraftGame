@@ -31,8 +31,6 @@
  */
 package org.lwjgl.utils;
 
-import org.lwjgl.BufferUtils;
-
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -42,7 +40,14 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
+
+import org.lwjgl.BufferUtils;
 
 /**
  * <p>
@@ -52,7 +57,7 @@ import java.util.*;
  * @author Brian Matzon <brian@matzon.dk>
  * @version $Revision$ $Id$
  */
-@SuppressWarnings({"deprecation", "removal"})
+@SuppressWarnings({ "deprecation", "removal" })
 public class LWJGLUtil {
 	public static final int PLATFORM_LINUX = 1;
 	public static final int PLATFORM_MACOSX = 2;
@@ -307,14 +312,14 @@ public class LWJGLUtil {
 	 */
 	public static String getPlatformName() {
 		switch (LWJGLUtil.getPlatform()) {
-			case LWJGLUtil.PLATFORM_LINUX:
-				return PLATFORM_LINUX_NAME;
-			case LWJGLUtil.PLATFORM_MACOSX:
-				return PLATFORM_MACOSX_NAME;
-			case LWJGLUtil.PLATFORM_WINDOWS:
-				return PLATFORM_WINDOWS_NAME;
-			default:
-				return "unknown";
+		case LWJGLUtil.PLATFORM_LINUX:
+			return PLATFORM_LINUX_NAME;
+		case LWJGLUtil.PLATFORM_MACOSX:
+			return PLATFORM_MACOSX_NAME;
+		case LWJGLUtil.PLATFORM_WINDOWS:
+			return PLATFORM_WINDOWS_NAME;
+		default:
+			return "unknown";
 		}
 	}
 
@@ -342,7 +347,7 @@ public class LWJGLUtil {
 	 * @return Paths to located libraries, if any
 	 */
 	public static String[] getLibraryPaths(String libname, String platform_lib_name, ClassLoader classloader) {
-		return getLibraryPaths(libname, new String[]{platform_lib_name}, classloader);
+		return getLibraryPaths(libname, new String[] { platform_lib_name }, classloader);
 	}
 
 	/**
@@ -553,7 +558,7 @@ public class LWJGLUtil {
 	 */
 
 	public static Map<Integer, String> getClassTokens(final TokenFilter filter, final Map<Integer, String> target,
-													  final Class<?>... tokenClasses) {
+			final Class<?>... tokenClasses) {
 		return getClassTokens(filter, target, Arrays.asList(tokenClasses));
 	}
 
@@ -572,7 +577,7 @@ public class LWJGLUtil {
 	 * @return the token map
 	 */
 	public static Map<Integer, String> getClassTokens(final TokenFilter filter, Map<Integer, String> target,
-													  final Iterable<Class<?>> tokenClasses) {
+			final Iterable<Class<?>> tokenClasses) {
 		if (target == null)
 			target = new HashMap<Integer, String>();
 

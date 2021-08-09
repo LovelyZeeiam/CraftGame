@@ -1,17 +1,18 @@
 package xueli.craftgame.entity;
 
+import java.io.IOException;
+import java.nio.FloatBuffer;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector3f;
+
 import xueli.game.utils.FloatBufferWrapper;
 import xueli.game.utils.Shader;
 import xueli.game.utils.texture.Texture;
 import xueli.game.vector.Vector;
 import xueli.utils.mojang.SkinGetter;
-
-import java.io.IOException;
-import java.nio.FloatBuffer;
 
 public class EntityPlayer extends Entity {
 

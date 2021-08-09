@@ -1,13 +1,12 @@
 package xueli.utils.exception;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
 
 public class CrashReport {
 
-	private static final String NICE_COMMENT[] = {
-			"AbaAbaAba", "Why did things go like this?", "But it works on my computer /(ToT)/~~", "ElectroBoooooom!",
-			"Also try Marshmello!", "Go get xueli!", "What bad ideas could xueli be thinking of?"
-	};
+	private static final String NICE_COMMENT[] = { "AbaAbaAba", "Why did things go like this?",
+			"But it works on my computer /(ToT)/~~", "ElectroBoooooom!", "Also try Marshmello!", "Go get xueli!",
+			"What bad ideas could xueli be thinking of?" };
 
 	private String state;
 	private Exception e;
@@ -35,7 +34,9 @@ public class CrashReport {
 			for (int i = 0; i < Math.min(es.length, 4); i++) {
 				StackTraceElement element = es[i];
 				builder.append(System.lineSeparator());
-				builder.append("    ").append(element.getClassName()).append(":").append(element.getMethodName()).append("(").append(element.getFileName()).append(":").append(element.getLineNumber()).append(")");
+				builder.append("    ").append(element.getClassName()).append(":").append(element.getMethodName())
+						.append("(").append(element.getFileName()).append(":").append(element.getLineNumber())
+						.append(")");
 			}
 
 			builder.append(System.lineSeparator());

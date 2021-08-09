@@ -1,12 +1,13 @@
 package xueli.craftgame.renderer;
 
+import java.nio.ByteBuffer;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
-import xueli.game.utils.GLHelper;
 
-import java.nio.ByteBuffer;
+import xueli.game.utils.GLHelper;
 
 public class VertexPointer {
 
@@ -47,21 +48,15 @@ public class VertexPointer {
 	}
 
 	protected void registerVertex() {
-		// 坐标
+		// Vertex
 		GL20.glVertexAttribPointer(0, 3, GL11.GL_FLOAT, false, 9 * 4, 0 * 4);
 		GL20.glEnableVertexAttribArray(0);
 		// UV
 		GL20.glVertexAttribPointer(1, 2, GL11.GL_FLOAT, false, 9 * 4, 3 * 4);
 		GL20.glEnableVertexAttribArray(1);
-		// normal
-		GL20.glVertexAttribPointer(2, 3, GL11.GL_FLOAT, false, 9 * 4, 5 * 4);
+		// Color
+		GL20.glVertexAttribPointer(2, 4, GL11.GL_FLOAT, false, 9 * 4, 5 * 4);
 		GL20.glEnableVertexAttribArray(2);
-
-		// Lighting
-		// r,g,b,sun
-		// Separated by 15 level
-		GL20.glVertexAttribPointer(3, 4, GL11.GL_BYTE, false, 9 * 4, 8 * 4);
-		GL20.glEnableVertexAttribArray(3);
 
 	}
 

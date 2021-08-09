@@ -30,5 +30,4 @@ public class TestSSAO extends Game {
 
 	}
 
-
 }

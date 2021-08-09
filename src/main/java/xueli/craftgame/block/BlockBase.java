@@ -1,13 +1,13 @@
 package xueli.craftgame.block;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 import xueli.craftgame.model.TexturedModel;
 import xueli.craftgame.world.Dimension;
 import xueli.game.module.Module;
 import xueli.game.utils.FloatList;
 import xueli.game.utils.Light;
-
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class BlockBase extends Module {
 
@@ -28,7 +28,7 @@ public class BlockBase extends Module {
 	}
 
 	public BlockBase(String namespace, String nameInternational, TexturedModel model, boolean isAlpha,
-					 boolean isComplete, IBlockListener listener) {
+			boolean isComplete, IBlockListener listener) {
 		this(namespace);
 		this.nameInternational = nameInternational;
 		this.model = model;
@@ -65,7 +65,7 @@ public class BlockBase extends Module {
 
 	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Dimension dimension) {
 		Light light = dimension != null ? dimension.getLight(x, y, z) : Light.FULL_LIGHT;
-		return model.getRenderData(x, y, z, face, light, buffer);
+		return model.getRenderData(x, y, z, face, buffer);
 	}
 
 	public int getRenderModelViewData(FloatList buffer) {

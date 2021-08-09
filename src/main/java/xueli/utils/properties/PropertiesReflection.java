@@ -1,7 +1,5 @@
 package xueli.utils.properties;
 
-import xueli.utils.logger.MyLogger;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.Field;
@@ -9,7 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Logger;
+
+import xueli.utils.logger.MyLogger;
 
 public class PropertiesReflection {
 
@@ -75,8 +74,8 @@ public class PropertiesReflection {
 					Parsable<?> parser = parsers.get(fieldClazz);
 					field.set(modifyTarget, parser.parse(value));
 				} else {
-					MyLogger.getInstance().warning("Not supported field type \"" + fieldClazz.getName() + "\" when setting key \"" + key
-							+ "\" in field \"" + field.getName() + "\"");
+					MyLogger.getInstance().warning("Not supported field type \"" + fieldClazz.getName()
+							+ "\" when setting key \"" + key + "\" in field \"" + field.getName() + "\"");
 				}
 
 			}

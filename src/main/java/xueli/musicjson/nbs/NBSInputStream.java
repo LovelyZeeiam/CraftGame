@@ -64,12 +64,14 @@ public class NBSInputStream extends DataInputStream {
 		short jumps = 0;
 		while (true) {
 			jumps = Short.reverseBytes(readShort());
-			if (jumps == 0) break;
+			if (jumps == 0)
+				break;
 			tick += jumps;
 			short layer = -1;
 			while (true) {
 				jumps = Short.reverseBytes(readShort());
-				if (jumps == 0) break;
+				if (jumps == 0)
+					break;
 				layer += jumps;
 
 				byte inst = readByte();

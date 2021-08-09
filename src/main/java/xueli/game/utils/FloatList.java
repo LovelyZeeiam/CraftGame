@@ -1,11 +1,13 @@
 package xueli.game.utils;
 
-import org.lwjgl.utils.vector.Vector2f;
-import org.lwjgl.utils.vector.Vector3f;
-import xueli.game.vector.Vector4b;
-
 import java.nio.FloatBuffer;
 import java.util.Arrays;
+
+import org.lwjgl.utils.vector.Vector2f;
+import org.lwjgl.utils.vector.Vector3f;
+import org.lwjgl.utils.vector.Vector4f;
+
+import xueli.game.vector.Vector4b;
 
 /**
  * 经过测试，性能没有直接的floatBuffer高， 但是还是挺好用的 因为floatBuffer大小已经限制死了
@@ -73,6 +75,10 @@ public class FloatList {
 
 	public FloatList put(Vector2f v) {
 		return put(v.x).put(v.y);
+	}
+
+	public FloatList put(Vector4f v) {
+		return put(v.x).put(v.y).put(v.z).put(v.w);
 	}
 
 	public int getPointer() {

@@ -1,6 +1,23 @@
 package xueli.craftgame.state;
 
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_LEFT;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_TOP;
+import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgCreateFont;
+import static org.lwjgl.nanovg.NanoVG.nvgCreateImage;
+import static org.lwjgl.nanovg.NanoVG.nvgFill;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
+import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
+import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
+import static org.lwjgl.nanovg.NanoVG.nvgImagePattern;
+import static org.lwjgl.nanovg.NanoVG.nvgRect;
+import static org.lwjgl.nanovg.NanoVG.nvgText;
+import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
+
 import org.lwjgl.glfw.GLFW;
+
 import xueli.craftgame.entity.Player;
 import xueli.craftgame.init.Blocks;
 import xueli.craftgame.init.Models;
@@ -13,8 +30,6 @@ import xueli.game.utils.Time;
 import xueli.game.utils.math.MatrixHelper;
 import xueli.game.utils.texture.TextureAtlas;
 import xueli.utils.io.Files;
-
-import static org.lwjgl.nanovg.NanoVG.*;
 
 public class StateWorld extends NVGRenderer {
 
@@ -89,8 +104,8 @@ public class StateWorld extends NVGRenderer {
 
 	@Override
 	public void stroke() {
-		String posTextString = "Position: " + (int) player.getPos().x + ", " + (int) player.getPos().y + ", "
-				+ (int) player.getPos().z;
+		String posTextString = "Position: " + (int) Math.floor(player.getPos().x) + ", "
+				+ (int) Math.floor(player.getPos().y) + ", " + (int) Math.floor(player.getPos().z);
 		String fpsTextString = "FPS: " + Time.fps;
 
 		float fontSize = 15.0f * game.getDisplayScale();

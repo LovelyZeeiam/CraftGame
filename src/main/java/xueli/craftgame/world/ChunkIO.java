@@ -1,15 +1,19 @@
 package xueli.craftgame.world;
 
-import com.flowpowered.nbt.*;
-import com.flowpowered.nbt.stream.NBTInputStream;
-import com.flowpowered.nbt.stream.NBTOutputStream;
-import xueli.utils.io.Files;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.flowpowered.nbt.CompoundMap;
+import com.flowpowered.nbt.CompoundTag;
+import com.flowpowered.nbt.IntArrayTag;
+import com.flowpowered.nbt.IntTag;
+import com.flowpowered.nbt.ListTag;
+import com.flowpowered.nbt.StringTag;
+import com.flowpowered.nbt.stream.NBTInputStream;
+import com.flowpowered.nbt.stream.NBTOutputStream;
 
 public class ChunkIO {
 
@@ -28,11 +32,11 @@ public class ChunkIO {
 
 		int version = ((IntTag) map.get("version")).getValue();
 		return switch (version) {
-			case 0: {
-				yield readChunk0(map, dimension);
-			}
-			default:
-				throw new IllegalArgumentException("Unexpected value: " + version);
+		case 0: {
+			yield readChunk0(map, dimension);
+		}
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + version);
 		};
 	}
 
@@ -152,9 +156,10 @@ public class ChunkIO {
 		nbtout.flush();
 		nbtout.close();
 
-		Files.fileOutput(
-				"temp/chunks/" + chunk.getChunkX() + "_" + chunk.getChunkY() + "_" + chunk.getChunkZ() + ".dat",
-				out.toByteArray());
+		// Files.fileOutput(
+		// "temp/chunks/" + chunk.getChunkX() + "_" + chunk.getChunkY() + "_" +
+		// chunk.getChunkZ() + ".dat",
+		// out.toByteArray());
 
 		return out.toByteArray();
 	}

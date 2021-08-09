@@ -1,12 +1,12 @@
 package xueli.craftgame.entity;
 
+import java.util.ArrayList;
+
 import xueli.game.Game;
 import xueli.game.utils.GLHelper;
 import xueli.game.utils.Shader;
 import xueli.game.utils.math.MatrixHelper;
 import xueli.game.vector.Vector;
-
-import java.util.ArrayList;
 
 public class EntityRenderer {
 

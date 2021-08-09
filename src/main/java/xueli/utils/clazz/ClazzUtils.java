@@ -1,7 +1,5 @@
 package xueli.utils.clazz;
 
-import xueli.utils.io.Files;
-
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -13,6 +11,8 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.stream.Collectors;
+
+import xueli.utils.io.Files;
 
 public class ClazzUtils {
 
@@ -87,21 +87,26 @@ public class ClazzUtils {
 
 			while (paths.hasMoreElements()) {
 				URL u = paths.nextElement();
-				URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{u}, Thread.currentThread().getContextClassLoader());
+				URLClassLoader urlClassLoader = new URLClassLoader(new URL[] { u },
+						Thread.currentThread().getContextClassLoader());
 
 				String p = u.getPath();
 				String jarpath = new File(p).getParent();
-				jarpath = jarpath.substring(!jarpath.contains("file:\\") ? 0 : "file:\\".length(), !jarpath.endsWith("!") ? jarpath.length() : jarpath.length() - 1);
+				jarpath = jarpath.substring(!jarpath.contains("file:\\") ? 0 : "file:\\".length(),
+						!jarpath.endsWith("!") ? jarpath.length() : jarpath.length() - 1);
 
 				JarFile file = new JarFile(jarpath);
 				Enumeration<JarEntry> entries = file.entries();
 				while (entries.hasMoreElements()) {
 					JarEntry e = entries.nextElement();
-					if (e.isDirectory()) continue;
+					if (e.isDirectory())
+						continue;
 
 					String name = e.getName();
-					if (name.contains("META-INF")) continue;
-					if (name.contains("module-info")) continue;
+					if (name.contains("META-INF"))
+						continue;
+					if (name.contains("module-info"))
+						continue;
 
 					if (name.endsWith(".class")) {
 						String className = name.substring(0, name.length() - ".class".length());
