@@ -30,11 +30,10 @@ public class WorldCollider {
 	private void collide(Player entity, Vector3f deltaPos) {
 		AABB entityAabb = entity.getOriginAABB();
 
+		// TODO: F**k accuracy
 		for (int x = (int) Math.floor(entity.pos.x + entityAabb.getX0()); x < entity.pos.x + entityAabb.getX1(); x++) {
-			for (int y = (int) Math.floor(entity.pos.y + entityAabb.getY0()); y < entity.pos.y
-					+ entityAabb.getY1(); y++) {
-				for (int z = (int) Math.floor(entity.pos.z + entityAabb.getZ0()); z < entity.pos.z
-						+ entityAabb.getZ1(); z++) {
+			for (int y = (int) Math.floor(entity.pos.y + entityAabb.getY0()); y < entity.pos.y + entityAabb.getY1(); y++) {
+				for (int z = (int) Math.floor(entity.pos.z + entityAabb.getZ0()); z < entity.pos.z + entityAabb.getZ1(); z++) {
 					Tile tile = world.getBlock(x, y, z);
 					if (tile != null) {
 						if (deltaPos.x > 0) {
@@ -63,8 +62,6 @@ public class WorldCollider {
 				}
 			}
 		}
-
-		// System.out.println(entity.pos.y);
 
 	}
 

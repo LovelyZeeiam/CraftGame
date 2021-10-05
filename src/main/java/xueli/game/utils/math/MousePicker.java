@@ -12,7 +12,7 @@ public class MousePicker {
 	private Vector3f ray, camPos;
 
 	public MousePicker(Vector camPos, Matrix4f projMatrix, Matrix4f viewMatrix) {
-		this.camPos = new Vector3f(camPos.x, camPos.y, camPos.z);
+		this.camPos = new Vector3f((float) camPos.x, (float) camPos.y, (float) camPos.z);
 
 		this.projMatrix = projMatrix;
 		this.viewMatrix = viewMatrix;

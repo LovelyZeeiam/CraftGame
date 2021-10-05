@@ -1,6 +1,17 @@
 # CraftGame
-a minecraft-like game programmed in Java with LWJGL 3.
+a Minecraft-like game programmed in Java with LWJGL 3.
 The game is in beta now. So if you have some suggestion, just leave in the comment.
+
+Another Winter in China is around the corner. Having had a try various programming pattern, it is time to back on the right track. There is also a list below indicating what I will attempt to do:
+
+1. `glBufferData` instead of `glMapBuffer`. This can increase variety of rendering cubes by allowing them to use different Shaders and configs.
+2. Adding threads: Main thread, Vertices generating thread, lighting thread, world providing thread [**These could be changed!**]
+3. Start by single player instead of making server and client at the beginning, making sure multi-player game can use the same code as well.
+4. Remove resource packs and turn to a \"Modding Pack\", which contains Java code to control the game behavior and resources to be loaded.
+5. Spend my spring holiday in the game~
+
+
+
 ****
 
 # How to Test the Game

@@ -29,6 +29,7 @@ import xueli.game.utils.NVGColors;
 import xueli.game.utils.Time;
 import xueli.game.utils.math.MatrixHelper;
 import xueli.game.utils.texture.TextureAtlas;
+import xueli.game.utils.tick.TickManager;
 import xueli.utils.io.Files;
 
 public class StateWorld extends NVGRenderer {
@@ -37,13 +38,15 @@ public class StateWorld extends NVGRenderer {
 
 	private static final String FONT_NAME = "Game";
 
+	private TickManager tickManager = new TickManager(50);
+	
 	private TextureAtlas blocksTextureAtlas;
 	private Blocks blocks;
 	private Models models;
 
 	private Player player;
 	private InventoryRenderer inventoryRenderer;
-
+	
 	private Dimension dimension;
 	private WorldRenderer worldRenderer;
 
@@ -75,6 +78,10 @@ public class StateWorld extends NVGRenderer {
 		this.inventoryRenderer = new InventoryRenderer(this.player.getInventory());
 
 		game.getDisplay().setMouseGrabbed(true);
+		
+		this.tickManager.add(this.dimension);
+		this.tickManager.add(this.player);
+		
 
 	}
 
@@ -82,14 +89,16 @@ public class StateWorld extends NVGRenderer {
 	public void update() {
 		worldRenderer.update(player);
 		MatrixHelper.calculateFrustumPlane();
-
-		player.tick();
+		
+		this.player.tick();
+		tickManager.tick();
+		
 		this.inventoryRenderer.update();
 
 		if (game.getDisplay().isKeyDownOnce(GLFW.GLFW_KEY_ESCAPE))
 			game.getDisplay().setMouseGrabbed(!game.getDisplay().isMouseGrabbed());
 
-		this.dimension.tick(player.getPos());
+		this.dimension.getProvider().tick(player.getPos());
 
 	}
 

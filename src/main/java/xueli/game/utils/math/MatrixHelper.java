@@ -67,7 +67,7 @@ public class MatrixHelper {
 		Matrix4f.rotate((float) Math.toRadians(camera.rotX), new Vector3f(1, 0, 0), viewMatrix, viewMatrix);
 		Matrix4f.rotate((float) Math.toRadians(camera.rotY), new Vector3f(0, 1, 0), viewMatrix, viewMatrix);
 		Matrix4f.rotate((float) Math.toRadians(camera.rotZ), new Vector3f(0, 0, 1), viewMatrix, viewMatrix);
-		Vector3f nagativeCamPos = new Vector3f(-camera.x, -camera.y, -camera.z);
+		Vector3f nagativeCamPos = new Vector3f((float) -camera.x, (float) -camera.y, (float) -camera.z);
 		Matrix4f.translate(nagativeCamPos, viewMatrix, viewMatrix);
 
 		lastTimeViewMatrix = viewMatrix;

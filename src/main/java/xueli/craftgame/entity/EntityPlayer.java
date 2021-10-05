@@ -686,7 +686,7 @@ public class EntityPlayer extends Entity {
 		// 玩家的位置与朝向
 		Matrix4f transMatrix = new Matrix4f();
 		transMatrix.setIdentity();
-		Matrix4f.translate(new Vector3f(position.x, position.y, position.z), transMatrix, transMatrix);
+		Matrix4f.translate(new Vector3f((float) position.x, (float) position.y, (float) position.z), transMatrix, transMatrix);
 		Matrix4f.rotate(position.rotX, new Vector3f(1, 0, 0), transMatrix, transMatrix);
 		Matrix4f.rotate(position.rotY, new Vector3f(0, 1, 0), transMatrix, transMatrix);
 		Matrix4f.rotate(position.rotZ, new Vector3f(0, 0, 1), transMatrix, transMatrix);

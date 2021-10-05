@@ -1,0 +1,30 @@
+{
+  "textures": {
+	"options_background": {
+	  "path": "main_menu/options_background.png",
+	  "gui": true,
+	  "flags": [
+		"nearest",
+		"repeat_x",
+		"repeat_y"
+	  ]
+	},
+	"blocks": {
+	  "path": {
+		"bedrock": "blocks/bedrock.png",
+		"brick": "blocks/brick.png",
+		"cobblestone": "blocks/cobblestone.png",
+		"diamond_ore": "blocks/diamond_ore.png",
+		"dirt": "blocks/dirt.png",
+		"dirt_podzol_side": "blocks/dirt_podzol_side.png",
+		"dirt_podzol_top": "blocks/dirt_podzol_top.png",
+		"grass_block_top": "blocks/grass_block_top.png",
+		"grass_block_side": "blocks/grass_block_side.png"
+	  },
+	  "size": 16,
+	  "flags": [
+		"nearest"
+	  ]
+	}
+  }
+}

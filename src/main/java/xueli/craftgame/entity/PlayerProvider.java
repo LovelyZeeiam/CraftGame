@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.flowpowered.nbt.CompoundMap;
 import com.flowpowered.nbt.CompoundTag;
+import com.flowpowered.nbt.DoubleTag;
 import com.flowpowered.nbt.FloatTag;
 import com.flowpowered.nbt.IntTag;
 import com.flowpowered.nbt.ListTag;
@@ -62,9 +63,9 @@ public class PlayerProvider {
 
 	@SuppressWarnings("unchecked")
 	private void loadVersion0(CompoundMap playerMap) {
-		float x = (float) playerMap.get("x").getValue();
-		float y = (float) playerMap.get("y").getValue();
-		float z = (float) playerMap.get("z").getValue();
+		double x = (double) playerMap.get("x").getValue();
+		double y = (double) playerMap.get("y").getValue();
+		double z = (double) playerMap.get("z").getValue();
 		float rotX = (float) playerMap.get("rotX").getValue();
 		float rotY = (float) playerMap.get("rotY").getValue();
 		float rotZ = (float) playerMap.get("rotZ").getValue();
@@ -97,9 +98,9 @@ public class PlayerProvider {
 		CompoundMap playerMap = new CompoundMap();
 		playerMap.put(new IntTag("version", 0));
 
-		playerMap.put(new FloatTag("x", player.pos.x));
-		playerMap.put(new FloatTag("y", player.pos.y));
-		playerMap.put(new FloatTag("z", player.pos.z));
+		playerMap.put(new DoubleTag("x", player.pos.x));
+		playerMap.put(new DoubleTag("y", player.pos.y));
+		playerMap.put(new DoubleTag("z", player.pos.z));
 		playerMap.put(new FloatTag("rotX", player.pos.rotX));
 		playerMap.put(new FloatTag("rotY", player.pos.rotY));
 		playerMap.put(new FloatTag("rotZ", player.pos.rotZ));

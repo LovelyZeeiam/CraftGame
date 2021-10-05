@@ -1,0 +1,19 @@
+{
+  "textures": {
+	"splash": {
+	  "path": "splash/splash.jpg",
+	  "gui": true
+	},
+	"logo": {
+	  "path": "splash/CraftGame.png",
+	  "gui": true
+	},
+	"loading_anime": {
+	  "path": "splash/loading_anime.png",
+	  "gui": true,
+	  "flags": [
+		"nearest"
+	  ]
+	}
+  }
+}

@@ -6,9 +6,9 @@ import org.lwjgl.utils.vector.Vector3i;
 
 import xueli.craftgame.init.Blocks;
 import xueli.game.utils.Light;
-import xueli.game.vector.Vector;
+import xueli.game.utils.tick.Tickable;
 
-public class Dimension {
+public class Dimension implements Tickable {
 
 	ConcurrentHashMap<Vector3i, Chunk> chunks = new ConcurrentHashMap<>();
 
@@ -51,12 +51,12 @@ public class Dimension {
 			return null;
 		return chunk.getLight(x - (chunk.getChunkX() << 4), y - (chunk.getChunkY() << 4), z - (chunk.getChunkZ() << 4));
 	}
-
-	public void tick(Vector playerPos) {
-		this.provider.tick(playerPos);
-
+	
+	@Override
+	public void tick(int deltaTime) {
+		
 	}
-
+	
 	public void close() {
 		this.updater.stopThread();
 		try {
@@ -80,4 +80,8 @@ public class Dimension {
 		return updater;
 	}
 
+	public ChunkProvider getProvider() {
+		return provider;
+	}
+	
 }

@@ -9,9 +9,10 @@ import xueli.game.Game;
 import xueli.game.display.Display;
 import xueli.game.physics.AABB;
 import xueli.game.utils.Time;
+import xueli.game.utils.tick.Tickable;
 import xueli.game.vector.Vector;
 
-public class Player {
+public class Player implements Tickable {
 
 	private static final float MAX_TOUCH = 8.0f;
 
@@ -48,7 +49,25 @@ public class Player {
 
 	private long lastTimeOperationBlock = Time.thisTime;
 
+	@Override
+	public void tick(int deltaTime) {
+		speed.x += acceleration.x * deltaTime / 1000.0f;
+		speed.y += acceleration.y * deltaTime / 1000.0f;
+		speed.z += acceleration.z * deltaTime / 1000.0f;
+
+		speed.x *= 0.4f;
+		speed.y *= 0.35f;
+		speed.z *= 0.4f;
+		
+		acceleration.x = acceleration.y = acceleration.z = 0;
+		
+		// acceleration.y -= 98.0f;
+
+	}
+	
 	public void tick() {
+		this.inventory.tick();
+		
 		if (display.isMouseGrabbed()) {
 			/**
 			 * mouse picker
@@ -120,30 +139,15 @@ public class Player {
 			}
 
 		}
-
-		// TODO: When deltaTime increase, player will jump higher
-
-		speed.x += acceleration.x * Time.deltaTime / 1000.0f;
-		speed.y += acceleration.y * Time.deltaTime / 1000.0f;
-		speed.z += acceleration.z * Time.deltaTime / 1000.0f;
-
+		
 		Vector3f deltaPos = new Vector3f(speed.x * Time.deltaTime / 1000.0f, speed.y * Time.deltaTime / 1000.0f,
 				speed.z * Time.deltaTime / 1000.0f);
-		// pos.x += deltaPos.x;
-		// pos.y += deltaPos.y;
-		// pos.z += deltaPos.z;
-		onGround = false;
-		collider.entityCollide(this, deltaPos);
-
-		speed.x *= 0.8f;
-		speed.y *= 0.9f;
-		speed.z *= 0.8f;
-
-		acceleration.x = acceleration.y = acceleration.z = 0;
-		// acceleration.y -= 98.0f;
-
-		this.inventory.tick();
-
+		pos.x += deltaPos.x;
+		pos.y += deltaPos.y;
+		pos.z += deltaPos.z;
+		// onGround = false;
+		// collider.entityCollide(this, deltaPos);
+		
 	}
 
 	public void close() {

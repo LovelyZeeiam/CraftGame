@@ -6,9 +6,9 @@ public class Vector implements Serializable {
 
 	private static final long serialVersionUID = 1957284979693368762L;
 
-	public float x;
-	public float y;
-	public float z;
+	public double x;
+	public double y;
+	public double z;
 	public float rotX, rotY, rotZ;
 
 	public Vector() {
