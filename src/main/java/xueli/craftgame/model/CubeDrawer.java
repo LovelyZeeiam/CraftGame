@@ -3,7 +3,6 @@ package xueli.craftgame.model;
 import org.lwjgl.utils.vector.Vector2f;
 import org.lwjgl.utils.vector.Vector3f;
 import org.lwjgl.utils.vector.Vector4f;
-
 import xueli.game.utils.FloatList;
 
 public class CubeDrawer {

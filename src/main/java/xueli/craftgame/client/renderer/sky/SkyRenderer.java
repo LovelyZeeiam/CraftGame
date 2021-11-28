@@ -1,11 +1,10 @@
-package xueli.craftgame.renderer.sky;
-
-import static org.lwjgl.opengl.GL11.glClearColor;
+package xueli.craftgame.client.renderer.sky;
 
 import org.lwjgl.utils.vector.Vector3f;
-
 import xueli.craftgame.entity.Player;
 import xueli.craftgame.world.Dimension;
+
+import static org.lwjgl.opengl.GL11.glClearColor;
 
 public class SkyRenderer {
 

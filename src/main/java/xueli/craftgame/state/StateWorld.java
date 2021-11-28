@@ -1,28 +1,11 @@
 package xueli.craftgame.state;
 
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_LEFT;
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_TOP;
-import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgCreateFont;
-import static org.lwjgl.nanovg.NanoVG.nvgCreateImage;
-import static org.lwjgl.nanovg.NanoVG.nvgFill;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
-import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
-import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
-import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
-import static org.lwjgl.nanovg.NanoVG.nvgImagePattern;
-import static org.lwjgl.nanovg.NanoVG.nvgRect;
-import static org.lwjgl.nanovg.NanoVG.nvgText;
-import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
-
 import org.lwjgl.glfw.GLFW;
-
+import xueli.craftgame.client.renderer.world.WorldRenderer;
 import xueli.craftgame.entity.Player;
 import xueli.craftgame.init.Blocks;
 import xueli.craftgame.init.Models;
 import xueli.craftgame.inventory.InventoryRenderer;
-import xueli.craftgame.renderer.WorldRenderer;
 import xueli.craftgame.world.Dimension;
 import xueli.game.renderer.NVGRenderer;
 import xueli.game.utils.NVGColors;
@@ -31,6 +14,8 @@ import xueli.game.utils.math.MatrixHelper;
 import xueli.game.utils.texture.TextureAtlas;
 import xueli.game.utils.tick.TickManager;
 import xueli.utils.io.Files;
+
+import static org.lwjgl.nanovg.NanoVG.*;
 
 public class StateWorld extends NVGRenderer {
 

@@ -1,9 +1,9 @@
 package xueli.game.module;
 
+import xueli.utils.logger.MyLogger;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import xueli.utils.logger.MyLogger;
 
 public class Modules<T extends Module> {
 

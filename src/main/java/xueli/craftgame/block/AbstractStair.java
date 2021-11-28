@@ -1,9 +1,6 @@
 package xueli.craftgame.block;
 
-import java.util.HashMap;
-
 import org.lwjgl.utils.vector.Vector2f;
-
 import xueli.craftgame.init.Models;
 import xueli.craftgame.model.TexturedModel;
 import xueli.craftgame.model.TexturedModelBuilder;
@@ -13,6 +10,8 @@ import xueli.craftgame.world.Tile;
 import xueli.game.utils.FloatList;
 import xueli.game.utils.Light;
 import xueli.game.utils.texture.AtlasTextureHolder;
+
+import java.util.HashMap;
 
 public class AbstractStair extends AbstractBlock {
 

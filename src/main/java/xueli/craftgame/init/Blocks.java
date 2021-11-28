@@ -1,12 +1,6 @@
 package xueli.craftgame.init;
 
-import xueli.craftgame.block.AbstractAlphaBlock;
-import xueli.craftgame.block.AbstractBlock;
-import xueli.craftgame.block.AbstractLightBlock;
-import xueli.craftgame.block.AbstractPlant;
-import xueli.craftgame.block.AbstractSlab;
-import xueli.craftgame.block.AbstractStair;
-import xueli.craftgame.block.BlockBase;
+import xueli.craftgame.block.*;
 import xueli.game.module.Modules;
 import xueli.game.vector.Vector3b;
 

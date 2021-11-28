@@ -3,7 +3,6 @@ package xueli.craftgame.entity.bonetest;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.utils.vector.Vector3f;
-
 import xueli.craftgame.entity.EntityPlayer;
 import xueli.craftgame.entity.EntityRenderer;
 import xueli.game.Game;

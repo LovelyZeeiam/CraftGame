@@ -1,9 +1,9 @@
 package xueli.musicjson;
 
+import xueli.utils.io.Files;
+
 import java.io.File;
 import java.io.IOException;
-
-import xueli.utils.io.Files;
 
 public class MusicJsonMain {
 

@@ -1,6 +1,6 @@
 package xueli.utils.exception;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 public class CrashReport {
 

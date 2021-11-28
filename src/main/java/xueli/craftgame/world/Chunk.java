@@ -1,24 +1,25 @@
 package xueli.craftgame.world;
 
-import java.util.ArrayList;
-
 import org.lwjgl.utils.vector.Vector3i;
-
 import xueli.craftgame.block.BlockFace;
 import xueli.game.utils.FloatList;
 import xueli.game.utils.Light;
 import xueli.game.vector.Vector;
 
+import java.util.ArrayList;
+
 public class Chunk {
 
-	private int chunkX, chunkY, chunkZ;
-	private Dimension dimension;
+	protected int chunkX, chunkY, chunkZ;
+	protected Dimension dimension;
 
-	Tile[][][] grid = new Tile[16][16][16];
-	Light[][][] light = new Light[16][16][16];
-	int[][] heightmap = new int[16][16];
+	public Tile[][][] grid = new Tile[16][16][16];
+	public Light[][][] light = new Light[16][16][16];
+	public int[][] heightmap = new int[16][16];
 
-	private ChunkBuffer buffer = new ChunkBuffer();
+	ChunkBuffer buffer = new ChunkBuffer();
+
+	public boolean somethingHasChanged = true;
 
 	{
 		for (int x = 0; x < 16; x++) {
@@ -42,7 +43,7 @@ public class Chunk {
 		grid[x][y][z] = tile;
 
 		buffer.reportRebuild();
-		dimension.getUpdater().addTask(new WorldUpdater.LightUpdater(Chunk.this));
+		new WorldUpdater.LightUpdater(this).run();
 
 		if (y > heightmap[x][z] && tile != null) {
 			heightmap[x][z] = y;
@@ -54,6 +55,8 @@ public class Chunk {
 					break;
 			}
 		}
+
+		somethingHasChanged = true;
 
 	}
 

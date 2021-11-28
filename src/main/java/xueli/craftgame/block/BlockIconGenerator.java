@@ -2,8 +2,7 @@ package xueli.craftgame.block;
 
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.utils.vector.Vector3f;
-
-import xueli.craftgame.renderer.VertexPointer;
+import xueli.craftgame.client.renderer.VertexPointer;
 import xueli.game.renderer.FrameBuffer;
 import xueli.game.utils.FloatList;
 import xueli.game.utils.Shader;

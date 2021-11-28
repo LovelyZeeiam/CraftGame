@@ -1,16 +1,16 @@
-package xueli.craftgame.renderer;
-
-import java.nio.ByteBuffer;
+package xueli.craftgame.client.renderer;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
-
 import xueli.game.utils.GLHelper;
+
+import java.nio.ByteBuffer;
 
 public class VertexPointer {
 
+	private int glUsage = GL15.GL_DYNAMIC_DRAW;
 	private final int vao, vbo;
 
 	public VertexPointer() {
@@ -20,7 +20,7 @@ public class VertexPointer {
 
 		vbo = GL15.glGenBuffers();
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo);
-		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, 67108864, GL15.GL_DYNAMIC_DRAW);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, 67108864, glUsage);
 
 		registerVertex();
 
@@ -31,13 +31,15 @@ public class VertexPointer {
 	}
 
 	public VertexPointer(int bufferSize, int bufferType) {
-		// 注册vao, vbo
+		this.glUsage = bufferType;
+
 		vao = GL30.glGenVertexArrays();
 		GL30.glBindVertexArray(vao);
 
 		vbo = GL15.glGenBuffers();
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo);
-		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, bufferSize, bufferType);
+		if(bufferSize > 0)
+			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, bufferSize, bufferType);
 
 		registerVertex();
 
@@ -65,6 +67,10 @@ public class VertexPointer {
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo);
 		GLHelper.checkGLError("World: Pre-render");
 
+	}
+
+	public void bufferData(float[] data) {
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, data, glUsage);
 	}
 
 	public ByteBuffer mapBuffer() {

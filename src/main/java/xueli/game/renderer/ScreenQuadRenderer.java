@@ -3,8 +3,7 @@ package xueli.game.renderer;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
-
-import xueli.craftgame.renderer.VertexPointer;
+import xueli.craftgame.client.renderer.VertexPointer;
 import xueli.game.utils.Shader;
 
 public class ScreenQuadRenderer {

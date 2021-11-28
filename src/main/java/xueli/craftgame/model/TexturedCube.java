@@ -2,7 +2,6 @@ package xueli.craftgame.model;
 
 import org.lwjgl.utils.vector.Vector3f;
 import org.lwjgl.utils.vector.Vector4f;
-
 import xueli.craftgame.Colors;
 import xueli.craftgame.block.BlockFace;
 import xueli.game.utils.FloatList;

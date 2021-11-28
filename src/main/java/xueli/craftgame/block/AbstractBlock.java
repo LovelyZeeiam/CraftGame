@@ -2,7 +2,6 @@ package xueli.craftgame.block;
 
 import org.lwjgl.utils.vector.Vector3f;
 import org.lwjgl.utils.vector.Vector4f;
-
 import xueli.craftgame.model.CubeDrawer;
 import xueli.craftgame.state.StateWorld;
 import xueli.craftgame.world.Dimension;
