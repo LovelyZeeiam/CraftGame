@@ -2,9 +2,9 @@ package xueli.craftgame.entity;
 
 import org.lwjgl.utils.vector.Vector3f;
 import org.lwjgl.utils.vector.Vector3i;
+import xueli.craftgame.block.BlockBase;
 import xueli.craftgame.block.BlockFace;
 import xueli.craftgame.world.Dimension;
-import xueli.craftgame.world.Tile;
 import xueli.game.utils.math.MatrixHelper;
 import xueli.game.utils.math.MousePicker;
 
@@ -40,8 +40,8 @@ public class PlayerPicker {
 				selectedBlock = new Vector3i(p);
 				lastSelectedBlock = lastRayVector != null ? new Vector3i(lastRayVector) : null;
 
-				Tile tile = dimension.getBlock(selectedBlock.getX(), selectedBlock.getY(), selectedBlock.getZ());
-				tile.getBase().getListener().onLookAt(selectedBlock.getX(), selectedBlock.getY(), selectedBlock.getZ(),
+				BlockBase tile = dimension.getBlock(selectedBlock.getX(), selectedBlock.getY(), selectedBlock.getZ());
+				tile.getListener().onLookAt(selectedBlock.getX(), selectedBlock.getY(), selectedBlock.getZ(),
 						tile, dimension, player);
 
 				if (lastRayVector != null) {

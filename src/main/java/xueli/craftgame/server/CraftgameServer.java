@@ -1,23 +1,53 @@
 package xueli.craftgame.server;
 
-import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.nio.NioEventLoopGroup;
+import xueli.craftgame.message.Message;
+
+import java.io.IOException;
 
 public class CraftgameServer {
 
+	private static final int PORT = 8848;
+
+	private boolean running = false;
+	private ServerWrapper server;
+
 	public CraftgameServer() {
+		this.server = new ServerWrapper(PORT);
 
 	}
 
-	public void run() {
-		NioEventLoopGroup bossGroup = new NioEventLoopGroup();
-		NioEventLoopGroup workerGroup = new NioEventLoopGroup();
+	public void run() throws IOException {
+		this.server.start();
+		this.running = true;
 
-		ServerBootstrap bootstrap = new ServerBootstrap();
+		while (running) {
+			WrappedMessage message = server.popMessage();
+			if(message == null) continue;
+
+			Message msg = message.getMessage();
+			msg.processServer(message.getFrom(), this);
+
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+		try {
+			this.server.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
-	public static void main(String[] args) {
+	public ServerWrapper getServer() {
+		return server;
+	}
+
+	public static void main(String[] args) throws IOException {
 		new CraftgameServer().run();
 	}
 

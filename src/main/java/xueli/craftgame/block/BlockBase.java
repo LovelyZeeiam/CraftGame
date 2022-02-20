@@ -1,5 +1,6 @@
 package xueli.craftgame.block;
 
+import com.flowpowered.nbt.CompoundMap;
 import xueli.craftgame.model.TexturedModel;
 import xueli.craftgame.world.Dimension;
 import xueli.game.module.Module;
@@ -63,7 +64,7 @@ public class BlockBase extends Module {
 		return Objects.nonNull(getNamespace()) && Objects.nonNull(nameInternational) && Objects.nonNull(listener);
 	}
 
-	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Dimension dimension) {
+	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, CompoundMap tag, Dimension dimension) {
 		Light light = dimension != null ? dimension.getLight(x, y, z) : Light.FULL_LIGHT;
 		return model.getRenderData(x, y, z, face, buffer);
 	}
@@ -71,7 +72,7 @@ public class BlockBase extends Module {
 	public int getRenderModelViewData(FloatList buffer) {
 		int v = 0;
 		for (byte f = 0; f < 6; f++) {
-			v += getRenderCubeData(buffer, 0, 0, 0, f, null);
+			v += getRenderCubeData(buffer, 0, 0, 0, f, null, null);
 		}
 		return v;
 	}

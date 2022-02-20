@@ -52,8 +52,7 @@ public class Inventory {
 			if (Game.INSTANCE_GAME.getDisplay().isMouseDownOnce(GLFW.GLFW_MOUSE_BUTTON_MIDDLE)
 					&& playerRayEndBlock != null) {
 				BlockBase playerChosenBase = player.getDimension()
-						.getBlock(playerRayEndBlock.getX(), playerRayEndBlock.getY(), playerRayEndBlock.getZ())
-						.getBase();
+						.getBlock(playerRayEndBlock.getX(), playerRayEndBlock.getY(), playerRayEndBlock.getZ());
 				int chosenSlot = getWhatTheMostPreferredSlotToAddOnMiddleClickBlock(chosenSlotId, playerChosenBase);
 				slots[chosenSlot] = items.get(items.indexOf(new BlockInventoryItem(playerChosenBase)));
 				chosenSlotId = chosenSlot;

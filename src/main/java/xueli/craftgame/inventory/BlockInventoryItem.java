@@ -1,6 +1,8 @@
 package xueli.craftgame.inventory;
 
 import com.flowpowered.nbt.ByteTag;
+import com.flowpowered.nbt.CompoundMap;
+import com.flowpowered.nbt.CompoundTag;
 import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NanoVGGL3;
 import xueli.craftgame.block.BlockBase;
@@ -9,7 +11,6 @@ import xueli.craftgame.block.BlockTags;
 import xueli.craftgame.entity.Player;
 import xueli.craftgame.entity.PlayerPicker;
 import xueli.craftgame.state.StateWorld;
-import xueli.craftgame.world.Tile;
 import xueli.game.renderer.FrameBuffer;
 
 import static org.lwjgl.nanovg.NanoVG.*;
@@ -86,14 +87,15 @@ public class BlockInventoryItem extends InventoryItem {
 	public void onRightClick(Player player) {
 		PlayerPicker picker = player.getPicker();
 		if (picker.getLastSelectedBlock() != null) {
-			Tile tile = new Tile(base);
+			CompoundMap tag = new CompoundMap();
 			if (base.getTags().contains(BlockTags.HAS_DIFFERENT_DIRECTION))
-				tile.getTags().put(new ByteTag(BlockTags.TAG_NAME_FACE_TO, picker.getFaceTo()));
+				tag.put(new ByteTag(BlockTags.TAG_NAME_FACE_TO, picker.getFaceTo()));
 			if (base.getTags().contains(BlockTags.HAS_PART_UP_AND_PART_DOWN))
-				tile.getTags().put(new ByteTag(BlockTags.TAG_NAME_PART, picker.getBlockPart()));
+				tag.put(new ByteTag(BlockTags.TAG_NAME_PART, picker.getBlockPart()));
 
 			player.getDimension().setBlock(picker.getLastSelectedBlock().getX(), picker.getLastSelectedBlock().getY(),
-					picker.getLastSelectedBlock().getZ(), tile);
+					picker.getLastSelectedBlock().getZ(), base, tag);
+
 		}
 
 	}

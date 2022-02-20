@@ -1,12 +1,13 @@
 package xueli.craftgame.client.world;
 
+import com.flowpowered.nbt.CompoundMap;
 import org.lwjgl.opengl.GL15;
+import xueli.craftgame.block.BlockBase;
 import xueli.craftgame.block.BlockFace;
 import xueli.craftgame.client.renderer.VertexPointer;
 import xueli.craftgame.client.renderer.world.WorldRenderer;
 import xueli.craftgame.world.Chunk;
 import xueli.craftgame.world.Dimension;
-import xueli.craftgame.world.Tile;
 import xueli.game.utils.FloatList;
 
 public class RenderableChunk {
@@ -44,7 +45,8 @@ public class RenderableChunk {
 		for (int x = 0; x < 16; x++) {
 			for (int y = 0; y < 16; y++) {
 				for (int z = 0; z < 16; z++) {
-					Tile tile = chunk.grid[x][y][z];
+					BlockBase tile = chunk.grid[x][y][z];
+					CompoundMap tag = chunk.tags[x][y][z];
 					if (tile == null)
 						continue;
 
@@ -53,40 +55,40 @@ public class RenderableChunk {
 					int realZ = z + (chunkZ << 4);
 
 						if (dimension.getBlock(realX, realY + 1, realZ) == null
-								|| (!dimension.getBlock(realX, realY + 1, realZ).getBase().isComplete()
-								|| dimension.getBlock(realX, realY + 1, realZ).getBase().isAlpha())) {
-							vertCount += tile.getBase().getRenderCubeData(data, realX, realY, realZ,
-									BlockFace.TOP, dimension);
+								|| (!dimension.getBlock(realX, realY + 1, realZ).isComplete()
+								|| dimension.getBlock(realX, realY + 1, realZ).isAlpha())) {
+							vertCount += tile.getRenderCubeData(data, realX, realY, realZ,
+									BlockFace.TOP, tag,dimension);
 						}
 						if (dimension.getBlock(realX, realY - 1, realZ) == null
-								|| (!dimension.getBlock(realX, realY - 1, realZ).getBase().isComplete()
-								|| dimension.getBlock(realX, realY - 1, realZ).getBase().isAlpha())) {
-							vertCount += tile.getBase().getRenderCubeData(data, realX, realY, realZ,
-									BlockFace.BOTTOM, dimension);
+								|| (!dimension.getBlock(realX, realY - 1, realZ).isComplete()
+								|| dimension.getBlock(realX, realY - 1, realZ).isAlpha())) {
+							vertCount += tile.getRenderCubeData(data, realX, realY, realZ,
+									BlockFace.BOTTOM,tag, dimension);
 						}
 						if (dimension.getBlock(realX + 1, realY, realZ) == null
-								|| (!dimension.getBlock(realX + 1, realY, realZ).getBase().isComplete()
-								|| dimension.getBlock(realX + 1, realY, realZ).getBase().isAlpha())) {
-							vertCount += tile.getBase().getRenderCubeData(data, realX, realY, realZ,
-									BlockFace.RIGHT, dimension);
+								|| (!dimension.getBlock(realX + 1, realY, realZ).isComplete()
+								|| dimension.getBlock(realX + 1, realY, realZ).isAlpha())) {
+							vertCount += tile.getRenderCubeData(data, realX, realY, realZ,
+									BlockFace.RIGHT,tag, dimension);
 						}
 						if (dimension.getBlock(realX - 1, realY, realZ) == null
-								|| (!dimension.getBlock(realX - 1, realY, realZ).getBase().isComplete()
-								|| dimension.getBlock(realX - 1, realY, realZ).getBase().isAlpha())) {
-							vertCount += tile.getBase().getRenderCubeData(data, realX, realY, realZ,
-									BlockFace.LEFT, dimension);
+								|| (!dimension.getBlock(realX - 1, realY, realZ).isComplete()
+								|| dimension.getBlock(realX - 1, realY, realZ).isAlpha())) {
+							vertCount += tile.getRenderCubeData(data, realX, realY, realZ,
+									BlockFace.LEFT, tag,dimension);
 						}
 						if (dimension.getBlock(realX, realY, realZ + 1) == null
-								|| (!dimension.getBlock(realX, realY, realZ + 1).getBase().isComplete()
-								|| dimension.getBlock(realX, realY, realZ + 1).getBase().isAlpha())) {
-							vertCount += tile.getBase().getRenderCubeData(data, realX, realY, realZ,
-									BlockFace.BACK, dimension);
+								|| (!dimension.getBlock(realX, realY, realZ + 1).isComplete()
+								|| dimension.getBlock(realX, realY, realZ + 1).isAlpha())) {
+							vertCount += tile.getRenderCubeData(data, realX, realY, realZ,
+									BlockFace.BACK,tag, dimension);
 						}
 						if (dimension.getBlock(realX, realY, realZ - 1) == null
-								|| (!dimension.getBlock(realX, realY, realZ - 1).getBase().isComplete()
-								|| dimension.getBlock(realX, realY, realZ - 1).getBase().isAlpha())) {
-							vertCount += tile.getBase().getRenderCubeData(data, realX, realY, realZ,
-									BlockFace.FRONT, dimension);
+								|| (!dimension.getBlock(realX, realY, realZ - 1).isComplete()
+								|| dimension.getBlock(realX, realY, realZ - 1).isAlpha())) {
+							vertCount += tile.getRenderCubeData(data, realX, realY, realZ,
+									BlockFace.FRONT,tag, dimension);
 						}
 
 				}

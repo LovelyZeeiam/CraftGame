@@ -28,10 +28,10 @@ public class ChunkGenerator {
 					int maxHeight = (int) ((SimplexNoise.noise((x * 16 + xInChunk) / 32.0f, (z * 16 + zInChunk) / 32.0f)
 							+ 1.0f) * 5.0f);
 
-					chunk.grid[xInChunk][maxHeight][zInChunk] = new Tile(blocks.getModule("craftgame:grass"));
+					chunk.grid[xInChunk][maxHeight][zInChunk] = blocks.getModule("craftgame:grass");
 					chunk.heightmap[xInChunk][zInChunk] = maxHeight;
 					for (int i = 0; i < maxHeight; i++) {
-						chunk.grid[xInChunk][i][zInChunk] = new Tile(blocks.getModule("craftgame:dirt"));
+						chunk.grid[xInChunk][i][zInChunk] = blocks.getModule("craftgame:dirt");
 
 					}
 
@@ -50,9 +50,9 @@ public class ChunkGenerator {
 			for (int m = 0; m < 16; m++) {
 				for (int n = 0; n < 16; n++) {
 					chunk.heightmap[m][n] = 15;
-					chunk.grid[m][15][n] = new Tile(blocks.getModule("craftgame:grass"));
+					chunk.grid[m][15][n] = blocks.getModule("craftgame:grass");
 					for (int j = 0; j < 15; j++)
-						chunk.grid[m][j][n] = new Tile(blocks.getModule("craftgame:dirt"));
+						chunk.grid[m][j][n] = blocks.getModule("craftgame:dirt");
 				}
 			}
 		} else if (y < 0) {
@@ -60,7 +60,7 @@ public class ChunkGenerator {
 				for (int n = 0; n < 16; n++) {
 					chunk.heightmap[m][n] = 15;
 					for (int j = 0; j < 16; j++)
-						chunk.grid[m][j][n] = new Tile(blocks.getModule("craftgame:stone"));
+						chunk.grid[m][j][n] = blocks.getModule("craftgame:stone");
 				}
 			}
 		}

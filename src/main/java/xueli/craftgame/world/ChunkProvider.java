@@ -172,7 +172,6 @@ public class ChunkProvider extends ThreadTask {
 			if (c == null)
 				return;
 			level.writeChunk(c);
-			c.getBuffer().postRelease();
 			dimension.chunks.remove(new Vector3i(x, y, z));
 
 		}

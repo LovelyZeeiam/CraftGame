@@ -1,12 +1,12 @@
 package xueli.craftgame.block;
 
+import com.flowpowered.nbt.CompoundMap;
 import org.lwjgl.utils.vector.Vector2f;
 import xueli.craftgame.init.Models;
 import xueli.craftgame.model.TexturedModel;
 import xueli.craftgame.model.TexturedModelBuilder;
 import xueli.craftgame.state.StateWorld;
 import xueli.craftgame.world.Dimension;
-import xueli.craftgame.world.Tile;
 import xueli.game.utils.FloatList;
 import xueli.game.utils.Light;
 import xueli.game.utils.texture.AtlasTextureHolder;
@@ -56,11 +56,10 @@ public class AbstractSlab extends AbstractBlock {
 	}
 
 	@Override
-	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Dimension dimension) {
+	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, CompoundMap tag, Dimension dimension) {
 		Light light = dimension.getLight(x, y, z);
 
-		Tile tile = dimension.getBlock(x, y, z);
-		byte part = (byte) tile.getTags().get(BlockTags.TAG_NAME_PART).getValue();
+		byte part = (byte) tag.get(BlockTags.TAG_NAME_PART).getValue();
 
 		if (part == BlockFace.PART_DOWN)
 			return down.getRenderData(x, y, z, face, buffer);

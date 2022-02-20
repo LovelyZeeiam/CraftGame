@@ -3,6 +3,7 @@ package xueli.craftgame.world;
 import com.flowpowered.nbt.*;
 import com.flowpowered.nbt.stream.NBTInputStream;
 import com.flowpowered.nbt.stream.NBTOutputStream;
+import xueli.craftgame.block.BlockBase;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -56,7 +57,7 @@ public class ChunkIO {
 					int index = grid[count];
 					String namespace = ((StringTag) namespaces.get(index)).getValue();
 
-					Tile tile = namespace.equals(AIR) ? null : new Tile(dimension.blocks.getModule(namespace));
+					BlockBase tile = namespace.equals(AIR) ? null : dimension.blocks.getModule(namespace);
 
 					chunk.grid[x][y][z] = tile;
 
@@ -75,7 +76,7 @@ public class ChunkIO {
 				int z = ((IntTag) tagMap.get("z")).getValue();
 				CompoundMap tags = ((CompoundTag) tagMap.get("tags")).getValue();
 
-				chunk.grid[x][y][z].tags = tags;
+				chunk.tags[x][y][z] = tags;
 
 			}
 		}
@@ -106,8 +107,9 @@ public class ChunkIO {
 				heightMap[count2] = chunk.heightmap[x][z];
 				count2++;
 				for (int y = 0; y < 16; y++) {
-					Tile tile = chunk.grid[x][y][z];
-					String namespace = tile != null ? tile.getBase().getNamespace() : AIR;
+					BlockBase tile = chunk.grid[x][y][z];
+					CompoundMap tag = chunk.tags[x][y][z];
+					String namespace = tile != null ? tile.getNamespace() : AIR;
 
 					int index = namespaces.indexOf(namespace);
 					if (index < 0) {
@@ -118,11 +120,10 @@ public class ChunkIO {
 					grid[count] = index;
 
 					if (tile != null && tile.getTags().size() != 0) {
-						CompoundMap tag = new CompoundMap();
-						tag.put(new IntTag("x", x));
-						tag.put(new IntTag("y", y));
-						tag.put(new IntTag("z", z));
-						tag.put(new CompoundTag("tags", tile.getTags()));
+						CompoundMap tileTag = new CompoundMap();
+						tileTag.put(new IntTag("x", x));
+						tileTag.put(new IntTag("y", y));
+						tileTag.put(new IntTag("z", z));
 						blockTags.add(new CompoundTag("", tag));
 
 					}
@@ -140,9 +141,9 @@ public class ChunkIO {
 		for (String namespace : namespaces) {
 			namespaceTags.add(new StringTag("", namespace));
 		}
-		gridMap.put(new ListTag<StringTag>("namespaces", StringTag.class, namespaceTags));
+		gridMap.put(new ListTag<>("namespaces", StringTag.class, namespaceTags));
 		if (blockTags.size() != 0)
-			gridMap.put(new ListTag<CompoundTag>("tags", CompoundTag.class, blockTags));
+			gridMap.put(new ListTag<>("tags", CompoundTag.class, blockTags));
 
 		map.put(new CompoundTag("chunkMap", gridMap));
 

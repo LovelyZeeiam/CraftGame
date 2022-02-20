@@ -1,8 +1,8 @@
 package xueli.craftgame.entity;
 
 import org.lwjgl.utils.vector.Vector3f;
+import xueli.craftgame.block.BlockBase;
 import xueli.craftgame.world.Dimension;
-import xueli.craftgame.world.Tile;
 import xueli.game.physics.AABB;
 
 public class WorldCollider {
@@ -33,7 +33,7 @@ public class WorldCollider {
 		for (int x = (int) Math.floor(entity.pos.x + entityAabb.getX0()); x < entity.pos.x + entityAabb.getX1(); x++) {
 			for (int y = (int) Math.floor(entity.pos.y + entityAabb.getY0()); y < entity.pos.y + entityAabb.getY1(); y++) {
 				for (int z = (int) Math.floor(entity.pos.z + entityAabb.getZ0()); z < entity.pos.z + entityAabb.getZ1(); z++) {
-					Tile tile = world.getBlock(x, y, z);
+					BlockBase tile = world.getBlock(x, y, z);
 					if (tile != null) {
 						if (deltaPos.x > 0) {
 							entity.pos.x = x + entityAabb.getX0();

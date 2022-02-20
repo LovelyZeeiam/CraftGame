@@ -1,5 +1,6 @@
 package xueli.craftgame.block;
 
+import com.flowpowered.nbt.CompoundMap;
 import org.lwjgl.utils.vector.Vector3f;
 import org.lwjgl.utils.vector.Vector4f;
 import xueli.craftgame.model.CubeDrawer;
@@ -47,7 +48,7 @@ public class AbstractBlock extends BlockBase {
 	}
 
 	@Override
-	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Dimension dimension) {
+	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, CompoundMap tag, Dimension dimension) {
 		AtlasTextureHolder texHolder = this.holders[face];
 
 		float[] aoColor = dimension == null ? ALL_WHITE : FakeAOBaker.bake(x, y, z, face, dimension);

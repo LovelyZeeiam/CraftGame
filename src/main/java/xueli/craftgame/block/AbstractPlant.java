@@ -1,5 +1,6 @@
 package xueli.craftgame.block;
 
+import com.flowpowered.nbt.CompoundMap;
 import org.lwjgl.utils.vector.Vector3f;
 import xueli.craftgame.Colors;
 import xueli.craftgame.model.CubeDrawer;
@@ -15,7 +16,7 @@ public class AbstractPlant extends AbstractBlock {
 
 	public AbstractPlant(String namespace, String nameInternational, String textureName) {
 		super(namespace, nameInternational,
-				new String[] { textureName, textureName, textureName, textureName, textureName, textureName });
+				textureName, textureName, textureName, textureName, textureName, textureName);
 
 		isComplete = false;
 		isAlpha = false;
@@ -25,7 +26,7 @@ public class AbstractPlant extends AbstractBlock {
 	}
 
 	@Override
-	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, Dimension dimension) {
+	public int getRenderCubeData(FloatList buffer, int x, int y, int z, byte face, CompoundMap map, Dimension dimension) {
 		Light light = dimension == null ? Light.FULL_LIGHT : dimension.getLight(x, y, z);
 		CubeDrawer.drawQuad(buffer, new Vector3f(-1, 0, 1), new Vector3f(x + 0.2f, y + 0.8f, z + 0.2f),
 				holder.p_left_top, Colors.WHITE, new Vector3f(x + 0.8f, y + 0.8f, z + 0.8f), holder.p_right_top,
