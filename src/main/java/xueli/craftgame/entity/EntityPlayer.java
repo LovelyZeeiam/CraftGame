@@ -36,7 +36,7 @@ public class EntityPlayer extends Entity {
 	}
 
 	private void getTexture() {
-		String skinPath = "temp/skins/" + name + ".png";
+		String skinPath = ".cg/skins/" + name + ".png";
 		if (!SkinGetter.saveSkin(name, skinPath)) {
 			texture = Texture.NULL;
 		} else {

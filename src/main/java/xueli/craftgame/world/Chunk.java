@@ -1,15 +1,8 @@
 package xueli.craftgame.world;
 
 import com.flowpowered.nbt.CompoundMap;
-import com.flowpowered.nbt.CompoundTag;
-import org.lwjgl.utils.vector.Vector3i;
 import xueli.craftgame.block.BlockBase;
-import xueli.craftgame.block.BlockFace;
-import xueli.game.utils.FloatList;
 import xueli.game.utils.Light;
-import xueli.game.vector.Vector;
-
-import java.util.ArrayList;
 
 public class Chunk {
 
@@ -38,7 +31,7 @@ public class Chunk {
 		this.chunkY = y;
 		this.chunkZ = z;
 		this.dimension = dimension;
-
+		
 	}
 
 	public void setBlockTag(int x, int y, int z, CompoundMap tag) {

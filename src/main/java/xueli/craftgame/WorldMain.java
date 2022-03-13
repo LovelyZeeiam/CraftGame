@@ -12,7 +12,7 @@ public class WorldMain extends Game {
 	}
 
 	@Override
-	public void onCreate() {
+	public void onCreate() { 
 		rendererManager.setCurrentRenderer(new StateWorld());
 
 	}

@@ -61,7 +61,90 @@ public class TextureAtlas {
 	public AtlasTextureHolder getTextureHolder(String key, Vector2f offsetFrom, Vector2f offsetTo) {
 		return new AtlasTextureHolder(key, offsetFrom, offsetTo, this);
 	}
+	
+	public static TextureAtlas generateAtlas(TextureAtlasBuilder builder) {
+		HashMap<String, String> textureMaps = builder.textureMaps;
+		
+		String[] names = new String[textureMaps.size()];
+		BufferedImage[] images = new BufferedImage[textureMaps.size()];
 
+		int per_width = 0, per_height = 0;
+
+		int count = 0;
+		try {
+			for (Entry<String, String> e : textureMaps.entrySet()) {
+				String name = e.getKey();
+				String imgPath = e.getValue();
+
+				File imgFile = new File(imgPath);
+				BufferedImage image = ImageIO.read(imgFile);
+				if (image == null) {
+					MyLogger.getInstance().warning("Can't read image: " + imgPath);
+					continue;
+				}
+				per_width = Math.max(per_width, image.getWidth());
+				per_height = Math.max(per_height, image.getHeight());
+
+				names[count] = name;
+				images[count] = image;
+				count++;
+
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		int size = (int) Math.ceil(Math.sqrt(images.length));
+
+		HashMap<String, Vector2i> atlas = new HashMap<>();
+
+		BufferedImage atlasImage = new BufferedImage(per_width * size, per_height * size,
+				BufferedImage.TYPE_4BYTE_ABGR);
+		Graphics2D g2d = atlasImage.createGraphics();
+
+		for (int i = 0; i < images.length; i++) {
+			BufferedImage image = images[i];
+
+			int x = i % size;
+			int y = i / size;
+			atlas.put(names[i], new Vector2i(x, y));
+
+			g2d.drawImage(image, x * per_width, y * per_height, null);
+
+		}
+
+		g2d.dispose();
+		/*
+		 * try { ImageIO.write(atlasImage, "png", new File("temp/atlas.png")); } catch
+		 * (IOException e) { e.printStackTrace(); }
+		 */
+
+		int[] pixels = new int[atlasImage.getWidth() * atlasImage.getHeight()];
+		atlasImage.getRGB(0, 0, atlasImage.getWidth(), atlasImage.getHeight(), pixels, 0, atlasImage.getWidth());
+
+		int[] data = new int[atlasImage.getWidth() * atlasImage.getHeight()];
+		for (int i = 0; i < atlasImage.getWidth() * atlasImage.getHeight(); i++) {
+			int a = (pixels[i] & 0xff000000) >> 24;
+			int r = (pixels[i] & 0xff0000) >> 16;
+			int g = (pixels[i] & 0xff00) >> 8;
+			int b = (pixels[i] & 0xff);
+			data[i] = a << 24 | b << 16 | g << 8 | r;
+		}
+
+		int id = GL11.glGenTextures();
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL13.GL_CLAMP_TO_BORDER);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL13.GL_CLAMP_TO_BORDER);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_BASE_LEVEL, 0);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_MAX_LEVEL, 4);
+		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, atlasImage.getWidth(), atlasImage.getHeight(), 0,
+				GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, data);
+
+		return new TextureAtlas(atlas, size, size, id);
+	}
+	
 	public static TextureAtlas generateAtlas(String defineJsonPath, String textureFolderString) {
 		JsonObject obj = null;
 		try {
@@ -121,11 +204,10 @@ public class TextureAtlas {
 		}
 
 		g2d.dispose();
-		try {
-			ImageIO.write(atlasImage, "png", new File("temp/atlas.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		/*
+		 * try { ImageIO.write(atlasImage, "png", new File("temp/atlas.png")); } catch
+		 * (IOException e) { e.printStackTrace(); }
+		 */
 
 		int[] pixels = new int[atlasImage.getWidth() * atlasImage.getHeight()];
 		atlasImage.getRGB(0, 0, atlasImage.getWidth(), atlasImage.getHeight(), pixels, 0, atlasImage.getWidth());

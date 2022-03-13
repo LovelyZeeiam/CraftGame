@@ -12,13 +12,14 @@ import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 import xueli.craftgame.message.Message;
 import xueli.craftgame.message.MessageNotAssociatedWithWorld;
+import xueli.craftgame.server.MessagePlayerInfo;
 import xueli.craftgame.server.MessageServerSideAuthentication;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class ClientWrapper implements IoHandler, AutoCloseable {
+public class ClientWrapper extends IOAdapter implements IoHandler {
 
 	private static final int CONNECT_TIMEOUT = 5000;
 
@@ -31,13 +32,15 @@ public class ClientWrapper implements IoHandler, AutoCloseable {
 	private boolean authentiated = false;
 	private ConcurrentLinkedQueue<Message> queue = new ConcurrentLinkedQueue<>();
 
-	public ClientWrapper(String hostname, int port) {
+	public ClientWrapper(CraftGameClient ctx, String hostname, int port) {
+		super(ctx);
 		this.hostname = hostname;
 		this.port = port;
 
 	}
-
-	public void start() throws IOException {
+	
+	@Override
+	public void start() throws Exception {
 		connector = new NioSocketConnector();
 		connector.setConnectTimeoutMillis(CONNECT_TIMEOUT);
 		connector.getSessionConfig().setReadBufferSize(2048 * 2048);
@@ -55,9 +58,19 @@ public class ClientWrapper implements IoHandler, AutoCloseable {
 		} catch (RuntimeIoException e) {
 			throw new IOException(e);
 		}
+		
+		sendMessage(new MessagePlayerInfo(getContext().getInfo())).awaitUninterruptibly();
 
+		while(!authentiated) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
-
+	
 	public Message popMessage() {
 		return queue.poll();
 	}
@@ -97,7 +110,7 @@ public class ClientWrapper implements IoHandler, AutoCloseable {
 				queue.add(msg);
 			}
 		}
-
+		
 	}
 
 	private void processMessageClientside(IoSession session, Message msg) {
@@ -109,15 +122,11 @@ public class ClientWrapper implements IoHandler, AutoCloseable {
 	@Override
 	public void messageSent(IoSession session, Object message) throws Exception {
 	}
-
-	public boolean isAuthentiated() {
-		return authentiated;
-	}
-
-	public void close() {
+	
+	@Override
+	public void close() throws Exception {
 		session.close(true).awaitUninterruptibly();
 		connector.dispose();
-
 	}
 
 	public String getHostname() {
