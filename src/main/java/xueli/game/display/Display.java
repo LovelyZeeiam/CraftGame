@@ -114,7 +114,7 @@ public class Display {
 
 	public void create() {
 		MyLogger.getInstance().pushState("Display");
-
+		
 		GLFWErrorCallback.createPrint(System.err).set();
 		if (!glfwInit()) {
 			MyLogger.getInstance().error("Can't init GLFW!");
@@ -122,10 +122,10 @@ public class Display {
 		}
 
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-		// glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		// glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-		// glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-		// glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 
 		window = glfwCreateWindow(width, height, mainTitle, 0, 0);
 
@@ -167,7 +167,7 @@ public class Display {
 
 	public void hide() {
 		glfwHideWindow(window);
-
+		
 	}
 
 	private void callbackTick() {
@@ -192,12 +192,18 @@ public class Display {
 
 		if (glfwWindowShouldClose(window))
 			running = false;
-
+		
 	}
 
 	public void setMouseGrabbed(boolean mouseGrabbed) {
 		glfwSetInputMode(window, GLFW_CURSOR, mouseGrabbed ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
 		this.mouseGrabbed = mouseGrabbed;
+	}
+	
+	public void release() {
+		this.running = false;
+		glfwTerminate();
+		
 	}
 
 	public double getWheelDelta() {
@@ -206,6 +212,10 @@ public class Display {
 
 	public boolean isRunning() {
 		return running;
+	}
+	
+	public void setRunning(boolean running) {
+		this.running = running;
 	}
 
 	public int getWidth() {

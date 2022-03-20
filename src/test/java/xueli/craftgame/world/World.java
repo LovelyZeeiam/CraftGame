@@ -1,25 +1,28 @@
 package xueli.craftgame.world;
 
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 import com.flowpowered.nbt.CompoundMap;
 import com.google.common.eventbus.Subscribe;
 
+import xueli.craftgame.CraftGameContext;
 import xueli.craftgame.block.BlockType;
+import xueli.craftgame.event.EventLoadChunk;
+import xueli.craftgame.event.EventRequireChunk;
 import xueli.craftgame.event.EventSetBlock;
+import xueli.game.vector.Vector2i;
 import xueli.utils.Int2HashMap;
 
 public class World {
 
-	private WorldIO provider;
-	private CopyOnWriteArrayList<Future<SubChunk>> requireChunkFutures = new CopyOnWriteArrayList<>();
+	private CraftGameContext ctx;
+
+	private CopyOnWriteArrayList<EventRequireChunk> requireChunkFutures = new CopyOnWriteArrayList<>();
 
 	private Int2HashMap<SubChunk> chunks = new Int2HashMap<>();
 
-	public World() {
-		this.provider = new WorldIO(this);
+	public World(CraftGameContext ctx) {
+		this.ctx = ctx;
 
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -30,7 +33,9 @@ public class World {
 	}
 
 	private void requireChunk(int x, int z) {
-		requireChunkFutures.add(provider.getChunk(x, z));
+		EventRequireChunk require = new EventRequireChunk(x, z);
+		ctx.submitEventToMainTicker(require);
+		requireChunkFutures.add(require);
 	}
 
 	public SubChunk getChunk(int x, int z) {
@@ -41,21 +46,32 @@ public class World {
 		SubChunk chunk = chunks.get(x >> 4, z >> 4);
 		if (chunk == null)
 			return null;
-		return chunk.grid[x - (chunk.getChunkX() << 4)][y][z - (chunk.getChunkZ() << 4)];
+		try {
+			return chunk.grid[x - (chunk.getChunkX() << 4)][y][z - (chunk.getChunkZ() << 4)];
+		} catch (ArrayIndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 
 	public CompoundMap getBlockTag(int x, int y, int z) {
 		SubChunk chunk = chunks.get(x >> 4, z >> 4);
 		if (chunk == null)
 			return null;
-		return chunk.tags[x - (chunk.getChunkX() << 4)][y][z - (chunk.getChunkZ() << 4)];
+		try {
+			return chunk.tags[x - (chunk.getChunkX() << 4)][y][z - (chunk.getChunkZ() << 4)];
+		} catch (ArrayIndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 
 	public void setBlockTag(int x, int y, int z, CompoundMap tag) {
 		SubChunk chunk = chunks.get(x >> 4, z >> 4);
 		if (chunk == null)
 			return;
-		chunk.tags[x - (chunk.getChunkX() << 4)][y][z - (chunk.getChunkZ() << 4)] = tag;
+		try {
+			chunk.tags[x - (chunk.getChunkX() << 4)][y][z - (chunk.getChunkZ() << 4)] = tag;
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
 	}
 
 	public void setBlock(int x, int y, int z, BlockType tile) {
@@ -85,6 +101,15 @@ public class World {
 		refreshHeightMap(inchunkX, y, inchunkZ, tile, chunk);
 
 	}
+	
+	public boolean canOperateBlock(int x, int y, int z) {
+		SubChunk chunk = chunks.get(x >> 4, z >> 4);
+		if (chunk == null)
+			return false;
+		if(y < 0)
+			return false;
+		return true;
+	}
 
 	private void refreshHeightMap(int inchunkX, int y, int inchunkZ, BlockType tile, SubChunk chunk) {
 		if (y > chunk.heightmap[inchunkX][inchunkZ] && tile != null) {
@@ -99,21 +124,23 @@ public class World {
 		}
 	}
 
-	public void tick() {
-		provider.tick();
+	public static Vector2i getLocatedChunkPos(int x, int z) {
+		return new Vector2i(x >> 4, z >> 4);
+	}
 
-		for (Future<SubChunk> future : requireChunkFutures) {
+	public boolean hasChunk(int x, int z) {
+		return chunks.containsKey(x, z);
+	}
+
+	public void tick() {
+		for (EventRequireChunk future : requireChunkFutures) {
 			if (future.isDone()) {
-				SubChunk chunk = null;
-				try {
-					chunk = future.get();
-				} catch (InterruptedException | ExecutionException e) {
-					e.printStackTrace();
-				}
+				SubChunk chunk = future.getValue();
+				if (chunk == null)
+					continue;
 
 				chunks.put(chunk.getChunkX(), chunk.getChunkZ(), chunk);
-				requireChunkFutures.remove(future);
-			} else if (future.isCancelled()) {
+				ctx.submitEvent(new EventLoadChunk(chunk.getChunkX(), chunk.getChunkZ()));
 				requireChunkFutures.remove(future);
 			}
 		}
@@ -121,8 +148,6 @@ public class World {
 	}
 
 	public void release() {
-		this.provider.release();
-
 	}
 
 	@Subscribe
@@ -133,12 +158,10 @@ public class World {
 		case BLOCK_TAG -> setBlock(event.getX(), event.getY(), event.getZ(), event.getBlock(), event.getTag());
 		}
 
-		provider.postEvent(event);
-
 	}
 
-	public WorldIO getProvider() {
-		return provider;
+	public CraftGameContext getContext() {
+		return ctx;
 	}
 
 }

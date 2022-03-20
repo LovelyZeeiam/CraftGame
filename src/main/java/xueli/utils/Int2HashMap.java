@@ -1,8 +1,8 @@
 package xueli.utils;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class Int2HashMap<V> extends HashMap<Long, V> {
+public class Int2HashMap<V> extends ConcurrentHashMap<Long, V> {
 
 	private static final long serialVersionUID = 1L;
 

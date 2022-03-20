@@ -2,6 +2,7 @@ package xueli.craftgame.block;
 
 import java.io.File;
 
+import xueli.craftgame.renderer.blocks.BlockRenderableSolid;
 import xueli.game.utils.texture.TextureAtlas;
 import xueli.game.utils.texture.TextureAtlasBuilder;
 import xueli.utils.io.Files;
@@ -21,7 +22,9 @@ public class Blocks {
 
 	}
 
-	public static BlockType BLOCK_STONE = new BlockType("cg:stone", "Stone");
+	// TODO: BlockRenderable
+	public static BlockType BLOCK_STONE = new BlockType("cg:stone", "Stone")
+			.setRenderable(new BlockRenderableSolid(blockTextureAtlas.getTextureHolder("stone")));
 
 	public static void initCall() {
 	}

@@ -27,7 +27,7 @@ public class Shader {
 	public Shader(String vertPath, String fragPath) {
 		vertID = getShader(vertPath, GL20.GL_VERTEX_SHADER);
 		fragID = getShader(fragPath, GL20.GL_FRAGMENT_SHADER);
-
+		
 		this.shaderID = GL20.glCreateProgram();
 		GL20.glAttachShader(this.shaderID, vertID);
 		GL20.glAttachShader(this.shaderID, fragID);
@@ -49,8 +49,15 @@ public class Shader {
 		GL20.glValidateProgram(this.shaderID);
 
 	}
+	
+	private Shader(int shaderID, int vertID, int fragID, int geoID) {
+		this.shaderID = shaderID;
+		this.vertID = vertID;
+		this.fragID = fragID;
+		this.geoID = geoID;
+	}
 
-	public static int getShader(String vertCode, String fragCode) {
+	public static Shader getShader(String vertCode, String fragCode) {
 		int vertID = GL20.glCreateShader(GL20.GL_VERTEX_SHADER);
 		GL20.glShaderSource(vertID, vertCode);
 		GL20.glCompileShader(vertID);
@@ -71,7 +78,7 @@ public class Shader {
 		GL20.glLinkProgram(id);
 		GL20.glValidateProgram(id);
 
-		return id;
+		return new Shader(id, vertID, fragID, 0);
 	}
 
 	private int getShader(String shaderPath, int type) {
@@ -159,12 +166,15 @@ public class Shader {
 		setProjectionMatrix(shader, game.getDisplay().getWidth(), game.getDisplay().getHeight(), 110.0f);
 	}
 
-	public static void setProjectionMatrix(Shader shader, float width, float height, float fov) {
+	public static Matrix4f setProjectionMatrix(Shader shader, float width, float height, float fov) {
+		Matrix4f matrix = MatrixHelper.perspecive(width, height, fov, 0.01f, 114514.0f);
+		
 		shader.use();
 		shader.setUniformMatrix(shader.getUnifromLocation("projMatrix"),
-				MatrixHelper.perspecive(width, height, fov, 0.01f, 114514.0f));
+				matrix);
 		shader.unbind();
-
+		
+		return matrix;
 	}
 
 	public static void setProjectionMatrix(Shader shader, Matrix4f mat) {
@@ -174,11 +184,14 @@ public class Shader {
 
 	}
 
-	public static void setViewMatrix(Vector cam, Shader shader) {
+	public static Matrix4f setViewMatrix(Vector cam, Shader shader) {
+		Matrix4f matrix = MatrixHelper.player(cam);
+		
 		shader.use();
-		shader.setUniformMatrix(shader.getUnifromLocation("viewMatrix"), MatrixHelper.player(cam));
+		shader.setUniformMatrix(shader.getUnifromLocation("viewMatrix"), matrix);
 		shader.unbind();
-
+		
+		return matrix;
 	}
 
 	public static void setViewMatrix(Matrix4f mat, Shader shader) {

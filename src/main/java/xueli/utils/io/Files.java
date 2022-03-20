@@ -1,9 +1,13 @@
 package xueli.utils.io;
 
 import javax.imageio.ImageIO;
+
+import org.lwjgl.system.MemoryStack;
+
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URLDecoder;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
@@ -98,6 +102,20 @@ public class Files {
 	public static File getResourcePackedInJar(String path) {
 		return new File(URLDecoder.decode(Thread.currentThread().getContextClassLoader().getResource(path).getPath(),
 				StandardCharsets.UTF_8));
+	}
+	
+	public static byte[] readResourcePackedInJar(String path) throws IOException {
+		InputStream in = Files.class.getResourceAsStream(path);
+		if(in == null)
+			throw new IOException("Stream is null! Maybe the file doesn't exist?");
+		byte[] all = in.readAllBytes();
+		in.close();
+		return all;
+	}
+	
+	public static ByteBuffer readResourcePackedInJarAndPackedToBuffer(String path) throws IOException {
+		byte[] all = readResourcePackedInJar(path);
+		return MemoryStack.stackBytes(all);
 	}
 
 	public static void writeObject(Object obj, File file) throws Exception {

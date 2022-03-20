@@ -6,10 +6,12 @@ import xueli.craftgame.block.BlockType;
 
 public class SubChunk {
 
+	public static final int MAX_HEIGHT = 256;
+
 	private World world;
 	private int chunkX, chunkZ;
 
-	public BlockType[][][] grid = new BlockType[16][256][16];
+	public BlockType[][][] grid = new BlockType[16][MAX_HEIGHT][16];
 	public CompoundMap[][][] tags = new CompoundMap[16][16][16];
 	public int[][] heightmap = new int[16][16];
 
@@ -26,6 +28,10 @@ public class SubChunk {
 
 	public int getChunkZ() {
 		return chunkZ;
+	}
+	
+	public World getWorld() {
+		return world;
 	}
 
 }

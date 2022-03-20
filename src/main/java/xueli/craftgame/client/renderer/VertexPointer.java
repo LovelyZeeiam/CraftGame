@@ -2,11 +2,13 @@ package xueli.craftgame.client.renderer;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
+import org.lwjgl.opengl.GL15C;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import xueli.game.utils.GLHelper;
 
 import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
 
 public class VertexPointer {
 
@@ -65,11 +67,18 @@ public class VertexPointer {
 	public void initDraw() {
 		GL30.glBindVertexArray(vao);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo);
+		// System.out.println(vao +", " + vbo);
+		
 		GLHelper.checkGLError("World: Pre-render");
 
 	}
 
 	public void bufferData(float[] data) {
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, data, glUsage);
+	}
+	
+	public void bufferData(FloatBuffer data) {
+		// System.out.println(vao + ", " + vbo);
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, data, glUsage);
 	}
 

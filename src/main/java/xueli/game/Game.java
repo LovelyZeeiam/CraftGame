@@ -5,6 +5,7 @@ import xueli.game.display.Display;
 import xueli.game.renderer.RendererManager;
 import xueli.game.utils.GLHelper;
 import xueli.game.utils.Time;
+import xueli.utils.exception.CrashReport;
 import xueli.utils.logger.MyLogger;
 
 import java.util.LinkedList;
@@ -56,7 +57,9 @@ public abstract class Game implements Runnable {
 
 		}
 
-		display.hide();
+		// display.hide();
+		display.release();
+		
 		rendererManager.release();
 		onRelease();
 
@@ -78,7 +81,14 @@ public abstract class Game implements Runnable {
 	}
 
 	public abstract void onRelease();
-
+	
+	public void announceCrash(String state, Throwable throwable) {
+		queueInMainThread.add(() -> {
+			display.release();
+			new CrashReport(state, throwable).showCrashReport();
+		});
+	}
+	
 	public Display getDisplay() {
 		return display;
 	}

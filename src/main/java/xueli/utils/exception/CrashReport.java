@@ -9,22 +9,25 @@ public class CrashReport {
 			"What bad ideas could xueli be thinking of?" };
 
 	private String state;
-	private Exception e;
+	private Throwable e;
 
-	public CrashReport(String state, Exception e) {
+	public CrashReport(String state, Throwable e) {
 		this.e = e;
 		this.state = state;
 	}
 
 	public void showCrashReport() {
-		JOptionPane.showMessageDialog(null, getMessage(), getNiceComment(), JOptionPane.ERROR_MESSAGE);
+		new Thread(() -> {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, getMessage(), getNiceComment(), JOptionPane.ERROR_MESSAGE);
+		}).start();
 	}
 
 	public String getMessage() {
 		StringBuilder builder = new StringBuilder();
 		Throwable t = e;
 
-		builder.append("Exception");
+		builder.append("Exception ");
 		while (true) {
 			builder.append(t.getClass().getName());
 			if (t.getMessage() != null && !t.getMessage().isBlank())
@@ -41,11 +44,11 @@ public class CrashReport {
 
 			builder.append(System.lineSeparator());
 
-			t = e.getCause();
+			t = t.getCause();
 			if (t == null)
 				break;
 
-			builder.append("Caused by");
+			builder.append("Caused by ");
 
 		}
 

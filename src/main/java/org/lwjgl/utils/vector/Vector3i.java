@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Vector3i {
 
-	private int x, y, z;
+	public int x, y, z;
 
 	public Vector3i(int x, int y, int z) {
 		this.x = x;

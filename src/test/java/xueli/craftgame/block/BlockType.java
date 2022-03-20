@@ -1,6 +1,6 @@
 package xueli.craftgame.block;
 
-import xueli.craftgame.renderer.BlockRenderable;
+import xueli.craftgame.renderer.blocks.BlockRenderable;
 
 public class BlockType {
 

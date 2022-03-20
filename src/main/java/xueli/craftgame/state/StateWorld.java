@@ -101,7 +101,7 @@ public class StateWorld extends NVGRenderer {
 		String posTextString = "Position: " + (int) Math.floor(player.getPos().x) + ", "
 				+ (int) Math.floor(player.getPos().y) + ", " + (int) Math.floor(player.getPos().z);
 		String fpsTextString = "FPS: " + Time.fps;
-
+		
 		float fontSize = 15.0f * game.getDisplayScale();
 		float measuredTextLength = Math.max(measureTextWidth(fontSize, posTextString),
 				measureTextWidth(fontSize, fpsTextString));
