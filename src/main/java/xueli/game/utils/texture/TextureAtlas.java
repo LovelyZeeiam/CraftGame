@@ -1,20 +1,31 @@
 package xueli.game.utils.texture;
 
-import com.google.gson.*;
-import com.google.gson.stream.JsonReader;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map.Entry;
+
+import javax.imageio.ImageIO;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.utils.vector.Vector2f;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.stream.JsonReader;
+
 import xueli.game.vector.Vector2i;
 import xueli.utils.logger.MyLogger;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.HashMap;
-import java.util.Map.Entry;
 
 public class TextureAtlas {
 
@@ -61,10 +72,10 @@ public class TextureAtlas {
 	public AtlasTextureHolder getTextureHolder(String key, Vector2f offsetFrom, Vector2f offsetTo) {
 		return new AtlasTextureHolder(key, offsetFrom, offsetTo, this);
 	}
-	
+
 	public static TextureAtlas generateAtlas(TextureAtlasBuilder builder) {
 		HashMap<String, String> textureMaps = builder.textureMaps;
-		
+
 		String[] names = new String[textureMaps.size()];
 		BufferedImage[] images = new BufferedImage[textureMaps.size()];
 
@@ -144,7 +155,7 @@ public class TextureAtlas {
 
 		return new TextureAtlas(atlas, size, size, id);
 	}
-	
+
 	public static TextureAtlas generateAtlas(String defineJsonPath, String textureFolderString) {
 		JsonObject obj = null;
 		try {

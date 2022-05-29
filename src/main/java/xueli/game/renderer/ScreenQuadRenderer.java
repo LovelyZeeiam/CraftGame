@@ -6,7 +6,8 @@ import java.nio.charset.StandardCharsets;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
-import xueli.craftgame.client.renderer.VertexPointer;
+
+import xueli.craftgame.renderer.VertexPointer;
 import xueli.game.utils.Shader;
 import xueli.utils.io.Files;
 
@@ -24,15 +25,19 @@ public class ScreenQuadRenderer {
 		pointer.mapBuffer().asFloatBuffer().put(VERTICES);
 		pointer.unmap();
 		pointer.postDraw();
-		
+
 		try {
-			shader = Shader.getShader(new String(Files.readResourcePackedInJar("/assets/shaders/screen_quad/vert.txt"), StandardCharsets.UTF_8), 
-						new String(Files.readResourcePackedInJar("/assets/shaders/screen_quad/frag.txt"), StandardCharsets.UTF_8));
+			shader = Shader.getShader(
+					new String(Files.readResourcePackedInJar("/assets/shaders/screen_quad/vert.txt"),
+							StandardCharsets.UTF_8),
+					new String(Files.readResourcePackedInJar("/assets/shaders/screen_quad/frag.txt"),
+							StandardCharsets.UTF_8));
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(-1);
 		}
-		// shader = new Shader("res/shaders/screen_quad/vert.txt", "res/shaders/screen_quad/frag.txt");
+		// shader = new Shader("res/shaders/screen_quad/vert.txt",
+		// "res/shaders/screen_quad/frag.txt");
 
 		shader.use();
 		shader.setInt(shader.getUnifromLocation("tex"), 0);

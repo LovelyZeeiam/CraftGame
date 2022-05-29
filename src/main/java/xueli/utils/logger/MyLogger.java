@@ -1,12 +1,12 @@
 package xueli.utils.logger;
 
-import org.fusesource.jansi.Ansi;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Stack;
 import java.util.logging.Level;
+
+import org.fusesource.jansi.Ansi;
 
 public class MyLogger {
 

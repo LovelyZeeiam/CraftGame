@@ -3,6 +3,7 @@ package xueli.game.utils.math;
 import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector3f;
 import org.lwjgl.utils.vector.Vector4f;
+
 import xueli.game.vector.Vector;
 
 public class MousePicker {
@@ -21,6 +22,9 @@ public class MousePicker {
 	}
 
 	private void ray() {
+		if (!valid())
+			return;
+
 		Vector4f clipCoords = new Vector4f(0, 0, -1f, 1f);
 
 		Matrix4f invertedProj = Matrix4f.invert(projMatrix, null);
@@ -34,9 +38,15 @@ public class MousePicker {
 	}
 
 	public Vector3f getPointOnRay(float distance) {
+		if (ray == null)
+			return null;
 		Vector3f scaledRay = new Vector3f(ray.x * distance, ray.y * distance, ray.z * distance);
 		Vector3f rayEnd = Vector3f.add(camPos, scaledRay, null);
 		return new Vector3f(rayEnd.x, rayEnd.y, rayEnd.z);
+	}
+
+	public boolean valid() {
+		return !(projMatrix == null || viewMatrix == null);
 	}
 
 }

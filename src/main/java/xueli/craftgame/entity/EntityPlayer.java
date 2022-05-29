@@ -1,17 +1,18 @@
 package xueli.craftgame.entity;
 
+import java.io.IOException;
+import java.nio.FloatBuffer;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector3f;
+
 import xueli.game.utils.Shader;
 import xueli.game.utils.WrappedFloatBuffer;
 import xueli.game.utils.texture.Texture;
 import xueli.game.vector.Vector;
 import xueli.utils.mojang.SkinGetter;
-
-import java.io.IOException;
-import java.nio.FloatBuffer;
 
 public class EntityPlayer extends Entity {
 
@@ -685,7 +686,8 @@ public class EntityPlayer extends Entity {
 		// 玩家的位置与朝向
 		Matrix4f transMatrix = new Matrix4f();
 		transMatrix.setIdentity();
-		Matrix4f.translate(new Vector3f((float) position.x, (float) position.y, (float) position.z), transMatrix, transMatrix);
+		Matrix4f.translate(new Vector3f((float) position.x, (float) position.y, (float) position.z), transMatrix,
+				transMatrix);
 		Matrix4f.rotate(position.rotX, new Vector3f(1, 0, 0), transMatrix, transMatrix);
 		Matrix4f.rotate(position.rotY, new Vector3f(0, 1, 0), transMatrix, transMatrix);
 		Matrix4f.rotate(position.rotZ, new Vector3f(0, 0, 1), transMatrix, transMatrix);
@@ -717,7 +719,7 @@ public class EntityPlayer extends Entity {
 				headBoneMatrix);
 		Matrix4f.rotate((float) Math.toRadians(boneParameters.get("head_rot_z")), new Vector3f(0, 0, 1), headBoneMatrix,
 				headBoneMatrix);
-		shader.setUniformMatrix(loc_boneMatrix, headBoneMatrix);
+		// shader.setUniformMatrix(loc_boneMatrix, headBoneMatrix);
 
 		Matrix4f rightArmMatrix = new Matrix4f();
 		rightArmMatrix.setIdentity();

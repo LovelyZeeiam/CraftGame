@@ -1,15 +1,21 @@
 package xueli.utils.cache;
 
-import com.google.gson.*;
-import xueli.utils.io.Files;
-import xueli.utils.io.Webs;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Random;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSyntaxException;
+
+import xueli.utils.io.Files;
+import xueli.utils.io.Webs;
 
 public class NetResourceCache {
 

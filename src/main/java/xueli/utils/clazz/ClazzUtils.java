@@ -1,7 +1,5 @@
 package xueli.utils.clazz;
 
-import xueli.utils.io.Files;
-
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -13,6 +11,8 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.stream.Collectors;
+
+import xueli.utils.io.Files;
 
 public class ClazzUtils {
 

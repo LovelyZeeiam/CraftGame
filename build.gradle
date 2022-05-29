@@ -75,11 +75,6 @@ dependencies {
     implementation group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-linux'
     implementation group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-macos'
 
-    implementation group: 'org.lwjgl', name: 'lwjgl-bgfx', version: lwjgl_version, changing: true
-    implementation group: 'org.lwjgl', name: 'lwjgl-bgfx', version: lwjgl_version, changing: true, classifier: 'natives-windows'
-    implementation group: 'org.lwjgl', name: 'lwjgl-bgfx', version: lwjgl_version, changing: true, classifier: 'natives-linux'
-    implementation group: 'org.lwjgl', name: 'lwjgl-bgfx', version: lwjgl_version, changing: true, classifier: 'natives-macos'
-
     implementation group: 'org.mozilla', name: 'rhino', version: '1.7.13'
 
     implementation group: 'org.lwjgl', name: 'lwjgl-jawt', version: '3.2.3'

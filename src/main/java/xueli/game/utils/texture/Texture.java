@@ -1,14 +1,17 @@
 package xueli.game.utils.texture;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-import org.lwjgl.opengl.GL13;
-import xueli.utils.logger.MyLogger;
-
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
+
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+import org.lwjgl.opengl.GL13;
+
+import xueli.utils.logger.MyLogger;
 
 public class Texture {
 
@@ -43,6 +46,16 @@ public class Texture {
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 	}
 
+	public static Texture loadTexture(InputStream in) throws IOException {
+		BufferedImage image = ImageIO.read(in);
+		if (image == null) {
+			MyLogger.getInstance().warning("Can't read image file: " + in.toString());
+			return Texture.NULL;
+		}
+
+		return loadTexture(image);
+	}
+
 	public static Texture loadTexture(String path) throws IOException {
 		BufferedImage image = ImageIO.read(new File(path));
 		if (image == null) {
@@ -50,6 +63,10 @@ public class Texture {
 			return Texture.NULL;
 		}
 
+		return loadTexture(image);
+	}
+
+	private static Texture loadTexture(BufferedImage image) {
 		int[] pixels = new int[image.getWidth() * image.getHeight()];
 		image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth());
 

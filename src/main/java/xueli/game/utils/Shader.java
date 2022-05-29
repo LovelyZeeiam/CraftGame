@@ -1,5 +1,12 @@
 package xueli.game.utils;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.FloatBuffer;
+import java.util.HashMap;
+
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
@@ -7,16 +14,10 @@ import org.lwjgl.opengl.GL32;
 import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector2f;
 import org.lwjgl.utils.vector.Vector3f;
+
 import xueli.game.Game;
 import xueli.game.utils.math.MatrixHelper;
 import xueli.game.vector.Vector;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.FloatBuffer;
-import java.util.HashMap;
 
 public class Shader {
 
@@ -27,7 +28,7 @@ public class Shader {
 	public Shader(String vertPath, String fragPath) {
 		vertID = getShader(vertPath, GL20.GL_VERTEX_SHADER);
 		fragID = getShader(fragPath, GL20.GL_FRAGMENT_SHADER);
-		
+
 		this.shaderID = GL20.glCreateProgram();
 		GL20.glAttachShader(this.shaderID, vertID);
 		GL20.glAttachShader(this.shaderID, fragID);
@@ -49,7 +50,7 @@ public class Shader {
 		GL20.glValidateProgram(this.shaderID);
 
 	}
-	
+
 	private Shader(int shaderID, int vertID, int fragID, int geoID) {
 		this.shaderID = shaderID;
 		this.vertID = vertID;
@@ -168,12 +169,11 @@ public class Shader {
 
 	public static Matrix4f setProjectionMatrix(Shader shader, float width, float height, float fov) {
 		Matrix4f matrix = MatrixHelper.perspecive(width, height, fov, 0.01f, 114514.0f);
-		
+
 		shader.use();
-		shader.setUniformMatrix(shader.getUnifromLocation("projMatrix"),
-				matrix);
+		shader.setUniformMatrix(shader.getUnifromLocation("projMatrix"), matrix);
 		shader.unbind();
-		
+
 		return matrix;
 	}
 
@@ -186,11 +186,11 @@ public class Shader {
 
 	public static Matrix4f setViewMatrix(Vector cam, Shader shader) {
 		Matrix4f matrix = MatrixHelper.player(cam);
-		
+
 		shader.use();
 		shader.setUniformMatrix(shader.getUnifromLocation("viewMatrix"), matrix);
 		shader.unbind();
-		
+
 		return matrix;
 	}
 

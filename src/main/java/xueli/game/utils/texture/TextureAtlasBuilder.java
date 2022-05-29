@@ -7,21 +7,21 @@ import java.util.HashMap;
 import xueli.utils.io.Files;
 
 public class TextureAtlasBuilder {
-	
+
 	HashMap<String, String> textureMaps = new HashMap<>();
-	
+
 	public TextureAtlasBuilder() {
-		
+
 	}
-	
+
 	public TextureAtlasBuilder add(String namespace, String path) {
 		textureMaps.put(namespace, path);
 		return this;
 	}
-	
+
 	public static TextureAtlasBuilder iterate(File folder) {
 		TextureAtlasBuilder builder = new TextureAtlasBuilder();
-		
+
 		File[] files = folder.listFiles(new FileFilter() {
 			@Override
 			public boolean accept(File pathname) {
@@ -33,8 +33,8 @@ public class TextureAtlasBuilder {
 			String name = Files.getNameExcludeSuffix(file.getName());
 			builder.add(name, file.getPath());
 		}
-		
+
 		return builder;
 	}
-	
+
 }

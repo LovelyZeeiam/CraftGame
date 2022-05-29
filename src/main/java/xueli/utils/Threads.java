@@ -1,11 +1,11 @@
 package xueli.utils;
 
-import xueli.utils.collection.Table;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import xueli.utils.collection.Table;
 
 public class Threads {
 

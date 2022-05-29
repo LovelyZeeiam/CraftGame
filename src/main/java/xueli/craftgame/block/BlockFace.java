@@ -26,10 +26,8 @@ public class BlockFace {
 
 	public static final byte PART_UP = 0;
 	public static final byte PART_DOWN = 1;
-	
-	public static final Vector3i[] DIRECTIONS = {
-		FRONT_DIR, BACK_DIR, LEFT_DIR, RIGHT_DIR, TOP_DIR, BOTTOM_DIR
-	};
+
+	public static final Vector3i[] DIRECTIONS = { FRONT_DIR, BACK_DIR, LEFT_DIR, RIGHT_DIR, TOP_DIR, BOTTOM_DIR };
 
 	public static String getFacingDescription(byte i) {
 		return switch (i) {

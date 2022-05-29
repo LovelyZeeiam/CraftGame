@@ -2,8 +2,8 @@ package xueli.game.player;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.utils.vector.Vector3f;
-import xueli.game.Game;
-import xueli.game.display.Display;
+
+import xueli.game.input.InputHolder;
 import xueli.game.utils.Time;
 import xueli.game.vector.Vector;
 
@@ -13,24 +13,34 @@ public class FirstPersonCamera {
 	Vector3f speed = new Vector3f();
 	private Vector3f acceleration = new Vector3f();
 
-	private Display display;
+	private InputHolder inputHolder = null;
 
 	public FirstPersonCamera(float x, float y, float z) {
-		this.pos = new Vector(x, y, z);
-		this.display = Game.INSTANCE_GAME.getDisplay();
+		this(x, y, z, null);
 
 	}
 
 	public FirstPersonCamera(float x, float y, float z, float rotX, float rotY, float rotZ) {
+		this(x, y, z, rotX, rotY, rotZ, null);
+
+	}
+
+	public FirstPersonCamera(float x, float y, float z, InputHolder holder) {
+		this.pos = new Vector(x, y, z);
+		this.inputHolder = holder;
+
+	}
+
+	public FirstPersonCamera(float x, float y, float z, float rotX, float rotY, float rotZ, InputHolder holder) {
 		this.pos = new Vector(x, y, z, rotX, rotY, rotZ);
-		this.display = Game.INSTANCE_GAME.getDisplay();
+		this.inputHolder = holder;
 
 	}
 
 	public void tick() {
-		if (display.isMouseGrabbed()) {
-			if (display.isKeyDown(GLFW.GLFW_KEY_W)) {
-				if (display.isKeyDown(GLFW.GLFW_KEY_R)) {
+		if (inputHolder.isMouseGrabbed()) {
+			if (inputHolder.isKeyDown(GLFW.GLFW_KEY_W)) {
+				if (inputHolder.isKeyDown(GLFW.GLFW_KEY_R)) {
 					acceleration.x -= this.getSpeed() * 4f * (float) Math.sin(Math.toRadians(-pos.rotY));
 					acceleration.z -= this.getSpeed() * 4f * (float) Math.cos(Math.toRadians(-pos.rotY));
 				} else {
@@ -38,29 +48,29 @@ public class FirstPersonCamera {
 					acceleration.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY));
 				}
 			}
-			if (display.isKeyDown(GLFW.GLFW_KEY_S)) {
+			if (inputHolder.isKeyDown(GLFW.GLFW_KEY_S)) {
 				acceleration.x += this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY));
 				acceleration.z += this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY));
 			}
-			if (display.isKeyDown(GLFW.GLFW_KEY_A)) {
+			if (inputHolder.isKeyDown(GLFW.GLFW_KEY_A)) {
 				acceleration.x -= this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY + 90));
 				acceleration.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY + 90));
 			}
-			if (display.isKeyDown(GLFW.GLFW_KEY_D)) {
+			if (inputHolder.isKeyDown(GLFW.GLFW_KEY_D)) {
 				acceleration.x -= this.getSpeed() * (float) Math.sin(Math.toRadians(-pos.rotY - 90));
 				acceleration.z -= this.getSpeed() * (float) Math.cos(Math.toRadians(-pos.rotY - 90));
 			}
 
-			if (display.isKeyDown(GLFW.GLFW_KEY_SPACE)) {
+			if (inputHolder.isKeyDown(GLFW.GLFW_KEY_SPACE)) {
 				acceleration.y += this.getSpeed() * 2.0f;
 			}
 
-			if (display.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
+			if (inputHolder.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
 				acceleration.y -= this.getSpeed() * 2.0f;
 			}
 
-			pos.rotX += display.getCursor_dy() * 0.08f;
-			pos.rotY += display.getCursor_dx() * 0.08f;
+			pos.rotX += inputHolder.getCursor_dy() * 0.08f;
+			pos.rotY += inputHolder.getCursor_dx() * 0.08f;
 
 			if (pos.rotY > 360) {
 				pos.rotY -= 360;

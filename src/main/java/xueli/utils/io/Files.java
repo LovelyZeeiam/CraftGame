@@ -1,15 +1,24 @@
 package xueli.utils.io;
 
-import javax.imageio.ImageIO;
-
-import org.lwjgl.system.MemoryStack;
-
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URLDecoder;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+
+import org.lwjgl.BufferUtils;
 
 public class Files {
 
@@ -103,19 +112,27 @@ public class Files {
 		return new File(URLDecoder.decode(Thread.currentThread().getContextClassLoader().getResource(path).getPath(),
 				StandardCharsets.UTF_8));
 	}
-	
+
+	public static InputStream getResourcePackedInJarStream(String path) {
+		return Files.class.getResourceAsStream(path);
+	}
+
 	public static byte[] readResourcePackedInJar(String path) throws IOException {
 		InputStream in = Files.class.getResourceAsStream(path);
-		if(in == null)
+		if (in == null)
 			throw new IOException("Stream is null! Maybe the file doesn't exist?");
 		byte[] all = in.readAllBytes();
 		in.close();
 		return all;
 	}
-	
+
+	private static ArrayList<ByteBuffer> stacks = new ArrayList<>();
+
 	public static ByteBuffer readResourcePackedInJarAndPackedToBuffer(String path) throws IOException {
 		byte[] all = readResourcePackedInJar(path);
-		return MemoryStack.stackBytes(all);
+		ByteBuffer buffer = BufferUtils.createByteBuffer(all.length);
+		stacks.add(buffer);
+		return buffer.put(all).flip();
 	}
 
 	public static void writeObject(Object obj, File file) throws Exception {

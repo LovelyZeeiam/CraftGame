@@ -9,6 +9,9 @@ Another Winter in China is around the corner. Having had a try various programmi
 3. Start by single player instead of making server and client at the beginning, making sure multi-player game can use the same code as well.
 4. Remove resource packs and turn to a \"Modding Pack\", which contains Java code to control the game behavior and resources to be loaded.
 5. Spend my spring holiday in the game~
+6. Implementation of Unity UI `Canvas Scaler` with three mode: `Constant pixel size`, `Scale with screen size`, `Constant physical size`
+
+
 
 
 
@@ -40,3 +43,4 @@ but I'm convinced it be able to run by typing the following 3 commands.
 ### Have fun!
 
 ****
+
