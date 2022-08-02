@@ -78,7 +78,7 @@ public class ClazzUtils {
 
 		}
 
-		// process loaded JAR pack
+		// process JAR pack
 		ArrayList<File> allJarFiles = new ArrayList<>();
 
 		try {
@@ -90,6 +90,7 @@ public class ClazzUtils {
 				URLClassLoader urlClassLoader = new URLClassLoader(new URL[] { u },
 						Thread.currentThread().getContextClassLoader());
 
+				// TODO: NOT SUPPORT LINUX
 				String p = u.getPath();
 				String jarpath = new File(p).getParent();
 				jarpath = jarpath.substring(!jarpath.contains("file:\\") ? 0 : "file:\\".length(),

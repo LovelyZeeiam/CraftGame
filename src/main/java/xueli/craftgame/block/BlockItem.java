@@ -3,11 +3,11 @@ package xueli.craftgame.block;
 import org.lwjgl.utils.vector.Vector3i;
 
 import xueli.craftgame.client.LocalTicker;
+import xueli.craftgame.entitytest.item.ItemListener;
+import xueli.craftgame.entitytest.item.ItemRenderable;
+import xueli.craftgame.entitytest.item.ItemStack;
+import xueli.craftgame.entitytest.item.ItemType;
 import xueli.craftgame.event.EventSetBlock;
-import xueli.craftgame.item.ItemListener;
-import xueli.craftgame.item.ItemRenderable;
-import xueli.craftgame.item.ItemStack;
-import xueli.craftgame.item.ItemType;
 import xueli.craftgame.player.LocalPlayer;
 import xueli.game.renderer.FrameBuffer;
 import xueli.game.renderer.ScreenQuadRenderer;
@@ -33,7 +33,12 @@ public class BlockItem extends ItemType implements ItemListener, ItemRenderable 
 					new EventSetBlock(lastSelectedBlock.x, lastSelectedBlock.y, lastSelectedBlock.z, this.block, null));
 	}
 
-	private static ScreenQuadRenderer renderer = new ScreenQuadRenderer();
+	private ScreenQuadRenderer renderer;
+
+	@Override
+	public void renderInit() {
+		renderer = new ScreenQuadRenderer();
+	}
 
 	@Override
 	public void render(ItemStack stack, LocalPlayer player) {

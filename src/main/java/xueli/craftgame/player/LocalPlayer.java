@@ -7,6 +7,7 @@ import org.lwjgl.utils.vector.Vector3i;
 import xueli.craftgame.CraftGameContext;
 import xueli.craftgame.block.BlockFace;
 import xueli.craftgame.block.BlockListener.Type;
+import xueli.craftgame.client.renderer.display.KeyInputListener;
 import xueli.craftgame.block.BlockType;
 import xueli.craftgame.event.EventBlockListener;
 import xueli.craftgame.event.EventInventorySlotChosenMove;
@@ -17,14 +18,13 @@ import xueli.craftgame.renderer.view.InventoryView;
 import xueli.craftgame.utils.OperationDuration;
 import xueli.craftgame.world.World;
 import xueli.game.input.InputHolder;
-import xueli.game.input.InputListener;
 import xueli.game.input.InputManager;
 import xueli.game.player.FirstPersonCamera;
 import xueli.game.utils.math.MousePicker;
 import xueli.game.vector.Vector;
 
 // TODO: Extend a entity class
-public class LocalPlayer implements InputListener {
+public class LocalPlayer implements KeyInputListener {
 
 	private CraftGameContext ctx;
 	private InputHolder inputHolder;
@@ -176,7 +176,7 @@ public class LocalPlayer implements InputListener {
 	public void onInput(int key, int scancode, int action, int mods) {
 		if (action == GLFW.GLFW_PRESS) {
 			int keyNumDetect = key - GLFW.GLFW_KEY_0;
-			if (keyNumDetect <= Inventory.FRONT_INVENTORY) {
+			if (keyNumDetect > 0 && keyNumDetect <= Inventory.FRONT_INVENTORY) {
 				ctx.submitEvent(new EventInventorySlotChosenMove(keyNumDetect - 1));
 			}
 		}

@@ -2,7 +2,7 @@ package xueli.craftgame.event;
 
 import xueli.craftgame.block.BlockListener;
 import xueli.craftgame.block.BlockListener.Type;
-import xueli.craftgame.entity.Entity;
+import xueli.craftgame.entitytest.Entity;
 
 public class EventBlockListener {
 

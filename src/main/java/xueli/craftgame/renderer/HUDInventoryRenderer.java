@@ -3,7 +3,6 @@ package xueli.craftgame.renderer;
 import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgCreateImageMem;
 import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
 import static org.lwjgl.nanovg.NanoVG.nvgFill;
 import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
@@ -16,16 +15,15 @@ import static org.lwjgl.opengl.GL11.GL_STENCIL_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
-
 import org.lwjgl.nanovg.NVGPaint;
 
 import xueli.craftgame.CraftGameContext;
-import xueli.craftgame.item.ItemStack;
+import xueli.craftgame.entitytest.item.ItemStack;
 import xueli.craftgame.player.Inventory;
 import xueli.game.renderer.FrameBuffer;
-import xueli.utils.io.Files;
+import xueli.game.resource.ImageResourceManager;
+import xueli.game.resource.NVGImage;
+import xueli.game.resource.ResourceHolder;
 
 public class HUDInventoryRenderer implements IGameRenderer {
 
@@ -40,7 +38,7 @@ public class HUDInventoryRenderer implements IGameRenderer {
 	NVGPaint paint = NVGPaint.create();
 
 	private long nvg;
-	private int tex_tab, tex_chosen_tab;
+	private ResourceHolder<NVGImage> texTabHolder, texChosenTabHolder;
 
 	public HUDInventoryRenderer(HUDRenderer masterRenderer) {
 		this.masterRenderer = masterRenderer;
@@ -59,22 +57,22 @@ public class HUDInventoryRenderer implements IGameRenderer {
 					INVENTORY_IMAGE_SIZE, INVENTORY_IMAGE_SIZE, NVG_IMAGE_NEAREST);
 		}
 
-		ByteBuffer buffer = null;
+		ImageResourceManager imageResourceManager = ctx.getResourceMaster().getImageResourceManager();
 
 		try {
-			buffer = Files.readResourcePackedInJarAndPackedToBuffer("/assets/images/inventory/inventory_tab.png");
-			this.tex_tab = nvgCreateImageMem(nvg, NVG_IMAGE_NEAREST, buffer);
-		} catch (IOException e) {
-			ctx.announceCrash("HUD Init", new Exception("Could load image: /assets/images/hud/inventory_tab.png", e));
+			texTabHolder = imageResourceManager.addToken("hud.inventory.tab",
+					"/assets/images/inventory/inventory_tab.png");
+		} catch (Exception e) {
+			new Exception("Could load image: /assets/images/hud/inventory_tab.png", e).printStackTrace();
+			imageResourceManager.getMissingProvider().onMissing(texTabHolder);
 		}
 
 		try {
-			buffer = Files
-					.readResourcePackedInJarAndPackedToBuffer("/assets/images/inventory/inventory_tab_chosen.png");
-			this.tex_chosen_tab = nvgCreateImageMem(nvg, NVG_IMAGE_NEAREST, buffer);
-		} catch (IOException e) {
-			ctx.announceCrash("HUD Init",
-					new Exception("Could load image: /assets/images/hud/inventory_tab_chosen.png", e));
+			texChosenTabHolder = imageResourceManager.addToken("hud.inventory.tab",
+					"/assets/images/inventory/inventory_tab_chosen.png");
+		} catch (Exception e) {
+			new Exception("Could load image: /assets/images/hud/inventory_tab_chosen.png", e).printStackTrace();
+			imageResourceManager.getMissingProvider().onMissing(texChosenTabHolder);
 		}
 
 	}
@@ -112,7 +110,7 @@ public class HUDInventoryRenderer implements IGameRenderer {
 
 			nvgBeginFrame(nvg, width, height, width / height);
 
-			nvgImagePattern(nvg, inv_x, inv_y, inv_width, inv_height, 0, tex_tab, 1, paint);
+			nvgImagePattern(nvg, inv_x, inv_y, inv_width, inv_height, 0, texTabHolder.getResult().image(), 1, paint);
 			nvgBeginPath(nvg);
 			nvgRoundedRect(nvg, inv_x, inv_y, inv_width, inv_height, 0);
 			nvgFillPaint(nvg, paint);
@@ -122,8 +120,8 @@ public class HUDInventoryRenderer implements IGameRenderer {
 			float inv_chosen_y = inv_y - chosenSizeOffsetY;
 			float inv_chosen_size = inv_height + chosenSizeOffsetY * 2;
 
-			nvgImagePattern(nvg, inv_chosen_x, inv_chosen_y, inv_chosen_size, inv_chosen_size, 0, tex_chosen_tab, 1,
-					paint);
+			nvgImagePattern(nvg, inv_chosen_x, inv_chosen_y, inv_chosen_size, inv_chosen_size, 0,
+					texChosenTabHolder.getResult().image(), 1, paint);
 			nvgBeginPath(nvg);
 			nvgRoundedRect(nvg, inv_chosen_x, inv_chosen_y, inv_chosen_size, inv_chosen_size, 0);
 			nvgFillPaint(nvg, paint);

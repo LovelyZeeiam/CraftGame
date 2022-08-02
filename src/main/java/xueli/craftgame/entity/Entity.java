@@ -1,81 +1,81 @@
 package xueli.craftgame.entity;
 
-import java.util.HashMap;
+import java.util.Objects;
 
+import org.lwjgl.utils.vector.Vector2f;
 import org.lwjgl.utils.vector.Vector3f;
 
-import xueli.game.utils.Time;
+import xueli.craftgame.core.math.TriFuncMap;
 import xueli.game.vector.Vector;
 
-public abstract class Entity {
-
-	protected Vector position;
-
-	private Vector3f acceleration = new Vector3f();
-	private Vector3f speed = new Vector3f();
-
-	protected HashMap<String, Float> boneParameters = new HashMap<>();
-
-	public Entity(Vector position) {
-		this.position = position;
-
+public class Entity {
+	
+	private EntityBase base;
+	
+	private VirtualKeyboard keyboard = new VirtualKeyboard();
+	
+	private Vector3f acceleration;
+	private Vector3f speed = new Vector3f(0, 0, 0);
+	private final Vector position;
+	private boolean onGround = false;
+	
+	public Entity(EntityBase base) {
+		this.base = Objects.requireNonNull(base);
+		this.position = new Vector(0, 0, 0);
+		
 	}
-
-	public Entity() {
-		this.position = new Vector();
-
+	
+	public void tick() {
+		this.acceleration = getAccelerationScale(this.position);
+		Vector3f.add(acceleration, speed, speed);
+		
+		this.speed.x *= 0.9f;
+		this.speed.y *= 0.8f;
+		this.speed.z *= 0.9f;
+		
+		this.position.x += this.speed.x;
+		this.position.y += this.speed.y;
+		this.position.z += this.speed.z;
+		
 	}
-
-	public void updatePos() {
-		speed.x += acceleration.x * Time.deltaTime / 1000.0f;
-		speed.y += acceleration.y * Time.deltaTime / 1000.0f;
-		speed.z += acceleration.z * Time.deltaTime / 1000.0f;
-
-		Vector3f deltaPos = new Vector3f(speed.x * Time.deltaTime / 1000.0f, speed.y * Time.deltaTime / 1000.0f,
-				speed.z * Time.deltaTime / 1000.0f);
-
-		position.x += deltaPos.x;
-		position.y += deltaPos.y;
-		position.z += deltaPos.z;
-
-		speed.x *= 0.8f;
-		speed.y *= 0.8f;
-		speed.z *= 0.8f;
-
-		acceleration.x = acceleration.y = acceleration.z = 0;
-
+	
+	private Vector3f getAccelerationScale(Vector position) {
+		// In Player Axis
+		float forward = 0, rightSide = 0, up = 0;
+		if(keyboard.virtualForward) {
+			forward++;
+			if(keyboard.virtualDash) {
+				forward *= base.getAttributeDashScale().getValue();
+			}
+		}
+		if(keyboard.virtualBack)
+			forward--;
+		if(keyboard.virtualLeft)
+			rightSide--;
+		if(keyboard.virtualRight)
+			rightSide++;
+		if(onGround) {
+			if(keyboard.virtualJump)
+				up++;
+			if(keyboard.virtualDown)
+				up--;
+		}
+			
+		Vector2f planeVector2f = new Vector2f(rightSide, forward);
+		planeVector2f.normalise();
+		
+		// To World Axis
+		Vector2f worldPlaneVector2f = new Vector2f(0, 0);
+		worldPlaneVector2f.x -= planeVector2f.y * TriFuncMap.sin(-position.rotY);
+		worldPlaneVector2f.y -= planeVector2f.x * TriFuncMap.cos(-position.rotY);
+		
+		Vector3f speedScaleVector3f = new Vector3f(worldPlaneVector2f.x, up, worldPlaneVector2f.y);
+		float speedValue = base.getAttributeSpeed().getValue(), speedUpDownValue = base.getAttributeSpeedUpDown().getValue();
+		return new Vector3f(speedScaleVector3f.x * speedValue, speedScaleVector3f.y * speedUpDownValue, speedScaleVector3f.z * speedValue);
 	}
-
+	
 	public Vector getPosition() {
 		return position;
 	}
-
-	/**
-	 * 由于实体的顶点数据都很确定，并且变化仅仅有矩阵变化，所以采用一种先注册顶点，渲染的时候仅修改矩阵的对策
-	 */
-	private boolean hasInitBuffer = false;
-	protected VertexPointerEntity pointer;
-
-	protected abstract void storeBuffer(EntityRenderer renderer);
-
-	protected abstract void render(EntityRenderer renderer);
-
-	public float getBoneParameters(String name) {
-		return this.boneParameters.get(name);
-	}
-
-	public void setBoneParameters(String key, float value) {
-		this.boneParameters.put(key, value);
-	}
-
-	public void draw(EntityRenderer renderer) {
-		if (!hasInitBuffer) {
-			this.storeBuffer(renderer);
-			hasInitBuffer = true;
-		}
-
-		render(renderer);
-
-	}
-
+	
 }

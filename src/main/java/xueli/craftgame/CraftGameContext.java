@@ -2,6 +2,7 @@ package xueli.craftgame;
 
 import static org.lwjgl.opengl.GL11.glClearColor;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -14,25 +15,32 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 import xueli.craftgame.block.Blocks;
 import xueli.craftgame.client.LocalTicker;
+import xueli.craftgame.entitytest.item.ItemStack;
+import xueli.craftgame.entitytest.item.Items;
 import xueli.craftgame.event.EventInventorySlotChosenMove;
 import xueli.craftgame.event.EventLoadChunk;
 import xueli.craftgame.event.EventRaiseGUI;
 import xueli.craftgame.event.EventRemoveChunk;
 import xueli.craftgame.event.EventSetBlock;
-import xueli.craftgame.item.ItemStack;
-import xueli.craftgame.item.Items;
 import xueli.craftgame.player.Inventory;
 import xueli.craftgame.player.LocalPlayer;
 import xueli.craftgame.player.PlayerInfo;
 import xueli.craftgame.renderer.GameViewRenderer;
 import xueli.craftgame.renderer.HUDRenderer;
 import xueli.craftgame.renderer.WorldRenderer;
+import xueli.craftgame.resource.manager.BackwardResourceManager;
+import xueli.craftgame.resource.provider.ClassLoaderResourceProvider;
+import xueli.craftgame.resource.provider.ResourceProvider;
+import xueli.craftgame.resource.render.texture.TextureRenderResource;
 import xueli.craftgame.world.World;
 import xueli.game.Game;
 import xueli.game.input.InputManager;
+import xueli.game.resource.ResourceMaster;
 import xueli.game.vector.Vector;
 
 public class CraftGameContext extends Game implements Runnable {
+
+	public static CraftGameContext ctx;
 
 	private PlayerInfo playerInfo = new PlayerInfo("LoveliZeeiam");
 
@@ -40,6 +48,9 @@ public class CraftGameContext extends Game implements Runnable {
 	private ExecutorService eventBusExecutor = Executors
 			.newSingleThreadExecutor(new ThreadFactoryBuilder().setNameFormat("Context-EventBus-pool-%d").build());
 	private AsyncEventBus eventBus = new AsyncEventBus(eventBusExecutor);
+
+	private BackwardResourceManager resourceManager;
+	private TextureRenderResource renderResource;
 
 	private World world;
 	// All the events must be sent to here first
@@ -52,8 +63,11 @@ public class CraftGameContext extends Game implements Runnable {
 
 	private LocalPlayer player;
 
+	private boolean isClient = true;
+
 	public CraftGameContext() {
 		super(800, 600, "Minecraft PE");
+		ctx = this;
 
 		eventBus.register(this);
 
@@ -61,6 +75,10 @@ public class CraftGameContext extends Game implements Runnable {
 
 	@Override
 	public void onCreate() {
+		List<ResourceProvider> resourceProviders = List.of(new ClassLoaderResourceProvider(true));
+		this.resourceManager = new BackwardResourceManager(resourceProviders);
+		this.renderResource = new TextureRenderResource(resourceManager);
+
 		this.inputManager = new InputManager(this);
 		this.ticker = new LocalTicker(this);
 		this.world = new World(this);
@@ -72,6 +90,9 @@ public class CraftGameContext extends Game implements Runnable {
 		this.worldRenderer.init();
 		this.hudRenderer.init();
 		this.viewRenderer.init();
+
+		Blocks.clazzInitCall();
+		Items.clazzInitCall();
 
 		Blocks.initCallForRenderer(this);
 		Items.initCallForRenderer(this);
@@ -216,13 +237,16 @@ public class CraftGameContext extends Game implements Runnable {
 		return hudRenderer;
 	}
 
+	public ResourceMaster getResourceMaster() {
+		return null;
+	}
+
 	public InputManager getInputManager() {
 		return inputManager;
 	}
 
-	public static void main(String[] args) {
-		new CraftGameContext().run();
-
+	public boolean isClient() {
+		return isClient;
 	}
 
 }

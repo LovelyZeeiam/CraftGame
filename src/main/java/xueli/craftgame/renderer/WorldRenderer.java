@@ -15,6 +15,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.utils.vector.Matrix4f;
 
 import xueli.craftgame.CraftGameContext;
+import xueli.craftgame.client.renderer.display.Display;
 import xueli.craftgame.event.EventLoadChunk;
 import xueli.craftgame.event.EventRemoveChunk;
 import xueli.craftgame.event.EventSetBlock;
@@ -25,7 +26,6 @@ import xueli.craftgame.renderer.blocks.IBlockRenderer;
 import xueli.craftgame.renderer.blocks.RendererCube;
 import xueli.craftgame.utils.ExecutorThisThread;
 import xueli.craftgame.world.World;
-import xueli.game.display.Display;
 import xueli.game.renderer.FrameBuffer;
 import xueli.game.renderer.ScreenQuadRenderer;
 import xueli.game.utils.math.MatrixHelper;

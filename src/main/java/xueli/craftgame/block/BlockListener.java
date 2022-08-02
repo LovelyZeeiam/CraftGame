@@ -1,7 +1,7 @@
 package xueli.craftgame.block;
 
 import xueli.craftgame.client.LocalTicker;
-import xueli.craftgame.entity.Entity;
+import xueli.craftgame.entitytest.Entity;
 
 // Should call local ticker and submit events
 public interface BlockListener {

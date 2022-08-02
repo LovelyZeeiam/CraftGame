@@ -1,7 +1,7 @@
 package xueli.craftgame.player;
 
 import xueli.craftgame.CraftGameContext;
-import xueli.craftgame.item.ItemStack;
+import xueli.craftgame.entitytest.item.ItemStack;
 
 public class Inventory {
 

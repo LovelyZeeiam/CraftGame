@@ -2,11 +2,9 @@ package xueli.craftgame.renderer;
 
 import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_LEFT;
 import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_TOP;
-import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
 import static org.lwjgl.nanovg.NanoVG.nvgCreateFontMem;
-import static org.lwjgl.nanovg.NanoVG.nvgCreateImageMem;
 import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
 import static org.lwjgl.nanovg.NanoVG.nvgFill;
 import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
@@ -29,8 +27,11 @@ import java.nio.ByteBuffer;
 import org.lwjgl.nanovg.NVGPaint;
 
 import xueli.craftgame.CraftGameContext;
+import xueli.craftgame.client.renderer.display.Display;
 import xueli.craftgame.player.LocalPlayer;
-import xueli.game.display.Display;
+import xueli.game.resource.ImageResourceManager;
+import xueli.game.resource.NVGImage;
+import xueli.game.resource.ResourceHolder;
 import xueli.game.utils.NVGColors;
 import xueli.game.utils.Time;
 import xueli.utils.io.Files;
@@ -42,8 +43,10 @@ public class HUDRenderer implements IGameRenderer {
 	long nvg;
 	NVGPaint paint = NVGPaint.create();
 
-	private int texCross, texPaimon;
+	private ResourceHolder<NVGImage> texCrossHolder, texPaimonHolder;
 	private int fontId;
+
+	// private int nullImage;
 
 	private HUDInventoryRenderer inventoryRenderer;
 
@@ -59,20 +62,20 @@ public class HUDRenderer implements IGameRenderer {
 			ctx.announceCrash("HUD Init", new Exception("Couldn't init NanoVG!"));
 		}
 
-		ByteBuffer bufferTexCross = null;
-		try {
-			bufferTexCross = Files.readResourcePackedInJarAndPackedToBuffer("/assets/images/hud/cross.png");
-			this.texCross = nvgCreateImageMem(nvg, NVG_IMAGE_NEAREST, bufferTexCross);
-		} catch (IOException e) {
-			ctx.announceCrash("HUD Init", new Exception("Could load image: /assets/images/hud/cross.png", e));
-		}
+		ImageResourceManager imageResourceManager = ctx.getResourceMaster().getImageResourceManager();
 
-		ByteBuffer bufferTexPaimon = null;
+		this.texCrossHolder = imageResourceManager.addToken("hud.cross", "/assets/images/hud/cross.png");
+		// this.texPaimonHolder = imageResourceManager.addToken("hud.paimon",
+		// "/assets/images/hud/paimon.png");
+
 		try {
-			bufferTexPaimon = Files.readResourcePackedInJarAndPackedToBuffer("/assets/images/hud/paimon.png");
-			this.texPaimon = nvgCreateImageMem(nvg, NVG_IMAGE_NEAREST, bufferTexPaimon);
-		} catch (IOException e) {
-			ctx.announceCrash("HUD Init", new Exception("Could load image: /assets/images/hud/paimon.png", e));
+			imageResourceManager.setCurrentNvg(nvg);
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			// ctx.announceCrash("HUD Init", exception);
+
+			imageResourceManager.getMissingProvider().onMissing(texCrossHolder);
+
 		}
 
 		ByteBuffer bufferFont;
@@ -84,6 +87,8 @@ public class HUDRenderer implements IGameRenderer {
 		}
 
 		this.inventoryRenderer.init();
+
+		// nullImage = TextureMissing.getMissingNvgImage(nvg);
 
 	}
 
@@ -125,7 +130,7 @@ public class HUDRenderer implements IGameRenderer {
 		if (!ctx.getViewRenderer().hasView()) {
 			nvgImagePattern(nvg, ctx.getWidth() / 2 - 5.0f * ctx.getDisplayScale(),
 					ctx.getHeight() / 2 - 5.0f * ctx.getDisplayScale(), 10.0f * ctx.getDisplayScale(),
-					10.0f * ctx.getDisplayScale(), 0, texCross, 1.0f, paint);
+					10.0f * ctx.getDisplayScale(), 0, texCrossHolder.getResult().image(), 1.0f, paint);
 			nvgBeginPath(nvg);
 			nvgRect(nvg, ctx.getWidth() / 2 - 5.0f * ctx.getDisplayScale(),
 					ctx.getHeight() / 2 - 5.0f * ctx.getDisplayScale(), 10.0f * ctx.getDisplayScale(),
@@ -134,22 +139,20 @@ public class HUDRenderer implements IGameRenderer {
 			nvgFill(nvg);
 		}
 
-		/*
-		 * { float xOffset = (float) Math.sin((Time.thisTime % 5000) / 5000.0 * Math.PI
-		 * * 2) * 4; float yOffset = (float) Math.sin((Time.thisTime % 2850) / 2850.0 *
-		 * Math.PI * 2) * 15;
-		 * 
-		 * float paimonSize = 160.0f * ctx.getDisplayScale(); float paimonX =
-		 * ctx.getWidth() - 90.0f * ctx.getDisplayScale() - paimonSize / 2 + xOffset *
-		 * ctx.getDisplayScale(); float paimonY = 90.0f * ctx.getDisplayScale() -
-		 * paimonSize / 2 + yOffset * ctx.getDisplayScale();
-		 * 
-		 * nvgImagePattern(nvg, paimonX, paimonY, paimonSize, paimonSize, 0, texPaimon,
-		 * 1.0f, paint); nvgBeginPath(nvg); nvgRect(nvg, paimonX, paimonY, paimonSize,
-		 * paimonSize); nvgFillPaint(nvg, paint); nvgFill(nvg);
-		 * 
-		 * }
-		 */
+//		  { float xOffset = (float) Math.sin((Time.thisTime % 5000) / 5000.0 * Math.PI
+//		  * 2) * 4; float yOffset = (float) Math.sin((Time.thisTime % 2850) / 2850.0 *
+//		 Math.PI * 2) * 15;
+//
+//		  float paimonSize = 160.0f * ctx.getDisplayScale(); float paimonX =
+//		  ctx.getWidth() - 90.0f * ctx.getDisplayScale() - paimonSize / 2 + xOffset *
+//		  ctx.getDisplayScale(); float paimonY = 90.0f * ctx.getDisplayScale() -
+//		  paimonSize / 2 + yOffset * ctx.getDisplayScale();
+//
+//		  nvgImagePattern(nvg, paimonX, paimonY, paimonSize, paimonSize, 0, texPaimonHolder.getResult().image(),
+//		  1.0f, paint); nvgBeginPath(nvg); nvgRect(nvg, paimonX, paimonY, paimonSize,
+//		  paimonSize); nvgFillPaint(nvg, paint); nvgFill(nvg);
+//
+//		  }
 
 	}
 

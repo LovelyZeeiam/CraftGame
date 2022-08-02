@@ -27,4 +27,12 @@ public class NVGColors {
 		nvgRGBA((byte) 0, (byte) 0, (byte) 0, (byte) 128, TRANSPARENT_BLACK);
 
 	}
+
+	public static NVGColor svgColor(int c) {
+		NVGColor color = NVGColor.create();
+		nvgRGBA((byte) (c & 0xFF), (byte) ((c >> 8) & 0xFF), (byte) ((c >> 16) & 0xFF), (byte) ((c >> 24) & 0xFF),
+				color);
+		return color;
+	}
+
 }

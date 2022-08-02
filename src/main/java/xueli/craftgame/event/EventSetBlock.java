@@ -3,7 +3,7 @@ package xueli.craftgame.event;
 import com.flowpowered.nbt.CompoundMap;
 
 import xueli.craftgame.block.BlockType;
-import xueli.craftgame.entity.Entity;
+import xueli.craftgame.entitytest.Entity;
 
 public class EventSetBlock {
 

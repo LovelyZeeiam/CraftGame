@@ -7,9 +7,10 @@ import static org.lwjgl.nanovg.NanoVG.nvgText;
 
 import org.lwjgl.nanovg.NVGPaint;
 
+import xueli.craftgame.client.renderer.display.Display;
 import xueli.craftgame.renderer.GameViewRenderer;
-import xueli.game.display.Display;
 import xueli.game.input.InputHolder;
+import xueli.game.resource.ImageResourceManager;
 
 public abstract class IngameView implements INVGRenderer {
 
@@ -18,9 +19,13 @@ public abstract class IngameView implements INVGRenderer {
 
 	protected NVGPaint paint = NVGPaint.create();
 
+	protected ImageResourceManager imageResourceManager;
+
 	public IngameView(GameViewRenderer master) {
 		this.master = master;
 		this.inputHolder = master.getInputHolder();
+
+		this.imageResourceManager = master.getContext().getResourceMaster().getImageResourceManager();
 
 	}
 

@@ -135,6 +135,11 @@ public class Files {
 		return buffer.put(all).flip();
 	}
 
+	public static String readResourcePackedInJarAndPackedToString(String path) throws IOException {
+		byte[] all = readResourcePackedInJar(path);
+		return new String(all);
+	}
+
 	public static void writeObject(Object obj, File file) throws Exception {
 		FileOutputStream out = new FileOutputStream(file);
 		ObjectOutputStream oo = new ObjectOutputStream(out);
@@ -152,10 +157,14 @@ public class Files {
 	}
 
 	public static String getNameExcludeSuffix(String fileName) {
-		int lastIndex = fileName.lastIndexOf('.');
-		if (lastIndex == -1)
-			return fileName;
-		return fileName.substring(0, lastIndex);
+		String dest = fileName;
+		int lastIndex = dest.lastIndexOf('.');
+		if (lastIndex != -1)
+			dest = dest.substring(0, lastIndex);
+		int lastIndexSeparator = dest.lastIndexOf(File.separatorChar);
+		if (lastIndexSeparator != -1)
+			dest = dest.substring(lastIndexSeparator + 1);
+		return dest;
 	}
 
 	public static String getFileExtension(String path) {

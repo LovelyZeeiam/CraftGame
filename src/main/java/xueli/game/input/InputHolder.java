@@ -2,6 +2,7 @@ package xueli.game.input;
 
 import java.util.ArrayList;
 
+import xueli.craftgame.client.renderer.display.KeyInputListener;
 import xueli.utils.Asserts;
 
 // TODO: SHOULD USED IN ALL INPUT LISTENER
@@ -12,7 +13,7 @@ public class InputHolder {
 	// Whether to pass the key signal to next input holder
 	boolean passInterrupt = false;
 
-	ArrayList<InputListener> listeners = new ArrayList<>();
+	ArrayList<KeyInputListener> listeners = new ArrayList<>();
 
 	InputHolder(int weight, InputManager ctx) {
 		this.ctx = ctx;
@@ -29,7 +30,7 @@ public class InputHolder {
 		return this;
 	}
 
-	public void addListener(InputListener listener) {
+	public void addListener(KeyInputListener listener) {
 		this.listeners.add(listener);
 	}
 

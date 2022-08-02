@@ -14,10 +14,10 @@ import xueli.craftgame.renderer.CubeDrawer;
 import xueli.craftgame.renderer.IGameRenderer;
 import xueli.craftgame.renderer.VertexPointer;
 import xueli.craftgame.renderer.WorldRenderer;
+import xueli.craftgame.resource.render.shader.Shader;
 import xueli.craftgame.utils.Colors;
-import xueli.game.utils.Shader;
+import xueli.game.resource.texture.Texture;
 import xueli.game.utils.WrappedFloatBuffer;
-import xueli.game.utils.texture.Texture;
 import xueli.utils.io.Files;
 
 public class BlockBorderRenderer implements IGameRenderer {

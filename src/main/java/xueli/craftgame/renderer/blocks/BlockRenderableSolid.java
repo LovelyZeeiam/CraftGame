@@ -9,23 +9,23 @@ import xueli.craftgame.block.BlockType;
 import xueli.craftgame.renderer.CubeDrawer;
 import xueli.craftgame.renderer.WorldRenderer;
 import xueli.craftgame.world.World;
+import xueli.game.resource.texture.TextureAtlasHolder;
 import xueli.game.utils.WrappedFloatBuffer;
-import xueli.game.utils.texture.AtlasTextureHolder;
 import xueli.game.vector.Vector2i;
 
 public class BlockRenderableSolid implements BlockRenderable {
 
-	private AtlasTextureHolder[] faceTextures;
+	private TextureAtlasHolder[] faceTextures;
 
-	public BlockRenderableSolid(AtlasTextureHolder holder) {
-		this.faceTextures = new AtlasTextureHolder[] { holder, holder, holder, holder, holder, holder };
+	public BlockRenderableSolid(TextureAtlasHolder holder) {
+		this.faceTextures = new TextureAtlasHolder[] { holder, holder, holder, holder, holder, holder };
 	}
 
-	public BlockRenderableSolid(AtlasTextureHolder... holders) {
+	public BlockRenderableSolid(TextureAtlasHolder... holders) {
 		if (holders.length == 6)
 			this.faceTextures = holders;
 		else
-			this.faceTextures = new AtlasTextureHolder[] { holders[0], holders[0], holders[0], holders[0], holders[0],
+			this.faceTextures = new TextureAtlasHolder[] { holders[0], holders[0], holders[0], holders[0], holders[0],
 					holders[0] };
 
 	}
@@ -66,7 +66,7 @@ public class BlockRenderableSolid implements BlockRenderable {
 
 	private void drawQuad(byte face, int x, int y, int z, ChunkBuffer buf, World world) {
 		WrappedFloatBuffer buffer = buf.buffer;
-		AtlasTextureHolder texHolder = faceTextures[face];
+		TextureAtlasHolder texHolder = faceTextures[face];
 
 		float[] aoDegree = null;
 		if (world != null) {

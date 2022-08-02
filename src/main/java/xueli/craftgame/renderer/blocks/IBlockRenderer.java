@@ -4,9 +4,9 @@ import xueli.craftgame.CraftGameContext;
 import xueli.craftgame.block.Blocks;
 import xueli.craftgame.player.LocalPlayer;
 import xueli.craftgame.renderer.WorldRenderer;
+import xueli.craftgame.resource.render.shader.Shader;
 import xueli.craftgame.setting.Settings;
 import xueli.game.utils.GLHelper;
-import xueli.game.utils.Shader;
 import xueli.game.vector.Vector;
 import xueli.utils.Int2HashMap;
 

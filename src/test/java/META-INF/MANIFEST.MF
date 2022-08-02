@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Main-Class: xueli.game.resource.JarPackResourceProviderTest
+Class-Path: lwjgl-stb-3.2.3-natives-macos.jar lwjgl-3.2.3-natives-linux.
+ jar lwjgl-stb-3.2.3.jar lwjgl-glfw-3.2.3-natives-windows.jar slick-util
+ -1.0.0.jar lwjgl-opengl-3.2.3-natives-linux.jar lwjgl-stb-3.2.3-natives
+ -linux.jar lwjgl-glfw-3.2.3-natives-linux.jar lwjgl-opengl-3.2.3.jar gs
+ on-2.8.6.jar slf4j-api-1.6.6.jar lwjgl-3.2.3-natives-macos.jar flow-nbt
+ -1.0.0.jar mina-core-2.0.7.jar lwjgl-openal-3.2.3-natives-macos.jar lwj
+ gl-stb-3.2.3-natives-windows.jar lwjgl-3.2.3-natives-windows.jar lwjgl-
+ nanovg-3.2.3-natives-macos.jar lwjgl-nanovg-3.2.3-natives-linux.jar lwj
+ gl-opengl-3.2.3-natives-macos.jar lwjgl-nanovg-3.2.3.jar lwjgl-3.2.3.ja
+ r lwjgl-openal-3.2.3-natives-windows.jar lwjgl-nanovg-3.2.3-natives-win
+ dows.jar guava-21.0.jar leveldb-0.12.jar lwjgl-glfw-3.2.3.jar lwjgl-ope
+ ngl-3.2.3-natives-windows.jar jansi-2.3.4.jar lwjgl-glfw-3.2.3-natives-
+ macos.jar lwjgl-openal-3.2.3-natives-linux.jar rhino-1.7.13.jar leveldb
+ -api-0.12.jar lwjgl-jawt-3.2.3.jar lwjgl-openal-3.2.3.jar RealCraftGame
+ .main.jar
+

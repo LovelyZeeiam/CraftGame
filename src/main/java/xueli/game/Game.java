@@ -5,7 +5,7 @@ import java.util.Queue;
 
 import org.lwjgl.opengl.GL11;
 
-import xueli.game.display.Display;
+import xueli.craftgame.client.renderer.display.Display;
 import xueli.game.renderer.RendererManager;
 import xueli.game.utils.GLHelper;
 import xueli.game.utils.Time;

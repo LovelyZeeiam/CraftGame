@@ -63,7 +63,7 @@ public class MyLogger {
 		a.a(DATE_FORMATTER.format(new Date(System.currentTimeMillis()))).a(" ").a(Ansi.Attribute.INTENSITY_BOLD)
 				.fg(STATE_COLOR);
 		a.a("[").a(stackOut()).a("]");
-		a.a(Ansi.Attribute.RESET).fgDefault().a(" ").a(ste.getClassName()).a(":").a(String.valueOf(ste.getLineNumber()))
+		a.a(Ansi.Attribute.RESET).fgDefault().a(" ").a(ste.getFileName()).a(":").a(String.valueOf(ste.getLineNumber()))
 				.a(" ");
 		a.fg(color).a(Ansi.Attribute.INTENSITY_BOLD).a(String.valueOf(s)).a(Ansi.Attribute.RESET).fgDefault();
 
