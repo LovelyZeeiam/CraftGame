@@ -7,7 +7,6 @@ import org.lwjgl.utils.vector.Vector3i;
 import xueli.craftgame.CraftGameContext;
 import xueli.craftgame.block.BlockFace;
 import xueli.craftgame.block.BlockListener.Type;
-import xueli.craftgame.client.renderer.display.KeyInputListener;
 import xueli.craftgame.block.BlockType;
 import xueli.craftgame.event.EventBlockListener;
 import xueli.craftgame.event.EventInventorySlotChosenMove;
@@ -22,6 +21,7 @@ import xueli.game.input.InputManager;
 import xueli.game.player.FirstPersonCamera;
 import xueli.game.utils.math.MousePicker;
 import xueli.game.vector.Vector;
+import xueli.game2.display.KeyInputListener;
 
 // TODO: Extend a entity class
 public class LocalPlayer implements KeyInputListener {

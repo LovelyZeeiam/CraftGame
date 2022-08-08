@@ -27,13 +27,13 @@ import java.nio.ByteBuffer;
 import org.lwjgl.nanovg.NVGPaint;
 
 import xueli.craftgame.CraftGameContext;
-import xueli.craftgame.client.renderer.display.Display;
 import xueli.craftgame.player.LocalPlayer;
 import xueli.game.resource.ImageResourceManager;
 import xueli.game.resource.NVGImage;
 import xueli.game.resource.ResourceHolder;
 import xueli.game.utils.NVGColors;
 import xueli.game.utils.Time;
+import xueli.game2.display.Display;
 import xueli.utils.io.Files;
 
 public class HUDRenderer implements IGameRenderer {

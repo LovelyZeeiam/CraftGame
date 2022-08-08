@@ -5,7 +5,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
-import xueli.craftgame.resource.provider.ResourceProvider;
+import xueli.game2.resource.provider.ResourceProvider;
 import xueli.utils.io.Files;
 import xueli.utils.logger.MyLogger;
 

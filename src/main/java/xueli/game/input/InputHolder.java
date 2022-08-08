@@ -2,7 +2,7 @@ package xueli.game.input;
 
 import java.util.ArrayList;
 
-import xueli.craftgame.client.renderer.display.KeyInputListener;
+import xueli.game2.display.KeyInputListener;
 import xueli.utils.Asserts;
 
 // TODO: SHOULD USED IN ALL INPUT LISTENER

@@ -4,8 +4,8 @@ import java.nio.FloatBuffer;
 
 import org.lwjgl.opengl.GL15;
 
-import xueli.craftgame.renderer.VertexPointer;
 import xueli.game.utils.WrappedFloatBuffer;
+import xueli.game2.renderer.VertexPointer;
 
 public class ChunkBuffer {
 

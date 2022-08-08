@@ -28,15 +28,15 @@ import xueli.craftgame.player.PlayerInfo;
 import xueli.craftgame.renderer.GameViewRenderer;
 import xueli.craftgame.renderer.HUDRenderer;
 import xueli.craftgame.renderer.WorldRenderer;
-import xueli.craftgame.resource.manager.BackwardResourceManager;
-import xueli.craftgame.resource.provider.ClassLoaderResourceProvider;
-import xueli.craftgame.resource.provider.ResourceProvider;
-import xueli.craftgame.resource.render.texture.TextureRenderResource;
 import xueli.craftgame.world.World;
 import xueli.game.Game;
 import xueli.game.input.InputManager;
 import xueli.game.resource.ResourceMaster;
 import xueli.game.vector.Vector;
+import xueli.game2.resource.manager.BackwardResourceManager;
+import xueli.game2.resource.provider.ClassLoaderResourceProvider;
+import xueli.game2.resource.provider.ResourceProvider;
+import xueli.game2.resource.render.texture.TextureRenderResource;
 
 public class CraftGameContext extends Game implements Runnable {
 

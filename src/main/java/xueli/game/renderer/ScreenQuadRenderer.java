@@ -7,8 +7,8 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
-import xueli.craftgame.renderer.VertexPointer;
-import xueli.craftgame.resource.render.shader.Shader;
+import xueli.game2.renderer.VertexPointer;
+import xueli.game2.resource.render.shader.Shader;
 import xueli.utils.io.Files;
 
 public class ScreenQuadRenderer {

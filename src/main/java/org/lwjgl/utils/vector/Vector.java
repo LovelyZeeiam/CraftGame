@@ -34,6 +34,8 @@ package org.lwjgl.utils.vector;
 import java.io.Serializable;
 import java.nio.FloatBuffer;
 
+import xueli.game2.renderer.buffer.LotsOfByteBuffer;
+
 /**
  * Base class for vectors.
  *
@@ -98,7 +100,7 @@ public abstract class Vector implements Serializable, ReadableVector {
 	 * @param buf The buffer to store it in, at the current position
 	 * @return this
 	 */
-	public abstract Vector store(FloatBuffer buf);
+	public abstract Vector store(LotsOfByteBuffer buf);
 
 	/**
 	 * Scale this vector
@@ -107,5 +109,7 @@ public abstract class Vector implements Serializable, ReadableVector {
 	 * @return this
 	 */
 	public abstract Vector scale(float scale);
+
+	public abstract int getSize();
 
 }

@@ -8,10 +8,10 @@ import org.lwjgl.opengl.GL15;
 import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector3f;
 
-import xueli.craftgame.resource.render.shader.Shader;
 import xueli.game.resource.texture.Texture;
 import xueli.game.utils.WrappedFloatBuffer;
 import xueli.game.vector.Vector;
+import xueli.game2.resource.render.shader.Shader;
 import xueli.utils.mojang.SkinGetter;
 
 public class EntityPlayer extends Entity {

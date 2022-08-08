@@ -34,6 +34,8 @@ package org.lwjgl.utils.vector;
 import java.io.Serializable;
 import java.nio.FloatBuffer;
 
+import xueli.game2.renderer.buffer.LotsOfByteBuffer;
+
 /**
  * Holds a 3-tuple vector.
  *
@@ -276,12 +278,17 @@ public class Vector3f extends Vector implements Serializable, ReadableVector3f, 
 
 	}
 
+	@Override
+	public int getSize() {
+		return 3 * Float.BYTES;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
 	 * @see org.lwjgl.vector.Vector#store(FloatBuffer)
 	 */
-	public Vector store(FloatBuffer buf) {
+	public Vector store(LotsOfByteBuffer buf) {
 
 		buf.put(x);
 		buf.put(y);

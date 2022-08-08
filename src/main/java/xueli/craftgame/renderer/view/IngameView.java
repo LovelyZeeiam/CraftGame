@@ -7,10 +7,10 @@ import static org.lwjgl.nanovg.NanoVG.nvgText;
 
 import org.lwjgl.nanovg.NVGPaint;
 
-import xueli.craftgame.client.renderer.display.Display;
 import xueli.craftgame.renderer.GameViewRenderer;
 import xueli.game.input.InputHolder;
 import xueli.game.resource.ImageResourceManager;
+import xueli.game2.display.Display;
 
 public abstract class IngameView implements INVGRenderer {
 

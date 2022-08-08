@@ -1,6 +1,6 @@
 package xueli.craftgame.client;
 
-import xueli.craftgame.client.renderer.display.IGameRenderer;
+import xueli.game2.display.IGameRenderer;
 
 public class CraftGameClient extends IGameRenderer {
 
@@ -10,17 +10,18 @@ public class CraftGameClient extends IGameRenderer {
 
 	@Override
 	protected void renderInit() {
-		
+
+
 	}
 		
 	@Override
 	protected void render() {
-		
+
 	}
 
 	@Override
 	protected void renderRelease() {
-		
+
 	}
 
 	public static void main(String[] args) {

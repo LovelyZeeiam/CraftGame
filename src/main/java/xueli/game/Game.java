@@ -5,10 +5,10 @@ import java.util.Queue;
 
 import org.lwjgl.opengl.GL11;
 
-import xueli.craftgame.client.renderer.display.Display;
 import xueli.game.renderer.RendererManager;
 import xueli.game.utils.GLHelper;
 import xueli.game.utils.Time;
+import xueli.game2.display.Display;
 import xueli.utils.exception.CrashReport;
 import xueli.utils.logger.MyLogger;
 

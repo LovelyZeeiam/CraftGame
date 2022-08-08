@@ -31,7 +31,7 @@
  */
 package org.lwjgl.utils.vector;
 
-import java.nio.FloatBuffer;
+import xueli.game2.renderer.buffer.LotsOfByteBuffer;
 
 /**
  * @author foo
@@ -53,5 +53,5 @@ public interface ReadableVector {
 	 * @param buf The buffer to store it in, at the current position
 	 * @return this
 	 */
-	Vector store(FloatBuffer buf);
+	Vector store(LotsOfByteBuffer buf);
 }

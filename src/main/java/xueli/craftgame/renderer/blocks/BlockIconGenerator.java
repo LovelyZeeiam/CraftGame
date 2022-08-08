@@ -8,10 +8,10 @@ import xueli.craftgame.CraftGameContext;
 import xueli.craftgame.block.BlockType;
 import xueli.craftgame.block.Blocks;
 import xueli.craftgame.renderer.WorldRenderer;
-import xueli.craftgame.resource.render.shader.Shader;
 import xueli.game.renderer.FrameBuffer;
 import xueli.game.utils.GLHelper;
 import xueli.game.utils.math.MatrixHelper;
+import xueli.game2.resource.render.shader.Shader;
 
 public class BlockIconGenerator {
 

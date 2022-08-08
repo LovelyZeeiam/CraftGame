@@ -2,11 +2,11 @@ package xueli.craftgame.entitytest;
 
 import java.util.ArrayList;
 
-import xueli.craftgame.resource.render.shader.Shader;
 import xueli.game.Game;
 import xueli.game.utils.GLHelper;
 import xueli.game.utils.math.MatrixHelper;
 import xueli.game.vector.Vector;
+import xueli.game2.resource.render.shader.Shader;
 
 public class EntityRenderer {
 

@@ -15,7 +15,6 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.utils.vector.Matrix4f;
 
 import xueli.craftgame.CraftGameContext;
-import xueli.craftgame.client.renderer.display.Display;
 import xueli.craftgame.event.EventLoadChunk;
 import xueli.craftgame.event.EventRemoveChunk;
 import xueli.craftgame.event.EventSetBlock;
@@ -30,6 +29,7 @@ import xueli.game.renderer.FrameBuffer;
 import xueli.game.renderer.ScreenQuadRenderer;
 import xueli.game.utils.math.MatrixHelper;
 import xueli.game.vector.Vector2i;
+import xueli.game2.display.Display;
 import xueli.utils.Int2HashMap;
 
 public class WorldRenderer implements IGameRenderer {

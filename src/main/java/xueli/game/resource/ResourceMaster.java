@@ -2,8 +2,8 @@ package xueli.game.resource;
 
 import java.util.ArrayList;
 
-import xueli.craftgame.resource.provider.ClassLoaderResourceProvider;
-import xueli.craftgame.resource.provider.ResourceProvider;
+import xueli.game2.resource.provider.ClassLoaderResourceProvider;
+import xueli.game2.resource.provider.ResourceProvider;
 
 public class ResourceMaster {
 

@@ -5,8 +5,8 @@ import java.util.Objects;
 import org.lwjgl.utils.vector.Vector2f;
 import org.lwjgl.utils.vector.Vector3f;
 
-import xueli.craftgame.core.math.TriFuncMap;
 import xueli.game.vector.Vector;
+import xueli.game2.core.math.TriFuncMap;
 
 public class Entity {
 	
