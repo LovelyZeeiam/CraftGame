@@ -6,6 +6,8 @@ import java.util.List;
 import org.lwjgl.opengl.GL30;
 
 import xueli.craftgame.Constants;
+import xueli.game.utils.Time;
+import xueli.game2.Timer;
 import xueli.game2.lifecycle.RunnableLifeCycle;
 import xueli.game2.renderer.ui.GameUIManager;
 import xueli.game2.renderer.ui.NanoVGContext;
@@ -21,6 +23,7 @@ import xueli.game2.resource.render.texture.TextureRenderResource;
 public abstract class IGameRenderer implements RunnableLifeCycle, RenderResourceProvider, KeyInputListener, WindowSizeListener {
 
 	protected Display display;
+	protected Timer timer = new Timer();
 
 	protected ChainedResourceManager resourceManager;
 	protected TextureRenderResource textureResource;
@@ -60,6 +63,7 @@ public abstract class IGameRenderer implements RunnableLifeCycle, RenderResource
 	public final void tick() {
 		GL30.glViewport(0, 0, display.getWidth(), display.getHeight());
 		GL30.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_STENCIL_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
+		timer.tick();
 		this.render();
 		this.display.update();
 	}

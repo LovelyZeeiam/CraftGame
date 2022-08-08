@@ -9,7 +9,7 @@ import xueli.game2.renderer.buffer.AttributeBuffer;
 import xueli.game2.renderer.buffer.Bindable;
 import xueli.game2.resource.render.shader.Shader;
 
-public class RenderSystem implements LifeCycle, Bindable {
+public class RenderSystem implements RenderEquipment {
 
 	private Shader shader;
 

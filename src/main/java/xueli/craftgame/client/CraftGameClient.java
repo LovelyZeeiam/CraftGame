@@ -11,7 +11,6 @@ public class CraftGameClient extends IGameRenderer {
 	@Override
 	protected void renderInit() {
 
-
 	}
 		
 	@Override

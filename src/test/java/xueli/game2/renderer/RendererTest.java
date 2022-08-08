@@ -49,28 +49,33 @@ public class RendererTest extends IGameRenderer {
 	private LinkedList<Vector3f> colorValue = new LinkedList<>();
 	private LinkedList<Vector3f> posValue = new LinkedList<>();
 	
-	private static final int cycleTime = 3000;
+	private static final int cycleTime = 50;
 	
 	@Override
 	protected void render() {
-		int time = (int) (System.currentTimeMillis() % cycleTime);
-		float x = (float) (0.5 * TriFuncMap.sin((float)(time * 360.0 / (cycleTime - 1)))) + (random.nextFloat() * 0.05f - 0.025f);
-		float y = x * x * 4 - 0.5f + (random.nextFloat() * 0.1f - 0.05f);
-		colorValue.add(new Vector3f(nextFloat(),nextFloat(),nextFloat()));
-		posValue.add(new Vector3f(x, y, 0));
-		
-		while(posValue.size() > 400) {
-			posValue.removeFirst();
-			colorValue.removeFirst();
-		}
+		timer.runTick(() -> {
+			int time = timer.getNumHasTick() % cycleTime;
+			float x = (float) (0.5 * TriFuncMap.sin((float)(time * 360.0 / (cycleTime - 1)))) + (random.nextFloat() * 0.05f - 0.025f);
+			float y = x * x * 4 - 0.5f + (random.nextFloat() * 0.1f - 0.05f);
+			colorValue.add(new Vector3f(nextFloat(),nextFloat(),nextFloat()));
+			posValue.add(new Vector3f(x, y, 0));
+
+			while(posValue.size() > 400) {
+				posValue.removeFirst();
+				colorValue.removeFirst();
+			}
+
+			for(int i = 0; i < posValue.size(); i++) {
+				Vector3f colorValueVector3f = colorValue.get(i);
+				colorValueVector3f.scale(0.96f);
+			}
+
+		});
 		
 		colorBuffer.clear();
 		posBuffer.clear();
 		for(int i = 0; i < posValue.size(); i++) {
-			Vector3f colorValueVector3f = colorValue.get(i);
-			colorValueVector3f.scale(0.96f);
-			
-			colorBuffer.submit(colorValueVector3f);
+			colorBuffer.submit(colorValue.get(i));
 			posBuffer.submit(posValue.get(i));
 		}
 		
