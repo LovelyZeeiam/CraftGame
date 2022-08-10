@@ -39,13 +39,15 @@ public class FolderResourceProvider extends URLResourceProvider {
 			urls.add(file.toURI().toURL());
 		} else if (file.isDirectory()) {
 			File[] files = file.listFiles();
+			if(files == null)
+				return urls;
 			List<URL> filesToUrls = Stream.of(files).map(f -> {
 				try {
 					return f.toURI().toURL();
 				} catch (MalformedURLException e) {
 					e.printStackTrace();
-					return null;
 				}
+				return null;
 			}).collect(Collectors.toList());
 			urls.addAll(filesToUrls);
 		}

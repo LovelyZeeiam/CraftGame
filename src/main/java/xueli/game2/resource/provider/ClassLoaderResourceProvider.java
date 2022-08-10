@@ -36,6 +36,7 @@ public class ClassLoaderResourceProvider extends URLResourceProvider {
 
 	@Override
 	protected URL getResourceURL(String virtualPath) throws IOException {
+//		System.out.println(virtualPath);
 		URL url = getClass().getResource(virtualPath);
 		if (url == null)
 			throw new IOException("Can't find resource: " + virtualPath);
@@ -44,6 +45,13 @@ public class ClassLoaderResourceProvider extends URLResourceProvider {
 
 	@Override
 	protected List<URL> findResources(String virtualPath) throws IOException {
+		// When it comes to ClassLoader, a "/" is unnecessary; but it's not in Class.getResource
+		while(virtualPath.startsWith("/")) {
+			virtualPath = virtualPath.substring(1);
+		}
+		// Final to get access in lambda
+		String finalVirtualPath = virtualPath;
+
 		Enumeration<URL> resources = ClassLoaderResourceProvider.class.getClassLoader().getResources(virtualPath);
 		ArrayList<URL> urls = new ArrayList<>();
 
@@ -83,11 +91,11 @@ public class ClassLoaderResourceProvider extends URLResourceProvider {
 						// Here a lot of results will be filtered, leaving files only in the folder
 						if (e.isDirectory())
 							return;
-						if (!filePathInJar.startsWith(virtualPath))
+						if (!filePathInJar.startsWith(finalVirtualPath))
 							return;
 
 						// A '/' is a must to remove the prefix
-						String folderName = virtualPath.endsWith("/") ? virtualPath : virtualPath + "/";
+						String folderName = finalVirtualPath.endsWith("/") ? finalVirtualPath : finalVirtualPath + "/";
 						String fileName = filePathInJar.substring(folderName.length());
 						if (fileName.contains("/"))
 							return;

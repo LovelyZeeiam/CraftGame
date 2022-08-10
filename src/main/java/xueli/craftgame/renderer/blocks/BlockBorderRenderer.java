@@ -17,7 +17,7 @@ import xueli.craftgame.utils.Colors;
 import xueli.game.resource.texture.Texture;
 import xueli.game.utils.WrappedFloatBuffer;
 import xueli.game2.renderer.VertexPointer;
-import xueli.game2.resource.render.shader.Shader;
+import xueli.game2.resource.submanager.render.shader.Shader;
 import xueli.utils.io.Files;
 
 public class BlockBorderRenderer implements IGameRenderer {
@@ -107,7 +107,7 @@ public class BlockBorderRenderer implements IGameRenderer {
 			Matrix4f.mul(ctx.getViewMatrix(), boxMatrix, boxMatrix);
 			Shader.setViewMatrix(boxMatrix, shader);
 
-			shader.use();
+			shader.bind();
 			borderTexture.bind();
 			this.pointer.initDraw();
 			this.pointer.draw(36);

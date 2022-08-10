@@ -36,7 +36,7 @@ import xueli.game.vector.Vector;
 import xueli.game2.resource.manager.BackwardResourceManager;
 import xueli.game2.resource.provider.ClassLoaderResourceProvider;
 import xueli.game2.resource.provider.ResourceProvider;
-import xueli.game2.resource.render.texture.TextureRenderResource;
+import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
 
 public class CraftGameContext extends Game implements Runnable {
 

@@ -17,6 +17,11 @@ public class ResourceZipEntry implements Resource {
 	}
 
 	@Override
+	public String getName() {
+		return file.getName();
+	}
+
+	@Override
 	public InputStream openInputStream() throws IOException {
 		return file.getInputStream(entry);
 	}

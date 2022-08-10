@@ -5,6 +5,7 @@ import java.io.InputStream;
 
 public interface Resource {
 
+	public String getName();
 	public InputStream openInputStream() throws IOException;
 
 }

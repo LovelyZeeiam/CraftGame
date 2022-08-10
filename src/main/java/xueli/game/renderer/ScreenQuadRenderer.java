@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 import xueli.game2.renderer.VertexPointer;
-import xueli.game2.resource.render.shader.Shader;
+import xueli.game2.resource.submanager.render.shader.Shader;
 import xueli.utils.io.Files;
 
 public class ScreenQuadRenderer {
@@ -39,7 +39,7 @@ public class ScreenQuadRenderer {
 		// shader = new Shader("res/shaders/screen_quad/vert.txt",
 		// "res/shaders/screen_quad/frag.txt");
 
-		shader.use();
+		shader.bind();
 		shader.setInt(shader.getUnifromLocation("tex"), 0);
 		shader.setInt(shader.getUnifromLocation("depth"), 1);
 		shader.unbind();
@@ -59,7 +59,7 @@ public class ScreenQuadRenderer {
 	}
 
 	public void render(int textureId) {
-		shader.use();
+		shader.bind();
 		pointer.initDraw();
 		GL30.glBindTexture(GL30.GL_TEXTURE_2D, textureId);
 		pointer.draw(GL30.GL_TRIANGLE_FAN, 0, 4);
@@ -69,7 +69,7 @@ public class ScreenQuadRenderer {
 	}
 
 	public void render(int textureId, int depthTexID) {
-		shader.use();
+		shader.bind();
 		pointer.initDraw();
 
 		GL30.glActiveTexture(GL30.GL_TEXTURE0);

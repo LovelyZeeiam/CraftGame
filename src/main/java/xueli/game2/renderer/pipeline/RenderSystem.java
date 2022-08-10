@@ -4,11 +4,10 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL30;
 
-import xueli.game2.lifecycle.LifeCycle;
 import xueli.game2.renderer.buffer.AttributeBuffer;
-import xueli.game2.renderer.buffer.Bindable;
-import xueli.game2.resource.render.shader.Shader;
+import xueli.game2.resource.submanager.render.shader.Shader;
 
+// TODO: When submit, divide each render system with texture ID, shaders and so on...
 public class RenderSystem implements RenderEquipment {
 
 	private Shader shader;
@@ -16,6 +15,8 @@ public class RenderSystem implements RenderEquipment {
 	private int vao;
 	private int renderType = GL30.GL_TRIANGLES;
 	private ArrayList<AttributeBuffer> attributes = new ArrayList<>();
+
+	private int[] textureId = new int[16];
 
 	public RenderSystem(Shader shader) {
 		this.shader = shader;
@@ -46,18 +47,30 @@ public class RenderSystem implements RenderEquipment {
 		this.renderType = renderType;
 	}
 
+	public void setTextureId(int id, int textureId) {
+		this.textureId[id] = textureId;
+	}
+
+	public Shader getShader() {
+		return shader;
+	}
+
 	@Override
 	public void tick() {
 		bind(() -> {
-			shader.use();
-			
+			shader.bind();
+			for (int i = 0; i < textureId.length; i++) {
+				GL30.glActiveTexture(GL30.GL_TEXTURE0 + i);
+				GL30.glBindTexture(GL30.GL_TEXTURE_2D, textureId[i]);
+			}
+
 			int vertCount = Integer.MAX_VALUE;
 			for (AttributeBuffer buffer : attributes) {
 				buffer.tick();
 				vertCount = Math.min(vertCount, buffer.getVertexCount());
 			}
 			GL30.glDrawArrays(renderType, 0, vertCount);
-			
+
 			shader.unbind();
 		});
 

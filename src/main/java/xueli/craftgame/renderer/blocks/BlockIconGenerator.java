@@ -11,7 +11,7 @@ import xueli.craftgame.renderer.WorldRenderer;
 import xueli.game.renderer.FrameBuffer;
 import xueli.game.utils.GLHelper;
 import xueli.game.utils.math.MatrixHelper;
-import xueli.game2.resource.render.shader.Shader;
+import xueli.game2.resource.submanager.render.shader.Shader;
 
 public class BlockIconGenerator {
 
@@ -43,7 +43,7 @@ public class BlockIconGenerator {
 			Shader shader = r.getShader();
 			Shader.setViewMatrix(viewMatrix, shader);
 			Shader.setProjectionMatrix(shader, projMatrix);
-			shader.use();
+			shader.bind();
 
 			ChunkBuffer buf = r.getChunkBuffer(0, 0);
 			GLHelper.checkGLError("BlockRendererPreview - Before");

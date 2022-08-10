@@ -6,7 +6,7 @@ import xueli.game.Game;
 import xueli.game.utils.GLHelper;
 import xueli.game.utils.math.MatrixHelper;
 import xueli.game.vector.Vector;
-import xueli.game2.resource.render.shader.Shader;
+import xueli.game2.resource.submanager.render.shader.Shader;
 
 public class EntityRenderer {
 
@@ -33,7 +33,7 @@ public class EntityRenderer {
 		// GL11.glEnable(GL11.GL_CULL_FACE);
 
 		Shader.setViewMatrix(camPos, shader);
-		shader.use();
+		shader.bind();
 
 		shader.setUniformMatrix(shader.getUnifromLocation("boneMatrix"), MatrixHelper.initMatrix);
 		shader.setUniformMatrix(shader.getUnifromLocation("transMatrix"), MatrixHelper.initMatrix);

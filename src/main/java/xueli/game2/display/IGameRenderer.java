@@ -6,7 +6,6 @@ import java.util.List;
 import org.lwjgl.opengl.GL30;
 
 import xueli.craftgame.Constants;
-import xueli.game.utils.Time;
 import xueli.game2.Timer;
 import xueli.game2.lifecycle.RunnableLifeCycle;
 import xueli.game2.renderer.ui.GameUIManager;
@@ -16,9 +15,10 @@ import xueli.game2.resource.manager.ChainedResourceManager;
 import xueli.game2.resource.manager.ResourceManager;
 import xueli.game2.resource.provider.ClassLoaderResourceProvider;
 import xueli.game2.resource.provider.ResourceProvider;
-import xueli.game2.resource.render.font.FontRenderResource;
-import xueli.game2.resource.render.shader.ShaderRenderResource;
-import xueli.game2.resource.render.texture.TextureRenderResource;
+import xueli.game2.resource.submanager.render.font.FontRenderResource;
+import xueli.game2.resource.submanager.render.shader.ShaderRenderResource;
+import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
+import xueli.game2.resource.submanager.render.texture.atlas.AtlasTextureRenderResource;
 
 public abstract class IGameRenderer implements RunnableLifeCycle, RenderResourceProvider, KeyInputListener, WindowSizeListener {
 
@@ -27,6 +27,7 @@ public abstract class IGameRenderer implements RunnableLifeCycle, RenderResource
 
 	protected ChainedResourceManager resourceManager;
 	protected TextureRenderResource textureResource;
+	protected AtlasTextureRenderResource atlasTextureResource;
 	protected ShaderRenderResource shaderResource;
 	protected FontRenderResource fontResource;
 	
@@ -43,6 +44,7 @@ public abstract class IGameRenderer implements RunnableLifeCycle, RenderResource
 		this.resourceManager = new BackwardResourceManager(resourceProviders);
 		
 		this.textureResource = new TextureRenderResource(resourceManager);
+		this.atlasTextureResource = new AtlasTextureRenderResource(this.textureResource);
 		this.shaderResource = new ShaderRenderResource(resourceManager);
 		this.fontResource = new FontRenderResource(resourceManager);
 		

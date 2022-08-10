@@ -7,7 +7,7 @@ import xueli.craftgame.renderer.WorldRenderer;
 import xueli.craftgame.setting.Settings;
 import xueli.game.utils.GLHelper;
 import xueli.game.vector.Vector;
-import xueli.game2.resource.render.shader.Shader;
+import xueli.game2.resource.submanager.render.shader.Shader;
 import xueli.utils.Int2HashMap;
 
 public class IBlockRenderer {
@@ -70,7 +70,7 @@ public class IBlockRenderer {
 				Shader.setProjectionMatrix(shader, manager.getProjMatrix());
 				Shader.setViewMatrix(manager.getViewMatrix(), shader);
 
-				shader.use();
+				shader.bind();
 
 				GLHelper.checkGLError("BlockRenderer - Before");
 				Blocks.blockTextureAtlas.bind();

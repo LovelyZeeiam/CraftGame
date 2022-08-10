@@ -11,7 +11,7 @@ import org.lwjgl.utils.vector.Vector3f;
 import xueli.game.resource.texture.Texture;
 import xueli.game.utils.WrappedFloatBuffer;
 import xueli.game.vector.Vector;
-import xueli.game2.resource.render.shader.Shader;
+import xueli.game2.resource.submanager.render.shader.Shader;
 import xueli.utils.mojang.SkinGetter;
 
 public class EntityPlayer extends Entity {

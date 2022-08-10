@@ -13,7 +13,7 @@ import xueli.game2.renderer.buffer.AttributeBuffer;
 import xueli.game2.renderer.buffer.VertexType;
 import xueli.game2.renderer.pipeline.RenderSystem;
 import xueli.game2.resource.ResourceLocation;
-import xueli.game2.resource.render.shader.ShaderResourceLocation;
+import xueli.game2.resource.submanager.render.shader.ShaderResourceLocation;
 
 public class RendererTest extends IGameRenderer {
 

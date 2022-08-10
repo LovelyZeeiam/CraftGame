@@ -31,8 +31,8 @@ import xueli.game.utils.NVGColors;
 import xueli.game2.display.Display;
 import xueli.game2.display.IGameRenderer;
 import xueli.game2.resource.ResourceLocation;
-import xueli.game2.resource.render.texture.TextureResourceLocation;
-import xueli.game2.resource.render.texture.TextureType;
+import xueli.game2.resource.submanager.render.texture.TextureResourceLocation;
+import xueli.game2.resource.submanager.render.texture.TextureType;
 import xueli.game2.renderer.ui.NanoVGContext;
 
 public class ClockMain extends IGameRenderer {
@@ -57,7 +57,9 @@ public class ClockMain extends IGameRenderer {
 	public void renderInit() {
 		this.nvg = NanoVGContext.INSTANCE.getNvg();
 		this.paint = NanoVGContext.INSTANCE.getPaint();
-		
+
+		fontResource.preRegister(fontLocation, true);
+
 	}
 
 	@Override

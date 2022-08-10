@@ -1,28 +1,24 @@
+import java.math.BigInteger;
 import java.util.Scanner;
 
 public class Main {
 
 	public static void main(String[] args) {
 		Scanner cin = new Scanner(System.in);
-		int roadSize = cin.nextInt();
-		int rangeNum = cin.nextInt();
-
-		byte[] line = new byte[roadSize + 1];
-
-		for (int i = 0; i < rangeNum; i++) {
-			int from = cin.nextInt();
-			int to = cin.nextInt();
-			for(int j = from; j <= to; j++) {
-				line[j] = 1;
-			}
+		int numVertInt = cin.nextInt();
+		BigInteger numVertex = BigInteger.valueOf(numVertInt);
+		BigInteger count = BigInteger.ONE;
+		if(numVertInt != 3) {
+			count = count
+					.multiply(numVertex)
+					.multiply(numVertex = numVertex.subtract(BigInteger.ONE))
+					.multiply(numVertex = numVertex.subtract(BigInteger.ONE))
+					.multiply(numVertex.subtract(BigInteger.ONE))
+					.divide(BigInteger.valueOf(24));
+			System.out.println(count);
+		} else {
+			System.out.println(0);
 		}
-
-		int count = 0;
-		for (int i = 0; i < line.length; i++) {
-			if(line[i] != 1)
-				count++;
-		}
-		System.out.println(count);
 
 	}
 

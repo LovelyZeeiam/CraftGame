@@ -1,7 +1,7 @@
 package xueli.game2.display;
 
 import xueli.game2.resource.manager.ResourceManager;
-import xueli.game2.resource.render.texture.TextureRenderResource;
+import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
 
 public interface RenderResourceProvider {
 
