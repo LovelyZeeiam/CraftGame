@@ -18,7 +18,7 @@ import org.lwjgl.utils.vector.Vector3f;
 import xueli.game.Game;
 import xueli.game.utils.math.MatrixHelper;
 import xueli.game.vector.Vector;
-import xueli.game2.renderer.buffer.Bindable;
+import xueli.game2.renderer.legacy.buffer.Bindable;
 
 public class Shader implements Bindable {
 	

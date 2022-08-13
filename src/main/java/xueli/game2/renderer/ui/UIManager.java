@@ -1,13 +1,13 @@
 package xueli.game2.renderer.ui;
 
-import xueli.game2.display.IGameRenderer;
+import xueli.game2.display.GameDisplay;
 import xueli.game2.lifecycle.LifeCycle;
 
 public class UIManager implements LifeCycle {
 	
-	protected IGameRenderer renderer;
+	protected GameDisplay renderer;
 	
-	public UIManager(IGameRenderer renderer) {
+	public UIManager(GameDisplay renderer) {
 		this.renderer = renderer;
 	}
 	

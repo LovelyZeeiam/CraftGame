@@ -1,4 +1,4 @@
-package xueli.game2.renderer.buffer;
+package xueli.game2.renderer.legacy.buffer;
 
 public interface Bindable {
 

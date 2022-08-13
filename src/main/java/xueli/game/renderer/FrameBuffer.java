@@ -49,11 +49,6 @@ public class FrameBuffer {
 
 	protected int fbo, tbo_image, rbo;
 
-	public FrameBuffer() {
-		this((int) Game.INSTANCE_GAME.getWidth(), (int) Game.INSTANCE_GAME.getHeight());
-
-	}
-
 	public FrameBuffer(int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -99,7 +94,7 @@ public class FrameBuffer {
 
 		for (int i = 0; i < data.length; i++) {
 			int origin = data[i];
-			int r = (origin >> 0) & 0xff;
+			int r = (origin) & 0xff;
 			int g = (origin >> 8) & 0xff;
 			int b = (origin >> 16) & 0xff;
 			int a = (origin >> 24) & 0xff;
@@ -112,7 +107,7 @@ public class FrameBuffer {
 
 		BufferedImage newImage = new BufferedImage(width, height, image.getType());
 		Graphics2D g = newImage.createGraphics();
-		g.rotate(Math.toRadians(180), width / 2, height / 2);
+		g.rotate(Math.toRadians(180), width / 2.0f, height / 2.0f);
 		g.drawImage(image, null, 0, 0);
 
 		try {
@@ -131,12 +126,6 @@ public class FrameBuffer {
 
 	public void unbind() {
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glViewport(0, 0, (int) Game.INSTANCE_GAME.getWidth(), (int) Game.INSTANCE_GAME.getHeight());
-	}
-
-	public void resize() {
-		resize((int) Game.INSTANCE_GAME.getWidth(), (int) Game.INSTANCE_GAME.getHeight());
-
 	}
 
 	public void resize(int width, int height) {

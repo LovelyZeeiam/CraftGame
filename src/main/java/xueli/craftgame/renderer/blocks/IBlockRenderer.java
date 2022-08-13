@@ -7,33 +7,44 @@ import xueli.craftgame.renderer.WorldRenderer;
 import xueli.craftgame.setting.Settings;
 import xueli.game.utils.GLHelper;
 import xueli.game.vector.Vector;
+import xueli.game2.renderer.legacy.RenderMaster;
+import xueli.game2.renderer.legacy.system.RenderSystem;
+import xueli.game2.resource.ResourceLocation;
 import xueli.game2.resource.submanager.render.shader.Shader;
+import xueli.game2.resource.submanager.render.shader.ShaderResourceLocation;
 import xueli.utils.Int2HashMap;
 
 public class IBlockRenderer {
 
-	private CraftGameContext ctx;
+	public static final ResourceLocation SOLID_BLOCKS_TEXTURES = new ResourceLocation("images/blocks/");
+	public static final ShaderResourceLocation SOLID_BLOCKS_SHADERS = new ShaderResourceLocation(
+			new ResourceLocation("shaders/world/world.vert"),
+			new ResourceLocation("shaders/world/world.frag")
+	);
+
 	private WorldRenderer manager;
-	private LocalPlayer player;
+
+	private Int2HashMap<ChunkBuffer> chunkBuffers = new Int2HashMap<>();
 
 	private Shader shader;
-	private Int2HashMap<ChunkBuffer> chunkBuffers = new Int2HashMap<>();
+	private RenderSystem renderer;
 
 	// Just Initialize Here
 	public IBlockRenderer(WorldRenderer manager) {
 		this.manager = manager;
-		this.ctx = manager.getContext();
-		this.player = manager.getPlayer();
 
 	}
 
-	protected void setShader(String vertSource, String fragSource) {
-		this.shader = Shader.getShader(vertSource, fragSource);
+	public void init() {
+		CraftGameContext context = manager.getContext();
+		this.shader = context.getShaderRenderResource().preRegister(SOLID_BLOCKS_SHADERS, true);
+		context.getAtlasTextureResource().findAndRegister(SOLID_BLOCKS_TEXTURES, key -> true);
+
 	}
 
 	public void newChunkBuffer(int x, int z) {
 		if (!chunkBuffers.containsKey(x, z)) {
-			chunkBuffers.put(x, z, new ChunkBuffer(x, z));
+			chunkBuffers.put(x, z, new ChunkBuffer(x, z, this));
 		}
 
 	}
@@ -52,6 +63,7 @@ public class IBlockRenderer {
 	}
 
 	public void draw() {
+		LocalPlayer player = manager.getPlayer();
 		Vector camera = player.getCamera();
 		int playerInChunkX = (int) camera.x >> 4;
 		int playerInChunkZ = (int) camera.z >> 4;
@@ -67,18 +79,9 @@ public class IBlockRenderer {
 				// if (!MatrixHelper.isChunkInFrustum(x, y, z))
 				// continue;
 
-				Shader.setProjectionMatrix(shader, manager.getProjMatrix());
-				Shader.setViewMatrix(manager.getViewMatrix(), shader);
-
-				shader.bind();
-
 				GLHelper.checkGLError("BlockRenderer - Before");
-				Blocks.blockTextureAtlas.bind();
 				chkBuf.draw();
-				Blocks.blockTextureAtlas.unbind();
 				GLHelper.checkGLError("BlockRenderer - Post");
-
-				shader.unbind();
 
 			}
 		}
@@ -91,14 +94,6 @@ public class IBlockRenderer {
 
 	public WorldRenderer getManager() {
 		return manager;
-	}
-
-	public Shader getShader() {
-		return shader;
-	}
-
-	public CraftGameContext getContext() {
-		return ctx;
 	}
 
 }

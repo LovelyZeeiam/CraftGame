@@ -1,6 +1,8 @@
 # CraftGame
-a Minecraft-like game programmed in Java with LWJGL 3.
+A Minecraft-like game programmed in Java with LWJGL 3.
 The game is in beta now. So if you have some suggestion, just leave in the comment.
+
+By analysing the code of Minecraft originally, I figured out loads of means to import to my game while improving my study.
 
 Another Winter in China is around the corner. Having had a try various programming pattern, it is time to back on the right track. There is also a list below indicating what I will attempt to do:
 
@@ -11,9 +13,7 @@ Another Winter in China is around the corner. Having had a try various programmi
 5. Spend my spring holiday in the game~
 6. Implementation of Unity UI `Canvas Scaler` with three mode: `Constant pixel size`, `Scale with screen size`, `Constant physical size`
 
-
-
-
+The game is going through a large-scale rewrite, which, therefore, cannot be run currently.
 
 ****
 

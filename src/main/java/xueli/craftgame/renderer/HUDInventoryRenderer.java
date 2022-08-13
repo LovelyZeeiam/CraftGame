@@ -24,10 +24,16 @@ import xueli.game.renderer.FrameBuffer;
 import xueli.game.resource.ImageResourceManager;
 import xueli.game.resource.NVGImage;
 import xueli.game.resource.ResourceHolder;
+import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
+import xueli.game2.resource.submanager.render.texture.TextureResourceLocation;
+import xueli.game2.resource.submanager.render.texture.TextureType;
 
 public class HUDInventoryRenderer implements IGameRenderer {
 
 	public static final int INVENTORY_IMAGE_SIZE = 256;
+	private static final TextureResourceLocation TAB_TEXTURE_LOCATION = new TextureResourceLocation(new ResourceLocation("images/inventory/inventory_tab.png"), TextureType.NVG);
+	private static final TextureResourceLocation TAB_CHOSEN_TEXTURE_LOCATION = new TextureResourceLocation(new ResourceLocation("images/inventory/inventory_tab_chosen.png"), TextureType.NVG);
 
 	private HUDRenderer masterRenderer;
 	private CraftGameContext ctx;
@@ -35,10 +41,10 @@ public class HUDInventoryRenderer implements IGameRenderer {
 
 	private FrameBuffer[] itemFrames = new FrameBuffer[Inventory.SLOT_COUNT];
 	private int[] itemFrameNanoVGImages = new int[itemFrames.length];
-	NVGPaint paint = NVGPaint.create();
 
 	private long nvg;
-	private ResourceHolder<NVGImage> texTabHolder, texChosenTabHolder;
+	NVGPaint paint;
+	private int texTabHolder, texChosenTabHolder;
 
 	public HUDInventoryRenderer(HUDRenderer masterRenderer) {
 		this.masterRenderer = masterRenderer;
@@ -50,6 +56,7 @@ public class HUDInventoryRenderer implements IGameRenderer {
 	@Override
 	public void init() {
 		this.nvg = masterRenderer.nvg;
+		this.paint = masterRenderer.paint;
 
 		for (int i = 0; i < itemFrames.length; i++) {
 			itemFrames[i] = new FrameBuffer(INVENTORY_IMAGE_SIZE, INVENTORY_IMAGE_SIZE);
@@ -57,23 +64,9 @@ public class HUDInventoryRenderer implements IGameRenderer {
 					INVENTORY_IMAGE_SIZE, INVENTORY_IMAGE_SIZE, NVG_IMAGE_NEAREST);
 		}
 
-		ImageResourceManager imageResourceManager = ctx.getResourceMaster().getImageResourceManager();
-
-		try {
-			texTabHolder = imageResourceManager.addToken("hud.inventory.tab",
-					"/assets/images/inventory/inventory_tab.png");
-		} catch (Exception e) {
-			new Exception("Could load image: /assets/images/hud/inventory_tab.png", e).printStackTrace();
-			imageResourceManager.getMissingProvider().onMissing(texTabHolder);
-		}
-
-		try {
-			texChosenTabHolder = imageResourceManager.addToken("hud.inventory.tab",
-					"/assets/images/inventory/inventory_tab_chosen.png");
-		} catch (Exception e) {
-			new Exception("Could load image: /assets/images/hud/inventory_tab_chosen.png", e).printStackTrace();
-			imageResourceManager.getMissingProvider().onMissing(texChosenTabHolder);
-		}
+		TextureRenderResource textureManager = ctx.getTextureRenderResource();
+		texTabHolder = textureManager.preRegister(TAB_TEXTURE_LOCATION, true);
+		texChosenTabHolder = textureManager.preRegister(TAB_CHOSEN_TEXTURE_LOCATION, true);
 
 	}
 
@@ -110,7 +103,7 @@ public class HUDInventoryRenderer implements IGameRenderer {
 
 			nvgBeginFrame(nvg, width, height, width / height);
 
-			nvgImagePattern(nvg, inv_x, inv_y, inv_width, inv_height, 0, texTabHolder.getResult().image(), 1, paint);
+			nvgImagePattern(nvg, inv_x, inv_y, inv_width, inv_height, 0, texTabHolder, 1, paint);
 			nvgBeginPath(nvg);
 			nvgRoundedRect(nvg, inv_x, inv_y, inv_width, inv_height, 0);
 			nvgFillPaint(nvg, paint);
@@ -121,7 +114,7 @@ public class HUDInventoryRenderer implements IGameRenderer {
 			float inv_chosen_size = inv_height + chosenSizeOffsetY * 2;
 
 			nvgImagePattern(nvg, inv_chosen_x, inv_chosen_y, inv_chosen_size, inv_chosen_size, 0,
-					texChosenTabHolder.getResult().image(), 1, paint);
+					texChosenTabHolder, 1, paint);
 			nvgBeginPath(nvg);
 			nvgRoundedRect(nvg, inv_chosen_x, inv_chosen_y, inv_chosen_size, inv_chosen_size, 0);
 			nvgFillPaint(nvg, paint);

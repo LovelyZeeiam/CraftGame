@@ -6,6 +6,7 @@ import java.util.List;
 import org.lwjgl.opengl.GL30;
 
 import xueli.craftgame.Constants;
+import xueli.game.utils.Time;
 import xueli.game2.Timer;
 import xueli.game2.lifecycle.RunnableLifeCycle;
 import xueli.game2.renderer.ui.GameUIManager;
@@ -19,8 +20,9 @@ import xueli.game2.resource.submanager.render.font.FontRenderResource;
 import xueli.game2.resource.submanager.render.shader.ShaderRenderResource;
 import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
 import xueli.game2.resource.submanager.render.texture.atlas.AtlasTextureRenderResource;
+import xueli.utils.exception.CrashReport;
 
-public abstract class IGameRenderer implements RunnableLifeCycle, RenderResourceProvider, KeyInputListener, WindowSizeListener {
+public abstract class GameDisplay implements RunnableLifeCycle, RenderResourceProvider, KeyInputListener, WindowSizeListener {
 
 	protected Display display;
 	protected Timer timer = new Timer();
@@ -33,11 +35,11 @@ public abstract class IGameRenderer implements RunnableLifeCycle, RenderResource
 	
 	protected GameUIManager uiManager;
 
-	public IGameRenderer(int initialWidth, int initialHeight) {
+	public GameDisplay(int initialWidth, int initialHeight) {
 		this(initialWidth, initialHeight, Constants.GAME_NAME_FULL);
 	}
 	
-	public IGameRenderer(int initialWidth, int initialHeight, String mainTitle) {
+	public GameDisplay(int initialWidth, int initialHeight, String mainTitle) {
 		this.display = new Display(initialWidth, initialHeight, mainTitle);
 
 		List<ResourceProvider> resourceProviders = List.of(new ClassLoaderResourceProvider(true));
@@ -66,6 +68,7 @@ public abstract class IGameRenderer implements RunnableLifeCycle, RenderResource
 		GL30.glViewport(0, 0, display.getWidth(), display.getHeight());
 		GL30.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_STENCIL_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
 		timer.tick();
+		Time.tick();
 		this.render();
 		this.display.update();
 	}
@@ -104,9 +107,25 @@ public abstract class IGameRenderer implements RunnableLifeCycle, RenderResource
 	@Override
 	public void onInput(int key, int scancode, int action, int mods) {
 	}
-	
+
+	public void announceCrash(String state, Throwable t) {
+		new CrashReport(state, t).showCrashReport();
+	}
+
 	public Display getDisplay() {
 		return display;
+	}
+
+	public int getWidth() {
+		return display.getWidth();
+	}
+
+	public int getHeight() {
+		return display.getHeight();
+	}
+
+	public float getDisplayScale() {
+		return display.getDisplayScale();
 	}
 
 	public ResourceManager getResourceManager() {
@@ -120,5 +139,13 @@ public abstract class IGameRenderer implements RunnableLifeCycle, RenderResource
 	public ShaderRenderResource getShaderRenderResource() {
 		return shaderResource;
 	}
-	
+
+	public AtlasTextureRenderResource getAtlasTextureResource() {
+		return atlasTextureResource;
+	}
+
+	public FontRenderResource getFontResource() {
+		return fontResource;
+	}
+
 }

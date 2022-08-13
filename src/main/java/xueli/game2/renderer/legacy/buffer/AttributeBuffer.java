@@ -1,10 +1,12 @@
-package xueli.game2.renderer.buffer;
+package xueli.game2.renderer.legacy.buffer;
 
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.utils.vector.Vector;
 
-import xueli.game2.renderer.pipeline.RenderEquipment;
+import xueli.game2.renderer.legacy.system.RenderEquipment;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AttributeBuffer implements RenderEquipment {
 
@@ -36,8 +38,13 @@ public class AttributeBuffer implements RenderEquipment {
 
 	}
 
+	private boolean inited = false;
+
 	@Override
 	public void init() {
+		if(inited) return;
+		inited = true;
+
 		this.vbo = GL30.glGenBuffers();
 		GL30.glBindBuffer(GL30.GL_ARRAY_BUFFER, vbo);
 		GL30.glBufferData(GL30.GL_ARRAY_BUFFER, lotsOfByteBuffer.getBuffer(), bufferType);
@@ -47,18 +54,30 @@ public class AttributeBuffer implements RenderEquipment {
 
 	}
 
-	public void submit(Vector vector) {
+	private AtomicBoolean shouldSyncData = new AtomicBoolean(true);
+
+	public AttributeBuffer submit(Vector vector) {
 		vector.store(lotsOfByteBuffer);
 		vertexCount++;
+		return this;
+	}
+
+	public void reportSyncData() {
+		this.shouldSyncData.set(true);
 	}
 
 	@Override
 	public void tick() {
-		this.bind(() -> {
-			lotsOfByteBuffer.setReadWrite(true);
-			GL30.glBufferData(GL30.GL_ARRAY_BUFFER, lotsOfByteBuffer.getBuffer(), bufferType);
-			lotsOfByteBuffer.setReadWrite(false);
-		});
+		synchronized (this) {
+			if(shouldSyncData.get()) {
+				this.bind(() -> {
+					lotsOfByteBuffer.setReadWrite(true);
+					GL30.glBufferData(GL30.GL_ARRAY_BUFFER, lotsOfByteBuffer.getBuffer(), bufferType);
+					lotsOfByteBuffer.setReadWrite(false);
+				});
+				shouldSyncData.set(false);
+			}
+		}
 	}
 
 	public int getVertexCount() {
@@ -68,6 +87,7 @@ public class AttributeBuffer implements RenderEquipment {
 	public void clear() {
 		vertexCount = 0;
 		lotsOfByteBuffer.clear();
+		shouldSyncData.set(true);
 	}
 
 	@Override

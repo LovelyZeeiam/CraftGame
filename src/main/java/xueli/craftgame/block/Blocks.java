@@ -20,37 +20,20 @@ public class Blocks {
 
 	private static final MyLogger LOGGER = new MyLogger();
 
-	private static TextureResourceManager textureResourceManager;
-	public static TextureAtlas blockTextureAtlas;
+	private static TextureResourceManager textureResourceManager = null;
 
 	static {
-		CraftGameContext ctx = CraftGameContext.ctx;
-		if (ctx.isClient()) {
-			ResourceMaster resourceMaster = ctx.getResourceMaster();
-			textureResourceManager = resourceMaster.getTextureResourceManager();
-			textureResourceManager.build(BLOCK_ATLAS_NAMESPACE,
-					TextureAtlasBuilder.iterateFiles("assets/images/blocks/", resourceMaster.getProvider(), true));
-		}
 
 	}
 
 	public static BlockType BLOCK_STONE = new BlockType("cg:stone", "Stone")
-			.setRenderable(new BlockRenderableSolid(textureResourceManager.addToken("stone")));
+			.setRenderable(new BlockRenderableSolid("stone"));
 	public static BlockType BLOCK_BEDROCK = new BlockType("cg:bedrock", "Bedrock")
-			.setRenderable(new BlockRenderableSolid(textureResourceManager.addToken("bedrock")));
+			.setRenderable(new BlockRenderableSolid("bedrock"));
 	public static BlockType BLOCK_DIRT = new BlockType("cg:dirt", "Dirt")
-			.setRenderable(new BlockRenderableSolid(textureResourceManager.addToken("dirt")));
+			.setRenderable(new BlockRenderableSolid("dirt"));
 	public static BlockType BLOCK_GRASS = new BlockType("cg:grass", "Grass Block")
-			.setRenderable(new BlockRenderableSolid(textureResourceManager.addToken("grass_block_side"),
-					textureResourceManager.addToken("grass_block_side"),
-					textureResourceManager.addToken("grass_block_side"),
-					textureResourceManager.addToken("grass_block_side"),
-					textureResourceManager.addToken("grass_block_top"), textureResourceManager.addToken("dirt")));
-	/*
-	 * .setListener(new BlockListener() { public void onLookAt(int x, int y, int z,
-	 * xueli.craftgame.client.LocalTicker ticker, xueli.craftgame.entity.Entity
-	 * player) { System.out.println(x + ", " + y + ", " + z); }; })
-	 */
+			.setRenderable(new BlockRenderableSolid("grass_block_side", "grass_block_side", "grass_block_side", "grass_block_side", "grass_block_top", "dirt"));
 
 	public static HashMap<String, BlockType> blocks = new HashMap<>();
 	public static HashMap<BlockType, FrameBuffer> blockReviews = new HashMap<>();
@@ -80,12 +63,11 @@ public class Blocks {
 	}
 
 	public static void initCallForRenderer(CraftGameContext ctx) {
-		blockTextureAtlas = textureResourceManager.getAtlas(BLOCK_ATLAS_NAMESPACE);
 		blocks.values().forEach(t -> {
+			t.getRenderable().init(ctx.getWorldRenderer());
 			FrameBuffer frameBuffer = BlockIconGenerator.generate(t, ctx);
 			blockReviews.put(t, frameBuffer);
 		});
-
 	}
 
 }

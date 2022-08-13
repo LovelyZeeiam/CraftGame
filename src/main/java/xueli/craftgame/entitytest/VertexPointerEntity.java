@@ -3,7 +3,7 @@ package xueli.craftgame.entitytest;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
-import xueli.game2.renderer.VertexPointer;
+import xueli.game2.renderer.legacy.buffer.VertexPointer;
 
 public class VertexPointerEntity extends VertexPointer {
 

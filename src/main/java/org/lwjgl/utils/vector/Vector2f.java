@@ -34,7 +34,7 @@ package org.lwjgl.utils.vector;
 import java.io.Serializable;
 import java.nio.FloatBuffer;
 
-import xueli.game2.renderer.buffer.LotsOfByteBuffer;
+import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
 
 /**
  * Holds a 2-tuple vector.

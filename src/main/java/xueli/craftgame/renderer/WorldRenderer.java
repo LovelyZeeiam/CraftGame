@@ -1,19 +1,7 @@
 package xueli.craftgame.renderer;
 
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glEnable;
-
-import java.lang.Thread.UncaughtExceptionHandler;
-import java.util.ArrayList;
-import java.util.Vector;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.utils.vector.Matrix4f;
-
 import xueli.craftgame.CraftGameContext;
 import xueli.craftgame.event.EventLoadChunk;
 import xueli.craftgame.event.EventRemoveChunk;
@@ -22,15 +10,24 @@ import xueli.craftgame.player.LocalPlayer;
 import xueli.craftgame.renderer.blocks.BlockBorderRenderer;
 import xueli.craftgame.renderer.blocks.ChunkBuilder;
 import xueli.craftgame.renderer.blocks.IBlockRenderer;
-import xueli.craftgame.renderer.blocks.RendererCube;
-import xueli.craftgame.utils.ExecutorThisThread;
+import xueli.utils.ExecutorThisThread;
 import xueli.craftgame.world.World;
-import xueli.game.renderer.FrameBuffer;
-import xueli.game.renderer.ScreenQuadRenderer;
 import xueli.game.utils.math.MatrixHelper;
 import xueli.game.vector.Vector2i;
 import xueli.game2.display.Display;
+import xueli.game2.renderer.legacy.RenderMaster;
+import xueli.utils.Elegance;
 import xueli.utils.Int2HashMap;
+
+import java.util.ArrayList;
+import java.util.Vector;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
 
 public class WorldRenderer implements IGameRenderer {
 
@@ -44,12 +41,7 @@ public class WorldRenderer implements IGameRenderer {
 	private ExecutorService chunkRebuiltExecutor = Executors
 			.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), r -> {
 				Thread thread = new Thread(r);
-				thread.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
-					@Override
-					public void uncaughtException(Thread t, Throwable e) {
-						e.printStackTrace();
-					}
-				});
+				thread.setUncaughtExceptionHandler((t, e) -> e.printStackTrace());
 				return thread;
 			});
 
@@ -62,33 +54,35 @@ public class WorldRenderer implements IGameRenderer {
 
 	}
 
-	private FrameBuffer frameBuffer;
-	private ScreenQuadRenderer scrQuadRenderer;
+	private RenderMaster renderer = new RenderMaster();
+
+//	private FrameBuffer frameBuffer;
+//	private ScreenQuadRenderer scrQuadRenderer;
 
 	// Renderers
 	public static final int RENDERER_CUBE = 0;
-	private ArrayList<IBlockRenderer> renderers;
+	private ArrayList<IBlockRenderer> blockRenderers = Elegance.make(new ArrayList<IBlockRenderer>(), list -> {
+		list.add(RENDERER_CUBE, new IBlockRenderer(this));
+		return list;
+	});
 
 	private BlockBorderRenderer borderRenderer;
 
 	private Int2HashMap<ReadWriteLock> chunkBufferGenLocks = new Int2HashMap<>();
 
 	public void init() {
-		this.frameBuffer = new FrameBuffer();
-		this.scrQuadRenderer = new ScreenQuadRenderer();
+//		this.frameBuffer = new FrameBuffer();
+//		this.scrQuadRenderer = new ScreenQuadRenderer();
 
-		this.renderers = new ArrayList<>() {
-			private static final long serialVersionUID = 537301129990853794L;
-
-			{
-				add(RENDERER_CUBE, new RendererCube(WorldRenderer.this));
-
-			}
-		};
+		blockRenderers.forEach(IBlockRenderer::init);
 
 		this.borderRenderer = new BlockBorderRenderer(this);
 		this.borderRenderer.init();
 
+	}
+
+	public IBlockRenderer rendererCube() {
+		return blockRenderers.get(RENDERER_CUBE);
 	}
 
 	// TODO: FRUSTUM CULLING
@@ -100,27 +94,27 @@ public class WorldRenderer implements IGameRenderer {
 				99999999.0f);
 		this.viewMatrix = MatrixHelper.player(player.getCamera());
 
-		frameBuffer.use();
+//		frameBuffer.use();
 		glEnable(GL11.GL_CULL_FACE);
 		glEnable(GL11.GL_DEPTH_TEST);
 
-		renderers.forEach(IBlockRenderer::draw);
+		blockRenderers.forEach(IBlockRenderer::draw);
 
 		borderRenderer.render();
 
 		glDisable(GL11.GL_DEPTH_TEST);
 		glDisable(GL11.GL_CULL_FACE);
 
-		frameBuffer.unbind();
+//		frameBuffer.unbind();
 
-		scrQuadRenderer.render(frameBuffer.getTbo_image());
+//		scrQuadRenderer.render(frameBuffer.getTbo_image());
 
 	}
 
-	@Override
-	public void onSize(int width, int height) {
-		this.frameBuffer.resize(width, height);
-	}
+//	@Override
+//	public void onSize(int width, int height) {
+//		this.frameBuffer.resize(width, height);
+//	}
 
 	public void onMeshShouldRebuilt(EventSetBlock event) {
 		int x = event.getX();
@@ -179,33 +173,27 @@ public class WorldRenderer implements IGameRenderer {
 		int x = event.getX();
 		int z = event.getZ();
 		threadSafeExecutor.execute(() -> {
-			renderers.forEach(r -> {
+			blockRenderers.forEach(r -> {
 				r.newChunkBuffer(x, z);
-				chunkBufferGenLocks.put(x, z, new ReentrantReadWriteLock());
-				callRebuiltChunkRenderList(x, z);
 			});
+			chunkBufferGenLocks.put(x, z, new ReentrantReadWriteLock());
 		});
 
 	}
 
 	public void onRemoveChunk(EventRemoveChunk event) {
+		int x = event.getX();
+		int z = event.getZ();
 		threadSafeExecutor.execute(() -> {
-			chunkBufferGenLocks.remove(event.getX(), event.getZ());
-			renderers.forEach(r -> r.removeChunkBuffer(event.getX(), event.getZ()));
+			blockRenderers.forEach(r -> {
+				r.removeChunkBuffer(x, z);
+			});
 		});
 
 	}
 
 	public World getWorld() {
 		return world;
-	}
-
-	public IBlockRenderer rendererCube() {
-		return renderers.get(RENDERER_CUBE);
-	}
-
-	public ArrayList<IBlockRenderer> getRenderers() {
-		return renderers;
 	}
 
 	public LocalPlayer getPlayer() {
@@ -220,10 +208,15 @@ public class WorldRenderer implements IGameRenderer {
 		return viewMatrix;
 	}
 
+	public ArrayList<IBlockRenderer> getBlockRenderers() {
+		return blockRenderers;
+	}
+
 	public void release() {
 		chunkRebuiltExecutor.shutdownNow();
 
 		// TODO
+		blockRenderers.forEach(IBlockRenderer::release);
 
 	}
 

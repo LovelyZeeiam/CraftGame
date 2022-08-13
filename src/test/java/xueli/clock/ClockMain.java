@@ -29,13 +29,13 @@ import org.lwjgl.opengl.GL11;
 
 import xueli.game.utils.NVGColors;
 import xueli.game2.display.Display;
-import xueli.game2.display.IGameRenderer;
+import xueli.game2.display.GameDisplay;
 import xueli.game2.resource.ResourceLocation;
 import xueli.game2.resource.submanager.render.texture.TextureResourceLocation;
 import xueli.game2.resource.submanager.render.texture.TextureType;
 import xueli.game2.renderer.ui.NanoVGContext;
 
-public class ClockMain extends IGameRenderer {
+public class ClockMain extends GameDisplay {
 
 	private static final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 	private static final DateFormat dateFormat = new SimpleDateFormat("MM-dd");

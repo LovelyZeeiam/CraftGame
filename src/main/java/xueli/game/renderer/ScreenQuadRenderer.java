@@ -7,8 +7,10 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
-import xueli.game2.renderer.VertexPointer;
+import xueli.game2.renderer.legacy.buffer.VertexPointer;
+import xueli.game2.resource.ResourceLocation;
 import xueli.game2.resource.submanager.render.shader.Shader;
+import xueli.game2.resource.submanager.render.shader.ShaderResourceLocation;
 import xueli.utils.io.Files;
 
 public class ScreenQuadRenderer {
@@ -27,10 +29,11 @@ public class ScreenQuadRenderer {
 		pointer.postDraw();
 
 		try {
+			// TODO
 			shader = Shader.getShader(
-					new String(Files.readResourcePackedInJar("/assets/shaders/screen_quad/vert.txt"),
+					new String(Files.readResourcePackedInJar("/assets/craftgame/shaders/screen_quad/vert.txt"),
 							StandardCharsets.UTF_8),
-					new String(Files.readResourcePackedInJar("/assets/shaders/screen_quad/frag.txt"),
+					new String(Files.readResourcePackedInJar("/assets/craftgame/shaders/screen_quad/frag.txt"),
 							StandardCharsets.UTF_8));
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -17,15 +17,9 @@ public abstract class IngameView implements INVGRenderer {
 	private GameViewRenderer master;
 	protected InputHolder inputHolder;
 
-	protected NVGPaint paint = NVGPaint.create();
-
-	protected ImageResourceManager imageResourceManager;
-
 	public IngameView(GameViewRenderer master) {
 		this.master = master;
 		this.inputHolder = master.getInputHolder();
-
-		this.imageResourceManager = master.getContext().getResourceMaster().getImageResourceManager();
 
 	}
 

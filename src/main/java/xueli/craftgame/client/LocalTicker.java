@@ -11,7 +11,7 @@ import xueli.craftgame.block.BlockType;
 import xueli.craftgame.event.EventBlockListener;
 import xueli.craftgame.event.EventRequireChunk;
 import xueli.craftgame.event.EventSetBlock;
-import xueli.craftgame.utils.ExecutorThisThread;
+import xueli.utils.ExecutorThisThread;
 
 public class LocalTicker {
 

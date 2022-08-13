@@ -1,4 +1,4 @@
-package xueli.game2.renderer;
+package xueli.game2.renderer.legacy.buffer;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;

@@ -34,19 +34,28 @@ import xueli.game.resource.ResourceHolder;
 import xueli.game.utils.NVGColors;
 import xueli.game.utils.Time;
 import xueli.game2.display.Display;
+import xueli.game2.renderer.ui.NanoVGContext;
+import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.submanager.render.font.FontRenderResource;
+import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
+import xueli.game2.resource.submanager.render.texture.TextureResourceLocation;
+import xueli.game2.resource.submanager.render.texture.TextureType;
 import xueli.utils.io.Files;
 
 public class HUDRenderer implements IGameRenderer {
 
+	private static final TextureResourceLocation PAIMON_TEXTURE_LOCATION = new TextureResourceLocation(new ResourceLocation("images/hud/paimon.png"), TextureType.NVG);
+	private static final TextureResourceLocation CROSS_TEXTURE_LOCATION = new TextureResourceLocation(new ResourceLocation("images/hud/cross.png"), TextureType.NVG);
+	private static final TextureResourceLocation BORDER_TEXTURE_LOCATION = new TextureResourceLocation(new ResourceLocation("images/hud/border.png"), TextureType.NVG);
+	private static final ResourceLocation FONT_LOCATION = new ResourceLocation("fonts/minecraft.ttf");
+
 	private CraftGameContext ctx;
 
 	long nvg;
-	NVGPaint paint = NVGPaint.create();
+	NVGPaint paint;
 
-	private ResourceHolder<NVGImage> texCrossHolder, texPaimonHolder;
+	private int texCrossHolder, texPaimonHolder;
 	private int fontId;
-
-	// private int nullImage;
 
 	private HUDInventoryRenderer inventoryRenderer;
 
@@ -57,38 +66,16 @@ public class HUDRenderer implements IGameRenderer {
 	}
 
 	public void init() {
-		this.nvg = nvgCreate(NVG_STENCIL_STROKES | NVG_ANTIALIAS | NVG_DEBUG);
-		if (this.nvg == 0) {
-			ctx.announceCrash("HUD Init", new Exception("Couldn't init NanoVG!"));
-		}
+		this.nvg = NanoVGContext.INSTANCE.getNvg();
+		this.paint = NanoVGContext.INSTANCE.getPaint();
 
-		ImageResourceManager imageResourceManager = ctx.getResourceMaster().getImageResourceManager();
-
-		this.texCrossHolder = imageResourceManager.addToken("hud.cross", "/assets/images/hud/cross.png");
-		// this.texPaimonHolder = imageResourceManager.addToken("hud.paimon",
-		// "/assets/images/hud/paimon.png");
-
-		try {
-			imageResourceManager.setCurrentNvg(nvg);
-		} catch (Exception exception) {
-			exception.printStackTrace();
-			// ctx.announceCrash("HUD Init", exception);
-
-			imageResourceManager.getMissingProvider().onMissing(texCrossHolder);
-
-		}
-
-		ByteBuffer bufferFont;
-		try {
-			bufferFont = Files.readResourcePackedInJarAndPackedToBuffer("/assets/fonts/minecraft.ttf");
-			this.fontId = nvgCreateFontMem(nvg, "Minecraft", bufferFont, 1);
-		} catch (IOException e) {
-			ctx.announceCrash("HUD Init", new Exception("Could load font: /assets/fonts/minecraft.ttf", e));
-		}
+		TextureRenderResource textureManager = ctx.getTextureRenderResource();
+		this.texPaimonHolder = textureManager.preRegister(PAIMON_TEXTURE_LOCATION, false);
+		this.texCrossHolder = textureManager.preRegister(CROSS_TEXTURE_LOCATION, true);
+		FontRenderResource fontManager = ctx.getFontResource();
+		this.fontId = fontManager.preRegister(FONT_LOCATION, true);
 
 		this.inventoryRenderer.init();
-
-		// nullImage = TextureMissing.getMissingNvgImage(nvg);
 
 	}
 
@@ -111,6 +98,7 @@ public class HUDRenderer implements IGameRenderer {
 		String fpsTextString = "FPS: " + Time.fps;
 
 		float fontSize = 15.0f * ctx.getDisplayScale();
+		nvgFontFaceId(nvg, fontId);
 		float measuredTextLength = Math.max(measureTextWidth(fontSize, posTextString),
 				measureTextWidth(fontSize, fpsTextString));
 
@@ -128,12 +116,12 @@ public class HUDRenderer implements IGameRenderer {
 		nvgText(nvg, 2.0f * ctx.getDisplayScale(), 4.0f * ctx.getDisplayScale() + fontSize, fpsTextString);
 
 		if (!ctx.getViewRenderer().hasView()) {
-			nvgImagePattern(nvg, ctx.getWidth() / 2 - 5.0f * ctx.getDisplayScale(),
-					ctx.getHeight() / 2 - 5.0f * ctx.getDisplayScale(), 10.0f * ctx.getDisplayScale(),
-					10.0f * ctx.getDisplayScale(), 0, texCrossHolder.getResult().image(), 1.0f, paint);
+			nvgImagePattern(nvg, ctx.getWidth() / 2.0f - 5.0f * ctx.getDisplayScale(),
+					ctx.getHeight() / 2.0f - 5.0f * ctx.getDisplayScale(), 10.0f * ctx.getDisplayScale(),
+					10.0f * ctx.getDisplayScale(), 0, texCrossHolder, 1.0f, paint);
 			nvgBeginPath(nvg);
-			nvgRect(nvg, ctx.getWidth() / 2 - 5.0f * ctx.getDisplayScale(),
-					ctx.getHeight() / 2 - 5.0f * ctx.getDisplayScale(), 10.0f * ctx.getDisplayScale(),
+			nvgRect(nvg, ctx.getWidth() / 2.0f - 5.0f * ctx.getDisplayScale(),
+					ctx.getHeight() / 2.0f - 5.0f * ctx.getDisplayScale(), 10.0f * ctx.getDisplayScale(),
 					10.0f * ctx.getDisplayScale());
 			nvgFillPaint(nvg, paint);
 			nvgFill(nvg);

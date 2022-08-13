@@ -4,54 +4,57 @@ import java.nio.FloatBuffer;
 
 import org.lwjgl.opengl.GL15;
 
+import xueli.craftgame.CraftGameContext;
 import xueli.game.utils.WrappedFloatBuffer;
-import xueli.game2.renderer.VertexPointer;
+import xueli.game2.display.GameDisplay;
+import xueli.game2.renderer.legacy.RenderMaster;
+import xueli.game2.renderer.legacy.buffer.VertexPointer;
+import xueli.game2.renderer.legacy.system.RenderSystem;
 
 public class ChunkBuffer {
 
-	int x, z;
+	private int x, z;
+	private IBlockRenderer blockRenderer;
 
-	VertexPointer pointer;
-	WrappedFloatBuffer buffer;
-	private int vertCount = 0;
-	volatile int tempCount = 0;
+	private RenderMaster renderer;
 
-	volatile boolean shouldSyncBuffer = false;
-
-	public ChunkBuffer(int x, int z) {
+	public ChunkBuffer(int x, int z, IBlockRenderer blockRenderer) {
 		this.x = x;
 		this.z = z;
+		this.blockRenderer = blockRenderer;
 
-		this.pointer = new VertexPointer(0, GL15.GL_DYNAMIC_DRAW);
-		this.buffer = new WrappedFloatBuffer();
+		this.renderer = new RenderMaster();
 
-	}
-
-	public void clear() {
-		buffer.getBuffer().clear();
-		this.tempCount = 0;
 	}
 
 	public void draw() {
-		pointer.initDraw();
-		if (shouldSyncBuffer) {
-			FloatBuffer buf = buffer.getBuffer();
-			buf.flip();
-			pointer.bufferData(buf);
-			this.vertCount = tempCount;
-			shouldSyncBuffer = false;
-		}
-		pointer.draw(vertCount);
-		pointer.postDraw();
+		this.renderer.tick();
 
 	}
 
 	public void release() {
-		buffer.getBuffer().clear();
-		buffer = null;
+		this.renderer.release();
 
-		pointer.delete();
+	}
 
+	public void reportRebuilt() {
+		renderer.reportRebuilt();
+	}
+
+	public IBlockRenderer getBlockRenderer() {
+		return blockRenderer;
+	}
+
+	public RenderMaster getRenderer() {
+		return renderer;
+	}
+
+	public int getZ() {
+		return z;
+	}
+
+	public int getX() {
+		return x;
 	}
 
 }
