@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL30;
 
-import xueli.craftgame.Constants;
 import xueli.game.utils.Time;
 import xueli.game2.Timer;
 import xueli.game2.lifecycle.RunnableLifeCycle;
@@ -35,10 +34,6 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 	protected FontRenderResource fontResource;
 	
 	protected GameUIManager uiManager;
-
-	public GameDisplay(int initialWidth, int initialHeight) {
-		this(initialWidth, initialHeight, Constants.GAME_NAME_FULL);
-	}
 	
 	public GameDisplay(int initialWidth, int initialHeight, String mainTitle) {
 		this.display = new Display(initialWidth, initialHeight, mainTitle);

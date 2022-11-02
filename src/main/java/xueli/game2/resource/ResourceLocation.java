@@ -1,11 +1,9 @@
 package xueli.game2.resource;
 
-import xueli.craftgame.Constants;
-
 public record ResourceLocation(String namespace, String location) {
 
 	public ResourceLocation(String location) {
-		this(Constants.GAME_NAME_LOWER_CASE, location);
+		this("default", location);
 	}
 
 	public static ResourceLocation serialize(String str) {

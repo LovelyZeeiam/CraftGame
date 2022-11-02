@@ -13,12 +13,25 @@ import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import xueli.craftgame.Constants;
 import xueli.game2.resource.ResourceLocation;
 
 public class ClassLoaderResourceProvider extends URLResourceProvider {
 
 	public static final String ROOT_FOLDER = "/assets/";
+
+	private static URL currentBinPath = ClassLoaderResourceProvider.class.getProtectionDomain().getCodeSource().getLocation();
+	private static JarFile currentBinJarFile = null;
+	static {
+		if (currentBinPath.getProtocol().equalsIgnoreCase("jar")) {
+			JarURLConnection connection;
+			try {
+				connection = (JarURLConnection) currentBinPath.openConnection();
+				currentBinJarFile = connection.getJarFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	private boolean onlyCurrentModule = true;
 
@@ -80,7 +93,7 @@ public class ClassLoaderResourceProvider extends URLResourceProvider {
 					JarURLConnection jarConnection = (JarURLConnection) u.openConnection();
 					JarFile file = jarConnection.getJarFile();
 
-					if (this.onlyCurrentModule && !file.equals(Constants.currentBinJarFile)) {
+					if (this.onlyCurrentModule && !file.equals(currentBinJarFile)) {
 						return;
 					}
 
