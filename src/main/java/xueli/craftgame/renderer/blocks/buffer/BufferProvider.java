@@ -1,4 +1,4 @@
-package xueli.craftgame.renderer.world;
+package xueli.craftgame.renderer.blocks.buffer;
 
 import xueli.game2.renderer.legacy.buffer.AttributeBuffer;
 import xueli.game2.renderer.legacy.buffer.VertexType;
@@ -36,6 +36,14 @@ public class BufferProvider implements IBufferProvider {
 	@Override
 	public AttributeBuffer uvBuffer() {
 		return uvBuffer;
+	}
+
+	public void tick() {
+		this.system.tick();
+	}
+
+	public void release() {
+		this.system.release();
 	}
 
 }

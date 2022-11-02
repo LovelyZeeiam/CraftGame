@@ -49,4 +49,10 @@ public class TextureMissing {
 		return atlasHolder;
 	}
 
+	static {
+		TextureMissing.getAtlasHolder();
+		TextureMissing.get(TextureType.LEGACY);
+		TextureMissing.get(TextureType.NVG);
+	}
+
 }

@@ -11,7 +11,6 @@ import xueli.craftgame.renderer.WorldRenderer;
 import xueli.game.renderer.FrameBuffer;
 import xueli.game.utils.GLHelper;
 import xueli.game.utils.math.MatrixHelper;
-import xueli.game2.renderer.legacy.RenderMaster;
 import xueli.game2.resource.submanager.render.shader.Shader;
 
 public class BlockIconGenerator {
@@ -31,28 +30,31 @@ public class BlockIconGenerator {
 	public static FrameBuffer generate(BlockType base, CraftGameContext ctx) {
 		FrameBuffer frameBuffer = new FrameBuffer(MODEL_VIEW_SIZE, MODEL_VIEW_SIZE);
 
-		WorldRenderer renderer = ctx.getWorldRenderer();
-		base.getRenderable().gatherRenderDataReview(renderer);
+//		WorldRenderer renderer = ctx.getWorldRenderer();
+//		renderer.getRenderers().forEach(r -> {
+//			r.newChunkBuffer(0, 0);
+//			r.getChunkBuffer(0, 0).shouldSyncBuffer = true;
+//		});
+//		base.getRenderable().renderReview(renderer);
 
 		frameBuffer.use();
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-
-		for (IBlockRenderer r : renderer.getBlockRenderers()) {
-			ChunkBuffer buf = r.getChunkBuffer(0, 0);
-			RenderMaster renderMaster = buf.getRenderer();
-
-			renderMaster.systems(system -> {
-				Shader shader = system.getShader();
-				Shader.setViewMatrix(viewMatrix, shader);
-				Shader.setProjectionMatrix(shader, projMatrix);
-			});
-
-			GLHelper.checkGLError("BlockRendererPreview - Before");
-			buf.draw();
-			GLHelper.checkGLError("BlockRendererPreview - Before");
-
-		}
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
+//		GL11.glEnable(GL11.GL_DEPTH_TEST);
+//		for (IBlockRenderer r : renderer.getRenderers()) {
+//			Shader shader = r.getShader();
+//			Shader.setViewMatrix(viewMatrix, shader);
+//			Shader.setProjectionMatrix(shader, projMatrix);
+//			shader.bind();
+//
+//			ChunkBuffer buf = r.getChunkBuffer(0, 0);
+//			GLHelper.checkGLError("BlockRendererPreview - Before");
+//			Blocks.blockTextureAtlas.bind();
+//			buf.draw();
+//			Blocks.blockTextureAtlas.unbind();
+//			GLHelper.checkGLError("BlockRendererPreview - Before");
+//
+//			shader.unbind();
+//		}
+//		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		frameBuffer.unbind();
 
 		// frameBuffer.save("temp/" + base.getName() + ".png");

@@ -17,18 +17,24 @@ public abstract class IngameView implements INVGRenderer {
 	private GameViewRenderer master;
 	protected InputHolder inputHolder;
 
+	protected NVGPaint paint = NVGPaint.create();
+
+	protected ImageResourceManager imageResourceManager;
+
 	public IngameView(GameViewRenderer master) {
 		this.master = master;
 		this.inputHolder = master.getInputHolder();
+
+//		this.imageResourceManager = master.getContext().getResourceMaster().getImageResourceManager();
 
 	}
 
 	@Override
 	public void render(long nvg) {
-		Display display = master.getContext().getDisplay();
-		nvgBeginFrame(nvg, display.getWidth(), display.getHeight(), (float) display.getWidth() / display.getHeight());
-		stroke(nvg);
-		nvgEndFrame(nvg);
+//		Display display = master.getContext().getDisplay();
+//		nvgBeginFrame(nvg, display.getWidth(), display.getHeight(), (float) display.getWidth() / display.getHeight());
+//		stroke(nvg);
+//		nvgEndFrame(nvg);
 
 	}
 

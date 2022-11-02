@@ -18,6 +18,7 @@ import xueli.game2.resource.provider.ClassLoaderResourceProvider;
 import xueli.game2.resource.provider.ResourceProvider;
 import xueli.game2.resource.submanager.render.font.FontRenderResource;
 import xueli.game2.resource.submanager.render.shader.ShaderRenderResource;
+import xueli.game2.resource.submanager.render.texture.TextureMissing;
 import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
 import xueli.game2.resource.submanager.render.texture.atlas.AtlasTextureRenderResource;
 import xueli.utils.exception.CrashReport;
@@ -57,7 +58,12 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 	@Override
 	public final void init() {
 		this.display.create();
+
+		// Trigger its create
 		NanoVGContext.INSTANCE.getNvg();
+		// Trigger its loading
+		TextureMissing.getAtlasHolder();
+
 		renderInit();
 		this.display.show();
 

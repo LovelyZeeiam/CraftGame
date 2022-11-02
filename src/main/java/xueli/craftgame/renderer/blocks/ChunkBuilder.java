@@ -25,9 +25,12 @@ public class ChunkBuilder implements Runnable {
 
 	@Override
 	public void run() {
-//		renderer.getRenderers().forEach(r -> {
-//			r.getChunkBuffer(x, z).clear();
-//		});
+		// TODO: Iterate all the BlockRenderable and allow them to call IBlockRenderer
+		// "addQuad"
+		// then when drawing, sync the buffer and render them
+		renderer.getRenderers().forEach(r -> {
+			r.getChunkBuffer(x, z).clear();
+		});
 
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
@@ -47,12 +50,11 @@ public class ChunkBuilder implements Runnable {
 					int realY = y;
 					int realZ = z + (this.z << 4);
 
-					renderable.gatherRenderData(realX, realY, realZ, renderer);
+					renderable.render(realX, realY, realZ, renderer);
 
 				}
 			}
 		}
-
 
 	}
 

@@ -1,28 +1,19 @@
 package xueli.craftgame.renderer.blocks;
 
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.utils.vector.Vector3f;
 import org.lwjgl.utils.vector.Vector3i;
 import org.lwjgl.utils.vector.Vector4f;
-
-import xueli.craftgame.CraftGameContext;
 import xueli.craftgame.block.BlockFace;
 import xueli.craftgame.block.BlockType;
-import xueli.craftgame.renderer.world.BufferProvider;
-import xueli.craftgame.renderer.world.CubeDrawer;
 import xueli.craftgame.renderer.WorldRenderer;
+import xueli.craftgame.renderer.blocks.buffer.CubeDrawer;
+import xueli.craftgame.renderer.blocks.buffer.IBufferProvider;
 import xueli.craftgame.world.World;
-import xueli.game.utils.WrappedFloatBuffer;
 import xueli.game.vector.Vector2i;
-import xueli.game2.renderer.legacy.RenderMaster;
-import xueli.game2.renderer.legacy.system.RenderState;
-import xueli.game2.renderer.legacy.system.RenderSystem;
-import xueli.game2.resource.ResourceLocation;
-import xueli.game2.resource.submanager.render.shader.Shader;
-import xueli.game2.resource.submanager.render.shader.ShaderResourceLocation;
 import xueli.game2.resource.submanager.render.texture.atlas.AtlasResourceHolder;
+import xueli.game2.resource.submanager.render.texture.atlas.AtlasTextureRenderResource;
 
-public class BlockRenderableSolid extends BlockRenderable {
+public class BlockRenderableSolid implements BlockRenderable {
 
 	private String[] faceTextures;
 
@@ -34,13 +25,13 @@ public class BlockRenderableSolid extends BlockRenderable {
 		if (holders.length == 6)
 			this.faceTextures = holders;
 		else
-			this.faceTextures = new String[]{holders[0], holders[0], holders[0], holders[0], holders[0],
-					holders[0]};
+			this.faceTextures = new String[] { holders[0], holders[0], holders[0], holders[0], holders[0],
+					holders[0] };
 
 	}
 
 	@Override
-	protected void gatherRenderDataActually(int x, int y, int z, WorldRenderer renderer) {
+	public void render(int x, int y, int z, WorldRenderer renderer) {
 		IBlockRenderer r = renderer.rendererCube();
 		Vector2i chunkPos = World.getLocatedChunkPos(x, z);
 		ChunkBuffer buf = r.getChunkBuffer(chunkPos.x, chunkPos.y);
@@ -54,8 +45,6 @@ public class BlockRenderableSolid extends BlockRenderable {
 			}
 		}
 
-		buf.reportRebuilt();
-
 	}
 
 	private boolean checkShouldRender(int x, int y, int z, World world) {
@@ -66,22 +55,19 @@ public class BlockRenderableSolid extends BlockRenderable {
 	}
 
 	@Override
-	protected void gatherRenderDataReviewActually(WorldRenderer renderer) {
+	public void renderReview(WorldRenderer renderer) {
 		IBlockRenderer r = renderer.rendererCube();
-		r.newChunkBuffer(0,0);
 		ChunkBuffer buf = r.getChunkBuffer(0, 0);
 		for (byte i = 0; i < BlockFace.DIRECTIONS.length; i++) {
 			drawQuad(i, 0, 0, 0, buf, null);
 		}
-		buf.reportRebuilt();
 
 	}
 
 	private void drawQuad(byte face, int x, int y, int z, ChunkBuffer buf, World world) {
-		RenderMaster rendererMaster = buf.getRenderer();
-		AtlasResourceHolder holder = this.holder[face];
-		RenderSystem system = rendererMaster.get(RenderState.easyState(shader, GL11.GL_TRIANGLES, holder.textureId()));
-		BufferProvider buffer = new BufferProvider(system);
+		AtlasTextureRenderResource atlasResourceManager = buf.getWorldRenderer().getContext().getAtlasTextureResource();
+		AtlasResourceHolder holder = atlasResourceManager.getHolder(IBlockRenderer.ATLAS_LOCATION, this.faceTextures[face]);
+		IBufferProvider buffer = buf.getProvider(holder.textureId());
 
 		float[] aoDegree = null;
 		if (world != null) {
@@ -127,6 +113,8 @@ public class BlockRenderableSolid extends BlockRenderable {
 						holder.rightBottom(), c3, new Vector3f(x + 1, y, z + 1), holder.rightTop(), c4);
 			}
 		}
+
+		// System.out.println(x + ", " + y + ", " + z + ", " + buf.tempCount);
 
 	}
 

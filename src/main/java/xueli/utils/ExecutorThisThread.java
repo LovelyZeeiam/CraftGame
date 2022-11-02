@@ -10,7 +10,7 @@ public class ExecutorThisThread {
 	public ExecutorThisThread() {
 	}
 
-	public Callable execute(Runnable command) {
+	public Callable<Object> execute(Runnable command) {
 		// Block the thread when "get" the result from another thread
 		LinkedBlockingDeque<Object> blockingDeque = new LinkedBlockingDeque<>();
 		Callable<Object> callable = () -> blockingDeque.poll(Long.MAX_VALUE, TimeUnit.DAYS);

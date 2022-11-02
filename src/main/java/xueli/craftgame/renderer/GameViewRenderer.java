@@ -10,10 +10,10 @@ import java.lang.reflect.Constructor;
 import xueli.craftgame.CraftGameContext;
 import xueli.craftgame.event.EventRaiseGUI;
 import xueli.craftgame.renderer.view.IngameView;
-import xueli.utils.ExecutorThisThread;
 import xueli.game.input.InputHolder;
 import xueli.game.input.InputManager;
 import xueli.utils.Asserts;
+import xueli.utils.ExecutorThisThread;
 
 public class GameViewRenderer implements IGameRenderer {
 

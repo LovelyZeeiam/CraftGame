@@ -1,60 +1,59 @@
 package xueli.craftgame.renderer.blocks;
 
-import java.nio.FloatBuffer;
-
-import org.lwjgl.opengl.GL15;
-
-import xueli.craftgame.CraftGameContext;
-import xueli.game.utils.WrappedFloatBuffer;
-import xueli.game2.display.GameDisplay;
-import xueli.game2.renderer.legacy.RenderMaster;
-import xueli.game2.renderer.legacy.buffer.VertexPointer;
+import org.lwjgl.opengl.GL11;
+import xueli.craftgame.renderer.WorldRenderer;
+import xueli.craftgame.renderer.blocks.buffer.BufferProvider;
+import xueli.craftgame.renderer.blocks.buffer.IBufferProvider;
+import xueli.game2.renderer.legacy.system.RenderState;
 import xueli.game2.renderer.legacy.system.RenderSystem;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ChunkBuffer {
 
 	private int x, z;
 	private IBlockRenderer blockRenderer;
+	private WorldRenderer worldRenderer;
 
-	private RenderMaster renderer;
+	private ConcurrentHashMap<Integer, BufferProvider> texturesSystems = new ConcurrentHashMap<>();
 
 	public ChunkBuffer(int x, int z, IBlockRenderer blockRenderer) {
 		this.x = x;
 		this.z = z;
 		this.blockRenderer = blockRenderer;
 
-		this.renderer = new RenderMaster();
+		this.worldRenderer = blockRenderer.getManager();
 
+	}
+
+	public void clear() {
+		try {
+			worldRenderer.getThreadSafeExecutor().execute(this::release).call();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		texturesSystems.clear();
+	}
+
+	public IBufferProvider getProvider(int textureId) {
+		return texturesSystems.computeIfAbsent(textureId, id -> {
+			try {
+				return worldRenderer.getThreadSafeExecutor().execute(() -> new BufferProvider(RenderSystem.withState(RenderState.easyState(blockRenderer.getShader(), GL11.GL_TRIANGLES, id)))).call();
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		});
 	}
 
 	public void draw() {
-		this.renderer.tick();
-
+		texturesSystems.values().forEach(BufferProvider::tick);
 	}
 
 	public void release() {
-		this.renderer.release();
-
+		texturesSystems.values().forEach(BufferProvider::release);
 	}
 
-	public void reportRebuilt() {
-		renderer.reportRebuilt();
+	public WorldRenderer getWorldRenderer() {
+		return worldRenderer;
 	}
-
-	public IBlockRenderer getBlockRenderer() {
-		return blockRenderer;
-	}
-
-	public RenderMaster getRenderer() {
-		return renderer;
-	}
-
-	public int getZ() {
-		return z;
-	}
-
-	public int getX() {
-		return x;
-	}
-
 }

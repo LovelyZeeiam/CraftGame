@@ -64,7 +64,7 @@ public class Blocks {
 
 	public static void initCallForRenderer(CraftGameContext ctx) {
 		blocks.values().forEach(t -> {
-			t.getRenderable().init(ctx.getWorldRenderer());
+//			t.getRenderable().init(ctx.getWorldRenderer());
 			FrameBuffer frameBuffer = BlockIconGenerator.generate(t, ctx);
 			blockReviews.put(t, frameBuffer);
 		});

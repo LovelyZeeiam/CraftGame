@@ -1,4 +1,4 @@
-package xueli.craftgame.renderer.world;
+package xueli.craftgame.renderer.blocks.buffer;
 
 import org.lwjgl.utils.vector.Vector2f;
 import org.lwjgl.utils.vector.Vector3f;

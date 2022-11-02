@@ -2,7 +2,7 @@
 A Minecraft-like game programmed in Java with LWJGL 3.
 The game is in beta now. So if you have some suggestion, just leave in the comment.
 
-By analysing the code of Minecraft originally, I figured out loads of means to import to my game while improving my study.
+By analyzing the code of Minecraft originally, I figured out loads of means to import to my game while improving my study. Currently I'm working on a project called `MyMinecraftClient`, which will also help to develop the game.
 
 Another Winter in China is around the corner. Having had a try various programming pattern, it is time to back on the right track. There is also a list below indicating what I will attempt to do:
 

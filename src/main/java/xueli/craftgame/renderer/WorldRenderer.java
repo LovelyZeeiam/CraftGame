@@ -10,15 +10,16 @@ import xueli.craftgame.player.LocalPlayer;
 import xueli.craftgame.renderer.blocks.BlockBorderRenderer;
 import xueli.craftgame.renderer.blocks.ChunkBuilder;
 import xueli.craftgame.renderer.blocks.IBlockRenderer;
-import xueli.utils.ExecutorThisThread;
+import xueli.craftgame.renderer.blocks.RendererCube;
+import xueli.craftgame.setting.Settings;
 import xueli.craftgame.world.World;
 import xueli.game.utils.math.MatrixHelper;
 import xueli.game.vector.Vector2i;
 import xueli.game2.display.Display;
-import xueli.game2.renderer.legacy.RenderMaster;
-import xueli.utils.Elegance;
+import xueli.utils.ExecutorThisThread;
 import xueli.utils.Int2HashMap;
 
+import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.concurrent.ExecutorService;
@@ -41,7 +42,12 @@ public class WorldRenderer implements IGameRenderer {
 	private ExecutorService chunkRebuiltExecutor = Executors
 			.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), r -> {
 				Thread thread = new Thread(r);
-				thread.setUncaughtExceptionHandler((t, e) -> e.printStackTrace());
+				thread.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+					@Override
+					public void uncaughtException(Thread t, Throwable e) {
+						e.printStackTrace();
+					}
+				});
 				return thread;
 			});
 
@@ -54,17 +60,12 @@ public class WorldRenderer implements IGameRenderer {
 
 	}
 
-	private RenderMaster renderer = new RenderMaster();
-
 //	private FrameBuffer frameBuffer;
 //	private ScreenQuadRenderer scrQuadRenderer;
 
 	// Renderers
 	public static final int RENDERER_CUBE = 0;
-	private ArrayList<IBlockRenderer> blockRenderers = Elegance.make(new ArrayList<IBlockRenderer>(), list -> {
-		list.add(RENDERER_CUBE, new IBlockRenderer(this));
-		return list;
-	});
+	private ArrayList<IBlockRenderer> renderers;
 
 	private BlockBorderRenderer borderRenderer;
 
@@ -74,15 +75,18 @@ public class WorldRenderer implements IGameRenderer {
 //		this.frameBuffer = new FrameBuffer();
 //		this.scrQuadRenderer = new ScreenQuadRenderer();
 
-		blockRenderers.forEach(IBlockRenderer::init);
+		this.renderers = new ArrayList<>() {
+			private static final long serialVersionUID = 537301129990853794L;
+
+			{
+				add(RENDERER_CUBE, new RendererCube(WorldRenderer.this));
+
+			}
+		};
 
 		this.borderRenderer = new BlockBorderRenderer(this);
 		this.borderRenderer.init();
 
-	}
-
-	public IBlockRenderer rendererCube() {
-		return blockRenderers.get(RENDERER_CUBE);
 	}
 
 	// TODO: FRUSTUM CULLING
@@ -98,7 +102,17 @@ public class WorldRenderer implements IGameRenderer {
 		glEnable(GL11.GL_CULL_FACE);
 		glEnable(GL11.GL_DEPTH_TEST);
 
-		blockRenderers.forEach(IBlockRenderer::draw);
+		xueli.game.vector.Vector camera = player.getCamera();
+		int playerInChunkX = (int) camera.x >> 4;
+		int playerInChunkZ = (int) camera.z >> 4;
+
+		for (int x = playerInChunkX - Settings.INSTANCE.RENDER_DISTANCE; x < playerInChunkX + Settings.INSTANCE.RENDER_DISTANCE; x++) {
+			for (int z = playerInChunkZ - Settings.INSTANCE.RENDER_DISTANCE; z < playerInChunkZ + Settings.INSTANCE.RENDER_DISTANCE; z++) {
+				for (IBlockRenderer renderer : renderers) {
+					renderer.draw(x, z);
+				}
+			}
+		}
 
 		borderRenderer.render();
 
@@ -111,10 +125,10 @@ public class WorldRenderer implements IGameRenderer {
 
 	}
 
-//	@Override
-//	public void onSize(int width, int height) {
+	@Override
+	public void onSize(int width, int height) {
 //		this.frameBuffer.resize(width, height);
-//	}
+	}
 
 	public void onMeshShouldRebuilt(EventSetBlock event) {
 		int x = event.getX();
@@ -149,21 +163,19 @@ public class WorldRenderer implements IGameRenderer {
 			return;
 		// System.out.println(x + ", " + z);
 		queueChunkRebuildList.add(new Vector2i(x, z));
-		chunkRebuiltExecutor.execute(() -> {
+		threadSafeExecutor.execute(() -> {
 			queueChunkRebuildList.remove(new Vector2i(x, z));
-
-			// TODO: BUG DOESN'T WORK
-			// WHEN FAST MODIFY THE BLOCK CAUSING TWO BUFFER GENERATOR TO WORK AT ONE TIME
-			// A BUFFEROVERFLOWEXCEPTION WILL BE THROWN
-			ReadWriteLock lock = chunkBufferGenLocks.get(x, z);
-			lock.writeLock().lock();
-			try {
-				new ChunkBuilder(x, z, world, this).run();
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				lock.writeLock().unlock();
-			}
+			chunkRebuiltExecutor.execute(() -> {
+				ReadWriteLock lock = chunkBufferGenLocks.get(x, z);
+				lock.writeLock().lock();
+				try {
+					new ChunkBuilder(x, z, world, this).run();
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					lock.writeLock().unlock();
+				}
+			});
 
 		});
 
@@ -173,27 +185,33 @@ public class WorldRenderer implements IGameRenderer {
 		int x = event.getX();
 		int z = event.getZ();
 		threadSafeExecutor.execute(() -> {
-			blockRenderers.forEach(r -> {
+			renderers.forEach(r -> {
 				r.newChunkBuffer(x, z);
+				chunkBufferGenLocks.put(x, z, new ReentrantReadWriteLock());
+				callRebuiltChunkRenderList(x, z);
 			});
-			chunkBufferGenLocks.put(x, z, new ReentrantReadWriteLock());
 		});
 
 	}
 
 	public void onRemoveChunk(EventRemoveChunk event) {
-		int x = event.getX();
-		int z = event.getZ();
 		threadSafeExecutor.execute(() -> {
-			blockRenderers.forEach(r -> {
-				r.removeChunkBuffer(x, z);
-			});
+			chunkBufferGenLocks.remove(event.getX(), event.getZ());
+			renderers.forEach(r -> r.removeChunkBuffer(event.getX(), event.getZ()));
 		});
 
 	}
 
 	public World getWorld() {
 		return world;
+	}
+
+	public IBlockRenderer rendererCube() {
+		return renderers.get(RENDERER_CUBE);
+	}
+
+	public ArrayList<IBlockRenderer> getRenderers() {
+		return renderers;
 	}
 
 	public LocalPlayer getPlayer() {
@@ -208,15 +226,14 @@ public class WorldRenderer implements IGameRenderer {
 		return viewMatrix;
 	}
 
-	public ArrayList<IBlockRenderer> getBlockRenderers() {
-		return blockRenderers;
+	public ExecutorThisThread getThreadSafeExecutor() {
+		return threadSafeExecutor;
 	}
 
 	public void release() {
 		chunkRebuiltExecutor.shutdownNow();
 
 		// TODO
-		blockRenderers.forEach(IBlockRenderer::release);
 
 	}
 

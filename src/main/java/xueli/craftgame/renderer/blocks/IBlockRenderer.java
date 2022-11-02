@@ -7,39 +7,33 @@ import xueli.craftgame.renderer.WorldRenderer;
 import xueli.craftgame.setting.Settings;
 import xueli.game.utils.GLHelper;
 import xueli.game.vector.Vector;
-import xueli.game2.renderer.legacy.RenderMaster;
-import xueli.game2.renderer.legacy.system.RenderSystem;
 import xueli.game2.resource.ResourceLocation;
 import xueli.game2.resource.submanager.render.shader.Shader;
-import xueli.game2.resource.submanager.render.shader.ShaderResourceLocation;
 import xueli.utils.Int2HashMap;
 
 public class IBlockRenderer {
 
-	public static final ResourceLocation SOLID_BLOCKS_TEXTURES = new ResourceLocation("images/blocks/");
-	public static final ShaderResourceLocation SOLID_BLOCKS_SHADERS = new ShaderResourceLocation(
-			new ResourceLocation("shaders/world/world.vert"),
-			new ResourceLocation("shaders/world/world.frag")
-	);
+	public static final ResourceLocation ATLAS_LOCATION = new ResourceLocation("images/blocks/");
 
+	private CraftGameContext ctx;
 	private WorldRenderer manager;
-
-	private Int2HashMap<ChunkBuffer> chunkBuffers = new Int2HashMap<>();
+	private LocalPlayer player;
 
 	private Shader shader;
-	private RenderSystem renderer;
+	private Int2HashMap<ChunkBuffer> chunkBuffers = new Int2HashMap<>();
 
 	// Just Initialize Here
 	public IBlockRenderer(WorldRenderer manager) {
 		this.manager = manager;
+		this.ctx = manager.getContext();
+		this.player = manager.getPlayer();
+
+		ctx.getAtlasTextureResource().findAndRegister(ATLAS_LOCATION, path -> true);
 
 	}
 
-	public void init() {
-		CraftGameContext context = manager.getContext();
-		this.shader = context.getShaderRenderResource().preRegister(SOLID_BLOCKS_SHADERS, true);
-		context.getAtlasTextureResource().findAndRegister(SOLID_BLOCKS_TEXTURES, key -> true);
-
+	protected void setShader(String vertSource, String fragSource) {
+		this.shader = Shader.getShader(vertSource, fragSource);
 	}
 
 	public void newChunkBuffer(int x, int z) {
@@ -62,29 +56,24 @@ public class IBlockRenderer {
 		return chunkBuffers.get(chunkX, chunkZ);
 	}
 
-	public void draw() {
-		LocalPlayer player = manager.getPlayer();
-		Vector camera = player.getCamera();
-		int playerInChunkX = (int) camera.x >> 4;
-		int playerInChunkZ = (int) camera.z >> 4;
+	public void draw(int x, int z) {
+		ChunkBuffer chkBuf = getChunkBuffer(x, z);
+		if (chkBuf == null)
+			return;
 
-		for (int x = playerInChunkX - Settings.INSTANCE.RENDER_DISTANCE; x < playerInChunkX
-				+ Settings.INSTANCE.RENDER_DISTANCE; x++) {
-			for (int z = playerInChunkZ - Settings.INSTANCE.RENDER_DISTANCE; z < playerInChunkZ
-					+ Settings.INSTANCE.RENDER_DISTANCE; z++) {
-				ChunkBuffer chkBuf = getChunkBuffer(x, z);
-				if (chkBuf == null)
-					continue;
+		// if (!MatrixHelper.isChunkInFrustum(x, y, z))
+		// continue;
 
-				// if (!MatrixHelper.isChunkInFrustum(x, y, z))
-				// continue;
+		Shader.setProjectionMatrix(shader, manager.getProjMatrix());
+		Shader.setViewMatrix(manager.getViewMatrix(), shader);
 
-				GLHelper.checkGLError("BlockRenderer - Before");
-				chkBuf.draw();
-				GLHelper.checkGLError("BlockRenderer - Post");
+		shader.bind();
 
-			}
-		}
+		GLHelper.checkGLError("BlockRenderer - Before");
+		chkBuf.draw();
+		GLHelper.checkGLError("BlockRenderer - Post");
+
+		shader.unbind();
 
 	}
 
@@ -94,6 +83,14 @@ public class IBlockRenderer {
 
 	public WorldRenderer getManager() {
 		return manager;
+	}
+
+	public Shader getShader() {
+		return shader;
+	}
+
+	public CraftGameContext getContext() {
+		return ctx;
 	}
 
 }

@@ -1,4 +1,4 @@
-package xueli.craftgame.renderer.world;
+package xueli.craftgame.renderer.blocks.buffer;
 
 import xueli.game2.renderer.legacy.buffer.AttributeBuffer;
 
