@@ -19,6 +19,8 @@ public class NanoVGContext implements Closeable {
 		INSTANCE = new NanoVGContext();
 	}
 
+	public static void init() {}
+
 	public static void release() {
 		if (INSTANCE != null) {
 			try {

@@ -15,6 +15,14 @@ public class CraftGame extends GameDisplay {
 
 	@Override
 	protected void render() {
+		if(getOverlayManager().hasOverlay()) {
+			getDisplay().setMouseGrabbed(false);
+			return;
+		}
+		getDisplay().setMouseGrabbed(true);
+
+
+
 
 	}
 

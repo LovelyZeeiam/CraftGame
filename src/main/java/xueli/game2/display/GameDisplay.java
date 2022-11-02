@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL30;
 import xueli.game.utils.Time;
 import xueli.game2.Timer;
 import xueli.game2.lifecycle.RunnableLifeCycle;
-import xueli.game2.renderer.ui.GameUIManager;
+import xueli.game2.renderer.ui.OverlayManager;
 import xueli.game2.renderer.ui.NanoVGContext;
 import xueli.game2.resource.manager.BackwardResourceManager;
 import xueli.game2.resource.manager.ChainedResourceManager;
@@ -33,7 +33,7 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 	protected ShaderRenderResource shaderResource;
 	protected FontRenderResource fontResource;
 	
-	protected GameUIManager uiManager;
+	protected OverlayManager overlayManager;
 	
 	public GameDisplay(int initialWidth, int initialHeight, String mainTitle) {
 		this.display = new Display(initialWidth, initialHeight, mainTitle);
@@ -46,7 +46,7 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 		this.shaderResource = new ShaderRenderResource(resourceManager);
 		this.fontResource = new FontRenderResource(resourceManager);
 		
-		this.uiManager = new GameUIManager(this);
+		this.overlayManager = new OverlayManager(this);
 		
 	}
 
@@ -55,9 +55,11 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 		this.display.create();
 
 		// Trigger its create
-		NanoVGContext.INSTANCE.getNvg();
+		NanoVGContext.init();
 		// Trigger its loading
-		TextureMissing.getAtlasHolder();
+		TextureMissing.init();
+
+		this.overlayManager.init();
 
 		renderInit();
 		this.display.show();
@@ -71,6 +73,7 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 		timer.tick();
 		Time.tick();
 		this.render();
+		this.overlayManager.tick();
 		this.display.update();
 	}
 
@@ -83,6 +86,7 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 	public final void release() {
 		this.display.hide();
 		NanoVGContext.release();
+		this.overlayManager.release();
 		this.renderRelease();
 		
 		try {
@@ -147,6 +151,10 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 
 	public FontRenderResource getFontResource() {
 		return fontResource;
+	}
+
+	public OverlayManager getOverlayManager() {
+		return overlayManager;
 	}
 
 }

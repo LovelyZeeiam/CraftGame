@@ -49,6 +49,8 @@ public class TextureMissing {
 		return atlasHolder;
 	}
 
+	public static void init() {}
+
 	static {
 		TextureMissing.getAtlasHolder();
 		TextureMissing.get(TextureType.LEGACY);

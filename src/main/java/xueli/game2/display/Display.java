@@ -224,8 +224,12 @@ public class Display {
 	}
 
 	public void setMouseGrabbed(boolean mouseGrabbed) {
+		if(this.mouseGrabbed == mouseGrabbed)
+			return;
+
 		glfwSetInputMode(window, GLFW_CURSOR, mouseGrabbed ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
 		this.mouseGrabbed = mouseGrabbed;
+
 	}
 
 	public void release() {
