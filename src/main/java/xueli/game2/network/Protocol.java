@@ -8,6 +8,7 @@ public class Protocol {
 	private final HashMap<Integer, Function<Readable, Packet>> deserializers = new HashMap<>();
 	private final HashMap<Class<? extends Packet>, Integer> packets = new HashMap<>();
 
+	@SuppressWarnings("unchecked")
 	public <T extends Packet> Protocol register(int id, Class<? extends T> clazz, Function<Readable, T> deserializer) {
 		this.deserializers.put(id, (Function<Readable, Packet>) deserializer);
 		this.packets.put(clazz, id);

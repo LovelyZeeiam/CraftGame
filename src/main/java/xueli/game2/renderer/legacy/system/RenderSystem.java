@@ -1,8 +1,8 @@
 package xueli.game2.renderer.legacy.system;
 
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
-import org.apache.mina.util.CopyOnWriteMap;
 import org.lwjgl.opengl.GL30;
 
 import xueli.game2.renderer.legacy.buffer.AttributeBuffer;
@@ -15,7 +15,7 @@ public class RenderSystem implements RenderEquipment {
 
 	private int vao;
 	private int renderType;
-	private CopyOnWriteMap<Integer, AttributeBuffer> attributes = new CopyOnWriteMap<>();
+	private ConcurrentHashMap<Integer, AttributeBuffer> attributes = new ConcurrentHashMap<>();
 
 	private int[] textureId;
 
