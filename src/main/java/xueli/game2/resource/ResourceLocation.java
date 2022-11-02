@@ -1,5 +1,7 @@
 package xueli.game2.resource;
 
+import java.util.Objects;
+
 public record ResourceLocation(String namespace, String location) {
 
 	public ResourceLocation(String location) {
@@ -23,6 +25,19 @@ public record ResourceLocation(String namespace, String location) {
 	@Override
 	public String toString() {
 		return namespace + ":" + location;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		ResourceLocation that = (ResourceLocation) o;
+		return namespace.equals(that.namespace) && location.equals(that.location);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(namespace, location);
 	}
 
 }
