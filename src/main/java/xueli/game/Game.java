@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 
 import xueli.game.renderer.RendererManager;
 import xueli.game.utils.GLHelper;
-import xueli.game.utils.Time;
+import xueli.game.utils.FPSCalculator;
 import xueli.game2.display.Display;
 import xueli.utils.exception.CrashReport;
 import xueli.utils.logger.MyLogger;
@@ -34,21 +34,21 @@ public abstract class Game implements Runnable {
 	@Override
 	public void run() {
 		display.create();
-		Time.tick();
+		FPSCalculator.tick();
 		rendererManager = new RendererManager();
 
 		onCreate();
 		display.show();
 
 		onSize((int) getWidth(), (int) getHeight());
-		Time.tick();
+		FPSCalculator.tick();
 
 		while (display.isRunning()) {
 			onTick();
 			rendererManager.render();
 			GLHelper.checkGLError("[Renderer]");
 			display.update();
-			Time.tick();
+			FPSCalculator.tick();
 
 			MyLogger.getInstance().pushState("MainThreadQueue");
 			if (!queueInMainThread.isEmpty()) {

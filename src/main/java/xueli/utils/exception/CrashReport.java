@@ -1,6 +1,6 @@
 package xueli.utils.exception;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 public class CrashReport {
 
@@ -19,8 +19,17 @@ public class CrashReport {
 	public void showCrashReport() {
 		new Thread(() -> {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, getMessage(), getNiceComment(), JOptionPane.ERROR_MESSAGE);
+			this.showErrorDialog(getNiceComment(), getMessage());
 		}).start();
+
+	}
+
+	private void showErrorDialog(String title, String message) {
+		JFrame frame = new JFrame();
+		frame.setAlwaysOnTop(true);
+		JOptionPane.showMessageDialog(frame, message, title, JOptionPane.ERROR_MESSAGE);
+		frame.dispose();
+
 	}
 
 	public String getMessage() {

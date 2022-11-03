@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL30;
 
-import xueli.game.utils.Time;
+import xueli.game.utils.FPSCalculator;
 import xueli.game2.Timer;
 import xueli.game2.lifecycle.RunnableLifeCycle;
 import xueli.game2.renderer.ui.OverlayManager;
@@ -26,6 +26,8 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 
 	protected Display display;
 	protected Timer timer = new Timer();
+
+	private boolean shouldCrash = false;
 
 	protected ChainedResourceManager resourceManager;
 	protected TextureRenderResource textureResource;
@@ -68,18 +70,27 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 
 	@Override
 	public final void tick() {
+		timer.tick();
+		FPSCalculator.tick();
+
 		GL30.glViewport(0, 0, display.getWidth(), display.getHeight());
 		GL30.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_STENCIL_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
-		timer.tick();
-		Time.tick();
-		this.render();
-		this.overlayManager.tick();
+
+		if(this.overlayManager.hasOverlay()) {
+			getDisplay().setMouseGrabbed(false);
+			this.overlayManager.tick();
+		} else {
+			getDisplay().setMouseGrabbed(true);
+			this.render();
+		}
+
 		this.display.update();
+
 	}
 
 	@Override
 	public boolean isRunning() {
-		return this.display.isRunning();
+		return this.display.isRunning() && !shouldCrash;
 	}
 
 	@Override
@@ -114,7 +125,9 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 	}
 
 	public void announceCrash(String state, Throwable t) {
+		this.shouldCrash = true;
 		new CrashReport(state, t).showCrashReport();
+
 	}
 
 	public Display getDisplay() {
