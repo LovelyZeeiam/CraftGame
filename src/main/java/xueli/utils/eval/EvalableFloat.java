@@ -1,8 +1,8 @@
 package xueli.utils.eval;
 
-import javax.script.ScriptException;
-
 import xueli.game.Game;
+
+import javax.script.ScriptException;
 
 public class EvalableFloat {
 

@@ -1,8 +1,8 @@
 package xueli.utils.swings;
 
-import javax.swing.JComponent;
-
 import xueli.utils.ThreadTask;
+
+import javax.swing.*;
 
 public class AWTSwingRefresher extends Thread {
 

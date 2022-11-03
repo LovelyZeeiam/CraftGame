@@ -1,11 +1,11 @@
 package xueli.game2.renderer.legacy.buffer;
 
-import java.nio.ByteBuffer;
-
 import org.lwjgl.BufferUtils;
 import org.lwjgl.utils.vector.Vector2f;
 import org.lwjgl.utils.vector.Vector3f;
 import org.lwjgl.utils.vector.Vector4f;
+
+import java.nio.ByteBuffer;
 
 public class LotsOfByteBuffer {
 
@@ -82,6 +82,10 @@ public class LotsOfByteBuffer {
 		}
 		this.isRead = read;
 		
+	}
+
+	public void release() {
+		this.buffer = null;
 	}
 
 	public ByteBuffer getBuffer() {

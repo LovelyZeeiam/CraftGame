@@ -31,10 +31,10 @@
  */
 package org.lwjgl.utils.vector;
 
+import xueli.game2.renderer.legacy.buffer.BufferStorable;
+
 import java.io.Serializable;
 import java.nio.FloatBuffer;
-
-import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
 
 /**
  * Base class for vectors.
@@ -42,7 +42,7 @@ import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
  * @author cix_foo <cix_foo@users.sourceforge.net>
  * @version $Revision$ $Id$
  */
-public abstract class Vector implements Serializable, ReadableVector {
+public abstract class Vector implements Serializable, ReadableVector, BufferStorable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -93,14 +93,6 @@ public abstract class Vector implements Serializable, ReadableVector {
 		} else
 			throw new IllegalStateException("Zero length vector");
 	}
-
-	/**
-	 * Store this vector in a FloatBuffer
-	 *
-	 * @param buf The buffer to store it in, at the current position
-	 * @return this
-	 */
-	public abstract Vector store(LotsOfByteBuffer buf);
 
 	/**
 	 * Scale this vector

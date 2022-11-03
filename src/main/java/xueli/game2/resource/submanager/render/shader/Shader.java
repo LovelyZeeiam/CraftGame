@@ -1,12 +1,5 @@
 package xueli.game2.resource.submanager.render.shader;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.FloatBuffer;
-import java.util.HashMap;
-
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
@@ -14,11 +7,17 @@ import org.lwjgl.opengl.GL32;
 import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector2f;
 import org.lwjgl.utils.vector.Vector3f;
-
 import xueli.game.Game;
 import xueli.game.utils.math.MatrixHelper;
 import xueli.game.vector.Vector;
 import xueli.game2.renderer.legacy.buffer.Bindable;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.FloatBuffer;
+import java.util.HashMap;
 
 public class Shader implements Bindable {
 	

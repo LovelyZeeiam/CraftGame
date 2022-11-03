@@ -1,16 +1,15 @@
-package xueli.mcremake.classic;
+package xueli.mcremake.classic.client;
 
 import xueli.game2.display.GameDisplay;
 
-public class CraftGame extends GameDisplay {
+public class CraftGameClient extends GameDisplay {
 
-	public CraftGame() {
+	public CraftGameClient() {
 		super(800, 600, "Minecraft Classic Forever");
 	}
 
 	@Override
 	protected void renderInit() {
-		this.announceCrash("TEST", new Throwable());
 
 	}
 
@@ -22,6 +21,7 @@ public class CraftGame extends GameDisplay {
 
 	@Override
 	protected void renderRelease() {
+
 
 	}
 

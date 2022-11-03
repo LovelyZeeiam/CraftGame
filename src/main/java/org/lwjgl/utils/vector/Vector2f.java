@@ -31,10 +31,10 @@
  */
 package org.lwjgl.utils.vector;
 
+import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
+
 import java.io.Serializable;
 import java.nio.FloatBuffer;
-
-import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
 
 /**
  * Holds a 2-tuple vector.
@@ -221,12 +221,10 @@ public class Vector2f extends Vector implements Serializable, ReadableVector2f, 
 	 * Store this vector in a FloatBuffer
 	 *
 	 * @param buf The buffer to store it in, at the current position
-	 * @return this
 	 */
-	public Vector store(LotsOfByteBuffer buf) {
+	public void store(LotsOfByteBuffer buf) {
 		buf.put(x);
 		buf.put(y);
-		return this;
 	}
 
 	/**

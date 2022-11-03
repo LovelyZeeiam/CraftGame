@@ -1,12 +1,12 @@
 package xueli.game.resource;
 
-import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
-import static org.lwjgl.nanovg.NanoVG.nvgCreateImageMem;
+import xueli.utils.io.Files;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-import xueli.utils.io.Files;
+import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
+import static org.lwjgl.nanovg.NanoVG.nvgCreateImageMem;
 
 public class ImageResourceManager extends ResourceManager<NVGImage>
 		implements ResourceLoader<NVGImage>, MissingProvider<NVGImage> {

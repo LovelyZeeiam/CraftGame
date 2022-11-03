@@ -1,9 +1,9 @@
-package xueli.mcremake.classic;
+package xueli.mcremake.classic.client;
 
 public class CraftGameMain {
 
 	public static void main(String[] args) {
-		new CraftGame().run();
+		new CraftGameClient().run();
 
 	}
 

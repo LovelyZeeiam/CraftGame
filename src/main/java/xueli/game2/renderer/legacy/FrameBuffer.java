@@ -1,4 +1,4 @@
-package xueli.game2.renderer.legacy.system;
+package xueli.game2.renderer.legacy;
 
 import xueli.game.Game;
 

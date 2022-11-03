@@ -51,7 +51,6 @@ public interface ReadableVector {
 	 * Store this vector in a FloatBuffer
 	 *
 	 * @param buf The buffer to store it in, at the current position
-	 * @return this
 	 */
-	Vector store(LotsOfByteBuffer buf);
+	void store(LotsOfByteBuffer buf);
 }

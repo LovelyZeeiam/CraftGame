@@ -31,10 +31,10 @@
  */
 package org.lwjgl.utils.vector;
 
+import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
+
 import java.io.Serializable;
 import java.nio.FloatBuffer;
-
-import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
 
 /**
  * Holds a 4-tuple vector.
@@ -288,14 +288,12 @@ public class Vector4f extends Vector implements Serializable, ReadableVector4f, 
 	 *
 	 * @see org.lwjgl.vector.Vector#store(FloatBuffer)
 	 */
-	public Vector store(LotsOfByteBuffer buf) {
-
+	public void store(LotsOfByteBuffer buf) {
 		buf.put(x);
 		buf.put(y);
 		buf.put(z);
 		buf.put(w);
 
-		return this;
 	}
 
 	public String toString() {

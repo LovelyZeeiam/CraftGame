@@ -1,10 +1,9 @@
 package xueli.game.resource.texture;
 
-import java.util.Objects;
-
 import org.lwjgl.utils.vector.Vector2f;
-
 import xueli.game.vector.Vector2i;
+
+import java.util.Objects;
 
 public class TextureAtlasHolder {
 

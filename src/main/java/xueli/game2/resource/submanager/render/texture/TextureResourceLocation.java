@@ -1,8 +1,8 @@
 package xueli.game2.resource.submanager.render.texture;
 
-import java.util.Objects;
-
 import xueli.game2.resource.ResourceLocation;
+
+import java.util.Objects;
 
 public final class TextureResourceLocation {
 

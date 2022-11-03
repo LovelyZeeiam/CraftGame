@@ -1,7 +1,9 @@
 package xueli.utils;
 
-import java.util.LinkedList;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.TimeUnit;
 
 public class ExecutorThisThread {
 

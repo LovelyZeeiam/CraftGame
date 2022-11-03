@@ -1,5 +1,7 @@
 package xueli.utils.properties;
 
+import xueli.utils.logger.MyLogger;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.Field;
@@ -7,8 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-
-import xueli.utils.logger.MyLogger;
 
 public class PropertiesReflection {
 
