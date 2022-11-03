@@ -2,12 +2,18 @@ package xueli.game2.renderer.legacy;
 
 import xueli.game2.renderer.legacy.buffer.BufferStorable;
 
-public interface RenderBuffer {
+public interface RenderBuffer extends VertexAcceptable {
 
 	public void reset();
 
-	public void acceptVertex(BufferStorable storable);
+	default public void acceptVertex(BufferStorable... storables) {
+		for (BufferStorable storable : storables) {
+			this.acceptVertex(storable);
+		}
+	}
 
 	public void render();
+
+	public void release();
 
 }

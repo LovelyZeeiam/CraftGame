@@ -1,6 +1,7 @@
 package xueli.game2.renderer.legacy;
 
 import java.util.HashMap;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public abstract class RenderType<T> {
@@ -29,8 +30,17 @@ public abstract class RenderType<T> {
 		return buffers.computeIfAbsent(key, bufferSupplier);
 	}
 
+	public void rebuiltBuffer(T key, Consumer<VertexAcceptable> c) {
+		RenderBuffer buffer = this.getRenderBuffer(key);
+		buffer.reset();
+		c.accept(buffer);
+
+	}
+
 	public RenderBuffer releaseRenderBuffer(T key) {
-		return buffers.remove(key);
+		RenderBuffer buffer = buffers.remove(key);
+		buffer.release();
+		return buffer;
 	}
 
 	public void render() {

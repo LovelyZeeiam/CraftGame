@@ -3,7 +3,7 @@ package xueli.game.renderer;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
-import xueli.game2.renderer.legacy.buffer.VertexPointer;
+import xueli.game2.renderer.legacy.DefaultRenderBuffer;
 import xueli.game2.resource.submanager.render.shader.Shader;
 import xueli.utils.io.Files;
 
@@ -20,10 +20,10 @@ public class ScreenQuadRenderer {
 	public ScreenQuadRenderer() {
 		pointer = new ScreenQuadPointer();
 
-		pointer.initDraw();
+		pointer.bind();
 		pointer.mapBuffer().asFloatBuffer().put(VERTICES);
 		pointer.unmap();
-		pointer.postDraw();
+		pointer.unbind();
 
 		try {
 			// TODO
@@ -49,10 +49,10 @@ public class ScreenQuadRenderer {
 	public ScreenQuadRenderer(Shader shader) {
 		pointer = new ScreenQuadPointer();
 
-		pointer.initDraw();
+		pointer.bind();
 		pointer.mapBuffer().asFloatBuffer().put(VERTICES);
 		pointer.unmap();
-		pointer.postDraw();
+		pointer.unbind();
 
 		this.shader = shader;
 
@@ -60,17 +60,17 @@ public class ScreenQuadRenderer {
 
 	public void render(int textureId) {
 		shader.bind();
-		pointer.initDraw();
+		pointer.bind();
 		GL30.glBindTexture(GL30.GL_TEXTURE_2D, textureId);
 		pointer.draw(GL30.GL_TRIANGLE_FAN, 0, 4);
-		pointer.postDraw();
+		pointer.unbind();
 		shader.unbind();
 
 	}
 
 	public void render(int textureId, int depthTexID) {
 		shader.bind();
-		pointer.initDraw();
+		pointer.bind();
 
 		GL30.glActiveTexture(GL30.GL_TEXTURE0);
 		GL30.glBindTexture(GL30.GL_TEXTURE_2D, textureId);
@@ -78,7 +78,7 @@ public class ScreenQuadRenderer {
 		GL30.glBindTexture(GL30.GL_TEXTURE_2D, depthTexID);
 
 		pointer.draw(GL30.GL_TRIANGLE_FAN, 0, 4);
-		pointer.postDraw();
+		pointer.unbind();
 		shader.unbind();
 
 	}
@@ -91,7 +91,7 @@ public class ScreenQuadRenderer {
 		return shader;
 	}
 
-	public static class ScreenQuadPointer extends VertexPointer {
+	public static class ScreenQuadPointer extends DefaultRenderBuffer.DefaultVertexPointer {
 
 		public ScreenQuadPointer() {
 			super(1024, GL30.GL_STATIC_DRAW);
