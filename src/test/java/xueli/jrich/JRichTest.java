@@ -1,18 +1,26 @@
 package xueli.jrich;
 
-import xueli.jrich.widgets.ConsoleText;
-import xueli.jrich.widgets.LeftRightBlocks;
+import org.fusesource.jansi.Ansi;
 
 public class JRichTest {
 
 	public static void main(String[] args) {
-		JRichConsole console = new JRichConsole();
-		console.render(new LeftRightBlocks(
-				10,
-				new ConsoleText("Fuck".repeat(10)),
-				new ConsoleText("Shit".repeat(100))
-		));
-
+		ConsoleFlowAppendable f = new ConsoleFlowAppendable(40);
+		f.print("adsada ".repeat(20));
+		f.setAttribute(new Attribute() {
+			@Override
+			public String compile() {
+				return Ansi.ansi().fgBlue().toString();
+			}
+		});
+		f.print("adsada ".repeat(20));
+		f.setAttribute(new Attribute() {
+			@Override
+			public String compile() {
+				return Ansi.ansi().reset().toString();
+			}
+		});
+		f.render();
 
 	}
 
