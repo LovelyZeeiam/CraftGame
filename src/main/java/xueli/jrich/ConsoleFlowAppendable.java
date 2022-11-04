@@ -1,8 +1,9 @@
 package xueli.jrich;
 
-public class ConsoleFlowAppendable implements ConsoleAppendable {
+import xueli.jrich.attributes.Attribute;
 
-	private final ConsoleBuffer buf = new ConsoleBuffer();
+public class ConsoleFlowAppendable extends ConsoleBuffer implements ConsoleAppendable {
+
 	private final int consoleWidth;
 
 	private int pX = 0, pY = 0;
@@ -13,14 +14,14 @@ public class ConsoleFlowAppendable implements ConsoleAppendable {
 	}
 
 	@Override
-	public void setAttribute(Attribute a) {
-		buf.addAsciiSymbol(pX + 1, pY, a.compile());
+	public void addAttribute(Attribute a) {
+		this.addAsciiSymbol(pX, pY, a.compile());
 
 	}
 
 	@Override
 	public void print(char c) {
-		buf.writeChar(c, pX, pY);
+		this.writeChar(c, pX, pY);
 		pX++;
 
 		if(pX >= consoleWidth) {
@@ -38,8 +39,16 @@ public class ConsoleFlowAppendable implements ConsoleAppendable {
 
 	@Override
 	public void render() {
-		buf.render(this.consoleWidth, Integer.MAX_VALUE);
+		super.render(this.consoleWidth, Integer.MAX_VALUE);
 
+	}
+	
+	public int getpX() {
+		return pX;
+	}
+	
+	public int getpY() {
+		return pY;
 	}
 
 }

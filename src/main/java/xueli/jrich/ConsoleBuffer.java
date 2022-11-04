@@ -1,17 +1,11 @@
 package xueli.jrich;
 
-import org.fusesource.jansi.AnsiConsole;
-
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class ConsoleBuffer {
-
-	static {
-		AnsiConsole.systemInstall();
-	}
 
 	private HashMap<ConsolePosition, ArrayList<String>> asciiControlSymbols = new HashMap<>();
 	private final ArrayList<StringBuffer> buffer = new ArrayList<>();
@@ -21,7 +15,7 @@ public class ConsoleBuffer {
 
 	public void writeBlock(ConsoleBuffer r, int x, int y, int width, int height) {
 		HashMap<ConsolePosition, ArrayList<String>> symbols = r.asciiControlSymbols;
-		symbols.forEach((p, l) -> this.getAsciiSymbols(x + p.x(), p.y()).addAll(l));
+		symbols.forEach((p, l) -> this.getAsciiSymbols(x + p.x(), y + p.y()).addAll(l));
 
 		ArrayList<StringBuffer> src = r.buffer;
 		int lineCount = 0;
@@ -49,7 +43,9 @@ public class ConsoleBuffer {
 		StringBuffer strBuf = buffer.get(y);
 		this.fillToCharInLine(x, strBuf);
 
-		strBuf.replace(x, x + Math.min(width, c.length()), c.toString());
+		String str = c.toString();
+		str = str.substring(0, Math.min(str.length(), width));
+		strBuf.replace(x, x + Math.min(width, c.length()), str);
 
 	}
 
@@ -88,8 +84,10 @@ public class ConsoleBuffer {
 		getAsciiSymbols(x, y).add(symbol);
 	}
 
-	public void render(int width, int height) {
-		PrintStream out = AnsiConsole.out();
+	void render(int width, int height) {
+//		asciiControlSymbols.keySet().forEach(p -> System.out.println(p));
+		
+		PrintStream out = System.out;
 
 		int printHeight = Math.min(height, buffer.size());
 		for (int i = 0; i < printHeight; i++) {
@@ -100,9 +98,10 @@ public class ConsoleBuffer {
 			for (int j = 0; j < cs.length; j++) {
 				if(j >= width) break;
 
-				ArrayList<String> symbols = asciiControlSymbols.get(new ConsolePosition(i, j));
+				ArrayList<String> symbols = asciiControlSymbols.get(new ConsolePosition(j, i));
 				if(symbols != null) {
-					symbols.forEach(System.out::print);
+					symbols.forEach(out::print);
+//					System.out.print("@");
 				}
 
 				out.print(cs[j]);

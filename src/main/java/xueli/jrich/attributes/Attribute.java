@@ -1,4 +1,4 @@
-package xueli.jrich;
+package xueli.jrich.attributes;
 
 public interface Attribute {
 

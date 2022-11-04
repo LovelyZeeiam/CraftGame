@@ -1,8 +1,10 @@
 package xueli.jrich;
 
+import xueli.jrich.attributes.Attribute;
+
 public interface ConsoleAppendable {
 
-	public void setAttribute(Attribute a);
+	public void addAttribute(Attribute a);
 	public void print(char c);
 	public void newLine();
 
