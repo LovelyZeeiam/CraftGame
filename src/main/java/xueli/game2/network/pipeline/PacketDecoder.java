@@ -18,10 +18,10 @@ public class PacketDecoder extends ByteToMessageDecoder {
 		}
 	};
 
-	private PacketSourceSide side;
+	private Protocol protocol;
 
-	public PacketDecoder(PacketSourceSide side) {
-		this.side = side;
+	public PacketDecoder(Protocol protocol) {
+		this.protocol = protocol;
 
 	}
 
@@ -31,7 +31,7 @@ public class PacketDecoder extends ByteToMessageDecoder {
 			Readable readable = new ByteBufReadable(in);
 			int id = PrimitiveCodec.VAR_INT.read(readable);
 
-			Function<Readable, Packet> deserializer = side.getProtocol().getDeserializerById(id);
+			Function<Readable, Packet> deserializer = protocol.getDeserializerById(id);
 			if (deserializer != null) {
 				Packet packet = deserializer.apply(readable);
 				out.add(packet);

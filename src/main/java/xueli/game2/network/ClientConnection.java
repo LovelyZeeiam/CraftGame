@@ -8,6 +8,7 @@ import xueli.game2.network.pipeline.PacketDecoder;
 import xueli.game2.network.pipeline.PacketEncoder;
 import xueli.game2.network.pipeline.PacketSizeDecodeHandler;
 import xueli.game2.network.pipeline.PacketSizePrefixer;
+import xueli.game2.network.processor.PacketProcessor;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -21,7 +22,15 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 	private String hostname;
 	private int port;
 
-	private ClientConnection() {
+	private final Protocol clientboundProtocol, serverboundProtocol;
+	private final PacketProcessor processor;
+
+	private ClientConnection(Protocol clientboundProtocol, Protocol serverboundProtocol, PacketProcessor processor) {
+		this.clientboundProtocol = clientboundProtocol;
+		this.serverboundProtocol = serverboundProtocol;
+
+		this.processor = processor;
+
 	}
 
 	@Override
@@ -33,7 +42,7 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Packet msg) throws Exception {
-		// TODO: Process Packet
+		msg.process(processor);
 
 	}
 
@@ -61,6 +70,11 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 
 	}
 
+
+	public PacketProcessor getPacketProcessor() {
+		return processor;
+	}
+
 	public String getHostname() {
 		return hostname;
 	}
@@ -76,8 +90,8 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 
 	}
 
-	public static ClientConnection connectToServer(InetSocketAddress addr) throws IOException {
-		ClientConnection c = new ClientConnection();
+	public static ClientConnection connectToServer(Protocol clientboundProtocol, Protocol serverboundProtocol, InetSocketAddress addr) throws IOException {
+		ClientConnection c = new ClientConnection(clientboundProtocol, serverboundProtocol, new PacketProcessor());
 		c.hostname = addr.getHostName();
 		c.port = addr.getPort();
 
@@ -88,10 +102,10 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 					protected void initChannel(Channel ch) throws Exception {
 						ch.pipeline()
 								.addLast(new PacketSizePrefixer())
-								.addLast(new PacketEncoder(PacketSourceSide.FROM_CLIENT))
+								.addLast(new PacketEncoder(serverboundProtocol))
 
 								.addLast(new PacketSizeDecodeHandler())
-								.addLast(new PacketDecoder(PacketSourceSide.FROM_SERVER))
+								.addLast(new PacketDecoder(clientboundProtocol))
 								.addLast(c);
 					}
 				}).channel(NioSocketChannel.class).connect(addr).syncUninterruptibly();

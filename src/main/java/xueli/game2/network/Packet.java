@@ -1,5 +1,7 @@
 package xueli.game2.network;
 
+import xueli.game2.network.processor.PacketProcessor;
+
 import java.io.IOException;
 
 public abstract class Packet {
@@ -18,4 +20,11 @@ public abstract class Packet {
 	public abstract void read(Readable buf) throws IOException;
 	public abstract void write(Writable buf) throws IOException;
 
+	public abstract String getProcessName();
+
+	public void process(PacketProcessor processor) {
+		processor.doProcess(getProcessName(), this);
+
+	}
+	
 }

@@ -1,4 +1,6 @@
-package xueli.game2.network;
+package xueli.mcremake.classic.network;
+
+import xueli.game2.network.Protocol;
 
 public enum PacketSourceSide {
 

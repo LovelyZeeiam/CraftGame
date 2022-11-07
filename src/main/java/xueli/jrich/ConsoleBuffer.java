@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Deprecated
 public class ConsoleBuffer {
 
 	private HashMap<ConsolePosition, ArrayList<String>> asciiControlSymbols = new HashMap<>();

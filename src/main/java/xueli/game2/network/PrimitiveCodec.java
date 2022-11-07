@@ -9,6 +9,8 @@ import com.google.gson.JsonObject;
 import org.lwjgl.utils.vector.Vector3i;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public interface PrimitiveCodec<T> {
@@ -17,22 +19,22 @@ public interface PrimitiveCodec<T> {
 
 	public void write(T t, Writable w) throws IOException;
 
-//	default T[] readArr(Readable r) throws IOException {
-//		int count = VAR_INT.read(r);
-//		Object[] objs = new Object[count];
-//		for (int i = 0; i < count; i++) {
-//			objs[i] = read(r);
-//		}
-//		return (T[]) objs;
-//	}
-//
-//	default void writeArr(T[] arr, Writable w) throws IOException {
-//		int count = arr.length;
-//		VAR_INT.write(count, w);
-//		for (int i = 0; i < count; i++) {
-//			write(arr[i], w);
-//		}
-//	}
+	default List<T> readArr(Readable r) throws IOException {
+		int count = VAR_INT.read(r);
+		List<T> list = new ArrayList<>();
+		for (int i = 0; i < count; i++) {
+			list.add(read(r));
+		}
+		return list;
+	}
+
+	default void writeArr(T[] arr, Writable w) throws IOException {
+		int count = arr.length;
+		VAR_INT.write(count, w);
+		for (int i = 0; i < count; i++) {
+			write(arr[i], w);
+		}
+	}
 
 	PrimitiveCodec<Integer> INT = new PrimitiveCodec<>() {
 		@Override

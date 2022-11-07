@@ -1,5 +1,6 @@
 package xueli.jrich.attributes;
 
+@Deprecated
 public class AttributeColor implements Attribute {
 
 	private ColorType type;

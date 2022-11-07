@@ -1,5 +1,6 @@
 package xueli.jrich.attributes;
 
+@Deprecated
 public class AttributeStyle implements Attribute {
 
 	private final Style style;

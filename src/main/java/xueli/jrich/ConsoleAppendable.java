@@ -2,6 +2,7 @@ package xueli.jrich;
 
 import xueli.jrich.attributes.Attribute;
 
+@Deprecated
 public interface ConsoleAppendable {
 
 	public void addAttribute(Attribute a);

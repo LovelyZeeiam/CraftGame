@@ -2,6 +2,7 @@ package xueli.jrich;
 
 import xueli.jrich.attributes.Attribute;
 
+@Deprecated
 public class ConsoleFlowAppendable extends ConsoleBuffer implements ConsoleAppendable {
 
 	private final int consoleWidth;
