@@ -22,13 +22,12 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 	private String hostname;
 	private int port;
 
-	private final Protocol clientboundProtocol, serverboundProtocol;
-	private final PacketProcessor processor;
+	private PacketProcessor processor;
 
-	private ClientConnection(Protocol clientboundProtocol, Protocol serverboundProtocol, PacketProcessor processor) {
-		this.clientboundProtocol = clientboundProtocol;
-		this.serverboundProtocol = serverboundProtocol;
+	public ClientConnection() {
+	}
 
+	public ClientConnection(PacketProcessor processor) {
 		this.processor = processor;
 
 	}
@@ -42,7 +41,9 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Packet msg) throws Exception {
-		msg.process(processor);
+		if(processor != null) {
+			msg.process(processor);
+		}
 
 	}
 
@@ -70,6 +71,9 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 
 	}
 
+	public void setPacketProcessor(PacketProcessor processor) {
+		this.processor = processor;
+	}
 
 	public PacketProcessor getPacketProcessor() {
 		return processor;
@@ -91,12 +95,13 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 	}
 
 	public static ClientConnection connectToServer(Protocol clientboundProtocol, Protocol serverboundProtocol, InetSocketAddress addr) throws IOException {
-		ClientConnection c = new ClientConnection(clientboundProtocol, serverboundProtocol, new PacketProcessor());
+		ClientConnection c = new ClientConnection(new PacketProcessor());
 		c.hostname = addr.getHostName();
 		c.port = addr.getPort();
 
 		new Bootstrap()
 				.group(workerGroup)
+				.channel(NioSocketChannel.class)
 				.handler(new ChannelInitializer<>() {
 					@Override
 					protected void initChannel(Channel ch) throws Exception {
@@ -108,7 +113,7 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 								.addLast(new PacketDecoder(clientboundProtocol))
 								.addLast(c);
 					}
-				}).channel(NioSocketChannel.class).connect(addr).syncUninterruptibly();
+				}).connect(addr).syncUninterruptibly();
 		return c;
 	}
 
