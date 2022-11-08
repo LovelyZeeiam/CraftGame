@@ -1,9 +1,9 @@
 package xueli.utils;
 
-import xueli.utils.collection.Table;
-
 import java.util.Map;
 import java.util.Map.Entry;
+
+import xueli.utils.collection.Table;
 
 public class Threads {
 

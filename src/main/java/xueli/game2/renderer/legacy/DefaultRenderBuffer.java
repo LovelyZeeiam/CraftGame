@@ -1,15 +1,16 @@
 package xueli.game2.renderer.legacy;
 
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
+
 import xueli.game.utils.GLHelper;
 import xueli.game2.renderer.legacy.buffer.BufferStorable;
 import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
-
-import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
 
 public class DefaultRenderBuffer implements RenderBuffer {
 

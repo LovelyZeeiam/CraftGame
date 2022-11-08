@@ -1,7 +1,5 @@
 package xueli.game2.resource.provider;
 
-import xueli.game2.resource.ResourceLocation;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.JarURLConnection;
@@ -14,6 +12,8 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import xueli.game2.resource.ResourceLocation;
 
 public class ClassLoaderResourceProvider extends URLResourceProvider {
 

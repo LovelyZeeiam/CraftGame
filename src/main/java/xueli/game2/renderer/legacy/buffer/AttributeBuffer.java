@@ -1,11 +1,12 @@
 package xueli.game2.renderer.legacy.buffer;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.utils.vector.Vector;
-import xueli.game2.lifecycle.LifeCycle;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import xueli.game2.lifecycle.LifeCycle;
 
 public class AttributeBuffer implements LifeCycle, Bindable {
 

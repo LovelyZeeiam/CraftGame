@@ -1,8 +1,8 @@
 package xueli.utils;
 
-import xueli.game.vector.Vector2i;
-
 import java.util.concurrent.ConcurrentHashMap;
+
+import xueli.game.vector.Vector2i;
 
 public class Int2HashMap<V> extends ConcurrentHashMap<Vector2i, V> {
 

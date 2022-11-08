@@ -1,12 +1,12 @@
 package xueli.game2.resource.submanager.render.texture;
 
-import xueli.game2.renderer.ui.NanoVGContext;
+import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
+import static org.lwjgl.nanovg.NanoVGGL3.nvglCreateImageFromHandle;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
-import static org.lwjgl.nanovg.NanoVGGL3.nvglCreateImageFromHandle;
+import xueli.game2.renderer.ui.NanoVGContext;
 
 public class TextureLoaderNanoVG extends TextureLoaderLegacy {
 

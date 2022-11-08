@@ -1,6 +1,10 @@
 package xueli.game2.display;
 
+import java.io.IOException;
+import java.util.List;
+
 import org.lwjgl.opengl.GL30;
+
 import xueli.game.utils.FPSCalculator;
 import xueli.game2.Timer;
 import xueli.game2.lifecycle.RunnableLifeCycle;
@@ -17,9 +21,6 @@ import xueli.game2.resource.submanager.render.texture.TextureMissing;
 import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
 import xueli.game2.resource.submanager.render.texture.atlas.AtlasTextureRenderResource;
 import xueli.utils.exception.CrashReport;
-
-import java.io.IOException;
-import java.util.List;
 
 public abstract class GameDisplay implements RunnableLifeCycle, RenderResourceProvider, KeyInputListener, WindowSizeListener {
 

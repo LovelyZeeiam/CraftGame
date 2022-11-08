@@ -1,9 +1,9 @@
 package xueli.jrich;
 
+import java.util.function.Supplier;
+
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.AnsiConsole;
-
-import java.util.function.Supplier;
 
 public class JRichConsole {
 

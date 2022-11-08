@@ -1,9 +1,9 @@
 package xueli.game2.resource.manager;
 
-import xueli.utils.logger.MyLogger;
-
 import java.io.IOException;
 import java.util.ArrayList;
+
+import xueli.utils.logger.MyLogger;
 
 public abstract class ChainedResourceManager implements ResourceManager {
 	

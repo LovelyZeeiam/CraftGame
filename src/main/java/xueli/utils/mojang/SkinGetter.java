@@ -1,16 +1,17 @@
 package xueli.utils.mojang;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import xueli.utils.io.Files;
-import xueli.utils.logger.MyLogger;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Base64;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import xueli.utils.io.Files;
+import xueli.utils.logger.MyLogger;
 
 public class SkinGetter {
 

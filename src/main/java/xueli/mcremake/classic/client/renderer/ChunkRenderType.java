@@ -1,10 +1,10 @@
 package xueli.mcremake.classic.client.renderer;
 
+import java.util.function.Function;
+
 import xueli.game.vector.Vector2i;
 import xueli.game2.renderer.legacy.RenderBuffer;
 import xueli.game2.renderer.legacy.RenderType;
-
-import java.util.function.Function;
 
 public abstract class ChunkRenderType extends RenderType<Vector2i> {
 

@@ -1,7 +1,16 @@
 package xueli.game2.network;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
+
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.*;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import xueli.game2.network.pipeline.PacketDecoder;
@@ -9,9 +18,6 @@ import xueli.game2.network.pipeline.PacketEncoder;
 import xueli.game2.network.pipeline.PacketSizeDecodeHandler;
 import xueli.game2.network.pipeline.PacketSizePrefixer;
 import xueli.game2.network.processor.PacketProcessor;
-
-import java.io.IOException;
-import java.net.InetSocketAddress;
 
 public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 
@@ -23,8 +29,9 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 	private int port;
 
 	private PacketProcessor processor;
-
-	public ClientConnection() {
+	private boolean connected = true;
+	
+	ClientConnection() {
 	}
 
 	public ClientConnection(PacketProcessor processor) {
@@ -54,9 +61,33 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 		super.exceptionCaught(ctx, cause);
 
 	}
+	
+	@Override
+	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+		super.channelInactive(ctx);
+		this.connected = false;
+		
+	}
 
 	public void writeAndFlush(Object p) {
 		this.writeAndFlush(p, true);
+	}
+	
+	public void writeAndFlush(Object p, PacketListener listener) {
+		ChannelFuture future = this.channel.writeAndFlush(p);
+		future.addListener(f -> {
+			if(f.isDone()) {
+				listener.onPacketSentSuccessfully();
+			} else {
+				Packet failurePacket = listener.onPacketSendFailure();
+				if(failurePacket != null) {
+					this.channel.writeAndFlush(failurePacket)
+						.addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
+				}
+			}
+			
+		});
+		
 	}
 
 	public void writeAndFlush(Object p, boolean async) {
@@ -89,9 +120,13 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 
 	public void close() {
 		if (this.channel != null) {
-			this.channel.close().syncUninterruptibly();
+			this.channel.close().awaitUninterruptibly();
 		}
 
+	}
+	
+	public boolean isConnected() {
+		return connected;
 	}
 
 	public static ClientConnection connectToServer(Protocol clientboundProtocol, Protocol serverboundProtocol, InetSocketAddress addr) throws IOException {

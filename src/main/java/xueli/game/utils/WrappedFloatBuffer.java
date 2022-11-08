@@ -1,11 +1,11 @@
 package xueli.game.utils;
 
+import java.nio.FloatBuffer;
+
 import org.lwjgl.BufferUtils;
 import org.lwjgl.utils.vector.Vector2f;
 import org.lwjgl.utils.vector.Vector3f;
 import org.lwjgl.utils.vector.Vector4f;
-
-import java.nio.FloatBuffer;
 
 public class WrappedFloatBuffer {
 

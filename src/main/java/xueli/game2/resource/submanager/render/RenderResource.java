@@ -1,10 +1,10 @@
 package xueli.game2.resource.submanager.render;
 
-import xueli.game2.resource.manager.ChainedResourceManager;
-import xueli.game2.resource.manager.SubResourceManager;
-
 import java.io.IOException;
 import java.util.HashMap;
+
+import xueli.game2.resource.manager.ChainedResourceManager;
+import xueli.game2.resource.manager.SubResourceManager;
 
 public abstract class RenderResource<K, V> extends SubResourceManager {
 

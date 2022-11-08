@@ -1,13 +1,13 @@
 package xueli.utils;
 
-import io.netty.buffer.ByteBuf;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.zip.DeflaterInputStream;
 import java.util.zip.DeflaterOutputStream;
+
+import io.netty.buffer.ByteBuf;
 
 public class ZLib {
 

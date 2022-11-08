@@ -1,8 +1,8 @@
 package xueli.game2.network;
 
-import io.netty.buffer.ByteBuf;
-
 import java.io.IOException;
+
+import io.netty.buffer.ByteBuf;
 
 public class ByteBufReadable implements Readable {
 

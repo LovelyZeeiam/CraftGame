@@ -1,13 +1,13 @@
 package xueli.game2.resource.provider;
 
-import xueli.game2.resource.Resource;
-import xueli.game2.resource.ResourceURL;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import xueli.game2.resource.Resource;
+import xueli.game2.resource.ResourceURL;
 
 public abstract class URLResourceProvider extends AbstractResourceProvider {
 

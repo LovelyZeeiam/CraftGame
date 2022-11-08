@@ -31,10 +31,10 @@
  */
 package org.lwjgl.utils.vector;
 
-import xueli.game2.renderer.legacy.buffer.BufferStorable;
-
 import java.io.Serializable;
 import java.nio.FloatBuffer;
+
+import xueli.game2.renderer.legacy.buffer.BufferStorable;
 
 /**
  * Base class for vectors.
