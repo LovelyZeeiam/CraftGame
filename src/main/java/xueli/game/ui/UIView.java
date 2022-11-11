@@ -1,20 +1,15 @@
 package xueli.game.ui;
 
-import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
-import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgluBindFramebuffer;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgluCreateFramebuffer;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgluDeleteFramebuffer;
-
-import java.util.ArrayList;
-
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGLUFramebuffer;
 import org.lwjgl.opengl.GL11;
-
 import xueli.game.renderer.Renderer;
 import xueli.game.utils.NVGColors;
+
+import java.util.ArrayList;
+
+import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.nanovg.NanoVGGL3.*;
 
 public abstract class UIView implements Renderer {
 

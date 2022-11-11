@@ -8,6 +8,8 @@ public interface RenderBuffer {
 
 	public void setVertexCount(int count);
 
+	public BackRenderBuffer createBackBuffer();
+
 	public void render();
 	
 	public void release();

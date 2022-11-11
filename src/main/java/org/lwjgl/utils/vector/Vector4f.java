@@ -31,10 +31,10 @@
  */
 package org.lwjgl.utils.vector;
 
+import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
+
 import java.io.Serializable;
 import java.nio.FloatBuffer;
-
-import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
 
 /**
  * Holds a 4-tuple vector.

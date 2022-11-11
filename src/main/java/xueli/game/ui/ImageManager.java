@@ -1,14 +1,12 @@
 package xueli.game.ui;
 
-import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
-import static org.lwjgl.nanovg.NanoVG.nvgCreateImageMem;
-import static org.lwjgl.nanovg.NanoVG.nvgDeleteImage;
+import xueli.utils.io.Files;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 
-import xueli.utils.io.Files;
+import static org.lwjgl.nanovg.NanoVG.*;
 
 public class ImageManager {
 

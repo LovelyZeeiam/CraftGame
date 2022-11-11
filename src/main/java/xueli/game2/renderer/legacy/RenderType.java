@@ -1,7 +1,6 @@
 package xueli.game2.renderer.legacy;
 
 import java.util.HashMap;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 public abstract class RenderType<T> {

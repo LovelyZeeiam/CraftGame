@@ -1,7 +1,6 @@
 package xueli.game.utils;
 
 import org.lwjgl.opengl.GL11;
-
 import xueli.utils.logger.MyLogger;
 
 public class GLHelper {

@@ -1,9 +1,9 @@
 package xueli.game2.renderer.legacy;
 
-import java.util.HashMap;
-
 import xueli.game2.lifecycle.LifeCycle;
 import xueli.game2.resource.ResourceLocation;
+
+import java.util.HashMap;
 
 public class RenderSystem<T extends RenderType> implements LifeCycle {
 

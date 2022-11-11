@@ -1,15 +1,11 @@
 package xueli.game2.renderer.ui;
 
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_ANTIALIAS;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_DEBUG;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_STENCIL_STROKES;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgCreate;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgDelete;
+import org.lwjgl.nanovg.NVGPaint;
 
 import java.io.Closeable;
 import java.io.IOException;
 
-import org.lwjgl.nanovg.NVGPaint;
+import static org.lwjgl.nanovg.NanoVGGL3.*;
 
 public class NanoVGContext implements Closeable {
 

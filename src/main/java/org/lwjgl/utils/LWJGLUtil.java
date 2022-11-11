@@ -31,6 +31,8 @@
  */
 package org.lwjgl.utils;
 
+import org.lwjgl.BufferUtils;
+
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -40,14 +42,7 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
-
-import org.lwjgl.BufferUtils;
+import java.util.*;
 
 /**
  * <p>
