@@ -12,6 +12,8 @@ public interface RenderBuffer extends VertexAcceptable {
 		}
 	}
 
+	public void sync();
+
 	public void render();
 	
 	public void release();

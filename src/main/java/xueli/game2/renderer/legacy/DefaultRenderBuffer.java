@@ -38,6 +38,10 @@ public class DefaultRenderBuffer implements RenderBuffer {
 	}
 
 	@Override
+	public void sync() {
+	}
+
+	@Override
 	public void acceptVertex(BufferStorable storable) {
 		storable.store(this.buf);
 		this.acceptTime++;
