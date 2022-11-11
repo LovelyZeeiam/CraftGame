@@ -30,13 +30,6 @@ public abstract class RenderType<T> {
 		return buffers.computeIfAbsent(key, bufferSupplier);
 	}
 
-	public void rebuiltBuffer(T key, Consumer<VertexAcceptable> c) {
-		RenderBuffer buffer = this.getRenderBuffer(key);
-		buffer.reset();
-		c.accept(buffer);
-
-	}
-
 	public RenderBuffer releaseRenderBuffer(T key) {
 		RenderBuffer buffer = buffers.remove(key);
 		buffer.release();

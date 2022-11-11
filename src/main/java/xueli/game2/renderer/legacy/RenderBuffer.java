@@ -1,18 +1,12 @@
 package xueli.game2.renderer.legacy;
 
-import xueli.game2.renderer.legacy.buffer.BufferStorable;
+import java.nio.ByteBuffer;
 
-public interface RenderBuffer extends VertexAcceptable {
+public interface RenderBuffer {
 
-	public void reset();
+	public void applyBuffer(int id, ByteBuffer buf);
 
-	default public void acceptVertex(BufferStorable... storables) {
-		for (BufferStorable storable : storables) {
-			this.acceptVertex(storable);
-		}
-	}
-
-	public void sync();
+	public void setVertexCount(int count);
 
 	public void render();
 	

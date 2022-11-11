@@ -13,55 +13,7 @@ import xueli.game2.renderer.legacy.buffer.BufferStorable;
 import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
 
 @Deprecated
-public class DefaultRenderBuffer implements RenderBuffer {
-
-	private final ShapeType shapeType;
-
-	private final LotsOfByteBuffer buf;
-	private final DefaultVertexPointer vertexPointer;
-
-	public DefaultRenderBuffer(ShapeType shapeType) {
-		this.shapeType = shapeType;
-
-		this.vertexPointer = new DefaultVertexPointer(0, GL15.GL_DYNAMIC_DRAW);
-		this.buf = new LotsOfByteBuffer(6000);
-
-	}
-
-	private int acceptTime = 0;
-
-	@Override
-	public void reset() {
-		this.buf.clear();
-		this.acceptTime = 0;
-
-	}
-
-	@Override
-	public void sync() {
-	}
-
-	@Override
-	public void acceptVertex(BufferStorable storable) {
-		storable.store(this.buf);
-		this.acceptTime++;
-
-	}
-
-	@Override
-	public void render() {
-		this.vertexPointer.bind();
-		this.vertexPointer.bufferData(this.buf.getBuffer());
-		this.vertexPointer.draw(this.shapeType.getGLValue(), 0, this.acceptTime / 3);
-		this.vertexPointer.unbind();
-
-	}
-
-	@Override
-	public void release() {
-		this.vertexPointer.delete();
-
-	}
+public class DefaultRenderBuffer {
 
 	public static class DefaultVertexPointer {
 

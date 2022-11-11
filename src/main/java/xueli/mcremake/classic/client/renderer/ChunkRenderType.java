@@ -8,7 +8,7 @@ import xueli.game2.renderer.legacy.ShapeType;
 public abstract class ChunkRenderType extends RenderType<Vector2i> {
 
 	public ChunkRenderType() {
-		super(v -> new DefaultRenderBuffer(ShapeType.TRIANGLES));
+		super(v -> new MyRenderBuffer());
 	}
 
 }
