@@ -4,10 +4,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL30;
-import org.lwjgl.utils.vector.Vector;
 
 import xueli.game2.lifecycle.LifeCycle;
-import xueli.game2.renderer.legacy.vertex.VertexType;
+import xueli.game2.renderer.legacy.VertexType;
 
 public class AttributeBuffer implements LifeCycle, Bindable {
 
@@ -17,7 +16,6 @@ public class AttributeBuffer implements LifeCycle, Bindable {
 	private final VertexType type;
 
 	private LotsOfByteBuffer lotsOfByteBuffer;
-	private int vertexCount = 0;
 
 	private int vbo;
 
@@ -55,11 +53,10 @@ public class AttributeBuffer implements LifeCycle, Bindable {
 
 	}
 
-	private AtomicBoolean shouldSyncData = new AtomicBoolean(true);
+	private final AtomicBoolean shouldSyncData = new AtomicBoolean(true);
 
-	public AttributeBuffer submit(Vector vector) {
+	public AttributeBuffer submit(BufferStorable vector) {
 		vector.store(lotsOfByteBuffer);
-		vertexCount++;
 		return this;
 	}
 
@@ -81,14 +78,9 @@ public class AttributeBuffer implements LifeCycle, Bindable {
 		}
 	}
 
-	public int getVertexCount() {
-		return vertexCount;
-	}
-
 	public void clear() {
-		vertexCount = 0;
 		lotsOfByteBuffer.clear();
-		shouldSyncData.set(true);
+
 	}
 
 	@Override

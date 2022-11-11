@@ -11,8 +11,8 @@ import org.lwjgl.opengl.GL30;
 import xueli.game.utils.GLHelper;
 import xueli.game2.renderer.legacy.buffer.BufferStorable;
 import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
-import xueli.game2.renderer.legacy.vertex.ShapeType;
 
+@Deprecated
 public class DefaultRenderBuffer implements RenderBuffer {
 
 	private final ShapeType shapeType;

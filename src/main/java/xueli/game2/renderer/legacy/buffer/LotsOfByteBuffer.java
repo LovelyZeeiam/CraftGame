@@ -9,7 +9,7 @@ import org.lwjgl.utils.vector.Vector4f;
 
 public class LotsOfByteBuffer {
 
-	private static final int DEFAULT_CAPACITY = 65536;
+	private static final int DEFAULT_CAPACITY = 32768;
 	private static final int STEP_EXPAND = 65536;
 
 	private ByteBuffer buffer;

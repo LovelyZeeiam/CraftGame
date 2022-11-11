@@ -1,4 +1,4 @@
-package xueli.game2.renderer.legacy.vertex;
+package xueli.game2.renderer.legacy;
 
 import org.lwjgl.opengl.GL11;
 
