@@ -44,5 +44,9 @@ public class CraftGameServer implements RunnableLifeCycle {
 	public boolean isRunning() {
 		return isRunning;
 	}
+	
+	public Server<MyServerConnection> getServer() {
+		return server;
+	}
 
 }

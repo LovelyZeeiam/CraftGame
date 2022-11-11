@@ -13,7 +13,7 @@ public interface RenderBuffer extends VertexAcceptable {
 	}
 
 	public void render();
-
+	
 	public void release();
 
 }

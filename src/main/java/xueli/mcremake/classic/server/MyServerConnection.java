@@ -30,7 +30,7 @@ public class MyServerConnection extends ServerClientConnection {
 	}
 	
 	private void handleHello(C00HelloPacket packet) {
-		System.out.println(packet);
+		
 		
 	}
 	

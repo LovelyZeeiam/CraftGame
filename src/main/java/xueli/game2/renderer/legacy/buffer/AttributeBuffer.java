@@ -7,13 +7,14 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.utils.vector.Vector;
 
 import xueli.game2.lifecycle.LifeCycle;
+import xueli.game2.renderer.legacy.vertex.VertexType;
 
 public class AttributeBuffer implements LifeCycle, Bindable {
 
-	private int id;
-	private int attributeSize;
-	private int bufferType = GL15.GL_DYNAMIC_DRAW;
-	private VertexType type;
+	private final int id;
+	private final int attributeSize;
+	private final int bufferType = GL15.GL_DYNAMIC_DRAW;
+	private final VertexType type;
 
 	private LotsOfByteBuffer lotsOfByteBuffer;
 	private int vertexCount = 0;

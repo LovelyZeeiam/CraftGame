@@ -10,9 +10,16 @@ By the way, to separate the packet into `game` and `game2` because the code abou
 
 This goal of this fork is to program a basic winnable game based on the Classic Minecraft color and some terrain generation in its later version, around `a1.0.4`. The resources is extracted from Minecraft a1.2.6.
 
-****
+## The goal
 
-# How to Test the Game
+- [ ] All blocks that are in Minecraft Alpha a1.0.4
+- [ ] Implement a simple world using terrain generation including default world and simple biomes like Minecraft.
+- [ ] Implement Survival Mode as default.
+- [ ] Day-night Circle.
+- [ ] Animals and monsters.
+
+
+## How to Test the Game
 
 #### Windows
 
@@ -37,6 +44,7 @@ I'm convinced it be able to run by typing the following 3 commands.
 > 
 > ./gradlew run
 
-### Have fun!
+***
 
-****
+# Have fun!
+
