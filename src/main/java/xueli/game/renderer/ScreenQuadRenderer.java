@@ -27,7 +27,7 @@ public class ScreenQuadRenderer {
 
 		try {
 			// TODO
-			shader = Shader.getShader(
+			shader = Shader.compile(
 					new String(Files.readResourcePackedInJar("/assets/craftgame/shaders/screen_quad/vert.txt"),
 							StandardCharsets.UTF_8),
 					new String(Files.readResourcePackedInJar("/assets/craftgame/shaders/screen_quad/frag.txt"),

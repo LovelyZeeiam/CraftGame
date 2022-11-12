@@ -1,14 +1,14 @@
 package xueli.game2.resource.manager;
 
+import xueli.game2.resource.Resource;
+import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.provider.ResourceProvider;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
-
-import xueli.game2.resource.Resource;
-import xueli.game2.resource.ResourceLocation;
-import xueli.game2.resource.provider.ResourceProvider;
 
 public class BackwardResourceManager extends ChainedResourceManager {
 

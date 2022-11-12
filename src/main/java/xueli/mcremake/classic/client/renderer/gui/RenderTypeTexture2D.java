@@ -1,25 +1,24 @@
-package xueli.mcremake.classic.client.renderer;
+package xueli.mcremake.classic.client.renderer.gui;
 
+import xueli.game2.renderer.legacy.engine.RenderType;
 import xueli.game2.resource.submanager.render.shader.Shader;
 
-public class RenderTypeSolid extends ChunkRenderType {
+import static org.lwjgl.opengl.GL30.*;
+
+public class RenderTypeTexture2D extends RenderType<Integer> {
 
 	private static final String VERT_SHADER_CODE = """
 #version 330
 
-layout (location = 0) in vec3 pos;
+layout (location = 0) in vec2 pos;
 layout (location = 1) in vec2 texPos;
 layout (location = 2) in vec3 color;
-
-uniform mat4 projMatrix;
-uniform mat4 viewMatrix;
 
 out vec2 otexPos;
 out vec3 ocolor;
 
 void main(){
-	vec4 posCam = viewMatrix * vec4(pos ,1.0);
-	gl_Position = projMatrix * posCam;
+	gl_Position = vec4(pos, 0.0, 1.0);
 	otexPos = texPos;
 	ocolor = color;
 	
@@ -48,22 +47,32 @@ void main(){
 
 	private Shader shader;
 
+	public RenderTypeTexture2D() {
+		super(i -> new MyRenderBuffer2D());
+
+	}
+
 	@Override
-	protected void doInit() {
-		this.shader = Shader.getShader(VERT_SHADER_CODE, FRAG_SHADER_CODE);
+	public void doInit() {
+		this.shader = Shader.compile(VERT_SHADER_CODE, FRAG_SHADER_CODE);
 
 	}
 
 	@Override
 	public void render() {
 		this.shader.bind();
-		super.render();
+		buffers.forEach((i, a) -> {
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, i);
+			a.render();
+			glBindTexture(GL_TEXTURE_2D, 0);
+		});
 		this.shader.unbind();
 
 	}
 
 	@Override
-	public void release() {
+	public void doRelease() {
 		this.shader.release();
 
 	}

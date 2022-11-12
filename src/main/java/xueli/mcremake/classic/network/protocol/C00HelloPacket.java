@@ -1,12 +1,12 @@
 package xueli.mcremake.classic.network.protocol;
 
-import java.io.IOException;
-import java.util.UUID;
-
 import xueli.game2.network.Packet;
 import xueli.game2.network.PrimitiveCodec;
 import xueli.game2.network.Readable;
 import xueli.game2.network.Writable;
+
+import java.io.IOException;
+import java.util.UUID;
 
 public class C00HelloPacket extends Packet {
 	

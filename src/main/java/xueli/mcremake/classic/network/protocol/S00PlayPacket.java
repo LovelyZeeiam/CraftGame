@@ -1,10 +1,10 @@
 package xueli.mcremake.classic.network.protocol;
 
-import java.io.IOException;
-
 import xueli.game2.network.Packet;
 import xueli.game2.network.Readable;
 import xueli.game2.network.Writable;
+
+import java.io.IOException;
 
 public class S00PlayPacket extends Packet {
 	

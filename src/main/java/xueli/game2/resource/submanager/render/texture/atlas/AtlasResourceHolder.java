@@ -1,8 +1,8 @@
 package xueli.game2.resource.submanager.render.texture.atlas;
 
-import java.util.Objects;
-
 import org.lwjgl.utils.vector.Vector2f;
+
+import java.util.Objects;
 
 public final class AtlasResourceHolder {
 

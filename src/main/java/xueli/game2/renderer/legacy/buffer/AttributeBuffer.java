@@ -33,6 +33,8 @@ public class AttributeBuffer implements LifeCycle, Bindable {
 		GL30.glVertexAttribPointer(id, attributeSize, type.getGlValue(), false, 0, 0);
 		GL30.glEnableVertexAttribArray(id);
 
+		GL30.glBindBuffer(GL30.GL_ARRAY_BUFFER, 0);
+
 	}
 
 	private final AtomicBoolean shouldSyncData = new AtomicBoolean(true);
@@ -42,9 +44,7 @@ public class AttributeBuffer implements LifeCycle, Bindable {
 	public void tick() {
 		synchronized (this) {
 			if(shouldSyncData.get()) {
-				this.bind(() -> {
-					GL30.glBufferData(GL30.GL_ARRAY_BUFFER, toBeSyncData, bufferType);
-				});
+				this.bind(() -> GL30.glBufferData(GL30.GL_ARRAY_BUFFER, toBeSyncData, bufferType));
 				shouldSyncData.set(false);
 			}
 		}
@@ -74,6 +74,10 @@ public class AttributeBuffer implements LifeCycle, Bindable {
 
 	public int getId() {
 		return id;
+	}
+
+	public int getAttributeSize() {
+		return attributeSize;
 	}
 
 	public VertexType getType() {

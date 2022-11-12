@@ -1,11 +1,11 @@
 package xueli.game2.resource.manager;
 
+import xueli.game2.resource.Resource;
+import xueli.game2.resource.ResourceLocation;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.function.Predicate;
-
-import xueli.game2.resource.Resource;
-import xueli.game2.resource.ResourceLocation;
 
 public class SubResourceManager extends ChainedResourceManager {
 	

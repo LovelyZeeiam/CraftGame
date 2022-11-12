@@ -13,7 +13,7 @@ public class ShaderRenderResource extends RenderResource<ShaderResourceLocation,
 	}
 
 	@Override
-	protected Shader register(ShaderResourceLocation k, boolean must) {
+	protected Shader doRegister(ShaderResourceLocation k, boolean must) {
 		ResourceManager manager = getUpperResourceManager();
 		try {
 			Resource vertResource = manager.getResource(k.vert());
@@ -22,7 +22,7 @@ public class ShaderRenderResource extends RenderResource<ShaderResourceLocation,
 			Resource fragResource = manager.getResource(k.frag());
 			String fragCode = ResourceHelper.readAllToString(fragResource);
 			
-			return Shader.getShader(vertCode, fragCode);
+			return Shader.compile(vertCode, fragCode);
 		} catch (Exception e) {
 			if (must)
 				throw new RuntimeException(e);

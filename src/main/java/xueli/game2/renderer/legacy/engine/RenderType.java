@@ -1,11 +1,11 @@
-package xueli.game2.renderer.legacy;
+package xueli.game2.renderer.legacy.engine;
 
 import java.util.HashMap;
 import java.util.function.Function;
 
 public abstract class RenderType<T> {
 
-	private final HashMap<T, RenderBuffer> buffers = new HashMap<>();
+	protected final HashMap<T, RenderBuffer> buffers = new HashMap<>();
 
 	private final Function<T, RenderBuffer> bufferSupplier;
 
@@ -23,7 +23,7 @@ public abstract class RenderType<T> {
 
 	}
 
-	protected abstract void doInit();
+	public abstract void doInit();
 
 	public RenderBuffer getRenderBuffer(T key) {
 		return buffers.computeIfAbsent(key, bufferSupplier);
@@ -40,6 +40,12 @@ public abstract class RenderType<T> {
 
 	}
 
-	public abstract void release();
+	public void release() {
+		buffers.values().forEach(RenderBuffer::release);
+		this.doRelease();
+
+	}
+
+	protected abstract void doRelease();
 
 }

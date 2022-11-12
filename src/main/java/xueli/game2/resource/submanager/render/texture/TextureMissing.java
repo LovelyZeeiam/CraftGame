@@ -1,12 +1,10 @@
 package xueli.game2.resource.submanager.render.texture;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.util.HashMap;
-
 import org.lwjgl.utils.vector.Vector2f;
-
 import xueli.game2.resource.submanager.render.texture.atlas.AtlasResourceHolder;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class TextureMissing {
 
@@ -28,16 +26,12 @@ public class TextureMissing {
 
 	}
 
-	private static HashMap<TextureType, Integer> textures = new HashMap<>();
-
 	public static int get(TextureType type) {
-		return textures.computeIfAbsent(type, t -> {
-			try {
-				return t.getLoader().registerTexture(image);
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		});
+		try {
+			return type.getLoader().registerTexture(image);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	private static AtlasResourceHolder atlasHolder;
@@ -51,11 +45,5 @@ public class TextureMissing {
 	}
 
 	public static void init() {}
-
-	static {
-		TextureMissing.getAtlasHolder();
-		TextureMissing.get(TextureType.LEGACY);
-		TextureMissing.get(TextureType.NVG);
-	}
 
 }

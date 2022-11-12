@@ -1,8 +1,8 @@
 package xueli.game2.network;
 
-import java.io.IOException;
-
 import xueli.game2.network.processor.PacketProcessor;
+
+import java.io.IOException;
 
 public abstract class Packet {
 

@@ -5,6 +5,7 @@ import xueli.game2.renderer.legacy.ShapeType;
 import xueli.game2.renderer.legacy.VertexType;
 
 import java.util.HashMap;
+import java.util.function.Consumer;
 
 public class VertexAttribute implements Bindable {
 
@@ -28,6 +29,10 @@ public class VertexAttribute implements Bindable {
 
 	public AttributeBuffer getAttributeBuffer(int id) {
 		return this.buffers.get(id);
+	}
+
+	public void forEachAttribute(Consumer<Integer> c) {
+		buffers.keySet().forEach(c);
 	}
 
 	@Override

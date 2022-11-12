@@ -1,6 +1,14 @@
 package xueli.game2.resource.submanager.render.texture.atlas;
 
-import java.awt.Graphics2D;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.utils.vector.Vector2f;
+import xueli.game2.resource.Resource;
+import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.manager.SubResourceManager;
+import xueli.game2.resource.submanager.render.texture.*;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,20 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-
-import javax.imageio.ImageIO;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.utils.vector.Vector2f;
-
-import xueli.game2.resource.Resource;
-import xueli.game2.resource.ResourceLocation;
-import xueli.game2.resource.manager.SubResourceManager;
-import xueli.game2.resource.submanager.render.texture.AbstractTextureLoader;
-import xueli.game2.resource.submanager.render.texture.TextureLoaderUtils;
-import xueli.game2.resource.submanager.render.texture.TextureMissing;
-import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
-import xueli.game2.resource.submanager.render.texture.TextureType;
 
 public class AtlasTextureRenderResource extends SubResourceManager {
 

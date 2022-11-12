@@ -1,18 +1,17 @@
 package xueli.game2.network;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import org.lwjgl.utils.vector.Vector3i;
-
 import com.flowpowered.nbt.CompoundTag;
 import com.flowpowered.nbt.Tag;
 import com.flowpowered.nbt.stream.NBTInputStream;
 import com.flowpowered.nbt.stream.NBTOutputStream;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import org.lwjgl.utils.vector.Vector3i;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public interface PrimitiveCodec<T> {
 

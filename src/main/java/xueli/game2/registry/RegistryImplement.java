@@ -1,9 +1,9 @@
 package xueli.game2.registry;
 
+import xueli.game2.resource.ResourceLocation;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import xueli.game2.resource.ResourceLocation;
 
 public class RegistryImplement<T> implements WritableRegistry<T> {
 

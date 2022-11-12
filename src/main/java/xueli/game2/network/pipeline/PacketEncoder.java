@@ -1,16 +1,12 @@
 package xueli.game2.network.pipeline;
 
-import java.io.IOException;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import xueli.game2.network.ByteBufWritable;
-import xueli.game2.network.Packet;
-import xueli.game2.network.PrimitiveCodec;
-import xueli.game2.network.Protocol;
-import xueli.game2.network.Writable;
+import xueli.game2.network.*;
 import xueli.utils.logger.MyLogger;
+
+import java.io.IOException;
 
 public class PacketEncoder extends MessageToByteEncoder<Packet> {
 

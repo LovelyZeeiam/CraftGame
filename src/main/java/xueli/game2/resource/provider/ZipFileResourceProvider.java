@@ -1,5 +1,9 @@
 package xueli.game2.resource.provider;
 
+import xueli.game2.resource.Resource;
+import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.ResourceZipEntry;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,10 +12,6 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import xueli.game2.resource.Resource;
-import xueli.game2.resource.ResourceLocation;
-import xueli.game2.resource.ResourceZipEntry;
 
 public class ZipFileResourceProvider extends AbstractResourceProvider {
 

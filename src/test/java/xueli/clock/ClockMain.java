@@ -58,7 +58,7 @@ public class ClockMain extends GameDisplay {
 		this.nvg = NanoVGContext.INSTANCE.getNvg();
 		this.paint = NanoVGContext.INSTANCE.getPaint();
 
-		fontResource.preRegister(fontLocation, true);
+		fontResource.register(fontLocation, true);
 
 	}
 

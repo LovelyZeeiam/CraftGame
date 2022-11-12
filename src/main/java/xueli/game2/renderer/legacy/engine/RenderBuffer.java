@@ -1,4 +1,6 @@
-package xueli.game2.renderer.legacy;
+package xueli.game2.renderer.legacy.engine;
+
+import xueli.game2.renderer.legacy.BackRenderBuffer;
 
 import java.nio.ByteBuffer;
 

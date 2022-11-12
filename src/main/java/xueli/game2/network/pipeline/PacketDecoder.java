@@ -1,17 +1,14 @@
 package xueli.game2.network.pipeline;
 
-import java.util.List;
-import java.util.function.Function;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import xueli.game2.network.ByteBufReadable;
-import xueli.game2.network.Packet;
-import xueli.game2.network.PrimitiveCodec;
-import xueli.game2.network.Protocol;
 import xueli.game2.network.Readable;
+import xueli.game2.network.*;
 import xueli.utils.logger.MyLogger;
+
+import java.util.List;
+import java.util.function.Function;
 
 public class PacketDecoder extends ByteToMessageDecoder {
 

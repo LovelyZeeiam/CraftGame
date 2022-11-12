@@ -1,9 +1,9 @@
 package xueli.game2.resource.submanager.render.texture;
 
-import java.io.IOException;
-
 import xueli.game2.resource.manager.ChainedResourceManager;
 import xueli.game2.resource.submanager.render.RenderResource;
+
+import java.io.IOException;
 
 public class TextureRenderResource extends RenderResource<TextureResourceLocation, Integer> {
 	
@@ -12,7 +12,7 @@ public class TextureRenderResource extends RenderResource<TextureResourceLocatio
 	}
 	
 	@Override
-	protected Integer register(TextureResourceLocation k, boolean must) {
+	protected Integer doRegister(TextureResourceLocation k, boolean must) {
 		TextureLoader loader = k.getTextureLoader();
 		TextureType type = k.type();
 		try {

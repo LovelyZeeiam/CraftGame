@@ -1,12 +1,5 @@
 package xueli.game2.resource.submanager.render.shader;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.FloatBuffer;
-import java.util.HashMap;
-
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
@@ -14,11 +7,17 @@ import org.lwjgl.opengl.GL32;
 import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector2f;
 import org.lwjgl.utils.vector.Vector3f;
-
 import xueli.game.Game;
 import xueli.game.utils.math.MatrixHelper;
 import xueli.game.vector.Vector;
 import xueli.game2.renderer.legacy.buffer.Bindable;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.FloatBuffer;
+import java.util.HashMap;
 
 public class Shader implements Bindable {
 	
@@ -29,8 +28,8 @@ public class Shader implements Bindable {
 	private FloatBuffer b = BufferUtils.createFloatBuffer(16);
 
 	public Shader(String vertPath, String fragPath) {
-		vertID = getShader(vertPath, GL20.GL_VERTEX_SHADER);
-		fragID = getShader(fragPath, GL20.GL_FRAGMENT_SHADER);
+		vertID = compile(vertPath, GL20.GL_VERTEX_SHADER);
+		fragID = compile(fragPath, GL20.GL_FRAGMENT_SHADER);
 
 		this.shaderID = GL20.glCreateProgram();
 		GL20.glAttachShader(this.shaderID, vertID);
@@ -41,9 +40,9 @@ public class Shader implements Bindable {
 	}
 
 	public Shader(String vertPath, String geoPath, String fragPath) {
-		vertID = getShader(vertPath, GL20.GL_VERTEX_SHADER);
-		geoID = getShader(geoPath, GL32.GL_GEOMETRY_SHADER);
-		fragID = getShader(fragPath, GL20.GL_FRAGMENT_SHADER);
+		vertID = compile(vertPath, GL20.GL_VERTEX_SHADER);
+		geoID = compile(geoPath, GL32.GL_GEOMETRY_SHADER);
+		fragID = compile(fragPath, GL20.GL_FRAGMENT_SHADER);
 
 		this.shaderID = GL20.glCreateProgram();
 		GL20.glAttachShader(this.shaderID, vertID);
@@ -61,7 +60,7 @@ public class Shader implements Bindable {
 		this.geoID = geoID;
 	}
 
-	public static Shader getShader(String vertCode, String fragCode) {
+	public static Shader compile(String vertCode, String fragCode) {
 		int vertID = GL20.glCreateShader(GL20.GL_VERTEX_SHADER);
 		GL20.glShaderSource(vertID, vertCode);
 		GL20.glCompileShader(vertID);
@@ -85,7 +84,7 @@ public class Shader implements Bindable {
 		return new Shader(id, vertID, fragID, 0);
 	}
 
-	private int getShader(String shaderPath, int type) {
+	private int compile(String shaderPath, int type) {
 		StringBuilder source = new StringBuilder();
 		BufferedReader reader;
 		try {
