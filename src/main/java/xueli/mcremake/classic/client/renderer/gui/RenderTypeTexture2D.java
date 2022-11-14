@@ -1,7 +1,7 @@
 package xueli.mcremake.classic.client.renderer.gui;
 
 import org.lwjgl.utils.vector.Vector2f;
-import xueli.game2.renderer.legacy.engine.RenderType;
+import xueli.game2.renderer.legacy.RenderType;
 import xueli.game2.resource.submanager.render.shader.Shader;
 
 import static org.lwjgl.opengl.GL30.*;

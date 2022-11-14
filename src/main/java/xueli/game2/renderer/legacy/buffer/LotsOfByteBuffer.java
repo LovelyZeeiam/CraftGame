@@ -1,6 +1,7 @@
 package xueli.game2.renderer.legacy.buffer;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.system.MemoryUtil;
 import org.lwjgl.utils.vector.Vector2f;
 import org.lwjgl.utils.vector.Vector3f;
 import org.lwjgl.utils.vector.Vector4f;
@@ -13,18 +14,23 @@ public class LotsOfByteBuffer {
 	private static final int STEP_EXPAND = 65536;
 
 	private ByteBuffer buffer;
+	private int size;
 
 	public LotsOfByteBuffer() {
 		this(DEFAULT_CAPACITY);
 	}
 
 	public LotsOfByteBuffer(int initialCapacity) {
+		// The direct memory should be freed explicitly, or the game will jam when it comes to GC because it will free about 1GB at the same time in my computer.
 		this.buffer = BufferUtils.createByteBuffer(initialCapacity);
+		this.size = initialCapacity;
+
 	}
 
 	private void predictAndExpand(int more) {
 		if (buffer.position() + more >= buffer.capacity()) {
-			ByteBuffer newBuffer = BufferUtils.createByteBuffer(this.buffer.capacity() + STEP_EXPAND);
+			int capacity = this.size = this.buffer.capacity() + STEP_EXPAND;
+			ByteBuffer newBuffer = BufferUtils.createByteBuffer(capacity);
 			newBuffer.put(this.buffer);
 			this.buffer = newBuffer;
 		}
@@ -84,12 +90,18 @@ public class LotsOfByteBuffer {
 		
 	}
 
-	public void release() {
-		this.buffer = null;
-	}
-
 	public ByteBuffer getBuffer() {
 		return buffer;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void release() {
+		MemoryUtil.memFree(this.buffer);
+		this.buffer = null;
+
 	}
 
 }

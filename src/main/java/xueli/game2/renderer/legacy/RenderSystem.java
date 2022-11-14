@@ -1,7 +1,6 @@
 package xueli.game2.renderer.legacy;
 
 import xueli.game2.lifecycle.LifeCycle;
-import xueli.game2.renderer.legacy.engine.RenderType;
 import xueli.game2.resource.ResourceLocation;
 
 import java.util.HashMap;

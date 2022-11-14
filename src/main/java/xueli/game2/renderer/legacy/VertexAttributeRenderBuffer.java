@@ -1,18 +1,12 @@
-package xueli.game2.renderer.legacy.engine;
+package xueli.game2.renderer.legacy;
 
-import org.lwjgl.BufferUtils;
-import org.lwjgl.system.MemoryUtil;
-import xueli.game2.renderer.legacy.BackRenderBuffer;
-import xueli.game2.renderer.legacy.ShapeType;
 import xueli.game2.renderer.legacy.buffer.AttributeBuffer;
 import xueli.game2.renderer.legacy.buffer.BufferStorable;
 import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
 import xueli.game2.renderer.legacy.buffer.VertexAttribute;
 
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class VertexAttributeRenderBuffer implements RenderBuffer {
@@ -36,6 +30,8 @@ public class VertexAttributeRenderBuffer implements RenderBuffer {
 	public void setVertexCount(int count) {
 		this.vertCount = count;
 	}
+
+//	private final BufferPool pool = new BufferPool(3, 2);
 
 	private class VertexBuffer {
 		public int submitCount = 0;
@@ -73,7 +69,7 @@ public class VertexAttributeRenderBuffer implements RenderBuffer {
 					buffer.flip();
 					VertexAttributeRenderBuffer.this.applyBuffer(i, buffer);
 
-					b.buf.release();
+//					b.buf.release();
 
 				});
 

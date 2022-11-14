@@ -1,4 +1,4 @@
-package xueli.game2.renderer.legacy.engine;
+package xueli.game2.renderer.legacy;
 
 import java.util.HashMap;
 import java.util.function.Function;
