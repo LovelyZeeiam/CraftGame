@@ -2,6 +2,7 @@ package xueli.game2.renderer.legacy.buffer;
 
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL30;
+import org.lwjgl.system.MemoryUtil;
 import xueli.game2.lifecycle.LifeCycle;
 import xueli.game2.renderer.legacy.VertexType;
 
@@ -45,12 +46,16 @@ public class AttributeBuffer implements LifeCycle, Bindable {
 		synchronized (this) {
 			if(shouldSyncData.get()) {
 				this.bind(() -> GL30.glBufferData(GL30.GL_ARRAY_BUFFER, toBeSyncData, bufferType));
+//				if(this.lastSyncData != null)
+//					MemoryUtil.memFree(this.lastSyncData);
+
 				shouldSyncData.set(false);
 			}
 		}
 	}
 
 	public void updateBuffer(ByteBuffer buffer) {
+//		this.lastSyncData = this.toBeSyncData;
 		this.toBeSyncData = buffer;
 		shouldSyncData.set(true);
 

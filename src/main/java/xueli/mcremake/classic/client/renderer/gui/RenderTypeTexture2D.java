@@ -1,5 +1,6 @@
 package xueli.mcremake.classic.client.renderer.gui;
 
+import org.lwjgl.utils.vector.Vector2f;
 import xueli.game2.renderer.legacy.engine.RenderType;
 import xueli.game2.resource.submanager.render.shader.Shader;
 
@@ -14,11 +15,14 @@ layout (location = 0) in vec2 pos;
 layout (location = 1) in vec2 texPos;
 layout (location = 2) in vec3 color;
 
+uniform vec2 displayDimension;
+
 out vec2 otexPos;
 out vec3 ocolor;
 
 void main(){
-	gl_Position = vec4(pos, 0.0, 1.0);
+	vec2 normalPos = vec2(mix(-1.0, 1.0, pos.x / displayDimension.x), mix(1.0, -1.0, pos.y / displayDimension.y));
+	gl_Position = vec4(normalPos, 0.0, 1.0);
 	otexPos = texPos;
 	ocolor = color;
 	
@@ -67,6 +71,13 @@ void main(){
 			a.render();
 			glBindTexture(GL_TEXTURE_2D, 0);
 		});
+		this.shader.unbind();
+
+	}
+
+	public void setDisplayDimension(float width, float height) {
+		this.shader.bind();
+		shader.setUniformVector2f(shader.getUnifromLocation("displayDimension"), new Vector2f(width, height));
 		this.shader.unbind();
 
 	}

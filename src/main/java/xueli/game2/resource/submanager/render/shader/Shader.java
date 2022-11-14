@@ -138,11 +138,11 @@ public class Shader implements Bindable {
 		GL20.glUniformMatrix4fv(loc, false, b);
 	}
 
-	public void setUniformVector3(int loc, Vector3f v) {
+	public void setUniformVector3f(int loc, Vector3f v) {
 		GL20.glUniform3f(loc, v.x, v.y, v.z);
 	}
 
-	public void setUniformVector2(int loc, Vector2f v) {
+	public void setUniformVector2f(int loc, Vector2f v) {
 		GL20.glUniform2f(loc, v.x, v.y);
 	}
 
