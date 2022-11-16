@@ -2,7 +2,6 @@ package xueli.mcremake.classic.client.renderer.gui;
 
 import org.lwjgl.utils.vector.Vector2f;
 import org.lwjgl.utils.vector.Vector3f;
-import xueli.game.utils.GLHelper;
 import xueli.game2.lifecycle.LifeCycle;
 import xueli.game2.renderer.legacy.BackRenderBuffer;
 import xueli.game2.renderer.legacy.RenderBuffer;
@@ -81,12 +80,12 @@ class MyFont implements LifeCycle {
 	@Override
 	public void tick() {
 		buffers.values().forEach(BackRenderBuffer::flip);
-		GLHelper.checkGLError("Draw Font - Flip");
+//		GLHelper.checkGLError("Draw Font - Flip");
 
 		renderer.setDisplayDimension(ctx.getWidth(), ctx.getHeight());
-		GLHelper.checkGLError("Draw Font - Dimension Set");
+//		GLHelper.checkGLError("Draw Font - Dimension Set");
 		renderer.render();
-		GLHelper.checkGLError("Draw Font - Render");
+//		GLHelper.checkGLError("Draw Font - Render");
 
 		this.buffers.clear();
 

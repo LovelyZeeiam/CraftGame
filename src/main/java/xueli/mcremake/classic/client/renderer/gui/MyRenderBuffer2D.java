@@ -1,8 +1,8 @@
 package xueli.mcremake.classic.client.renderer.gui;
 
 import xueli.game2.renderer.legacy.ShapeType;
-import xueli.game2.renderer.legacy.VertexType;
 import xueli.game2.renderer.legacy.VertexAttributeRenderBuffer;
+import xueli.game2.renderer.legacy.VertexType;
 
 public class MyRenderBuffer2D extends VertexAttributeRenderBuffer {
 

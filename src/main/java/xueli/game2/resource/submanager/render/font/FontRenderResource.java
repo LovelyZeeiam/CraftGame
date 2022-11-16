@@ -1,5 +1,6 @@
 package xueli.game2.resource.submanager.render.font;
 
+import xueli.game2.renderer.ui.MyGui;
 import xueli.game2.resource.Resource;
 import xueli.game2.resource.ResourceHelper;
 import xueli.game2.resource.ResourceLocation;
@@ -7,7 +8,6 @@ import xueli.game2.resource.manager.ChainedResourceManager;
 import xueli.game2.resource.manager.ResourceManager;
 import xueli.game2.resource.submanager.render.BufferUtils;
 import xueli.game2.resource.submanager.render.RenderResource;
-import xueli.game2.renderer.ui.MyGui;
 
 import java.nio.ByteBuffer;
 

@@ -1,5 +1,7 @@
 package xueli.utils.download;
 
+import com.google.common.collect.Lists;
+
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -7,8 +9,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.function.Consumer;
-
-import com.google.common.collect.Lists;
 
 /**
  * <code>DeterminedListWorker</code> is a worker that keeps working until the list gets empty. When the

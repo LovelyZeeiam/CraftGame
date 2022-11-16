@@ -2,14 +2,17 @@ package xueli.game.utils;
 
 public class FPSCalculator {
 
-	public static long deltaTime = 0;
-	public static long thisTime = System.currentTimeMillis();
-	public static int fps = 0;
-	private static long last_time = System.currentTimeMillis();
-	private static long lastTimeCountFPS = 0;
-	private static int count = 0;
+	private long deltaTime = 0;
+	private long thisTime = System.currentTimeMillis();
 
-	public static void tick() {
+	private long last_time = System.currentTimeMillis();
+	private long lastTimeCountFPS = 0;
+
+	private int count = 0;
+
+	private int fps = 0;
+
+	public void tick() {
 		thisTime = System.currentTimeMillis();
 		deltaTime = thisTime - last_time;
 		last_time = thisTime;
@@ -21,10 +24,14 @@ public class FPSCalculator {
 			count = 0;
 
 			lastTimeCountFPS = thisTime;
-			// System.out.println("FPS: " + fps);
+			 System.out.println("FPS: " + fps);
 
 		}
 
+	}
+
+	public int getFps() {
+		return fps;
 	}
 
 }

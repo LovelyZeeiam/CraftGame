@@ -2,7 +2,6 @@ package xueli.game2.renderer.legacy.buffer;
 
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL30;
-import org.lwjgl.system.MemoryUtil;
 import xueli.game2.lifecycle.LifeCycle;
 import xueli.game2.renderer.legacy.VertexType;
 

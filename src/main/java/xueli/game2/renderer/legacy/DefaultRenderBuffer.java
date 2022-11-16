@@ -4,7 +4,6 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
-import xueli.game.utils.GLHelper;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
@@ -69,8 +68,6 @@ public class DefaultRenderBuffer {
 			GL30.glBindVertexArray(vao);
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo);
 			// System.out.println(vao +", " + vbo);
-
-			GLHelper.checkGLError("World: Pre-render");
 
 		}
 
