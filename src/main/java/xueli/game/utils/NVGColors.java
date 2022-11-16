@@ -5,6 +5,7 @@ import org.lwjgl.nanovg.NVGColor;
 import static org.lwjgl.nanovg.NanoVG.nvgRGB;
 import static org.lwjgl.nanovg.NanoVG.nvgRGBA;
 
+@Deprecated
 public class NVGColors {
 
 	public static NVGColor GREEN = NVGColor.create();
@@ -28,7 +29,7 @@ public class NVGColors {
 
 	}
 
-	public static NVGColor svgColor(int c) {
+	public static NVGColor nvgColor(int c) {
 		NVGColor color = NVGColor.create();
 		nvgRGBA((byte) (c & 0xFF), (byte) ((c >> 8) & 0xFF), (byte) ((c >> 16) & 0xFF), (byte) ((c >> 24) & 0xFF),
 				color);

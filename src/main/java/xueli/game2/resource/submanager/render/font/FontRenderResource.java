@@ -1,6 +1,5 @@
 package xueli.game2.resource.submanager.render.font;
 
-import xueli.game2.renderer.ui.NanoVGContext;
 import xueli.game2.resource.Resource;
 import xueli.game2.resource.ResourceHelper;
 import xueli.game2.resource.ResourceLocation;
@@ -8,22 +7,26 @@ import xueli.game2.resource.manager.ChainedResourceManager;
 import xueli.game2.resource.manager.ResourceManager;
 import xueli.game2.resource.submanager.render.BufferUtils;
 import xueli.game2.resource.submanager.render.RenderResource;
+import xueli.game2.renderer.ui.MyGui;
 
 import java.nio.ByteBuffer;
 
 import static org.lwjgl.nanovg.NanoVG.nvgCreateFontMem;
-import static org.lwjgl.nanovg.NanoVG.nvgFontFaceId;
 
 public class FontRenderResource extends RenderResource<ResourceLocation, Integer> {
 
-	public FontRenderResource(ChainedResourceManager superiorManager) {
+	private final MyGui ctx;
+
+	public FontRenderResource(MyGui ctx, ChainedResourceManager superiorManager) {
 		super(superiorManager);
+		this.ctx = ctx;
+
 	}
 
 	@Override
 	protected Integer doRegister(ResourceLocation k, boolean must) {
 		ResourceManager manager = getUpperResourceManager();
-		long nvg = NanoVGContext.INSTANCE.getNvg();
+		long nvg = ctx.getContext();
 		
 		try {
 			Resource res = manager.getResource(k);
@@ -49,11 +52,6 @@ public class FontRenderResource extends RenderResource<ResourceLocation, Integer
 				return -1;
 			}
 		}
-	}
-	
-	@Override
-	protected void bind(ResourceLocation k, Integer v) {
-		nvgFontFaceId(NanoVGContext.INSTANCE.getNvg(), v);
 	}
 
 	@Override

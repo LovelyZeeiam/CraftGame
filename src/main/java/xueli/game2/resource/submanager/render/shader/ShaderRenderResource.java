@@ -32,11 +32,6 @@ public class ShaderRenderResource extends RenderResource<ShaderResourceLocation,
 			}
 		}
 	}
-	
-	@Override
-	protected void bind(ShaderResourceLocation k, Shader v) {
-		v.bind();
-	}
 
 	@Override
 	protected void close(ShaderResourceLocation k, Shader v) {

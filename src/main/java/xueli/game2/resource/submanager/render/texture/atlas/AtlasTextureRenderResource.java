@@ -20,9 +20,9 @@ import java.util.function.Predicate;
 
 public class AtlasTextureRenderResource extends SubResourceManager {
 
-	private ArrayList<RegisterData> registerData = new ArrayList<>();
-	private ArrayList<Integer> registeredTexture = new ArrayList<>();
-	private HashMap<ResourceLocation, HashMap<String, AtlasResourceHolder>> atlasHolders = new HashMap<>();
+	private final ArrayList<RegisterData> registerData = new ArrayList<>();
+	private final ArrayList<Integer> registeredTexture = new ArrayList<>();
+	private final HashMap<ResourceLocation, HashMap<String, AtlasResourceHolder>> atlasHolders = new HashMap<>();
 
 	public AtlasTextureRenderResource(TextureRenderResource superiorManager) {
 		super(superiorManager);
@@ -76,7 +76,7 @@ public class AtlasTextureRenderResource extends SubResourceManager {
 		BufferedImage atlasImage = new BufferedImage(atlasImageWidth, atlasImageHeight, BufferedImage.TYPE_4BYTE_ABGR);
 		Graphics2D g2d = atlasImage.createGraphics();
 
-		AbstractTextureLoader loader = TextureType.LEGACY.getLoader();
+		AbstractTextureLoader loader = TextureLoaderLegacy.LOADER;
 		int textureId = loader.createTexture();
 		registeredTexture.add(textureId);
 

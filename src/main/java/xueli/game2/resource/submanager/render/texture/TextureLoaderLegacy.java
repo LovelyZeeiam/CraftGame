@@ -10,6 +10,8 @@ import static org.lwjgl.opengl.GL13.GL_CLAMP_TO_BORDER;
 
 public class TextureLoaderLegacy extends AbstractTextureLoader {
 
+	public static final TextureLoaderLegacy LOADER = new TextureLoaderLegacy();
+
 	@Override
 	public int createTexture() {
 		int id = glGenTextures();
@@ -36,11 +38,6 @@ public class TextureLoaderLegacy extends AbstractTextureLoader {
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		return id;
-	}
-
-	@Override
-	public void applyTexture(int id) {
-		glBindTexture(GL_TEXTURE_2D, id);
 	}
 
 	@Override

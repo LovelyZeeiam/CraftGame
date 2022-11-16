@@ -4,7 +4,6 @@ import org.lwjgl.opengl.GL30;
 import xueli.game.utils.FPSCalculator;
 import xueli.game2.Timer;
 import xueli.game2.lifecycle.RunnableLifeCycle;
-import xueli.game2.renderer.ui.NanoVGContext;
 import xueli.game2.renderer.ui.OverlayManager;
 import xueli.game2.resource.manager.BackwardResourceManager;
 import xueli.game2.resource.manager.ChainedResourceManager;
@@ -16,6 +15,7 @@ import xueli.game2.resource.submanager.render.shader.ShaderRenderResource;
 import xueli.game2.resource.submanager.render.texture.TextureMissing;
 import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
 import xueli.game2.resource.submanager.render.texture.atlas.AtlasTextureRenderResource;
+import xueli.game2.renderer.ui.MyGui;
 import xueli.utils.exception.CrashReport;
 
 import java.io.IOException;
@@ -35,19 +35,24 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 	protected FontRenderResource fontResource;
 	
 	protected OverlayManager overlayManager;
+
+	private final MyGui gui;
 	
 	public GameDisplay(int initialWidth, int initialHeight, String mainTitle) {
 		this.display = new Display(initialWidth, initialHeight, mainTitle);
 
 		List<ResourceProvider> resourceProviders = List.of(new ClassLoaderResourceProvider(true));
 		this.resourceManager = new BackwardResourceManager(resourceProviders);
-		
-		this.textureResource = new TextureRenderResource(resourceManager);
+
+		this.gui = new MyGui(this);
+
+		this.textureResource = new TextureRenderResource(gui, resourceManager);
 		this.atlasTextureResource = new AtlasTextureRenderResource(this.textureResource);
 		this.shaderResource = new ShaderRenderResource(resourceManager);
-		this.fontResource = new FontRenderResource(resourceManager);
-		
+		this.fontResource = new FontRenderResource(gui, resourceManager);
+
 		this.overlayManager = new OverlayManager(this);
+
 		
 	}
 
@@ -55,11 +60,10 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 	public final void init() {
 		this.display.create();
 
-		// Trigger its create
-		NanoVGContext.init();
 		// Trigger its loading
 		TextureMissing.init();
 
+		this.gui.init();
 		this.overlayManager.init();
 
 		try {
@@ -88,6 +92,8 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 			this.render();
 		}
 
+		this.gui.tick();
+
 		this.display.update();
 
 	}
@@ -100,7 +106,7 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 	@Override
 	public final void release() {
 		this.display.hide();
-		NanoVGContext.release();
+		this.gui.release();
 		this.overlayManager.release();
 		this.renderRelease();
 		
@@ -168,6 +174,10 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 
 	public FontRenderResource getFontResource() {
 		return fontResource;
+	}
+
+	public MyGui getGuiManager() {
+		return gui;
 	}
 
 	public OverlayManager getOverlayManager() {

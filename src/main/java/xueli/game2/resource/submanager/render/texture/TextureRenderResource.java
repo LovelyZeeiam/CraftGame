@@ -1,40 +1,45 @@
 package xueli.game2.resource.submanager.render.texture;
 
+import xueli.game2.renderer.ui.MyGui;
 import xueli.game2.resource.manager.ChainedResourceManager;
 import xueli.game2.resource.submanager.render.RenderResource;
 
 import java.io.IOException;
 
 public class TextureRenderResource extends RenderResource<TextureResourceLocation, Integer> {
-	
-	public TextureRenderResource(ChainedResourceManager manager) {
+
+	private final MyGui gui;
+
+	public TextureRenderResource(MyGui gui, ChainedResourceManager manager) {
 		super(manager);
+		this.gui = gui;
+
 	}
 	
 	@Override
 	protected Integer doRegister(TextureResourceLocation k, boolean must) {
-		TextureLoader loader = k.getTextureLoader();
-		TextureType type = k.type();
+		AbstractTextureLoader loader = getTextureLoader(k.type());
 		try {
 			return loader.registerTexture(k, getUpperResourceManager());
 		} catch (IOException | NullPointerException e) {
 			if (must)
 				throw new RuntimeException(e);
 			else
-				return TextureMissing.get(type);
+				return TextureMissing.get(loader);
 		}
 	}
 	
 	@Override
-	protected void bind(TextureResourceLocation k, Integer v) {
-		TextureLoader loader = k.getTextureLoader();
-		loader.applyTexture(v);
-	}
-	
-	@Override
 	protected void close(TextureResourceLocation k, Integer v) {
-		AbstractTextureLoader loader = k.getTextureLoader();
+		TextureLoader loader = getTextureLoader(k.type());
 		loader.releaseTexture(v);
+	}
+
+	private AbstractTextureLoader getTextureLoader(TextureType k) {
+		return switch (k) {
+			case LEGACY -> TextureLoaderLegacy.LOADER;
+			case NVG -> TextureLoaderNanoVG.getInstance(gui.getContext());
+		};
 	}
 	
 }

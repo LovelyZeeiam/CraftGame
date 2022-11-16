@@ -10,8 +10,6 @@ public interface TextureLoader {
 
 	public int registerTexture(TextureResourceLocation res, ResourceManager manager) throws IOException;
 
-	public void applyTexture(int id);
-
 	public void releaseTexture(int id);
 
 }

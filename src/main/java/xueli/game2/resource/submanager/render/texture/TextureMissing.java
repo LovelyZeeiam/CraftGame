@@ -26,9 +26,9 @@ public class TextureMissing {
 
 	}
 
-	public static int get(TextureType type) {
+	public static int get(AbstractTextureLoader loader) {
 		try {
-			return type.getLoader().registerTexture(image);
+			return loader.registerTexture(image);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -39,7 +39,7 @@ public class TextureMissing {
 	public static AtlasResourceHolder getAtlasHolder() {
 		if(atlasHolder != null)
 			return atlasHolder;
-		int id = get(TextureType.LEGACY);
+		int id = get(TextureLoaderLegacy.LOADER);
 		atlasHolder = new AtlasResourceHolder(new Vector2f(0,0), new Vector2f(1,1), id);
 		return atlasHolder;
 	}

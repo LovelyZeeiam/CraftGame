@@ -7,6 +7,10 @@ import java.io.IOException;
 
 import static org.lwjgl.nanovg.NanoVGGL3.*;
 
+/**
+ * Maybe later when we want to draw something on the sign this would not be working
+ */
+@Deprecated
 public class NanoVGContext implements Closeable {
 
 	public static NanoVGContext INSTANCE;

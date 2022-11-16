@@ -2,29 +2,13 @@ package xueli.game2.resource.submanager.render.texture;
 
 import xueli.game2.resource.ResourceLocation;
 
-import java.util.Objects;
-
-public final class TextureResourceLocation {
-
-	private final ResourceLocation location;
-	private final TextureType type;
-
-	private AbstractTextureLoader textureLoader;
-
-	public TextureResourceLocation(ResourceLocation location, TextureType type) {
-		this.location = location;
-		this.type = type;
-
-		this.textureLoader = type.getLoader();
-
-	}
+public record TextureResourceLocation(ResourceLocation location, TextureType type) {
 
 	@Override
 	public String toString() {
 		return "TextureResourceLocation{" +
 				"location=" + location +
 				", type=" + type +
-				", textureLoader=" + textureLoader +
 				'}';
 	}
 
@@ -36,21 +20,5 @@ public final class TextureResourceLocation {
 		return location.equals(that.location) && type == that.type;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(location, type);
-	}
-
-	public ResourceLocation location() {
-		return location;
-	}
-
-	public TextureType type() {
-		return type;
-	}
-
-	public AbstractTextureLoader getTextureLoader() {
-		return textureLoader;
-	}
 
 }
