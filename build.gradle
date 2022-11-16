@@ -18,7 +18,7 @@ application {
     // Define the main class for the application.
     apply plugin: 'application'
 
-    mainClassName = 'xueli.craftgame.WorldMain'
+    mainClassName = 'xueli.mcremake.classic.client.CraftGameMain'
 
 }
 
