@@ -1,5 +1,6 @@
 package xueli.game2.resource.manager;
 
+import xueli.game2.resource.ResourceHolder;
 import xueli.utils.logger.MyLogger;
 
 import java.io.IOException;
@@ -13,31 +14,38 @@ public abstract class ChainedResourceManager implements ResourceManager {
 		}
 	};
 	
-	private ArrayList<ResourceManager> subResourceManagers = new ArrayList<>();
+	private final ArrayList<ResourceHolder> resourceHolders = new ArrayList<>();
+	private final ArrayList<ResourceManager> subManagers = new ArrayList<>();
 	
 	public ChainedResourceManager() {
 	}
-	
+
 	public void addSubManager(ResourceManager manager) {
-		this.subResourceManagers.add(manager);
-		LOGGER.info("Add Sub " + manager.getClass().getName() + " to " + this.getClass().getName());
+		this.subManagers.add(manager);
+		LOGGER.info("Add sub-manager " + manager.getClass().getName() + " to " + this.getClass().getName());
+	}
+
+	public void addResourceHolder(ResourceHolder holder) {
+		this.resourceHolders.add(holder);
+		LOGGER.info("Add holder " + holder.getClass().getName() + " to " + this.getClass().getName());
 	}
 	
 	@Override
 	public void reload() {
-		for(ResourceManager subManager : subResourceManagers) {
-			subManager.reload();
-			LOGGER.info("Reload: " + subManager.getClass().getName());
+		for(ResourceManager manager : subManagers) {
+			manager.reload();
+			LOGGER.info("Reload: " + manager.getClass().getName());
 		}
-	}
-	
-	public void removeSubManager(ResourceManager manager) {
-		this.subResourceManagers.remove(manager);
+		for (ResourceHolder holder : resourceHolders) {
+			holder.reload();
+			LOGGER.info("Holder reload: " + holder.getClass().getName());
+		}
+
 	}
 	
 	@Override
 	public void close() throws IOException {
-		for(ResourceManager manager : subResourceManagers) {
+		for(ResourceManager manager : subManagers) {
 			manager.close();
 			LOGGER.info("Close: " + manager.getClass().getName());
 		}

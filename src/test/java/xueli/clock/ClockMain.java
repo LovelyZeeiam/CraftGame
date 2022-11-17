@@ -1,6 +1,5 @@
 package xueli.clock;
 
-import org.lwjgl.nanovg.NVGPaint;
 import xueli.game2.display.Display;
 import xueli.game2.display.GameDisplay;
 import xueli.game2.renderer.ui.MyGui;
@@ -80,6 +79,10 @@ public class ClockMain extends GameDisplay {
 				int texBack = textureResource.register(backgroundLocation, true);
 				guiManager.drawImage(width - backMargin - backSize, height - backMargin - backSize, backSize, backSize, 1, texBack);
 
+			}
+
+			@Override
+			public void reload() {
 			}
 
 			@Override

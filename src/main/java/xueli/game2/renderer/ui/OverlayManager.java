@@ -2,10 +2,11 @@ package xueli.game2.renderer.ui;
 
 import xueli.game2.display.GameDisplay;
 import xueli.game2.lifecycle.LifeCycle;
+import xueli.game2.resource.ResourceHolder;
 
-public class OverlayManager implements LifeCycle {
+public class OverlayManager implements LifeCycle, ResourceHolder {
 
-	private GameDisplay display;
+	private final GameDisplay display;
 
 	private Overlay overlay = null;
 
@@ -22,6 +23,14 @@ public class OverlayManager implements LifeCycle {
 	public void tick() {
 		if(overlay != null) {
 			overlay.tick();
+		}
+
+	}
+
+	@Override
+	public void reload() {
+		if(overlay != null) {
+			overlay.reload();
 		}
 
 	}

@@ -8,7 +8,6 @@ import xueli.game2.lifecycle.RunnableLifeCycle;
 import xueli.game2.renderer.ui.MyGui;
 import xueli.game2.renderer.ui.OverlayManager;
 import xueli.game2.resource.manager.BackwardResourceManager;
-import xueli.game2.resource.manager.ChainedResourceManager;
 import xueli.game2.resource.manager.ResourceManager;
 import xueli.game2.resource.provider.ClassLoaderResourceProvider;
 import xueli.game2.resource.provider.ResourceProvider;
@@ -31,7 +30,7 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 
 	private boolean shouldCrash = false;
 
-	protected ChainedResourceManager resourceManager;
+	protected BackwardResourceManager resourceManager;
 	protected TextureRenderResource textureResource;
 	protected AtlasTextureRenderResource atlasTextureResource;
 	protected ShaderRenderResource shaderResource;
@@ -55,8 +54,9 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 		this.fontResource = new FontRenderResource(gui, resourceManager);
 
 		this.overlayManager = new OverlayManager(this);
+		this.resourceManager.addResourceHolder(this.overlayManager);
 
-		
+
 	}
 
 	@Override

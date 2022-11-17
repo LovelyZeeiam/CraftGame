@@ -10,7 +10,6 @@ public class CraftGameClient extends GameDisplay {
 	public CraftGameClient() {
 		super(800, 600, "Minecraft Classic Forever");
 
-
 	}
 
 	@Override
