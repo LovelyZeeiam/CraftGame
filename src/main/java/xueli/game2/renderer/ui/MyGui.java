@@ -111,13 +111,12 @@ public class MyGui implements LifeCycle {
 		return nvgText(nvg, 0, -10000000, text);
 	}
 
+	public void finish() {
+		nvgEndFrame(nvg);
+	}
+
 	@Override
 	public void tick() {
-		if(this.hasBegun) {
-			nvgEndFrame(nvg);
-			this.hasBegun = false;
-		}
-
 	}
 
 	public long getContext() {

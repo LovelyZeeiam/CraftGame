@@ -76,7 +76,7 @@ public class AtlasTextureRenderResource extends SubResourceManager {
 		BufferedImage atlasImage = new BufferedImage(atlasImageWidth, atlasImageHeight, BufferedImage.TYPE_4BYTE_ABGR);
 		Graphics2D g2d = atlasImage.createGraphics();
 
-		AbstractTextureLoader loader = TextureLoaderLegacy.LOADER;
+		AbstractTextureLoader loader = new TextureLoaderLegacy();
 		int textureId = loader.createTexture();
 		registeredTexture.add(textureId);
 

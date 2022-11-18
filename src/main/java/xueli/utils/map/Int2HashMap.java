@@ -1,9 +1,12 @@
 package xueli.utils.map;
 
+import java.io.Serial;
 import java.util.HashMap;
 
+@Deprecated
 public class Int2HashMap<V> extends HashMap<Long, V> {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	public V put(int x, int y, V value) {

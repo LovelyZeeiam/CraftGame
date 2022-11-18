@@ -1,11 +1,12 @@
 package xueli.mcremake.classic.client;
 
 import xueli.game2.display.GameDisplay;
-import xueli.game2.resource.ResourceLocation;
+import xueli.mcremake.classic.client.gui.LoadingWorldOverlay;
+import xueli.mcremake.classic.client.gui.UniversalGui;
 
 public class CraftGameClient extends GameDisplay {
 
-	public static final ResourceLocation FONT_RESOURCE_LOCATION = new ResourceLocation("minecraft", "font/default.ttf");
+	private final UniversalGui universalGui = new UniversalGui(this);
 
 	public CraftGameClient() {
 		super(800, 600, "Minecraft Classic Forever");
@@ -14,7 +15,10 @@ public class CraftGameClient extends GameDisplay {
 
 	@Override
 	protected void renderInit() {
+		getResourceManager().addResourceHolder(universalGui);
+		universalGui.init();
 
+		getOverlayManager().setOverlay(new LoadingWorldOverlay(this));
 
 	}
 
@@ -28,6 +32,10 @@ public class CraftGameClient extends GameDisplay {
 	protected void renderRelease() {
 
 
+	}
+
+	public UniversalGui getUniversalGui() {
+		return universalGui;
 	}
 
 }

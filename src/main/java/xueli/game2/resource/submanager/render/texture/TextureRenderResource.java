@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class TextureRenderResource extends RenderResource<TextureResourceLocation, Integer> {
 
-	private final MyGui gui;
+	final MyGui gui;
 
 	public TextureRenderResource(MyGui gui, ChainedResourceManager manager) {
 		super(manager);
@@ -18,9 +18,9 @@ public class TextureRenderResource extends RenderResource<TextureResourceLocatio
 	
 	@Override
 	protected Integer doRegister(TextureResourceLocation k, boolean must) {
-		AbstractTextureLoader loader = getTextureLoader(k.type());
+		AbstractTextureLoader loader = k.type().getLoader(this);
 		try {
-			return loader.registerTexture(k, getUpperResourceManager());
+			return loader.registerTexture(k.location(), getUpperResourceManager());
 		} catch (IOException | NullPointerException e) {
 			if (must)
 				throw new RuntimeException(e);
@@ -31,15 +31,8 @@ public class TextureRenderResource extends RenderResource<TextureResourceLocatio
 	
 	@Override
 	protected void close(TextureResourceLocation k, Integer v) {
-		TextureLoader loader = getTextureLoader(k.type());
+		TextureLoader loader = k.type().getLoader(this);
 		loader.releaseTexture(v);
-	}
-
-	private AbstractTextureLoader getTextureLoader(TextureType k) {
-		return switch (k) {
-			case LEGACY -> TextureLoaderLegacy.LOADER;
-			case NVG -> TextureLoaderNanoVG.getInstance(gui.getContext());
-		};
 	}
 	
 }

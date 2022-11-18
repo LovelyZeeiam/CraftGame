@@ -7,11 +7,13 @@ import xueli.game2.resource.ResourceHolder;
 public class OverlayManager implements LifeCycle, ResourceHolder {
 
 	private final GameDisplay display;
+	private final MyGui gui;
 
 	private Overlay overlay = null;
 
 	public OverlayManager(GameDisplay display) {
 		this.display = display;
+		this.gui = display.getGuiManager();
 
 	}
 
@@ -22,7 +24,9 @@ public class OverlayManager implements LifeCycle, ResourceHolder {
 	@Override
 	public void tick() {
 		if(overlay != null) {
-			overlay.tick();
+			gui.begin();
+			overlay.render(gui);
+			gui.finish();
 		}
 
 	}

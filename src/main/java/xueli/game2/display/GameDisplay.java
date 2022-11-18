@@ -8,7 +8,7 @@ import xueli.game2.lifecycle.RunnableLifeCycle;
 import xueli.game2.renderer.ui.MyGui;
 import xueli.game2.renderer.ui.OverlayManager;
 import xueli.game2.resource.manager.BackwardResourceManager;
-import xueli.game2.resource.manager.ResourceManager;
+import xueli.game2.resource.manager.ChainedResourceManager;
 import xueli.game2.resource.provider.ClassLoaderResourceProvider;
 import xueli.game2.resource.provider.ResourceProvider;
 import xueli.game2.resource.submanager.render.font.FontRenderResource;
@@ -180,7 +180,7 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 		return display.getDisplayScale();
 	}
 
-	public ResourceManager getResourceManager() {
+	public ChainedResourceManager getResourceManager() {
 		return resourceManager;
 	}
 

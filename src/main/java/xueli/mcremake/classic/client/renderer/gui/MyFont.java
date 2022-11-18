@@ -7,7 +7,7 @@ import xueli.game2.renderer.legacy.BackRenderBuffer;
 import xueli.game2.renderer.legacy.RenderBuffer;
 import xueli.game2.resource.ResourceLocation;
 import xueli.game2.resource.submanager.render.texture.TextureResourceLocation;
-import xueli.game2.resource.submanager.render.texture.TextureType;
+import xueli.game2.resource.submanager.render.texture.TextureTypeLegacy;
 import xueli.mcremake.classic.client.CraftGameClient;
 
 import java.awt.*;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 @Deprecated
 class MyFont implements LifeCycle {
 
-	private static final TextureResourceLocation FONT_TEXTURE_LOCATION = new TextureResourceLocation(new ResourceLocation("minecraft", "font/default.png"), TextureType.LEGACY);
+	private static final TextureResourceLocation FONT_TEXTURE_LOCATION = new TextureResourceLocation(new ResourceLocation("minecraft", "font/default.png"), new TextureTypeLegacy());
 
 	private static final float DEFAULT_FONT_SIZE = 8;
 	private static final float DIGIT_FONT_SIZE = 6;

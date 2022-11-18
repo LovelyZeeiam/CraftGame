@@ -7,6 +7,7 @@ import xueli.game2.renderer.ui.Overlay;
 import xueli.game2.resource.ResourceLocation;
 import xueli.game2.resource.submanager.render.texture.TextureResourceLocation;
 import xueli.game2.resource.submanager.render.texture.TextureType;
+import xueli.game2.resource.submanager.render.texture.TextureTypeNanoVG;
 
 import java.awt.*;
 import java.text.DateFormat;
@@ -21,8 +22,8 @@ public class ClockMain extends GameDisplay {
 	private static final String USER_NAME = "LoveliZeeiam";
 	
 	private final ResourceLocation fontLocation = new ResourceLocation("clock", "fonts/CascadiaCode.ttf"); 
-	private final TextureResourceLocation iconLocation = new TextureResourceLocation(new ResourceLocation("clock", "images/icon.jpg"), TextureType.NVG);
-	private final TextureResourceLocation backgroundLocation = new TextureResourceLocation(new ResourceLocation("clock", "images/background.png"), TextureType.NVG);
+	private final TextureResourceLocation iconLocation = new TextureResourceLocation(new ResourceLocation("clock", "images/icon.jpg"), new TextureTypeNanoVG());
+	private final TextureResourceLocation backgroundLocation = new TextureResourceLocation(new ResourceLocation("clock", "images/background.png"), new TextureTypeNanoVG());
 
 	public ClockMain() {
 		super(800, 600, "Li.Clock");
@@ -40,7 +41,7 @@ public class ClockMain extends GameDisplay {
 			}
 
 			@Override
-			public void tick() {
+			public void render(MyGui guiManager) {
 				Display display = getDisplay();
 				float scale = display.getDisplayScale();
 				float width = display.getWidth();
@@ -59,8 +60,6 @@ public class ClockMain extends GameDisplay {
 				String dateStr = dateFormat.format(date);
 				String timeStr = timeFormat.format(date);
 
-				MyGui guiManager = getGuiManager();
-				guiManager.begin();
 				guiManager.setColor(Color.WHITE);
 
 				float clockFontSize = scale * 50.0f * scale;
