@@ -75,6 +75,7 @@ public class MyGui implements LifeCycle {
 
 	public void setTexturedPaint(float x, float y, float width, float height, float angle, float alpha, int imageId) {
 		nvgImagePattern(nvg, x, y, width, height, angle, imageId, alpha, paintBuf);
+
 	}
 
 	public void drawImage(float x, float y, float width, float height, float alpha, int imageId) {

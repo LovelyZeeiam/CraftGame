@@ -10,7 +10,7 @@ public class TextureLoaderNanoVG extends TextureLoaderLegacy {
 	private final long nvg;
 	private final int flag;
 
-	private TextureLoaderNanoVG(long nvg) {
+	public TextureLoaderNanoVG(long nvg) {
 		this.nvg = nvg;
 		this.flag = NvgImageFlag.NEAREST.val;
 	}
@@ -27,7 +27,7 @@ public class TextureLoaderNanoVG extends TextureLoaderLegacy {
 	}
 
 	@Override
-	int registerTexture(BufferedImage image) throws IOException {
+	public int registerTexture(BufferedImage image) throws IOException {
 		int legacyId = super.registerTexture(image);
 		return nvglCreateImageFromHandle(nvg, legacyId, image.getWidth(), image.getHeight(), flag);
 	}

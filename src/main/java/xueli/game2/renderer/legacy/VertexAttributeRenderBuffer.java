@@ -33,7 +33,7 @@ public class VertexAttributeRenderBuffer implements RenderBuffer {
 
 //	private final BufferPool pool = new BufferPool(3, 2);
 
-	private class VertexBuffer {
+	private static class VertexBuffer {
 		public int submitCount = 0;
 		public LotsOfByteBuffer buf = new LotsOfByteBuffer();
 	};

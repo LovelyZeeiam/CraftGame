@@ -10,8 +10,6 @@ import static org.lwjgl.opengl.GL13.GL_CLAMP_TO_BORDER;
 
 public class TextureLoaderLegacy extends AbstractTextureLoader {
 
-	public static final TextureLoaderLegacy LOADER = new TextureLoaderLegacy();
-
 	@Override
 	public int createTexture() {
 		int id = glGenTextures();
@@ -27,7 +25,7 @@ public class TextureLoaderLegacy extends AbstractTextureLoader {
 	}
 
 	@Override
-	int registerTexture(BufferedImage image) throws IOException {
+	public int registerTexture(BufferedImage image) throws IOException {
 		int width = image.getWidth();
 		int height = image.getHeight();
 		int[] data = TextureLoaderUtils.imageToLegacyData(image);

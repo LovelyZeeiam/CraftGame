@@ -2,7 +2,7 @@ package xueli.mcremake.classic.client;
 
 import xueli.game2.display.GameDisplay;
 import xueli.mcremake.classic.client.gui.LoadingWorldOverlay;
-import xueli.mcremake.classic.client.gui.UniversalGui;
+import xueli.mcremake.classic.client.gui.universal.UniversalGui;
 
 public class CraftGameClient extends GameDisplay {
 

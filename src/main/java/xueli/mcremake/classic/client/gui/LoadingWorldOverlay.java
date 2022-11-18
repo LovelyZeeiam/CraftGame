@@ -15,7 +15,9 @@ public class LoadingWorldOverlay extends CraftGameOverlay {
 
 	@Override
 	public void render(MyGui gui) {
-		this.drawInternalBackground(gui);
+		this.drawUniversalBackground(gui, 0, 0, getContext().getWidth(), getContext().getHeight());
+
+		super.render(gui);
 
 	}
 

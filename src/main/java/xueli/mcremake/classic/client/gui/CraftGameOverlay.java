@@ -3,6 +3,7 @@ package xueli.mcremake.classic.client.gui;
 import xueli.game2.renderer.ui.MyGui;
 import xueli.game2.renderer.ui.Overlay;
 import xueli.mcremake.classic.client.CraftGameClient;
+import xueli.mcremake.classic.client.gui.universal.UniversalGui;
 
 public abstract class CraftGameOverlay implements Overlay {
 
@@ -15,10 +16,13 @@ public abstract class CraftGameOverlay implements Overlay {
 
 	}
 
-	protected void drawInternalBackground(MyGui gui) {
-		gui.setTexturedPaint(0, 0, 100, 100, 0, 1.0f, universalGui.getTextureUniversalBgId());
-		gui.drawFilledRect(0, 0, ctx.getWidth(), ctx.getHeight(), MyGui.FillType.PAINT);
+	protected void drawUniversalBackground(MyGui gui, int x, int y, int width, int height) {
+		universalGui.drawUniversalBackground2(gui, x, y, width, height);
+	}
 
+	@Override
+	public void render(MyGui gui) {
+		universalGui.tick();
 	}
 
 	public CraftGameClient getContext() {

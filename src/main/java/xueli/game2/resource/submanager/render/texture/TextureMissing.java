@@ -39,7 +39,7 @@ public class TextureMissing {
 	public static AtlasResourceHolder getAtlasHolder() {
 		if(atlasHolder != null)
 			return atlasHolder;
-		int id = get(TextureLoaderLegacy.LOADER);
+		int id = get(new TextureLoaderLegacy());
 		atlasHolder = new AtlasResourceHolder(new Vector2f(0,0), new Vector2f(1,1), id);
 		return atlasHolder;
 	}

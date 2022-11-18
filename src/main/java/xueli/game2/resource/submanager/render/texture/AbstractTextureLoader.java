@@ -19,6 +19,6 @@ public abstract class AbstractTextureLoader implements TextureLoader {
 		return registerTexture(image);
 	}
 
-	abstract int registerTexture(BufferedImage image) throws IOException;
+	public abstract int registerTexture(BufferedImage image) throws IOException;
 
 }
