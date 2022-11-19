@@ -105,6 +105,14 @@ public class MyGui implements LifeCycle {
 		nvgFill(nvg);
 	}
 
+	public void scissor(float x, float y, float width, float height) {
+		nvgScissor(nvg, x, y, width, height);
+	}
+
+	public void scissorReset() {
+		nvgResetScissor(nvg);
+	}
+
 	public float measureTextWidth(float size, String text, int fontId) {
 		nvgFontSize(nvg, size);
 		nvgTextAlign(nvg, NVG_ALIGN_LEFT);

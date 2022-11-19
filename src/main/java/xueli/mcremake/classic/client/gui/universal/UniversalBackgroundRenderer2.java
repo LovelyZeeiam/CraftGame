@@ -35,13 +35,23 @@ public class UniversalBackgroundRenderer2 {
 		float sizeX = SIZE;
 		int xRepeatCount = 0;
 
+//		gui.scissor(x, y, width, height);
+
 		for (float px = x; px < x + width; px += SIZE) {
+			if(px + SIZE > x + width) {
+				sizeX = x + width - px;
+			}
+
 			int yRepeatCount = 0;
 			float sizeY = SIZE;
 
 			int xRandVal = randX[xRepeatCount % randX.length];
 
 			for (float py = y; py < y + height; py += SIZE) {
+				if(py + SIZE > y + height) {
+					sizeY = y + height - py;
+				}
+
 				int yRandVal = randY[yRepeatCount % randY.length];
 				int thisRandVal = (xRandVal + yRandVal) % 4;
 
@@ -53,17 +63,13 @@ public class UniversalBackgroundRenderer2 {
 				}
 				gui.drawFilledRect(px, py, sizeX, sizeY, MyGui.FillType.PAINT);
 
-				if(py + SIZE > y + height) {
-					sizeY = y + height - py;
-				}
 				yRepeatCount++;
 			}
 
-			if(px + SIZE > x + width) {
-				sizeX = x + width - px;
-			}
 			xRepeatCount++;
 		}
+
+//		gui.scissorReset();
 
 		gui.setColor(TOP_COLOR);
 		gui.drawFilledRect(x, y, width, height, MyGui.FillType.COLOR);
