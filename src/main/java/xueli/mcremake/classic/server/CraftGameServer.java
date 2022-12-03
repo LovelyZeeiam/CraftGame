@@ -11,7 +11,7 @@ public class CraftGameServer implements RunnableLifeCycle {
 	private final Server<MyServerConnection> server;
 
 	public CraftGameServer(int port) {
-		this.server = new Server<MyServerConnection>(port, () -> new MyServerConnection(this), PacketSourceSide.FROM_SERVER.getProtocol(), PacketSourceSide.FROM_CLIENT.getProtocol());
+		this.server = new Server<>(port, () -> new MyServerConnection(this), PacketSourceSide.FROM_SERVER.getProtocol(), PacketSourceSide.FROM_CLIENT.getProtocol());
 		
 	}
 

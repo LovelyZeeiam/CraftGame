@@ -22,15 +22,9 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 	private String hostname;
 	private int port;
 
-	private PacketProcessor processor;
 	private boolean connected = true;
 	
 	ClientConnection() {
-	}
-
-	public ClientConnection(PacketProcessor processor) {
-		this.processor = processor;
-
 	}
 
 	@Override
@@ -42,10 +36,10 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Packet msg) throws Exception {
-		if(processor != null) {
-			msg.process(processor);
-		}
+		this.packetRead(msg);
+	}
 
+	protected void packetRead(Packet msg) {
 	}
 
 	@Override
@@ -96,14 +90,6 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 
 	}
 
-	public void setPacketProcessor(PacketProcessor processor) {
-		this.processor = processor;
-	}
-
-	public PacketProcessor getPacketProcessor() {
-		return processor;
-	}
-
 	public String getHostname() {
 		return hostname;
 	}
@@ -115,6 +101,7 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 	public void close() {
 		if (this.channel != null) {
 			this.channel.close().awaitUninterruptibly();
+			this.connected = false;
 		}
 
 	}
@@ -124,7 +111,7 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 	}
 
 	public static ClientConnection connectToServer(Protocol clientboundProtocol, Protocol serverboundProtocol, InetSocketAddress addr) throws IOException {
-		ClientConnection c = new ClientConnection(new PacketProcessor());
+		ClientConnection c = new ClientConnection();
 		c.hostname = addr.getHostName();
 		c.port = addr.getPort();
 

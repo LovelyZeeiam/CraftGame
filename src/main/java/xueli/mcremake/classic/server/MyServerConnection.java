@@ -1,5 +1,7 @@
 package xueli.mcremake.classic.server;
 
+import xueli.game2.network.ConnectionStageListener;
+import xueli.game2.network.Packet;
 import xueli.game2.network.ServerClientConnection;
 import xueli.game2.network.processor.PacketProcessor;
 import xueli.mcremake.classic.network.ServerPlayerInfo;
@@ -10,28 +12,31 @@ public class MyServerConnection extends ServerClientConnection {
 	private final CraftGameServer ctx;
 	
 	private final PacketProcessor packetProcessor = new PacketProcessor();
-	
-	{
-		packetProcessor.addProcessor(C00HelloPacket.PROCESS_NAME, this::handleHello);
-		
-	}
-	
-	private ServerPlayerInfo playerInfo;
+
+	private ConnectionStageListener<MyServerConnection> listener = new ServerStageHelloListener(this);
+
+	ServerPlayerInfo playerInfo;
 	
 	public MyServerConnection(CraftGameServer ctx) {
 		this.ctx = ctx;
-		
-		setPacketProcessor(packetProcessor);
-		
 	}
-	
+
+	@Override
+	protected void packetRead(Packet msg) {
+		if(listener != null) {
+			listener.doProcess(msg);
+		} else {
+			System.err.println("Bugs? No Packet Listener for: " + msg);
+		}
+
+	}
+
+	public void setListener(ConnectionStageListener<MyServerConnection> listener) {
+		this.listener = listener;
+	}
+
 	public ServerPlayerInfo getPlayerInfo() {
 		return playerInfo;
-	}
-	
-	private void handleHello(C00HelloPacket packet) {
-		
-		
 	}
 	
 }

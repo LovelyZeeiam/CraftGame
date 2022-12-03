@@ -10,8 +10,6 @@ import java.util.UUID;
 
 public class C00HelloPacket extends Packet {
 	
-	public static final String PROCESS_NAME = "client_hello";
-	
 	private String name;
 	private UUID uuid;
 	
@@ -36,11 +34,6 @@ public class C00HelloPacket extends Packet {
 		PrimitiveCodec.STRING.write(name, buf);
 		PrimitiveCodec.UUID.write(uuid, buf);
 		
-	}
-
-	@Override
-	public String getProcessName() {
-		return PROCESS_NAME;
 	}
 
 	@Override

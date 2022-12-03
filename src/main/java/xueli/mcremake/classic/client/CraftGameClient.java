@@ -20,6 +20,7 @@ public class CraftGameClient extends GameDisplay {
 
 		getOverlayManager().setOverlay(new LoadingWorldOverlay(this));
 
+
 	}
 
 	@Override

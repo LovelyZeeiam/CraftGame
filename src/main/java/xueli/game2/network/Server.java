@@ -46,7 +46,7 @@ public class Server<T extends ServerClientConnection> implements RunnableLifeCyc
 		this.serverFuture = new ServerBootstrap()
 				.group(workerGroup)
 				.channel(NioServerSocketChannel.class)
-				.childHandler(new ChannelInitializer<Channel>() {
+				.childHandler(new ChannelInitializer<>() {
 					@Override
 					protected void initChannel(Channel ch) throws Exception {
 						T conn = connFunc.get();
