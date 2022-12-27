@@ -60,7 +60,7 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 	}
 
 	@Override
-	public final void init() {
+	public void init() {
 		this.display.create();
 
 		// Trigger its loading
@@ -82,7 +82,7 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 	}
 
 	@Override
-	public final void tick() {
+	public void gameLoop() {
 		timer.tick();
 		fps.tick();
 
@@ -91,13 +91,13 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 
 		if(this.overlayManager.hasOverlay()) {
 			getDisplay().setMouseGrabbed(false);
-			this.overlayManager.tick();
+			this.overlayManager.gameLoop();
 		} else {
 			getDisplay().setMouseGrabbed(true);
 			this.render();
 		}
 
-		this.gui.tick();
+		this.gui.gameLoop();
 
 		this.display.update();
 
@@ -111,7 +111,7 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 	}
 
 	@Override
-	public final void release() {
+	public void release() {
 		this.display.hide();
 		this.gui.release();
 		this.overlayManager.release();

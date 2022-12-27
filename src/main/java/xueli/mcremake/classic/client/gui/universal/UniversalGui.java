@@ -17,11 +17,6 @@ public class UniversalGui implements ResourceHolder {
 	public UniversalGui(CraftGameClient ctx) {
 		this.ctx = ctx;
 		this.universalBg = new UniversalBackgroundRenderer(ctx);
-
-	}
-
-	public void init() {
-		this.reload();
 		this.universalBg.init();
 
 	}
@@ -46,7 +41,6 @@ public class UniversalGui implements ResourceHolder {
 	@Override
 	public void reload() {
 		this.gameFontId = ctx.getFontResource().register(FONT_RESOURCE_LOCATION, true);
-
 		ubr.reload(ctx);
 
 	}

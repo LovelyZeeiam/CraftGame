@@ -230,11 +230,11 @@ public class Display {
 		return cursor_y;
 	}
 
-	public float getCursor_dx() {
+	public float getCursorDX() {
 		return cursor_dx;
 	}
 
-	public float getCursor_dy() {
+	public float getCursorDY() {
 		return cursor_dy;
 	}
 

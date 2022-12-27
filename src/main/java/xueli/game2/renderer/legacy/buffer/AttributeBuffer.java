@@ -2,13 +2,12 @@ package xueli.game2.renderer.legacy.buffer;
 
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL30;
-import xueli.game2.lifecycle.LifeCycle;
 import xueli.game2.renderer.legacy.VertexType;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class AttributeBuffer implements LifeCycle, Bindable {
+public class AttributeBuffer implements Bindable {
 
 	private final int id;
 	private final int attributeSize;
@@ -24,7 +23,6 @@ public class AttributeBuffer implements LifeCycle, Bindable {
 
 	}
 
-	@Override
 	public void init() {
 		this.vbo = GL30.glGenBuffers();
 		GL30.glBindBuffer(GL30.GL_ARRAY_BUFFER, vbo);
@@ -37,10 +35,9 @@ public class AttributeBuffer implements LifeCycle, Bindable {
 
 	}
 
-	private final AtomicBoolean shouldSyncData = new AtomicBoolean(true);
+	private final AtomicBoolean shouldSyncData = new AtomicBoolean(false);
 	private ByteBuffer toBeSyncData;
 
-	@Override
 	public void tick() {
 		synchronized (this) {
 			if(shouldSyncData.get()) {
@@ -55,6 +52,7 @@ public class AttributeBuffer implements LifeCycle, Bindable {
 
 	public void updateBuffer(ByteBuffer buffer) {
 //		this.lastSyncData = this.toBeSyncData;
+//		System.out.println(buffer);
 		this.toBeSyncData = buffer;
 		shouldSyncData.set(true);
 
@@ -70,7 +68,6 @@ public class AttributeBuffer implements LifeCycle, Bindable {
 		GL30.glBindBuffer(GL30.GL_ARRAY_BUFFER, 0);
 	}
 
-	@Override
 	public void release() {
 		GL30.glDeleteBuffers(this.vbo);
 

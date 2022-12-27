@@ -7,9 +7,6 @@ import org.lwjgl.opengl.GL32;
 import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector2f;
 import org.lwjgl.utils.vector.Vector3f;
-import xueli.game.Game;
-import xueli.game.utils.math.MatrixHelper;
-import xueli.game.vector.Vector;
 import xueli.game2.renderer.legacy.buffer.Bindable;
 
 import java.io.BufferedReader;
@@ -26,6 +23,8 @@ public class Shader implements Bindable {
 	private int shaderID, vertID, fragID, geoID = -1;
 	private HashMap<String, Integer> uniforms = new HashMap<String, Integer>();
 	private FloatBuffer b = BufferUtils.createFloatBuffer(16);
+
+	private boolean bound = false;
 
 	public Shader(String vertPath, String fragPath) {
 		vertID = compile(vertPath, GL20.GL_VERTEX_SHADER);
@@ -111,7 +110,10 @@ public class Shader implements Bindable {
 
 	@Override
 	public void bind() {
+		if(this.bound) return;
 		GL20.glUseProgram(this.shaderID);
+		this.bound = true;
+
 	}
 
 	protected void bindAttribute(String name, int attrib_id) {
@@ -156,7 +158,10 @@ public class Shader implements Bindable {
 
 	@Override
 	public void unbind() {
+		if(!this.bound) return;
+		this.bound = false;
 		GL20.glUseProgram(0);
+
 	}
 
 	public void release() {
@@ -167,42 +172,8 @@ public class Shader implements Bindable {
 		GL20.glDeleteShader(fragID);
 	}
 
-	public static void setProjectionMatrix(Game game, Shader shader) {
-		setProjectionMatrix(shader, game.getDisplay().getWidth(), game.getDisplay().getHeight(), 110.0f);
-	}
-
-	public static Matrix4f setProjectionMatrix(Shader shader, float width, float height, float fov) {
-		Matrix4f matrix = MatrixHelper.perspecive(width, height, fov, 0.01f, 114514.0f);
-
-		shader.bind();
-		shader.setUniformMatrix(shader.getUnifromLocation("projMatrix"), matrix);
-		shader.unbind();
-
-		return matrix;
-	}
-
-	public static void setProjectionMatrix(Shader shader, Matrix4f mat) {
-		shader.bind();
-		shader.setUniformMatrix(shader.getUnifromLocation("projMatrix"), mat);
-		shader.unbind();
-
-	}
-
-	public static Matrix4f setViewMatrix(Vector cam, Shader shader) {
-		Matrix4f matrix = MatrixHelper.player(cam);
-
-		shader.bind();
-		shader.setUniformMatrix(shader.getUnifromLocation("viewMatrix"), matrix);
-		shader.unbind();
-
-		return matrix;
-	}
-
-	public static void setViewMatrix(Matrix4f mat, Shader shader) {
-		shader.bind();
-		shader.setUniformMatrix(shader.getUnifromLocation("viewMatrix"), mat);
-		shader.unbind();
-
+	public boolean isBound() {
+		return bound;
 	}
 
 }

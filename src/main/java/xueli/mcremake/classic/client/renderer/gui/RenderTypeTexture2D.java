@@ -1,5 +1,6 @@
 package xueli.mcremake.classic.client.renderer.gui;
 
+import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector2f;
 import xueli.game2.renderer.legacy.RenderType;
 import xueli.game2.resource.submanager.render.shader.Shader;
@@ -68,6 +69,10 @@ void main(){
 		});
 		this.shader.unbind();
 
+	}
+
+	@Override
+	public void applyMatrix(String name, Matrix4f matrix) {
 	}
 
 	public void setDisplayDimension(float width, float height) {

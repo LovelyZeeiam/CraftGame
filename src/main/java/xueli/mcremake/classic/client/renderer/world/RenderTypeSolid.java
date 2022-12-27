@@ -1,5 +1,6 @@
 package xueli.mcremake.classic.client.renderer.world;
 
+import org.lwjgl.utils.vector.Matrix4f;
 import xueli.game2.resource.submanager.render.shader.Shader;
 
 public class RenderTypeSolid extends ChunkRenderType {
@@ -18,7 +19,7 @@ out vec2 otexPos;
 out vec3 ocolor;
 
 void main(){
-	vec4 posCam = viewMatrix * vec4(pos ,1.0);
+	vec4 posCam = viewMatrix * vec4(pos, 1.0);
 	gl_Position = projMatrix * posCam;
 	otexPos = texPos;
 	ocolor = color;
@@ -47,17 +48,34 @@ void main(){
 """;
 
 	private final Shader shader;
+	private final TerrainTexture texture;
 
-	public RenderTypeSolid() {
+	public RenderTypeSolid(WorldRenderer renderer) {
+		super(renderer);
 		this.shader = Shader.compile(VERT_SHADER_CODE, FRAG_SHADER_CODE);
+		this.texture = renderer.getTerrainTexture();
 
 	}
 
 	@Override
 	public void render() {
 		this.shader.bind();
+		texture.bind();
 		super.render();
+		texture.unbind();
 		this.shader.unbind();
+
+	}
+
+	@Override
+	public void applyMatrix(String name, Matrix4f matrix) {
+		if(this.shader.isBound()) {
+			shader.setUniformMatrix(shader.getUnifromLocation(name), matrix);
+		} else {
+			shader.bind();
+			shader.setUniformMatrix(shader.getUnifromLocation(name), matrix);
+			shader.unbind();
+		}
 
 	}
 

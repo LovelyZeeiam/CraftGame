@@ -26,6 +26,7 @@ public abstract class ChainedResourceManager implements ResourceManager {
 	}
 
 	public void addResourceHolder(ResourceHolder holder) {
+		holder.reload();
 		this.resourceHolders.add(holder);
 		LOGGER.info("Add holder " + holder.getClass().getName() + " to " + this.getClass().getName());
 	}

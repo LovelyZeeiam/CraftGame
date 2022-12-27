@@ -26,10 +26,11 @@ public class Timer {
 
 		this.numShouldTick = (int) (this.remain / DUE_SECOND_PER_TICK);
 		this.remain -= this.numShouldTick * DUE_SECOND_PER_TICK;
+		this.remainProgress = (float) (this.remain / DUE_SECOND_PER_TICK);
 
 		int numExceed = this.numShouldTick - MAX_TICK_PER_INVOKE;
 		if(numExceed > 0) {
-			System.out.println(String.format("Can't keep up! Drop %d ticks", numExceed));
+			System.out.printf("Can't keep up! Drop %d ticks%n", numExceed);
 			this.numShouldTick = MAX_TICK_PER_INVOKE;
 		}
 
@@ -37,10 +38,10 @@ public class Timer {
 
 	}
 
-	public void runTick(Runnable run) {
+	public void runTick(Runnable tick) {
 		for (int i = 0; i < numShouldTick; i++) {
 			this.numHasTick++;
-			run.run();
+			tick.run();
 		}
 	}
 

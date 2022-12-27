@@ -31,6 +31,7 @@ public class LotsOfByteBuffer {
 		if (buffer.position() + more >= buffer.capacity()) {
 			int capacity = this.size = this.buffer.capacity() + STEP_EXPAND;
 			ByteBuffer newBuffer = BufferUtils.createByteBuffer(capacity);
+			this.buffer.flip();
 			newBuffer.put(this.buffer);
 			this.buffer = newBuffer;
 		}
@@ -39,6 +40,7 @@ public class LotsOfByteBuffer {
 	public void put(float v) {
 		predictAndExpand(Float.BYTES);
 		buffer.putFloat(v);
+//		System.out.println(buffer.position());
 	}
 
 	public void put(int v) {

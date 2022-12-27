@@ -2,6 +2,7 @@ package xueli.mcremake.classic.core.world;
 
 import com.flowpowered.nbt.CompoundMap;
 import xueli.game.vector.Vector2i;
+import xueli.mcremake.classic.GameRegistry;
 import xueli.mcremake.classic.client.CraftGameClient;
 import xueli.mcremake.classic.client.WorldEvents;
 import xueli.mcremake.classic.core.block.BlockType;
@@ -21,9 +22,13 @@ public class WorldDimension implements WorldAccessible {
 	public void init() {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				Chunk chunk = new Chunk();
-				for (int k = 0; k < 64; k++) {
-
+				Chunk chunk = new Chunk(this);
+				for (int k = 0; k < 4; k++) {
+					for (int l = 0; l < Chunk.CHUNK_SIZE; l++) {
+						for (int m = 0; m < Chunk.CHUNK_SIZE; m++) {
+							chunk.setBlock(l, k, m, GameRegistry.STONE);
+						}
+					}
 				}
 				chunkMap.put(new Vector2i(i, j), chunk);
 				ctx.WorldEventBus.post(new WorldEvents.NewChunkEvent(i, j));

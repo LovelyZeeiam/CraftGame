@@ -22,7 +22,7 @@ public class OverlayManager implements LifeCycle, ResourceHolder {
 	}
 
 	@Override
-	public void tick() {
+	public void gameLoop() {
 		if(overlay != null) {
 			gui.begin();
 			overlay.render(gui);

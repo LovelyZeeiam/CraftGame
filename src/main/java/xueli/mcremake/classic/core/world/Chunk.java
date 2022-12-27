@@ -12,12 +12,14 @@ public class Chunk implements WorldAccessible {
 	public static final int SUB_CHUNK_HEIGHT = 16;
 	public static final int SUB_CHUNK_LAYER_COUNT = 8;
 
-	private final ChunkGrid[] grids = new ChunkGrid[SUB_CHUNK_LAYER_COUNT];
+	private final WorldDimension world;
+	final ChunkGrid[] grids = new ChunkGrid[SUB_CHUNK_LAYER_COUNT];
 
 	private final HashMap<String, Integer> techniqueTags = new HashMap<>();
 	private final CompoundMap gamingChunkTag = new CompoundMap();
 
-	public Chunk() {
+	public Chunk(WorldDimension world) {
+		this.world = world;
 		for (int i = 0; i < SUB_CHUNK_LAYER_COUNT; i++) {
 			grids[i] = new ChunkGrid();
 		}
@@ -58,8 +60,12 @@ public class Chunk implements WorldAccessible {
 
 	@Override
 	public CompoundMap createBlockTag(int x, int y, int z) {
-		int yInSub = y / SUB_CHUNK_HEIGHT;
-		return grids[yInSub].tagGrid[x][z][y % SUB_CHUNK_HEIGHT] = new CompoundMap();
+		int ySub = y / SUB_CHUNK_HEIGHT;
+		return grids[ySub].tagGrid[x][z][y % SUB_CHUNK_HEIGHT] = new CompoundMap();
+	}
+
+	public int getMaxHeight(int x, int z, int ySub) {
+		return grids[ySub].heightMap[x][z];
 	}
 
 	public void addTag(Tag<?> tag) {
@@ -76,6 +82,10 @@ public class Chunk implements WorldAccessible {
 
 	int getTechniqueTags(String key) {
 		return this.techniqueTags.get(key);
+	}
+
+	public WorldDimension getWorld() {
+		return world;
 	}
 
 }

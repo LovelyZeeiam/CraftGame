@@ -1,5 +1,7 @@
 package xueli.game2.renderer.legacy;
 
+import org.lwjgl.utils.vector.Matrix4f;
+
 import java.util.HashMap;
 import java.util.function.Function;
 
@@ -28,6 +30,8 @@ public abstract class RenderType<T> {
 		buffers.values().forEach(RenderBuffer::render);
 
 	}
+
+	public abstract void applyMatrix(String name, Matrix4f matrix);
 
 	public void release() {
 		buffers.values().forEach(RenderBuffer::release);

@@ -52,15 +52,17 @@ public class VertexAttributeRenderBuffer implements RenderBuffer {
 
 			@Override
 			public void applyToBuffer(int id, BufferStorable storable) {
-				VertexBuffer buf = applyCount.get(id);
-				buf.submitCount++;
-
-				storable.store(buf.buf);
+				VertexBuffer obj = applyCount.get(id);
+				storable.store(obj.buf);
+				obj.submitCount++;
 
 			}
 
 			@Override
 			public void flip() {
+				// TODO: This time we manage the memory by LWJGL API
+				// Actually just now I practise C# and use Memory handle which works pretty nice
+				// Or it might appear some unexpected behaviors
 				AtomicInteger vertCount = new AtomicInteger(Integer.MAX_VALUE);
 				applyCount.forEach((i, b) -> {
 					vertCount.set(Math.min(vertCount.get(), b.submitCount));

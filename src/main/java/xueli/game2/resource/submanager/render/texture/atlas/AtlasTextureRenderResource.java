@@ -41,7 +41,7 @@ public class AtlasTextureRenderResource extends SubResourceManager {
 			return;
 		}
 
-		if(resources.size() <= 0) {
+		if(resources.size() == 0) {
 			System.err.println("Can't find atlas in: " + path);
 			return;
 		}

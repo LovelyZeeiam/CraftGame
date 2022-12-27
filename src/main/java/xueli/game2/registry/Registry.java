@@ -8,4 +8,6 @@ public interface Registry<T> {
 	public T getById(int id);
 	public int getId(T t);
 
+	public WritableRegistry<T> cloneToWritable();
+
 }

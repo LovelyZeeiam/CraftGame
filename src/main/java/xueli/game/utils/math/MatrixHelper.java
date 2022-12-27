@@ -4,6 +4,7 @@ import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector3f;
 import xueli.game.vector.Vector;
 
+@Deprecated
 public class MatrixHelper {
 
 	public static Matrix4f initMatrix = new Matrix4f();
@@ -16,7 +17,7 @@ public class MatrixHelper {
 	public static Matrix4f lastTimeProjMatrix, lastTimeViewMatrix;
 	public static float[][] frustumPlane = new float[6][4];
 
-	public static Matrix4f perspecive(float width, float height, float fov, float near, float far) {
+	public static Matrix4f perspective(float width, float height, float fov, float near, float far) {
 		Matrix4f projectionMatrix = new Matrix4f();
 
 		float ratio = width / height;
@@ -66,9 +67,8 @@ public class MatrixHelper {
 		Matrix4f.rotate((float) Math.toRadians(camera.rotX), new Vector3f(1, 0, 0), viewMatrix, viewMatrix);
 		Matrix4f.rotate((float) Math.toRadians(camera.rotY), new Vector3f(0, 1, 0), viewMatrix, viewMatrix);
 		Matrix4f.rotate((float) Math.toRadians(camera.rotZ), new Vector3f(0, 0, 1), viewMatrix, viewMatrix);
-		Vector3f nagativeCamPos = new Vector3f((float) -camera.x, (float) -camera.y, (float) -camera.z);
-		Matrix4f.translate(nagativeCamPos, viewMatrix, viewMatrix);
-
+		Vector3f negativeCamPos = new Vector3f((float) -camera.x, (float) -camera.y, (float) -camera.z);
+		Matrix4f.translate(negativeCamPos, viewMatrix, viewMatrix);
 		lastTimeViewMatrix = viewMatrix;
 		return viewMatrix;
 	}

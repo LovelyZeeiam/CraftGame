@@ -24,8 +24,8 @@ public class CraftGameServer implements RunnableLifeCycle {
 	}
 
 	@Override
-	public void tick() {
-		server.tick();
+	public void gameLoop() {
+		server.gameLoop();
 		
 	}
 

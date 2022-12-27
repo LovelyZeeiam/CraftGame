@@ -125,7 +125,7 @@ public class MyGui implements LifeCycle {
 	}
 
 	@Override
-	public void tick() {
+	public void gameLoop() {
 	}
 
 	public long getContext() {
