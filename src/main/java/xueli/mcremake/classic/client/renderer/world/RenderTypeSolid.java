@@ -46,10 +46,9 @@ void main(){
 
 """;
 
-	private Shader shader;
+	private final Shader shader;
 
-	@Override
-	public void doInit() {
+	public RenderTypeSolid() {
 		this.shader = Shader.compile(VERT_SHADER_CODE, FRAG_SHADER_CODE);
 
 	}

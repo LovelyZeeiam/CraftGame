@@ -53,11 +53,6 @@ void main(){
 
 	public RenderTypeTexture2D() {
 		super(i -> new MyRenderBuffer2D());
-
-	}
-
-	@Override
-	public void doInit() {
 		this.shader = Shader.compile(VERT_SHADER_CODE, FRAG_SHADER_CODE);
 
 	}

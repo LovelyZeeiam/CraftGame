@@ -14,17 +14,6 @@ public abstract class RenderType<T> {
 
 	}
 
-	private boolean initialized = false;
-
-	public void init() {
-		if(initialized) return;
-		this.doInit();
-		this.initialized = true;
-
-	}
-
-	public abstract void doInit();
-
 	public RenderBuffer getRenderBuffer(T key) {
 		return buffers.computeIfAbsent(key, bufferSupplier);
 	}

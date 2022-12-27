@@ -4,8 +4,6 @@ import xueli.game2.network.ConnectionStageListener;
 import xueli.game2.network.Packet;
 import xueli.game2.network.ServerClientConnection;
 import xueli.game2.network.processor.PacketProcessor;
-import xueli.mcremake.classic.network.ServerPlayerInfo;
-import xueli.mcremake.classic.network.protocol.C00HelloPacket;
 
 public class MyServerConnection extends ServerClientConnection {
 	
@@ -14,8 +12,6 @@ public class MyServerConnection extends ServerClientConnection {
 	private final PacketProcessor packetProcessor = new PacketProcessor();
 
 	private ConnectionStageListener<MyServerConnection> listener = new ServerStageHelloListener(this);
-
-	ServerPlayerInfo playerInfo;
 	
 	public MyServerConnection(CraftGameServer ctx) {
 		this.ctx = ctx;
@@ -33,10 +29,6 @@ public class MyServerConnection extends ServerClientConnection {
 
 	public void setListener(ConnectionStageListener<MyServerConnection> listener) {
 		this.listener = listener;
-	}
-
-	public ServerPlayerInfo getPlayerInfo() {
-		return playerInfo;
 	}
 	
 }

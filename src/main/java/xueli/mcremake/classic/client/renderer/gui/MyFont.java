@@ -2,7 +2,6 @@ package xueli.mcremake.classic.client.renderer.gui;
 
 import org.lwjgl.utils.vector.Vector2f;
 import org.lwjgl.utils.vector.Vector3f;
-import xueli.game2.lifecycle.LifeCycle;
 import xueli.game2.renderer.legacy.BackRenderBuffer;
 import xueli.game2.renderer.legacy.RenderBuffer;
 import xueli.game2.resource.ResourceLocation;
@@ -14,7 +13,7 @@ import java.awt.*;
 import java.util.HashMap;
 
 @Deprecated
-class MyFont implements LifeCycle {
+class MyFont {
 
 	private static final TextureResourceLocation FONT_TEXTURE_LOCATION = new TextureResourceLocation(new ResourceLocation("minecraft", "font/default.png"), new TextureTypeLegacy());
 
@@ -30,10 +29,7 @@ class MyFont implements LifeCycle {
 
 	}
 
-	@Override
 	public void init() {
-		renderer.init();
-
 	}
 
 	private HashMap<RenderBuffer, BackRenderBuffer> buffers = new HashMap<>();
@@ -77,7 +73,6 @@ class MyFont implements LifeCycle {
 //
 //	}
 
-	@Override
 	public void tick() {
 		buffers.values().forEach(BackRenderBuffer::flip);
 //		GLHelper.checkGLError("Draw Font - Flip");
@@ -91,7 +86,6 @@ class MyFont implements LifeCycle {
 
 	}
 
-	@Override
 	public void release() {
 		renderer.release();
 

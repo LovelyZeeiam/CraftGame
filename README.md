@@ -2,22 +2,15 @@
 
 # Minecraft-Classic-Remake
 
-A Minecraft Classic remake programmed in Java 17 with LWJGL 3.
-
-During the last several months, I attempted to write a client for Minecraft Java 1.19.2, which helped me better understand how the network is programmed. So I just copy the source code base in that project and paste it here in `xueli.game2.network` (There seems to be no other completely unfamiliar protocol :} ).
-
-By the way, to separate the packet into `game` and `game2` because the code about my game utilities is optimized to adapt to things like resource packs or multi-renderer for sub-chunks and so on.
-
-This goal of this fork is to program a basic winnable game based on the Classic Minecraft color and some terrain generation in its later version, around `a1.0.4`. The resources is extracted from Minecraft a1.2.6.
+The goal is to make a "Minecraft PE 0.10.5 Remake" programmed in Java 17 with LWJGL 3. Currently, the game is being refactored and cannot be played. But when the game is done, there will be a skeleton summary of this project.
 
 ## The goal
 
-- [ ] All blocks that are in Minecraft Alpha a1.0.4
+- [ ] All blocks that are in Minecraft PE 0.10.5
 - [ ] Implement a simple world using terrain generation including default world and simple biomes like Minecraft.
 - [ ] Implement Survival Mode as default.
 - [ ] Day-night Circle.
 - [ ] Animals and monsters.
-
 
 ## How to Test the Game
 
@@ -36,7 +29,7 @@ There you go!
 #### Linux && MacOS
 
 I have no computer running MacOS, but I got a dual system, Windows and Ubuntu.
-I'm convinced it be able to run by typing the following 3 commands.
+I'm convinced that it is able to run by typing the following 3 commands.
 
 > chmod +x gradlew
 > 

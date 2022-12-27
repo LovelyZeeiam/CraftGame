@@ -6,7 +6,7 @@ import xueli.mcremake.classic.network.PacketSourceSide;
 
 public class CraftGameServer implements RunnableLifeCycle {
 
-	private boolean isRunning = false;
+	private volatile boolean isRunning = false;
 
 	private final Server<MyServerConnection> server;
 

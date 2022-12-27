@@ -32,7 +32,6 @@ public class UniversalBackgroundRenderer implements ResourceHolder {
 	private BackRenderBuffer backBuf;
 
 	public void init() {
-		renderType.init();
 		this.reload();
 
 	}

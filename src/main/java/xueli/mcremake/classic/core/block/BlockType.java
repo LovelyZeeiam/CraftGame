@@ -1,4 +1,4 @@
-package xueli.mcremake.classic.block;
+package xueli.mcremake.classic.core.block;
 
 import xueli.game2.resource.ResourceLocation;
 import xueli.game2.resource.submanager.lang.Translatable;

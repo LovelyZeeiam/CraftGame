@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 
 public class Server<T extends ServerClientConnection> implements RunnableLifeCycle {
 
-	private static final EventLoopGroup workerGroup = new NioEventLoopGroup();
+	private final EventLoopGroup workerGroup = new NioEventLoopGroup();
 
 	private int port;
 
@@ -72,6 +72,7 @@ public class Server<T extends ServerClientConnection> implements RunnableLifeCyc
 		Iterator<T> iterable = connections.iterator();
 		while(iterable.hasNext()) {
 			T t = iterable.next();
+			t.tick();
 			if(!t.isConnected()) {
 				iterable.remove();
 			}
@@ -94,6 +95,8 @@ public class Server<T extends ServerClientConnection> implements RunnableLifeCyc
 				throw new RuntimeException(e);
 			}
 		}
+
+		workerGroup.shutdownGracefully();
 
 	}
 

@@ -8,7 +8,6 @@ import xueli.game2.network.pipeline.PacketDecoder;
 import xueli.game2.network.pipeline.PacketEncoder;
 import xueli.game2.network.pipeline.PacketSizeDecodeHandler;
 import xueli.game2.network.pipeline.PacketSizePrefixer;
-import xueli.game2.network.processor.PacketProcessor;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -88,6 +87,9 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 			}
 		}
 
+	}
+
+	public void tick() {
 	}
 
 	public String getHostname() {

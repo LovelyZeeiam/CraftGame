@@ -1,9 +1,9 @@
-package xueli.mcremake.classic.world;
+package xueli.mcremake.classic.core.world;
 
 import com.flowpowered.nbt.CompoundMap;
-import xueli.mcremake.classic.block.BlockType;
+import xueli.mcremake.classic.core.block.BlockType;
 
-public interface ChunkAccessible {
+public interface WorldAccessible {
 
 	public BlockType getBlock(int x, int y, int z);
 	public CompoundMap getBlockTag(int x, int y, int z);
