@@ -6,6 +6,7 @@ import org.lwjgl.utils.vector.Vector2i;
 import xueli.mcremake.core.block.BlockType;
 
 import java.util.HashMap;
+import java.util.function.Consumer;
 
 public class Chunk implements WorldAccessible {
 
@@ -56,6 +57,7 @@ public class Chunk implements WorldAccessible {
 		grid.grid[x][z][yInSub] = block;
 
 		if(block == null) {
+			grid.tagGrid[x][z][yInSub] = null;
 			if(y == grid.heightMap[x][z])
 				for (int i = --grid.heightMap[x][z]; i >= 0 && grid.grid[x][z][i] == null; i--) {}
 		} else {
@@ -65,10 +67,14 @@ public class Chunk implements WorldAccessible {
 	}
 
 	@Override
-	public CompoundMap createBlockTag(int x, int y, int z) {
-		if(y < 0 || y >= Chunk.CHUNK_HEIGHT) return null;
+	public void modifyBlockTag(int x, int y, int z, Consumer<CompoundMap> c) {
+		if(y < 0 || y >= Chunk.CHUNK_HEIGHT) return;
 		int ySub = y / SUB_CHUNK_HEIGHT;
-		return grids[ySub].tagGrid[x][z][y % SUB_CHUNK_HEIGHT] = new CompoundMap();
+		CompoundMap map = grids[ySub].tagGrid[x][z][y % SUB_CHUNK_HEIGHT];
+		if(map == null) {
+			map = grids[ySub].tagGrid[x][z][y % SUB_CHUNK_HEIGHT] = new CompoundMap();
+		}
+		c.accept(map);
 	}
 
 	public int getMaxHeight(int x, int z, int ySub) {

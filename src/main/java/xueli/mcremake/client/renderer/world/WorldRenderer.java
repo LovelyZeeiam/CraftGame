@@ -2,6 +2,8 @@ package xueli.mcremake.client.renderer.world;
 
 import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector2i;
+import xueli.game2.camera3d.BoundCamera;
+import xueli.game2.camera3d.ICamera;
 import xueli.game2.display.Display;
 import xueli.game2.resource.ResourceHolder;
 import xueli.mcremake.client.CraftGameClient;
@@ -25,6 +27,9 @@ public class WorldRenderer implements ResourceHolder {
 
 	private final HashMap<Class<? extends ChunkRenderType>, ChunkRenderType> renderTypes = new HashMap<>();
 
+	private BoundCamera camera = new BoundCamera(null);
+	private Matrix4f viewMatrix, projMatrix;
+
 	public WorldRenderer(CraftGameClient ctx) {
 		this.ctx = ctx;
 		this.world = ctx.getUnsafeImmediateWorld();
@@ -42,6 +47,10 @@ public class WorldRenderer implements ResourceHolder {
 	public void reload() {
 		this.terrainTexture.reload();
 
+	}
+
+	public void setCamera(ICamera camera) {
+		this.camera.setCamera(camera);
 	}
 
 	public void onCreateNewChunk(WorldEvents.NewChunkEvent event) {
@@ -98,13 +107,13 @@ public class WorldRenderer implements ResourceHolder {
 
 	}
 
-	public void render(float partialTick) {
+	public void render() {
 		this.doTasks();
 
 		Display display = ctx.getDisplay();
 
-		Matrix4f viewMatrix = ctx.getPlayer().getViewMatrix(partialTick);
-		Matrix4f projMatrix = getPerspectiveMatrix(display.getWidth(), display.getHeight(), 110.0f, 0.01f, 999999.9f);
+		this.viewMatrix = camera.getCameraMatrix();
+		this.projMatrix = getPerspectiveMatrix(display.getWidth(), display.getHeight(), 110.0f, 0.01f, 999999.9f);
 
 		for (ChunkRenderType type : renderTypes.values()) {
 			type.applyMatrix("viewMatrix", viewMatrix);
@@ -142,6 +151,14 @@ public class WorldRenderer implements ResourceHolder {
 
 	public TerrainTexture getTerrainTexture() {
 		return terrainTexture;
+	}
+
+	public Matrix4f getViewMatrix() {
+		return viewMatrix;
+	}
+
+	public Matrix4f getProjMatrix() {
+		return projMatrix;
 	}
 
 }

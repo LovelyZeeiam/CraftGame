@@ -1,10 +1,11 @@
-package xueli.game.utils.math;
+package xueli.game2.math;
 
 import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector3f;
 import org.lwjgl.utils.vector.Vector4f;
 import xueli.game.vector.Vector;
 
+// TODO: Use when the ray is not emitted from the center of the screen
 public class MousePicker {
 
 	private final Matrix4f projMatrix, viewMatrix;
@@ -37,8 +38,8 @@ public class MousePicker {
 	}
 
 	public Vector3f getPointOnRay(float distance) {
-		if (ray == null)
-			return null;
+//		if (ray == null)
+//			return null;
 		Vector3f scaledRay = new Vector3f(ray.x * distance, ray.y * distance, ray.z * distance);
 		Vector3f rayEnd = Vector3f.add(camPos, scaledRay, null);
 		return new Vector3f(rayEnd.x, rayEnd.y, rayEnd.z);

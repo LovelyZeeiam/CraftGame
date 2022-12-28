@@ -132,7 +132,7 @@ public class EntityCollider {
 					if(block == null) continue;
 					BlockCollidable collidable = block.collidable();
 					if(collidable == null) continue;
-					collidable.getAABBs(x, y ,z, world, list);
+					collidable.getCollisionAABBs(x, y ,z, world, list);
 				}
 			}
 		}

@@ -66,4 +66,8 @@ public class Vector3i {
 		return true;
 	}
 
+	public static Vector3i add(Vector3i v1, Vector3i v2) {
+		return new Vector3i(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+	}
+
 }

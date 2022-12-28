@@ -1,6 +1,7 @@
 package xueli.mcremake.client;
 
 import org.lwjgl.opengl.GL30;
+import xueli.game2.camera3d.MovableCamera;
 import xueli.game2.display.GameDisplay;
 import xueli.mcremake.client.gui.universal.UniversalGui;
 import xueli.mcremake.client.renderer.world.WorldRenderer;
@@ -23,7 +24,7 @@ public class CraftGameClient extends GameDisplay {
 //	public final EventBus GuiEventBus = new EventBus();
 
 	private WorldDimension world;
-	private BufferedWorldAccessible bufferedWorld;
+	private ListenableBufferedWorldAccessible bufferedWorld;
 	private ClientPlayer player;
 	private WorldRenderer worldRenderer;
 
@@ -40,7 +41,7 @@ public class CraftGameClient extends GameDisplay {
 		GameRegistry.callForClazzLoad();
 
 		this.world = new WorldDimension(this);
-		this.bufferedWorld = new BufferedWorldAccessible(this.world);
+		this.bufferedWorld = new ListenableBufferedWorldAccessible(this.world, WorldEventBus);
 		this.worldRenderer = new WorldRenderer(this);
 		getResourceManager().addResourceHolder(worldRenderer);
 
@@ -61,13 +62,14 @@ public class CraftGameClient extends GameDisplay {
 		GL30.glClearColor(0.5f, 0.5f, 0.8f, 1.0f);
 
 		this.player.inputRefresh();
-
 		this.timer.runTick(() -> {
 			this.player.tick();
+			this.bufferedWorld.flush();
 		});
-		this.bufferedWorld.flush();
 
-		worldRenderer.render(timer.getRemainProgress());
+		MovableCamera camera = this.player.getCamera(timer.getRemainProgress());
+		worldRenderer.setCamera(camera);
+		worldRenderer.render();
 
 	}
 

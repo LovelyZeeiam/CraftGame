@@ -8,6 +8,7 @@ import xueli.mcremake.client.WorldEvents;
 import xueli.mcremake.core.block.BlockType;
 
 import java.util.HashMap;
+import java.util.function.Consumer;
 
 public class WorldDimension implements WorldAccessible {
 
@@ -66,10 +67,12 @@ public class WorldDimension implements WorldAccessible {
 	}
 
 	@Override
-	public CompoundMap createBlockTag(int x, int y, int z) {
+	public void modifyBlockTag(int x, int y, int z, Consumer<CompoundMap> c) {
 		Vector2i chunkPos = Chunk.toChunkPos(x, z);
 		Chunk chunk = chunkMap.get(chunkPos);
-		return chunk == null ? null : chunk.createBlockTag(x - (chunkPos.x * Chunk.CHUNK_SIZE), y, z - (chunkPos.y * Chunk.CHUNK_SIZE));
+		if(chunk == null) return;
+		chunk.modifyBlockTag(x - (chunkPos.x * Chunk.CHUNK_SIZE), y, z - (chunkPos.y * Chunk.CHUNK_SIZE), c);
+
 	}
 
 	public Chunk getChunk(int x, int z) {

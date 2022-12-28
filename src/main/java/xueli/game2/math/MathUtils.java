@@ -1,4 +1,4 @@
-package xueli.game2.core.math;
+package xueli.game2.math;
 
 public class MathUtils {
 

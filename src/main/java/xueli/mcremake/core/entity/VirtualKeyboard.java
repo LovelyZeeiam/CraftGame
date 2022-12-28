@@ -6,6 +6,6 @@ public class VirtualKeyboard {
 	public boolean leftward = false, rightward = false;
 	public boolean wantDash = false, wantFly = false, wantSneak = false;
 
-	public boolean wantUseLeftHand = false, wantUseRightHand = false;
+	public int wantUseLeftButton = 0, wantUseRightButton = 0;
 
 }

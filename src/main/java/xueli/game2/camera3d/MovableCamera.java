@@ -22,7 +22,7 @@ public class MovableCamera extends Vector implements ICamera {
 	public Matrix4f getCameraMatrix() {
 		Matrix4f viewMatrix = new Matrix4f();
 		viewMatrix.setIdentity();
-		Matrix4f.rotate((float) Math.toRadians(this.rotX), new Vector3f(1, 0, 0), viewMatrix, viewMatrix);
+		Matrix4f.rotate((float) Math.toRadians(-this.rotX), new Vector3f(1, 0, 0), viewMatrix, viewMatrix);
 		Matrix4f.rotate((float) Math.toRadians(this.rotY), new Vector3f(0, 1, 0), viewMatrix, viewMatrix);
 		Matrix4f.rotate((float) Math.toRadians(this.rotZ), new Vector3f(0, 0, 1), viewMatrix, viewMatrix);
 		Vector3f negativeCamPos = new Vector3f((float) -this.x, (float) -this.y, (float) -this.z);

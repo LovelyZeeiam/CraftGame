@@ -16,6 +16,13 @@ public class Vector3d {
 		this.z = z;
 	}
 
+	public void normalize() {
+		double length = Math.sqrt(x * x + y * y + z * z);
+		this.x /= length;
+		this.y /= length;
+		this.z /= length;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

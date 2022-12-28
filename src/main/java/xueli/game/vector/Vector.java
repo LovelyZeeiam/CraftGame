@@ -9,7 +9,7 @@ public class Vector implements Serializable {
 	public double x;
 	public double y;
 	public double z;
-	public float rotX, rotY, rotZ;
+	public double rotX, rotY, rotZ;
 
 	public Vector() {
 		x = y = z = rotX = rotY = rotZ = 0;

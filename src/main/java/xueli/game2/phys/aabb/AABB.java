@@ -4,7 +4,7 @@ import org.lwjgl.utils.vector.Vector3d;
 
 public class AABB {
 
-	private Vector3d v1 = new Vector3d(), v2 = new Vector3d();
+	protected Vector3d v1 = new Vector3d(), v2 = new Vector3d();
 
 	private AABB() {}
 
@@ -58,6 +58,14 @@ public class AABB {
 		}
 
 		return aabb;
+	}
+
+	@Override
+	public String toString() {
+		return "AABB{" +
+				"v1=" + v1 +
+				", v2=" + v2 +
+				'}';
 	}
 
 }

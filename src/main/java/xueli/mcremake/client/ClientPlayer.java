@@ -1,25 +1,31 @@
 package xueli.mcremake.client;
 
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.utils.vector.Matrix4f;
-import org.lwjgl.utils.vector.Vector3f;
-import xueli.game.vector.Vector;
 import org.lwjgl.utils.vector.Vector3d;
+import org.lwjgl.utils.vector.Vector3f;
+import org.lwjgl.utils.vector.Vector3i;
+import xueli.game.vector.Vector;
 import xueli.game2.camera3d.MovableCamera;
-import xueli.game2.core.math.TriFuncMap;
 import xueli.game2.display.Display;
+import xueli.game2.math.TriFuncMap;
 import xueli.game2.phys.aabb.AABB;
 import xueli.mcremake.core.entity.EntityCollider;
+import xueli.mcremake.core.entity.PickCollider;
+import xueli.mcremake.core.entity.PickResult;
 import xueli.mcremake.core.entity.VirtualKeyboard;
 import xueli.mcremake.core.world.WorldAccessible;
+import xueli.mcremake.registry.GameRegistry;
 
 public class ClientPlayer extends Vector {
 
-	private static AABB PLAYER_COLLISION_BOX = new AABB(new Vector3d(-0.4, -1.5, -0.4), new Vector3d(0.4, 0.2, 0.4));
+	private static final AABB PLAYER_COLLISION_BOX = new AABB(new Vector3d(-0.4, -1.5, -0.4), new Vector3d(0.4, 0.2, 0.4));
 
 	private final CraftGameClient ctx;
 	private final WorldAccessible world;
 	private final EntityCollider collider;
+
+	private final PickCollider picker;
+	private PickResult pickResult;
 
 	public final VirtualKeyboard keyboard = new VirtualKeyboard();
 
@@ -33,11 +39,13 @@ public class ClientPlayer extends Vector {
 		this.ctx = ctx;
 		this.world = ctx.getWorld();
 		this.collider = new EntityCollider(PLAYER_COLLISION_BOX, world);
+		this.picker = new PickCollider(world);
 
 	}
 
 	public void inputRefresh() {
 		Display display = ctx.getDisplay();
+		// TODO: CHANGE
 		keyboard.forward = display.isKeyDown(GLFW.GLFW_KEY_W);
 		keyboard.backward = display.isKeyDown(GLFW.GLFW_KEY_S);
 		keyboard.leftward = display.isKeyDown(GLFW.GLFW_KEY_A);
@@ -45,11 +53,19 @@ public class ClientPlayer extends Vector {
 		keyboard.wantDash = display.isKeyDown(GLFW.GLFW_KEY_R);
 		keyboard.wantFly = display.isKeyDown(GLFW.GLFW_KEY_SPACE);
 		keyboard.wantSneak = display.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT);
-		keyboard.wantUseLeftHand = display.isMouseDown(GLFW.GLFW_MOUSE_BUTTON_LEFT);
-		keyboard.wantUseRightHand = display.isMouseDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT);
+		keyboard.wantUseLeftButton = display.isMouseDown(GLFW.GLFW_MOUSE_BUTTON_LEFT) ? 1 : 0;
+		keyboard.wantUseRightButton = display.isMouseDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT) ? 1 : 0;
 
-		this.rotX += display.getCursorDY() * 0.1f;
+		this.rotX -= display.getCursorDY() * 0.1f;
 		this.rotY += display.getCursorDX() * 0.1f;
+		this.rotX = Math.min(this.rotX, 89.0);
+		this.rotX = Math.max(this.rotX, -89.0);
+
+	}
+
+	private void keyboardStateReset() {
+		keyboard.forward = keyboard.backward = keyboard.leftward = keyboard.rightward = keyboard.wantDash = keyboard.wantFly = keyboard.wantSneak = false;
+		keyboard.wantUseLeftButton = keyboard.wantUseRightButton = 0;
 
 	}
 
@@ -68,10 +84,10 @@ public class ClientPlayer extends Vector {
 		Display display = ctx.getDisplay();
 
 		Vector3f acceleration = new Vector3f();
-		float speed = 0.6f;
+		float speed = 0.3f;
 
 		if(keyboard.wantDash) {
-			speed *= 4.0f;
+			speed *= 7.0f;
 		}
 
 		if(keyboard.forward) {
@@ -110,14 +126,60 @@ public class ClientPlayer extends Vector {
 		this.y += delta.y;
 		this.z += delta.z;
 
+		this.pickResult = picker.pick(this, 6.0f);
+
+//		System.out.println(this.x + ", " + this.y + ", " + this.z);
+
+	}
+
+	private boolean lastTimeLeftButtonPressed = false, lastTimeRightButtonPressed = false;
+	private boolean isLeftButtonPressed = false, isRightButtonPressed = false;
+	private int leftButtonCooldown = 0, rightButtonCooldown = 0;
+
+	private void handUseTick() {
+
+
+		for (int i = 0; i < keyboard.wantUseLeftButton; i++) {
+			handleLeftButton();
+		}
+
+		for (int i = 0; i < keyboard.wantUseRightButton; i++) {
+			handleRightButton();
+		}
+
+		if(keyboard.wantUseLeftButton == 1) {
+			lastTimeLeftButtonPressed = true;
+		}
+
+		if(keyboard.wantUseRightButton == 1) {
+			lastTimeLeftButtonPressed = true;
+		}
+
+	}
+
+	private void handleLeftButton() {
+		if(pickResult != null) {
+			Vector3i blockPos = pickResult.blockPos();
+			world.setBlock(blockPos.x, blockPos.y, blockPos.z, null);
+		}
+
+	}
+
+	private void handleRightButton() {
+		if(pickResult != null) {
+			Vector3i blockPos = pickResult.placePos();
+			world.setBlock(blockPos.x, blockPos.y, blockPos.z, GameRegistry.STONE);
+		}
 	}
 
 	public void tick() {
 		this.moveTick();
+		this.handUseTick();
+		this.keyboardStateReset();
 
 	}
 
-	public Matrix4f getViewMatrix(float partialTick) {
+	public MovableCamera getCamera(float partialTick) {
 //		System.out.println(partialTick);
 		movableCamera.x = lastTickX + (x - lastTickX) * partialTick;
 		movableCamera.y = lastTickY + (y - lastTickY) * partialTick;
@@ -128,7 +190,7 @@ public class ClientPlayer extends Vector {
 
 //		System.out.println(this.movableCamera.x + ", " + this.movableCamera.y + ", " + this.movableCamera.z + ", " + this.movableCamera.rotX + ", " + this.movableCamera.rotY);
 
-		return movableCamera.getCameraMatrix();
+		return movableCamera;
 	}
 
 }
