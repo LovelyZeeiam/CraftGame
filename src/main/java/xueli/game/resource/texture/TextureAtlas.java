@@ -5,7 +5,7 @@ import com.google.gson.stream.JsonReader;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL13;
-import xueli.game.vector.Vector2i;
+import org.lwjgl.utils.vector.Vector2i;
 import xueli.utils.logger.MyLogger;
 
 import javax.imageio.ImageIO;

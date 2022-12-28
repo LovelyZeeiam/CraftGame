@@ -17,21 +17,20 @@ public class TriFuncMap {
 		}
 	}
 	
-	public static float sin(float degree) {
+	public static float sin(double degree) {
 		int fittingIndex = getFittingIndex(degree);
 		return sinMap[fittingIndex];
 	}
 	
-	public static float cos(float degree) {
+	public static float cos(double degree) {
 		int fittingIndex = getFittingIndex(degree);
 		return cosMap[fittingIndex];
 	}
 	
-	private static int getFittingIndex(float degree) {
+	private static int getFittingIndex(double degree) {
 		degree = MathUtils.floorMod(degree, 360);
-		float index = degree * num / 360;
-		int fittingIndex = (int) index;
-		return fittingIndex;
+		double index = degree * num / 360;
+		return (int) index;
 	}
 
 }

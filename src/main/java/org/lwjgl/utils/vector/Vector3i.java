@@ -12,6 +12,13 @@ public class Vector3i {
 		this.z = z;
 	}
 
+	public Vector3i(Vector3d doubleVector) {
+		this.x = (int) Math.floor(doubleVector.x);
+		this.y = (int) Math.floor(doubleVector.y);
+		this.z = (int) Math.floor(doubleVector.z);
+
+	}
+
 	public Vector3i(Vector3f floatVector) {
 		this.x = (int) Math.floor(floatVector.x);
 		this.y = (int) Math.floor(floatVector.y);

@@ -5,8 +5,8 @@ import java.net.InetSocketAddress;
 import java.util.UUID;
 
 import xueli.game2.network.ClientConnection;
-import xueli.mcremake.classic.network.PacketSourceSide;
-import xueli.mcremake.classic.network.protocol.C00HelloPacket;
+import xueli.mcremake.network.PacketSourceSide;
+import xueli.mcremake.network.protocol.C00HelloPacket;
 
 public class ClientTest {
 

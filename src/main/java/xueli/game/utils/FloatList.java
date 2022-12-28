@@ -3,7 +3,7 @@ package xueli.game.utils;
 import org.lwjgl.utils.vector.Vector2f;
 import org.lwjgl.utils.vector.Vector3f;
 import org.lwjgl.utils.vector.Vector4f;
-import xueli.game.vector.Vector4b;
+import org.lwjgl.utils.vector.Vector4b;
 
 import java.nio.FloatBuffer;
 import java.util.Arrays;

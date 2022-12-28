@@ -1,6 +1,6 @@
 package xueli.game.utils;
 
-import xueli.game.vector.Vector4b;
+import org.lwjgl.utils.vector.Vector4b;
 
 public class Light {
 

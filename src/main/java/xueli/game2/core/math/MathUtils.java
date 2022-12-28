@@ -7,7 +7,12 @@ public class MathUtils {
 	
 	public static float floorMod(float x, float y) {
 		float multiple = x / y;
-		return x - (int) multiple * y;
+		return (float) (x - Math.floor(multiple) * y);
+	}
+
+	public static double floorMod(double x, double y) {
+		double multiple = x / y;
+		return x - Math.floor(multiple) * y;
 	}
 
 }
