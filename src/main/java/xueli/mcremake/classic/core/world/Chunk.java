@@ -11,6 +11,7 @@ public class Chunk implements WorldAccessible {
 	public static final int CHUNK_SIZE = 16;
 	public static final int SUB_CHUNK_HEIGHT = 16;
 	public static final int SUB_CHUNK_LAYER_COUNT = 8;
+	public static final int CHUNK_HEIGHT = SUB_CHUNK_HEIGHT * SUB_CHUNK_LAYER_COUNT;
 
 	private final WorldDimension world;
 	final ChunkGrid[] grids = new ChunkGrid[SUB_CHUNK_LAYER_COUNT];
@@ -32,18 +33,21 @@ public class Chunk implements WorldAccessible {
 
 	@Override
 	public BlockType getBlock(int x, int y, int z) {
-		int yInSub = y / SUB_CHUNK_HEIGHT;
-		return grids[yInSub].grid[x][z][y % SUB_CHUNK_HEIGHT];
+		if(y < 0 || y >= Chunk.CHUNK_HEIGHT) return null;
+		int ySub = y / SUB_CHUNK_HEIGHT;
+		return grids[ySub].grid[x][z][y % SUB_CHUNK_HEIGHT];
 	}
 
 	@Override
 	public CompoundMap getBlockTag(int x, int y, int z) {
-		int yInSub = y / SUB_CHUNK_HEIGHT;
-		return grids[yInSub].tagGrid[x][z][y % SUB_CHUNK_HEIGHT];
+		if(y < 0 || y >= Chunk.CHUNK_HEIGHT) return null;
+		int ySub = y / SUB_CHUNK_HEIGHT;
+		return grids[ySub].tagGrid[x][z][y % SUB_CHUNK_HEIGHT];
 	}
 
 	@Override
 	public void setBlock(int x, int y, int z, BlockType block) {
+		if(y < 0 || y >= Chunk.CHUNK_HEIGHT) return;
 		int ySub = y / SUB_CHUNK_HEIGHT;
 		int yInSub = y % SUB_CHUNK_HEIGHT;
 		ChunkGrid grid = grids[ySub];
@@ -60,6 +64,7 @@ public class Chunk implements WorldAccessible {
 
 	@Override
 	public CompoundMap createBlockTag(int x, int y, int z) {
+		if(y < 0 || y >= Chunk.CHUNK_HEIGHT) return null;
 		int ySub = y / SUB_CHUNK_HEIGHT;
 		return grids[ySub].tagGrid[x][z][y % SUB_CHUNK_HEIGHT] = new CompoundMap();
 	}

@@ -49,6 +49,7 @@ public class CraftGameClient extends GameDisplay {
 		this.player.z = 16;
 
 		GL30.glEnable(GL30.GL_DEPTH_TEST);
+		GL30.glEnable(GL30.GL_CULL_FACE);
 
 	}
 
