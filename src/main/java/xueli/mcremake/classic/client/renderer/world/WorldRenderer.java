@@ -6,6 +6,7 @@ import xueli.game2.display.Display;
 import xueli.game2.resource.ResourceHolder;
 import xueli.mcremake.classic.client.CraftGameClient;
 import xueli.mcremake.classic.client.WorldEvents;
+import xueli.mcremake.classic.core.world.Chunk;
 import xueli.mcremake.classic.core.world.WorldDimension;
 
 import java.util.HashMap;
@@ -48,7 +49,22 @@ public class WorldRenderer implements ResourceHolder {
 	}
 
 	public void onModifyBlock(WorldEvents.ModifyBlockEvent event) {
-		chunkRebuiltList.add(new Vector2i(event.x(), event.z()));
+		Vector2i chunkPos = Chunk.toChunkPos(event.x(), event.z());
+		chunkRebuiltList.add(chunkPos);
+
+		if(event.x() == 0) {
+			chunkRebuiltList.add(new Vector2i(chunkPos.x - 1, chunkPos.y));
+		} else if(event.x() == Chunk.CHUNK_SIZE - 1) {
+			chunkRebuiltList.add(new Vector2i(chunkPos.x + 1, chunkPos.y));
+		}
+
+		if(event.z() == 0) {
+			chunkRebuiltList.add(new Vector2i(chunkPos.x, chunkPos.y - 1));
+		} else if(event.z() == Chunk.CHUNK_SIZE - 1) {
+			chunkRebuiltList.add(new Vector2i(chunkPos.x, chunkPos.y - 1));
+		}
+
+
 	}
 
 	public void onRemoveChunk(WorldEvents.UnloadChunkEvent event) {
@@ -59,15 +75,18 @@ public class WorldRenderer implements ResourceHolder {
 		Vector2i v;
 		v = chunkRebuiltList.poll();
 		if(v != null) {
-			ChunkRenderBuildManager manager = new ChunkRenderBuildManager(v, this) {
-				@Override
-				@SuppressWarnings("unchecked")
-				protected <T extends ChunkRenderType> T getRenderType(Class<T> clazz) {
-					return (T) renderTypes.get(clazz);
-				}
-			};
-			new ChunkRebuiltTask(v.x, v.y, world.getChunk(v.x, v.y), manager).run();
-			manager.flip();
+			Chunk chunk = world.getChunk(v.x, v.y);
+			if(chunk != null) {
+				ChunkRenderBuildManager manager = new ChunkRenderBuildManager(v, this) {
+					@Override
+					@SuppressWarnings("unchecked")
+					protected <T extends ChunkRenderType> T getRenderType(Class<T> clazz) {
+						return (T) renderTypes.get(clazz);
+					}
+				};
+				new ChunkRebuiltTask(v.x, v.y, chunk, manager).run();
+				manager.flip();
+			}
 		}
 
 		v = chunkRemoveList.poll();

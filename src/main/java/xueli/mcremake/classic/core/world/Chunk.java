@@ -2,6 +2,7 @@ package xueli.mcremake.classic.core.world;
 
 import com.flowpowered.nbt.CompoundMap;
 import com.flowpowered.nbt.Tag;
+import xueli.game.vector.Vector2i;
 import xueli.mcremake.classic.core.block.BlockType;
 
 import java.util.HashMap;
@@ -35,6 +36,7 @@ public class Chunk implements WorldAccessible {
 	public BlockType getBlock(int x, int y, int z) {
 		if(y < 0 || y >= Chunk.CHUNK_HEIGHT) return null;
 		int ySub = y / SUB_CHUNK_HEIGHT;
+//		System.out.println(ySub + ", " + y + ", " + x + ", " + z);
 		return grids[ySub].grid[x][z][y % SUB_CHUNK_HEIGHT];
 	}
 
@@ -91,6 +93,10 @@ public class Chunk implements WorldAccessible {
 
 	public WorldDimension getWorld() {
 		return world;
+	}
+
+	public static Vector2i toChunkPos(int blockX, int blockZ) {
+		return new Vector2i(blockX >> 4, blockZ >> 4);
 	}
 
 }

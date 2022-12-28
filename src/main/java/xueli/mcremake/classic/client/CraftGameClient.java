@@ -44,9 +44,9 @@ public class CraftGameClient extends GameDisplay {
 		this.world.init();
 
 		this.player = new ClientPlayer(this);
-		this.player.x = 16;
-		this.player.y = 8;
-		this.player.z = 16;
+		this.player.x = 0;
+		this.player.y = 16;
+		this.player.z = 0;
 
 		GL30.glEnable(GL30.GL_DEPTH_TEST);
 		GL30.glEnable(GL30.GL_CULL_FACE);

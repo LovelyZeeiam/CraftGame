@@ -57,6 +57,10 @@ public class ClientPlayer extends Vector {
 		Vector3f acceleration = new Vector3f();
 		float speed = 0.09f;
 
+		if(keyboard.wantDash) {
+			speed *= 4.0f;
+		}
+
 		if(keyboard.forward) {
 			acceleration.x -= speed * (float) Math.sin(Math.toRadians(-rotY));
 			acceleration.z -= speed * (float) Math.cos(Math.toRadians(-rotY));

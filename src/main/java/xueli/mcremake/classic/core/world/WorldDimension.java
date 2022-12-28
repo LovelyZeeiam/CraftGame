@@ -20,10 +20,10 @@ public class WorldDimension implements WorldAccessible {
 	}
 
 	public void init() {
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
+		for (int i = -4; i < 4; i++) {
+			for (int j = -4; j < 4; j++) {
 				Chunk chunk = new Chunk(this);
-				for (int k = 0; k < 4; k++) {
+				for (int k = 0; k < 8; k++) {
 					for (int l = 0; l < Chunk.CHUNK_SIZE; l++) {
 						for (int m = 0; m < Chunk.CHUNK_SIZE; m++) {
 							chunk.setBlock(l, k, m, GameRegistry.STONE);
@@ -43,38 +43,33 @@ public class WorldDimension implements WorldAccessible {
 
 	@Override
 	public BlockType getBlock(int x, int y, int z) {
-		int chunkX = x >> 4;
-		int chunkZ = z >> 4;
-		Chunk chunk = chunkMap.get(new Vector2i(chunkX, chunkZ));
-		return chunk == null ? null : chunk.getBlock(x - (chunkX << 4), y, z - (chunkZ << 4));
+		Vector2i chunkPos = Chunk.toChunkPos(x, z);
+		Chunk chunk = chunkMap.get(chunkPos);
+		return chunk == null ? null : chunk.getBlock(x - (chunkPos.x * Chunk.CHUNK_SIZE), y, z - (chunkPos.y * Chunk.CHUNK_SIZE));
 	}
 
 	@Override
 	public CompoundMap getBlockTag(int x, int y, int z) {
-		int chunkX = x >> 4;
-		int chunkZ = z >> 4;
-		Chunk chunk = chunkMap.get(new Vector2i(chunkX, chunkZ));
-		return chunk == null ? null : chunk.getBlockTag(x - (chunkX << 4), y, z - (chunkZ << 4));
+		Vector2i chunkPos = Chunk.toChunkPos(x, z);
+		Chunk chunk = chunkMap.get(chunkPos);
+		return chunk == null ? null : chunk.getBlockTag(x - (chunkPos.x * Chunk.CHUNK_SIZE), y, z - (chunkPos.y * Chunk.CHUNK_SIZE));
 	}
 
-	// TODO: Later, Add it to a preserved chunk command list
 	@Override
 	public void setBlock(int x, int y, int z, BlockType block) {
-		int chunkX = x >> 4;
-		int chunkZ = z >> 4;
-		Chunk chunk = chunkMap.get(new Vector2i(chunkX, chunkZ));
+		Vector2i chunkPos = Chunk.toChunkPos(x, z);
+		Chunk chunk = chunkMap.get(chunkPos);
 		if(chunk != null) {
-			chunk.setBlock(x - (chunkX << 4), y, z - (chunkZ << 4), block);
+			chunk.setBlock(x - (chunkPos.x * Chunk.CHUNK_SIZE), y, z - (chunkPos.y * Chunk.CHUNK_SIZE), block);
 		}
 
 	}
 
 	@Override
 	public CompoundMap createBlockTag(int x, int y, int z) {
-		int chunkX = x >> 4;
-		int chunkZ = z >> 4;
-		Chunk chunk = chunkMap.get(new Vector2i(chunkX, chunkZ));
-		return chunk == null ? null : chunk.createBlockTag(x - (chunkX << 4), y, z - (chunkZ << 4));
+		Vector2i chunkPos = Chunk.toChunkPos(x, z);
+		Chunk chunk = chunkMap.get(chunkPos);
+		return chunk == null ? null : chunk.createBlockTag(x - (chunkPos.x * Chunk.CHUNK_SIZE), y, z - (chunkPos.y * Chunk.CHUNK_SIZE));
 	}
 
 	public Chunk getChunk(int x, int z) {
