@@ -4,28 +4,27 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.utils.vector.Vector3d;
 import org.lwjgl.utils.vector.Vector3f;
 import org.lwjgl.utils.vector.Vector3i;
+
 import xueli.game.vector.Vector;
 import xueli.game2.camera3d.MovableCamera;
 import xueli.game2.display.Display;
 import xueli.game2.math.TriFuncMap;
 import xueli.game2.phys.aabb.AABB;
 import xueli.mcremake.core.entity.EntityCollider;
-import xueli.mcremake.core.entity.PickCollider;
 import xueli.mcremake.core.entity.PickResult;
 import xueli.mcremake.core.entity.VirtualKeyboard;
 import xueli.mcremake.core.world.WorldAccessible;
 import xueli.mcremake.registry.GameRegistry;
 
 public class ClientPlayer extends Vector {
+	
+	private static final long serialVersionUID = -1935507223867606182L;
 
 	private static final AABB PLAYER_COLLISION_BOX = new AABB(new Vector3d(-0.4, -1.5, -0.4), new Vector3d(0.4, 0.2, 0.4));
 
 	private final CraftGameClient ctx;
 	private final WorldAccessible world;
 	private final EntityCollider collider;
-
-	private final PickCollider picker;
-	private PickResult pickResult;
 
 	public final VirtualKeyboard keyboard = new VirtualKeyboard();
 
@@ -39,7 +38,6 @@ public class ClientPlayer extends Vector {
 		this.ctx = ctx;
 		this.world = ctx.getWorld();
 		this.collider = new EntityCollider(PLAYER_COLLISION_BOX, world);
-		this.picker = new PickCollider(world);
 
 	}
 
@@ -53,8 +51,8 @@ public class ClientPlayer extends Vector {
 		keyboard.wantDash = display.isKeyDown(GLFW.GLFW_KEY_R);
 		keyboard.wantFly = display.isKeyDown(GLFW.GLFW_KEY_SPACE);
 		keyboard.wantSneak = display.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT);
-		keyboard.wantUseLeftButton = display.isMouseDown(GLFW.GLFW_MOUSE_BUTTON_LEFT) ? 1 : 0;
-		keyboard.wantUseRightButton = display.isMouseDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT) ? 1 : 0;
+//		keyboard.wantUseLeftButton = display.isMouseDown(GLFW.GLFW_MOUSE_BUTTON_LEFT) ? 1 : 0;
+//		keyboard.wantUseRightButton = display.isMouseDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT) ? 1 : 0;
 
 		this.rotX -= display.getCursorDY() * 0.1f;
 		this.rotY += display.getCursorDX() * 0.1f;
@@ -65,7 +63,19 @@ public class ClientPlayer extends Vector {
 
 	private void keyboardStateReset() {
 		keyboard.forward = keyboard.backward = keyboard.leftward = keyboard.rightward = keyboard.wantDash = keyboard.wantFly = keyboard.wantSneak = false;
-		keyboard.wantUseLeftButton = keyboard.wantUseRightButton = 0;
+//		keyboard.wantUseLeftButton = keyboard.wantUseRightButton = 0;
+
+	}
+
+	public void handleLeftButton(PickResult pickResult, int holdTime) {
+		Vector3i blockPos = pickResult.blockPos();
+		world.setBlock(blockPos.x, blockPos.y, blockPos.z, null);
+
+	}
+
+	public void handleRightButton(PickResult pickResult, int holdTime) {
+		Vector3i blockPos = pickResult.placePos();
+		world.setBlock(blockPos.x, blockPos.y, blockPos.z, GameRegistry.STONE);
 
 	}
 
@@ -80,8 +90,6 @@ public class ClientPlayer extends Vector {
 		lastTickX = x;
 		lastTickY = y;
 		lastTickZ = z;
-
-		Display display = ctx.getDisplay();
 
 		Vector3f acceleration = new Vector3f();
 		float speed = 0.3f;
@@ -126,55 +134,12 @@ public class ClientPlayer extends Vector {
 		this.y += delta.y;
 		this.z += delta.z;
 
-		this.pickResult = picker.pick(this, 6.0f);
-
 //		System.out.println(this.x + ", " + this.y + ", " + this.z);
 
 	}
 
-	private boolean lastTimeLeftButtonPressed = false, lastTimeRightButtonPressed = false;
-	private boolean isLeftButtonPressed = false, isRightButtonPressed = false;
-	private int leftButtonCooldown = 0, rightButtonCooldown = 0;
-
-	private void handUseTick() {
-
-
-		for (int i = 0; i < keyboard.wantUseLeftButton; i++) {
-			handleLeftButton();
-		}
-
-		for (int i = 0; i < keyboard.wantUseRightButton; i++) {
-			handleRightButton();
-		}
-
-		if(keyboard.wantUseLeftButton == 1) {
-			lastTimeLeftButtonPressed = true;
-		}
-
-		if(keyboard.wantUseRightButton == 1) {
-			lastTimeLeftButtonPressed = true;
-		}
-
-	}
-
-	private void handleLeftButton() {
-		if(pickResult != null) {
-			Vector3i blockPos = pickResult.blockPos();
-			world.setBlock(blockPos.x, blockPos.y, blockPos.z, null);
-		}
-
-	}
-
-	private void handleRightButton() {
-		if(pickResult != null) {
-			Vector3i blockPos = pickResult.placePos();
-			world.setBlock(blockPos.x, blockPos.y, blockPos.z, GameRegistry.STONE);
-		}
-	}
-
 	public void tick() {
 		this.moveTick();
-		this.handUseTick();
 		this.keyboardStateReset();
 
 	}

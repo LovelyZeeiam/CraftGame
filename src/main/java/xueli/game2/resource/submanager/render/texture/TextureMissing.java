@@ -1,10 +1,11 @@
 package xueli.game2.resource.submanager.render.texture;
 
-import org.lwjgl.utils.vector.Vector2f;
-import xueli.game2.resource.submanager.render.texture.atlas.AtlasResourceHolder;
-
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
+
+import org.lwjgl.utils.vector.Vector2f;
+
+import xueli.game2.resource.submanager.render.texture.atlas.AtlasResourceHolder;
 
 public class TextureMissing {
 

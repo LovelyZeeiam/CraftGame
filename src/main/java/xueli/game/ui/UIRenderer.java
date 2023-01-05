@@ -1,13 +1,16 @@
 package xueli.game.ui;
 
-import xueli.game.Game;
-import xueli.game.renderer.Renderer;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
+import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
+import static org.lwjgl.nanovg.NanoVGGL3.NVG_ANTIALIAS;
+import static org.lwjgl.nanovg.NanoVGGL3.NVG_DEBUG;
+import static org.lwjgl.nanovg.NanoVGGL3.NVG_STENCIL_STROKES;
+import static org.lwjgl.nanovg.NanoVGGL3.nvgCreate;
 
 import java.util.Stack;
 
-import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
-import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
-import static org.lwjgl.nanovg.NanoVGGL3.*;
+import xueli.game.Game;
+import xueli.game.renderer.Renderer;
 
 public class UIRenderer implements Renderer {
 

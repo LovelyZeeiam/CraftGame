@@ -1,8 +1,8 @@
 package xueli.game2.renderer.legacy;
 
-import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
-
 import java.util.LinkedList;
+
+import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
 
 /*
   Some Exceptions natively will be thrown:

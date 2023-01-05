@@ -1,9 +1,10 @@
 package xueli.utils.concurrent;
 
-import xueli.utils.ThreadTask;
-
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import xueli.utils.ThreadTask;
+
+@Deprecated
 public class Concurrent extends ThreadTask {
 
 	private CopyOnWriteArrayList<Thread> summited = new CopyOnWriteArrayList<>();

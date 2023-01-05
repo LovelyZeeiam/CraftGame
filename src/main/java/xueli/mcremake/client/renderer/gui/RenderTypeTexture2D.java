@@ -1,11 +1,15 @@
 package xueli.mcremake.client.renderer.gui;
 
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.glBindTexture;
+import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
+import static org.lwjgl.opengl.GL13.glActiveTexture;
+
 import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector2f;
+
 import xueli.game2.renderer.legacy.RenderType;
 import xueli.game2.resource.submanager.render.shader.Shader;
-
-import static org.lwjgl.opengl.GL30.*;
 
 public class RenderTypeTexture2D extends RenderType<Integer> {
 

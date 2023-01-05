@@ -1,15 +1,17 @@
 package xueli.game.renderer;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
+
 import xueli.game2.renderer.legacy.DefaultRenderBuffer;
 import xueli.game2.resource.submanager.render.shader.Shader;
 import xueli.utils.io.Files;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-
+@Deprecated
 public class ScreenQuadRenderer {
 
 	private static final float[] VERTICES = new float[] { -1, -1, 0, 0, -1, 1, 0, 1, 1, 1, 1, 1, 1, -1, 1, 0 };

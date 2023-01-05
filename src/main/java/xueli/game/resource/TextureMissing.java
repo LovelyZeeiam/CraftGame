@@ -1,27 +1,26 @@
 package xueli.game.resource;
 
-import org.lwjgl.BufferUtils;
-import xueli.game.resource.texture.TextureAtlas;
-import xueli.game.resource.texture.TextureAtlasHolder;
+import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
+import static org.lwjgl.nanovg.NanoVG.nvgCreateImageMem;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 
-import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
-import static org.lwjgl.nanovg.NanoVG.nvgCreateImageMem;
+import javax.imageio.ImageIO;
+
+import org.lwjgl.BufferUtils;
+
+import xueli.game.resource.texture.TextureAtlas;
+import xueli.game.resource.texture.TextureAtlasHolder;
 
 public class TextureMissing {
 
 	private static BufferedImage IMAGE_MISSING = new BufferedImage(16, 16, BufferedImage.TYPE_4BYTE_ABGR);
 	private static ByteBuffer imageData;
 	static {
-		int i = -16777216;
-		int j = -524040;
-
 		for (int k = 0; k < 16; ++k) {
 			for (int l = 0; l < 16; ++l) {
 				if (k < 8 ^ l < 8) {

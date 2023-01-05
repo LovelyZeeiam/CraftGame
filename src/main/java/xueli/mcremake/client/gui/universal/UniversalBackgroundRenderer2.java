@@ -1,13 +1,13 @@
 package xueli.mcremake.client.gui.universal;
 
+import java.awt.Color;
+import java.util.Random;
+
 import xueli.game2.renderer.ui.MyGui;
 import xueli.game2.resource.ResourceLocation;
 import xueli.game2.resource.submanager.render.texture.TextureResourceLocation;
 import xueli.game2.resource.submanager.render.texture.TextureTypeNanoVG;
 import xueli.mcremake.client.CraftGameClient;
-
-import java.awt.*;
-import java.util.Random;
 
 public class UniversalBackgroundRenderer2 {
 

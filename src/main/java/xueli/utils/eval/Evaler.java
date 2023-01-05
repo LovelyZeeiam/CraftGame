@@ -1,10 +1,11 @@
 package xueli.utils.eval;
 
+import javax.script.ScriptException;
+
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Scriptable;
 
-import javax.script.ScriptException;
-
+@Deprecated
 public class Evaler {
 
 	private static Context context;

@@ -1,13 +1,13 @@
 package xueli.game2.renderer.legacy;
 
+import java.nio.ByteBuffer;
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import xueli.game2.renderer.legacy.buffer.AttributeBuffer;
 import xueli.game2.renderer.legacy.buffer.BufferStorable;
 import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
 import xueli.game2.renderer.legacy.buffer.VertexAttribute;
-
-import java.nio.ByteBuffer;
-import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class VertexAttributeRenderBuffer implements RenderBuffer {
 
@@ -42,6 +42,8 @@ public class VertexAttributeRenderBuffer implements RenderBuffer {
 	public BackRenderBuffer createBackBuffer() {
 		return new BackRenderBuffer() {
 			private final HashMap<Integer, VertexBuffer> applyCount = new HashMap<>() {
+				private static final long serialVersionUID = 5062673955963603115L;
+
 				{
 					attr.forEachAttribute(i -> {
 						VertexBuffer vertexBuffer = new VertexBuffer();

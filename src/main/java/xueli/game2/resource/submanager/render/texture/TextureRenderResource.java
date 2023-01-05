@@ -1,10 +1,10 @@
 package xueli.game2.resource.submanager.render.texture;
 
+import java.io.IOException;
+
 import xueli.game2.renderer.ui.MyGui;
 import xueli.game2.resource.manager.ChainedResourceManager;
 import xueli.game2.resource.submanager.render.RenderResource;
-
-import java.io.IOException;
 
 public class TextureRenderResource extends RenderResource<TextureResourceLocation, Integer> {
 

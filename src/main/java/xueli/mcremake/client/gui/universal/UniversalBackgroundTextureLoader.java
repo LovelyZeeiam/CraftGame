@@ -1,8 +1,17 @@
 package xueli.mcremake.client.gui.universal;
 
-import xueli.game2.resource.submanager.render.texture.TextureLoaderLegacy;
+import static org.lwjgl.opengl.GL11.GL_NEAREST;
+import static org.lwjgl.opengl.GL11.GL_REPEAT;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_WRAP_S;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_WRAP_T;
+import static org.lwjgl.opengl.GL11.glBindTexture;
+import static org.lwjgl.opengl.GL11.glGenTextures;
+import static org.lwjgl.opengl.GL11.glTexParameteri;
 
-import static org.lwjgl.opengl.GL30.*;
+import xueli.game2.resource.submanager.render.texture.TextureLoaderLegacy;
 
 public class UniversalBackgroundTextureLoader extends TextureLoaderLegacy {
 

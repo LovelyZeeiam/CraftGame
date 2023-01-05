@@ -1,9 +1,9 @@
 package xueli.game2.resource.submanager.render.texture;
 
+import java.io.IOException;
+
 import xueli.game2.resource.ResourceLocation;
 import xueli.game2.resource.manager.ResourceManager;
-
-import java.io.IOException;
 
 public interface TextureLoader {
 

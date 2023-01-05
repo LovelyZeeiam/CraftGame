@@ -1,10 +1,10 @@
 package xueli.mcremake.core.block;
 
+import java.util.List;
+
 import xueli.game2.phys.aabb.AABB;
 import xueli.game2.phys.aabb.NameableAABB;
 import xueli.mcremake.core.world.WorldAccessible;
-
-import java.util.List;
 
 public interface BlockCollidable {
 

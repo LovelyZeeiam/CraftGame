@@ -1,21 +1,20 @@
 package xueli.game.resource.texture;
 
-import xueli.game2.resource.provider.ResourceProvider;
-import xueli.utils.io.Files;
-import xueli.utils.logger.MyLogger;
-
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
+import xueli.game2.resource.provider.ResourceProvider;
+import xueli.utils.io.Files;
+
 public class TextureAtlasBuilder {
 
-	private static final MyLogger LOGGER = new MyLogger() {
-		{
-			pushState("TextureAtlasBuilder");
-		}
-	};
+//	private static final MyLogger LOGGER = new MyLogger() {
+//		{
+//			pushState("TextureAtlasBuilder");
+//		}
+//	};
 
 	HashMap<String, URL> textureMaps = new HashMap<>();
 

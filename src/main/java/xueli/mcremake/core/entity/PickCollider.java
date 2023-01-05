@@ -1,8 +1,11 @@
 package xueli.mcremake.core.entity;
 
+import java.util.ArrayList;
+
 import org.lwjgl.utils.vector.Vector2d;
 import org.lwjgl.utils.vector.Vector3d;
 import org.lwjgl.utils.vector.Vector3i;
+
 import xueli.game.vector.Vector;
 import xueli.game2.math.TriFuncMap;
 import xueli.game2.phys.aabb.BoxFace;
@@ -10,8 +13,6 @@ import xueli.game2.phys.aabb.NameableAABB;
 import xueli.mcremake.core.block.BlockCollidable;
 import xueli.mcremake.core.block.BlockType;
 import xueli.mcremake.core.world.WorldAccessible;
-
-import java.util.ArrayList;
 
 public class PickCollider {
 
@@ -23,9 +24,9 @@ public class PickCollider {
 	}
 
 	public PickResult pick(Vector camera, double maxReachDistance) {
-		Vector3d direction = new Vector3d(TriFuncMap.sin(camera.rotY), TriFuncMap.tan(camera.rotX), TriFuncMap.cos(camera.rotY));
+		Vector3d direction = new Vector3d(TriFuncMap.sin(camera.rotY), TriFuncMap.tan(camera.rotX), -TriFuncMap.cos(camera.rotY));
 		direction.normalize();
-		System.out.println(direction);
+//		System.out.println(direction);
 
 		// If the line goes down, it is impossible to interact with the bottom. Conversely, the line going up can't interact with the top. The thesis is the same with the other 2 axis.
 		boolean[] needFaceTest = { true, true, true, true, true, true };

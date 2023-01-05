@@ -1,12 +1,14 @@
 package xueli.mcremake.core.world;
 
-import com.flowpowered.nbt.CompoundMap;
-import com.flowpowered.nbt.Tag;
-import org.lwjgl.utils.vector.Vector2i;
-import xueli.mcremake.core.block.BlockType;
-
 import java.util.HashMap;
 import java.util.function.Consumer;
+
+import org.lwjgl.utils.vector.Vector2i;
+
+import com.flowpowered.nbt.CompoundMap;
+import com.flowpowered.nbt.Tag;
+
+import xueli.mcremake.core.block.BlockType;
 
 public class Chunk implements WorldAccessible {
 

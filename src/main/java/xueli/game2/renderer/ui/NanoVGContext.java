@@ -1,11 +1,15 @@
 package xueli.game2.renderer.ui;
 
-import org.lwjgl.nanovg.NVGPaint;
+import static org.lwjgl.nanovg.NanoVGGL3.NVG_ANTIALIAS;
+import static org.lwjgl.nanovg.NanoVGGL3.NVG_DEBUG;
+import static org.lwjgl.nanovg.NanoVGGL3.NVG_STENCIL_STROKES;
+import static org.lwjgl.nanovg.NanoVGGL3.nvgCreate;
+import static org.lwjgl.nanovg.NanoVGGL3.nvgDelete;
 
 import java.io.Closeable;
 import java.io.IOException;
 
-import static org.lwjgl.nanovg.NanoVGGL3.*;
+import org.lwjgl.nanovg.NVGPaint;
 
 /**
  * Maybe later when we want to draw something on the sign this would not be working

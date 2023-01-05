@@ -1,11 +1,12 @@
 package xueli.game2.renderer.legacy.buffer;
 
-import org.lwjgl.opengl.GL30;
-import xueli.game2.renderer.legacy.ShapeType;
-import xueli.game2.renderer.legacy.VertexType;
-
 import java.util.HashMap;
 import java.util.function.Consumer;
+
+import org.lwjgl.opengl.GL30;
+
+import xueli.game2.renderer.legacy.ShapeType;
+import xueli.game2.renderer.legacy.VertexType;
 
 public class VertexAttribute implements Bindable {
 

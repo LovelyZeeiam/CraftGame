@@ -1,6 +1,7 @@
 package xueli.utils.exception;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class CrashReport {
 
@@ -36,7 +37,7 @@ public class CrashReport {
 		StringBuilder builder = new StringBuilder();
 		Throwable t = e;
 
-		builder.append("Exception ");
+		builder.append("[" + this.state + "] Exception ");
 		while (true) {
 			builder.append(t.getClass().getName());
 			if (t.getMessage() != null && !t.getMessage().isBlank())

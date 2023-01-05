@@ -3,6 +3,7 @@ package xueli.game.renderer;
 import xueli.game.Game;
 import xueli.utils.logger.MyLogger;
 
+@Deprecated
 public class RendererManager {
 
 	private Renderer current;

@@ -1,10 +1,10 @@
 package xueli.game2.renderer.legacy;
 
-import xueli.game2.resource.ResourceLocation;
-
 import java.util.HashMap;
 
-public class RenderSystem<T extends RenderType> {
+import xueli.game2.resource.ResourceLocation;
+
+public class RenderSystem<T extends RenderType<?>> {
 
 	private final HashMap<ResourceLocation, T> renderTypes = new HashMap<>();
 

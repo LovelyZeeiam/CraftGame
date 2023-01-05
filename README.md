@@ -37,7 +37,6 @@ I'm convinced that it is able to run by typing the following 3 commands.
 > 
 > ./gradlew run
 
-***
-
 # Have fun!
+
 

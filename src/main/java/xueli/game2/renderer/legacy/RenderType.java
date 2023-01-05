@@ -1,9 +1,9 @@
 package xueli.game2.renderer.legacy;
 
-import org.lwjgl.utils.vector.Matrix4f;
-
 import java.util.HashMap;
 import java.util.function.Function;
+
+import org.lwjgl.utils.vector.Matrix4f;
 
 public abstract class RenderType<T> {
 

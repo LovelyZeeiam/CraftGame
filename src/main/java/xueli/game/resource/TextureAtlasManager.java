@@ -1,10 +1,10 @@
 package xueli.game.resource;
 
+import java.util.HashMap;
+
 import xueli.game.resource.texture.TextureAtlas;
 import xueli.game.resource.texture.TextureAtlasBuilder;
 import xueli.game.resource.texture.TextureAtlasHolder;
-
-import java.util.HashMap;
 
 class TextureAtlasManager extends ResourceManager<TextureAtlas> {
 

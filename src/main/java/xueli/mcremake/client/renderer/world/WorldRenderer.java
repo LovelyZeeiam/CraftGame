@@ -1,7 +1,11 @@
 package xueli.mcremake.client.renderer.world;
 
+import java.util.HashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector2i;
+
 import xueli.game2.camera3d.BoundCamera;
 import xueli.game2.camera3d.ICamera;
 import xueli.game2.display.Display;
@@ -10,9 +14,6 @@ import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.client.WorldEvents;
 import xueli.mcremake.core.world.Chunk;
 import xueli.mcremake.core.world.WorldDimension;
-
-import java.util.HashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class WorldRenderer implements ResourceHolder {
 

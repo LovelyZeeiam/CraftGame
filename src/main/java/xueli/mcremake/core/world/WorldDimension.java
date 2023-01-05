@@ -1,14 +1,16 @@
 package xueli.mcremake.core.world;
 
-import com.flowpowered.nbt.CompoundMap;
+import java.util.HashMap;
+import java.util.function.Consumer;
+
 import org.lwjgl.utils.vector.Vector2i;
-import xueli.mcremake.registry.GameRegistry;
+
+import com.flowpowered.nbt.CompoundMap;
+
 import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.client.WorldEvents;
 import xueli.mcremake.core.block.BlockType;
-
-import java.util.HashMap;
-import java.util.function.Consumer;
+import xueli.mcremake.registry.GameRegistry;
 
 public class WorldDimension implements WorldAccessible {
 

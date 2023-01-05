@@ -1,7 +1,5 @@
 package xueli.utils;
 
-import xueli.utils.collection.Table;
-
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -9,9 +7,10 @@ public class Threads {
 
 	private static final int DUMP_BEFORE_NUM = 5;
 
+	// TODO: Maybe later use my JRich to make the debug more readable
 	public static void dumpAllThreads() {
 		Map<Thread, StackTraceElement[]> m = Thread.getAllStackTraces();
-		Table<String> table = new Table<>();
+//		Table<String> table = new Table<>();
 
 //		int count = 1;
 

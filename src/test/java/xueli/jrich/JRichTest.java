@@ -2,6 +2,7 @@ package xueli.jrich;
 
 import xueli.jrich.attributes.AttributeStyle;
 
+@Deprecated
 public class JRichTest {
 
 	public static void main(String[] args) {

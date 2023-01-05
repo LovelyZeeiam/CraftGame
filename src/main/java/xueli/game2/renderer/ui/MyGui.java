@@ -1,15 +1,46 @@
 package xueli.game2.renderer.ui;
 
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_BASELINE;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_BOTTOM;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_CENTER;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_LEFT;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_MIDDLE;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_RIGHT;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_TOP;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgCircle;
+import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
+import static org.lwjgl.nanovg.NanoVG.nvgFill;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
+import static org.lwjgl.nanovg.NanoVG.nvgFontFaceId;
+import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
+import static org.lwjgl.nanovg.NanoVG.nvgImagePattern;
+import static org.lwjgl.nanovg.NanoVG.nvgRGBA;
+import static org.lwjgl.nanovg.NanoVG.nvgRect;
+import static org.lwjgl.nanovg.NanoVG.nvgResetScissor;
+import static org.lwjgl.nanovg.NanoVG.nvgScissor;
+import static org.lwjgl.nanovg.NanoVG.nvgText;
+import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
+import static org.lwjgl.nanovg.NanoVG.nvgTextLetterSpacing;
+import static org.lwjgl.nanovg.NanoVGGL3.NVG_ANTIALIAS;
+import static org.lwjgl.nanovg.NanoVGGL3.NVG_DEBUG;
+import static org.lwjgl.nanovg.NanoVGGL3.NVG_STENCIL_STROKES;
+import static org.lwjgl.nanovg.NanoVGGL3.nvgCreate;
+import static org.lwjgl.nanovg.NanoVGGL3.nvgDelete;
+
+import java.awt.Color;
+
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
+
 import xueli.game2.display.GameDisplay;
 import xueli.game2.lifecycle.LifeCycle;
 
-import java.awt.*;
-
-import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.nanovg.NanoVGGL3.*;
-
+// TODO: I want to use DirectX in Windows and OpenGL in MacOS and Linux
+// TODO: Although it seems like a bad idea in Java, it might as well improve the performance
+// TODO: So maybe we should make it an interface
 public class MyGui implements LifeCycle {
 
 	private final GameDisplay ctx;
@@ -32,14 +63,14 @@ public class MyGui implements LifeCycle {
 
 	}
 
-	private boolean hasBegun = false;
+//	private boolean hasBegun = false;
 
 	public void begin() {
 		float width = ctx.getWidth();
 		float height = ctx.getHeight();
 		nvgBeginFrame(nvg, width, height, width / height);
 
-		this.hasBegun = true;
+//		this.hasBegun = true;
 
 	}
 

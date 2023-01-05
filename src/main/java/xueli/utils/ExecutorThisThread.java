@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
 
+@Deprecated
 public class ExecutorThisThread {
 
 	private ConcurrentLinkedQueue<Runnable> runnables = new ConcurrentLinkedQueue<>();

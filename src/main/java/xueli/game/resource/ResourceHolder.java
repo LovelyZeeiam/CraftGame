@@ -20,7 +20,6 @@ public class ResourceHolder<T> {
 
 	}
 
-	// Homo specific acuteness homo特有的急性子
 	public void preload() throws Exception {
 		preloaded = true;
 		result = manager.getLoader().load(this);

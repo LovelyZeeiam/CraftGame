@@ -1,10 +1,10 @@
 package xueli.game2.network.processor;
 
-import xueli.game2.network.Packet;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.Consumer;
+
+import xueli.game2.network.Packet;
 
 public class PacketProcessor {
 

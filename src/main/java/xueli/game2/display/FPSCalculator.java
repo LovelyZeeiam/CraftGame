@@ -1,11 +1,8 @@
-package xueli.game.utils;
+package xueli.game2.display;
 
 public class FPSCalculator {
-
-	private long deltaTime = 0;
-	private long thisTime = System.currentTimeMillis();
-
-	private long last_time = System.currentTimeMillis();
+	
+	private long thisTime;
 	private long lastTimeCountFPS = 0;
 
 	private int count = 0;
@@ -14,9 +11,6 @@ public class FPSCalculator {
 
 	public void tick() {
 		thisTime = System.currentTimeMillis();
-		deltaTime = thisTime - last_time;
-		last_time = thisTime;
-
 		if (thisTime - lastTimeCountFPS < 1000) {
 			count++;
 		} else {
@@ -24,7 +18,7 @@ public class FPSCalculator {
 			count = 0;
 
 			lastTimeCountFPS = thisTime;
-			 System.out.println("FPS: " + fps);
+			System.out.println("FPS: " + fps);
 
 		}
 

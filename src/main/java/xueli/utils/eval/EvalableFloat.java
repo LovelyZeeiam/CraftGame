@@ -1,9 +1,10 @@
 package xueli.utils.eval;
 
-import xueli.game.Game;
-
 import javax.script.ScriptException;
 
+import xueli.game.Game;
+
+@Deprecated
 public class EvalableFloat {
 
 	private String expression;

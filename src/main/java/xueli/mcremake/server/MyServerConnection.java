@@ -5,6 +5,7 @@ import xueli.game2.network.Packet;
 import xueli.game2.network.ServerClientConnection;
 import xueli.game2.network.processor.PacketProcessor;
 
+@SuppressWarnings("unused")
 public class MyServerConnection extends ServerClientConnection {
 	
 	private final CraftGameServer ctx;

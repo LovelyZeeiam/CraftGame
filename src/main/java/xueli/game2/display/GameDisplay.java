@@ -1,8 +1,11 @@
 package xueli.game2.display;
 
+import java.io.IOException;
+import java.util.List;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
-import xueli.game.utils.FPSCalculator;
+
 import xueli.game2.Timer;
 import xueli.game2.lifecycle.RunnableLifeCycle;
 import xueli.game2.renderer.ui.MyGui;
@@ -18,12 +21,10 @@ import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
 import xueli.game2.resource.submanager.render.texture.atlas.AtlasTextureRenderResource;
 import xueli.utils.exception.CrashReport;
 
-import java.io.IOException;
-import java.util.List;
-
-public abstract class GameDisplay implements RunnableLifeCycle, RenderResourceProvider, KeyInputListener, WindowSizeListener {
+public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener, WindowSizeListener, MouseInputListener {
 
 	protected Display display;
+//	private final MouseButtonStorage mouseButtonStorage = new MouseButtonStorage();
 
 	protected Timer timer = new Timer();
 	protected FPSCalculator fps = new FPSCalculator();
@@ -62,6 +63,9 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 	@Override
 	public void init() {
 		this.display.create();
+		this.display.addKeyListener(this);
+		this.display.addWindowSizedListener(this);
+		this.display.addMouseInputListener(this);
 
 		// Trigger its loading
 		TextureMissing.init();
@@ -101,6 +105,7 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 
 		this.display.update();
 
+
 		this.checkGLError("Post-Render");
 
 	}
@@ -138,7 +143,11 @@ public abstract class GameDisplay implements RunnableLifeCycle, RenderResourcePr
 	}
 	
 	@Override
-	public void onInput(int key, int scancode, int action, int mods) {
+	public void onKey(int key, int scancode, int action, int mods) {
+	}
+
+	@Override
+	public void onMouseButton(int button, int action, int mods) {
 	}
 
 	public void announceCrash(String state, Throwable t) {

@@ -1,9 +1,9 @@
 package xueli.game2.resource.submanager.render.texture;
 
+import static org.lwjgl.nanovg.NanoVGGL3.nvglCreateImageFromHandle;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
-import static org.lwjgl.nanovg.NanoVGGL3.nvglCreateImageFromHandle;
 
 public class TextureLoaderNanoVG extends TextureLoaderLegacy {
 

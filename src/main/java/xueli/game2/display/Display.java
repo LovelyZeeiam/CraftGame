@@ -1,39 +1,77 @@
 package xueli.game2.display;
 
-import org.lwjgl.glfw.*;
-import org.lwjgl.opengl.GL;
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MAJOR;
+import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MINOR;
+import static org.lwjgl.glfw.GLFW.GLFW_CURSOR;
+import static org.lwjgl.glfw.GLFW.GLFW_CURSOR_DISABLED;
+import static org.lwjgl.glfw.GLFW.GLFW_CURSOR_NORMAL;
+import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_CORE_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_FORWARD_COMPAT;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
+import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
+import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
+import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
+import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
+import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
+import static org.lwjgl.glfw.GLFW.glfwGetMouseButton;
+import static org.lwjgl.glfw.GLFW.glfwHideWindow;
+import static org.lwjgl.glfw.GLFW.glfwInit;
+import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
+import static org.lwjgl.glfw.GLFW.glfwPollEvents;
+import static org.lwjgl.glfw.GLFW.glfwSetCursorPosCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetInputMode;
+import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetScrollCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback;
+import static org.lwjgl.glfw.GLFW.glfwShowWindow;
+import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
+import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
+import static org.lwjgl.glfw.GLFW.glfwTerminate;
+import static org.lwjgl.glfw.GLFW.glfwWindowHint;
+import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.lwjgl.glfw.GLFW.*;
+import org.lwjgl.glfw.GLFWCursorPosCallback;
+import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWKeyCallback;
+import org.lwjgl.glfw.GLFWMouseButtonCallback;
+import org.lwjgl.glfw.GLFWScrollCallback;
+import org.lwjgl.glfw.GLFWWindowSizeCallback;
+import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GL11;
 
 public class Display {
 
 	private long window;
 	private boolean running = false;
-	private String mainTitle;
+	private final String mainTitle;
 
 	private int width, height;
-	private float display_scale;
+	private float displayScale;
 
-	private float cursor_x, cursor_y;
-	private float cursor_dx = 0, cursor_dy = 0;
+	private float cursorX, cursorY;
+	private float cursorDx = 0, cursorDy = 0;
 
-	private double wheel_delta;
+	private double wheelDelta;
 
 	private boolean mouseGrabbed = false;
 
-	private ArrayList<WindowSizeListener> sizeCallbacks = new ArrayList<>();
-	private GLFWWindowSizeCallback windowSizeCallback = new GLFWWindowSizeCallback() {
+	private final ArrayList<WindowSizeListener> sizeCallbacks = new ArrayList<>();
+	private final GLFWWindowSizeCallback windowSizeCallback = new GLFWWindowSizeCallback() {
 		@Override
 		public void invoke(long window, int w, int h) {
 			if (w != 0 || h != 0) {
 				width = w;
 				height = h;
-				display_scale = getScale(w, h);
+				displayScale = getScale(w, h);
 
 				sizeCallbacks.forEach(c -> c.onSize(w, h));
 
@@ -41,35 +79,37 @@ public class Display {
 		}
 	};
 
-	private GLFWCursorPosCallback cursorPosCallback = new GLFWCursorPosCallback() {
+	private final GLFWCursorPosCallback cursorPosCallback = new GLFWCursorPosCallback() {
 		@Override
 		public void invoke(long window, double xpos, double ypos) {
-			cursor_dx = (float) (xpos - cursor_x);
-			cursor_dy = (float) (ypos - cursor_y);
+			cursorDx = (float) (xpos - cursorX);
+			cursorDy = (float) (ypos - cursorY);
 
-			cursor_x = (float) xpos;
-			cursor_y = (float) ypos;
+			cursorX = (float) xpos;
+			cursorY = (float) ypos;
 
 		}
 	};
 
-	private boolean[] mouse_buttons = new boolean[8];
+	private final boolean[] mouse_buttons = new boolean[8];
+	private final ArrayList<MouseInputListener> mouseCallbacks = new ArrayList<>();
 
-	private GLFWMouseButtonCallback mouseButtonCallback = new GLFWMouseButtonCallback() {
+	private final GLFWMouseButtonCallback mouseButtonCallback = new GLFWMouseButtonCallback() {
 		@Override
 		public void invoke(long window, int button, int action, int mods) {
 			if (button >= 0 && action == GLFW_RELEASE) {
 				mouse_buttons[button] = true;
 			}
+			mouseCallbacks.forEach(l -> l.onMouseButton(button, action, mods));
 
 		}
 	};
 
-	private boolean[] keys = new boolean[65536];
-	private boolean[] keyboard_keys = new boolean[65536];
-	private ArrayList<Integer> last_press_keys = new ArrayList<>();
-	private ArrayList<KeyInputListener> keyCallbacks = new ArrayList<>();
-	private GLFWKeyCallback keyCallback = new GLFWKeyCallback() {
+	private final boolean[] keys = new boolean[65536];
+	private final boolean[] keyboard_keys = new boolean[65536];
+	private final ArrayList<Integer> last_press_keys = new ArrayList<>();
+	private final ArrayList<KeyInputListener> keyCallbacks = new ArrayList<>();
+	private final GLFWKeyCallback keyCallback = new GLFWKeyCallback() {
 		@Override
 		public void invoke(long window, int key, int scancode, int action, int mods) {
 			if (key >= 0 && action == GLFW_PRESS) {
@@ -79,22 +119,22 @@ public class Display {
 			if (key >= 0)
 				keys[key] = action != GLFW_RELEASE;
 
-			keyCallbacks.forEach(c -> c.onInput(key, scancode, action, mods));
+			keyCallbacks.forEach(c -> c.onKey(key, scancode, action, mods));
 
 		}
 	};
 
-	private GLFWScrollCallback scrollCallback = new GLFWScrollCallback() {
+	private final GLFWScrollCallback scrollCallback = new GLFWScrollCallback() {
 		@Override
 		public void invoke(long window, double xoffset, double yoffset) {
-			wheel_delta = yoffset;
+			wheelDelta = yoffset;
 		}
 	};
 
 	public Display(int width, int height, String title) {
 		this.width = width;
 		this.height = height;
-		display_scale = getScale(width, height);
+		displayScale = getScale(width, height);
 		this.mainTitle = title;
 
 	}
@@ -151,6 +191,22 @@ public class Display {
 		keyCallbacks.remove(callback);
 	}
 
+	public void addWindowSizedListener(WindowSizeListener callback) {
+		sizeCallbacks.add(callback);
+	}
+
+	public void removeWindowSizedListener(WindowSizeListener callback) {
+		sizeCallbacks.remove(callback);
+	}
+
+	public void addMouseInputListener(MouseInputListener callback) {
+		mouseCallbacks.add(callback);
+	}
+
+	public void removeMouseInputListener(MouseInputListener callback) {
+		mouseCallbacks.remove(callback);
+	}
+
 	public void show() {
 		glfwShowWindow(window);
 
@@ -169,9 +225,9 @@ public class Display {
 			keyboard_keys[r] = false;
 		last_press_keys.clear();
 
-		wheel_delta = 0;
-		cursor_dx = 0;
-		cursor_dy = 0;
+		wheelDelta = 0;
+		cursorDx = 0;
+		cursorDy = 0;
 
 	}
 
@@ -203,7 +259,7 @@ public class Display {
 	}
 
 	public double getWheelDelta() {
-		return wheel_delta;
+		return wheelDelta;
 	}
 
 	public boolean isRunning() {
@@ -223,29 +279,30 @@ public class Display {
 	}
 
 	public float getCursorX() {
-		return cursor_x;
+		return cursorX;
 	}
 
 	public float getCursorY() {
-		return cursor_y;
+		return cursorY;
 	}
 
 	public float getCursorDX() {
-		return cursor_dx;
+		return cursorDx;
 	}
 
 	public float getCursorDY() {
-		return cursor_dy;
+		return cursorDy;
 	}
 
 	public float getDisplayScale() {
-		return display_scale;
+		return displayScale;
 	}
 
 	public boolean isKeyDown(int key) {
 		return keys[key];
 	}
 
+	@Deprecated
 	public boolean isKeyDownOnce(int key) {
 		return keyboard_keys[key];
 	}
@@ -254,6 +311,7 @@ public class Display {
 		return glfwGetMouseButton(window, mouse) == GLFW_PRESS;
 	}
 
+	@Deprecated
 	public boolean isMouseDownOnce(int mouse) {
 		return mouse_buttons[mouse];
 	}

@@ -1,5 +1,9 @@
 package xueli.game2.network;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.function.Supplier;
+
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -12,10 +16,6 @@ import xueli.game2.network.pipeline.PacketDecoder;
 import xueli.game2.network.pipeline.PacketEncoder;
 import xueli.game2.network.pipeline.PacketSizeDecodeHandler;
 import xueli.game2.network.pipeline.PacketSizePrefixer;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.function.Supplier;
 
 public class Server<T extends ServerClientConnection> implements RunnableLifeCycle {
 

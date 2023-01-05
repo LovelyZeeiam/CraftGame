@@ -1,9 +1,10 @@
 package xueli.mcremake.core.world;
 
-import com.flowpowered.nbt.CompoundMap;
-import xueli.mcremake.core.block.BlockType;
-
 import java.util.function.Consumer;
+
+import com.flowpowered.nbt.CompoundMap;
+
+import xueli.mcremake.core.block.BlockType;
 
 public interface WorldAccessible {
 

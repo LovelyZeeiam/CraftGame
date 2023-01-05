@@ -1,16 +1,13 @@
 package xueli.mcremake.core.block;
 
-import xueli.mcremake.core.world.WorldAccessible;
-
 public interface BlockListener {
 
 	public static final BlockListener NONE = new BlockListener() {
-		@Override
-		public void onLookAt(int x, int y, int z, WorldAccessible world) {
-		}
 	};
 
-	public void onLookAt(int x, int y, int z, WorldAccessible world);
+//	default public void onClientLookAt(int x, int y, int z, WorldAccessible world, PickResult pick) {}
+
+//	default public void onClientMouseButton(int x, int y, int z, WorldAccessible world, PickResult pick) {}
 
 	// TODO: On key listener
 

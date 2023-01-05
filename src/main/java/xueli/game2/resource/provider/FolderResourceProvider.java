@@ -1,7 +1,5 @@
 package xueli.game2.resource.provider;
 
-import xueli.game2.resource.ResourceLocation;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -10,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import xueli.game2.resource.ResourceLocation;
 
 public class FolderResourceProvider extends URLResourceProvider {
 

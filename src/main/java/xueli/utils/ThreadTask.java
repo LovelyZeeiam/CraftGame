@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.LinkedBlockingDeque;
 
+@Deprecated
 public class ThreadTask extends Thread {
 
 	private static final Task EMPTY = new Task(() -> {

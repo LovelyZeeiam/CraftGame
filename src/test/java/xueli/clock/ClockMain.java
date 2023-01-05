@@ -6,7 +6,6 @@ import xueli.game2.renderer.ui.MyGui;
 import xueli.game2.renderer.ui.Overlay;
 import xueli.game2.resource.ResourceLocation;
 import xueli.game2.resource.submanager.render.texture.TextureResourceLocation;
-import xueli.game2.resource.submanager.render.texture.TextureType;
 import xueli.game2.resource.submanager.render.texture.TextureTypeNanoVG;
 
 import java.awt.*;
