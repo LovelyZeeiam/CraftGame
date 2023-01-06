@@ -2,6 +2,10 @@ package xueli.utils.collection;
 
 import java.util.HashMap;
 
+/**
+ * For now we ignore it
+ */
+@Deprecated
 public class Table<T> extends HashMap<Integer, HashMap<Integer, T>> {
 
 	private static final long serialVersionUID = 3543645039023993865L;

@@ -106,5 +106,12 @@ public class Chunk implements WorldAccessible {
 	public static Vector2i toChunkPos(int blockX, int blockZ) {
 		return new Vector2i(blockX >> 4, blockZ >> 4);
 	}
+	
+	public static Vector2i toChunkPos(int blockX, int blockZ, Vector2i inChunkPosDist) {
+		Vector2i chunkPos = toChunkPos(blockX, blockZ);
+		inChunkPosDist.x = blockX - (chunkPos.x << 4);
+		inChunkPosDist.y = blockZ - (chunkPos.y << 4);
+		return chunkPos;
+	}
 
 }

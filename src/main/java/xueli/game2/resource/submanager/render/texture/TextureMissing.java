@@ -45,6 +45,4 @@ public class TextureMissing {
 		return atlasHolder;
 	}
 
-	public static void init() {}
-
 }

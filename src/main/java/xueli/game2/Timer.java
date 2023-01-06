@@ -38,6 +38,7 @@ public class Timer {
 
 	}
 
+	@Deprecated
 	public void runTick(Runnable tick) {
 		for (int i = 0; i < numShouldTick; i++) {
 			this.numHasTick++;
@@ -51,6 +52,10 @@ public class Timer {
 
 	public int getNumHasTick() {
 		return numHasTick;
+	}
+	
+	public int getNumShouldTick() {
+		return numShouldTick;
 	}
 
 }

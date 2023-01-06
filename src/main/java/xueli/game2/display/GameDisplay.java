@@ -11,12 +11,10 @@ import xueli.game2.lifecycle.RunnableLifeCycle;
 import xueli.game2.renderer.ui.MyGui;
 import xueli.game2.renderer.ui.OverlayManager;
 import xueli.game2.resource.manager.BackwardResourceManager;
-import xueli.game2.resource.manager.ChainedResourceManager;
 import xueli.game2.resource.provider.ClassLoaderResourceProvider;
 import xueli.game2.resource.provider.ResourceProvider;
 import xueli.game2.resource.submanager.render.font.FontRenderResource;
 import xueli.game2.resource.submanager.render.shader.ShaderRenderResource;
-import xueli.game2.resource.submanager.render.texture.TextureMissing;
 import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
 import xueli.game2.resource.submanager.render.texture.atlas.AtlasTextureRenderResource;
 import xueli.utils.exception.CrashReport;
@@ -26,18 +24,18 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 	protected Display display;
 //	private final MouseButtonStorage mouseButtonStorage = new MouseButtonStorage();
 
-	protected Timer timer = new Timer();
-	protected FPSCalculator fps = new FPSCalculator();
+	public final Timer timer = new Timer();
+	public final FPSCalculator fps = new FPSCalculator();
 
 	private boolean shouldCrash = false;
 
-	protected BackwardResourceManager resourceManager;
-	protected TextureRenderResource textureResource;
-	protected AtlasTextureRenderResource atlasTextureResource;
-	protected ShaderRenderResource shaderResource;
-	protected FontRenderResource fontResource;
+	public final BackwardResourceManager resourceManager;
+	public final TextureRenderResource textureResource;
+	public final AtlasTextureRenderResource atlasTextureResource;
+	public final ShaderRenderResource shaderResource;
+	public final FontRenderResource fontResource;
 	
-	protected OverlayManager overlayManager;
+	public final OverlayManager overlayManager;
 
 	private final MyGui gui;
 	
@@ -56,8 +54,8 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 
 		this.overlayManager = new OverlayManager(this);
 		this.resourceManager.addResourceHolder(this.overlayManager);
-
-
+		
+		
 	}
 
 	@Override
@@ -66,9 +64,6 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 		this.display.addKeyListener(this);
 		this.display.addWindowSizedListener(this);
 		this.display.addMouseInputListener(this);
-
-		// Trigger its loading
-		TextureMissing.init();
 
 		this.gui.init();
 		this.overlayManager.init();
@@ -104,8 +99,8 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 		this.gui.gameLoop();
 
 		this.display.update();
-
-
+		
+		
 		this.checkGLError("Post-Render");
 
 	}
@@ -148,6 +143,7 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 
 	@Override
 	public void onMouseButton(int button, int action, int mods) {
+		
 	}
 
 	public void announceCrash(String state, Throwable t) {
@@ -188,33 +184,9 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 	public float getDisplayScale() {
 		return display.getDisplayScale();
 	}
-
-	public ChainedResourceManager getResourceManager() {
-		return resourceManager;
-	}
-
-	public TextureRenderResource getTextureRenderResource() {
-		return textureResource;
-	}
 	
-	public ShaderRenderResource getShaderRenderResource() {
-		return shaderResource;
-	}
-
-	public AtlasTextureRenderResource getAtlasTextureResource() {
-		return atlasTextureResource;
-	}
-
-	public FontRenderResource getFontResource() {
-		return fontResource;
-	}
-
 	public MyGui getGuiManager() {
 		return gui;
-	}
-
-	public OverlayManager getOverlayManager() {
-		return overlayManager;
 	}
 
 }

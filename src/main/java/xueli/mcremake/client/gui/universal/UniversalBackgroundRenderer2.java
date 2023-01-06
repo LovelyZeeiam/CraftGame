@@ -77,7 +77,7 @@ public class UniversalBackgroundRenderer2 {
 	}
 
 	public void reload(CraftGameClient ctx) {
-		imageId = ctx.getTextureRenderResource().register(UNIVERSAL_BACKGROUND_RESOURCE_LOCATION, false);
+		imageId = ctx.textureResource.register(UNIVERSAL_BACKGROUND_RESOURCE_LOCATION, false);
 	}
 
 }

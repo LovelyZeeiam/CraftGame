@@ -10,15 +10,15 @@ import xueli.game.vector.Vector;
 import xueli.game2.math.TriFuncMap;
 import xueli.game2.phys.aabb.BoxFace;
 import xueli.game2.phys.aabb.NameableAABB;
+import xueli.mcremake.client.ListenableBufferedWorldAccessible;
 import xueli.mcremake.core.block.BlockCollidable;
 import xueli.mcremake.core.block.BlockType;
-import xueli.mcremake.core.world.WorldAccessible;
 
 public class PickCollider {
 
-	private final WorldAccessible world;
+	private final ListenableBufferedWorldAccessible world;
 
-	public PickCollider(WorldAccessible world) {
+	public PickCollider(ListenableBufferedWorldAccessible world) {
 		this.world = world;
 
 	}
@@ -62,7 +62,7 @@ public class PickCollider {
 			double rayEndZ = camera.z + i * direction.z;
 
 			Vector3i blockPos = new Vector3i((int) Math.floor(rayEndX), (int) Math.floor(rayEndY), (int) Math.floor(rayEndZ));
-			BlockType block = world.getBlock(blockPos.x, blockPos.y, blockPos.z);
+			BlockType block = world.getBlockImmediate(blockPos.x, blockPos.y, blockPos.z);
 			BlockCollidable collidable;
 			if(block != null && ((collidable = block.collidable()) != null)) {
 				ArrayList<NameableAABB> blockBoundingBoxes = new ArrayList<>();

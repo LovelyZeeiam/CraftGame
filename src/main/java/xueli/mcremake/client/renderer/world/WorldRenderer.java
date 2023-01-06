@@ -59,19 +59,20 @@ public class WorldRenderer implements ResourceHolder {
 	}
 
 	public void onModifyBlock(WorldEvents.ModifyBlockEvent event) {
-		Vector2i chunkPos = Chunk.toChunkPos(event.x(), event.z());
+		Vector2i inChunkPos = new Vector2i();
+		Vector2i chunkPos = Chunk.toChunkPos(event.x(), event.z(), inChunkPos);
 		chunkRebuiltList.add(chunkPos);
 
-		if(event.x() == 0) {
+		if(inChunkPos.x == 0) {
 			chunkRebuiltList.add(new Vector2i(chunkPos.x - 1, chunkPos.y));
-		} else if(event.x() == Chunk.CHUNK_SIZE - 1) {
+		} else if(inChunkPos.x == Chunk.CHUNK_SIZE - 1) {
 			chunkRebuiltList.add(new Vector2i(chunkPos.x + 1, chunkPos.y));
 		}
 
-		if(event.z() == 0) {
+		if(inChunkPos.y == 0) {
 			chunkRebuiltList.add(new Vector2i(chunkPos.x, chunkPos.y - 1));
-		} else if(event.z() == Chunk.CHUNK_SIZE - 1) {
-			chunkRebuiltList.add(new Vector2i(chunkPos.x, chunkPos.y - 1));
+		} else if(inChunkPos.y == Chunk.CHUNK_SIZE - 1) {
+			chunkRebuiltList.add(new Vector2i(chunkPos.x, chunkPos.y + 1));
 		}
 
 

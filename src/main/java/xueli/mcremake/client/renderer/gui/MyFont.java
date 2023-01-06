@@ -37,7 +37,7 @@ class MyFont {
 	private HashMap<RenderBuffer, BackRenderBuffer> buffers = new HashMap<>();
 
 	public void drawFont(float x, float y, float size, String str, Color color) {
-		RenderBuffer buffer = renderer.getRenderBuffer(ctx.getTextureRenderResource().register(FONT_TEXTURE_LOCATION, true));
+		RenderBuffer buffer = renderer.getRenderBuffer(ctx.textureResource.register(FONT_TEXTURE_LOCATION, true));
 		BackRenderBuffer backBuffer = buffers.computeIfAbsent(buffer, RenderBuffer::createBackBuffer);
 
 		float colorR = color.getRed() / 255.0f;

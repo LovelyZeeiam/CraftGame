@@ -23,7 +23,7 @@ public class TerrainTexture implements ResourceHolder {
 
 	@Override
 	public void reload() {
-		textureId = ctx.getTextureRenderResource().register(TERRAIN_TEXTURE_LOCATION, true);
+		textureId = ctx.textureResource.register(TERRAIN_TEXTURE_LOCATION, true);
 	}
 
 	public void bind() {

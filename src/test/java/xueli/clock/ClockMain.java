@@ -34,7 +34,7 @@ public class ClockMain extends GameDisplay {
 		textureResource.register(iconLocation, true);
 		textureResource.register(backgroundLocation, true);
 
-		this.getOverlayManager().setOverlay(new Overlay() {
+		this.overlayManager.setOverlay(new Overlay() {
 			@Override
 			public void init() {
 			}

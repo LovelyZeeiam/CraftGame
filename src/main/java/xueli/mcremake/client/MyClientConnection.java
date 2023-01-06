@@ -5,7 +5,11 @@ import java.net.InetSocketAddress;
 
 import xueli.game2.network.ClientConnection;
 
+/**
+ * Mark it deprecated because now we don't use this
+ */
 @SuppressWarnings("unused")
+@Deprecated
 public class MyClientConnection {
 
 	private InetSocketAddress addr;

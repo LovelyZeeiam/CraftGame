@@ -68,7 +68,7 @@ public class UniversalBackgroundRenderer implements ResourceHolder {
 
 	@Override
 	public void reload() {
-		this.texUniversalBgId = ctx.getTextureRenderResource().register(UNIVERSAL_BACKGROUND_RESOURCE_LOCATION, false);
+		this.texUniversalBgId = ctx.textureResource.register(UNIVERSAL_BACKGROUND_RESOURCE_LOCATION, false);
 
 		if(this.renderBuffer != null) {
 			this.renderBuffer.release();

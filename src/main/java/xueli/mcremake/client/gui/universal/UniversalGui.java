@@ -40,7 +40,7 @@ public class UniversalGui implements ResourceHolder {
 
 	@Override
 	public void reload() {
-		this.gameFontId = ctx.getFontResource().register(FONT_RESOURCE_LOCATION, true);
+		this.gameFontId = ctx.fontResource.register(FONT_RESOURCE_LOCATION, true);
 		ubr.reload(ctx);
 
 	}
