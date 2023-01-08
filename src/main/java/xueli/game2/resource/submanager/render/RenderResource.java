@@ -5,15 +5,11 @@ import java.util.HashMap;
 
 import xueli.game2.resource.manager.ChainedResourceManager;
 import xueli.game2.resource.manager.SubResourceManager;
-import xueli.utils.logger.MyLogger;
+import xueli.utils.logger.Logger;
 
 public abstract class RenderResource<K, V> extends SubResourceManager {
 
-	public static final MyLogger LOGGER = new MyLogger() {
-		{
-			pushState("RenderResource");
-		}
-	};
+	public static final Logger LOGGER = new Logger();
 
 	private HashMap<K, V> registers = new HashMap<>();
 	private final HashMap<K, Boolean> registerMusts = new HashMap<>();

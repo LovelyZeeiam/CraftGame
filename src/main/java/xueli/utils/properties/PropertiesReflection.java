@@ -8,10 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import xueli.utils.logger.MyLogger;
+import xueli.utils.logger.Logger;
 
 public class PropertiesReflection {
-
+	
+	private static final Logger LOGGER = new Logger();
+	
 	private static HashMap<Class<?>, Parsable<?>> parsers = new HashMap<>();
 
 	public static <T> void registerParser(Parsable<T> parsable, Class<T> clazz) {
@@ -20,7 +22,7 @@ public class PropertiesReflection {
 	}
 
 	public static void reflect(Object obj, File properties) throws Exception {
-		MyLogger.getInstance().pushState("Reflection");
+//		Logger.getInstance().pushState("Reflection");
 
 		Properties p = new Properties();
 		p.load(new FileInputStream(properties));
@@ -74,13 +76,13 @@ public class PropertiesReflection {
 					Parsable<?> parser = parsers.get(fieldClazz);
 					field.set(modifyTarget, parser.parse(value));
 				} else {
-					MyLogger.getInstance().warning("Not supported field type \"" + fieldClazz.getName()
+					LOGGER.warning("Not supported field type \"" + fieldClazz.getName()
 							+ "\" when setting key \"" + key + "\" in field \"" + field.getName() + "\"");
 				}
 
 			}
 
-			MyLogger.getInstance().popState();
+//			Logger.getInstance().popState();
 
 		}
 

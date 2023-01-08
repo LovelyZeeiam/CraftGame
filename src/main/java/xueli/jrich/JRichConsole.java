@@ -30,7 +30,7 @@ public class JRichConsole {
 		Ansi buffer = Ansi.ansi();
 		c.render(this.column.get(), Integer.MAX_VALUE, buffer);
 		buffer.reset();
-		AnsiConsole.sysOut().print(buffer);
+		AnsiConsole.out().print(buffer);
 
 	}
 

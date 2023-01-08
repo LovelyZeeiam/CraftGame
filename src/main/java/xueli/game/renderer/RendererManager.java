@@ -1,7 +1,7 @@
 package xueli.game.renderer;
 
 import xueli.game.Game;
-import xueli.utils.logger.MyLogger;
+import xueli.utils.logger.Logger;
 
 @Deprecated
 public class RendererManager {
@@ -14,14 +14,14 @@ public class RendererManager {
 
 	public void setCurrentRenderer(Renderer renderer) {
 		Game.INSTANCE_GAME.addTaskForMainThread(() -> {
-			MyLogger.getInstance().pushState("Renderer");
+//			Logger.getInstance().pushState("Renderer");
 			if (this.current != null) {
 				this.current.release();
 			}
 			this.current = renderer;
 			this.current.size();
-			MyLogger.getInstance().info("Change renderer: " + renderer.getClass().getName());
-			MyLogger.getInstance().popState();
+			Logger.getInstance().info("Change renderer: " + renderer.getClass().getName());
+//			Logger.getInstance().popState();
 		});
 
 	}

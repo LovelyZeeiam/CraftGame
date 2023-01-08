@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL13;
 
-import xueli.utils.logger.MyLogger;
+import xueli.utils.logger.Logger;
 
 public class Texture {
 
@@ -49,7 +49,7 @@ public class Texture {
 	public static Texture loadTexture(InputStream in) throws IOException {
 		BufferedImage image = ImageIO.read(in);
 		if (image == null) {
-			MyLogger.getInstance().warning("Can't read image file: " + in.toString());
+			Logger.getInstance().warning("Can't read image file: " + in.toString());
 			return Texture.NULL;
 		}
 
@@ -59,7 +59,7 @@ public class Texture {
 	public static Texture loadTexture(String path) throws IOException {
 		BufferedImage image = ImageIO.read(new File(path));
 		if (image == null) {
-			MyLogger.getInstance().warning("Can't read image file: " + path);
+			Logger.getInstance().warning("Can't read image file: " + path);
 			return Texture.NULL;
 		}
 

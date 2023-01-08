@@ -25,7 +25,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 
-import xueli.utils.logger.MyLogger;
+import xueli.utils.logger.Logger;
 
 public class TextureAtlas {
 
@@ -121,7 +121,7 @@ public class TextureAtlas {
 				URL imgUrl = e.getValue();
 				BufferedImage image = ImageIO.read(imgUrl);
 				if (image == null) {
-					MyLogger.getInstance().warning("Can't read image: " + imgUrl.toString());
+					Logger.getInstance().warning("Can't read image: " + imgUrl.toString());
 					continue;
 				}
 				per_width = Math.max(per_width, image.getWidth());
@@ -211,7 +211,7 @@ public class TextureAtlas {
 				File imgFile = new File(textureFolderString + File.separator + imgPath);
 				BufferedImage image = ImageIO.read(imgFile);
 				if (image == null) {
-					MyLogger.getInstance().warning("Can't read image: " + imgPath);
+					Logger.getInstance().warning("Can't read image: " + imgPath);
 					continue;
 				}
 				per_width = Math.max(per_width, image.getWidth());

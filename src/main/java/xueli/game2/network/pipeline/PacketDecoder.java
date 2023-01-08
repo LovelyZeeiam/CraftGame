@@ -11,15 +11,11 @@ import xueli.game2.network.Packet;
 import xueli.game2.network.PrimitiveCodec;
 import xueli.game2.network.Protocol;
 import xueli.game2.network.Readable;
-import xueli.utils.logger.MyLogger;
+import xueli.utils.logger.Logger;
 
 public class PacketDecoder extends ByteToMessageDecoder {
 
-	private static final MyLogger LOGGER = new MyLogger() {
-		{
-			pushState("PacketDecoder");
-		}
-	};
+	private static final Logger LOGGER = new Logger();
 
 	private Protocol protocol;
 

@@ -8,7 +8,6 @@ import org.lwjgl.opengl.GL11;
 import xueli.game.renderer.RendererManager;
 import xueli.game2.display.Display;
 import xueli.utils.exception.CrashReport;
-import xueli.utils.logger.MyLogger;
 
 @Deprecated
 public abstract class Game implements Runnable {
@@ -46,11 +45,11 @@ public abstract class Game implements Runnable {
 //			GLHelper.checkGLError("[Renderer]");
 			display.update();
 
-			MyLogger.getInstance().pushState("MainThreadQueue");
+//			Logger.getInstance().pushState("MainThreadQueue");
 			if (!queueInMainThread.isEmpty()) {
 				queueInMainThread.poll().run();
 			}
-			MyLogger.getInstance().popState();
+//			Logger.getInstance().popState();
 
 		}
 
