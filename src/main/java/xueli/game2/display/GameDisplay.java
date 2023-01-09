@@ -18,9 +18,12 @@ import xueli.game2.resource.submanager.render.shader.ShaderRenderResource;
 import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
 import xueli.game2.resource.submanager.render.texture.atlas.AtlasTextureRenderResource;
 import xueli.utils.exception.CrashReport;
+import xueli.utils.logger.Logger;
 
 public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener, WindowSizeListener, MouseInputListener {
-
+	
+	private static final Logger LOGGER = new Logger();
+	
 	protected Display display;
 //	private final MouseButtonStorage mouseButtonStorage = new MouseButtonStorage();
 
@@ -165,7 +168,7 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 		String nameString = GL11.glGetString(GL11.GL_VENDOR);
 		String platform = GL11.glGetString(GL11.GL_RENDERER);
 		String glVersion = GL11.glGetString(GL11.GL_VERSION);
-		System.out.println("[DeviceInfo] OpenGL: " + nameString + ", " + platform + ", " + glVersion);
+		LOGGER.warning("[DeviceInfo] OpenGL: " + nameString + ", " + platform + ", " + glVersion);
 
 	}
 

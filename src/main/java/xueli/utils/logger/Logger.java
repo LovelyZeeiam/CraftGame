@@ -7,18 +7,19 @@ import java.util.Objects;
 import java.util.logging.Level;
 
 import org.fusesource.jansi.Ansi;
+import org.fusesource.jansi.Ansi.Attribute;
 import org.fusesource.jansi.AnsiConsole;
 
 public class Logger {
 
 //	private static final Ansi.Color STATE_COLOR = Ansi.Color.BLUE;
-
+	
 	private static final HashMap<Level, Ansi.Color> textColor = new HashMap<>();
 
 	static {
 //		AnsiConsole.systemInstall();
 		
-		textColor.put(Level.INFO, Ansi.Color.CYAN);
+		textColor.put(Level.INFO, Ansi.Color.GREEN);
 		textColor.put(Level.SEVERE, Ansi.Color.RED);
 		textColor.put(Level.WARNING, Ansi.Color.YELLOW);
 
@@ -78,7 +79,7 @@ public class Logger {
 		a.reset();
 		if(contentPerLine <= 0) {
 			a.a(timeStr).newline();
-			a.a(pathStr).newline();
+			a.a(Attribute.ITALIC).a(pathStr).a(Attribute.ITALIC_OFF).newline();
 			a.fg(color).render(contentStr).fgDefault().newline();
 		} else {
 			a.a(timeStr).a(" ");
@@ -89,7 +90,7 @@ public class Logger {
 				lineStartInStr += contentPerLine;
 				lineEndInStr += contentPerLine;
 				
-				a.a(" ").a(pathStr).newline();
+				a.a(" ").a(Attribute.ITALIC).a(pathStr).a(Attribute.ITALIC).newline();
 				
 				while(true) {
 					if(lineStartInStr >= contentStr.length())
@@ -106,7 +107,7 @@ public class Logger {
 				}
 				
 			} else {
-				a.fg(color).render(contentStr).fgDefault().a(" ".repeat(oneLineLogSpace)).a(" ").a(pathStr).newline();
+				a.fg(color).render(contentStr).fgDefault().a(" ".repeat(oneLineLogSpace)).a(" ").a(Attribute.ITALIC).a(pathStr).a(Attribute.ITALIC_OFF).newline();
 				
 			}
 			
