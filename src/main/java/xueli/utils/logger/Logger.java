@@ -107,13 +107,14 @@ public class Logger {
 				}
 				
 			} else {
-				a.fg(color).render(contentStr).fgDefault().a(" ".repeat(oneLineLogSpace)).a(" ").a(Attribute.ITALIC).a(pathStr).a(Attribute.ITALIC_OFF).newline();
+				a.fg(color).render(contentStr).fgDefault().a(" ".repeat(oneLineLogSpace)).a(" ").a(Attribute.ITALIC).a(pathStr).newline();
 				
 			}
 			
 			
 		}
 		
+		a.reset();
 		System.out.print(a);
 
 	}

@@ -10,6 +10,7 @@ import xueli.game2.input.DefaultKeyListener;
 import xueli.game2.input.DefaultMouseListener;
 import xueli.game2.input.KeyBindings;
 import xueli.mcremake.client.gui.universal.UniversalGui;
+import xueli.mcremake.client.player.ClientPlayer;
 import xueli.mcremake.client.renderer.world.WorldRenderer;
 import xueli.mcremake.core.entity.PickCollider;
 import xueli.mcremake.core.entity.PickResult;

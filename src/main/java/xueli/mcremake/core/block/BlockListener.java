@@ -1,5 +1,9 @@
 package xueli.mcremake.core.block;
 
+/**
+ * Maybe later a division between client and server will be made,
+ * or we create instance for every block instance
+ */
 public interface BlockListener {
 
 	public static final BlockListener NONE = new BlockListener() {

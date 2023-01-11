@@ -2,6 +2,7 @@ package xueli.game2.registry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.function.BiConsumer;
 
 import xueli.game2.resource.ResourceLocation;
 
@@ -29,9 +30,15 @@ public class RegistryImplement<T> implements WritableRegistry<T> {
 
 	@Override
 	public void register(ResourceLocation name, T t) {
-		if(frozen) throw new IllegalStateException("Please call \"cloneToWritable\" to write to another clone object!");
+		if (frozen)
+			throw new IllegalStateException("Please call \"cloneToWritable\" to write to another clone object!");
 		list.add(t);
 		map.put(name, t);
+	}
+
+	@Override
+	public void forEach(BiConsumer<ResourceLocation, T> c) {
+		map.forEach(c);
 	}
 
 	@Override

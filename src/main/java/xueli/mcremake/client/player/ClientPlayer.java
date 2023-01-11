@@ -1,4 +1,4 @@
-package xueli.mcremake.client;
+package xueli.mcremake.client.player;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.utils.vector.Vector3d;
@@ -10,6 +10,7 @@ import xueli.game2.camera3d.MovableCamera;
 import xueli.game2.display.Display;
 import xueli.game2.math.TriFuncMap;
 import xueli.game2.phys.aabb.AABB;
+import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.core.entity.EntityCollider;
 import xueli.mcremake.core.entity.PickResult;
 import xueli.mcremake.core.entity.VirtualKeyboard;
