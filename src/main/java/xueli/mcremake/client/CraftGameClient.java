@@ -6,7 +6,6 @@ import org.lwjgl.opengl.GL30;
 
 import xueli.game2.camera3d.MovableCamera;
 import xueli.game2.display.GameDisplay;
-import xueli.game2.ecs.ResourceListGeneric;
 import xueli.game2.ecs.ResourceListImpl;
 import xueli.game2.input.DefaultKeyListener;
 import xueli.game2.input.DefaultMouseListener;
@@ -15,8 +14,7 @@ import xueli.game2.resource.ResourceHolder;
 import xueli.mcremake.client.gui.universal.UniversalGui;
 import xueli.mcremake.client.player.ClientPlayer;
 import xueli.mcremake.client.renderer.item.ItemRenderer;
-import xueli.mcremake.client.renderer.world.ChunkRenderType;
-import xueli.mcremake.client.renderer.world.RenderTypeSolid;
+import xueli.mcremake.client.renderer.world.RenderTypes;
 import xueli.mcremake.client.renderer.world.WorldRenderer;
 import xueli.mcremake.core.entity.PickCollider;
 import xueli.mcremake.core.entity.PickResult;
@@ -40,7 +38,7 @@ public class CraftGameClient extends GameDisplay {
 	public final EventBus WorldEventBus = new EventBus();
 //	public final EventBus GuiEventBus = new EventBus();
 
-	private final ResourceListImpl resources = new ResourceListImpl();
+	private final ResourceListImpl renderResources = new ResourceListImpl();
 	
 	private WorldDimension world;
 	private ListenableBufferedWorldAccessible bufferedWorld;
@@ -67,9 +65,9 @@ public class CraftGameClient extends GameDisplay {
 
 		GameRegistry.callForClazzLoad();
 		
-		this.resources.add(new TerrainTexture(this));
+		this.renderResources.add(new TerrainTexture(this));
 		this.resourceManager.addResourceHolder(() -> {
-			this.resources.values().forEach(o -> {
+			this.renderResources.values().forEach(o -> {
 				if(o instanceof ResourceHolder holder) {
 					holder.reload();
 				}
@@ -78,7 +76,7 @@ public class CraftGameClient extends GameDisplay {
 		
 		this.world = new WorldDimension(this);
 		this.bufferedWorld = new ListenableBufferedWorldAccessible(this.world, WorldEventBus);
-		this.worldRenderer = new WorldRenderer(newRenderTypes(), this);
+		this.worldRenderer = new WorldRenderer(new RenderTypes(renderResources), this);
 		this.resourceManager.addResourceHolder(worldRenderer);
 		
 		this.itemRenderer = new ItemRenderer();
@@ -142,10 +140,8 @@ public class CraftGameClient extends GameDisplay {
 
 	}
 	
-	private ResourceListGeneric<ChunkRenderType> newRenderTypes() {
-		ResourceListGeneric<ChunkRenderType> types = new ResourceListGeneric<>();
-		types.add(new RenderTypeSolid(resources));
-		return types;
+	public ResourceListImpl getRenderResources() {
+		return renderResources;
 	}
 	
 	public WorldDimension getUnsafeImmediateWorld() {

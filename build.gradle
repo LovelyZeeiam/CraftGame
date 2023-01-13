@@ -73,21 +73,10 @@ dependencies {
     implementation group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-linux'
     implementation group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-macos'
 
-    implementation group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true
-    implementation group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-windows'
-    implementation group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-linux'
-    implementation group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-macos'
-
-    // SEEMS TO BE REMOVED
-    implementation group: 'org.mozilla', name: 'rhino', version: '1.7.13'
-
-    // TO BE REMOVED
-    implementation group: 'org.lwjgl', name: 'lwjgl-jawt', version: '3.2.3'
-
-    // TO BE REMOVED
-    implementation group: 'slick-util', name: 'slick-util', version: '1.0.0'
-
-    implementation 'it.unimi.dsi:fastutil:8.5.9'
+    // implementation group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true
+    // implementation group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    // implementation group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-linux'
+    // implementation group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-macos'
 
     implementation group: 'org.iq80.leveldb', name: 'leveldb', version: '0.12'
     implementation 'com.flowpowered:flow-nbt:1.0.0'

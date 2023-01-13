@@ -12,7 +12,7 @@ public class LotsOfByteBuffer {
 
 	private static final int DEFAULT_CAPACITY = 32768;
 	private static final int STEP_EXPAND = 65536;
-
+	
 	private ByteBuffer buffer;
 	private int size;
 
@@ -23,6 +23,7 @@ public class LotsOfByteBuffer {
 	public LotsOfByteBuffer(int initialCapacity) {
 		// The direct memory should be freed explicitly, or the game will jam when it comes to GC because it will free about 1GB at the same time in my computer.
 		this.buffer = BufferUtils.createByteBuffer(initialCapacity);
+		
 		this.size = initialCapacity;
 
 	}
