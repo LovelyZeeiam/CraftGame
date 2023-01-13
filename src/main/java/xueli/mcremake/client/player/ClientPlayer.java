@@ -5,7 +5,7 @@ import org.lwjgl.utils.vector.Vector3d;
 import org.lwjgl.utils.vector.Vector3f;
 import org.lwjgl.utils.vector.Vector3i;
 
-import xueli.game.vector.Vector;
+import xueli.game2.Vector;
 import xueli.game2.camera3d.MovableCamera;
 import xueli.game2.display.Display;
 import xueli.game2.math.TriFuncMap;

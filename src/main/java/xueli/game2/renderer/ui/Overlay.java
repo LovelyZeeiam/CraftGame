@@ -1,11 +1,10 @@
 package xueli.game2.renderer.ui;
 
-import xueli.game2.resource.ResourceHolder;
+public interface Overlay {
 
-public interface Overlay extends ResourceHolder {
-
-	public void init();
+	public void init(Gui gui);
+	public void reload(Gui gui);
 	public void render(Gui gui);
-	public void release();
+	public void release(Gui gui);
 
 }

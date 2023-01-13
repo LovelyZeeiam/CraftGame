@@ -19,10 +19,13 @@ public class OverlayManager implements LifeCycle, ResourceHolder {
 
 	@Override
 	public void init() {
+		if(overlay != null) {
+			overlay.init(gui);
+		}
 	}
 
 	@Override
-	public void gameLoop() {
+	public void tick() {
 		if(overlay != null) {
 			gui.begin(display.getWidth(), display.getHeight());
 			overlay.render(gui);
@@ -34,7 +37,7 @@ public class OverlayManager implements LifeCycle, ResourceHolder {
 	@Override
 	public void reload() {
 		if(overlay != null) {
-			overlay.reload();
+			overlay.reload(gui);
 		}
 
 	}
@@ -42,18 +45,19 @@ public class OverlayManager implements LifeCycle, ResourceHolder {
 	@Override
 	public void release() {
 		if(this.overlay != null) {
-			this.overlay.release();
+			this.overlay.release(gui);
 		}
 
 	}
 
 	public void setOverlay(Overlay overlay) {
 		if(this.overlay != null) {
-			this.overlay.release();
+			this.overlay.release(gui);
 		}
 		this.overlay = overlay;
 		if(this.overlay != null) {
-			this.overlay.init();
+			this.overlay.init(gui);
+			this.overlay.reload(gui);
 		}
 
 	}

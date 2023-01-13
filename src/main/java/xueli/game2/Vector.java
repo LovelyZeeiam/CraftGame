@@ -1,4 +1,4 @@
-package xueli.game.vector;
+package xueli.game2;
 
 import java.io.Serializable;
 

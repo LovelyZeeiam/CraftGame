@@ -67,7 +67,7 @@ public class Server<T extends ServerClientConnection> implements RunnableLifeCyc
 	}
 	
 	@Override
-	public void gameLoop() {
+	public void tick() {
 		// we can get an iterator of the list and we can remove it immediately, learnt from source code of Minecraft
 		Iterator<T> iterable = connections.iterator();
 		while(iterable.hasNext()) {

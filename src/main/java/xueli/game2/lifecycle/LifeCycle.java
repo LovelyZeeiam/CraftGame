@@ -7,7 +7,7 @@ public interface LifeCycle {
 	/**
 	 * In something about rendering, this is called "Render"
 	 */
-	public void gameLoop();
+	public void tick();
 
 	public void release();
 	

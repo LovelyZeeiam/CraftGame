@@ -8,7 +8,7 @@ public interface RunnableLifeCycle extends LifeCycle, Runnable {
 	default void run() {
 		init();
 		while (isRunning()) {
-			gameLoop();
+			tick();
 		}
 		release();
 	}

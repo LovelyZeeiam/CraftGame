@@ -54,7 +54,6 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 
 		this.gui = new Gui();
 		this.overlayManager = new OverlayManager(this);
-		this.resourceManager.addResourceHolder(this.overlayManager);
 		
 		
 	}
@@ -65,6 +64,9 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 		this.display.addKeyListener(this);
 		this.display.addWindowSizedListener(this);
 		this.display.addMouseInputListener(this);
+		
+		this.resourceManager.addResourceHolder(this.gui);
+		this.resourceManager.addResourceHolder(this.overlayManager);
 
 		try {
 			this.gui.init();
@@ -81,7 +83,7 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 	}
 
 	@Override
-	public void gameLoop() {
+	public void tick() {
 		timer.tick();
 		fps.tick();
 
@@ -90,13 +92,13 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 
 		if(this.overlayManager.hasOverlay()) {
 			getDisplay().setMouseGrabbed(false);
-			this.overlayManager.gameLoop();
+			this.overlayManager.tick();
 		} else {
 			getDisplay().setMouseGrabbed(true);
 			this.render();
 		}
 
-		this.gui.gameLoop();
+		this.gui.tick();
 
 		this.display.update();
 		

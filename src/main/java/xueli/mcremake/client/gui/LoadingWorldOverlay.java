@@ -10,7 +10,7 @@ public class LoadingWorldOverlay extends CraftGameOverlay {
 	}
 
 	@Override
-	public void init() {
+	public void init(Gui gui) {
 	}
 
 	@Override
@@ -22,12 +22,12 @@ public class LoadingWorldOverlay extends CraftGameOverlay {
 	}
 
 	@Override
-	public void release() {
+	public void release(Gui gui) {
 
 	}
 
 	@Override
-	public void reload() {
+	public void reload(Gui gui) {
 
 	}
 

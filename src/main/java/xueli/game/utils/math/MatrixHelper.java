@@ -3,7 +3,7 @@ package xueli.game.utils.math;
 import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector3f;
 
-import xueli.game.vector.Vector;
+import xueli.game2.Vector;
 
 @Deprecated
 public class MatrixHelper {

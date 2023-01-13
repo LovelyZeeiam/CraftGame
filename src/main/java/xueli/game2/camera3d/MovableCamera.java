@@ -3,7 +3,7 @@ package xueli.game2.camera3d;
 import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector3f;
 
-import xueli.game.vector.Vector;
+import xueli.game2.Vector;
 
 public class MovableCamera extends Vector implements ICamera {
 	

@@ -4,44 +4,51 @@ import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.nanovg.NanoVGGL3.*;
 
 import java.awt.Color;
-import java.util.ArrayList;
+import java.io.IOException;
 
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
 import xueli.game2.lifecycle.LifeCycle;
+import xueli.game2.resource.Resource;
 import xueli.game2.resource.ResourceHolder;
 import xueli.game2.resource.submanager.render.texture.Texture;
 
 public class Gui implements LifeCycle, ResourceHolder {
 
-	private long nvg;
+	long nvg = 0;
 	private final NVGColor colorBuf = NVGColor.create();
 	private final NVGPaint paintBuf = NVGPaint.create();
-
+	
+	private final ImageManager imageManager = new ImageManager(this);
+	private final FontManager fontManager = new FontManager(this);
+	
 	public Gui() {
 	}
 
 	@Override
 	public void init() {
-		this.nvg = nvgCreate(NVG_STENCIL_STROKES | NVG_ANTIALIAS | NVG_DEBUG);
-		if (this.nvg == 0) {
-			throw new RuntimeException("Couldn't init NanoVG!");
-		}
 
-	}
-	
-	private ArrayList<Integer> imageList = new ArrayList<>();
-	
-	public int registerImage(Texture tex) {
-		int image = nvglCreateImageFromHandle(nvg, tex.id(), tex.width(), tex.height(), NVG_IMAGE_NEAREST);
-		imageList.add(image);
-		return image;
 	}
 	
 	@Override
 	public void reload() {
-		imageList.forEach(i -> nvgDeleteImage(nvg, i));
-		imageList.clear();
+		if(this.nvg != 0) {
+			nvgDelete(nvg);
+		}
+		
+		this.nvg = nvgCreate(NVG_STENCIL_STROKES | NVG_ANTIALIAS | NVG_DEBUG);
+		if (this.nvg == 0) {
+			throw new RuntimeException("Couldn't init NanoVG!");
+		}
+		
+	}
+	
+	public int registerImage(Texture tex) {
+		return imageManager.createImage(tex);
+	}
+	
+	public int registerFont(String name, Resource res) throws IOException {
+		return fontManager.createFont(name, res);
 	}
 
 	public void begin(float width, float height) {
@@ -131,7 +138,7 @@ public class Gui implements LifeCycle, ResourceHolder {
 	}
 
 	@Override
-	public void gameLoop() {
+	public void tick() {
 	}
 
 	public long getContext() {

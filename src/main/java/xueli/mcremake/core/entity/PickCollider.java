@@ -6,7 +6,7 @@ import org.lwjgl.utils.vector.Vector2d;
 import org.lwjgl.utils.vector.Vector3d;
 import org.lwjgl.utils.vector.Vector3i;
 
-import xueli.game.vector.Vector;
+import xueli.game2.Vector;
 import xueli.game2.math.TriFuncMap;
 import xueli.game2.phys.aabb.BoxFace;
 import xueli.game2.phys.aabb.NameableAABB;

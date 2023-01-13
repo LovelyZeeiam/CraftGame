@@ -11,8 +11,6 @@ import xueli.game2.renderer.legacy.RenderBuffer;
 import xueli.game2.resource.ResourceHolder;
 import xueli.game2.resource.ResourceLocation;
 import xueli.game2.resource.submanager.render.texture.Texture;
-import xueli.game2.resource.submanager.render.texture.TextureResourceLocation;
-import xueli.game2.resource.submanager.render.texture.TextureTypeLegacy;
 import xueli.mcremake.client.CraftGameClient;
 
 @Deprecated
