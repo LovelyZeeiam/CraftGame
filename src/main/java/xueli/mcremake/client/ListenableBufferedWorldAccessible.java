@@ -10,7 +10,7 @@ import com.flowpowered.nbt.CompoundMap;
 import xueli.mcremake.core.block.BlockType;
 import xueli.mcremake.core.world.BufferedWorldAccessible;
 import xueli.mcremake.core.world.WorldAccessible;
-import xueli.utils.EventBus;
+import xueli.utils.events.EventBus;
 
 public class ListenableBufferedWorldAccessible extends BufferedWorldAccessible {
 

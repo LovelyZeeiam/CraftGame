@@ -1,4 +1,4 @@
-package xueli.utils;
+package xueli.utils.events;
 
 import java.util.ArrayList;
 import java.util.HashMap;

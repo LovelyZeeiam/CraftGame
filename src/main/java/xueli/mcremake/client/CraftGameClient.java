@@ -17,7 +17,7 @@ import xueli.mcremake.core.entity.PickResult;
 import xueli.mcremake.core.world.WorldDimension;
 import xueli.mcremake.network.ServerPlayerInfo;
 import xueli.mcremake.registry.GameRegistry;
-import xueli.utils.EventBus;
+import xueli.utils.events.EventBus;
 
 // TODO: Combine different overlay with different listener because they are "one to one".
 public class CraftGameClient extends GameDisplay {

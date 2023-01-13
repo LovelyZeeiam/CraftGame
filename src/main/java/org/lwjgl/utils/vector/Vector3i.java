@@ -40,7 +40,7 @@ public class Vector3i {
 
 	@Override
 	public String toString() {
-		return x + ", " + y + ", " + z;
+		return "Vector3i [x=" + x + ", y=" + y + ", z=" + z + "]";
 	}
 
 	@Override

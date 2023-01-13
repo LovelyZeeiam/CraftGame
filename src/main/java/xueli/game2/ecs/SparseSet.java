@@ -20,7 +20,7 @@ public class SparseSet {
 	/**
 	 * Add an element to this set
 	 * @param i The element to be added to the set
-	 * @return Whether the operation ends successfully
+	 * @return "True" means we successfully add the element while "False" means we find the same element in the set
 	 */
 	public boolean add(int i) {
 		// Because the initial value of array is 0, so we add one to the real data to avoid some problems.
@@ -40,6 +40,11 @@ public class SparseSet {
 		return getSparse(i);
 	}
 	
+	/**
+	 * 
+	 * @param i the element to be removed
+	 * @return "True" means we successfully find the element and remove it while "False" means we don't find that element
+	 */
 	// To save the cost, I duplicate some codes.
 	public boolean remove(int i) {
 		// Get sparse data of the element to be removed and its page array.
