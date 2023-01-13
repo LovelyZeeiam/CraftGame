@@ -13,18 +13,29 @@ import xueli.game2.input.KeyBindings;
 import xueli.game2.resource.ResourceHolder;
 import xueli.mcremake.client.gui.universal.UniversalGui;
 import xueli.mcremake.client.player.ClientPlayer;
-import xueli.mcremake.client.renderer.item.ItemRenderer;
-import xueli.mcremake.client.renderer.world.RenderTypes;
+import xueli.mcremake.client.renderer.item.ItemRenderMaster;
 import xueli.mcremake.client.renderer.world.WorldRenderer;
 import xueli.mcremake.core.entity.PickCollider;
 import xueli.mcremake.core.entity.PickResult;
 import xueli.mcremake.core.world.WorldDimension;
 import xueli.mcremake.network.ServerPlayerInfo;
 import xueli.mcremake.registry.GameRegistry;
+import xueli.mcremake.registry.ItemRenderTypes;
+import xueli.mcremake.registry.BlockRenderTypes;
 import xueli.mcremake.registry.TerrainTexture;
 import xueli.utils.events.EventBus;
 
 // TODO: Combine different overlay with different listener because they are "one to one".
+/**
+ * This is the main class of game client.<br/>
+ * <br/>
+ * SOME PRINCIPLES:<br/>
+ * 1. The render resources should be added to "renderResources" so that it can be reloaded.<br/>
+ * 2. Item system and block system follow the same rules: a render type which you can have access
+ * to every resource, initialize everything that render needs; a "vertex gatherer" separated by
+ * each type of blocks or items so that every item can choose its render type.
+ * 
+ */
 public class CraftGameClient extends GameDisplay {
 
 	public static final ServerPlayerInfo PLAYER_INFO = new ServerPlayerInfo("LovelyZeeiam", UUID.fromString("a5538060-b314-4cb0-90cd-ead6c59f16a7"));
@@ -44,7 +55,7 @@ public class CraftGameClient extends GameDisplay {
 	private ListenableBufferedWorldAccessible bufferedWorld;
 	private WorldRenderer worldRenderer;
 	
-	private ItemRenderer itemRenderer;
+	private ItemRenderMaster itemRenderer;
 	
 	private ClientPlayer player;
 	private PickCollider picker;
@@ -66,6 +77,7 @@ public class CraftGameClient extends GameDisplay {
 		GameRegistry.callForClazzLoad();
 		
 		this.renderResources.add(new TerrainTexture(this));
+		
 		this.resourceManager.addResourceHolder(() -> {
 			this.renderResources.values().forEach(o -> {
 				if(o instanceof ResourceHolder holder) {
@@ -76,10 +88,10 @@ public class CraftGameClient extends GameDisplay {
 		
 		this.world = new WorldDimension(this);
 		this.bufferedWorld = new ListenableBufferedWorldAccessible(this.world, WorldEventBus);
-		this.worldRenderer = new WorldRenderer(new RenderTypes(renderResources), this);
+		this.worldRenderer = new WorldRenderer(new BlockRenderTypes(renderResources), this);
 		this.resourceManager.addResourceHolder(worldRenderer);
 		
-		this.itemRenderer = new ItemRenderer();
+		this.itemRenderer = new ItemRenderMaster(new ItemRenderTypes(renderResources), this);
 		this.resourceManager.addResourceHolder(itemRenderer);
 
 		this.world.init();

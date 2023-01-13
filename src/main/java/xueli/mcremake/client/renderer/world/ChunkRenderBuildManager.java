@@ -7,15 +7,12 @@ import org.lwjgl.utils.vector.Vector2i;
 import xueli.game2.renderer.legacy.BackRenderBuffer;
 
 public abstract class ChunkRenderBuildManager {
-
-	private final WorldRenderer renderer;
+	
 	private final Vector2i chunkPos;
 	private final HashMap<Class<? extends ChunkRenderType>, BackRenderBuffer> backBuffers = new HashMap<>();
 
-	public ChunkRenderBuildManager(Vector2i chunkPos, WorldRenderer ctx) {
+	public ChunkRenderBuildManager(Vector2i chunkPos) {
 		this.chunkPos = chunkPos;
-		this.renderer = ctx;
-
 	}
 
 	public BackRenderBuffer getRenderBuffer(Class<? extends ChunkRenderType> clazz) {
@@ -29,10 +26,6 @@ public abstract class ChunkRenderBuildManager {
 
 	public void flip() {
 		backBuffers.values().forEach(BackRenderBuffer::flip);
-	}
-
-	public WorldRenderer getRenderer() {
-		return renderer;
 	}
 
 }

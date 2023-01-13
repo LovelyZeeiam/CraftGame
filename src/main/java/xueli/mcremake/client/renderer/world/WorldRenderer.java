@@ -83,7 +83,7 @@ public class WorldRenderer implements ResourceHolder {
 		if(v != null) {
 			Chunk chunk = world.getChunk(v.x, v.y);
 			if(chunk != null) {
-				ChunkRenderBuildManager manager = new ChunkRenderBuildManager(v, this) {
+				ChunkRenderBuildManager manager = new ChunkRenderBuildManager(v) {
 					@Override
 					public <T extends ChunkRenderType> T getRenderType(Class<T> clazz) {
 						return renderTypes.get(clazz);

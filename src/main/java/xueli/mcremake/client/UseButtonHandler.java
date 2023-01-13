@@ -32,7 +32,7 @@ public class UseButtonHandler extends FunctionalKeyHandler {
 		var pickResult = ctx.getPickResult();
 		if(pickResult == null) return false;
 		var pickBlockPos = pickResult.placePos();
-		ctx.getWorld().setBlock(pickBlockPos.x, pickBlockPos.y, pickBlockPos.z, GameRegistry.STONE);
+		ctx.getWorld().setBlock(pickBlockPos.x, pickBlockPos.y, pickBlockPos.z, GameRegistry.BLOCK_STONE);
 		return true;
 	}
 

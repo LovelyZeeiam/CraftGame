@@ -76,7 +76,7 @@ public class ClientPlayer extends Vector {
 
 	public void handleRightButton(PickResult pickResult, int holdTime) {
 		Vector3i blockPos = pickResult.placePos();
-		world.setBlock(blockPos.x, blockPos.y, blockPos.z, GameRegistry.STONE);
+		world.setBlock(blockPos.x, blockPos.y, blockPos.z, GameRegistry.BLOCK_STONE);
 
 	}
 

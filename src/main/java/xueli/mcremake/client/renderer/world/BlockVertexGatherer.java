@@ -8,5 +8,8 @@ public interface BlockVertexGatherer {
 
 	public void render(int x, int y, int z, CompoundMap tag, WorldAccessible world, ChunkRenderBuildManager manager);
 	
+	default public void renderIcon(ChunkRenderBuildManager manager) {
+		this.render(0, 0, 0, null, null, manager);
+	}
 	
 }

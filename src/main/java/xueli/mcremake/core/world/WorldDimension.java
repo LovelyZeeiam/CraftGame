@@ -29,12 +29,12 @@ public class WorldDimension implements WorldAccessible {
 				
 					for (int l = 0; l < Chunk.CHUNK_SIZE; l++) {
 						for (int m = 0; m < Chunk.CHUNK_SIZE; m++) {
-							chunk.setBlock(l, 7, m, GameRegistry.GRASS);
+							chunk.setBlock(l, 7, m, GameRegistry.BLOCK_GRASS);
 							for (int k = 6; k > 3; k--) {
-								chunk.setBlock(l, k, m, GameRegistry.DIRT);
+								chunk.setBlock(l, k, m, GameRegistry.BLOCK_DIRT);
 							}
 							for (int k = 3; k >= 0; k--) {
-								chunk.setBlock(l, k, m, GameRegistry.STONE);
+								chunk.setBlock(l, k, m, GameRegistry.BLOCK_STONE);
 							}
 						}
 					}
