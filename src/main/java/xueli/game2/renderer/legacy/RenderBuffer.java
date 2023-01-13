@@ -1,10 +1,10 @@
 package xueli.game2.renderer.legacy;
 
-import java.nio.ByteBuffer;
+import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
 
 public interface RenderBuffer {
 
-	public void applyBuffer(int id, ByteBuffer buf);
+	public void applyBuffer(int id, LotsOfByteBuffer buf);
 
 	public void setVertexCount(int count);
 

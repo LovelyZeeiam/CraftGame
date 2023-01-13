@@ -63,7 +63,7 @@ public class Chunk implements WorldAccessible {
 			if(y == grid.heightMap[x][z])
 				for (int i = --grid.heightMap[x][z]; i >= 0 && grid.grid[x][z][i] == null; i--) {}
 		} else {
-			grid.heightMap[x][z] = Math.max(grid.heightMap[x][z], y);
+			grid.heightMap[x][z] = Math.max(grid.heightMap[x][z], yInSub);
 		}
 
 	}

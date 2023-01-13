@@ -1,6 +1,5 @@
 package xueli.game2.renderer.legacy;
 
-import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -20,7 +19,7 @@ public class VertexAttributeRenderBuffer implements RenderBuffer {
 	}
 
 	@Override
-	public void applyBuffer(int id, ByteBuffer buf) {
+	public void applyBuffer(int id, LotsOfByteBuffer buf) {
 		AttributeBuffer atb = this.attr.getAttributeBuffer(id);
 		atb.updateBuffer(buf);
 
@@ -68,11 +67,10 @@ public class VertexAttributeRenderBuffer implements RenderBuffer {
 				AtomicInteger vertCount = new AtomicInteger(Integer.MAX_VALUE);
 				applyCount.forEach((i, b) -> {
 					vertCount.set(Math.min(vertCount.get(), b.submitCount));
-
-					ByteBuffer buffer = b.buf.getBuffer();
-					buffer.flip();
-					VertexAttributeRenderBuffer.this.applyBuffer(i, buffer);
-
+					
+					b.buf.setReadWrite(true);
+					VertexAttributeRenderBuffer.this.applyBuffer(i, b.buf);
+					
 //					b.buf.release();
 
 				});

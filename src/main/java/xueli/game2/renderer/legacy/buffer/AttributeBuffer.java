@@ -1,11 +1,9 @@
 package xueli.game2.renderer.legacy.buffer;
 
-import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL30;
-
 import xueli.game2.renderer.legacy.VertexType;
 
 public class AttributeBuffer implements Bindable {
@@ -37,22 +35,24 @@ public class AttributeBuffer implements Bindable {
 	}
 
 	private final AtomicBoolean shouldSyncData = new AtomicBoolean(false);
-	private ByteBuffer toBeSyncData;
+	private LotsOfByteBuffer lastSyncData, toBeSyncData;
 
 	public void tick() {
 		synchronized (this) {
 			if(shouldSyncData.get()) {
-				this.bind(() -> GL30.glBufferData(GL30.GL_ARRAY_BUFFER, toBeSyncData, bufferType));
-//				if(this.lastSyncData != null)
-//					MemoryUtil.memFree(this.lastSyncData);
+				this.bind(() -> GL30.glBufferData(GL30.GL_ARRAY_BUFFER, toBeSyncData.getBuffer(), bufferType));
+				if(this.lastSyncData != null) {
+					this.lastSyncData.release();
+					this.lastSyncData = null;
+				}
 
 				shouldSyncData.set(false);
 			}
 		}
 	}
 
-	public void updateBuffer(ByteBuffer buffer) {
-//		this.lastSyncData = this.toBeSyncData;
+	public void updateBuffer(LotsOfByteBuffer buffer) {
+		this.lastSyncData = this.toBeSyncData;
 //		System.out.println(buffer);
 		this.toBeSyncData = buffer;
 		shouldSyncData.set(true);
