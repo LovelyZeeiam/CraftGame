@@ -1,4 +1,4 @@
-package xueli.mcremake.client.renderer.world;
+package xueli.mcremake.registry;
 
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.utils.vector.Vector2f;

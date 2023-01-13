@@ -25,7 +25,7 @@ public abstract class ChunkRenderBuildManager {
 		});
 	}
 
-	protected abstract <T extends ChunkRenderType> T getRenderType(Class<T> clazz);
+	public abstract <T extends ChunkRenderType> T getRenderType(Class<T> clazz);
 
 	public void flip() {
 		backBuffers.values().forEach(BackRenderBuffer::flip);

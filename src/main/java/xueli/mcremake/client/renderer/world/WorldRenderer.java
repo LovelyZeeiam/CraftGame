@@ -1,6 +1,5 @@
 package xueli.mcremake.client.renderer.world;
 
-import java.util.HashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.lwjgl.utils.vector.Matrix4f;
@@ -9,6 +8,7 @@ import org.lwjgl.utils.vector.Vector2i;
 import xueli.game2.camera3d.BoundCamera;
 import xueli.game2.camera3d.ICamera;
 import xueli.game2.display.Display;
+import xueli.game2.ecs.ResourceListGeneric;
 import xueli.game2.resource.ResourceHolder;
 import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.client.WorldEvents;
@@ -19,35 +19,30 @@ public class WorldRenderer implements ResourceHolder {
 
 	private final CraftGameClient ctx;
 
-	private final TerrainTexture terrainTexture;
-
 	private final WorldDimension world;
 
 	private final ConcurrentLinkedQueue<Vector2i> chunkRebuiltList = new ConcurrentLinkedQueue<>();
 	private final ConcurrentLinkedQueue<Vector2i> chunkRemoveList = new ConcurrentLinkedQueue<>();
 
-	private final HashMap<Class<? extends ChunkRenderType>, ChunkRenderType> renderTypes = new HashMap<>();
+	private final ResourceListGeneric<ChunkRenderType> renderTypes;
 
 	private BoundCamera camera = new BoundCamera(null);
 	private Matrix4f viewMatrix, projMatrix;
 
-	public WorldRenderer(CraftGameClient ctx) {
+	public WorldRenderer(ResourceListGeneric<ChunkRenderType> renderTypes, CraftGameClient ctx) {
 		this.ctx = ctx;
 		this.world = ctx.getUnsafeImmediateWorld();
-		this.terrainTexture = new TerrainTexture(ctx);
 
 		ctx.WorldEventBus.register(WorldEvents.NewChunkEvent.class, this::onCreateNewChunk);
 		ctx.WorldEventBus.register(WorldEvents.ModifyBlockEvent.class, this::onModifyBlock);
 		ctx.WorldEventBus.register(WorldEvents.UnloadChunkEvent.class, this::onRemoveChunk);
 
-		renderTypes.put(RenderTypeSolid.class, new RenderTypeSolid(this));
+		this.renderTypes = renderTypes;
 
 	}
 
 	@Override
 	public void reload() {
-		this.terrainTexture.reload();
-
 	}
 
 	public void setCamera(ICamera camera) {
@@ -90,9 +85,8 @@ public class WorldRenderer implements ResourceHolder {
 			if(chunk != null) {
 				ChunkRenderBuildManager manager = new ChunkRenderBuildManager(v, this) {
 					@Override
-					@SuppressWarnings("unchecked")
-					protected <T extends ChunkRenderType> T getRenderType(Class<T> clazz) {
-						return (T) renderTypes.get(clazz);
+					public <T extends ChunkRenderType> T getRenderType(Class<T> clazz) {
+						return renderTypes.get(clazz);
 					}
 				};
 				new ChunkRebuiltTask(v.x, v.y, chunk, manager).run();
@@ -117,7 +111,8 @@ public class WorldRenderer implements ResourceHolder {
 		this.viewMatrix = camera.getCameraMatrix();
 		this.projMatrix = getPerspectiveMatrix(display.getWidth(), display.getHeight(), 110.0f, 0.01f, 999999.9f);
 
-		for (ChunkRenderType type : renderTypes.values()) {
+		for (Object obj : renderTypes.values()) {
+			ChunkRenderType type = (ChunkRenderType) obj;
 			type.applyMatrix("viewMatrix", viewMatrix);
 			type.applyMatrix("projMatrix", projMatrix);
 			type.render();
@@ -126,8 +121,8 @@ public class WorldRenderer implements ResourceHolder {
 	}
 
 	public void release() {
-		for (ChunkRenderType type : renderTypes.values()) {
-			type.release();
+		for (Object type : renderTypes.values()) {
+			((ChunkRenderType) type).release();
 		}
 
 	}
@@ -149,10 +144,6 @@ public class WorldRenderer implements ResourceHolder {
 		projectionMatrix.m33 = 0;
 
 		return projectionMatrix;
-	}
-
-	public TerrainTexture getTerrainTexture() {
-		return terrainTexture;
 	}
 
 	public Matrix4f getViewMatrix() {

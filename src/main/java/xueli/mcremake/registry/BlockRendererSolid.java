@@ -9,7 +9,6 @@ import xueli.game2.resource.submanager.render.texture.atlas.AtlasResourceHolder;
 import xueli.mcremake.client.renderer.world.BlockVertexGatherer;
 import xueli.mcremake.client.renderer.world.ChunkRenderBuildManager;
 import xueli.mcremake.client.renderer.world.RenderTypeSolid;
-import xueli.mcremake.client.renderer.world.TerrainTexture;
 import xueli.mcremake.core.world.WorldAccessible;
 
 public class BlockRendererSolid implements BlockVertexGatherer {
@@ -24,7 +23,7 @@ public class BlockRendererSolid implements BlockVertexGatherer {
 	@Override
 	public void render(int x, int y, int z, CompoundMap tag, WorldAccessible world, ChunkRenderBuildManager manager) {
 		BackRenderBuffer buffer = manager.getRenderBuffer(RenderTypeSolid.class);
-		TerrainTexture texture = manager.getRenderer().getTerrainTexture();
+		TerrainTexture texture = manager.getRenderType(RenderTypeSolid.class).getTexture();
 		AtlasResourceHolder uvVertex = texture.getUVVertex(this.x, this.y);
 
 		if(world.getBlock(x, y - 1, z) == null) {

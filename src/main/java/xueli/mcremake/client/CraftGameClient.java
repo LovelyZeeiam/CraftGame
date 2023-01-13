@@ -6,17 +6,24 @@ import org.lwjgl.opengl.GL30;
 
 import xueli.game2.camera3d.MovableCamera;
 import xueli.game2.display.GameDisplay;
+import xueli.game2.ecs.ResourceListGeneric;
+import xueli.game2.ecs.ResourceListImpl;
 import xueli.game2.input.DefaultKeyListener;
 import xueli.game2.input.DefaultMouseListener;
 import xueli.game2.input.KeyBindings;
+import xueli.game2.resource.ResourceHolder;
 import xueli.mcremake.client.gui.universal.UniversalGui;
 import xueli.mcremake.client.player.ClientPlayer;
+import xueli.mcremake.client.renderer.item.ItemRenderer;
+import xueli.mcremake.client.renderer.world.ChunkRenderType;
+import xueli.mcremake.client.renderer.world.RenderTypeSolid;
 import xueli.mcremake.client.renderer.world.WorldRenderer;
 import xueli.mcremake.core.entity.PickCollider;
 import xueli.mcremake.core.entity.PickResult;
 import xueli.mcremake.core.world.WorldDimension;
 import xueli.mcremake.network.ServerPlayerInfo;
 import xueli.mcremake.registry.GameRegistry;
+import xueli.mcremake.registry.TerrainTexture;
 import xueli.utils.events.EventBus;
 
 // TODO: Combine different overlay with different listener because they are "one to one".
@@ -33,9 +40,13 @@ public class CraftGameClient extends GameDisplay {
 	public final EventBus WorldEventBus = new EventBus();
 //	public final EventBus GuiEventBus = new EventBus();
 
+	private final ResourceListImpl resources = new ResourceListImpl();
+	
 	private WorldDimension world;
 	private ListenableBufferedWorldAccessible bufferedWorld;
 	private WorldRenderer worldRenderer;
+	
+	private ItemRenderer itemRenderer;
 	
 	private ClientPlayer player;
 	private PickCollider picker;
@@ -55,11 +66,23 @@ public class CraftGameClient extends GameDisplay {
 		this.resourceManager.addResourceHolder(universalGui);
 
 		GameRegistry.callForClazzLoad();
-
+		
+		this.resources.add(new TerrainTexture(this));
+		this.resourceManager.addResourceHolder(() -> {
+			this.resources.values().forEach(o -> {
+				if(o instanceof ResourceHolder holder) {
+					holder.reload();
+				}
+			});
+		});
+		
 		this.world = new WorldDimension(this);
 		this.bufferedWorld = new ListenableBufferedWorldAccessible(this.world, WorldEventBus);
-		this.worldRenderer = new WorldRenderer(this);
+		this.worldRenderer = new WorldRenderer(newRenderTypes(), this);
 		this.resourceManager.addResourceHolder(worldRenderer);
+		
+		this.itemRenderer = new ItemRenderer();
+		this.resourceManager.addResourceHolder(itemRenderer);
 
 		this.world.init();
 
@@ -117,6 +140,12 @@ public class CraftGameClient extends GameDisplay {
 	protected void renderRelease() {
 		worldRenderer.release();
 
+	}
+	
+	private ResourceListGeneric<ChunkRenderType> newRenderTypes() {
+		ResourceListGeneric<ChunkRenderType> types = new ResourceListGeneric<>();
+		types.add(new RenderTypeSolid(resources));
+		return types;
 	}
 	
 	public WorldDimension getUnsafeImmediateWorld() {

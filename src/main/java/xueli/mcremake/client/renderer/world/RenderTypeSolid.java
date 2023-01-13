@@ -2,7 +2,9 @@ package xueli.mcremake.client.renderer.world;
 
 import org.lwjgl.utils.vector.Matrix4f;
 
+import xueli.game2.ecs.ResourceListImpl;
 import xueli.game2.resource.submanager.render.shader.Shader;
+import xueli.mcremake.registry.TerrainTexture;
 
 public class RenderTypeSolid extends ChunkRenderType {
 
@@ -51,10 +53,9 @@ void main(){
 	private final Shader shader;
 	private final TerrainTexture texture;
 
-	public RenderTypeSolid(WorldRenderer renderer) {
-		super(renderer);
+	public RenderTypeSolid(ResourceListImpl renderResource) {
 		this.shader = Shader.compile(VERT_SHADER_CODE, FRAG_SHADER_CODE);
-		this.texture = renderer.getTerrainTexture();
+		this.texture = renderResource.get(TerrainTexture.class);
 
 	}
 
@@ -85,5 +86,9 @@ void main(){
 		this.shader.release();
 
 	}
-
+	
+	public TerrainTexture getTexture() {
+		return texture;
+	}
+	
 }
