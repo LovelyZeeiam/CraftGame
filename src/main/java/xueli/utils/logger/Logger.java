@@ -90,7 +90,7 @@ public class Logger {
 				lineStartInStr += contentPerLine;
 				lineEndInStr += contentPerLine;
 				
-				a.a(" ").a(Attribute.ITALIC).a(pathStr).a(Attribute.ITALIC).newline();
+				a.a(" ").a(Attribute.ITALIC).a(pathStr).a(Attribute.ITALIC_OFF).newline();
 				
 				while(true) {
 					if(lineStartInStr >= contentStr.length())

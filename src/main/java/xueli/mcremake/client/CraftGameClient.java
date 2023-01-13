@@ -48,6 +48,7 @@ public class CraftGameClient extends GameDisplay {
 
 	}
 
+	
 	@Override
 	protected void renderInit() {
 		universalGui = new UniversalGui(this);

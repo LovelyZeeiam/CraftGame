@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import xueli.game2.resource.ResourceLocation;
 
+@Deprecated
 public record TextureResourceLocation(ResourceLocation location, TextureLoaderBuilder type) {
 
 	@Override

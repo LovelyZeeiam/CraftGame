@@ -8,16 +8,18 @@ import org.lwjgl.utils.vector.Vector3f;
 
 import xueli.game2.renderer.legacy.BackRenderBuffer;
 import xueli.game2.renderer.legacy.RenderBuffer;
+import xueli.game2.resource.ResourceHolder;
 import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.submanager.render.texture.Texture;
 import xueli.game2.resource.submanager.render.texture.TextureResourceLocation;
 import xueli.game2.resource.submanager.render.texture.TextureTypeLegacy;
 import xueli.mcremake.client.CraftGameClient;
 
 @Deprecated
 @SuppressWarnings("unused")
-class MyFont {
+class MyFont implements ResourceHolder {
 
-	private static final TextureResourceLocation FONT_TEXTURE_LOCATION = new TextureResourceLocation(new ResourceLocation("minecraft", "font/default.png"), new TextureTypeLegacy());
+	private static final ResourceLocation FONT_TEXTURE_LOCATION = new ResourceLocation("minecraft", "font/default.png");
 	
 	private static final float DEFAULT_FONT_SIZE = 8;
 	private static final float DIGIT_FONT_SIZE = 6;
@@ -25,7 +27,8 @@ class MyFont {
 	private final CraftGameClient ctx;
 
 	private RenderTypeTexture2D renderer = new RenderTypeTexture2D();
-
+	private int fontTexture;
+	
 	public MyFont(CraftGameClient ctx) {
 		this.ctx = ctx;
 
@@ -33,11 +36,11 @@ class MyFont {
 
 	public void init() {
 	}
-
+	
 	private HashMap<RenderBuffer, BackRenderBuffer> buffers = new HashMap<>();
 
 	public void drawFont(float x, float y, float size, String str, Color color) {
-		RenderBuffer buffer = renderer.getRenderBuffer(ctx.textureResource.register(FONT_TEXTURE_LOCATION, true));
+		RenderBuffer buffer = renderer.getRenderBuffer(fontTexture);
 		BackRenderBuffer backBuffer = buffers.computeIfAbsent(buffer, RenderBuffer::createBackBuffer);
 
 		float colorR = color.getRed() / 255.0f;
@@ -66,6 +69,12 @@ class MyFont {
 
 //		System.out.println("==");
 
+	}
+	
+	@Override
+	public void reload() {
+		fontTexture = ctx.textureResource.register(FONT_TEXTURE_LOCATION, true).id();
+		
 	}
 
 //	private void internalDraw(BackRenderBuffer buf, Vector2f pos, Vector2f uv, Vector3f color) {

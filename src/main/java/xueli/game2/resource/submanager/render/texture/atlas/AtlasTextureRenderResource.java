@@ -18,14 +18,12 @@ import org.lwjgl.utils.vector.Vector2f;
 import xueli.game2.resource.Resource;
 import xueli.game2.resource.ResourceLocation;
 import xueli.game2.resource.manager.SubResourceManager;
-import xueli.game2.resource.submanager.render.texture.AbstractTextureLoader;
 import xueli.game2.resource.submanager.render.texture.TextureLoaderLegacy;
-import xueli.game2.resource.submanager.render.texture.TextureLoaderUtils;
 import xueli.game2.resource.submanager.render.texture.TextureMissing;
 import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
 
 public class AtlasTextureRenderResource extends SubResourceManager {
-
+	
 	private final ArrayList<RegisterData> registerData = new ArrayList<>();
 	private final ArrayList<Integer> registeredTexture = new ArrayList<>();
 	private final HashMap<ResourceLocation, HashMap<String, AtlasResourceHolder>> atlasHolders = new HashMap<>();
@@ -82,10 +80,6 @@ public class AtlasTextureRenderResource extends SubResourceManager {
 		BufferedImage atlasImage = new BufferedImage(atlasImageWidth, atlasImageHeight, BufferedImage.TYPE_4BYTE_ABGR);
 		Graphics2D g2d = atlasImage.createGraphics();
 
-		AbstractTextureLoader loader = new TextureLoaderLegacy();
-		int textureId = loader.createTexture();
-		registeredTexture.add(textureId);
-
 		for (int i = 0; i < images.size(); i++) {
 			BufferedImage image = images.get(i);
 			int x = i % atlasSize;
@@ -93,18 +87,15 @@ public class AtlasTextureRenderResource extends SubResourceManager {
 
 			Vector2f leftTop = new Vector2f((float) x / atlasSize, (float) y / atlasSize);
 			Vector2f rightBottom = new Vector2f((float) (x * maxWidth[0] + image.getWidth()) / atlasImageWidth, (float) (y * maxHeight[0] + image.getHeight()) / atlasImageHeight);
-			list.put(resources.get(i).getName(), new AtlasResourceHolder(leftTop, rightBottom, textureId));
+			list.put(resources.get(i).getName(), new AtlasResourceHolder(leftTop, rightBottom));
 
 			g2d.drawImage(image, x * maxWidth[0], y * maxHeight[0], null);
 
 		}
 
 		g2d.dispose();
-
-		int[] imageData = TextureLoaderUtils.imageToLegacyData(atlasImage);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureId);
-		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, atlasImageWidth, atlasImageHeight, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, imageData);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+		
+		registeredTexture.add(TextureLoaderLegacy.INSTANCE.registerTexture(atlasImage).id());
 
 	}
 
@@ -116,10 +107,10 @@ public class AtlasTextureRenderResource extends SubResourceManager {
 	public AtlasResourceHolder getHolder(ResourceLocation path, String name) {
 		HashMap<String, AtlasResourceHolder> map = atlasHolders.get(path);
 		if(map == null)
-			return TextureMissing.getAtlasHolder();
+			return null;
 		AtlasResourceHolder holder = map.get(name);
 		if(holder == null)
-			return TextureMissing.getAtlasHolder();
+			return null;
 		return holder;
 	}
 

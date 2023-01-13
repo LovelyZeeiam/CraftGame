@@ -13,13 +13,13 @@ import xueli.game2.resource.manager.ResourceManager;
 public abstract class AbstractTextureLoader implements TextureLoader {
 
 	@Override
-	public int registerTexture(ResourceLocation res, ResourceManager manager) throws IOException {
+	public Texture registerTexture(ResourceLocation res, ResourceManager manager) throws IOException {
 		Resource resource = manager.getResource(res);
 		InputStream in = resource.openInputStream();
 		BufferedImage image = ImageIO.read(in);
 		return registerTexture(image);
 	}
 
-	public abstract int registerTexture(BufferedImage image) throws IOException;
+	public abstract Texture registerTexture(BufferedImage image);
 
 }

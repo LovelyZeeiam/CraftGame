@@ -6,11 +6,13 @@ import xueli.game2.resource.ResourceHolder;
 
 public class OverlayManager implements LifeCycle, ResourceHolder {
 
-	private final MyGui gui;
+	private final GameDisplay display;
+	private final Gui gui;
 
 	private Overlay overlay = null;
 
 	public OverlayManager(GameDisplay display) {
+		this.display = display;
 		this.gui = display.getGuiManager();
 
 	}
@@ -22,7 +24,7 @@ public class OverlayManager implements LifeCycle, ResourceHolder {
 	@Override
 	public void gameLoop() {
 		if(overlay != null) {
-			gui.begin();
+			gui.begin(display.getWidth(), display.getHeight());
 			overlay.render(gui);
 			gui.finish();
 		}

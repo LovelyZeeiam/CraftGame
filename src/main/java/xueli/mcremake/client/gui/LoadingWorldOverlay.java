@@ -1,6 +1,6 @@
 package xueli.mcremake.client.gui;
 
-import xueli.game2.renderer.ui.MyGui;
+import xueli.game2.renderer.ui.Gui;
 import xueli.mcremake.client.CraftGameClient;
 
 public class LoadingWorldOverlay extends CraftGameOverlay {
@@ -14,7 +14,7 @@ public class LoadingWorldOverlay extends CraftGameOverlay {
 	}
 
 	@Override
-	public void render(MyGui gui) {
+	public void render(Gui gui) {
 		this.drawUniversalBackground(gui, 0, 0, getContext().getWidth(), getContext().getHeight());
 
 		super.render(gui);

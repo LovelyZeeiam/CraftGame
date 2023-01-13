@@ -2,6 +2,7 @@ package xueli.game2.resource.submanager.render.texture;
 
 import java.util.Arrays;
 
+@Deprecated
 public class TextureTypeNanoVG implements TextureLoaderBuilder {
 
 	private final NvgImageFlag[] flags;
@@ -12,7 +13,8 @@ public class TextureTypeNanoVG implements TextureLoaderBuilder {
 
 	@Override
 	public AbstractTextureLoader getLoader(TextureRenderResource resManager) {
-		return new TextureLoaderNanoVG(resManager.gui.getContext(), flags);
+		throw new UnsupportedOperationException();
+//		return new TextureLoaderNanoVG(resManager.gui.getContext(), flags);
 	}
 
 	@Override

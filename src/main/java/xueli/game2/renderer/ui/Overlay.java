@@ -5,7 +5,7 @@ import xueli.game2.resource.ResourceHolder;
 public interface Overlay extends ResourceHolder {
 
 	public void init();
-	public void render(MyGui gui);
+	public void render(Gui gui);
 	public void release();
 
 }

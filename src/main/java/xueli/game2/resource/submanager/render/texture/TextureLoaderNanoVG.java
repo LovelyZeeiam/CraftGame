@@ -1,10 +1,10 @@
 package xueli.game2.resource.submanager.render.texture;
 
-import static org.lwjgl.nanovg.NanoVGGL3.nvglCreateImageFromHandle;
-
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+@Deprecated
+@SuppressWarnings("unused")
 public class TextureLoaderNanoVG extends TextureLoaderLegacy {
 
 	private final long nvg;
@@ -27,9 +27,10 @@ public class TextureLoaderNanoVG extends TextureLoaderLegacy {
 	}
 
 	@Override
-	public int registerTexture(BufferedImage image) throws IOException {
-		int legacyId = super.registerTexture(image);
-		return nvglCreateImageFromHandle(nvg, legacyId, image.getWidth(), image.getHeight(), flag);
+	public Texture registerTexture(BufferedImage image) {
+//		int legacyId = super.registerTexture(image);
+//		return nvglCreateImageFromHandle(nvg, legacyId, image.getWidth(), image.getHeight(), flag);
+		throw new UnsupportedOperationException();
 	}
 
 	public static TextureLoaderNanoVG getInstance(long nvg) {

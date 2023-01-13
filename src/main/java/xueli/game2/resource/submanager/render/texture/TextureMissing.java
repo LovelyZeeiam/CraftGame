@@ -3,10 +3,6 @@ package xueli.game2.resource.submanager.render.texture;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-import org.lwjgl.utils.vector.Vector2f;
-
-import xueli.game2.resource.submanager.render.texture.atlas.AtlasResourceHolder;
-
 public class TextureMissing {
 
 	public static final BufferedImage image = new BufferedImage(16, 16, BufferedImage.TYPE_4BYTE_ABGR);
@@ -27,22 +23,12 @@ public class TextureMissing {
 
 	}
 
-	public static int get(AbstractTextureLoader loader) {
+	public static Texture get(AbstractTextureLoader loader) {
 		try {
 			return loader.registerTexture(image);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
-
-	private static AtlasResourceHolder atlasHolder;
-
-	public static AtlasResourceHolder getAtlasHolder() {
-		if(atlasHolder != null)
-			return atlasHolder;
-		int id = get(new TextureLoaderLegacy());
-		atlasHolder = new AtlasResourceHolder(new Vector2f(0,0), new Vector2f(1,1), id);
-		return atlasHolder;
-	}
-
+	
 }

@@ -6,13 +6,13 @@ import com.flowpowered.nbt.CompoundMap;
 
 import xueli.game2.renderer.legacy.BackRenderBuffer;
 import xueli.game2.resource.submanager.render.texture.atlas.AtlasResourceHolder;
-import xueli.mcremake.client.renderer.world.BlockRenderer;
+import xueli.mcremake.client.renderer.world.BlockVertexGatherer;
 import xueli.mcremake.client.renderer.world.ChunkRenderBuildManager;
 import xueli.mcremake.client.renderer.world.RenderTypeSolid;
 import xueli.mcremake.client.renderer.world.TerrainTexture;
 import xueli.mcremake.core.world.WorldAccessible;
 
-public class BlockRendererSolid implements BlockRenderer {
+public class BlockRendererSolid implements BlockVertexGatherer {
 
 	private final int x, y;
 

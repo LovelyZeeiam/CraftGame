@@ -8,12 +8,11 @@ import org.lwjgl.opengl.GL30;
 
 import xueli.game2.Timer;
 import xueli.game2.lifecycle.RunnableLifeCycle;
-import xueli.game2.renderer.ui.MyGui;
+import xueli.game2.renderer.ui.Gui;
 import xueli.game2.renderer.ui.OverlayManager;
 import xueli.game2.resource.manager.BackwardResourceManager;
 import xueli.game2.resource.provider.ClassLoaderResourceProvider;
 import xueli.game2.resource.provider.ResourceProvider;
-import xueli.game2.resource.submanager.render.font.FontRenderResource;
 import xueli.game2.resource.submanager.render.shader.ShaderRenderResource;
 import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
 import xueli.game2.resource.submanager.render.texture.atlas.AtlasTextureRenderResource;
@@ -36,11 +35,11 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 	public final TextureRenderResource textureResource;
 	public final AtlasTextureRenderResource atlasTextureResource;
 	public final ShaderRenderResource shaderResource;
-	public final FontRenderResource fontResource;
+//	public final FontRenderResource fontResource;
 	
 	public final OverlayManager overlayManager;
 
-	private final MyGui gui;
+	private final Gui gui;
 	
 	public GameDisplay(int initialWidth, int initialHeight, String mainTitle) {
 		this.display = new Display(initialWidth, initialHeight, mainTitle);
@@ -48,13 +47,12 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 		List<ResourceProvider> resourceProviders = List.of(new ClassLoaderResourceProvider(true));
 		this.resourceManager = new BackwardResourceManager(resourceProviders);
 
-		this.gui = new MyGui(this);
-
-		this.textureResource = new TextureRenderResource(gui, resourceManager);
+		this.textureResource = new TextureRenderResource(resourceManager);
 		this.atlasTextureResource = new AtlasTextureRenderResource(this.textureResource);
 		this.shaderResource = new ShaderRenderResource(resourceManager);
-		this.fontResource = new FontRenderResource(gui, resourceManager);
+//		this.fontResource = new FontRenderResource(gui, resourceManager);
 
+		this.gui = new Gui();
 		this.overlayManager = new OverlayManager(this);
 		this.resourceManager.addResourceHolder(this.overlayManager);
 		
@@ -68,10 +66,9 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 		this.display.addWindowSizedListener(this);
 		this.display.addMouseInputListener(this);
 
-		this.gui.init();
-		this.overlayManager.init();
-
 		try {
+			this.gui.init();
+			this.overlayManager.init();
 			renderInit();
 		} catch (Exception e) {
 			this.announceCrash("Init", e);
@@ -146,7 +143,6 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 
 	@Override
 	public void onMouseButton(int button, int action, int mods) {
-		
 	}
 
 	public void announceCrash(String state, Throwable t) {
@@ -188,7 +184,7 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 		return display.getDisplayScale();
 	}
 	
-	public MyGui getGuiManager() {
+	public Gui getGuiManager() {
 		return gui;
 	}
 

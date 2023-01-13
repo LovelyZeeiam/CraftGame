@@ -1,6 +1,6 @@
 package xueli.mcremake.client.gui;
 
-import xueli.game2.renderer.ui.MyGui;
+import xueli.game2.renderer.ui.Gui;
 import xueli.game2.renderer.ui.Overlay;
 import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.client.gui.universal.UniversalGui;
@@ -16,12 +16,12 @@ public abstract class CraftGameOverlay implements Overlay {
 
 	}
 
-	protected void drawUniversalBackground(MyGui gui, int x, int y, int width, int height) {
+	protected void drawUniversalBackground(Gui gui, int x, int y, int width, int height) {
 		universalGui.drawUniversalBackground2(gui, x, y, width, height);
 	}
 
 	@Override
-	public void render(MyGui gui) {
+	public void render(Gui gui) {
 		universalGui.tick();
 	}
 

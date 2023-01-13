@@ -2,37 +2,35 @@ package xueli.game2.resource.submanager.render.texture;
 
 import java.io.IOException;
 
-import xueli.game2.renderer.ui.MyGui;
+import xueli.game2.resource.ResourceLocation;
 import xueli.game2.resource.manager.ChainedResourceManager;
 import xueli.game2.resource.submanager.render.RenderResource;
 
-public class TextureRenderResource extends RenderResource<TextureResourceLocation, Integer> {
-
-	final MyGui gui;
-
-	public TextureRenderResource(MyGui gui, ChainedResourceManager manager) {
+public class TextureRenderResource extends RenderResource<ResourceLocation, Texture> {
+	
+	private static final TextureLoaderLegacy LEGACY_LOADER = new TextureLoaderLegacy();
+	
+	public TextureRenderResource(ChainedResourceManager manager) {
 		super(manager);
-		this.gui = gui;
 
 	}
 	
 	@Override
-	protected Integer doRegister(TextureResourceLocation k, boolean must) {
-		AbstractTextureLoader loader = k.type().getLoader(this);
+	protected Texture doRegister(ResourceLocation k, boolean must) {
+		
 		try {
-			return loader.registerTexture(k.location(), getUpperResourceManager());
+			return LEGACY_LOADER.registerTexture(k, getUpperResourceManager());
 		} catch (IOException | NullPointerException e) {
 			if (must)
 				throw new RuntimeException(e);
 			else
-				return TextureMissing.get(loader);
+				return TextureMissing.get(LEGACY_LOADER);
 		}
 	}
 	
 	@Override
-	protected void close(TextureResourceLocation k, Integer v) {
-		TextureLoader loader = k.type().getLoader(this);
-		loader.releaseTexture(v);
+	protected void close(ResourceLocation k, Texture v) {
+		LEGACY_LOADER.releaseTexture(v);
 	}
 	
 }

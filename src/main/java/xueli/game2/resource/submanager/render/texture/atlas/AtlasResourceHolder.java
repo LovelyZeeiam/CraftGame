@@ -6,16 +6,14 @@ import org.lwjgl.utils.vector.Vector2f;
 
 public final class AtlasResourceHolder {
 
-	private final int textureId;
+//	private final int textureId;
 
 	private final Vector2f leftTop;
 	private final Vector2f rightBottom;
 	private final Vector2f leftBottom;
 	private final Vector2f rightTop;
 
-	public AtlasResourceHolder(Vector2f leftTop, Vector2f rightBottom, int textureId) {
-		this.textureId = textureId;
-
+	public AtlasResourceHolder(Vector2f leftTop, Vector2f rightBottom) {
 		this.leftTop = leftTop;
 		this.rightBottom = rightBottom;
 
@@ -40,31 +38,25 @@ public final class AtlasResourceHolder {
 		return rightTop;
 	}
 
-	public int textureId() {
-		return textureId;
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) return true;
 		if (obj == null || obj.getClass() != this.getClass()) return false;
 		var that = (AtlasResourceHolder) obj;
 		return Objects.equals(this.leftTop, that.leftTop) &&
-				Objects.equals(this.rightBottom, that.rightBottom) &&
-				this.textureId == that.textureId;
+				Objects.equals(this.rightBottom, that.rightBottom);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(leftTop, rightBottom, textureId);
+		return Objects.hash(leftTop, rightBottom);
 	}
 
 	@Override
 	public String toString() {
 		return "AtlasResourceHolder[" +
 				"leftTop=" + leftTop + ", " +
-				"rightBottom=" + rightBottom + ", " +
-				"textureId=" + textureId + ']';
+				"rightBottom=" + rightBottom + ']';
 	}
 
 }

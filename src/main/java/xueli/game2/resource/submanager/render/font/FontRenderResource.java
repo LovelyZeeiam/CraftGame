@@ -4,7 +4,7 @@ import static org.lwjgl.nanovg.NanoVG.nvgCreateFontMem;
 
 import java.nio.ByteBuffer;
 
-import xueli.game2.renderer.ui.MyGui;
+import xueli.game2.renderer.ui.Gui;
 import xueli.game2.resource.Resource;
 import xueli.game2.resource.ResourceHelper;
 import xueli.game2.resource.ResourceLocation;
@@ -13,11 +13,12 @@ import xueli.game2.resource.manager.ResourceManager;
 import xueli.game2.resource.submanager.render.BufferUtils;
 import xueli.game2.resource.submanager.render.RenderResource;
 
+@Deprecated
 public class FontRenderResource extends RenderResource<ResourceLocation, Integer> {
 
-	private final MyGui ctx;
+	private final Gui ctx;
 
-	public FontRenderResource(MyGui ctx, ChainedResourceManager superiorManager) {
+	public FontRenderResource(Gui ctx, ChainedResourceManager superiorManager) {
 		super(superiorManager);
 		this.ctx = ctx;
 

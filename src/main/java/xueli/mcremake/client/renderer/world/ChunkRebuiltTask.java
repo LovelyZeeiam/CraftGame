@@ -29,7 +29,7 @@ public class ChunkRebuiltTask {
 						BlockType block = chunk.getBlock(i, realHeight, j);
 						if(block == null) continue;
 						CompoundMap tag = chunk.getBlockTag(i, realHeight, j);
-						BlockRenderer renderer = block.renderer();
+						BlockVertexGatherer renderer = block.renderer();
 						if(renderer == null) continue;
 						renderer.render(this.x * Chunk.CHUNK_SIZE + i, realHeight, this.z * Chunk.CHUNK_SIZE + j, tag, chunk.getWorld(), manager);
 					}

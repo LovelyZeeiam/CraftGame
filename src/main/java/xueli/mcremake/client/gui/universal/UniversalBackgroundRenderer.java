@@ -7,14 +7,17 @@ import xueli.game2.renderer.legacy.BackRenderBuffer;
 import xueli.game2.renderer.legacy.RenderBuffer;
 import xueli.game2.resource.ResourceHolder;
 import xueli.game2.resource.ResourceLocation;
-import xueli.game2.resource.submanager.render.texture.TextureResourceLocation;
 import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.client.renderer.gui.MyRenderBuffer2D;
 import xueli.mcremake.client.renderer.gui.RenderTypeTexture2D;
 
+/**
+ * Sorry but we have to give up this for some time
+ */
+@Deprecated
 public class UniversalBackgroundRenderer implements ResourceHolder {
 
-	public static final TextureResourceLocation UNIVERSAL_BACKGROUND_RESOURCE_LOCATION = new TextureResourceLocation(new ResourceLocation("minecraft", "gui/background.png"), resManager -> new UniversalBackgroundTextureLoader());
+	public static final ResourceLocation UNIVERSAL_BACKGROUND_RESOURCE_LOCATION = new ResourceLocation("minecraft", "gui/background.png");
 	public static final int BG_SIZE = 128;
 	public static final Vector3f BG_COLOR = new Vector3f(0.3f, 0.3f, 0.3f);
 
@@ -68,7 +71,7 @@ public class UniversalBackgroundRenderer implements ResourceHolder {
 
 	@Override
 	public void reload() {
-		this.texUniversalBgId = ctx.textureResource.register(UNIVERSAL_BACKGROUND_RESOURCE_LOCATION, false);
+		this.texUniversalBgId = ctx.textureResource.register(UNIVERSAL_BACKGROUND_RESOURCE_LOCATION, false).id();
 
 		if(this.renderBuffer != null) {
 			this.renderBuffer.release();

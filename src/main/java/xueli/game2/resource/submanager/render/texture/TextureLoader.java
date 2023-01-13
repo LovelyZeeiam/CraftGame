@@ -7,10 +7,8 @@ import xueli.game2.resource.manager.ResourceManager;
 
 public interface TextureLoader {
 
-	public int createTexture();
+	public Texture registerTexture(ResourceLocation res, ResourceManager manager) throws IOException;
 
-	public int registerTexture(ResourceLocation res, ResourceManager manager) throws IOException;
-
-	public void releaseTexture(int id);
+	public void releaseTexture(Texture id);
 
 }

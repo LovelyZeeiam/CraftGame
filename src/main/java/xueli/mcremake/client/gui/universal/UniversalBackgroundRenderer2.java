@@ -3,15 +3,13 @@ package xueli.mcremake.client.gui.universal;
 import java.awt.Color;
 import java.util.Random;
 
-import xueli.game2.renderer.ui.MyGui;
+import xueli.game2.renderer.ui.Gui;
 import xueli.game2.resource.ResourceLocation;
-import xueli.game2.resource.submanager.render.texture.TextureResourceLocation;
-import xueli.game2.resource.submanager.render.texture.TextureTypeNanoVG;
 import xueli.mcremake.client.CraftGameClient;
 
 public class UniversalBackgroundRenderer2 {
 
-	public static final TextureResourceLocation UNIVERSAL_BACKGROUND_RESOURCE_LOCATION = new TextureResourceLocation(new ResourceLocation("minecraft", "gui/background.png"), new TextureTypeNanoVG());
+	public static final ResourceLocation UNIVERSAL_BACKGROUND_RESOURCE_LOCATION = new ResourceLocation("minecraft", "gui/background.png");
 	public static final Color TOP_COLOR = new Color(0, 0, 0, 0.7f);
 
 	public static final int SIZE = 128;
@@ -31,7 +29,7 @@ public class UniversalBackgroundRenderer2 {
 
 	private int imageId;
 
-	public void draw(MyGui gui, int x, int y, int width, int height) {
+	public void draw(Gui gui, int x, int y, int width, int height) {
 		float sizeX = SIZE;
 		int xRepeatCount = 0;
 
@@ -61,7 +59,7 @@ public class UniversalBackgroundRenderer2 {
 					case 2 -> gui.setTexturedPaint(px + SIZE, py + SIZE, SIZE, SIZE, (float) (Math.PI), 1.0f, imageId);
 					case 3 -> gui.setTexturedPaint(px, py + SIZE, SIZE, SIZE, (float) (Math.PI * 3 / 2), 1.0f, imageId);
 				}
-				gui.drawFilledRect(px, py, sizeX, sizeY, MyGui.FillType.PAINT);
+				gui.drawFilledRect(px, py, sizeX, sizeY, Gui.FillType.PAINT);
 
 				yRepeatCount++;
 			}
@@ -72,12 +70,13 @@ public class UniversalBackgroundRenderer2 {
 //		gui.scissorReset();
 
 		gui.setColor(TOP_COLOR);
-		gui.drawFilledRect(x, y, width, height, MyGui.FillType.COLOR);
+		gui.drawFilledRect(x, y, width, height, Gui.FillType.COLOR);
 
 	}
 
 	public void reload(CraftGameClient ctx) {
-		imageId = ctx.textureResource.register(UNIVERSAL_BACKGROUND_RESOURCE_LOCATION, false);
+		imageId = ctx.getGuiManager().registerImage(ctx.textureResource.register(UNIVERSAL_BACKGROUND_RESOURCE_LOCATION, false));
+		
 	}
 
 }

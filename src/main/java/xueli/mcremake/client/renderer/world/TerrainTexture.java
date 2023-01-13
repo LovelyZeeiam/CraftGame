@@ -5,14 +5,12 @@ import org.lwjgl.utils.vector.Vector2f;
 
 import xueli.game2.resource.ResourceHolder;
 import xueli.game2.resource.ResourceLocation;
-import xueli.game2.resource.submanager.render.texture.TextureResourceLocation;
-import xueli.game2.resource.submanager.render.texture.TextureTypeLegacy;
 import xueli.game2.resource.submanager.render.texture.atlas.AtlasResourceHolder;
 import xueli.mcremake.client.CraftGameClient;
 
 public class TerrainTexture implements ResourceHolder {
 
-	public static TextureResourceLocation TERRAIN_TEXTURE_LOCATION = new TextureResourceLocation(new ResourceLocation("minecraft", "terrain.png"), new TextureTypeLegacy());
+	public static ResourceLocation TERRAIN_TEXTURE_LOCATION = new ResourceLocation("minecraft", "terrain.png");
 
 	private final CraftGameClient ctx;
 	private int textureId;
@@ -23,7 +21,7 @@ public class TerrainTexture implements ResourceHolder {
 
 	@Override
 	public void reload() {
-		textureId = ctx.textureResource.register(TERRAIN_TEXTURE_LOCATION, true);
+		textureId = ctx.textureResource.register(TERRAIN_TEXTURE_LOCATION, true).id();
 	}
 
 	public void bind() {
@@ -35,7 +33,7 @@ public class TerrainTexture implements ResourceHolder {
 	}
 
 	public AtlasResourceHolder getUVVertex(int x, int y) {
-		return new AtlasResourceHolder(new Vector2f(x / 16.0f, y / 16.0f), new Vector2f((x + 1) / 16.0f, (y + 1) / 16.0f), textureId);
+		return new AtlasResourceHolder(new Vector2f(x / 16.0f, y / 16.0f), new Vector2f((x + 1) / 16.0f, (y + 1) / 16.0f));
 	}
 
 	public int getTextureId() {
