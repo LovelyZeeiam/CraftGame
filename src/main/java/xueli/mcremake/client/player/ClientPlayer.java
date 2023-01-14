@@ -3,8 +3,6 @@ package xueli.mcremake.client.player;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.utils.vector.Vector3d;
 import org.lwjgl.utils.vector.Vector3f;
-import org.lwjgl.utils.vector.Vector3i;
-
 import xueli.game2.Vector;
 import xueli.game2.camera3d.MovableCamera;
 import xueli.game2.display.Display;
@@ -12,10 +10,8 @@ import xueli.game2.math.TriFuncMap;
 import xueli.game2.phys.aabb.AABB;
 import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.core.entity.EntityCollider;
-import xueli.mcremake.core.entity.PickResult;
 import xueli.mcremake.core.entity.VirtualKeyboard;
 import xueli.mcremake.core.world.WorldAccessible;
-import xueli.mcremake.registry.GameRegistry;
 
 public class ClientPlayer extends Vector {
 	
@@ -68,17 +64,17 @@ public class ClientPlayer extends Vector {
 
 	}
 
-	public void handleLeftButton(PickResult pickResult, int holdTime) {
-		Vector3i blockPos = pickResult.blockPos();
-		world.setBlock(blockPos.x, blockPos.y, blockPos.z, null);
-
-	}
-
-	public void handleRightButton(PickResult pickResult, int holdTime) {
-		Vector3i blockPos = pickResult.placePos();
-		world.setBlock(blockPos.x, blockPos.y, blockPos.z, GameRegistry.BLOCK_STONE);
-
-	}
+//	public void handleLeftButton(PickResult pickResult, int holdTime) {
+//		Vector3i blockPos = pickResult.blockPos();
+//		world.setBlock(blockPos.x, blockPos.y, blockPos.z, null);
+//
+//	}
+//
+//	public void handleRightButton(PickResult pickResult, int holdTime) {
+//		Vector3i blockPos = pickResult.placePos();
+//		world.setBlock(blockPos.x, blockPos.y, blockPos.z, GameRegistry.BLOCK_STONE);
+//
+//	}
 
 	private void moveTick() {
 		if(firstTick) {

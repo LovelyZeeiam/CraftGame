@@ -1,6 +1,8 @@
-package xueli.mcremake.client;
+package xueli.mcremake.client.player;
 
 import org.lwjgl.glfw.GLFW;
+
+import xueli.mcremake.client.CraftGameClient;
 
 public class AttackButtonHandler extends FunctionalKeyHandler {
 	
@@ -11,34 +13,33 @@ public class AttackButtonHandler extends FunctionalKeyHandler {
 	private int blockBreakCooldown = 0;
 	
 	@Override
-	protected boolean functionStart() {
-		return this.breakBlock();
+	protected void functionStart() {
+		this.doAttack();
 	}
 
 	@Override
-	protected boolean functionContinue() {
+	protected void functionContinue() {
 		// TODO: In creative mode, when the player is faster, its break cooldown should be faster. So is it when placing blocks.
+		// TODO: When we can aim at an entity, the block break cooldown should not be updated.
 		blockBreakCooldown += ctx.timer.getNumShouldTick();
 		if(blockBreakCooldown > 6) {
 			blockBreakCooldown = 0;
-			return this.breakBlock();
+			this.doAttack();
 		}
 		
-		return false;
 	}
 	
-	private boolean breakBlock() {
-		var pickResult = ctx.getPickResult();
-		if(pickResult == null) return false;
-		var pickBlockPos = pickResult.blockPos();
-		ctx.getWorld().setBlock(pickBlockPos.x, pickBlockPos.y, pickBlockPos.z, null);
-		return true;
+	private void doAttack() {
+		var itemListener = ctx.getCurrentItemType().listener();
+		if(itemListener != null) {
+			itemListener.onItemAttack(ctx);
+		}
 	}
 
 	@Override
-	protected boolean functionEnd() {
+	protected void functionEnd() {
 		blockBreakCooldown = 0;
-		return false;
+		
 	}
 	
 }

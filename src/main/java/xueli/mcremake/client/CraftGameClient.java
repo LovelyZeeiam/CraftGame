@@ -2,6 +2,7 @@ package xueli.mcremake.client;
 
 import java.util.UUID;
 
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL30;
 
 import xueli.game2.camera3d.MovableCamera;
@@ -13,11 +14,15 @@ import xueli.game2.input.KeyBindings;
 import xueli.game2.renderer.ui.Gui;
 import xueli.game2.resource.ResourceHolder;
 import xueli.mcremake.client.gui.universal.UniversalGui;
+import xueli.mcremake.client.player.AttackButtonHandler;
 import xueli.mcremake.client.player.ClientPlayer;
+import xueli.mcremake.client.player.UseButtonHandler;
 import xueli.mcremake.client.renderer.item.ItemRenderMaster;
 import xueli.mcremake.client.renderer.world.WorldRenderer;
+import xueli.mcremake.core.block.BlockType;
 import xueli.mcremake.core.entity.PickCollider;
 import xueli.mcremake.core.entity.PickResult;
+import xueli.mcremake.core.item.ItemType;
 import xueli.mcremake.core.world.WorldDimension;
 import xueli.mcremake.network.ServerPlayerInfo;
 import xueli.mcremake.registry.GameRegistry;
@@ -60,16 +65,19 @@ public class CraftGameClient extends GameDisplay {
 	private ItemRenderMaster itemRenderer;
 	
 	private ClientPlayer player;
+	private MovableCamera camera;
+	private boolean needAnotherPick = false;
 	private PickCollider picker;
 	private PickResult pickResult;
 	private AttackButtonHandler attackHandler = new AttackButtonHandler(this);
 	private UseButtonHandler useHandler = new UseButtonHandler(this);
-
+	
+	private ItemType currentItemType = GameRegistry.ITEM_BLOCK_DIRT;
+	
 	public CraftGameClient() {
 		super(800, 600, "Minecraft Classic Forever");
-
+		
 	}
-
 	
 	@Override
 	protected void renderInit() {
@@ -90,7 +98,13 @@ public class CraftGameClient extends GameDisplay {
 		});
 		
 		this.world = new WorldDimension(this);
-		this.bufferedWorld = new ListenableBufferedWorldAccessible(this.world, worldBus);
+		this.bufferedWorld = new ListenableBufferedWorldAccessible(this.world, worldBus) {
+			@Override
+			public void setBlock(int x, int y, int z, BlockType block) {
+				needAnotherPick = true;
+				super.setBlock(x, y, z, block);
+			}
+		};
 		this.worldRenderer = new WorldRenderer(new BlockRenderTypes(renderResources), this);
 		this.resourceManager.addResourceHolder(worldRenderer);
 		
@@ -117,28 +131,45 @@ public class CraftGameClient extends GameDisplay {
 			this.bufferedWorld.flush();
 		}
 		
-		this.renderTick();
+		this.camera = this.player.getCamera(timer.getRemainProgress());
+		this.pickResult = this.picker.pick(camera, 6.0f);
+		worldRenderer.setCamera(camera);
+		
+		this.setItemType();
+		
+		this.needAnotherPick = false;
 		while(attackHandler.tick()) {
-			this.renderTick();
+			if(needAnotherPick) {
+				this.pickResult = this.picker.pick(camera, 6.0f);
+			}
 		}
 		while(useHandler.tick()) {
-			this.renderTick();
+			if(needAnotherPick) {
+				this.pickResult = this.picker.pick(camera, 6.0f);
+			}
 		}
 		
 		worldRenderer.render();
 		
 		Gui gui = getGuiManager();
 		gui.begin(getWidth(), getHeight());
-		itemRenderer.renderUI(GameRegistry.ITEM_BLOCK_STONE, null, 0, 0, 256, 256, gui);
+		if(this.currentItemType != null) {
+			itemRenderer.renderUI(this.currentItemType, null, getWidth() - 128, 0, 128, 128, gui);
+		}
 		gui.finish();
-		
 		
 	}
 	
-	private void renderTick() {
-		MovableCamera camera = this.player.getCamera(timer.getRemainProgress());
-		this.pickResult = this.picker.pick(camera, 6.0f);
-		worldRenderer.setCamera(camera);
+	private void setItemType() {
+		if(keyBindings.isPressed(GLFW.GLFW_KEY_1)) {
+			this.currentItemType = GameRegistry.ITEM_BLOCK_DIRT;
+		}
+		if(keyBindings.isPressed(GLFW.GLFW_KEY_2)) {
+			this.currentItemType = GameRegistry.ITEM_BLOCK_GRASS;
+		}
+		if(keyBindings.isPressed(GLFW.GLFW_KEY_3)) {
+			this.currentItemType = GameRegistry.ITEM_BLOCK_STONE;
+		}
 		
 	}
 	
@@ -158,6 +189,10 @@ public class CraftGameClient extends GameDisplay {
 			worldRenderer.release();
 		}
 
+	}
+	
+	public ItemType getCurrentItemType() {
+		return currentItemType;
 	}
 	
 	public ResourceListImpl getRenderResources() {

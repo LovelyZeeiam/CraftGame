@@ -38,9 +38,9 @@ public final class GameRegistry {
 	
 	static {
 		RegistryImplement<ItemType> writable = new RegistryImplement<>();
-		ITEM_BLOCK_STONE = registerItemType(writable, new ResourceLocation("stone"), "Stone", ItemListener.NONE, new ItemRendererRegularBlock(BLOCK_STONE));
-		ITEM_BLOCK_DIRT = registerItemType(writable, new ResourceLocation("dirt"), "Dirt", ItemListener.NONE, new ItemRendererRegularBlock(BLOCK_DIRT));
-		ITEM_BLOCK_GRASS = registerItemType(writable, new ResourceLocation("grass_block"), "Grass Block", ItemListener.NONE, new ItemRendererRegularBlock(BLOCK_GRASS));
+		ITEM_BLOCK_STONE = registerItemType(writable, new ResourceLocation("stone"), "Stone", new ItemListenerGenericBlock(BLOCK_STONE), new ItemRendererRegularBlock(BLOCK_STONE));
+		ITEM_BLOCK_DIRT = registerItemType(writable, new ResourceLocation("dirt"), "Dirt", new ItemListenerGenericBlock(BLOCK_DIRT), new ItemRendererRegularBlock(BLOCK_DIRT));
+		ITEM_BLOCK_GRASS = registerItemType(writable, new ResourceLocation("grass_block"), "Grass Block", new ItemListenerGenericBlock(BLOCK_GRASS), new ItemRendererRegularBlock(BLOCK_GRASS));
 		
 		BUILTIN_ITEM_REGISTRY = writable.freeze();
 	}

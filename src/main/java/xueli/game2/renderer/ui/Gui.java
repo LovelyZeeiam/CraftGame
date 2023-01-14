@@ -27,7 +27,6 @@ public class Gui implements LifeCycle, ResourceHolder {
 
 	@Override
 	public void init() {
-
 	}
 	
 	@Override
