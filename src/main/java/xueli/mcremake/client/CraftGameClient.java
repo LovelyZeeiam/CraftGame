@@ -21,6 +21,7 @@ import xueli.mcremake.core.world.WorldDimension;
 import xueli.mcremake.network.ServerPlayerInfo;
 import xueli.mcremake.registry.GameRegistry;
 import xueli.mcremake.registry.ItemRenderTypes;
+import xueli.mcremake.registry.BlockIconGenerator;
 import xueli.mcremake.registry.BlockRenderTypes;
 import xueli.mcremake.registry.TerrainTextureAtlas;
 import xueli.utils.events.EventBus;
@@ -77,6 +78,7 @@ public class CraftGameClient extends GameDisplay {
 		GameRegistry.callForClazzLoad();
 		
 		this.renderResources.add(new TerrainTextureAtlas(this));
+		this.renderResources.add(new BlockIconGenerator(this));
 		
 		this.resourceManager.addResourceHolder(() -> {
 			this.renderResources.values().forEach(o -> {
@@ -101,9 +103,6 @@ public class CraftGameClient extends GameDisplay {
 		this.player.y = 16;
 		this.player.z = 0;
 		this.picker = new PickCollider(this.bufferedWorld);
-
-		GL30.glEnable(GL30.GL_DEPTH_TEST);
-		GL30.glEnable(GL30.GL_CULL_FACE);
 
 	}
 
@@ -148,7 +147,9 @@ public class CraftGameClient extends GameDisplay {
 
 	@Override
 	protected void renderRelease() {
-		worldRenderer.release();
+		if(this.worldRenderer != null) {
+			worldRenderer.release();
+		}
 
 	}
 	

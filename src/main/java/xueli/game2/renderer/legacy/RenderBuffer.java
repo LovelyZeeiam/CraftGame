@@ -12,6 +12,8 @@ public interface RenderBuffer {
 
 	public void render();
 	
+	public void clear();
+	
 	public void release();
 
 }

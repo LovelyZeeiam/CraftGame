@@ -9,7 +9,6 @@ public class BlockRenderTypes extends ResourceListGeneric<ChunkRenderType> {
 	
 	public BlockRenderTypes(ResourceListImpl renderResources) {
 		this.add(new RenderTypeSolid(renderResources));
-		
 	}
 	
 }

@@ -2,6 +2,7 @@ package xueli.game.utils.math;
 
 import java.math.BigDecimal;
 
+@Deprecated
 public class MathUtils {
 
 	public static float doubleToFloat(double value) {

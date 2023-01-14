@@ -16,6 +16,7 @@ import xueli.game2.resource.provider.ResourceProvider;
 import xueli.game2.resource.submanager.render.shader.ShaderRenderResource;
 import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
 import xueli.game2.resource.submanager.render.texture.atlas.AtlasTextureRenderResource;
+import xueli.game2.worker.GameWorker;
 import xueli.utils.exception.CrashReport;
 import xueli.utils.logger.Logger;
 
@@ -24,8 +25,8 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 	private static final Logger LOGGER = new Logger();
 	
 	protected Display display;
-//	private final MouseButtonStorage mouseButtonStorage = new MouseButtonStorage();
-
+	public final GameWorker worker = new GameWorker();
+	
 	public final Timer timer = new Timer();
 	public final FPSCalculator fps = new FPSCalculator();
 
@@ -35,7 +36,6 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 	public final TextureRenderResource textureResource;
 	public final AtlasTextureRenderResource atlasTextureResource;
 	public final ShaderRenderResource shaderResource;
-//	public final FontRenderResource fontResource;
 	
 	public final OverlayManager overlayManager;
 
@@ -102,9 +102,10 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 
 		this.display.update();
 		
-		
 		this.checkGLError("Post-Render");
-
+		
+		worker.tickMainThread();
+		
 	}
 
 	@Override
@@ -149,8 +150,7 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 
 	public void announceCrash(String state, Throwable t) {
 		this.shouldCrash = true;
-		new CrashReport(state, t).showCrashReport();
-
+		new CrashReport(state, t).showCrashReport();	
 	}
 
 	public void checkGLError(String state) {

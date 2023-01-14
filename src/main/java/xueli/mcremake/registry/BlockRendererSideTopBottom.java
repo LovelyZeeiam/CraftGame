@@ -31,7 +31,7 @@ public class BlockRendererSideTopBottom implements BlockVertexGatherer {
 		BackRenderBuffer buffer = manager.getRenderBuffer(RenderTypeSolid.class);
 		TerrainTextureAtlas texture = manager.getRenderType(RenderTypeSolid.class).getTexture();
 		
-		if(world.getBlock(x, y - 1, z) == null) {
+		if(world == null || world.getBlock(x, y - 1, z) == null) {
 			AtlasResourceHolder uvVertex = texture.getUVVertex(this.bottomX, this.bottomY);
 			buffer.applyToBuffer(0, new Vector3f(x, y, z), new Vector3f(x + 1, y, z), new Vector3f(x, y, z + 1));
 			buffer.applyToBuffer(1, uvVertex.leftBottom(), uvVertex.rightBottom(), uvVertex.leftTop());
@@ -44,7 +44,7 @@ public class BlockRendererSideTopBottom implements BlockVertexGatherer {
 
 		}
 
-		if(world.getBlock(x, y + 1, z) == null) {
+		if(world == null || world.getBlock(x, y + 1, z) == null) {
 			AtlasResourceHolder uvVertex = texture.getUVVertex(this.topX, this.topY);
 			buffer.applyToBuffer(0, new Vector3f(x + 1, y + 1, z), new Vector3f(x, y + 1, z), new Vector3f(x, y + 1, z + 1));
 			buffer.applyToBuffer(1, uvVertex.rightBottom(), uvVertex.leftBottom(), uvVertex.leftTop());
@@ -56,7 +56,7 @@ public class BlockRendererSideTopBottom implements BlockVertexGatherer {
 
 		}
 
-		if(world.getBlock(x - 1, y, z) == null) {
+		if(world == null || world.getBlock(x - 1, y, z) == null) {
 			AtlasResourceHolder uvVertex = texture.getUVVertex(this.sideX, this.sideY);
 			buffer.applyToBuffer(0, new Vector3f(x, y, z), new Vector3f(x, y, z + 1), new Vector3f(x, y + 1, z));
 			buffer.applyToBuffer(1, uvVertex.leftBottom(), uvVertex.rightBottom(), uvVertex.leftTop());
@@ -68,7 +68,7 @@ public class BlockRendererSideTopBottom implements BlockVertexGatherer {
 
 		}
 
-		if(world.getBlock(x + 1, y, z) == null) {
+		if(world == null || world.getBlock(x + 1, y, z) == null) {
 			AtlasResourceHolder uvVertex = texture.getUVVertex(this.sideX, this.sideY);
 			buffer.applyToBuffer(0, new Vector3f(x + 1, y, z), new Vector3f(x + 1, y + 1, z), new Vector3f(x + 1, y, z + 1));
 			buffer.applyToBuffer(1, uvVertex.rightBottom(), uvVertex.rightTop(), uvVertex.leftBottom());
@@ -80,7 +80,7 @@ public class BlockRendererSideTopBottom implements BlockVertexGatherer {
 
 		}
 
-		if(world.getBlock(x, y, z - 1) == null) {
+		if(world == null || world.getBlock(x, y, z - 1) == null) {
 			AtlasResourceHolder uvVertex = texture.getUVVertex(this.sideX, this.sideY);
 			buffer.applyToBuffer(0, new Vector3f(x, y, z), new Vector3f(x, y + 1, z), new Vector3f(x + 1, y, z));
 			buffer.applyToBuffer(1, uvVertex.rightBottom(), uvVertex.rightTop(), uvVertex.leftBottom());
@@ -92,7 +92,7 @@ public class BlockRendererSideTopBottom implements BlockVertexGatherer {
 
 		}
 
-		if(world.getBlock(x, y, z + 1) == null) {
+		if(world == null || world.getBlock(x, y, z + 1) == null) {
 			AtlasResourceHolder uvVertex = texture.getUVVertex(this.sideX, this.sideY);
 			buffer.applyToBuffer(0, new Vector3f(x, y, z + 1), new Vector3f(x + 1, y, z + 1), new Vector3f(x, y + 1, z + 1));
 			buffer.applyToBuffer(1, uvVertex.leftBottom(), uvVertex.rightBottom(), uvVertex.leftTop());

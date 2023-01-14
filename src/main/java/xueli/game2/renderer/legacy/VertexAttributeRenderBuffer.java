@@ -29,6 +29,11 @@ public class VertexAttributeRenderBuffer implements RenderBuffer {
 	public void setVertexCount(int count) {
 		this.vertCount = count;
 	}
+	
+	@Override
+	public void clear() {
+		this.vertCount = 0;
+	}
 
 //	private final BufferPool pool = new BufferPool(3, 2);
 

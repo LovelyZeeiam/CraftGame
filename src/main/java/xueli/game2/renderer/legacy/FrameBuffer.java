@@ -34,7 +34,6 @@ import static org.lwjgl.opengl.GL30.glGenFramebuffers;
 import static org.lwjgl.opengl.GL30.glGenRenderbuffers;
 import static org.lwjgl.opengl.GL30.glRenderbufferStorage;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +44,7 @@ public class FrameBuffer {
 
 	protected int width, height;
 
-	protected int fbo, tbo_image, rbo;
+	protected int fbo, textureId, rbo;
 
 	public FrameBuffer(int width, int height) {
 		this.width = width;
@@ -58,8 +57,8 @@ public class FrameBuffer {
 	protected void create() {
 		this.fbo = glGenFramebuffers();
 
-		this.tbo_image = glGenTextures();
-		glBindTexture(GL_TEXTURE_2D, tbo_image);
+		this.textureId = glGenTextures();
+		glBindTexture(GL_TEXTURE_2D, textureId);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -71,7 +70,7 @@ public class FrameBuffer {
 		glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tbo_image, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureId, 0);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
 
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
@@ -103,20 +102,20 @@ public class FrameBuffer {
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
 		image.setRGB(0, 0, width, height, data, 0, width);
 
-		BufferedImage newImage = new BufferedImage(width, height, image.getType());
-		Graphics2D g = newImage.createGraphics();
-		g.rotate(Math.toRadians(180), width / 2, height / 2);
-		g.drawImage(image, null, 0, 0);
+//		BufferedImage newImage = new BufferedImage(width, height, image.getType());
+//		Graphics2D g = newImage.createGraphics();
+//		g.rotate(Math.toRadians(0), width / 2, height / 2);
+//		g.drawImage(image, null, 0, 0);
 
 		try {
-			ImageIO.write(newImage, "png", new File(path));
+			ImageIO.write(image, "png", new File(path));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	public void use() {
+	public void bind() {
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 		glViewport(0, 0, width, height);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -137,7 +136,7 @@ public class FrameBuffer {
 	}
 
 	public void delete() {
-		glDeleteTextures(tbo_image);
+		glDeleteTextures(textureId);
 		glDeleteFramebuffers(fbo);
 		glDeleteRenderbuffers(rbo);
 
@@ -152,7 +151,7 @@ public class FrameBuffer {
 	}
 
 	public int getTbo_image() {
-		return tbo_image;
+		return textureId;
 	}
 
 	public int getFbo() {

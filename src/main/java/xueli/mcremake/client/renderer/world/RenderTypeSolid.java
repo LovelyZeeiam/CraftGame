@@ -1,5 +1,6 @@
 package xueli.mcremake.client.renderer.world;
 
+import org.lwjgl.opengl.GL30;
 import org.lwjgl.utils.vector.Matrix4f;
 
 import xueli.game2.ecs.ResourceListImpl;
@@ -61,12 +62,16 @@ void main(){
 
 	@Override
 	public void render() {
+		GL30.glEnable(GL30.GL_DEPTH_TEST);
+		GL30.glEnable(GL30.GL_CULL_FACE);
 		this.shader.bind();
 		texture.bind();
 		super.render();
 		texture.unbind();
 		this.shader.unbind();
-
+		GL30.glDisable(GL30.GL_DEPTH_TEST);
+		GL30.glDisable(GL30.GL_CULL_FACE);
+		
 	}
 
 	@Override

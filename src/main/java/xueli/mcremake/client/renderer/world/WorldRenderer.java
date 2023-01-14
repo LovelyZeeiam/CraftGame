@@ -9,6 +9,8 @@ import xueli.game2.camera3d.BoundCamera;
 import xueli.game2.camera3d.ICamera;
 import xueli.game2.display.Display;
 import xueli.game2.ecs.ResourceListGeneric;
+import xueli.game2.math.MatrixHelper;
+import xueli.game2.renderer.legacy.RenderBuffer;
 import xueli.game2.resource.ResourceHolder;
 import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.client.WorldEvents;
@@ -81,6 +83,11 @@ public class WorldRenderer implements ResourceHolder {
 		Vector2i v;
 		v = chunkRebuiltList.poll();
 		if(v != null) {
+			for (ChunkRenderType type : renderTypes.values()) {
+				RenderBuffer buf = type.getRenderBuffer(v);
+				buf.clear();
+			}
+			
 			Chunk chunk = world.getChunk(v.x, v.y);
 			if(chunk != null) {
 				ChunkRenderBuildManager manager = new ChunkRenderBuildManager(v) {
@@ -109,10 +116,9 @@ public class WorldRenderer implements ResourceHolder {
 		Display display = ctx.getDisplay();
 
 		this.viewMatrix = camera.getCameraMatrix();
-		this.projMatrix = getPerspectiveMatrix(display.getWidth(), display.getHeight(), 110.0f, 0.01f, 999999.9f);
+		this.projMatrix = MatrixHelper.perspective(display.getWidth(), display.getHeight(), 110.0f, 0.01f, 999999.9f);
 
-		for (Object obj : renderTypes.values()) {
-			ChunkRenderType type = (ChunkRenderType) obj;
+		for (ChunkRenderType type : renderTypes.values()) {
 			type.applyMatrix("viewMatrix", viewMatrix);
 			type.applyMatrix("projMatrix", projMatrix);
 			type.render();
@@ -125,25 +131,6 @@ public class WorldRenderer implements ResourceHolder {
 			((ChunkRenderType) type).release();
 		}
 
-	}
-
-	private Matrix4f getPerspectiveMatrix(float width, float height, float fov, float near, float far) {
-		Matrix4f projectionMatrix = new Matrix4f();
-
-		float ratio = width / height;
-		float y_scale = (float) ((1f / Math.tan(Math.toRadians(fov / 2F))) * ratio);
-		float x_scale = y_scale / ratio;
-		float frustum_length = far - near;
-
-		projectionMatrix.setIdentity();
-		projectionMatrix.m00 = x_scale;
-		projectionMatrix.m11 = y_scale;
-		projectionMatrix.m22 = -(far + near) / frustum_length;
-		projectionMatrix.m23 = -1;
-		projectionMatrix.m32 = -((2 * far * near) / frustum_length);
-		projectionMatrix.m33 = 0;
-
-		return projectionMatrix;
 	}
 
 	public Matrix4f getViewMatrix() {

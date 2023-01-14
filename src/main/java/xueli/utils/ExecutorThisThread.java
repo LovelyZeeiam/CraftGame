@@ -5,7 +5,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
 
-@Deprecated
 public class ExecutorThisThread {
 
 	private ConcurrentLinkedQueue<Runnable> runnables = new ConcurrentLinkedQueue<>();
@@ -13,6 +12,7 @@ public class ExecutorThisThread {
 	public ExecutorThisThread() {
 	}
 
+	@Deprecated
 	public Callable<Object> execute(Runnable command) {
 		// Block the thread when "get" the result from another thread
 		LinkedBlockingDeque<Object> blockingDeque = new LinkedBlockingDeque<>();
@@ -24,6 +24,7 @@ public class ExecutorThisThread {
 		return callable;
 	}
 
+	@Deprecated
 	public <T> Callable<T> execute(Callable<T> callable) {
 		LinkedBlockingDeque<T> blockingDeque = new LinkedBlockingDeque<>();
 		Callable<T> newCallable = () -> blockingDeque.poll(Long.MAX_VALUE, TimeUnit.DAYS);
