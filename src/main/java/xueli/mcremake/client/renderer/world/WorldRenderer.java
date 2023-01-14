@@ -33,9 +33,9 @@ public class WorldRenderer implements ResourceHolder {
 		this.ctx = ctx;
 		this.world = ctx.getUnsafeImmediateWorld();
 
-		ctx.WorldEventBus.register(WorldEvents.NewChunkEvent.class, this::onCreateNewChunk);
-		ctx.WorldEventBus.register(WorldEvents.ModifyBlockEvent.class, this::onModifyBlock);
-		ctx.WorldEventBus.register(WorldEvents.UnloadChunkEvent.class, this::onRemoveChunk);
+		ctx.worldBus.register(WorldEvents.NewChunkEvent.class, this::onCreateNewChunk);
+		ctx.worldBus.register(WorldEvents.ModifyBlockEvent.class, this::onModifyBlock);
+		ctx.worldBus.register(WorldEvents.UnloadChunkEvent.class, this::onRemoveChunk);
 
 		this.renderTypes = renderTypes;
 

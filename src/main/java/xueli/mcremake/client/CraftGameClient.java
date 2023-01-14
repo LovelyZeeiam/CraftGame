@@ -22,7 +22,7 @@ import xueli.mcremake.network.ServerPlayerInfo;
 import xueli.mcremake.registry.GameRegistry;
 import xueli.mcremake.registry.ItemRenderTypes;
 import xueli.mcremake.registry.BlockRenderTypes;
-import xueli.mcremake.registry.TerrainTexture;
+import xueli.mcremake.registry.TerrainTextureAtlas;
 import xueli.utils.events.EventBus;
 
 // TODO: Combine different overlay with different listener because they are "one to one".
@@ -46,7 +46,7 @@ public class CraftGameClient extends GameDisplay {
 	
 	private UniversalGui universalGui;
 
-	public final EventBus WorldEventBus = new EventBus();
+	public final EventBus worldBus = new EventBus();
 //	public final EventBus GuiEventBus = new EventBus();
 
 	private final ResourceListImpl renderResources = new ResourceListImpl();
@@ -76,7 +76,7 @@ public class CraftGameClient extends GameDisplay {
 
 		GameRegistry.callForClazzLoad();
 		
-		this.renderResources.add(new TerrainTexture(this));
+		this.renderResources.add(new TerrainTextureAtlas(this));
 		
 		this.resourceManager.addResourceHolder(() -> {
 			this.renderResources.values().forEach(o -> {
@@ -87,7 +87,7 @@ public class CraftGameClient extends GameDisplay {
 		});
 		
 		this.world = new WorldDimension(this);
-		this.bufferedWorld = new ListenableBufferedWorldAccessible(this.world, WorldEventBus);
+		this.bufferedWorld = new ListenableBufferedWorldAccessible(this.world, worldBus);
 		this.worldRenderer = new WorldRenderer(new BlockRenderTypes(renderResources), this);
 		this.resourceManager.addResourceHolder(worldRenderer);
 		

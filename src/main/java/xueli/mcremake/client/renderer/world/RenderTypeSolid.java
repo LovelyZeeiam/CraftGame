@@ -4,7 +4,7 @@ import org.lwjgl.utils.vector.Matrix4f;
 
 import xueli.game2.ecs.ResourceListImpl;
 import xueli.game2.resource.submanager.render.shader.Shader;
-import xueli.mcremake.registry.TerrainTexture;
+import xueli.mcremake.registry.TerrainTextureAtlas;
 
 public class RenderTypeSolid extends ChunkRenderType {
 
@@ -51,11 +51,11 @@ void main(){
 """;
 
 	private final Shader shader;
-	private final TerrainTexture texture;
+	private final TerrainTextureAtlas texture;
 
 	public RenderTypeSolid(ResourceListImpl renderResource) {
 		this.shader = Shader.compile(VERT_SHADER_CODE, FRAG_SHADER_CODE);
-		this.texture = renderResource.get(TerrainTexture.class);
+		this.texture = renderResource.get(TerrainTextureAtlas.class);
 
 	}
 
@@ -87,7 +87,7 @@ void main(){
 
 	}
 	
-	public TerrainTexture getTexture() {
+	public TerrainTextureAtlas getTexture() {
 		return texture;
 	}
 	

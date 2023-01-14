@@ -13,25 +13,28 @@ import xueli.mcremake.core.item.ItemListener;
 import xueli.mcremake.core.item.ItemType;
 
 public final class GameRegistry {
-
-	public static Registry<BlockType> BUILTIN_BLOCK_REGISTRY;
-	public static BlockType BLOCK_STONE;
-	public static BlockType BLOCK_DIRT;
-	public static BlockType BLOCK_GRASS;
+	
+	// Include this tag to make block item use default renderer
+	public static final ResourceLocation TAG_GENERIC_BLOCK = new ResourceLocation("generic_blocks");
+	
+	public static final Registry<BlockType> BUILTIN_BLOCK_REGISTRY;
+	public static final BlockType BLOCK_STONE;
+	public static final BlockType BLOCK_DIRT;
+	public static final BlockType BLOCK_GRASS;
 	
 	static {
 		RegistryImplement<BlockType> writable = new RegistryImplement<>();
-		BLOCK_STONE = registerBlockType(writable, new ResourceLocation("stone"), "Stone", BlockListener.NONE, new BlockRendererSolid(1, 0), new BlockCollidableSolid());
-		BLOCK_DIRT = registerBlockType(writable, new ResourceLocation("dirt"), "dirt", BlockListener.NONE, new BlockRendererSolid(2, 0), new BlockCollidableSolid());
-		BLOCK_GRASS = registerBlockType(writable, new ResourceLocation("grass_block"), "Grass Block", BlockListener.NONE, new BlockRendererSideTopBottom(3, 0, 1, 7, 2, 0), new BlockCollidableSolid());
+		BLOCK_STONE = registerBlockType(writable, new ResourceLocation("stone"), "Stone", BlockListener.NONE, new BlockRendererSolid(1, 0), new BlockCollidableSolid(), TAG_GENERIC_BLOCK);
+		BLOCK_DIRT = registerBlockType(writable, new ResourceLocation("dirt"), "dirt", BlockListener.NONE, new BlockRendererSolid(2, 0), new BlockCollidableSolid(), TAG_GENERIC_BLOCK);
+		BLOCK_GRASS = registerBlockType(writable, new ResourceLocation("grass_block"), "Grass Block", BlockListener.NONE, new BlockRendererSideTopBottom(3, 0, 1, 7, 2, 0), new BlockCollidableSolid(), TAG_GENERIC_BLOCK);
 		
 		BUILTIN_BLOCK_REGISTRY = writable.freeze();
 	}
 	
-	public static Registry<ItemType> BUILTIN_ITEM_REGISTRY;
-	public static ItemType ITEM_BLOCK_STONE;
-	public static ItemType ITEM_BLOCK_DIRT;
-	public static ItemType ITEM_BLOCK_GRASS;
+	public static final Registry<ItemType> BUILTIN_ITEM_REGISTRY;
+	public static final ItemType ITEM_BLOCK_STONE;
+	public static final ItemType ITEM_BLOCK_DIRT;
+	public static final ItemType ITEM_BLOCK_GRASS;
 	
 	static {
 		RegistryImplement<ItemType> writable = new RegistryImplement<>();
@@ -42,15 +45,19 @@ public final class GameRegistry {
 		BUILTIN_ITEM_REGISTRY = writable.freeze();
 	}
 	
-	private static BlockType registerBlockType(WritableRegistry<BlockType> registry, ResourceLocation identify, String name, BlockListener blockListener, BlockVertexGatherer renderer, BlockCollidable collidable) {
+	private static BlockType registerBlockType(WritableRegistry<BlockType> registry, ResourceLocation identify, String name, BlockListener blockListener, BlockVertexGatherer renderer, BlockCollidable collidable, ResourceLocation... tags) {
 		BlockType type = new BlockType(identify, name, blockListener, renderer, collidable);
 		registry.register(identify, type);
+		registry.addTag(identify, tags);
 		return type;
 	}
 	
-	private static ItemType registerItemType(WritableRegistry<ItemType> registry, ResourceLocation namespace, String name, ItemListener listener, ItemVertexGatherer renderer) {
-		ItemType type = new ItemType(namespace, name, listener, renderer);
-		registry.register(namespace, type);
+//	private static ItemType registerItemFromBlock(WritableRegistry<ItemType> registry, BlockType)
+	
+	private static ItemType registerItemType(WritableRegistry<ItemType> registry, ResourceLocation identify, String name, ItemListener listener, ItemVertexGatherer renderer, ResourceLocation... tags) {
+		ItemType type = new ItemType(identify, name, listener, renderer);
+		registry.register(identify, type);
+		registry.addTag(identify, tags);
 		return type;
 	}
 

@@ -23,7 +23,7 @@ public class BlockRendererSolid implements BlockVertexGatherer {
 	@Override
 	public void render(int x, int y, int z, CompoundMap tag, WorldAccessible world, ChunkRenderBuildManager manager) {
 		BackRenderBuffer buffer = manager.getRenderBuffer(RenderTypeSolid.class);
-		TerrainTexture texture = manager.getRenderType(RenderTypeSolid.class).getTexture();
+		TerrainTextureAtlas texture = manager.getRenderType(RenderTypeSolid.class).getTexture();
 		AtlasResourceHolder uvVertex = texture.getUVVertex(this.x, this.y);
 
 		if(world.getBlock(x, y - 1, z) == null) {

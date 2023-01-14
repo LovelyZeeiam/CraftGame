@@ -8,14 +8,14 @@ import xueli.game2.resource.ResourceLocation;
 import xueli.game2.resource.submanager.render.texture.atlas.AtlasResourceHolder;
 import xueli.mcremake.client.CraftGameClient;
 
-public class TerrainTexture implements ResourceHolder {
+public class TerrainTextureAtlas implements ResourceHolder {
 
 	public static ResourceLocation TERRAIN_TEXTURE_LOCATION = new ResourceLocation("minecraft", "terrain.png");
 
 	private final CraftGameClient ctx;
 	private int textureId;
 
-	public TerrainTexture(CraftGameClient ctx) {
+	public TerrainTextureAtlas(CraftGameClient ctx) {
 		this.ctx = ctx;
 	}
 

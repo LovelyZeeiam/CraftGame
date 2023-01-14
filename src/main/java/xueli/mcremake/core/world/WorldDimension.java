@@ -39,7 +39,7 @@ public class WorldDimension implements WorldAccessible {
 						}
 					}
 				chunkMap.put(new Vector2i(i, j), chunk);
-				ctx.WorldEventBus.post(new WorldEvents.NewChunkEvent(i, j));
+				ctx.worldBus.post(new WorldEvents.NewChunkEvent(i, j));
 			}
 		}
 
