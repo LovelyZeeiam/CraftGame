@@ -10,6 +10,7 @@ import xueli.game2.ecs.ResourceListImpl;
 import xueli.game2.input.DefaultKeyListener;
 import xueli.game2.input.DefaultMouseListener;
 import xueli.game2.input.KeyBindings;
+import xueli.game2.renderer.ui.Gui;
 import xueli.game2.resource.ResourceHolder;
 import xueli.mcremake.client.gui.universal.UniversalGui;
 import xueli.mcremake.client.player.ClientPlayer;
@@ -125,7 +126,13 @@ public class CraftGameClient extends GameDisplay {
 		}
 		
 		worldRenderer.render();
-
+		
+		Gui gui = getGuiManager();
+		gui.begin(getWidth(), getHeight());
+		itemRenderer.renderUI(GameRegistry.ITEM_BLOCK_STONE, null, 0, 0, 256, 256, gui);
+		gui.finish();
+		
+		
 	}
 	
 	private void renderTick() {

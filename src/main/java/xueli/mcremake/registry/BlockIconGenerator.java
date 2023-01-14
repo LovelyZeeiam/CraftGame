@@ -1,7 +1,7 @@
 package xueli.mcremake.registry;
 
 import java.util.HashMap;
-
+import java.util.function.BiConsumer;
 import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector2i;
 import org.lwjgl.utils.vector.Vector3f;
@@ -10,6 +10,7 @@ import xueli.game2.math.MatrixHelper;
 import xueli.game2.renderer.legacy.FrameBuffer;
 import xueli.game2.resource.ResourceHolder;
 import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.submanager.render.texture.Texture;
 import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.client.renderer.world.ChunkRenderBuildManager;
 import xueli.mcremake.client.renderer.world.ChunkRenderType;
@@ -36,7 +37,7 @@ public class BlockIconGenerator implements ResourceHolder {
 		this.ctx = ctx;
 		
 	}
-
+	
 	@Override
 	public void reload() {
 		this.clear();
@@ -78,8 +79,19 @@ public class BlockIconGenerator implements ResourceHolder {
 			frameBuffer.unbind();
 //			frameBuffer.save("./" + name.location() + ".png");
 			
+			icons.put(name, frameBuffer);
+			
 		});
 		
+	}
+	
+	public Texture getTextureId(ResourceLocation loc) {
+		FrameBuffer frame;
+		return (frame = icons.get(loc)) == null ? null : new Texture(frame.getTextureId(), FRAME_BUFFER_SIZE, FRAME_BUFFER_SIZE);
+	}
+	
+	public void ForEach(BiConsumer<ResourceLocation, Texture> c) {
+		icons.forEach((n, f) -> c.accept(n, new Texture(f.getTextureId(), FRAME_BUFFER_SIZE, FRAME_BUFFER_SIZE)));
 	}
 	
 }

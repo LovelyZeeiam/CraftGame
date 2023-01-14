@@ -150,7 +150,7 @@ public class FrameBuffer {
 		return height;
 	}
 
-	public int getTbo_image() {
+	public int getTextureId() {
 		return textureId;
 	}
 
