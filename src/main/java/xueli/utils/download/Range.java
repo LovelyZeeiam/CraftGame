@@ -5,7 +5,7 @@ package xueli.utils.download;
  * range is closed at the both sides, enabling it to apply to the HTTP request directly but supposed to
  * be processed when it comes to file seek like <code>RandomAccessFile</code>.
  */
-class Range {
+public class Range {
 
 	private final long from, to;
 
