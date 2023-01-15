@@ -18,7 +18,14 @@ public class AnimationManager {
 		return inst;
 	}
 	
-	public void tick(long time) {
+	public void tick() {
+		var iter = animationInstances.iterator();
+		while(iter.hasNext()) {
+			AnimationInstanceImpl inst = iter.next();
+			if(!inst.tick(timeProvider.get())) {
+				iter.remove();
+			}
+		}
 		
 	}
 	

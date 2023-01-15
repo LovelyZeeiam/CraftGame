@@ -14,10 +14,12 @@ import xueli.game2.resource.ResourceLocation;
 
 public class ClockMain extends GameDisplay {
 
-	private static final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-	private static final DateFormat dateFormat = new SimpleDateFormat("MM-dd");
+	public static final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+	public static final DateFormat dateFormat = new SimpleDateFormat("MM-dd");
 
 	private static final String USER_NAME = "LoveliZeeiam";
+	
+//	private final AnimationManager animManager;
 	
 	private final ResourceLocation fontLocation = new ResourceLocation("clock", "fonts/CascadiaCode.ttf"); 
 	private final ResourceLocation iconLocation = new ResourceLocation("clock", "images/icon.jpg");
@@ -25,6 +27,8 @@ public class ClockMain extends GameDisplay {
 
 	public ClockMain() {
 		super(800, 600, "Li.Clock");
+//		this.animManager = new AnimationManager(System::currentTimeMillis);
+		
 	}
 
 	@Override
@@ -46,7 +50,6 @@ public class ClockMain extends GameDisplay {
 				} catch (IOException e) {
 					announceCrash("Reload", e);
 				}
-				
 				
 			}
 

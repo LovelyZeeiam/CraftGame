@@ -95,8 +95,8 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 			this.overlayManager.tick();
 		} else {
 			getDisplay().setMouseGrabbed(true);
-			this.render();
 		}
+		this.render();
 
 		this.gui.tick();
 
