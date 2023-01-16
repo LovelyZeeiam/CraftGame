@@ -1,4 +1,4 @@
-package xueli.game2.animation;
+package xueli.animation;
 
 /**
  * All the internal curves. Actually this is a clone of "https://easings.net/",

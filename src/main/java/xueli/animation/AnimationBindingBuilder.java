@@ -1,4 +1,4 @@
-package xueli.game2.animation;
+package xueli.animation;
 
 import java.util.ArrayList;
 
@@ -28,10 +28,6 @@ public class AnimationBindingBuilder {
 		if(bindings.isEmpty()) return AnimationBinding.EMPTY;
 		
 		double allCount = lastPointTime;
-//		for(int i = 0; i < separatePoints.size(); i++) {
-//			separatePoints.set(i, separatePoints.get(i) / allCount);
-//		}
-//		separatePoints.add(1.0);
 		
 		return new AnimationBinding() {
 			AnimationBinding current;
@@ -48,6 +44,8 @@ public class AnimationBindingBuilder {
 				currentAnimIndex = 0;
 				refreshAnim();
 				lastTimeProgress = 0;
+				
+				current.animStart();
 				
 			}
 			

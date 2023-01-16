@@ -82,6 +82,8 @@ dependencies {
     implementation 'com.flowpowered:flow-nbt:1.0.0'
 
     implementation 'io.netty:netty-all:4.1.82.Final'
+    
+    implementation 'com.formdev:flatlaf:1.5'
 	
 	
 

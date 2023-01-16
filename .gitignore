@@ -8,8 +8,11 @@ bin
 
 # Ignore working directory and debug output
 output
-.craftgame
 log
 
 .idea
 .settings
+
+# Ignore my temporary directory and game working directory
+.craftgame
+EasingsAnim

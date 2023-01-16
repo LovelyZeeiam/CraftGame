@@ -1,4 +1,4 @@
-package xueli.game2.animation;
+package xueli.animation;
 
 public interface Curve {
 	

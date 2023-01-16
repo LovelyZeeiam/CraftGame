@@ -9,6 +9,8 @@ public abstract class CraftGameOverlay implements Overlay {
 
 	private final CraftGameClient ctx;
 	private final UniversalGui universalGui;
+	
+	private Gui gui;
 
 	public CraftGameOverlay(CraftGameClient ctx) {
 		this.ctx = ctx;
@@ -16,17 +18,27 @@ public abstract class CraftGameOverlay implements Overlay {
 
 	}
 
-	protected void drawUniversalBackground(Gui gui, int x, int y, int width, int height) {
+	protected void drawUniversalBackground(int x, int y, int width, int height) {
 		universalGui.drawUniversalBackground2(gui, x, y, width, height);
+	}
+	
+	@Override
+	public void init(Gui gui) {
+		this.gui = gui;
+		
 	}
 
 	@Override
-	public void render(Gui gui) {
-		universalGui.tick();
+	public void render() {
+		
 	}
 
 	public CraftGameClient getContext() {
 		return ctx;
+	}
+
+	public Gui getGui() {
+		return gui;
 	}
 
 }

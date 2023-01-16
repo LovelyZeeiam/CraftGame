@@ -1,4 +1,4 @@
-package xueli.game2.animation;
+package xueli.animation;
 
 public interface AnimationInstance {
 	
@@ -7,6 +7,8 @@ public interface AnimationInstance {
 	public void stop(long jumpTime);
 	
 	public double getProgress();
+	
+	public long getDuration();
 	
 	public void addAnimationEndListener(AnimationEndListener listener);
 	

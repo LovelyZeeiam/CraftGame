@@ -1,4 +1,4 @@
-package xueli.game2.animation;
+package xueli.animation;
 
 import java.util.ArrayList;
 
@@ -6,17 +6,20 @@ class AnimationInstanceImpl implements AnimationInstance {
 	
 	private final AnimationBinding binding;
 	private final long startTime, duration, endTime;
+	private final boolean reverse;
 	
 	private double progress = 0.0;
 	private AnimationStage stage = AnimationStage.PLAYING;
 	
 	private final ArrayList<AnimationEndListener> endListeners = new ArrayList<>();
 	
-	AnimationInstanceImpl(AnimationBinding binding, long startTime, long duration) {
+	AnimationInstanceImpl(AnimationBinding binding, long startTime, long duration, boolean reverse) {
 		this.binding = binding;
 		this.startTime = startTime;
 		this.duration = duration;
 		this.endTime = this.startTime + this.duration;
+		
+		this.reverse = reverse;
 		
 		this.binding.animStart();
 		this.progress = 0.0;
@@ -40,7 +43,10 @@ class AnimationInstanceImpl implements AnimationInstance {
 		switch (this.stage) {
 		case PLAYING -> {
 			this.progress = (double) (currentTime - startTime) / duration;
-			this.binding.animProgress(progress);
+			if(reverse)
+				this.binding.animProgress(1 - progress);
+			else
+				this.binding.animProgress(progress);
 		}
 		case PAUSE -> {}
 		case STOP -> {
@@ -70,6 +76,11 @@ class AnimationInstanceImpl implements AnimationInstance {
 	@Override
 	public double getProgress() {
 		return this.progress;
+	}
+	
+	@Override
+	public long getDuration() {
+		return this.duration;
 	}
 	
 	@Override

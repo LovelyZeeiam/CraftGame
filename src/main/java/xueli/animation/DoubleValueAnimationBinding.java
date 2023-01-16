@@ -1,4 +1,4 @@
-package xueli.game2.animation;
+package xueli.animation;
 
 import java.util.function.Supplier;
 
@@ -28,7 +28,7 @@ public abstract class DoubleValueAnimationBinding extends CurveAnimationBinding 
 	
 	@Override
 	protected void animRealProgress(double progress) {
-		this.animProgress(realStartValue + this.realDurationValue * progress);
+		this.progress(realStartValue + this.realDurationValue * progress);
 	}
 	
 	@Override
