@@ -13,6 +13,8 @@ import xueli.animation.AnimationBindingBuilder;
 import xueli.animation.AnimationManager;
 import xueli.animation.Curves;
 import xueli.animation.IntValueAnimationBinding;
+import xueli.animation.TransitionCaller;
+import xueli.animation.TransitionManager;
 import xueli.clock.bean.ClockBean;
 import xueli.clock.component.UserInfoPanel;
 import xueli.clock.service.ClockService;
@@ -22,16 +24,18 @@ import xueli.swingx.component.ImageView;
 import xueli.swingx.layout.CoverAllLayout;
 import xueli.swingx.layout.HorizontalFilledLayout;
 import xueli.swingx.layout.OffsetLayout;
+import xueli.swingx.responsive.PropertyAccessible;
+import xueli.swingx.responsive.TransitionBindings;
+import xueli.swingx.responsive.ValueProvider;
 import xueli.swingx.layout.HorizontalFilledLayout.HorizentalAlign;
 import xueli.swingx.layout.HorizontalFilledLayout.VerticalAlign;
-import xueli.swingx.responsive.ResponsiveImpl;
-import xueli.swingx.responsive.TransitionResponsivePreferredSize;
-
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -40,6 +44,7 @@ import java.awt.FlowLayout;
 public class ClockFrame {
 	
 	public static final AnimationManager M_ANIMATION_MANAGER = new AnimationManager(() -> System.currentTimeMillis());
+	public static final TransitionManager M_TRANSITION_MANAGER = new TransitionManager(M_ANIMATION_MANAGER);
 	public static final ClassLoaderResourceProvider RESOURCE_PROVIDER = new ClassLoaderResourceProvider();
 	
 	private JFrame frmMain;
@@ -84,8 +89,7 @@ public class ClockFrame {
 			}
 			backgroundImage.setPreferredSize(new Dimension(0, 0));
 			backgroundContainer.add(backgroundImage);
-			TransitionResponsivePreferredSize.addResponsive(backgroundImage, ResponsiveImpl.newProviderRatioVMin(i -> (int) (i * 0.5), 1.0), 750, Curves.easeOutExpo, M_ANIMATION_MANAGER);
-		
+			
 		JPanel userInfoContainer = new JPanel();
 		userInfoContainer.setOpaque(false);
 		FlowLayout userInfoFlowLayout = new FlowLayout();
@@ -111,7 +115,8 @@ public class ClockFrame {
 			timeDateContainer.add(timeDatePanel);
 			
 				JLabel lblTime = new JLabel("LABEL FOR TIME");
-				lblTime.setName("");
+//				lblTime.setDoubleBuffered(true);
+				
 				lblTime.setFont(new Font("Cascadia Mono", Font.PLAIN, 25));
 				timeDatePanel.add(lblTime, BorderLayout.CENTER);
 			
@@ -126,9 +131,10 @@ public class ClockFrame {
 				timeDatePanel.add(dateContainer, BorderLayout.SOUTH);
 				
 					JLabel lblDate = new JLabel("LABEL FOR DATE");
+					lblDate.setDoubleBuffered(true);
 					lblDate.setFont(new Font("Cascadia Mono", Font.PLAIN, 14));
 					dateContainer.add(lblDate);
-		
+					
 		this.bean = new ClockBean();
 		this.bean.addPropertyChangeListener(ClockBean.PROPERTY_TIME, e -> {
 			lblTime.setText((String) e.getNewValue());
@@ -142,6 +148,27 @@ public class ClockFrame {
 			@Override
 			public void windowClosed(WindowEvent e) {
 				service.close();
+			}
+		});
+		
+		TransitionCaller backgroundImageTransitionCaller = M_TRANSITION_MANAGER.registerNewTransition(
+			TransitionBindings.newBindingDimension(backgroundImage, ValueProvider.newProviderRatioVMin(i -> (int) (i * 0.5), 1.0), Curves.easeOutExpo),
+			500
+		);
+		TransitionCaller timeFontSizeTransitionCaller = M_TRANSITION_MANAGER.registerNewTransition(
+			TransitionBindings.newBindingNumber(lblTime, ValueProvider.vminForDouble(10.0, appPanel), PropertyAccessible.fontAccessible(lblTime), Curves.easeOutExpo),
+			500
+		);
+		TransitionCaller dateFontSizeTransitionCaller = M_TRANSITION_MANAGER.registerNewTransition(
+				TransitionBindings.newBindingNumber(lblDate, ValueProvider.vminForDouble(3.0, appPanel), PropertyAccessible.fontAccessible(lblDate), Curves.easeOutExpo),
+				500
+			);
+		appPanel.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				backgroundImageTransitionCaller.announceTransition();
+				timeFontSizeTransitionCaller.announceTransition();
+				dateFontSizeTransitionCaller.announceTransition();
 			}
 		});
 		

@@ -18,7 +18,7 @@ public class HorizontalFilledLayout implements LayoutManager2 {
 	private final VerticalAlign verticalAlign;
 	private final HorizentalAlign horizentalAlign;
 	
-	private final HashMap<Component, ValueProvider<Integer>> componentLayoutConstraintMap = new HashMap<>();
+	private final HashMap<Component, ValueProvider<Integer, Integer>> componentLayoutConstraintMap = new HashMap<>();
 	
 	public HorizontalFilledLayout(VerticalAlign verticalAlign, HorizentalAlign horizentalAlign) {
 		this.verticalAlign = verticalAlign;
@@ -82,7 +82,7 @@ public class HorizontalFilledLayout implements LayoutManager2 {
 			
 			for(int i = 0; i < components.length; i++) {
 				Component child = components[i];
-				ValueProvider<Integer> widthProvider = componentLayoutConstraintMap.get(child);
+				var widthProvider = componentLayoutConstraintMap.get(child);
 				Dimension childPreferredSize = child.getPreferredSize();
 				
 				int childWidth;
