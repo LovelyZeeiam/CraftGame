@@ -1,21 +1,9 @@
 package xueli.clock;
 
-import java.awt.EventQueue;
-
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
 import com.formdev.flatlaf.FlatDarkLaf;
-import xueli.animation.AnimationBinding;
-import xueli.animation.AnimationBindingBuilder;
-import xueli.animation.AnimationManager;
-import xueli.animation.Curves;
-import xueli.animation.IntValueAnimationBinding;
-import xueli.animation.TransitionCaller;
-import xueli.animation.TransitionManager;
+import xueli.animation.*;
 import xueli.clock.bean.ClockBean;
+import xueli.clock.component.SystemInfoPanel;
 import xueli.clock.component.UserInfoPanel;
 import xueli.clock.service.ClockService;
 import xueli.game2.resource.ResourceLocation;
@@ -23,24 +11,23 @@ import xueli.game2.resource.provider.ClassLoaderResourceProvider;
 import xueli.swingx.component.ImageView;
 import xueli.swingx.layout.CoverAllLayout;
 import xueli.swingx.layout.HorizontalFilledLayout;
+import xueli.swingx.layout.HorizontalFilledLayout.HorizontalAlign;
+import xueli.swingx.layout.HorizontalFilledLayout.VerticalAlign;
 import xueli.swingx.layout.OffsetLayout;
 import xueli.swingx.responsive.PropertyAccessible;
 import xueli.swingx.responsive.TransitionBindings;
 import xueli.swingx.responsive.ValueProvider;
-import xueli.swingx.layout.HorizontalFilledLayout.HorizentalAlign;
-import xueli.swingx.layout.HorizontalFilledLayout.VerticalAlign;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Font;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-import java.awt.FlowLayout;
 
+// Swing库真的强大 一行代码两行bug 小小码农烦恼不怕 LovelyZeeiam带我出发~
 public class ClockFrame {
 	
 	public static final AnimationManager M_ANIMATION_MANAGER = new AnimationManager(() -> System.currentTimeMillis());
@@ -74,21 +61,6 @@ public class ClockFrame {
 		appPanel.setDoubleBuffered(true);
 		appPanel.setLayout(new CoverAllLayout());
 		frmMain.getContentPane().add(appPanel, BorderLayout.CENTER);
-		
-		JPanel backgroundContainer = new JPanel();
-		backgroundContainer.setOpaque(false);
-		HorizontalFilledLayout backgroundLayout = new HorizontalFilledLayout(VerticalAlign.ALIGN_BOTTOM, HorizentalAlign.ALIGN_RIGHT);
-		backgroundContainer.setLayout(backgroundLayout);
-		appPanel.add(backgroundContainer);
-		
-			ImageView backgroundImage;
-			try {
-				backgroundImage = new ImageView(ImageIO.read(RESOURCE_PROVIDER.getResource(new ResourceLocation("clock", "images/background.png")).openInputStream()));
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-			backgroundImage.setPreferredSize(new Dimension(0, 0));
-			backgroundContainer.add(backgroundImage);
 			
 		JPanel userInfoContainer = new JPanel();
 		userInfoContainer.setOpaque(false);
@@ -105,7 +77,7 @@ public class ClockFrame {
 			
 		JPanel timeDateContainer = new JPanel();
 		timeDateContainer.setOpaque(false);
-		OffsetLayout timeDateOffsetLayout = new OffsetLayout(new HorizontalFilledLayout(VerticalAlign.ALIGN_CENTER, HorizentalAlign.CENTER));
+		OffsetLayout timeDateOffsetLayout = new OffsetLayout(new HorizontalFilledLayout(VerticalAlign.ALIGN_CENTER, HorizontalAlign.CENTER));
 		timeDateContainer.setLayout(timeDateOffsetLayout);
 		appPanel.add(timeDateContainer);
 		
@@ -115,8 +87,6 @@ public class ClockFrame {
 			timeDateContainer.add(timeDatePanel);
 			
 				JLabel lblTime = new JLabel("LABEL FOR TIME");
-//				lblTime.setDoubleBuffered(true);
-				
 				lblTime.setFont(new Font("Cascadia Mono", Font.PLAIN, 25));
 				timeDatePanel.add(lblTime, BorderLayout.CENTER);
 			
@@ -131,9 +101,27 @@ public class ClockFrame {
 				timeDatePanel.add(dateContainer, BorderLayout.SOUTH);
 				
 					JLabel lblDate = new JLabel("LABEL FOR DATE");
-					lblDate.setDoubleBuffered(true);
 					lblDate.setFont(new Font("Cascadia Mono", Font.PLAIN, 14));
 					dateContainer.add(lblDate);
+				
+		SystemInfoPanel sysInfoPanel = new SystemInfoPanel();
+		sysInfoPanel.setOpaque(false);
+		appPanel.add(sysInfoPanel);
+		
+		JPanel backgroundContainer = new JPanel();
+		backgroundContainer.setOpaque(false);
+		HorizontalFilledLayout backgroundLayout = new HorizontalFilledLayout(VerticalAlign.ALIGN_BOTTOM, HorizontalAlign.ALIGN_RIGHT);
+		backgroundContainer.setLayout(backgroundLayout);
+		appPanel.add(backgroundContainer);
+		
+			ImageView backgroundImage;
+			try {
+				backgroundImage = new ImageView(ImageIO.read(RESOURCE_PROVIDER.getResource(new ResourceLocation("clock", "images/background.png")).openInputStream()));
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+			backgroundImage.setPreferredSize(new Dimension(0, 0));
+			backgroundContainer.add(backgroundImage);
 					
 		this.bean = new ClockBean();
 		this.bean.addPropertyChangeListener(ClockBean.PROPERTY_TIME, e -> {
@@ -142,27 +130,35 @@ public class ClockFrame {
 		this.bean.addPropertyChangeListener(ClockBean.PROPERTY_DATE, e -> {
 			lblDate.setText((String) e.getNewValue());
 		});
+		
 		this.service = new ClockService(bean);
 		
-		frmMain.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed(WindowEvent e) {
-				service.close();
-			}
-		});
-		
+		// TODO: JLabel Animation running lag
 		TransitionCaller backgroundImageTransitionCaller = M_TRANSITION_MANAGER.registerNewTransition(
-			TransitionBindings.newBindingDimension(backgroundImage, ValueProvider.newProviderRatioVMin(i -> (int) (i * 0.5), 1.0), Curves.easeOutExpo),
+			TransitionBindings.newBindingDimension(backgroundImage, ValueProvider.newProviderRatioVMin(i -> (int) (i * 0.5), 1.0), Curves.easeOutExtreme),
 			500
 		);
 		TransitionCaller timeFontSizeTransitionCaller = M_TRANSITION_MANAGER.registerNewTransition(
-			TransitionBindings.newBindingNumber(lblTime, ValueProvider.vminForDouble(10.0, appPanel), PropertyAccessible.fontAccessible(lblTime), Curves.easeOutExpo),
+			TransitionBindings.newBindingNumber(lblTime, ValueProvider.vminForDouble(10.0, appPanel), PropertyAccessible.fontAccessible(lblTime), Curves.easeOutExtreme),
 			500
 		);
 		TransitionCaller dateFontSizeTransitionCaller = M_TRANSITION_MANAGER.registerNewTransition(
-				TransitionBindings.newBindingNumber(lblDate, ValueProvider.vminForDouble(3.0, appPanel), PropertyAccessible.fontAccessible(lblDate), Curves.easeOutExpo),
-				500
-			);
+			TransitionBindings.newBindingNumber(lblDate, ValueProvider.vminForDouble(3.0, appPanel), PropertyAccessible.fontAccessible(lblDate), Curves.easeOutExtreme),
+			500
+		);
+		
+		frmMain.addWindowListener(new WindowAdapter() {
+			public void windowOpened(WindowEvent e) {
+				System.out.println("started");
+				service.start();
+			};
+			
+			public void windowClosing(WindowEvent e) {
+				System.out.println("hidden");
+				service.stop();
+				
+			};
+		});
 		appPanel.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -172,7 +168,7 @@ public class ClockFrame {
 			}
 		});
 		
-		AnimationBinding startAnimBinding = AnimationBindingBuilder.newBuilder().add(new IntValueAnimationBinding(Curves.easeInOutCubic, () -> -100, () -> 0, true) {
+		AnimationBinding startAnimBinding = AnimationBindingBuilder.newBuilder().add(new IntValueAnimationBinding(Curves.easeOutQuint, () -> -100, () -> 0, true) {
 			@Override
 			protected void progress(int val) {
 				dateContainerOffsetLayout.setOffset(lblDate, val, 0);
@@ -180,8 +176,6 @@ public class ClockFrame {
 			}
 		}, 1.0).build();
 		M_ANIMATION_MANAGER.start(startAnimBinding, 2500);
-		
-		
 		
 	}
 	

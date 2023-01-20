@@ -15,7 +15,7 @@ public class TransitionManager {
 	}
 	
 	public TransitionCaller registerNewTransition(TransitionBinding binding, long duration) {
-		return new TransitionCaller() {
+		TransitionCaller caller = new TransitionCaller() {
 			@Override
 			public void announceTransition() {
 				AnimationInstance previous = instances.get(this);
@@ -31,6 +31,8 @@ public class TransitionManager {
 				
 			}
 		};
+		caller.announceTransition();
+		return caller;
 	}
 	
 }

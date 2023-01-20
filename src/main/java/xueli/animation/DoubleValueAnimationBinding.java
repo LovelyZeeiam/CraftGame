@@ -34,7 +34,9 @@ public abstract class DoubleValueAnimationBinding extends CurveAnimationBinding 
 	@Override
 	public void animEnd() {
 		if(!stay) {
-			this.animProgress(realStartValue);
+			this.progress(realStartValue);
+		} else {
+			this.progress(realEndValue);
 		}
 	}
 	

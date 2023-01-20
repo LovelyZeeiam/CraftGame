@@ -1,6 +1,7 @@
 package xueli.mcremake;
 
 import java.awt.Color;
+
 import xueli.game2.display.GameDisplay;
 import xueli.game2.math.TriFuncMap;
 import xueli.game2.renderer.ui.Gui;

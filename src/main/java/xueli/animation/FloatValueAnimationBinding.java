@@ -36,6 +36,8 @@ public abstract class FloatValueAnimationBinding extends CurveAnimationBinding {
 	public void animEnd() {
 		if(!stay) {
 			this.progress(realStartValue);
+		} else {
+			this.progress((float) realEndValue);
 		}
 	}
 	

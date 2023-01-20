@@ -79,13 +79,13 @@ dependencies {
     // implementation group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-macos'
 
     implementation group: 'org.iq80.leveldb', name: 'leveldb', version: '0.12'
+    implementation group: 'org.iq80.snappy', name: 'snappy', version: '0.4'
     implementation 'com.flowpowered:flow-nbt:1.0.0'
 
     implementation 'io.netty:netty-all:4.1.82.Final'
     
     implementation 'com.formdev:flatlaf:1.5'
-	
-	
+    implementation group: 'com.github.oshi', name: 'oshi-core', version: '6.4.0'
 
 }
 

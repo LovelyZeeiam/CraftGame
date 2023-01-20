@@ -1,17 +1,18 @@
 package xueli.awacoder;
 
-import javax.swing.JDialog;
 import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import javax.swing.JButton;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import javax.swing.JLabel;
+
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 
 public class AboutQTDialog extends JDialog {
 	
@@ -23,10 +24,11 @@ public class AboutQTDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public AboutQTDialog() {
-		setType(Type.POPUP);
+//		setType(Type.POPUP);
 		setTitle("About Qt");
 		setResizable(false);
 		setPreferredSize(new Dimension(600, 546));
+		setLocation(100, 100);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelBottom = new JPanel();
@@ -60,7 +62,6 @@ public class AboutQTDialog extends JDialog {
 		panelCenter.add(lblAboutContent);
 		
 		this.pack();
-		
 		
 	}
 

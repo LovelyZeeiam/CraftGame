@@ -13,16 +13,16 @@ import xueli.swingx.responsive.ValueProvider;
  * many mode to select.
  * 
  */
-public class HorizontalFilledLayout implements LayoutManager2 {
+public class VerticalFilledLayout implements LayoutManager2 {
 	
+	private final HorizontalAlign horizontalAlign;
 	private final VerticalAlign verticalAlign;
-	private final HorizontalAlign horizentalAlign;
 	
 	private final HashMap<Component, ValueProvider<Integer, Integer>> componentLayoutConstraintMap = new HashMap<>();
 	
-	public HorizontalFilledLayout(VerticalAlign verticalAlign, HorizontalAlign horizentalAlign) {
+	public VerticalFilledLayout(HorizontalAlign horizentalAlign, VerticalAlign verticalAlign) {
+		this.horizontalAlign = horizentalAlign;
 		this.verticalAlign = verticalAlign;
-		this.horizentalAlign = horizentalAlign;
 		
 	}
 
@@ -46,15 +46,15 @@ public class HorizontalFilledLayout implements LayoutManager2 {
 
 	@Override
 	public Dimension preferredLayoutSize(Container parent) {
-		int preferredWidth = 0, preferredHeight = 0;
+		int preferredHeight = 0, preferredWidth = 0;
 		synchronized (parent.getTreeLock()) {
 			Component[] components = parent.getComponents();
 			for(int i = 0; i < components.length; i++) {
 				Component child = components[i];
 				if(!child.isVisible()) continue;
 				Dimension childPreferredSize = child.getPreferredSize();
-				preferredHeight = Math.max(preferredHeight, childPreferredSize.height);
-				preferredWidth += childPreferredSize.width;
+				preferredWidth = Math.max(preferredWidth, childPreferredSize.width);
+				preferredHeight += childPreferredSize.height;
 			}
 		}
 		return new Dimension(preferredWidth, preferredHeight);
@@ -79,59 +79,58 @@ public class HorizontalFilledLayout implements LayoutManager2 {
 			// To make horizental align easy, we first pretend to combine the components to one panel.
 			// Calculate its relative layout to this "existed" panel.
 			// After the loop, this variable will be the sum width of all components
-			int pointerX = 0;
+			int pointerY = 0;
 			
 			for(int i = 0; i < components.length; i++) {
 				Component child = components[i];
 				if(!child.isVisible()) continue;
-				
-				var widthProvider = componentLayoutConstraintMap.get(child);
+				var heightProvider = componentLayoutConstraintMap.get(child);
 				Dimension childPreferredSize = child.getPreferredSize();
 				
-				int childWidth;
-				if(widthProvider == null) {
-					childWidth = childPreferredSize.width;
+				int childHeight;
+				if(heightProvider == null) {
+					childHeight = childPreferredSize.height;
 				} else {
-					childWidth = widthProvider.get(parentWidth);
+					childHeight = heightProvider.get(parentWidth);
 				}
 				
-				int childY = 0;
-				int childHeight = 0;
+				int childX = 0;
+				int childWidth = 0;
 				
-				switch (this.verticalAlign) {
-				case ALIGN_TOP -> {
-					childHeight = childPreferredSize.height;
-					childY = 0;
+				switch (this.horizontalAlign) {
+				case ALIGN_LEFT -> {
+					childWidth = childPreferredSize.width;
+					childX = 0;
 				}
 				case ALIGN_CENTER -> {
-					childHeight = childPreferredSize.height;
-					childY = (parentHeight - childHeight) / 2;
+					childWidth = childPreferredSize.width;
+					childX = (parentWidth - childWidth) / 2;
 				}
-				case ALIGN_BOTTOM -> {
-					childHeight = childPreferredSize.height;
-					childY = parentHeight - childHeight;
+				case ALIGN_RIGHT -> {
+					childWidth = childPreferredSize.width;
+					childX = parentWidth - childWidth;
 				}
 				case FILL -> {
-					childHeight = parentHeight;
-					childY = 0;
+					childWidth = parentWidth;
+					childX = 0;
 				}
 				}
 				
-				layoutResults[i] = new LayoutResult(pointerX, childY, childWidth, childHeight);
-				pointerX += childWidth;
+				layoutResults[i] = new LayoutResult(childX, pointerY, childWidth, childHeight);
+				pointerY += childHeight;
 			}
 			
-			int layoutStartX = switch (this.horizentalAlign) {
-			case ALIGN_LEFT -> 0;
-			case CENTER -> (parentWidth - pointerX) / 2;
-			case ALIGN_RIGHT -> parentWidth - pointerX;
+			int layoutStartY = switch (this.verticalAlign) {
+			case ALIGN_TOP -> 0;
+			case CENTER -> (parentHeight - pointerY) / 2;
+			case ALIGN_BOTTOM -> parentHeight - pointerY;
 			};
 			
 			for(int i = 0; i < components.length; i++) {
 				Component child = components[i];
 				LayoutResult layoutResult = layoutResults[i];
 				if(layoutResult == null) continue;
-				child.setBounds(layoutStartX + layoutResult.relativeX, layoutResult.relativeY, layoutResult.width, layoutResult.height);
+				child.setBounds(layoutResult.relativeX, layoutStartY + layoutResult.relativeY, layoutResult.width, layoutResult.height);
 			}
 			
 		}
@@ -152,20 +151,17 @@ public class HorizontalFilledLayout implements LayoutManager2 {
 	public float getLayoutAlignmentY(Container target) {
 		return 0;
 	}
-
-//	int i = 0;
+	
 	@Override
 	public void invalidateLayout(Container target) {
-//		System.out.println("[INVALIDATE] " + (i++));
-//		this.layoutContainer(target);
-	}
-	
-	public static enum HorizontalAlign {
-		ALIGN_LEFT, CENTER, ALIGN_RIGHT,
 	}
 	
 	public static enum VerticalAlign {
-		ALIGN_TOP, ALIGN_CENTER, ALIGN_BOTTOM, FILL,
+		ALIGN_TOP, CENTER, ALIGN_BOTTOM,
+	}
+	
+	public static enum HorizontalAlign {
+		ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT, FILL,
 	}
 	
 }

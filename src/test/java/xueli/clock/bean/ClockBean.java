@@ -1,6 +1,7 @@
 package xueli.clock.bean;
 
 import java.beans.PropertyChangeListener;
+
 import javax.swing.event.SwingPropertyChangeSupport;
 
 public class ClockBean {

@@ -104,5 +104,10 @@ public class Curves {
 	public final static Curve easeInBounce = x -> 1 - easeOutBounce.getValue(1 - x);
 	
 	public final static Curve easeInOutBounce = x -> x < 0.5 ? (1 - easeOutBounce.getValue(1 - 2 * x)) / 2 : (1 + easeOutBounce.getValue(2 * x - 1)) / 2;
-
+	
+	public final static Curve easeOutExtreme = x -> {
+		double exp = Math.exp(6 * x + 1);
+		return (exp - 1) / (exp + 1);
+	};
+	
 }
