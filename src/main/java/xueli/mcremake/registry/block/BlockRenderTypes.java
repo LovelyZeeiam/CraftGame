@@ -1,4 +1,4 @@
-package xueli.mcremake.registry;
+package xueli.mcremake.registry.block;
 
 import xueli.game2.ecs.ResourceListGeneric;
 import xueli.game2.ecs.ResourceListImpl;

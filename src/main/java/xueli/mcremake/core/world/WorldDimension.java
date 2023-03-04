@@ -10,7 +10,7 @@ import com.flowpowered.nbt.CompoundMap;
 import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.client.WorldEvents;
 import xueli.mcremake.core.block.BlockType;
-import xueli.mcremake.core.world.pocket.PocketEditionChunkProvider;
+import xueli.mcremake.registry.chunkgenerator.PocketEditionChunkProvider;
 
 public class WorldDimension implements WorldAccessible {
 

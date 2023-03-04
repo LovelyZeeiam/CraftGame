@@ -1,4 +1,4 @@
-package xueli.mcremake.registry;
+package xueli.mcremake.registry.block;
 
 import java.util.List;
 

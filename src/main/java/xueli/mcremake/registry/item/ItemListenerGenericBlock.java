@@ -1,4 +1,4 @@
-package xueli.mcremake.registry;
+package xueli.mcremake.registry.item;
 
 import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.core.block.BlockType;

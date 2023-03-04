@@ -2,6 +2,7 @@ package xueli.swingx.component;
 
 import java.awt.Component;
 import java.awt.Graphics;
+
 import javax.swing.JComponent;
 import javax.swing.plaf.LayerUI;
 

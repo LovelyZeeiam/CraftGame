@@ -16,6 +16,7 @@ import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.client.renderer.world.ChunkRenderBuildManager;
 import xueli.mcremake.client.renderer.world.ChunkRenderType;
 import xueli.mcremake.core.block.BlockType;
+import xueli.mcremake.registry.block.BlockRenderTypes;
 
 public class BlockIconGenerator implements ResourceHolder {
 	

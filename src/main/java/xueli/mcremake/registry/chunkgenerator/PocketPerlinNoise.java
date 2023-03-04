@@ -1,9 +1,11 @@
-package xueli.mcremake.core.world.pocket;
+package xueli.mcremake.registry.chunkgenerator;
 
 import java.util.Random;
 
 import riven.PerlinNoise;
+import xueli.mcremake.registry.PocketNativeType;
 
+@PocketNativeType("PerlinNoise")
 public class PocketPerlinNoise {
 	
 	@SuppressWarnings("unused")

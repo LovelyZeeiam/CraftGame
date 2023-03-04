@@ -1,4 +1,4 @@
-package xueli.mcremake.registry;
+package xueli.mcremake.registry.item;
 
 import java.util.HashMap;
 
@@ -9,6 +9,7 @@ import xueli.game2.renderer.ui.Gui;
 import xueli.game2.resource.submanager.render.texture.Texture;
 import xueli.mcremake.client.renderer.item.ItemRenderType;
 import xueli.mcremake.core.block.BlockType;
+import xueli.mcremake.registry.BlockIconGenerator;
 
 public class ItemRenderTypeRegularBlock implements ItemRenderType {
 	

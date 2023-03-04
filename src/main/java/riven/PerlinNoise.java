@@ -2,6 +2,8 @@ package riven;
 
 import java.util.Random;
 
+import xueli.mcremake.registry.PocketNativeType;
+
 /**
  * <p>
  * Adapted from Riven's Implementation of Perlin noise. Modified it to be more
@@ -11,6 +13,7 @@ import java.util.Random;
  * @author Matthew A. Johnston (WarmWaffles)
  * 
  */
+@PocketNativeType("ImprovedNoise")
 public class PerlinNoise {
 	private double   xo, yo, zo;
 	private double[] pow;
@@ -154,6 +157,7 @@ public class PerlinNoise {
 					int v62_int = (int) Math.floor(v62);
 					double v62_remain = v62 - v62_int;
 					
+					// TODO: Some exceptions may happen here
 					int v13 = v62_int + perm[perm[v66_int]];
 					int v14 = v62_int + perm[perm[v66_int + 1]];
 					

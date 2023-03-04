@@ -26,10 +26,10 @@ import xueli.mcremake.core.item.ItemType;
 import xueli.mcremake.core.world.WorldDimension;
 import xueli.mcremake.network.ServerPlayerInfo;
 import xueli.mcremake.registry.BlockIconGenerator;
-import xueli.mcremake.registry.BlockRenderTypes;
 import xueli.mcremake.registry.GameRegistry;
-import xueli.mcremake.registry.ItemRenderTypes;
 import xueli.mcremake.registry.TerrainTextureAtlas;
+import xueli.mcremake.registry.block.BlockRenderTypes;
+import xueli.mcremake.registry.item.ItemRenderTypes;
 import xueli.utils.events.EventBus;
 
 // TODO: Combine different overlay with different listener because they are "one to one".
@@ -45,7 +45,8 @@ import xueli.utils.events.EventBus;
  * TODOs: <br/>
  * 1. When it comes to infinity world we just use ticket-like mechanism (each time we iterate the chunks
  * and spread the ticket and load it until it got under zero) but at first I should have the chunk generator
- * done.  
+ * done.
+ * 2. Also set 2 state of a chunk, "LOADING", "DONE", determining whether the chunk is ready to go
  * 
  */
 public class CraftGameClient extends GameDisplay {

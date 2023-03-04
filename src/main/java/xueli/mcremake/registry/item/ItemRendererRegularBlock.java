@@ -1,4 +1,4 @@
-package xueli.mcremake.registry;
+package xueli.mcremake.registry.item;
 
 import com.flowpowered.nbt.CompoundMap;
 

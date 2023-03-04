@@ -7,6 +7,7 @@ import xueli.game2.network.ClientConnection;
 
 /**
  * Mark it deprecated because now we don't use this
+ * If I can't make it Promise-like just as Javascript so it is maybe easy to use
  */
 @SuppressWarnings("unused")
 @Deprecated
