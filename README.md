@@ -4,6 +4,8 @@
 
 The goal is to make a "Minecraft PE 0.10.5 Remake" programmed in Java 17 with LWJGL 3. Currently, the game is being refactored and cannot be played. But when the game is done, there will be a skeleton summary of this project.
 
+I upload the game to Github just in case my computer falls into an accident.
+
 ## The goal
 
 - [ ] All blocks that are in Minecraft PE 0.10.5
