@@ -8,10 +8,12 @@ public class ClockBean {
 	
 	public static final String PROPERTY_TIME = "1";
 	public static final String PROPERTY_DATE = "2";
+	public static final String PROPERTY_SHOW_FUNATIONAL_PANEL = "3";
 	
 	private final SwingPropertyChangeSupport pcs = new SwingPropertyChangeSupport(this, true);
 	
 	private String timeStr, dateStr;
+	private boolean showFunctionalPanel = false;
 	
 	public ClockBean() {
 		
@@ -33,6 +35,15 @@ public class ClockBean {
 	
 	public String getDateString() {
 		return dateStr;
+	}
+	
+	public void setShowFunctionalPanel(boolean showFunctionalPanel) {
+		this.pcs.firePropertyChange(PROPERTY_SHOW_FUNATIONAL_PANEL, this.showFunctionalPanel, showFunctionalPanel);
+		this.showFunctionalPanel = showFunctionalPanel;
+	}
+	
+	public boolean isShowFunctionalPanel() {
+		return showFunctionalPanel;
 	}
 	
 	public void addPropertyChangeListener(String name, PropertyChangeListener listener) {

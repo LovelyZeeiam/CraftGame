@@ -25,10 +25,10 @@ import xueli.mcremake.core.entity.PickResult;
 import xueli.mcremake.core.item.ItemType;
 import xueli.mcremake.core.world.WorldDimension;
 import xueli.mcremake.network.ServerPlayerInfo;
-import xueli.mcremake.registry.GameRegistry;
-import xueli.mcremake.registry.ItemRenderTypes;
 import xueli.mcremake.registry.BlockIconGenerator;
 import xueli.mcremake.registry.BlockRenderTypes;
+import xueli.mcremake.registry.GameRegistry;
+import xueli.mcremake.registry.ItemRenderTypes;
 import xueli.mcremake.registry.TerrainTextureAtlas;
 import xueli.utils.events.EventBus;
 
@@ -40,7 +40,12 @@ import xueli.utils.events.EventBus;
  * 1. The render resources should be added to "renderResources" so that it can be reloaded.<br/>
  * 2. Item system and block system follow the same rules: a render type which you can have access
  * to every resource, initialize everything that render needs; a "vertex gatherer" separated by
- * each type of blocks or items so that every item can choose its render type.
+ * each type of blocks or items so that every item can choose its render type.<br/>
+ * 
+ * TODOs: <br/>
+ * 1. When it comes to infinity world we just use ticket-like mechanism (each time we iterate the chunks
+ * and spread the ticket and load it until it got under zero) but at first I should have the chunk generator
+ * done.  
  * 
  */
 public class CraftGameClient extends GameDisplay {
@@ -157,6 +162,10 @@ public class CraftGameClient extends GameDisplay {
 			itemRenderer.renderUI(this.currentItemType, null, getWidth() - 128, 0, 128, 128, gui);
 		}
 		gui.finish();
+		
+		if(keyBindings.isPressed(GLFW.GLFW_KEY_ESCAPE)) {
+			this.announceClose();
+		}
 		
 	}
 	

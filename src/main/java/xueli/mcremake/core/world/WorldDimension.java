@@ -10,7 +10,7 @@ import com.flowpowered.nbt.CompoundMap;
 import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.client.WorldEvents;
 import xueli.mcremake.core.block.BlockType;
-import xueli.mcremake.registry.GameRegistry;
+import xueli.mcremake.core.world.pocket.PocketEditionChunkProvider;
 
 public class WorldDimension implements WorldAccessible {
 
@@ -23,21 +23,23 @@ public class WorldDimension implements WorldAccessible {
 	}
 
 	public void init() {
+		PocketEditionChunkProvider chunkGenerator = new PocketEditionChunkProvider();
 		for (int i = -4; i < 4; i++) {
 			for (int j = -4; j < 4; j++) {
 				Chunk chunk = new Chunk(this);
+//				for (int l = 0; l < Chunk.CHUNK_SIZE; l++) {
+//					for (int m = 0; m < Chunk.CHUNK_SIZE; m++) {
+//						chunk.setBlock(l, 7, m, GameRegistry.BLOCK_GRASS);
+//						for (int k = 6; k > 3; k--) {
+//							chunk.setBlock(l, k, m, GameRegistry.BLOCK_DIRT);
+//						}
+//						for (int k = 3; k >= 0; k--) {
+//							chunk.setBlock(l, k, m, GameRegistry.BLOCK_STONE);
+//						}
+//					}
+//				}
+				chunkGenerator.genChunk(j, i, chunk);
 				
-					for (int l = 0; l < Chunk.CHUNK_SIZE; l++) {
-						for (int m = 0; m < Chunk.CHUNK_SIZE; m++) {
-							chunk.setBlock(l, 7, m, GameRegistry.BLOCK_GRASS);
-							for (int k = 6; k > 3; k--) {
-								chunk.setBlock(l, k, m, GameRegistry.BLOCK_DIRT);
-							}
-							for (int k = 3; k >= 0; k--) {
-								chunk.setBlock(l, k, m, GameRegistry.BLOCK_STONE);
-							}
-						}
-					}
 				chunkMap.put(new Vector2i(i, j), chunk);
 				ctx.worldBus.post(new WorldEvents.NewChunkEvent(i, j));
 			}

@@ -27,7 +27,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 
-// Swing库真的强大 一行代码两行bug 小小码农烦恼不怕 LovelyZeeiam带我出发~
+// Swing搴撶湡鐨勫己澶� 涓�琛屼唬鐮佷袱琛宐ug 灏忓皬鐮佸啘鐑︽伡涓嶆�� LovelyZeeiam甯︽垜鍑哄彂~
 public class ClockFrame {
 	
 	public static final AnimationManager M_ANIMATION_MANAGER = new AnimationManager(() -> System.currentTimeMillis());
@@ -134,18 +134,31 @@ public class ClockFrame {
 		this.service = new ClockService(bean);
 		
 		// TODO: JLabel Animation running lag
-		TransitionCaller backgroundImageTransitionCaller = M_TRANSITION_MANAGER.registerNewTransition(
-			TransitionBindings.newBindingDimension(backgroundImage, ValueProvider.newProviderRatioVMin(i -> (int) (i * 0.5), 1.0), Curves.easeOutExtreme),
+		var backgroundImageTransitionCaller = M_TRANSITION_MANAGER.registerNewTransition(
+			TransitionBindings.newBindingDimension(backgroundImage, ValueProvider.newProviderRatioVMin(i -> (int) (i * 0.5), 1.0)),
+			Curves.easeOutExtreme,
 			500
 		);
-		TransitionCaller timeFontSizeTransitionCaller = M_TRANSITION_MANAGER.registerNewTransition(
-			TransitionBindings.newBindingNumber(lblTime, ValueProvider.vminForDouble(10.0, appPanel), PropertyAccessible.fontAccessible(lblTime), Curves.easeOutExtreme),
+		var timeFontSizeTransitionCaller = M_TRANSITION_MANAGER.registerNewTransition(
+			TransitionBindings.newBindingNumber(lblTime, ValueProvider.vminForDouble(10.0, appPanel), PropertyAccessible.fontAccessible(lblTime)),
+			Curves.easeOutExtreme,
 			500
 		);
-		TransitionCaller dateFontSizeTransitionCaller = M_TRANSITION_MANAGER.registerNewTransition(
-			TransitionBindings.newBindingNumber(lblDate, ValueProvider.vminForDouble(3.0, appPanel), PropertyAccessible.fontAccessible(lblDate), Curves.easeOutExtreme),
+		var dateFontSizeTransitionCaller = M_TRANSITION_MANAGER.registerNewTransition(
+			TransitionBindings.newBindingNumber(lblDate, ValueProvider.vminForDouble(3.0, appPanel), PropertyAccessible.fontAccessible(lblDate)),
+			Curves.easeOutExtreme,
 			500
 		);
+//		var realPanelTransitionCaller = M_TRANSITION_MANAGER.registerNewStateChangingTransition(
+//			new TransitionBinding() {
+//				@Override
+//				public void animProgress(double timeProgress) {
+//					
+//				}
+//			},
+//			Curves.easeOutQuint,
+//			500
+//		);
 		
 		frmMain.addWindowListener(new WindowAdapter() {
 			public void windowOpened(WindowEvent e) {
@@ -168,14 +181,14 @@ public class ClockFrame {
 			}
 		});
 		
-		AnimationBinding startAnimBinding = AnimationBindingBuilder.newBuilder().add(new IntValueAnimationBinding(Curves.easeOutQuint, () -> -100, () -> 0, true) {
+		AnimationBinding startAnimBinding = AnimationBindingBuilder.newBuilder().add(new IntValueAnimationBinding(() -> -100, () -> 0, true) {
 			@Override
 			protected void progress(int val) {
 				dateContainerOffsetLayout.setOffset(lblDate, val, 0);
 				userInfoOffsetLayout.setOffset(userInfoPanel, 0, val);
 			}
 		}, 1.0).build();
-		M_ANIMATION_MANAGER.start(startAnimBinding, 2500);
+		M_ANIMATION_MANAGER.start(startAnimBinding, Curves.easeOutQuint, 2500);
 		
 	}
 	

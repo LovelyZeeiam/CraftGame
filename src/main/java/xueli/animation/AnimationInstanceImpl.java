@@ -5,18 +5,21 @@ import java.util.ArrayList;
 class AnimationInstanceImpl implements AnimationInstance {
 	
 	private final AnimationBinding binding;
+	private final Curve curve;
 	private final long startTime, duration, endTime;
 	private final boolean reverse;
 	
+	// Progress from the time, so its change is linear
 	private double progress = 0.0;
 	private AnimationStage stage = AnimationStage.PLAYING;
 	
 	private final ArrayList<AnimationEndListener> endListeners = new ArrayList<>();
 	
-	AnimationInstanceImpl(AnimationBinding binding, long startTime, long duration, boolean reverse) {
+	AnimationInstanceImpl(AnimationBinding binding, long startTime, long duration, Curve curve, boolean reverse) {
 		this.binding = binding;
 		this.startTime = startTime;
 		this.duration = duration;
+		this.curve = curve;
 		this.endTime = this.startTime + this.duration;
 		
 		this.reverse = reverse;
@@ -43,10 +46,11 @@ class AnimationInstanceImpl implements AnimationInstance {
 		switch (this.stage) {
 		case PLAYING -> {
 			this.progress = (double) (currentTime - startTime) / duration;
+			double curveValue = curve.getValue(progress);
 			if(reverse)
-				this.binding.animProgress(1 - progress);
+				this.binding.animProgress(1 - curveValue);
 			else
-				this.binding.animProgress(progress);
+				this.binding.animProgress(curveValue);
 		}
 		case PAUSE -> {}
 		case STOP -> {
@@ -64,12 +68,9 @@ class AnimationInstanceImpl implements AnimationInstance {
 	}
 
 	@Override
-	public void stop(long jumpTime) {
+	public void stop(double progress) {
 		this.stage = AnimationStage.STOP;
-		if(jumpTime >= 0)
-			this.binding.animProgress((double) jumpTime / this.duration);
-		else
-			this.binding.animProgress(1.0);
+		this.binding.animProgress(curve.getValue(progress));
 		
 	}
 	

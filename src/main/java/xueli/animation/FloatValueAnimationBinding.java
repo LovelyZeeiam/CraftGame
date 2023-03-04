@@ -2,13 +2,12 @@ package xueli.animation;
 
 import java.util.function.Supplier;
 
-public abstract class FloatValueAnimationBinding extends CurveAnimationBinding {
+public abstract class FloatValueAnimationBinding implements AnimationBinding {
 	
 	private final Supplier<Float> startValueSupplier, endValueSupplier;
 	private final boolean stay;
 	
-	public FloatValueAnimationBinding(Curve curve, Supplier<Float> startValue, Supplier<Float> endValue, boolean stay) {
-		super(curve);
+	public FloatValueAnimationBinding(Supplier<Float> startValue, Supplier<Float> endValue, boolean stay) {
 		this.startValueSupplier = startValue;
 		this.endValueSupplier = endValue;
 		this.stay = stay;
@@ -27,9 +26,10 @@ public abstract class FloatValueAnimationBinding extends CurveAnimationBinding {
 	}
 	
 	@Override
-	protected void animRealProgress(double progress) {
+	public void animProgress(double progress) {
 		this.progress((float) (realStartValue + this.realDurationValue * progress));
 //		System.out.println(progress);
+		
 	}
 	
 	@Override

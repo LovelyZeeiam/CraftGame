@@ -4,7 +4,7 @@ public interface AnimationInstance {
 	
 	public void pause();
 	
-	public void stop(long jumpTime);
+	public void stop(double progress);
 	
 	public double getProgress();
 	

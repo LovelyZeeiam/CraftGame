@@ -1,9 +1,19 @@
 package xueli.animation;
 
-public abstract class TransitionBinding extends DoubleValueAnimationBinding {
+public abstract class TransitionBinding implements AnimationBinding {
 
-	public TransitionBinding(Curve curve) {
-		super(curve, () -> 0.0, () -> 1.0, true);
+	public TransitionBinding() {
+	}
+
+	@Override
+	public void animStart() {
+		this.animProgress(0.0);
+		
+	}
+
+	@Override
+	public void animEnd() {
+		this.animProgress(1.0);
 	}
 
 }

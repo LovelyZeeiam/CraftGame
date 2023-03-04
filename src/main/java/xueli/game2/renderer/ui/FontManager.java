@@ -1,8 +1,10 @@
 package xueli.game2.renderer.ui;
 
-import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.nanovg.NanoVG.nvgCreateFontMem;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
+
 import xueli.game2.resource.Resource;
 import xueli.game2.resource.submanager.render.BufferUtils;
 

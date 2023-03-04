@@ -147,7 +147,11 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 	@Override
 	public void onMouseButton(int button, int action, int mods) {
 	}
-
+	
+	public void announceClose() {
+		this.display.setRunning(false);
+	}
+	
 	public void announceCrash(String state, Throwable t) {
 		this.shouldCrash = true;
 		new CrashReport(state, t).showCrashReport();	

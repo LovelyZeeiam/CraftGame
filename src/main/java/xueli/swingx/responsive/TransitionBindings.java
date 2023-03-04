@@ -4,19 +4,16 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 
-import xueli.animation.Curve;
 import xueli.animation.TransitionBinding;
 
 public class TransitionBindings {
 	
-	public static TransitionBinding newBindingDimension(Component component, ValueProvider<Dimension, Dimension> sizeProvider, Curve curve) {
-		return new TransitionBinding(curve) {
+	public static TransitionBinding newBindingDimension(Component component, ValueProvider<Dimension, Dimension> sizeProvider) {
+		return new TransitionBinding() {
 			private Dimension oldSize, newSize;
 			
 			@Override
 			public void animStart() {
-				super.animStart();
-				
 				Container parent = component.getParent();
 				Dimension parentSize = parent.getSize();
 				
@@ -24,10 +21,12 @@ public class TransitionBindings {
 				if(oldSize == null) oldSize = new Dimension();
 				newSize = sizeProvider.get(parentSize);
 				
+				super.animStart();
+				
 			}
 			
 			@Override
-			protected void progress(double val) {
+			public void animProgress(double val) {
 				component.setPreferredSize(new Dimension(
 						(int) (oldSize.width + (newSize.width - oldSize.width) * val),
 						(int) (oldSize.height + (newSize.height - oldSize.height) * val)
@@ -39,15 +38,13 @@ public class TransitionBindings {
 		};
 	}
 	
-	public static <C extends Component> TransitionBinding newBindingNumber(C component, ValueProvider<Dimension, Double> valueProvider, PropertyAccessible<C, Double> accessible, Curve curve) {
-		return new TransitionBinding(curve) {
+	public static <C extends Component> TransitionBinding newBindingNumber(C component, ValueProvider<Dimension, Double> valueProvider, PropertyAccessible<C, Double> accessible) {
+		return new TransitionBinding() {
 			
 			private double oldValue, newValue;
 			
 			@Override
 			public void animStart() {
-				super.animStart();
-				
 				Container parent = component.getParent();
 				Dimension parentSize = parent.getSize();
 				
@@ -58,10 +55,12 @@ public class TransitionBindings {
 					oldValue = oldValueObj;
 				newValue = valueProvider.get(parentSize);
 				
+				super.animStart();
+				
 			}
 			
 			@Override
-			protected void progress(double val) {
+			public void animProgress(double val) {
 				accessible.set(component, (oldValue + (newValue - oldValue) * val));
 			}
 			

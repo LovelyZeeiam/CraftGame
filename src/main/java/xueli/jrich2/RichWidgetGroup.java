@@ -2,6 +2,7 @@ package xueli.jrich2;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+
 import xueli.jrich2.MeasureSpec.Mode;
 
 public class RichWidgetGroup extends RichWidget {

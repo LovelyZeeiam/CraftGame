@@ -22,7 +22,7 @@ public class CoverAllLayout implements LayoutManager {
 
 	@Override
 	public Dimension minimumLayoutSize(Container parent) {
-		return null;
+		return new Dimension(0, 0);
 	}
 
 	@Override

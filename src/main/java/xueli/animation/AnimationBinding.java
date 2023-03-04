@@ -13,17 +13,9 @@ public interface AnimationBinding {
 	public void animEnd();
 	
 	public static AnimationBinding EMPTY = new AnimationBinding() {
-		@Override
-		public void animStart() {
-		}
-		
-		@Override
-		public void animProgress(double timeProgress) {
-		}
-		
-		@Override
-		public void animEnd() {
-		}
+		@Override public void animStart() {}
+		@Override public void animProgress(double timeProgress) {}
+		@Override public void animEnd() {}
 	};
 	
 }

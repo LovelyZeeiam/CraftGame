@@ -2,6 +2,7 @@ package xueli.mcremake.registry;
 
 import java.util.HashMap;
 import java.util.function.BiConsumer;
+
 import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector2i;
 import org.lwjgl.utils.vector.Vector3f;

@@ -1,37 +1,54 @@
 package xueli.animation;
 
-import java.util.HashMap;
-
 public class TransitionManager {
 	
 	private final AnimationManager animator;
-	
-	// Every transition called should correspond to one animation instance or null
-	// TODO: Is there no need to create a concurrent HashMap?
-	private final HashMap<TransitionCaller, AnimationInstance> instances = new HashMap<>();
 	
 	public TransitionManager(AnimationManager animator) {
 		this.animator = animator;
 	}
 	
-	public TransitionCaller registerNewTransition(TransitionBinding binding, long duration) {
+	public TransitionCaller registerNewTransition(TransitionBinding binding, Curve curve, long duration) {
 		TransitionCaller caller = new TransitionCaller() {
+			private AnimationInstance previous;
+			
 			@Override
 			public void announceTransition() {
-				AnimationInstance previous = instances.get(this);
 				if(previous != null) {
-					previous.stop((long) (previous.getProgress() * previous.getDuration()));				
+					previous.stop(previous.getProgress());
 				}
 				
-				AnimationInstance newInstance = animator.start(binding, duration);
+				AnimationInstance newInstance = animator.start(binding, curve, duration);
 				newInstance.addAnimationEndListener(() -> {
-					instances.remove(this);
+					previous = null;
 				});
-				instances.put(this, newInstance);
+				this.previous = newInstance;
 				
 			}
 		};
 		caller.announceTransition();
+		return caller;
+	}
+	
+	public StateChangingTransitionCaller registerNewStateChangingTransition(TransitionBinding binding, Curve curve, long duration) {
+		StateChangingTransitionCaller caller = new StateChangingTransitionCaller() {
+			private AnimationInstance previous;
+			
+			@Override
+			public void announceTransition(boolean state) {
+				if(previous != null) {
+					previous.stop(previous.getProgress());
+				}
+				
+				AnimationInstance newInstance = state ? animator.start(binding, curve, duration) : animator.startReverse(binding, curve, duration);
+				newInstance.addAnimationEndListener(() -> {
+					previous = null;
+				});
+				this.previous = newInstance;
+				
+			}
+		};
+		caller.announceTransition(false);
 		return caller;
 	}
 	

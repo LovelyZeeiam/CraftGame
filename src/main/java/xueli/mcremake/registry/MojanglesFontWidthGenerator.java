@@ -3,6 +3,7 @@ package xueli.mcremake.registry;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+
 import javax.imageio.ImageIO;
 
 import xueli.game2.resource.Resource;

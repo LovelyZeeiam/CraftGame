@@ -1,7 +1,7 @@
 package xueli.game2.renderer.ui;
 
-import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.nanovg.NanoVGGL3.*;
+import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
+import static org.lwjgl.nanovg.NanoVGGL3.nvglCreateImageFromHandle;
 
 import xueli.game2.resource.submanager.render.texture.Texture;
 

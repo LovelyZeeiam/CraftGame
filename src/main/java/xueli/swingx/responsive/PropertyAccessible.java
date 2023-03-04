@@ -2,6 +2,7 @@ package xueli.swingx.responsive;
 
 import java.awt.Component;
 import java.awt.Label;
+
 import javax.swing.JLabel;
 
 public interface PropertyAccessible<C extends Component, T> {

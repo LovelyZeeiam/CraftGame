@@ -1,6 +1,7 @@
 package xueli.jrich2.widgets;
 
 import java.awt.Dimension;
+
 import xueli.jrich2.LayoutParams;
 import xueli.jrich2.MeasureSpec;
 import xueli.jrich2.RichConsole;
