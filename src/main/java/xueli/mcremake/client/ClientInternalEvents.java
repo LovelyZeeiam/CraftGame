@@ -1,6 +1,6 @@
 package xueli.mcremake.client;
 
-public class WorldEvents {
+public class ClientInternalEvents {
 
 	public record NewChunkEvent(int x, int z) {
 	}

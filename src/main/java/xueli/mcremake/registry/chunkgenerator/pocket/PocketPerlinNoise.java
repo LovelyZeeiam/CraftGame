@@ -1,18 +1,22 @@
-package xueli.mcremake.registry.chunkgenerator;
+package xueli.mcremake.registry.chunkgenerator.pocket;
 
 import java.util.Random;
 
 import riven.PerlinNoise;
 import xueli.mcremake.registry.PocketNativeType;
 
-@PocketNativeType("PerlinNoise")
+@PocketNativeType(version = "0.1.3", value = "PerlinNoise")
 public class PocketPerlinNoise {
 	
 	@SuppressWarnings("unused")
 	private final Random random1;
+	@PocketNativeType(version = "0.1.3", value = "*((_DWORD *)this + 629)")
 	private final Random random2;
+	
+	@PocketNativeType(version = "0.1.3", value = "*((_DWORD *)this + 2)")
 	private final int num;
 	
+	@PocketNativeType(version = "0.1.3", value = "*((_DWORD *)this + 1)")
 	private PerlinNoise[] result;
 	
 	public PocketPerlinNoise(int num) {
@@ -61,10 +65,12 @@ public class PocketPerlinNoise {
 		int v19 = a8 * a7 * a6;
 		if(v14 == null) v14 = new double[v19];
 		// Set all the element in v14 to 0.0 here but Java did this
-		double v17 = 1.0;
-		for(int j = 0; j < this.num; j++) {
-			result[j].add(v14, v13, v12, (int) a5, a6, a7, a8, a9 * v17, a10 * v17, a11 * v17, v17);
-			v17 /= 2.0;
+		if(this.num > 0) {
+			double v18 = 1.0;
+			for(int j = 0; j < this.num; j++) {
+				result[j].add(v14, v13, v12, a5, a6, a7, a8, a9 * v18, a10 * v18, a11 * v18, v18);
+				v18 /= 2.0;
+			}
 		}
 		return v14;
 	}

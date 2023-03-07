@@ -13,10 +13,24 @@ import xueli.mcremake.registry.PocketNativeType;
  * @author Matthew A. Johnston (WarmWaffles)
  * 
  */
-@PocketNativeType("ImprovedNoise")
+@PocketNativeType(version = "0.1.3", value = "ImprovedNoise")
 public class PerlinNoise {
-	private double   xo, yo, zo;
-	private double[] pow;
+	
+	private static final double[] pow = new double[32];
+	static {
+		for (int i = 0; i < pow.length; i++)
+			pow[i] = Math.pow(2, i);
+		
+	}
+	
+	@PocketNativeType("*((_DWORD*)this + 2)")
+	private double xo;
+	@PocketNativeType("*((_DWORD*)this + 3)")
+	private double yo;
+	@PocketNativeType("*((_DWORD*)this + 4)")
+	private double zo;
+	
+	@PocketNativeType("*((_DWORD*)v4_this + 5)")
 	private int[]   perm;
 	
 	/**
@@ -29,26 +43,32 @@ public class PerlinNoise {
 	}
 	
 	public PerlinNoise(Random r) {
-		this.xo = r.nextFloat() * 256.0;
+		this.xo = r.nextFloat() * 256.0; // Origin: (double)random.genrand_int32() * 2.32830644e-10
 		this.yo = r.nextFloat() * 256.0;
 		this.zo = r.nextFloat() * 256.0;
 		
-		pow  = new double[32];
 		perm = new int[512];
+		for(int i = 0; i < 256; i++) {
+			perm[i] = i;
+		}
 		
-		for (int i = 0; i < pow.length; i++)
-			pow[i] = Math.pow(2, i);
-		
-		int[] permutation = new int[256];
-		
-		for(int i = 0; i < permutation.length; i++)
-			permutation[i] = r.nextInt(256);
+		for(int i = 0; i < 256; i++) {
+			int v3 = r.nextInt(256 - i);
+			
+			int v4 = perm[i];
+			perm[i] = perm[i + v3];
+			perm[i + v3] = v4;
+			
+			perm[i + 256] = perm[i];
+			
+		}
 
 //		if (permutation.length != 256)
 //			throw new IllegalStateException();
 
-		for (int i = 0; i < 256; i++)
-			perm[256 + i] = perm[i] = permutation[i];
+//		for (int i = 0; i < 256; i++)
+//			perm[256 + i] = perm[i] = permutation[i];
+		
 	}
 
 	/**
@@ -146,36 +166,45 @@ public class PerlinNoise {
 	
 	public double[] add(double[] v39, double v38, double v37, double a5, int a6, int a7, double a8, double a9, double a10, double a11, double a12) {
 		if(a7 == 1) {
-			int v69 = 0;
-			for(int i = 0; i < a6; i++) {
-				double v66 = (i + v38) * a9 + this.xo;
-				int v66_int = (int) Math.floor(v66); // Maybe casting it directly is faster
-				double v66_remain = v66 - v66_int;
-				double v64 = this.fade(v66_remain);
-				for(int j = 0; j < a8; j++) {
-					double v62 = (j + a5) * a11 + this.zo;
-					int v62_int = (int) Math.floor(v62);
-					double v62_remain = v62 - v62_int;
-					
-					// TODO: Some exceptions may happen here
-					int v13 = v62_int + perm[perm[v66_int]];
-					int v14 = v62_int + perm[perm[v66_int + 1]];
-					
-					double v15 = grad2(perm[v13], v66_remain, v62_remain);
-					double v16 = grad(perm[v14], v66_remain - 1.0, 0.0, v62_remain);
-					double v17 = lerp(v64, v15, v16);
-					
-					double v18 = grad(perm[v13 + 1], v66_remain, 0.0, v62_remain - 1.0);
-					double v19 = grad(perm[v14 + 1], v66_remain - 1.0, 0.0, v62_remain - 1.0);
-					double v20 = lerp(v64, v18, v19);
-					
-					double result = lerp(fade(v62_remain), v17, v20);
-					v39[v69] += result / a12;
-					v69++;
-					
+			if(a6 > 0) {
+				int v74 = 0;
+				for(int i = 0; i < a6; i++) {
+					double v49 = (i + v38) * a9 + this.xo;
+					int v49_floor = (int) Math.floor(v49); // Maybe casting it directly is faster
+					double v49_remain = v49 - v49_floor;
+					if(a8 > 0) {
+						double v57 = this.fade(v49_remain);
+						for(int j = 0; j < a8; j++) {
+							double v58 = (j + a5) * a11 + this.zo;
+							int v58_floor = (int) Math.floor(v58);
+							double v58_remain = v58 - v58_floor;
+							
+							if(v49_floor < 0) {
+								System.out.println();
+							}
+							
+							int v62 = v58_floor + perm[
+							                           	perm[v49_floor]
+					                        		   ]; // java.lang.ArrayIndexOutOfBoundsException: Index -3038 out of bounds for length 512
+							int v64 = v58_floor + perm[perm[v49_floor + 1]];
+							
+							double v65 = grad2(perm[v62], v49_remain, v58_remain);
+							double v66 = grad(perm[v64], v49_remain - 1.0, 0.0, v58_remain);
+							double v67 = lerp(v57, v65, v66);
+							
+							double v68 = grad(perm[v62 + 1], v49_remain, 0.0, v58_remain - 1.0);
+							double v69 = grad(perm[v64 + 1], v49_remain - 1.0, 0.0, v58_remain - 1.0);
+							double v70 = lerp(v57, v68, v69);
+							
+							double result = lerp(fade(v58_remain), v67, v70);
+							v39[v74] += result / a12;
+							v74++;
+							
+						}
+					}
 				}
 			}
-		} else {
+		} else if(a6 > 0) {
 			int v60 = 0;
 			int v59 = -1;
 			double v58 = 0.0, v57 = 0.0, v56 = 0.0, v55 = 0.0;

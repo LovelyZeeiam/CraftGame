@@ -12,8 +12,8 @@ import xueli.game2.ecs.ResourceListGeneric;
 import xueli.game2.math.MatrixHelper;
 import xueli.game2.renderer.legacy.RenderBuffer;
 import xueli.game2.resource.ResourceHolder;
+import xueli.mcremake.client.ClientInternalEvents;
 import xueli.mcremake.client.CraftGameClient;
-import xueli.mcremake.client.WorldEvents;
 import xueli.mcremake.core.world.Chunk;
 import xueli.mcremake.core.world.WorldDimension;
 
@@ -35,9 +35,9 @@ public class WorldRenderer implements ResourceHolder {
 		this.ctx = ctx;
 		this.world = ctx.getUnsafeImmediateWorld();
 
-		ctx.worldBus.register(WorldEvents.NewChunkEvent.class, this::onCreateNewChunk);
-		ctx.worldBus.register(WorldEvents.ModifyBlockEvent.class, this::onModifyBlock);
-		ctx.worldBus.register(WorldEvents.UnloadChunkEvent.class, this::onRemoveChunk);
+		ctx.worldBus.register(ClientInternalEvents.NewChunkEvent.class, this::onCreateNewChunk);
+		ctx.worldBus.register(ClientInternalEvents.ModifyBlockEvent.class, this::onModifyBlock);
+		ctx.worldBus.register(ClientInternalEvents.UnloadChunkEvent.class, this::onRemoveChunk);
 
 		this.renderTypes = renderTypes;
 
@@ -51,11 +51,11 @@ public class WorldRenderer implements ResourceHolder {
 		this.camera.setCamera(camera);
 	}
 
-	public void onCreateNewChunk(WorldEvents.NewChunkEvent event) {
+	public void onCreateNewChunk(ClientInternalEvents.NewChunkEvent event) {
 		chunkRebuiltList.add(new Vector2i(event.x(), event.z()));
 	}
 
-	public void onModifyBlock(WorldEvents.ModifyBlockEvent event) {
+	public void onModifyBlock(ClientInternalEvents.ModifyBlockEvent event) {
 		Vector2i inChunkPos = new Vector2i();
 		Vector2i chunkPos = Chunk.toChunkPos(event.x(), event.z(), inChunkPos);
 		chunkRebuiltList.add(chunkPos);
@@ -75,7 +75,7 @@ public class WorldRenderer implements ResourceHolder {
 
 	}
 
-	public void onRemoveChunk(WorldEvents.UnloadChunkEvent event) {
+	public void onRemoveChunk(ClientInternalEvents.UnloadChunkEvent event) {
 		chunkRemoveList.add(new Vector2i(event.x(), event.z()));
 	}
 

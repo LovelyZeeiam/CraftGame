@@ -1,4 +1,4 @@
-package xueli.mcremake.registry.chunkgenerator;
+package xueli.mcremake.registry.chunkgenerator.pocket;
 
 import java.util.Random;
 
@@ -43,8 +43,17 @@ public class PocketBiomeSource {
 	}
 	
 //	private final long seed;
-	private final Random random1, random2, random3;
-	private final PocketPerlinNoise noise1, noise2, noise3;
+	
+	// this offset(char)[4-12] seems like a temporary cache. Seems like used by RandomLevelSource::getHeights
+	// this offset(char)[12-36] seems staying at 0
+	
+	@PocketNativeType("(char*)this + 48") private final Random random1;
+	@PocketNativeType("(char*)this + 2552") private final Random random2;
+	@PocketNativeType("(char*)this + 5056") private final Random random3;
+	
+	@PocketNativeType("(char*)this + 36") private final PocketPerlinNoise noise1;
+	@PocketNativeType("(char*)this + 40") private final PocketPerlinNoise noise2;
+	@PocketNativeType("(char*)this + 44") private final PocketPerlinNoise noise3;
 	
 	public PocketBiomeSource() {
 		this(System.currentTimeMillis());

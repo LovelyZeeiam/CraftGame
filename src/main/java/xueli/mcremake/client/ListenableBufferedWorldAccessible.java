@@ -36,7 +36,7 @@ public class ListenableBufferedWorldAccessible extends BufferedWorldAccessible {
 		blockChangeList.put(new Vector3i(x, y, z), block);
 		commandBuffer.add(() -> {
 			world.setBlock(x, y, z, block);
-			bus.post(new WorldEvents.ModifyBlockEvent(x, y, z));
+			bus.post(new ClientInternalEvents.ModifyBlockEvent(x, y, z));
 		});
 		
 	}
@@ -45,7 +45,7 @@ public class ListenableBufferedWorldAccessible extends BufferedWorldAccessible {
 	public void modifyBlockTag(int x, int y, int z, Consumer<CompoundMap> c) {
 		commandBuffer.add(() -> {
 			world.modifyBlockTag(x, y, z, c);
-			bus.post(new WorldEvents.ModifyBlockEvent(x, y, z));
+			bus.post(new ClientInternalEvents.ModifyBlockEvent(x, y, z));
 		});
 		
 	}
