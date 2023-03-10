@@ -6,7 +6,7 @@ import org.lwjgl.utils.vector.Vector3f;
 import xueli.game2.renderer.legacy.BackRenderBuffer;
 import xueli.game2.renderer.legacy.RenderBuffer;
 import xueli.game2.resource.ResourceHolder;
-import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.ResourceIdentifier;
 import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.client.renderer.gui.MyRenderBuffer2D;
 import xueli.mcremake.client.renderer.gui.RenderTypeTexture2D;
@@ -17,7 +17,7 @@ import xueli.mcremake.client.renderer.gui.RenderTypeTexture2D;
 @Deprecated
 public class UniversalBackgroundRenderer implements ResourceHolder {
 
-	public static final ResourceLocation UNIVERSAL_BACKGROUND_RESOURCE_LOCATION = new ResourceLocation("minecraft", "gui/background.png");
+	public static final ResourceIdentifier UNIVERSAL_BACKGROUND_RESOURCE_LOCATION = new ResourceIdentifier("minecraft", "gui/background.png");
 	public static final int BG_SIZE = 128;
 	public static final Vector3f BG_COLOR = new Vector3f(0.3f, 0.3f, 0.3f);
 

@@ -24,8 +24,8 @@ public class WorldDimension implements WorldAccessible {
 
 	public void init() {
 		PocketEditionChunkProvider chunkGenerator = new PocketEditionChunkProvider();
-		for (int i = 0; i < -4; i++) {
-			for (int j = 0; j < 4; j++) {
+		for (int i = -8; i < 8; i++) {
+			for (int j = -8; j < 8; j++) {
 				Chunk chunk = new Chunk(this);
 //				for (int l = 0; l < Chunk.CHUNK_SIZE; l++) {
 //					for (int m = 0; m < Chunk.CHUNK_SIZE; m++) {

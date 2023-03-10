@@ -16,7 +16,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.utils.vector.Vector2f;
 
 import xueli.game2.resource.Resource;
-import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.ResourceIdentifier;
 import xueli.game2.resource.manager.SubResourceManager;
 import xueli.game2.resource.submanager.render.texture.TextureLoaderLegacy;
 import xueli.game2.resource.submanager.render.texture.TextureMissing;
@@ -26,15 +26,15 @@ public class AtlasTextureRenderResource extends SubResourceManager {
 	
 	private final ArrayList<RegisterData> registerData = new ArrayList<>();
 	private final ArrayList<Integer> registeredTexture = new ArrayList<>();
-	private final HashMap<ResourceLocation, HashMap<String, AtlasResourceHolder>> atlasHolders = new HashMap<>();
+	private final HashMap<ResourceIdentifier, HashMap<String, AtlasResourceHolder>> atlasHolders = new HashMap<>();
 
 	public AtlasTextureRenderResource(TextureRenderResource superiorManager) {
 		super(superiorManager);
 	}
 
-	private record RegisterData(ResourceLocation path, Predicate<String> selector) {}
+	private record RegisterData(ResourceIdentifier path, Predicate<String> selector) {}
 
-	public void findAndRegister(ResourceLocation path, Predicate<String> selector) {
+	public void findAndRegister(ResourceIdentifier path, Predicate<String> selector) {
 		registerData.add(new RegisterData(path, selector));
 
 		List<Resource> resources = null;
@@ -99,12 +99,12 @@ public class AtlasTextureRenderResource extends SubResourceManager {
 
 	}
 
-	public Map<String, AtlasResourceHolder> getAllHolders(ResourceLocation path) {
+	public Map<String, AtlasResourceHolder> getAllHolders(ResourceIdentifier path) {
 		HashMap<String, AtlasResourceHolder> map = atlasHolders.get(path);
 		return map;
 	}
 
-	public AtlasResourceHolder getHolder(ResourceLocation path, String name) {
+	public AtlasResourceHolder getHolder(ResourceIdentifier path, String name) {
 		HashMap<String, AtlasResourceHolder> map = atlasHolders.get(path);
 		if(map == null)
 			return null;

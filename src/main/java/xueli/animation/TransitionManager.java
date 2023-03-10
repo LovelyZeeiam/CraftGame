@@ -8,6 +8,10 @@ public class TransitionManager {
 		this.animator = animator;
 	}
 	
+	public TransitionCaller registerNewTransition(TransitionBinding binding) {
+		return this.registerNewTransition(binding, Curves.linear, 0);
+	}
+	
 	public TransitionCaller registerNewTransition(TransitionBinding binding, Curve curve, long duration) {
 		TransitionCaller caller = new TransitionCaller() {
 			private AnimationInstance previous;

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import xueli.game2.resource.Resource;
-import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.ResourceIdentifier;
 
 public class SubResourceManager extends ChainedResourceManager {
 	
@@ -21,12 +21,12 @@ public class SubResourceManager extends ChainedResourceManager {
 	}
 
 	@Override
-	public Resource getResource(ResourceLocation location) throws IOException {
+	public Resource getResource(ResourceIdentifier location) throws IOException {
 		return upperResourceManager.getResource(location);
 	}
 
 	@Override
-	public List<Resource> findResources(ResourceLocation location, Predicate<String> fileNamePredicate)
+	public List<Resource> findResources(ResourceIdentifier location, Predicate<String> fileNamePredicate)
 			throws IOException {
 		return upperResourceManager.findResources(location, fileNamePredicate);
 	}

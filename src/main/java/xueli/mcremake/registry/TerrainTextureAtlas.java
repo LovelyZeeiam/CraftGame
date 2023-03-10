@@ -4,13 +4,13 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.utils.vector.Vector2f;
 
 import xueli.game2.resource.ResourceHolder;
-import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.ResourceIdentifier;
 import xueli.game2.resource.submanager.render.texture.atlas.AtlasResourceHolder;
 import xueli.mcremake.client.CraftGameClient;
 
 public class TerrainTextureAtlas implements ResourceHolder {
 
-	public static ResourceLocation TERRAIN_TEXTURE_LOCATION = new ResourceLocation("minecraft", "terrain.png");
+	public static ResourceIdentifier TERRAIN_TEXTURE_LOCATION = new ResourceIdentifier("minecraft", "terrain.png");
 
 	private final CraftGameClient ctx;
 	private int textureId;

@@ -22,6 +22,8 @@ public abstract class Service<T> {
 		
 		updateTimer.start();
 		
+		this.started = true;
+		
 	}
 	
 	protected abstract void updateTimer();

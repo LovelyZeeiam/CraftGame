@@ -2,11 +2,11 @@ package xueli.game2.resource.submanager.render.texture;
 
 import java.io.IOException;
 
-import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.ResourceIdentifier;
 import xueli.game2.resource.manager.ChainedResourceManager;
 import xueli.game2.resource.submanager.render.RenderResource;
 
-public class TextureRenderResource extends RenderResource<ResourceLocation, Texture> {
+public class TextureRenderResource extends RenderResource<ResourceIdentifier, Texture> {
 	
 	private static final TextureLoaderLegacy LEGACY_LOADER = new TextureLoaderLegacy();
 	
@@ -16,7 +16,7 @@ public class TextureRenderResource extends RenderResource<ResourceLocation, Text
 	}
 	
 	@Override
-	protected Texture doRegister(ResourceLocation k, boolean must) {
+	protected Texture doRegister(ResourceIdentifier k, boolean must) {
 		
 		try {
 			return LEGACY_LOADER.registerTexture(k, getUpperResourceManager());
@@ -29,7 +29,7 @@ public class TextureRenderResource extends RenderResource<ResourceLocation, Text
 	}
 	
 	@Override
-	protected void close(ResourceLocation k, Texture v) {
+	protected void close(ResourceIdentifier k, Texture v) {
 		LEGACY_LOADER.releaseTexture(v);
 	}
 	

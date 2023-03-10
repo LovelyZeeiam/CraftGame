@@ -7,14 +7,14 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 import xueli.game2.resource.Resource;
-import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.ResourceIdentifier;
 import xueli.game2.resource.provider.ClassLoaderResourceProvider;
 
 public class MojanglesFontWidthGenerator {
 
 	public static void main(String[] args) throws IOException {
 		ClassLoaderResourceProvider resourceManager = new ClassLoaderResourceProvider();
-		Resource resource = resourceManager.getResource(new ResourceLocation("minecraft", "font/default.png"));
+		Resource resource = resourceManager.getResource(new ResourceIdentifier("minecraft", "font/default.png"));
 		InputStream in = resource.openInputStream();
 		BufferedImage image = ImageIO.read(in);
 		in.close();

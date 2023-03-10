@@ -5,16 +5,16 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import xueli.game2.resource.Resource;
-import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.ResourceIdentifier;
 
 public interface ResourceProvider {
 
-	public Resource getResource(ResourceLocation location) throws IOException;
+	public Resource getResource(ResourceIdentifier location) throws IOException;
 
 	/**
 	 * Find resource <b>files</b> only in the root of the pack
 	 */
-	public List<Resource> findResources(ResourceLocation location, Predicate<String> fileNamePredicate)
+	public List<Resource> findResources(ResourceIdentifier location, Predicate<String> fileNamePredicate)
 			throws IOException;
 
 }

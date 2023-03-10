@@ -2,12 +2,12 @@ package xueli.mcremake.client.gui.universal;
 
 import xueli.game2.renderer.ui.Gui;
 import xueli.game2.resource.ResourceHolder;
-import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.ResourceIdentifier;
 import xueli.mcremake.client.CraftGameClient;
 
 public class UniversalGui implements ResourceHolder {
 
-	public static final ResourceLocation FONT_RESOURCE_LOCATION = new ResourceLocation("minecraft", "font/default.ttf");
+	public static final ResourceIdentifier FONT_RESOURCE_LOCATION = new ResourceIdentifier("minecraft", "font/default.ttf");
 //	private int gameFontId;
 
 	private final CraftGameClient ctx;

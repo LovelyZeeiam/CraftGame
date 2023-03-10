@@ -32,7 +32,7 @@ public class TransitionBindings {
 						(int) (oldSize.height + (newSize.height - oldSize.height) * val)
 				));
 				// https://www.dovov.com/swing-guivalidaterevalidateinvalidate.html
-				component.revalidate();
+				component.revalidate(); // But it can cause lag because every time it will call to layout all the components
 				
 			}
 		};
@@ -62,6 +62,27 @@ public class TransitionBindings {
 			@Override
 			public void animProgress(double val) {
 				accessible.set(component, (oldValue + (newValue - oldValue) * val));
+			}
+			
+		};
+	}
+
+	public static <C> TransitionBinding newBindingNumber(C c, AnimationValueProvider<Double> valueProvider, PropertyAccessible<C, Double> accessible) {
+		return new TransitionBinding() {
+			
+			private double oldValue, newValue;
+			
+			@Override
+			public void animStart() {
+				this.oldValue = valueProvider.getStart();
+				this.newValue = valueProvider.getEnd();
+				super.animStart();
+				
+			}
+			
+			@Override
+			public void animProgress(double val) {
+				accessible.set(c, (oldValue + (newValue - oldValue) * val));
 			}
 			
 		};

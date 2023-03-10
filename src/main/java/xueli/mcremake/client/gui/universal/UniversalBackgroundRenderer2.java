@@ -4,12 +4,12 @@ import java.awt.Color;
 import java.util.Random;
 
 import xueli.game2.renderer.ui.Gui;
-import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.ResourceIdentifier;
 import xueli.mcremake.client.CraftGameClient;
 
 public class UniversalBackgroundRenderer2 {
 
-	public static final ResourceLocation UNIVERSAL_BACKGROUND_RESOURCE_LOCATION = new ResourceLocation("minecraft", "gui/background.png");
+	public static final ResourceIdentifier UNIVERSAL_BACKGROUND_RESOURCE_LOCATION = new ResourceIdentifier("minecraft", "gui/background.png");
 	public static final Color TOP_COLOR = new Color(0, 0, 0, 0.7f);
 
 	public static final int SIZE = 128;

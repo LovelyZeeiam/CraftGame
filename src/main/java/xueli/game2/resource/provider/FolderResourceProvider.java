@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.ResourceIdentifier;
 
 public class FolderResourceProvider extends URLResourceProvider {
 
@@ -20,7 +20,7 @@ public class FolderResourceProvider extends URLResourceProvider {
 	}
 
 	@Override
-	protected String toVirtualPath(ResourceLocation location) {
+	protected String toVirtualPath(ResourceIdentifier location) {
 		return folderFile.getPath() + "/" + location.namespace() + "/" + location.location();
 	}
 

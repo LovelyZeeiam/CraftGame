@@ -43,9 +43,9 @@ public class PerlinNoise {
 	}
 	
 	public PerlinNoise(Random r) {
-		this.xo = r.nextFloat() * 256.0; // Origin: (double)random.genrand_int32() * 2.32830644e-10
-		this.yo = r.nextFloat() * 256.0;
-		this.zo = r.nextFloat() * 256.0;
+		this.xo = r.nextDouble(256.0); // Origin: (double)random.genrand_int32() * 2.32830644e-10
+		this.yo = r.nextDouble(256.0);
+		this.zo = r.nextDouble(256.0);
 		
 		perm = new int[512];
 		for(int i = 0; i < 256; i++) {
@@ -172,29 +172,27 @@ public class PerlinNoise {
 					double v49 = (i + v38) * a9 + this.xo;
 					int v49_floor = (int) Math.floor(v49); // Maybe casting it directly is faster
 					double v49_remain = v49 - v49_floor;
+					v49_floor = Math.floorMod(v49_floor, 256); // Cast to unsigned __int8
+					
 					if(a8 > 0) {
-						double v57 = this.fade(v49_remain);
+						double v49_fade = this.fade(v49_remain);
 						for(int j = 0; j < a8; j++) {
 							double v58 = (j + a5) * a11 + this.zo;
 							int v58_floor = (int) Math.floor(v58);
 							double v58_remain = v58 - v58_floor;
+							v58_floor = Math.floorMod(v58_floor, 256); // Cast to unsigned __int8
 							
-							if(v49_floor < 0) {
-								System.out.println();
-							}
 							
-							int v62 = v58_floor + perm[
-							                           	perm[v49_floor]
-					                        		   ]; // java.lang.ArrayIndexOutOfBoundsException: Index -3038 out of bounds for length 512
+							int v62 = v58_floor + perm[perm[v49_floor]]; 
 							int v64 = v58_floor + perm[perm[v49_floor + 1]];
 							
-							double v65 = grad2(perm[v62], v49_remain, v58_remain);
+							double v65 = grad2(perm[v62], v49_remain, v58_remain); // Index 574 out of bounds for length 512
 							double v66 = grad(perm[v64], v49_remain - 1.0, 0.0, v58_remain);
-							double v67 = lerp(v57, v65, v66);
+							double v67 = lerp(v49_fade, v65, v66);
 							
 							double v68 = grad(perm[v62 + 1], v49_remain, 0.0, v58_remain - 1.0);
 							double v69 = grad(perm[v64 + 1], v49_remain - 1.0, 0.0, v58_remain - 1.0);
-							double v70 = lerp(v57, v68, v69);
+							double v70 = lerp(v49_fade, v68, v69);
 							
 							double result = lerp(fade(v58_remain), v67, v70);
 							v39[v74] += result / a12;
@@ -210,29 +208,35 @@ public class PerlinNoise {
 			double v58 = 0.0, v57 = 0.0, v56 = 0.0, v55 = 0.0;
 			for(int k = 0; k < a6; k++) {
 				double v52 = (k + v38) * a9 + this.xo;
-				int v52_int = (int) Math.floor(v52);
-				double v52_remain = v52 - v52_int;
+				int v52_floor = (int) Math.floor(v52);
+				double v52_remain = v52 - v52_floor;
 				double v52_fade = fade(v52_remain);
+				v52_floor = Math.floorMod(v52_floor, 256); // Cast to unsigned __int8
+				
 				for(int l = 0; l < a8; l++) {
 					double v47 = (l + a5) * a11 + this.zo;
-					int v47_int = (int) Math.floor(v47);
-					double v47_remain = v47 - v47_int;
+					int v47_floor = (int) Math.floor(v47);
+					double v47_remain = v47 - v47_floor;
 					double v47_fade = fade(v47_remain);
+					v47_floor = Math.floorMod(v47_floor, 256); // Cast to unsigned __int8
+					
 					for(int m = 0; m < a7; m++) {
 						double v43 = (m + v37) * a10 + this.yo;
-						int v43_int = (int) Math.floor(v43);
-						double v43_remain = v43 - v43_int;
+						int v43_floor = (int) Math.floor(v43);
+						double v43_remain = v43 - v43_floor;
 						double v43_fade = fade(v43_remain);
-						if(m == 0 || v43_int != v59) {
-							v59 = v43_int;
+						v43_floor = Math.floorMod(v43_floor, 256); // Cast to unsigned __int8
+						
+						if(m == 0 || v43_floor != v59) {
+							v59 = v43_floor;
 							
-							int v21 = v43_int + perm[v52_int];
-							int v22 = v47_int + perm[v21];
-							int v23 = v47_int + perm[v21 + 1];
+							int v21 = v43_floor + perm[v52_floor];
+							int v22 = v47_floor + perm[v21];
+							int v23 = v47_floor + perm[v21 + 1];
 							
-							int v24 = v43_int + perm[v52_int + 1];
-							int v25 = v47_int + perm[v24];
-							int v26 = v47_int + perm[v24 + 1];
+							int v24 = v43_floor + perm[v52_floor + 1];
+							int v25 = v47_floor + perm[v24];
+							int v26 = v47_floor + perm[v24 + 1];
 							
 							double v27 = grad(perm[v22], v52_remain, v43_remain, v47_remain);
 							double v28 = grad(perm[v25], v52_remain - 1.0, v43_remain, v47_remain);

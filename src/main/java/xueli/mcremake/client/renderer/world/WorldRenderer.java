@@ -51,11 +51,12 @@ public class WorldRenderer implements ResourceHolder {
 		this.camera.setCamera(camera);
 	}
 
-	public void onCreateNewChunk(ClientInternalEvents.NewChunkEvent event) {
+	private void onCreateNewChunk(ClientInternalEvents.NewChunkEvent event) {
 		chunkRebuiltList.add(new Vector2i(event.x(), event.z()));
+		
 	}
 
-	public void onModifyBlock(ClientInternalEvents.ModifyBlockEvent event) {
+	private void onModifyBlock(ClientInternalEvents.ModifyBlockEvent event) {
 		Vector2i inChunkPos = new Vector2i();
 		Vector2i chunkPos = Chunk.toChunkPos(event.x(), event.z(), inChunkPos);
 		chunkRebuiltList.add(chunkPos);
@@ -75,7 +76,7 @@ public class WorldRenderer implements ResourceHolder {
 
 	}
 
-	public void onRemoveChunk(ClientInternalEvents.UnloadChunkEvent event) {
+	private void onRemoveChunk(ClientInternalEvents.UnloadChunkEvent event) {
 		chunkRemoveList.add(new Vector2i(event.x(), event.z()));
 	}
 

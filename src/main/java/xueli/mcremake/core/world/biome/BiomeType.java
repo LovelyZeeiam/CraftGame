@@ -1,6 +1,6 @@
 package xueli.mcremake.core.world.biome;
 
-import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.ResourceIdentifier;
 
-public record BiomeType(ResourceLocation namespace, String name) {
+public record BiomeType(ResourceIdentifier namespace, String name) {
 }

@@ -13,7 +13,7 @@ import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.ResourceIdentifier;
 
 public class ClassLoaderResourceProvider extends URLResourceProvider {
 
@@ -43,7 +43,7 @@ public class ClassLoaderResourceProvider extends URLResourceProvider {
 	}
 
 	@Override
-	protected String toVirtualPath(ResourceLocation location) {
+	protected String toVirtualPath(ResourceIdentifier location) {
 		return ROOT_FOLDER + location.namespace() + "/" + location.location();
 	}
 

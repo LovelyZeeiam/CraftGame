@@ -10,7 +10,7 @@ import org.lwjgl.utils.vector.Vector3f;
 import xueli.game2.math.MatrixHelper;
 import xueli.game2.renderer.legacy.FrameBuffer;
 import xueli.game2.resource.ResourceHolder;
-import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.ResourceIdentifier;
 import xueli.game2.resource.submanager.render.texture.Texture;
 import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.client.renderer.world.ChunkRenderBuildManager;
@@ -33,7 +33,7 @@ public class BlockIconGenerator implements ResourceHolder {
 	
 	private final CraftGameClient ctx;
 	
-	private final HashMap<ResourceLocation, FrameBuffer> icons = new HashMap<>();
+	private final HashMap<ResourceIdentifier, FrameBuffer> icons = new HashMap<>();
 	
 	public BlockIconGenerator(CraftGameClient ctx) {
 		this.ctx = ctx;
@@ -87,12 +87,12 @@ public class BlockIconGenerator implements ResourceHolder {
 		
 	}
 	
-	public Texture getTextureId(ResourceLocation loc) {
+	public Texture getTextureId(ResourceIdentifier loc) {
 		FrameBuffer frame;
 		return (frame = icons.get(loc)) == null ? null : new Texture(frame.getTextureId(), FRAME_BUFFER_SIZE, FRAME_BUFFER_SIZE);
 	}
 	
-	public void ForEach(BiConsumer<ResourceLocation, Texture> c) {
+	public void ForEach(BiConsumer<ResourceIdentifier, Texture> c) {
 		icons.forEach((n, f) -> c.accept(n, new Texture(f.getTextureId(), FRAME_BUFFER_SIZE, FRAME_BUFFER_SIZE)));
 	}
 	

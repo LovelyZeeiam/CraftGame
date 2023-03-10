@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import xueli.clock.ClockFrame;
-import xueli.game2.resource.ResourceLocation;
+import xueli.game2.resource.ResourceIdentifier;
 import xueli.swingx.component.ImageView;
 
 public class UserInfoPanel extends JPanel {
@@ -26,7 +26,7 @@ public class UserInfoPanel extends JPanel {
 		
 		ImageView lblUserIcon = null;
 		try {
-			lblUserIcon = new ImageView(ImageIO.read(ClockFrame.RESOURCE_PROVIDER.getResource(new ResourceLocation("clock", "images/user_icon.jpg")).openInputStream()), true);
+			lblUserIcon = new ImageView(ImageIO.read(ClockFrame.RESOURCE_PROVIDER.getResource(new ResourceIdentifier("clock", "images/user_icon.jpg")).openInputStream()), true);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

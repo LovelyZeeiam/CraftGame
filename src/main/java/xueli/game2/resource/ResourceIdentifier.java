@@ -2,23 +2,23 @@ package xueli.game2.resource;
 
 import java.util.Objects;
 
-public record ResourceLocation(String namespace, String location) {
+public record ResourceIdentifier(String namespace, String location) {
 
-	public ResourceLocation(String location) {
+	public ResourceIdentifier(String location) {
 		this("default", location);
 	}
 
-	public static ResourceLocation serialize(String str) {
+	public static ResourceIdentifier serialize(String str) {
 		str = str.trim();
 		int separatorIndex = str.indexOf(':');
 		if (separatorIndex < 0) {
-			return new ResourceLocation(str);
+			return new ResourceIdentifier(str);
 		} else {
 			String namespace = str.substring(0, separatorIndex);
 			String location = str.substring(separatorIndex);
 			if (namespace.isBlank())
-				return new ResourceLocation(location);
-			return new ResourceLocation(namespace, location);
+				return new ResourceIdentifier(location);
+			return new ResourceIdentifier(namespace, location);
 		}
 	}
 
@@ -31,7 +31,7 @@ public record ResourceLocation(String namespace, String location) {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		ResourceLocation that = (ResourceLocation) o;
+		ResourceIdentifier that = (ResourceIdentifier) o;
 		return namespace.equals(that.namespace) && location.equals(that.location);
 	}
 

@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import xueli.swingx.layout.LayoutListener;
 
+@Deprecated
 public class Responsive {
 	
 	private static final HashMap<Container, Responsive> responsives = new HashMap<>();

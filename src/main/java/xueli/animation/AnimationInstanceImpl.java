@@ -33,7 +33,7 @@ class AnimationInstanceImpl implements AnimationInstance {
 	 * @return Whether the animation needs ticking
 	 */
 	boolean tick(long currentTime) {	
-		if(currentTime > endTime) {
+		if(currentTime >= endTime) {
 			this.stage = AnimationStage.STOP;
 			this.progress = 1.0;
 			this.binding.animEnd();

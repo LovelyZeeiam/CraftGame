@@ -10,5 +10,5 @@ public class ClientInternalEvents {
 
 	public record UnloadChunkEvent(int x, int z) {
 	}
-
+	
 }

@@ -6,6 +6,9 @@ import xueli.mcremake.core.world.biome.BiomeType;
 import xueli.mcremake.registry.GameRegistry;
 import xueli.mcremake.registry.PocketNativeType;
 
+/**
+ * Stored in (_DWORD)(Dimension*)this + 8)
+ */
 @PocketNativeType("BiomeSource")
 public class PocketBiomeSource {
 	
@@ -71,7 +74,9 @@ public class PocketBiomeSource {
 		
 	}
 	
-	public void getBiomeBlock(BiomeType[] dest, int a3, int a4, int a5, int a6) {
+	public BiomeType[] getBiomeBlock(BiomeType[] dest, int a3, int a4, int a5, int a6) {
+		if(dest == null) dest = new BiomeType[a5 * a6];
+		
 		double[] of1 = new double[256];
 		noise1.getRegion(of1, a3, a4, a5, a5, 0.025, 0.025, 0.25);
 		
@@ -101,14 +106,12 @@ public class PocketBiomeSource {
 				int v14_int = (int) (v14 * 63.0);
 				dest[j + i * a6] = BIOME_MAP[v14_int + (v13_int << 6)];
 				
-//				System.out.print(String.format("%5d", biomeMapKey));
 				v17++;
 				
 			}
-//			System.out.println();
 		}
-//		System.out.println("===== " + a3 + ", " + a4);
 		
+		return dest; 
 	}
 	
 	

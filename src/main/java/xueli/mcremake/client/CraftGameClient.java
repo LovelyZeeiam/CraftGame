@@ -47,6 +47,7 @@ import xueli.utils.events.EventBus;
  * and spread the ticket and load it until it got under zero) but at first I should have the chunk generator
  * done.
  * 2. Also set 2 state of a chunk, "LOADING", "DONE", determining whether the chunk is ready to go
+ * 3. Separate BlockInfo and BlockRenderer, and in WorldRenderer class, we just attach the certain block renderer to the BlockInfo 
  * 
  */
 public class CraftGameClient extends GameDisplay {
@@ -81,7 +82,7 @@ public class CraftGameClient extends GameDisplay {
 	private ItemType currentItemType = GameRegistry.ITEM_BLOCK_DIRT;
 	
 	public CraftGameClient() {
-		super(800, 600, "Minecraft Classic Forever");
+		super(1280, 720, "Minecraft Classic Forever");
 		
 	}
 	
@@ -121,7 +122,7 @@ public class CraftGameClient extends GameDisplay {
 
 		this.player = new ClientPlayer(this);
 		this.player.x = 0;
-		this.player.y = 16;
+		this.player.y = 100;
 		this.player.z = 0;
 		this.picker = new PickCollider(this.bufferedWorld);
 
