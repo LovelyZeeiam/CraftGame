@@ -130,7 +130,7 @@ public class CraftGameClient extends GameDisplay {
 
 	@Override
 	protected void render() {
-		GL30.glClearColor(0.5f, 0.5f, 0.8f, 1.0f);
+		GL30.glClearColor(0.7f, 0.7f, 1.0f, 1.0f);
 
 		this.player.inputRefresh();
 		for (int i = 0; i < timer.getNumShouldTick(); i++) {

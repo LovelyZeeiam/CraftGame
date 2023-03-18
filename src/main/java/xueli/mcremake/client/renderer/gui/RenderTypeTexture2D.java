@@ -5,6 +5,8 @@ import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
 
+import java.util.function.Predicate;
+
 import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector2f;
 
@@ -63,16 +65,17 @@ void main(){
 	}
 
 	@Override
-	public void render() {
+	public void render(Predicate<Integer> selector) {
 		this.shader.bind();
 		buffers.forEach((i, a) -> {
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, i);
-			a.render();
-			glBindTexture(GL_TEXTURE_2D, 0);
+			if(selector.test(i)) {
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, i);
+				a.render();
+				glBindTexture(GL_TEXTURE_2D, 0);
+			}
 		});
 		this.shader.unbind();
-
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import xueli.game2.camera3d.BoundCamera;
 import xueli.game2.camera3d.ICamera;
 import xueli.game2.display.Display;
 import xueli.game2.ecs.ResourceListGeneric;
+import xueli.game2.math.Frustum;
 import xueli.game2.math.MatrixHelper;
 import xueli.game2.renderer.legacy.RenderBuffer;
 import xueli.game2.resource.ResourceHolder;
@@ -117,12 +118,13 @@ public class WorldRenderer implements ResourceHolder {
 		Display display = ctx.getDisplay();
 
 		this.viewMatrix = camera.getCameraMatrix();
-		this.projMatrix = MatrixHelper.perspective(display.getWidth(), display.getHeight(), 110.0f, 0.01f, 999999.9f);
-
+		this.projMatrix = MatrixHelper.perspective(display.getWidth(), display.getHeight(), 110.0f, 0.01f, 99999.9f); // Really shouldn't make "99999" larger, or in frustum culling it will throw an NAN
+		Frustum frustum = new Frustum(projMatrix, viewMatrix); // New allocation seems like a much costing time, so we should make something like object pool
+		
 		for (ChunkRenderType type : renderTypes.values()) {
 			type.applyMatrix("viewMatrix", viewMatrix);
 			type.applyMatrix("projMatrix", projMatrix);
-			type.render();
+			type.cullRender(frustum);
 		}
 
 	}

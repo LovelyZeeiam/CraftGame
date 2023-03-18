@@ -1,7 +1,10 @@
 package xueli.mcremake.client.renderer.world;
 
+import java.util.function.Predicate;
+
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.utils.vector.Matrix4f;
+import org.lwjgl.utils.vector.Vector2i;
 
 import xueli.game2.ecs.ResourceListImpl;
 import xueli.game2.resource.submanager.render.shader.Shader;
@@ -61,12 +64,12 @@ void main(){
 	}
 
 	@Override
-	public void render() {
+	public void render(Predicate<Vector2i> selector) {
 		GL30.glEnable(GL30.GL_DEPTH_TEST);
 		GL30.glEnable(GL30.GL_CULL_FACE);
 		this.shader.bind();
 		texture.bind();
-		super.render();
+		super.render(selector);
 		texture.unbind();
 		this.shader.unbind();
 		GL30.glDisable(GL30.GL_DEPTH_TEST);

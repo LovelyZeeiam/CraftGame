@@ -113,17 +113,18 @@ public class PocketEditionChunkProvider {
 				int v16 = (int) (v10 + thisChunkRandom.nextDouble() * 0.25);
 				int v15 = -1;
 				
+				BlockType v21 = GameRegistry.BLOCK_GRASS, v20 = GameRegistry.BLOCK_DIRT;
+				
 				for(int k = 127; k >= 0; k--) {
-					double result = thisChunkRandom.nextInt(5);
+					int result = thisChunkRandom.nextInt(5);
 					BlockType temp;
 					if(result >= k) {
 						chunk.setBlock(j, k, i, GameRegistry.BLOCK_BEDROCK);
 					} else if((temp = chunk.getBlock(j, k, i)) != null) {
 						if(temp == GameRegistry.BLOCK_STONE) {
-							BlockType v21 = GameRegistry.BLOCK_GRASS, v20 = GameRegistry.BLOCK_DIRT;
 							if(v15 == -1) {
 								if(v16 > 0) {
-									if(k >= 60 && k <= 65) {
+									if(k >= 60 && k <= 80) { // Make 80 change to see if there remains stone
 										v21 = GameRegistry.BLOCK_GRASS;
 										v20 = GameRegistry.BLOCK_DIRT;
 										if(v22) {

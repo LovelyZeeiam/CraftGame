@@ -27,8 +27,8 @@ public abstract class RenderType<T> {
 		return buffer;
 	}
 
-	public void render() {
-		buffers.values().forEach(RenderBuffer::render);
+	public final void render() {
+		this.render(t -> true);
 	}
 	
 	public void render(Predicate<T> selector) {
@@ -36,7 +36,8 @@ public abstract class RenderType<T> {
 			if(selector.test(t)) {
 				b.render();
 			}
-		});;
+		});
+		
 	}
 
 	public abstract void applyMatrix(String name, Matrix4f matrix);

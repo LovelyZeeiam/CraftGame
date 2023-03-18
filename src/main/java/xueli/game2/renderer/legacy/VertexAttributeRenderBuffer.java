@@ -2,7 +2,6 @@ package xueli.game2.renderer.legacy;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import xueli.game2.renderer.legacy.buffer.AttributeBuffer;
 import xueli.game2.renderer.legacy.buffer.BufferStorable;
 import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;

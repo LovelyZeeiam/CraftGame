@@ -1,12 +1,11 @@
 package xueli.linotebook;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
 import xueli.linotebook.noteeditor.NoteEditorPanel;
-
-import java.awt.BorderLayout;
 
 // LEARN: We can seemingly get clip bound of a Graphic instance to know where we need to repaint
 public class LiNotebookUI {

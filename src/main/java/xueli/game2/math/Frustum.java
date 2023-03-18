@@ -89,33 +89,29 @@ public class Frustum {
 		return true;
 	}
 
-//	public boolean isBlockInFrustum(int x, int y, int z) {
-//		for (int p = 0; p < 6; p++) {
-//			if (frustumPlane[p][0] * x + frustumPlane[p][1] * y + frustumPlane[p][2] * z + frustumPlane[p][3] > 0)
-//				continue;
-//			if (frustumPlane[p][0] * (x + 1) + frustumPlane[p][1] * y + frustumPlane[p][2] * z + frustumPlane[p][3] > 0)
-//				continue;
-//			if (frustumPlane[p][0] * x + frustumPlane[p][1] * (y + 1) + frustumPlane[p][2] * z + frustumPlane[p][3] > 0)
-//				continue;
-//			if (frustumPlane[p][0] * (x + 1) + frustumPlane[p][1] * (y + 1) + frustumPlane[p][2] * z
-//					+ frustumPlane[p][3] > 0)
-//				continue;
-//			if (frustumPlane[p][0] * x + frustumPlane[p][1] * y + frustumPlane[p][2] * (z + 1) + frustumPlane[p][3] > 0)
-//				continue;
-//			if (frustumPlane[p][0] * (x + 1) + frustumPlane[p][1] * y + frustumPlane[p][2] * (z + 1)
-//					+ frustumPlane[p][3] > 0)
-//				continue;
-//			if (frustumPlane[p][0] * x + frustumPlane[p][1] * (y + 1) + frustumPlane[p][2] * (z + 1)
-//					+ frustumPlane[p][3] > 0)
-//				continue;
-//			if (frustumPlane[p][0] * (x + 1) + frustumPlane[p][1] * (y + 1) + frustumPlane[p][2] * (z + 1)
-//					+ frustumPlane[p][3] > 0)
-//				continue;
-//			return false;
-//		}
-//		return true;
-//	}
-//
+	public boolean isCubeInFrustum(double x1, double y1, double z1, double x2, double y2, double z2) {
+		for (int p = 0; p < 6; p++) {
+			if (frustumPlane[p][0] * x1 + frustumPlane[p][1] * y1 + frustumPlane[p][2] * z1 + frustumPlane[p][3] > 0)
+				continue;
+			if (frustumPlane[p][0] * x2 + frustumPlane[p][1] * y1 + frustumPlane[p][2] * z1 + frustumPlane[p][3] > 0)
+				continue;
+			if (frustumPlane[p][0] * x1 + frustumPlane[p][1] * y2 + frustumPlane[p][2] * z1 + frustumPlane[p][3] > 0)
+				continue;
+			if (frustumPlane[p][0] * x2 + frustumPlane[p][1] * y2 + frustumPlane[p][2] * z1 + frustumPlane[p][3] > 0)
+				continue;
+			if (frustumPlane[p][0] * x1 + frustumPlane[p][1] * y1 + frustumPlane[p][2] * z2 + frustumPlane[p][3] > 0)
+				continue;
+			if (frustumPlane[p][0] * x2 + frustumPlane[p][1] * y1 + frustumPlane[p][2] * z2 + frustumPlane[p][3] > 0)
+				continue;
+			if (frustumPlane[p][0] * x1 + frustumPlane[p][1] * y2 + frustumPlane[p][2] * z2 + frustumPlane[p][3] > 0)
+				continue;
+			if (frustumPlane[p][0] * x2 + frustumPlane[p][1] * y2 + frustumPlane[p][2] * z2 + frustumPlane[p][3] > 0)
+				continue;
+			return false;
+		}
+		return true;
+	}
+
 //	public boolean isChunkInFrustum(int x, int y, int z) {
 //		for (int p = 0; p < 6; p++) {
 //			if (frustumPlane[p][0] * x * 16 + frustumPlane[p][1] * y * 16 + frustumPlane[p][2] * z * 16
