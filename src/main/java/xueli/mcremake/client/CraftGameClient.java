@@ -7,6 +7,8 @@ import org.lwjgl.opengl.GL30;
 
 import xueli.game2.camera3d.MovableCamera;
 import xueli.game2.display.GameDisplay;
+import xueli.game2.display.event.WindowKeyEvent;
+import xueli.game2.display.event.WindowMouseButtonEvent;
 import xueli.game2.ecs.ResourceListImpl;
 import xueli.game2.input.DefaultKeyListener;
 import xueli.game2.input.DefaultMouseListener;
@@ -125,7 +127,10 @@ public class CraftGameClient extends GameDisplay {
 		this.player.y = 100;
 		this.player.z = 0;
 		this.picker = new PickCollider(this.bufferedWorld);
-
+		
+		this.clientEventBus.register(WindowKeyEvent.class, t -> keyListener.onKey(t.key(), t.scancode(), t.action(), t.mods()));
+		this.clientEventBus.register(WindowMouseButtonEvent.class, t -> mouseListener.onMouseButton(t.button(), t.action(), t.mods()));
+		
 	}
 
 	@Override
@@ -182,16 +187,6 @@ public class CraftGameClient extends GameDisplay {
 			this.currentItemType = GameRegistry.ITEM_BLOCK_STONE;
 		}
 		
-	}
-	
-	@Override
-	public void onKey(int key, int scancode, int action, int mods) {
-		keyListener.onKey(key, scancode, action, mods);
-	}
-	
-	@Override
-	public void onMouseButton(int button, int action, int mods) {
-		mouseListener.onMouseButton(button, action, mods);
 	}
 
 	@Override

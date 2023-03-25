@@ -7,6 +7,9 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
 import xueli.game2.Timer;
+import xueli.game2.display.event.WindowKeyEvent;
+import xueli.game2.display.event.WindowMouseButtonEvent;
+import xueli.game2.display.event.WindowSizedEvent;
 import xueli.game2.lifecycle.RunnableLifeCycle;
 import xueli.game2.renderer.ui.Gui;
 import xueli.game2.renderer.ui.OverlayManager;
@@ -17,10 +20,11 @@ import xueli.game2.resource.submanager.render.shader.ShaderRenderResource;
 import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
 import xueli.game2.resource.submanager.render.texture.atlas.AtlasTextureRenderResource;
 import xueli.game2.worker.GameWorker;
+import xueli.utils.events.EventBus;
 import xueli.utils.exception.CrashReport;
 import xueli.utils.logger.Logger;
 
-public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener, WindowSizeListener, MouseInputListener {
+public abstract class GameDisplay implements RunnableLifeCycle {
 	
 	private static final Logger LOGGER = new Logger();
 	
@@ -38,7 +42,9 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 	public final ShaderRenderResource shaderResource;
 	
 	public final OverlayManager overlayManager;
-
+	
+	public final EventBus clientEventBus = new EventBus();
+	
 	private final Gui gui;
 	
 	public GameDisplay(int initialWidth, int initialHeight, String mainTitle) {
@@ -61,9 +67,9 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 	@Override
 	public void init() {
 		this.display.create();
-		this.display.addKeyListener(this);
-		this.display.addWindowSizedListener(this);
-		this.display.addMouseInputListener(this);
+		this.display.addKeyListener((key, scancode, action, mods) -> clientEventBus.post(new WindowKeyEvent(key, scancode, action, mods)));
+		this.display.addWindowSizedListener((w, h) -> clientEventBus.post(new WindowSizedEvent(w, h)));
+		this.display.addMouseInputListener((btn, action, mods) -> clientEventBus.post(new WindowMouseButtonEvent(btn, action, mods)));
 		
 		this.resourceManager.addResourceHolder(this.gui);
 		this.resourceManager.addResourceHolder(this.overlayManager);
@@ -135,18 +141,6 @@ public abstract class GameDisplay implements RunnableLifeCycle, KeyInputListener
 	protected abstract void render();
 
 	protected abstract void renderRelease();
-
-	@Override
-	public void onSize(int width, int height) {
-	}
-	
-	@Override
-	public void onKey(int key, int scancode, int action, int mods) {
-	}
-
-	@Override
-	public void onMouseButton(int button, int action, int mods) {
-	}
 	
 	public void announceClose() {
 		this.display.setRunning(false);
