@@ -31,7 +31,6 @@
  */
 package org.lwjgl.utils.vector;
 
-import java.io.Serializable;
 import java.nio.FloatBuffer;
 
 /**
@@ -41,7 +40,7 @@ import java.nio.FloatBuffer;
  * @version $Revision$ $Id$
  */
 
-public class Matrix2f extends Matrix implements Serializable {
+public class Matrix2f extends Matrix {
 
 	private static final long serialVersionUID = 1L;
 

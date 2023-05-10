@@ -1,4 +1,4 @@
-package xueli.mcremake.registry;
+package xueli.mcremake.client;
 
 import java.util.HashMap;
 import java.util.function.BiConsumer;
@@ -12,10 +12,10 @@ import xueli.game2.renderer.legacy.FrameBuffer;
 import xueli.game2.resource.ResourceHolder;
 import xueli.game2.resource.ResourceIdentifier;
 import xueli.game2.resource.submanager.render.texture.Texture;
-import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.client.renderer.world.ChunkRenderBuildManager;
 import xueli.mcremake.client.renderer.world.ChunkRenderType;
 import xueli.mcremake.core.block.BlockType;
+import xueli.mcremake.registry.GameRegistry;
 import xueli.mcremake.registry.block.BlockRenderTypes;
 
 public class BlockIconGenerator implements ResourceHolder {
@@ -54,7 +54,7 @@ public class BlockIconGenerator implements ResourceHolder {
 	}
 	
 	private void genBlockIcons() {
-		BlockRenderTypes renderTypes = new BlockRenderTypes(ctx.getRenderResources());
+		BlockRenderTypes renderTypes = new BlockRenderTypes(ctx.renderResources);
 		
 		for (ChunkRenderType type : renderTypes.values()) {
 			type.applyMatrix("viewMatrix", viewMatrix);

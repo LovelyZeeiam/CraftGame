@@ -7,7 +7,7 @@ import xueli.mcremake.client.CraftGameClient;
 public class UseButtonHandler extends FunctionalKeyHandler {
 
 	public UseButtonHandler(CraftGameClient ctx) {
-		super(ctx, () -> ctx.mouseBindings.getKeyBinding(GLFW.GLFW_MOUSE_BUTTON_RIGHT));
+		super(ctx, ctx.state.keyBindings.getKeyBinding(GLFW.GLFW_MOUSE_BUTTON_RIGHT));
 	}
 	
 	private int blockPlaceCooldown = 0;
@@ -28,10 +28,8 @@ public class UseButtonHandler extends FunctionalKeyHandler {
 	}
 	
 	private void doUse() {
-		var itemListener = ctx.getCurrentItemType().listener();
-		if(itemListener != null) {
-			itemListener.onItemUse(ctx);
-		}
+		System.out.println("Use");
+		
 	}
 
 	@Override

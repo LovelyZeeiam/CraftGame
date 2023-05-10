@@ -1,0 +1,13 @@
+package xueli.mcremake.client;
+
+public interface GameSystem {
+
+    default public void start(CraftGameClient ctx) {};
+	
+	default public void tick(CraftGameClient ctx) {};
+
+	default public void update(CraftGameClient ctx) {};
+	
+	default public void release(CraftGameClient ctx) {};
+
+}

@@ -15,14 +15,14 @@ public class Vector implements Serializable {
 		x = y = z = rotX = rotY = rotZ = 0;
 	}
 
-	public Vector(float x, float y, float z) {
+	public Vector(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		rotX = rotY = rotZ = 0;
 	}
 
-	public Vector(float x, float y, float z, float rotX, float rotY, float rotZ) {
+	public Vector(double x, double y, double z, double rotX, double rotY, double rotZ) {
 		this.x = x;
 		this.y = y;
 		this.z = z;

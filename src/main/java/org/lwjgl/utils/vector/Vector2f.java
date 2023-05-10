@@ -31,7 +31,6 @@
  */
 package org.lwjgl.utils.vector;
 
-import java.io.Serializable;
 import java.nio.FloatBuffer;
 
 import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
@@ -43,7 +42,7 @@ import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
  * @version $Revision$ $Id$
  */
 
-public class Vector2f extends Vector implements Serializable, ReadableVector2f, WritableVector2f {
+public class Vector2f extends Vector implements ReadableVector2f, WritableVector2f {
 
 	private static final long serialVersionUID = 1L;
 

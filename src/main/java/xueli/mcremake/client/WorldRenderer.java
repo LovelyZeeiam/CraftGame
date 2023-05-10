@@ -1,4 +1,4 @@
-package xueli.mcremake.client.renderer.world;
+package xueli.mcremake.client;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -13,12 +13,19 @@ import xueli.game2.math.Frustum;
 import xueli.game2.math.MatrixHelper;
 import xueli.game2.renderer.legacy.RenderBuffer;
 import xueli.game2.resource.ResourceHolder;
-import xueli.mcremake.client.ClientInternalEvents;
-import xueli.mcremake.client.CraftGameClient;
+import xueli.mcremake.client.events.ModifyBlockEvent;
+import xueli.mcremake.client.events.NewChunkEvent;
+import xueli.mcremake.client.events.UnloadChunkEvent;
+import xueli.mcremake.client.renderer.world.ChunkRebuiltTask;
+import xueli.mcremake.client.renderer.world.ChunkRenderBuildManager;
+import xueli.mcremake.client.renderer.world.ChunkRenderType;
 import xueli.mcremake.core.world.Chunk;
 import xueli.mcremake.core.world.WorldDimension;
 
-public class WorldRenderer implements ResourceHolder {
+/**
+ * Sort the vertex: First store the vertex, then calculate its indices
+ */
+public class WorldRenderer implements ResourceHolder, AutoCloseable {
 
 	private final CraftGameClient ctx;
 
@@ -34,11 +41,11 @@ public class WorldRenderer implements ResourceHolder {
 
 	public WorldRenderer(ResourceListGeneric<ChunkRenderType> renderTypes, CraftGameClient ctx) {
 		this.ctx = ctx;
-		this.world = ctx.getUnsafeImmediateWorld();
+		this.world = ctx.state.worldDirect;
 
-		ctx.worldBus.register(ClientInternalEvents.NewChunkEvent.class, this::onCreateNewChunk);
-		ctx.worldBus.register(ClientInternalEvents.ModifyBlockEvent.class, this::onModifyBlock);
-		ctx.worldBus.register(ClientInternalEvents.UnloadChunkEvent.class, this::onRemoveChunk);
+		ctx.eventbus.register(NewChunkEvent.class, this::onCreateNewChunk);
+		ctx.eventbus.register(ModifyBlockEvent.class, this::onModifyBlock);
+		ctx.eventbus.register(UnloadChunkEvent.class, this::onRemoveChunk);
 
 		this.renderTypes = renderTypes;
 
@@ -52,12 +59,12 @@ public class WorldRenderer implements ResourceHolder {
 		this.camera.setCamera(camera);
 	}
 
-	private void onCreateNewChunk(ClientInternalEvents.NewChunkEvent event) {
+	private void onCreateNewChunk(NewChunkEvent event) {
 		chunkRebuiltList.add(new Vector2i(event.x(), event.z()));
 		
 	}
 
-	private void onModifyBlock(ClientInternalEvents.ModifyBlockEvent event) {
+	private void onModifyBlock(ModifyBlockEvent event) {
 		Vector2i inChunkPos = new Vector2i();
 		Vector2i chunkPos = Chunk.toChunkPos(event.x(), event.z(), inChunkPos);
 		chunkRebuiltList.add(chunkPos);
@@ -77,7 +84,7 @@ public class WorldRenderer implements ResourceHolder {
 
 	}
 
-	private void onRemoveChunk(ClientInternalEvents.UnloadChunkEvent event) {
+	private void onRemoveChunk(UnloadChunkEvent event) {
 		chunkRemoveList.add(new Vector2i(event.x(), event.z()));
 	}
 
@@ -129,7 +136,8 @@ public class WorldRenderer implements ResourceHolder {
 
 	}
 
-	public void release() {
+	@Override
+	public void close() throws Exception {
 		for (Object type : renderTypes.values()) {
 			((ChunkRenderType) type).release();
 		}

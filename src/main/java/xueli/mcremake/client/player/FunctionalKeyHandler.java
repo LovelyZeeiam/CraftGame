@@ -1,18 +1,16 @@
 package xueli.mcremake.client.player;
 
-import java.util.function.Supplier;
-
 import xueli.game2.input.KeyBindings.KeyBinding;
 import xueli.mcremake.client.CraftGameClient;
 
 public abstract class FunctionalKeyHandler {
 	
 	protected final CraftGameClient ctx;
-	private final Supplier<KeyBinding> keyBindingSupplier;
+	private final KeyBinding keyBinding;
 	
-	public FunctionalKeyHandler(CraftGameClient ctx, Supplier<KeyBinding> keyBindingSupplier) {
+	public FunctionalKeyHandler(CraftGameClient ctx, KeyBinding keyBinding) {
 		this.ctx = ctx;
-		this.keyBindingSupplier = keyBindingSupplier;
+		this.keyBinding = keyBinding;
 	}
 	
 	private boolean lastTimePressed = false;
@@ -21,7 +19,6 @@ public abstract class FunctionalKeyHandler {
 	 * @return Whether this method need another invoke
 	 */
 	public boolean tick() {
-		KeyBinding keyBinding = keyBindingSupplier.get();
 		while(keyBinding.consumeClick()) {
 			this.functionStart();
 			return true;

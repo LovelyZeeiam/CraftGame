@@ -7,9 +7,9 @@ import com.flowpowered.nbt.CompoundMap;
 import xueli.game2.ecs.ResourceListImpl;
 import xueli.game2.renderer.ui.Gui;
 import xueli.game2.resource.submanager.render.texture.Texture;
+import xueli.mcremake.client.BlockIconGenerator;
 import xueli.mcremake.client.renderer.item.ItemRenderType;
 import xueli.mcremake.core.block.BlockType;
-import xueli.mcremake.registry.BlockIconGenerator;
 
 public class ItemRenderTypeRegularBlock implements ItemRenderType {
 	

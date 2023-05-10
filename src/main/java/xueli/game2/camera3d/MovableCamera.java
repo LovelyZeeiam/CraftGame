@@ -21,6 +21,15 @@ public class MovableCamera extends Vector implements ICamera {
 		super(x, y, z, rotX, rotY, rotZ);
 	}
 
+	public MovableCamera(Vector other) {
+		this.x = other.x;
+		this.y = other.y;
+		this.z = other.z;
+		this.rotX = other.rotX;
+		this.rotY = other.rotY;
+		this.rotZ = other.rotZ;
+	}
+
 	@Override
 	public Matrix4f getCameraMatrix() {
 		Matrix4f viewMatrix = new Matrix4f();

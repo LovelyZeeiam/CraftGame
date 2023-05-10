@@ -7,7 +7,7 @@ import xueli.mcremake.client.CraftGameClient;
 public class AttackButtonHandler extends FunctionalKeyHandler {
 	
 	public AttackButtonHandler(CraftGameClient ctx) {
-		super(ctx, () -> ctx.mouseBindings.getKeyBinding(GLFW.GLFW_MOUSE_BUTTON_LEFT));
+		super(ctx, ctx.state.keyBindings.getKeyBinding(GLFW.GLFW_MOUSE_BUTTON_LEFT));
 	}
 	
 	private int blockBreakCooldown = 0;
@@ -30,10 +30,8 @@ public class AttackButtonHandler extends FunctionalKeyHandler {
 	}
 	
 	private void doAttack() {
-		var itemListener = ctx.getCurrentItemType().listener();
-		if(itemListener != null) {
-			itemListener.onItemAttack(ctx);
-		}
+		System.out.println("Do attack");
+
 	}
 
 	@Override

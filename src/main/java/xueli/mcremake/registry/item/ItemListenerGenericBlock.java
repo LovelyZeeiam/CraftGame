@@ -14,15 +14,11 @@ public class ItemListenerGenericBlock implements ItemListener {
 	
 	@Override
 	public void onItemAttack(CraftGameClient ctx) {
-		ItemListener.super.onItemAttack(ctx);
+		
 	}
 	
 	@Override
 	public void onItemUse(CraftGameClient ctx) {
-		var pickResult = ctx.getPickResult();
-		if(pickResult == null) return;
-		var pickBlockPos = pickResult.placePos();
-		ctx.getWorld().setBlock(pickBlockPos.x, pickBlockPos.y, pickBlockPos.z, block);;
 		
 	}
 	

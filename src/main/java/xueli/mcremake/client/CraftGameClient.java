@@ -3,38 +3,20 @@ package xueli.mcremake.client;
 import java.util.UUID;
 
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.opengl.GL30;
-
-import xueli.game2.camera3d.MovableCamera;
 import xueli.game2.display.GameDisplay;
-import xueli.game2.display.event.WindowKeyEvent;
-import xueli.game2.display.event.WindowMouseButtonEvent;
 import xueli.game2.ecs.ResourceListImpl;
-import xueli.game2.input.DefaultKeyListener;
-import xueli.game2.input.DefaultMouseListener;
-import xueli.game2.input.KeyBindings;
-import xueli.game2.renderer.ui.Gui;
 import xueli.game2.resource.ResourceHolder;
-import xueli.mcremake.client.gui.universal.UniversalGui;
-import xueli.mcremake.client.player.AttackButtonHandler;
-import xueli.mcremake.client.player.ClientPlayer;
-import xueli.mcremake.client.player.UseButtonHandler;
 import xueli.mcremake.client.renderer.item.ItemRenderMaster;
-import xueli.mcremake.client.renderer.world.WorldRenderer;
-import xueli.mcremake.core.block.BlockType;
-import xueli.mcremake.core.entity.PickCollider;
-import xueli.mcremake.core.entity.PickResult;
-import xueli.mcremake.core.item.ItemType;
+import xueli.mcremake.client.systems.GameRenderSystem;
+import xueli.mcremake.client.systems.KeyBindingUpdateSystem;
+import xueli.mcremake.client.systems.PlayerUpdateSystem;
 import xueli.mcremake.core.world.WorldDimension;
 import xueli.mcremake.network.ServerPlayerInfo;
-import xueli.mcremake.registry.BlockIconGenerator;
 import xueli.mcremake.registry.GameRegistry;
 import xueli.mcremake.registry.TerrainTextureAtlas;
 import xueli.mcremake.registry.block.BlockRenderTypes;
 import xueli.mcremake.registry.item.ItemRenderTypes;
-import xueli.utils.events.EventBus;
 
-// TODO: Combine different overlay with different listener because they are "one to one".
 /**
  * This is the main class of game client.<br/>
  * <br/>
@@ -55,33 +37,9 @@ import xueli.utils.events.EventBus;
 public class CraftGameClient extends GameDisplay {
 
 	public static final ServerPlayerInfo PLAYER_INFO = new ServerPlayerInfo("LovelyZeeiam", UUID.fromString("a5538060-b314-4cb0-90cd-ead6c59f16a7"));
-	
-	public final KeyBindings keyBindings = new KeyBindings(), mouseBindings = new KeyBindings();
-	private final DefaultKeyListener keyListener = new DefaultKeyListener(keyBindings);
-	private final DefaultMouseListener mouseListener = new DefaultMouseListener(mouseBindings);
-	
-	private UniversalGui universalGui;
 
-	public final EventBus worldBus = new EventBus();
-//	public final EventBus GuiEventBus = new EventBus();
-
-	private final ResourceListImpl renderResources = new ResourceListImpl();
-	
-	private WorldDimension world;
-	private ListenableBufferedWorldAccessible bufferedWorld;
-	private WorldRenderer worldRenderer;
-	
-	private ItemRenderMaster itemRenderer;
-	
-	private ClientPlayer player;
-	private MovableCamera camera;
-	private boolean needAnotherPick = false;
-	private PickCollider picker;
-	private PickResult pickResult;
-	private AttackButtonHandler attackHandler = new AttackButtonHandler(this);
-	private UseButtonHandler useHandler = new UseButtonHandler(this);
-	
-	private ItemType currentItemType = GameRegistry.ITEM_BLOCK_DIRT;
+	public final GameState state = new GameState();
+	final ResourceListImpl renderResources = new ResourceListImpl();
 	
 	public CraftGameClient() {
 		super(1280, 720, "Minecraft Classic Forever");
@@ -90,14 +48,27 @@ public class CraftGameClient extends GameDisplay {
 	
 	@Override
 	protected void renderInit() {
-		universalGui = new UniversalGui(this);
-		this.resourceManager.addResourceHolder(universalGui);
-
 		GameRegistry.callForClazzLoad();
 		
+		state.worldDirect = new WorldDimension(this);
+		state.world = new ListenableBufferedWorldAccessible(state.worldDirect, eventbus);
+
 		this.renderResources.add(new TerrainTextureAtlas(this));
 		this.renderResources.add(new BlockIconGenerator(this));
+		this.renderResources.add(new WorldRenderer(new BlockRenderTypes(renderResources), this));
+		this.renderResources.add(new ItemRenderMaster(new ItemRenderTypes(renderResources), this));
+		this.renderResources.add(new KeyBindingUpdateSystem());
+		this.renderResources.add(new PlayerUpdateSystem());
+		this.renderResources.add(new GameRenderSystem());
 		
+		this.renderResources.values().forEach(o -> {
+			if(o instanceof GameSystem system) {
+				system.start(this);
+			}
+		});
+
+		state.worldDirect.init();
+
 		this.resourceManager.addResourceHolder(() -> {
 			this.renderResources.values().forEach(o -> {
 				if(o instanceof ResourceHolder holder) {
@@ -105,124 +76,50 @@ public class CraftGameClient extends GameDisplay {
 				}
 			});
 		});
-		
-		this.world = new WorldDimension(this);
-		this.bufferedWorld = new ListenableBufferedWorldAccessible(this.world, worldBus) {
-			@Override
-			public void setBlock(int x, int y, int z, BlockType block) {
-				needAnotherPick = true;
-				super.setBlock(x, y, z, block);
-			}
-		};
-		this.worldRenderer = new WorldRenderer(new BlockRenderTypes(renderResources), this);
-		this.resourceManager.addResourceHolder(worldRenderer);
-		
-		this.itemRenderer = new ItemRenderMaster(new ItemRenderTypes(renderResources), this);
-		this.resourceManager.addResourceHolder(itemRenderer);
 
-		this.world.init();
-
-		this.player = new ClientPlayer(this);
-		this.player.x = 0;
-		this.player.y = 100;
-		this.player.z = 0;
-		this.picker = new PickCollider(this.bufferedWorld);
-		
-		this.clientEventBus.register(WindowKeyEvent.class, t -> keyListener.onKey(t.key(), t.scancode(), t.action(), t.mods()));
-		this.clientEventBus.register(WindowMouseButtonEvent.class, t -> mouseListener.onMouseButton(t.button(), t.action(), t.mods()));
-		
 	}
 
 	@Override
 	protected void render() {
-		GL30.glClearColor(0.7f, 0.7f, 1.0f, 1.0f);
+		for (int i = 0; i < this.timer.getNumShouldTick(); i++) {
+			this.renderResources.values().forEach(o -> {
+				if(o instanceof GameSystem system) {
+					system.tick(this);
+				}
+			});
+			this.state.tickCount++;
+		}
+		this.state.partialTick = this.timer.getRemainProgress();
 
-		this.player.inputRefresh();
-		for (int i = 0; i < timer.getNumShouldTick(); i++) {
-			this.player.tick();
-			this.bufferedWorld.flush();
-		}
-		
-		this.camera = this.player.getCamera(timer.getRemainProgress());
-		this.pickResult = this.picker.pick(camera, 6.0f);
-		worldRenderer.setCamera(camera);
-		
-		this.setItemType();
-		
-		this.needAnotherPick = false;
-		while(attackHandler.tick()) {
-			if(needAnotherPick) {
-				this.pickResult = this.picker.pick(camera, 6.0f);
+		state.world.flush();
+
+		this.renderResources.values().forEach(o -> {
+			if(o instanceof GameSystem system) {
+				system.update(this);
 			}
-		}
-		while(useHandler.tick()) {
-			if(needAnotherPick) {
-				this.pickResult = this.picker.pick(camera, 6.0f);
-			}
-		}
-		
-		worldRenderer.render();
-		
-		Gui gui = getGuiManager();
-		gui.begin(getWidth(), getHeight());
-		if(this.currentItemType != null) {
-			itemRenderer.renderUI(this.currentItemType, null, getWidth() - 128, 0, 128, 128, gui);
-		}
-		gui.finish();
-		
-		if(keyBindings.isPressed(GLFW.GLFW_KEY_ESCAPE)) {
+		});
+		// System.out.println("=======");
+		// System.out.println(state.player.position);
+		// System.out.println(state.player.lastTickPosition);
+
+		if(this.state.keyBindings.isPressed(GLFW.GLFW_KEY_ESCAPE)) {
 			this.announceClose();
-		}
-		
-	}
-	
-	private void setItemType() {
-		if(keyBindings.isPressed(GLFW.GLFW_KEY_1)) {
-			this.currentItemType = GameRegistry.ITEM_BLOCK_DIRT;
-		}
-		if(keyBindings.isPressed(GLFW.GLFW_KEY_2)) {
-			this.currentItemType = GameRegistry.ITEM_BLOCK_GRASS;
-		}
-		if(keyBindings.isPressed(GLFW.GLFW_KEY_3)) {
-			this.currentItemType = GameRegistry.ITEM_BLOCK_STONE;
 		}
 		
 	}
 
 	@Override
 	protected void renderRelease() {
-		if(this.worldRenderer != null) {
-			worldRenderer.release();
-		}
+		this.renderResources.values().forEach(o -> {
+			if(o instanceof GameSystem system) {
+				system.release(this);
+			}
+		});
 
 	}
 	
-	public ItemType getCurrentItemType() {
-		return currentItemType;
+	public <T> T getRenderResources(Class<T> clazz) {
+		return this.renderResources.get(clazz);
 	}
 	
-	public ResourceListImpl getRenderResources() {
-		return renderResources;
-	}
-	
-	public WorldDimension getUnsafeImmediateWorld() {
-		return world;
-	}
-
-	public ListenableBufferedWorldAccessible getWorld() {
-		return bufferedWorld;
-	}
-
-	public PickResult getPickResult() {
-		return pickResult;
-	}
-
-	public UniversalGui getUniversalGui() {
-		return universalGui;
-	}
-
-	public ClientPlayer getPlayer() {
-		return player;
-	}
-
 }

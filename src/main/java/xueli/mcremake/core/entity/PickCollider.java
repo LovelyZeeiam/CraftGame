@@ -16,17 +16,9 @@ import xueli.mcremake.core.block.BlockType;
 
 public class PickCollider {
 
-	private final ListenableBufferedWorldAccessible world;
-
-	public PickCollider(ListenableBufferedWorldAccessible world) {
-		this.world = world;
-
-	}
-
-	public PickResult pick(Vector camera, double maxReachDistance) {
+	public static PickResult pick(Vector camera, double maxReachDistance, ListenableBufferedWorldAccessible world) {
 		Vector3d direction = new Vector3d(TriFuncMap.sin(camera.rotY), TriFuncMap.tan(camera.rotX), -TriFuncMap.cos(camera.rotY));
 		direction.normalize();
-//		System.out.println(direction);
 
 		// If the line goes down, it is impossible to interact with the bottom. Conversely, the line going up can't interact with the top. The thesis is the same with the other 2 axis.
 		boolean[] needFaceTest = { true, true, true, true, true, true };
@@ -53,8 +45,6 @@ public class PickCollider {
 		} else {
 			needFaceTest[4] = needFaceTest[5] = false;
 		}
-
-//		System.out.println(Arrays.toString(needFaceTest));
 
 		for (double i = 0; i < maxReachDistance; i += 0.1) {
 			double rayEndX = camera.x + i * direction.x;
@@ -89,8 +79,6 @@ public class PickCollider {
 					// If t is greater than maxReachDistance, we ignore it
 					// Or we calculate y and z to check if they are in a range
 					// At last we choose the least "t" as our collision result
-
-//					System.out.println(aabb);
 
 					if(needFaceTest[0]) {
 						double t = (b0.x - camera.x) / direction.x;

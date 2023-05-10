@@ -7,6 +7,7 @@ import org.lwjgl.utils.vector.Vector3i;
 
 import com.flowpowered.nbt.CompoundMap;
 
+import xueli.mcremake.client.events.ModifyBlockEvent;
 import xueli.mcremake.core.block.BlockType;
 import xueli.mcremake.core.world.BufferedWorldAccessible;
 import xueli.mcremake.core.world.WorldAccessible;
@@ -36,7 +37,7 @@ public class ListenableBufferedWorldAccessible extends BufferedWorldAccessible {
 		blockChangeList.put(new Vector3i(x, y, z), block);
 		commandBuffer.add(() -> {
 			world.setBlock(x, y, z, block);
-			bus.post(new ClientInternalEvents.ModifyBlockEvent(x, y, z));
+			bus.post(new ModifyBlockEvent(x, y, z));
 		});
 		
 	}
@@ -45,7 +46,7 @@ public class ListenableBufferedWorldAccessible extends BufferedWorldAccessible {
 	public void modifyBlockTag(int x, int y, int z, Consumer<CompoundMap> c) {
 		commandBuffer.add(() -> {
 			world.modifyBlockTag(x, y, z, c);
-			bus.post(new ClientInternalEvents.ModifyBlockEvent(x, y, z));
+			bus.post(new ModifyBlockEvent(x, y, z));
 		});
 		
 	}

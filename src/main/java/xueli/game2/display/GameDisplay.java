@@ -43,7 +43,7 @@ public abstract class GameDisplay implements RunnableLifeCycle {
 	
 	public final OverlayManager overlayManager;
 	
-	public final EventBus clientEventBus = new EventBus();
+	public final EventBus eventbus = new EventBus();
 	
 	private final Gui gui;
 	
@@ -61,15 +61,14 @@ public abstract class GameDisplay implements RunnableLifeCycle {
 		this.gui = new Gui();
 		this.overlayManager = new OverlayManager(this);
 		
-		
 	}
 
 	@Override
 	public void init() {
 		this.display.create();
-		this.display.addKeyListener((key, scancode, action, mods) -> clientEventBus.post(new WindowKeyEvent(key, scancode, action, mods)));
-		this.display.addWindowSizedListener((w, h) -> clientEventBus.post(new WindowSizedEvent(w, h)));
-		this.display.addMouseInputListener((btn, action, mods) -> clientEventBus.post(new WindowMouseButtonEvent(btn, action, mods)));
+		this.display.addKeyListener((key, scancode, action, mods) -> eventbus.post(new WindowKeyEvent(key, scancode, action, mods)));
+		this.display.addWindowSizedListener((w, h) -> eventbus.post(new WindowSizedEvent(w, h)));
+		this.display.addMouseInputListener((btn, action, mods) -> eventbus.post(new WindowMouseButtonEvent(btn, action, mods)));
 		
 		this.resourceManager.addResourceHolder(this.gui);
 		this.resourceManager.addResourceHolder(this.overlayManager);
