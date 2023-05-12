@@ -64,7 +64,7 @@ public class PlayerUpdateSystem implements IGameSystem {
 		Display display = ctx.getDisplay();
 		ctx.state.player.rotX -= display.getCursorDY() * 0.1; // TODO: Into key binding or something like that for the "abstract" layer
 		ctx.state.player.rotY += display.getCursorDX() * 0.1;
-		ctx.state.player.rotX = Math.min(ctx.state.player.rotX, 89.0);
+		ctx.state.player.rotX = Math.min(ctx.state.player.rotX, 89.0); // TODO: Why isn't the view doing smooth rotation? 
 		ctx.state.player.rotX = Math.max(ctx.state.player.rotX, -89.0);
 		// System.out.println(ctx.state.player.rotX + ", " + ctx.state.player.rotY);
 
