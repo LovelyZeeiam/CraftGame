@@ -3,15 +3,15 @@ package xueli.game2.math;
 public class TriFuncMap {
 	
 	private static final int scale = 20;
-	private static final int num = 360 * scale;
-	
-	private static final double[] sinMap = new double[num];
-	private static final double[] cosMap = new double[num];
-	private static final double[] tanMap = new double[num];
+
+	private static final int mapLength = 360 * scale;
+	private static final double[] sinMap = new double[mapLength];
+	private static final double[] cosMap = new double[mapLength];
+	private static final double[] tanMap = new double[mapLength];
 	
 	static {
-		for(int i = 0; i < num; i++) {
-			double degree = (double)i / num * 360;
+		for(int i = 0; i < mapLength; i++) {
+			double degree = (double)i / mapLength * 360;
 			double radius = Math.toRadians(degree);
 			sinMap[i] = Math.sin(radius);
 			cosMap[i] = Math.cos(radius);
@@ -35,9 +35,9 @@ public class TriFuncMap {
 	}
 	
 	private static int getFittingIndex(double degree) {
-		degree = MathUtils.floorMod(degree, 360);
-		double index = degree * num / 360;
-		return (int) index;
+		// degree = MathUtils.floorMod(degree, 360.0); // When degree is -0.000000000000007077671781985373 or something, this method will output 360, which leads to an ArrayOutOfBoundsException
+		double index = degree * scale;
+		return (int) MathUtils.floorMod(Math.floor(index), mapLength);
 	}
 
 }
