@@ -5,9 +5,9 @@ import xueli.game2.display.event.WindowMouseButtonEvent;
 import xueli.game2.input.DefaultKeyListener;
 import xueli.game2.input.DefaultMouseListener;
 import xueli.mcremake.client.CraftGameClient;
-import xueli.mcremake.client.GameSystem;
+import xueli.mcremake.client.IGameSystem;
 
-public class KeyBindingUpdateSystem implements GameSystem {
+public class KeyBindingUpdateSystem implements IGameSystem {
 
     private DefaultKeyListener keyListener;
 	private DefaultMouseListener mouseListener;

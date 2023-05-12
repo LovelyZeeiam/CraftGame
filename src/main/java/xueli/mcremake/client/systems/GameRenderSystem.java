@@ -6,11 +6,11 @@ import xueli.game2.Vector;
 import xueli.game2.camera3d.MovableCamera;
 import xueli.game2.renderer.ui.Gui;
 import xueli.mcremake.client.CraftGameClient;
-import xueli.mcremake.client.GameSystem;
+import xueli.mcremake.client.IGameSystem;
 import xueli.mcremake.client.WorldRenderer;
 import xueli.mcremake.client.renderer.item.ItemRenderMaster;
 
-public class GameRenderSystem implements GameSystem {
+public class GameRenderSystem implements IGameSystem {
 
     @Override
     public void start(CraftGameClient ctx) {

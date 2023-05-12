@@ -9,7 +9,7 @@ import xueli.game2.display.Display;
 import xueli.game2.math.TriFuncMap;
 import xueli.game2.phys.aabb.AABB;
 import xueli.mcremake.client.CraftGameClient;
-import xueli.mcremake.client.GameSystem;
+import xueli.mcremake.client.IGameSystem;
 import xueli.mcremake.client.player.AttackButtonHandler;
 import xueli.mcremake.client.player.UseButtonHandler;
 import xueli.mcremake.core.entity.EntityCollider;
@@ -17,7 +17,7 @@ import xueli.mcremake.core.entity.PickCollider;
 import xueli.mcremake.core.entity.VirtualKeyboard;
 import xueli.mcremake.registry.GameRegistry;
 
-public class PlayerUpdateSystem implements GameSystem {
+public class PlayerUpdateSystem implements IGameSystem {
 
     private static final AABB PLAYER_COLLISION_BOX = new AABB(new Vector3d(-0.4, -1.5, -0.4), new Vector3d(0.4, 0.2, 0.4));
 	private static final double MAX_REACH_DISTANCE = 6.0;
@@ -62,10 +62,11 @@ public class PlayerUpdateSystem implements GameSystem {
 
 	private void updateRotation(CraftGameClient ctx) {
 		Display display = ctx.getDisplay();
-		ctx.state.player.rotX -= display.getCursorDY() * 0.1f; // TODO: Into key binding or something like that for the "abstract" layer
-		ctx.state.player.rotY += display.getCursorDX() * 0.1f;
+		ctx.state.player.rotX -= display.getCursorDY() * 0.1; // TODO: Into key binding or something like that for the "abstract" layer
+		ctx.state.player.rotY += display.getCursorDX() * 0.1;
 		ctx.state.player.rotX = Math.min(ctx.state.player.rotX, 89.0);
 		ctx.state.player.rotX = Math.max(ctx.state.player.rotX, -89.0);
+		// System.out.println(ctx.state.player.rotX + ", " + ctx.state.player.rotY);
 
 	}
 

@@ -69,7 +69,7 @@ public class PocketEditionChunkProvider {
 								
 								if(8 * k + l < 64) /* Maybe 64 is sea level */ {
 									// We try replace the water and ice with some other thing to serve as a placeholder
-									block = GameRegistry.BLOCK_DIRT;
+									block = GameRegistry.BLOCK_WATER;
 								}
 								if(v11 > 0.0) {
 									block = GameRegistry.BLOCK_STONE;
@@ -142,7 +142,7 @@ public class PocketEditionChunkProvider {
 									}
 									if(k < 64 && v21 != null) {
 										// v21 is calmWater
-										v21 = GameRegistry.BLOCK_DIRT;
+										v21 = GameRegistry.BLOCK_WATER;
 									}
 									v15 = v16;
 									if(k < 63) chunk.setBlock(j, k, i, v20);

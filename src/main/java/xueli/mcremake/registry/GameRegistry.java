@@ -13,6 +13,7 @@ import xueli.mcremake.core.item.ItemListener;
 import xueli.mcremake.core.item.ItemType;
 import xueli.mcremake.core.world.biome.BiomeType;
 import xueli.mcremake.registry.block.BlockCollidableSolid;
+import xueli.mcremake.registry.block.BlockRendererLiquid;
 import xueli.mcremake.registry.block.BlockRendererSideTopBottom;
 import xueli.mcremake.registry.block.BlockRendererSolid;
 import xueli.mcremake.registry.item.ItemListenerGenericBlock;
@@ -22,7 +23,8 @@ public final class GameRegistry {
 	
 	// Include this tag to make block item use default renderer
 	public static final ResourceIdentifier TAG_GENERIC_BLOCK = new ResourceIdentifier("generic_blocks");
-	
+	public static final ResourceIdentifier TAG_GENERIC_LIQUID = new ResourceIdentifier("generic_liquid");
+
 	public static final Registry<BlockType> BUILTIN_BLOCK_REGISTRY;
 	public static final BlockType BLOCK_STONE;
 	public static final BlockType BLOCK_DIRT;
@@ -30,6 +32,7 @@ public final class GameRegistry {
 	public static final BlockType BLOCK_BEDROCK;
 	public static final BlockType BLOCK_SAND;
 	public static final BlockType BLOCK_GRAVEL;
+	public static final BlockType BLOCK_WATER;
 //	public static final BlockType BLOCK_SAND_STONE;
 	
 	static {
@@ -40,6 +43,7 @@ public final class GameRegistry {
 		BLOCK_BEDROCK = registerBlockType(writable, new ResourceIdentifier("bedrock"), "bedrock", BlockListener.NONE, new BlockRendererSolid(1, 1), new BlockCollidableSolid(), TAG_GENERIC_BLOCK);
 		BLOCK_SAND = registerBlockType(writable, new ResourceIdentifier("sand"), "sand", BlockListener.NONE, new BlockRendererSolid(2, 1), new BlockCollidableSolid(), TAG_GENERIC_BLOCK);
 		BLOCK_GRAVEL = registerBlockType(writable, new ResourceIdentifier("gravel"), "gravel", BlockListener.NONE, new BlockRendererSolid(3, 1), new BlockCollidableSolid(), TAG_GENERIC_BLOCK);
+		BLOCK_WATER = registerBlockType(writable, new ResourceIdentifier("water"), "water", BlockListener.NONE, new BlockRendererLiquid(15, 12), BlockCollidable.NONE, TAG_GENERIC_LIQUID);
 		//		BLOCK_SAND_STONE = registerBlockType(writable, new ResourceIdentifier("sandstone"), "sandstone", BlockListener.NONE, new BlockRendererSolid(1, 1), new BlockCollidableSolid(), TAG_GENERIC_BLOCK);
 		
 		BUILTIN_BLOCK_REGISTRY = writable.freeze();

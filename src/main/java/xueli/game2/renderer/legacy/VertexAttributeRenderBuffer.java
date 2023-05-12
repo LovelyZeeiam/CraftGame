@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import xueli.game2.renderer.legacy.buffer.AttributeBuffer;
 import xueli.game2.renderer.legacy.buffer.BufferStorable;
+import xueli.game2.renderer.legacy.buffer.BufferSyncor;
 import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
 import xueli.game2.renderer.legacy.buffer.VertexAttribute;
+import xueli.game2.renderer.legacy.shape.ShapeType;
 
 public class VertexAttributeRenderBuffer implements RenderBuffer {
 
@@ -34,11 +36,9 @@ public class VertexAttributeRenderBuffer implements RenderBuffer {
 		this.vertCount = 0;
 	}
 
-//	private final BufferPool pool = new BufferPool(3, 2);
-
 	private static class VertexBuffer {
 		public int submitCount = 0;
-		public LotsOfByteBuffer buf = new LotsOfByteBuffer();
+		public BufferSyncor.BackBuffer buf;
 	};
 
 	@Override
@@ -49,7 +49,9 @@ public class VertexAttributeRenderBuffer implements RenderBuffer {
 
 				{
 					attr.forEachAttribute(i -> {
+						AttributeBuffer buf = attr.getAttributeBuffer(i);
 						VertexBuffer vertexBuffer = new VertexBuffer();
+						vertexBuffer.buf = buf.createBackBuffer();
 						this.put(i, vertexBuffer);
 					});
 				}
@@ -58,28 +60,19 @@ public class VertexAttributeRenderBuffer implements RenderBuffer {
 			@Override
 			public void applyToBuffer(int id, BufferStorable storable) {
 				VertexBuffer obj = applyCount.get(id);
-				storable.store(obj.buf);
+				storable.store(obj.buf.getBuffer());
 				obj.submitCount++;
 
 			}
 
 			@Override
 			public void flip() {
-				// TODO: This time we manage the memory by LWJGL API
-				// Actually just now I practise C# and use Memory handle which works pretty nice
-				// Or it might appear some unexpected behaviors
 				AtomicInteger vertCount = new AtomicInteger(Integer.MAX_VALUE);
 				applyCount.forEach((i, b) -> {
 					vertCount.set(Math.min(vertCount.get(), b.submitCount));
-					
-					b.buf.setReadWrite(true);
-					VertexAttributeRenderBuffer.this.applyBuffer(i, b.buf);
-					
-//					b.buf.release();
-
+					b.buf.markSync();
 				});
 
-//				System.out.println(vertCount.get());
 				VertexAttributeRenderBuffer.this.setVertexCount(vertCount.get());
 
 			}
@@ -89,7 +82,6 @@ public class VertexAttributeRenderBuffer implements RenderBuffer {
 
 	@Override
 	public void render() {
-//		System.out.println(vertCount);
 		this.attr.render(vertCount);
 
 	}

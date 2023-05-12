@@ -8,25 +8,25 @@ import xueli.game2.renderer.legacy.BackRenderBuffer;
 import xueli.game2.resource.submanager.render.texture.atlas.AtlasResourceHolder;
 import xueli.mcremake.client.renderer.world.BlockVertexGatherer;
 import xueli.mcremake.client.renderer.world.ChunkRenderBuildManager;
-import xueli.mcremake.client.renderer.world.RenderTypeSolid;
+import xueli.mcremake.client.renderer.world.RenderTypeAlpha;
 import xueli.mcremake.core.block.BlockType;
 import xueli.mcremake.core.world.WorldAccessible;
 import xueli.mcremake.registry.GameRegistry;
 import xueli.mcremake.registry.TerrainTextureAtlas;
 
-public class BlockRendererSolid implements BlockVertexGatherer {
+public class BlockRendererLiquid implements BlockVertexGatherer {
+    
+    private final int x, y;
 
-	private final int x, y;
-
-	public BlockRendererSolid(int xInAtlas, int yInAtlas) {
+	public BlockRendererLiquid(int xInAtlas, int yInAtlas) {
 		this.x = xInAtlas;
 		this.y = yInAtlas;
 	}
 
 	@Override
 	public void render(int x, int y, int z, CompoundMap tag, WorldAccessible world, ChunkRenderBuildManager manager) {
-		BackRenderBuffer buffer = manager.getRenderBuffer(RenderTypeSolid.class);
-		TerrainTextureAtlas texture = manager.getRenderType(RenderTypeSolid.class).getTexture();
+		BackRenderBuffer buffer = manager.getRenderBuffer(RenderTypeAlpha.class);
+		TerrainTextureAtlas texture = manager.getRenderType(RenderTypeAlpha.class).getTexture();
 		AtlasResourceHolder uvVertex = texture.getUVVertex(this.x, this.y);
 
 		if(world == null || shouldRenderFaceOnThisBlock(world.getBlock(x, y - 1, z))) {
@@ -99,7 +99,7 @@ public class BlockRendererSolid implements BlockVertexGatherer {
 	}
 
     private boolean shouldRenderFaceOnThisBlock(BlockType block) {
-        return block == null || !GameRegistry.BUILTIN_BLOCK_REGISTRY.getTags(block.namespace()).contains(GameRegistry.TAG_GENERIC_BLOCK);
+        return block == null;
     }
 
 }

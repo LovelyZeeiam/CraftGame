@@ -62,7 +62,7 @@ public class CraftGameClient extends GameDisplay {
 		this.renderResources.add(new GameRenderSystem());
 		
 		this.renderResources.values().forEach(o -> {
-			if(o instanceof GameSystem system) {
+			if(o instanceof IGameSystem system) {
 				system.start(this);
 			}
 		});
@@ -83,7 +83,7 @@ public class CraftGameClient extends GameDisplay {
 	protected void render() {
 		for (int i = 0; i < this.timer.getNumShouldTick(); i++) {
 			this.renderResources.values().forEach(o -> {
-				if(o instanceof GameSystem system) {
+				if(o instanceof IGameSystem system) {
 					system.tick(this);
 				}
 			});
@@ -94,13 +94,10 @@ public class CraftGameClient extends GameDisplay {
 		state.world.flush();
 
 		this.renderResources.values().forEach(o -> {
-			if(o instanceof GameSystem system) {
+			if(o instanceof IGameSystem system) {
 				system.update(this);
 			}
 		});
-		// System.out.println("=======");
-		// System.out.println(state.player.position);
-		// System.out.println(state.player.lastTickPosition);
 
 		if(this.state.keyBindings.isPressed(GLFW.GLFW_KEY_ESCAPE)) {
 			this.announceClose();
@@ -111,7 +108,7 @@ public class CraftGameClient extends GameDisplay {
 	@Override
 	protected void renderRelease() {
 		this.renderResources.values().forEach(o -> {
-			if(o instanceof GameSystem system) {
+			if(o instanceof IGameSystem system) {
 				system.release(this);
 			}
 		});

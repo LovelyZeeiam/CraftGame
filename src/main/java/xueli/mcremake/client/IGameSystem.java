@@ -1,6 +1,6 @@
 package xueli.mcremake.client;
 
-public interface GameSystem {
+public interface IGameSystem {
 
     default public void start(CraftGameClient ctx) {};
 	

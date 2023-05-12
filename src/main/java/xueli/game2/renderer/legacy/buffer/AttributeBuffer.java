@@ -16,6 +16,8 @@ public class AttributeBuffer implements Bindable {
 
 	private int vbo;
 
+	private BufferSyncor bufferManager = new BufferSyncor();
+
 	public AttributeBuffer(int id, int attributeSize, VertexType type) {
 		this.id = id;
 		this.attributeSize = attributeSize;
@@ -35,29 +37,20 @@ public class AttributeBuffer implements Bindable {
 
 	}
 
-	private final AtomicBoolean shouldSyncData = new AtomicBoolean(false);
-	private LotsOfByteBuffer lastSyncData, toBeSyncData;
-
 	public void tick() {
 		synchronized (this) {
-			if(shouldSyncData.get()) {
-				this.bind(() -> GL30.glBufferData(GL30.GL_ARRAY_BUFFER, toBeSyncData.getBuffer(), bufferType));
-				if(this.lastSyncData != null) {
-					this.lastSyncData.release();
-					this.lastSyncData = null;
-				}
-
-				shouldSyncData.set(false);
-			}
+			bufferManager.doingSyncIfNecessary(buf -> {
+				this.bind(() -> GL30.glBufferData(GL30.GL_ARRAY_BUFFER, buf.getBuffer(), bufferType));
+			});
 		}
 	}
 
-	public void updateBuffer(LotsOfByteBuffer buffer) {
-		this.lastSyncData = this.toBeSyncData;
-//		System.out.println(buffer);
-		this.toBeSyncData = buffer;
-		shouldSyncData.set(true);
+	public void updateBuffer(LotsOfByteBuffer buf) {
+		bufferManager.updateBuffer(buf);
+    }
 
+	public BufferSyncor.BackBuffer createBackBuffer() {
+		return bufferManager.createBackBuffer();
 	}
 
 	@Override
