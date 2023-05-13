@@ -15,7 +15,6 @@ import xueli.mcremake.client.player.UseButtonHandler;
 import xueli.mcremake.core.entity.EntityCollider;
 import xueli.mcremake.core.entity.PickCollider;
 import xueli.mcremake.core.entity.VirtualKeyboard;
-import xueli.mcremake.registry.GameRegistry;
 
 public class PlayerUpdateSystem implements IGameSystem {
 
@@ -26,16 +25,16 @@ public class PlayerUpdateSystem implements IGameSystem {
     // private boolean firstTick = true;
 
     private EntityCollider collider;
-
-	private AttackButtonHandler attackHandler;
-	private UseButtonHandler useHandler;
+    
+    private AttackButtonHandler attackHandler;
+    private UseButtonHandler useHandler;
 
     @Override
     public void start(CraftGameClient ctx) {
         this.collider = new EntityCollider(PLAYER_COLLISION_BOX, ctx.state.world);
-		this.attackHandler = new AttackButtonHandler(ctx);
-		this.useHandler = new UseButtonHandler(ctx);
-
+        this.attackHandler = new AttackButtonHandler(ctx);
+        this.useHandler = new UseButtonHandler(ctx);
+        
     }
 
     @Override
@@ -44,8 +43,7 @@ public class PlayerUpdateSystem implements IGameSystem {
 		this.updateRotation(ctx);
 		this.updateRenderPosition(ctx);
 		this.updatePickResult(ctx);
-		this.updateSelectedItemType(ctx);
-		this.updateAttackAndUse();
+		this.tickMouseButton(ctx);
 
     }
 
@@ -88,23 +86,12 @@ public class PlayerUpdateSystem implements IGameSystem {
 		
 	}
 	
-	private void updateSelectedItemType(CraftGameClient ctx) {
-		if(ctx.state.keyBindings.isPressed(GLFW.GLFW_KEY_1)) {
-			ctx.state.selectedItemType = GameRegistry.ITEM_BLOCK_DIRT;
-		}
-		if(ctx.state.keyBindings.isPressed(GLFW.GLFW_KEY_2)) {
-			ctx.state.selectedItemType = GameRegistry.ITEM_BLOCK_GRASS;
-		}
-		if(ctx.state.keyBindings.isPressed(GLFW.GLFW_KEY_3)) {
-			ctx.state.selectedItemType = GameRegistry.ITEM_BLOCK_STONE;
-		}
+	private void tickMouseButton(CraftGameClient ctx) {
+		attackHandler.tick(ctx);
+		useHandler.tick(ctx);
+		
 	}
-
-	private void updateAttackAndUse() {
-		this.attackHandler.tick();
-		this.useHandler.tick();
-	}
-
+	
     @Override
     public void tick(CraftGameClient ctx) {
 		this.movePlayer(ctx);

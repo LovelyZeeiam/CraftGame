@@ -2,14 +2,19 @@ package xueli.mcremake.client.player;
 
 import xueli.game2.input.KeyBindings.KeyBinding;
 import xueli.mcremake.client.CraftGameClient;
+import xueli.mcremake.client.IGameSystem;
 
-public abstract class FunctionalKeyHandler {
+public abstract class FunctionalKeyHandler implements IGameSystem {
 	
 	protected final CraftGameClient ctx;
-	private final KeyBinding keyBinding;
+	private KeyBinding keyBinding;
 	
 	public FunctionalKeyHandler(CraftGameClient ctx, KeyBinding keyBinding) {
 		this.ctx = ctx;
+		this.keyBinding = keyBinding;
+	}
+	
+	public void setKeyBinding(KeyBinding keyBinding) {
 		this.keyBinding = keyBinding;
 	}
 	
@@ -18,27 +23,27 @@ public abstract class FunctionalKeyHandler {
 	/**
 	 * @return Whether this method need another invoke
 	 */
-	public boolean tick() {
+	public void tick(CraftGameClient ctx) {
 		while(keyBinding.consumeClick()) {
-			this.functionStart();
-			return true;
+			this.functionStart(ctx);
+			return;
 		}
 		
 		boolean thisTimePressed = keyBinding.isPressed();
 		if(thisTimePressed) {
-			this.functionContinue();
+			this.functionContinue(ctx);
 		} else if(this.lastTimePressed) {
-			this.functionEnd();
+			this.functionEnd(ctx);
 		}
 		
 		this.lastTimePressed = thisTimePressed;
-		return false;
+		
 	}
 	
-	protected abstract void functionStart();
+	protected abstract void functionStart(CraftGameClient ctx);
 	
-	protected abstract void functionContinue();
+	protected abstract void functionContinue(CraftGameClient ctx);
 	
-	protected abstract void functionEnd();
+	protected abstract void functionEnd(CraftGameClient ctx);
 	
 }

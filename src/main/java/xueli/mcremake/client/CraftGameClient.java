@@ -10,6 +10,7 @@ import xueli.game2.resource.ResourceHolder;
 import xueli.mcremake.client.renderer.item.ItemRenderMaster;
 import xueli.mcremake.client.renderer.world.block.BlockRenderTypes;
 import xueli.mcremake.client.systems.GameRenderSystem;
+import xueli.mcremake.client.systems.ItemTypeSelectSystem;
 import xueli.mcremake.client.systems.KeyBindingUpdateSystem;
 import xueli.mcremake.client.systems.PlayerUpdateSystem;
 import xueli.mcremake.core.world.WorldDimension;
@@ -59,9 +60,10 @@ public class CraftGameClient extends GameDisplay {
 		this.renderResources.add(new BlockIconGenerator(this));
 		this.renderResources.add(new WorldRenderer(new BlockRenderTypes(this), this));
 		this.renderResources.add(new ItemRenderMaster(new ItemRenderTypes(renderResources), this));
-
+		
 		this.systems.add(new KeyBindingUpdateSystem());
 		this.systems.add(new PlayerUpdateSystem());
+		this.systems.add(new ItemTypeSelectSystem());
 		this.systems.add(new GameRenderSystem());
 		
 		this.systems.values().forEach(o -> o.start(this));
