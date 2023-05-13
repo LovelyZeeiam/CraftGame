@@ -19,6 +19,15 @@ public class ItemTypeSelectSystem implements IGameSystem {
 		if(ctx.state.keyBindings.isPressed(GLFW.GLFW_KEY_3)) {
 			ctx.state.selectedItemType = GameRegistry.ITEM_BLOCK_STONE;
 		}
+		if(ctx.state.keyBindings.isPressed(GLFW.GLFW_KEY_4)) {
+			ctx.state.selectedItemType = GameRegistry.ITEM_BLOCK_BEDROCK;
+		}
+		if(ctx.state.keyBindings.isPressed(GLFW.GLFW_KEY_5)) {
+			ctx.state.selectedItemType = GameRegistry.ITEM_BLOCK_SAND;
+		}
+		if(ctx.state.keyBindings.isPressed(GLFW.GLFW_KEY_6)) {
+			ctx.state.selectedItemType = GameRegistry.ITEM_BLOCK_GRAVEL;
+		}
 	}
 	
 }

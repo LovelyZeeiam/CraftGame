@@ -34,8 +34,11 @@ public class AttackButtonHandler extends FunctionalKeyHandler {
 	
 	private void doAttack(CraftGameClient ctx) {
 		PickResult pick = ctx.state.player.pickResult;
-		Vector3i pickBlock = pick.blockPos();
-		ctx.state.world.setBlock(pickBlock.x, pickBlock.y, pickBlock.z, null);
+		if(pick != null) {
+			Vector3i pickBlock = pick.blockPos();
+			ctx.state.world.setBlock(pickBlock.x, pickBlock.y, pickBlock.z, null);
+			
+		}
 		
 	}
 

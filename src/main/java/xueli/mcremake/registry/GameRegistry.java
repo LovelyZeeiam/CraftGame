@@ -47,28 +47,27 @@ public final class GameRegistry {
 	}
 	
 	public static final Registry<ItemType> BUILTIN_ITEM_REGISTRY;
+	public static final Registry<ResourceIdentifier> BUILTIN_ITEM_BLOCK_MAP_REGISTRY;
 	public static final ItemType ITEM_BLOCK_STONE;
 	public static final ItemType ITEM_BLOCK_DIRT;
 	public static final ItemType ITEM_BLOCK_GRASS;
+	public static final ItemType ITEM_BLOCK_BEDROCK;
+	public static final ItemType ITEM_BLOCK_SAND;
+	public static final ItemType ITEM_BLOCK_GRAVEL;
 	
 	static {
 		RegistryImplement<ItemType> writable = new RegistryImplement<>();
-		ITEM_BLOCK_STONE = registerItemType(writable, new ResourceIdentifier("stone"), "Stone", new ItemRendererRegularBlock(BLOCK_STONE));
-		ITEM_BLOCK_DIRT = registerItemType(writable, new ResourceIdentifier("dirt"), "Dirt", new ItemRendererRegularBlock(BLOCK_DIRT));
-		ITEM_BLOCK_GRASS = registerItemType(writable, new ResourceIdentifier("grass_block"), "Grass Block", new ItemRendererRegularBlock(BLOCK_GRASS));
+		RegistryImplement<ResourceIdentifier> mapWritable = new RegistryImplement<>();
 		
+		ITEM_BLOCK_STONE = registerItemFromBlock(writable, mapWritable, BLOCK_STONE, new ItemRendererRegularBlock(BLOCK_STONE));
+		ITEM_BLOCK_DIRT = registerItemFromBlock(writable, mapWritable, BLOCK_DIRT, new ItemRendererRegularBlock(BLOCK_DIRT));
+		ITEM_BLOCK_GRASS = registerItemFromBlock(writable, mapWritable, BLOCK_GRASS, new ItemRendererRegularBlock(BLOCK_GRASS));
+		ITEM_BLOCK_BEDROCK = registerItemFromBlock(writable, mapWritable, BLOCK_BEDROCK, new ItemRendererRegularBlock(BLOCK_BEDROCK));
+		ITEM_BLOCK_SAND = registerItemFromBlock(writable, mapWritable, BLOCK_SAND, new ItemRendererRegularBlock(BLOCK_SAND));
+		ITEM_BLOCK_GRAVEL = registerItemFromBlock(writable, mapWritable, BLOCK_GRAVEL, new ItemRendererRegularBlock(BLOCK_GRAVEL));
+		
+		BUILTIN_ITEM_BLOCK_MAP_REGISTRY = mapWritable.freeze();
 		BUILTIN_ITEM_REGISTRY = writable.freeze();
-	}
-	
-	public static final Registry<ResourceIdentifier> BUILTIN_ITEM_BLOCK_MAP_REGISTRY;
-	
-	static {
-		RegistryImplement<ResourceIdentifier> writable = new RegistryImplement<>();
-		writable.register(ITEM_BLOCK_STONE.namespace(), BLOCK_STONE.namespace());
-		writable.register(ITEM_BLOCK_DIRT.namespace(), BLOCK_DIRT.namespace());
-		writable.register(ITEM_BLOCK_GRASS.namespace(), BLOCK_GRASS.namespace());
-		
-		BUILTIN_ITEM_BLOCK_MAP_REGISTRY = writable.freeze();
 		
 	}
 	
@@ -109,7 +108,13 @@ public final class GameRegistry {
 		return type;
 	}
 	
-//	private static ItemType registerItemFromBlock(WritableRegistry<ItemType> registry, BlockType)
+	private static ItemType registerItemFromBlock(WritableRegistry<ItemType> registry, WritableRegistry<ResourceIdentifier> itemBlockMapRegistry, BlockType block, ItemVertexGatherer renderer, ResourceIdentifier... tags) {
+		ItemType type = new ItemType(block.namespace(), block.name(), renderer);
+		registry.register(block.namespace(), type);
+		registry.addTag(block.namespace(), tags);
+		itemBlockMapRegistry.register(block.namespace(), block.namespace());
+		return type;
+	}
 	
 	public static ItemType registerItemType(WritableRegistry<ItemType> registry, ResourceIdentifier identify, String name, ItemVertexGatherer renderer, ResourceIdentifier... tags) {
 		ItemType type = new ItemType(identify, name, renderer);

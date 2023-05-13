@@ -33,10 +33,12 @@ public class UseButtonHandler extends FunctionalKeyHandler {
 	
 	private void doUse(CraftGameClient ctx) {
 		PickResult pick = ctx.state.player.pickResult;
-		Vector3i pickBlock = pick.placePos();
-		ResourceIdentifier itemBlock = GameRegistry.BUILTIN_ITEM_BLOCK_MAP_REGISTRY.getByName(ctx.state.selectedItemType.namespace());
-		if(itemBlock != null) {
-			ctx.state.world.setBlock(pickBlock.x, pickBlock.y, pickBlock.z, GameRegistry.BUILTIN_BLOCK_REGISTRY.getByName(itemBlock));
+		if(pick != null) {
+			Vector3i pickBlock = pick.placePos();
+			ResourceIdentifier itemBlock = GameRegistry.BUILTIN_ITEM_BLOCK_MAP_REGISTRY.getByName(ctx.state.selectedItemType.namespace());
+			if(itemBlock != null) {
+				ctx.state.world.setBlock(pickBlock.x, pickBlock.y, pickBlock.z, GameRegistry.BUILTIN_BLOCK_REGISTRY.getByName(itemBlock));
+			}
 		}
 		
 	}
