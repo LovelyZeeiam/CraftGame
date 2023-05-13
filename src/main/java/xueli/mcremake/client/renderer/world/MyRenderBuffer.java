@@ -17,7 +17,6 @@ public class MyRenderBuffer extends VertexAttributeRenderBuffer {
 			this.attr.addAttributeBuffer(UV_VERTEX, 2, VertexType.FLOAT);
 			this.attr.addAttributeBuffer(COLOR_VERTEX, 3, VertexType.FLOAT);
 		});
-
 	}
 
 }

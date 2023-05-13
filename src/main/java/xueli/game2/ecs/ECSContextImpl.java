@@ -46,7 +46,7 @@ public class ECSContextImpl implements ECSContext {
 		info.removeComponent(entityId);
 	}
 	
-	final ResourceList resources = new ResourceListImpl();
+	final ResourceList<Object> resources = new ResourceListImpl<>();
 
 	@Override
 	public void addResource(Object resource) {

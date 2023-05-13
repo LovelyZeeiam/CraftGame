@@ -1,13 +1,15 @@
 package xueli.mcremake.client.renderer.world;
 
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector2i;
 
-import xueli.game2.ecs.ResourceListImpl;
+import xueli.game2.renderer.legacy.RenderBuffer;
 import xueli.game2.resource.submanager.render.shader.Shader;
+import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.registry.TerrainTextureAtlas;
 
 public class RenderTypeSolid extends ChunkRenderType {
@@ -54,23 +56,30 @@ void main(){
 
 """;
 
-	private final Shader shader;
-	private final TerrainTextureAtlas texture;
+	protected final CraftGameClient ctx;
+	protected final Shader shader;
+	protected final TerrainTextureAtlas texture;
 
-	public RenderTypeSolid(ResourceListImpl renderResource) {
-		this.shader = Shader.compile(VERT_SHADER_CODE, FRAG_SHADER_CODE);
-		this.texture = renderResource.get(TerrainTextureAtlas.class);
-
+	public RenderTypeSolid(CraftGameClient ctx) {
+		this(v -> new MyRenderBuffer(), ctx);
 	}
 
+	public RenderTypeSolid(Function<Vector2i, RenderBuffer> bufferSupplier, CraftGameClient ctx) {
+		super(bufferSupplier);
+		this.ctx = ctx;
+		this.shader = Shader.compile(VERT_SHADER_CODE, FRAG_SHADER_CODE);
+		this.texture = ctx.getRenderResources(TerrainTextureAtlas.class);
+
+	}
+	
 	@Override
 	public void render(Predicate<Vector2i> selector) {
 		GL30.glEnable(GL30.GL_DEPTH_TEST);
 		GL30.glEnable(GL30.GL_CULL_FACE);
 		this.shader.bind();
-		texture.bind();
+		this.texture.bind();
 		super.render(selector);
-		texture.unbind();
+		this.texture.unbind();
 		this.shader.unbind();
 		GL30.glDisable(GL30.GL_DEPTH_TEST);
 		GL30.glDisable(GL30.GL_CULL_FACE);

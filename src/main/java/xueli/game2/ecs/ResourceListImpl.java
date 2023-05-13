@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ResourceListImpl implements ResourceList {
+public class ResourceListImpl<T> implements ResourceList<T> {
 	
-	private final HashMap<Class<?>, Integer> classToIndexMap = new HashMap<>();
-	private final ArrayList<Object> components = new ArrayList<>();
+	private final HashMap<Class<? extends T>, Integer> classToIndexMap = new HashMap<>();
+	private final ArrayList<T> components = new ArrayList<>();
 	
 	public ResourceListImpl() {
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public void add(Object t) {
-		Class<?> clazz = t.getClass();
+	public void add(T t) {
+		Class<? extends T> clazz = (Class<? extends T>) t.getClass();
 		Integer previousIndex = classToIndexMap.get(clazz);
 		if(previousIndex != null) {
 			components.set(previousIndex, t);
@@ -29,16 +30,17 @@ public class ResourceListImpl implements ResourceList {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> T get(Class<T> clazz) {
+	public <S extends T> S get(Class<S> clazz) {
 		Integer index = classToIndexMap.get(clazz);
 		if(index == null) {
 			return null;
 		}
-		return (T) components.get(index);
+		return (S) components.get(index);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public <T> void remove(Class<T> clazz) {
+	public <S extends T> void remove(Class<S> clazz) {
 		Integer indexBoxed = classToIndexMap.get(clazz);
 		if(indexBoxed == null) {
 			return;
@@ -48,12 +50,12 @@ public class ResourceListImpl implements ResourceList {
 		int componentsLastIndex = components.size() - 1;
 		if(index != components.size()) {
 			// Pick up the last component
-			Object lastComponent = components.get(componentsLastIndex);
+			T lastComponent = components.get(componentsLastIndex);
 			// Switch it to the place where our leaving element is
 			components.set(index, lastComponent);
 			
 			// Don't forget to change the value in the map
-			Class<?> lastCompClazz = lastComponent.getClass();
+			Class<? extends T> lastCompClazz = (Class<? extends T>) lastComponent.getClass();
 			classToIndexMap.put(lastCompClazz, indexBoxed);
 			
 		}
@@ -64,7 +66,7 @@ public class ResourceListImpl implements ResourceList {
 	}
 	
 	@Override
-	public List<Object> values() {
+	public List<T> values() {
 		return components;
 	}
 

@@ -1,4 +1,4 @@
-package xueli.mcremake.registry.block;
+package xueli.mcremake.client.renderer.world.block;
 
 import org.lwjgl.utils.vector.Vector3f;
 
@@ -6,7 +6,6 @@ import com.flowpowered.nbt.CompoundMap;
 
 import xueli.game2.renderer.legacy.BackRenderBuffer;
 import xueli.game2.resource.submanager.render.texture.atlas.AtlasResourceHolder;
-import xueli.mcremake.client.renderer.world.BlockVertexGatherer;
 import xueli.mcremake.client.renderer.world.ChunkRenderBuildManager;
 import xueli.mcremake.client.renderer.world.RenderTypeSolid;
 import xueli.mcremake.core.block.BlockType;

@@ -2,14 +2,14 @@ package xueli.game2.ecs;
 
 import java.util.List;
 
-interface ResourceList {
+interface ResourceList<T> {
 	
-	public void add(Object t);
+	public void add(T t);
 	
-	public <T> T get(Class<T> clazz);
+	public <S extends T> S get(Class<S> clazz);
 	
-	public <T> void remove(Class<T> clazz);
-	
-	public List<Object> values();
+	public <S extends T> void remove(Class<S> clazz);
+
+	public List<T> values();
 	
 }

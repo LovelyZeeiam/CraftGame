@@ -3,6 +3,7 @@ package xueli.game2.renderer.legacy.buffer;
 import java.util.HashMap;
 import java.util.function.Consumer;
 
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
 import xueli.game2.renderer.legacy.VertexType;
@@ -23,7 +24,6 @@ public class VertexAttribute implements Bindable {
 
 	public void addAttributeBuffer(int id, int attrSize, VertexType type) {
 		AttributeBuffer buf = new AttributeBuffer(id, attrSize, type);
-		buf.init();
 		this.buffers.put(id, buf);
 
 	}
@@ -47,6 +47,15 @@ public class VertexAttribute implements Bindable {
 		GL30.glDrawArrays(shapeType.getGLValue(), 0, vertCount);
 		this.unbind();
 
+	}
+
+	public void renderElement(ElementBuffer ebo, int vertCount) {
+		this.bind();
+		ebo.bind();
+		buffers.values().forEach(AttributeBuffer::tick);
+		GL30.glDrawElements(shapeType.getGLValue(), vertCount, GL11.GL_UNSIGNED_INT, 0);
+		ebo.unbind();
+		this.unbind();
 	}
 
 	@Override

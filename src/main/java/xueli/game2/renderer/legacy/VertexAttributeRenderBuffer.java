@@ -2,6 +2,7 @@ package xueli.game2.renderer.legacy;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+
 import xueli.game2.renderer.legacy.buffer.AttributeBuffer;
 import xueli.game2.renderer.legacy.buffer.BufferStorable;
 import xueli.game2.renderer.legacy.buffer.BufferSyncor;
@@ -36,9 +37,14 @@ public class VertexAttributeRenderBuffer implements RenderBuffer {
 		this.vertCount = 0;
 	}
 
-	private static class VertexBuffer {
-		public int submitCount = 0;
+	protected static class VertexBuffer {
+        public int submitCount = 0;
 		public BufferSyncor.BackBuffer buf;
+
+		public VertexBuffer(BufferSyncor.BackBuffer buf) {
+			this.buf = buf;
+        }
+
 	};
 
 	@Override
@@ -50,8 +56,7 @@ public class VertexAttributeRenderBuffer implements RenderBuffer {
 				{
 					attr.forEachAttribute(i -> {
 						AttributeBuffer buf = attr.getAttributeBuffer(i);
-						VertexBuffer vertexBuffer = new VertexBuffer();
-						vertexBuffer.buf = buf.createBackBuffer();
+						VertexBuffer vertexBuffer = new VertexBuffer(buf.createBackBuffer());
 						this.put(i, vertexBuffer);
 					});
 				}
@@ -90,6 +95,10 @@ public class VertexAttributeRenderBuffer implements RenderBuffer {
 	public void release() {
 		this.attr.release();
 
+	}
+
+	protected int getVertCount() {
+		return vertCount;
 	}
 
 }

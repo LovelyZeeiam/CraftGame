@@ -1,6 +1,6 @@
 package xueli.game2.renderer.legacy.buffer;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.nio.ByteBuffer;
 
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL30;
@@ -23,9 +23,6 @@ public class AttributeBuffer implements Bindable {
 		this.attributeSize = attributeSize;
 		this.type = type;
 
-	}
-
-	public void init() {
 		this.vbo = GL30.glGenBuffers();
 		GL30.glBindBuffer(GL30.GL_ARRAY_BUFFER, vbo);
 		GL30.glBufferData(GL30.GL_ARRAY_BUFFER, 0, bufferType);
@@ -51,6 +48,12 @@ public class AttributeBuffer implements Bindable {
 
 	public BufferSyncor.BackBuffer createBackBuffer() {
 		return bufferManager.createBackBuffer();
+	}
+
+	public ByteBuffer getLatestBuffer() {
+		LotsOfByteBuffer latestBuffer = bufferManager.getLatestBuffer();
+		if(latestBuffer == null) return null;
+		return latestBuffer.getBuffer();
 	}
 
 	@Override

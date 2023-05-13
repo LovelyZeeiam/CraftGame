@@ -3,10 +3,12 @@ package xueli.mcremake.client;
 import java.util.UUID;
 
 import org.lwjgl.glfw.GLFW;
+
 import xueli.game2.display.GameDisplay;
 import xueli.game2.ecs.ResourceListImpl;
 import xueli.game2.resource.ResourceHolder;
 import xueli.mcremake.client.renderer.item.ItemRenderMaster;
+import xueli.mcremake.client.renderer.world.block.BlockRenderTypes;
 import xueli.mcremake.client.systems.GameRenderSystem;
 import xueli.mcremake.client.systems.KeyBindingUpdateSystem;
 import xueli.mcremake.client.systems.PlayerUpdateSystem;
@@ -14,7 +16,6 @@ import xueli.mcremake.core.world.WorldDimension;
 import xueli.mcremake.network.ServerPlayerInfo;
 import xueli.mcremake.registry.GameRegistry;
 import xueli.mcremake.registry.TerrainTextureAtlas;
-import xueli.mcremake.registry.block.BlockRenderTypes;
 import xueli.mcremake.registry.item.ItemRenderTypes;
 
 /**
@@ -39,7 +40,8 @@ public class CraftGameClient extends GameDisplay {
 	public static final ServerPlayerInfo PLAYER_INFO = new ServerPlayerInfo("LovelyZeeiam", UUID.fromString("a5538060-b314-4cb0-90cd-ead6c59f16a7"));
 
 	public final GameState state = new GameState();
-	final ResourceListImpl renderResources = new ResourceListImpl();
+	final ResourceListImpl<Object> renderResources = new ResourceListImpl<>();
+	final ResourceListImpl<IGameSystem> systems = new ResourceListImpl<>();
 	
 	public CraftGameClient() {
 		super(1280, 720, "Minecraft Classic Forever");
@@ -55,17 +57,14 @@ public class CraftGameClient extends GameDisplay {
 
 		this.renderResources.add(new TerrainTextureAtlas(this));
 		this.renderResources.add(new BlockIconGenerator(this));
-		this.renderResources.add(new WorldRenderer(new BlockRenderTypes(renderResources), this));
+		this.renderResources.add(new WorldRenderer(new BlockRenderTypes(this), this));
 		this.renderResources.add(new ItemRenderMaster(new ItemRenderTypes(renderResources), this));
-		this.renderResources.add(new KeyBindingUpdateSystem());
-		this.renderResources.add(new PlayerUpdateSystem());
-		this.renderResources.add(new GameRenderSystem());
+
+		this.systems.add(new KeyBindingUpdateSystem());
+		this.systems.add(new PlayerUpdateSystem());
+		this.systems.add(new GameRenderSystem());
 		
-		this.renderResources.values().forEach(o -> {
-			if(o instanceof IGameSystem system) {
-				system.start(this);
-			}
-		});
+		this.systems.values().forEach(o -> o.start(this));
 
 		state.worldDirect.init();
 
@@ -82,22 +81,14 @@ public class CraftGameClient extends GameDisplay {
 	@Override
 	protected void render() {
 		for (int i = 0; i < this.timer.getNumShouldTick(); i++) {
-			this.renderResources.values().forEach(o -> {
-				if(o instanceof IGameSystem system) {
-					system.tick(this);
-				}
-			});
+			this.systems.values().forEach(o -> o.tick(this));
 			this.state.tickCount++;
 		}
 		this.state.partialTick = this.timer.getRemainProgress();
 
 		state.world.flush();
 
-		this.renderResources.values().forEach(o -> {
-			if(o instanceof IGameSystem system) {
-				system.update(this);
-			}
-		});
+		this.systems.values().forEach(o -> o.update(this));
 
 		if(this.state.keyBindings.isPressed(GLFW.GLFW_KEY_ESCAPE)) {
 			this.announceClose();

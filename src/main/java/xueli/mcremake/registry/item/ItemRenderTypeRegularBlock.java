@@ -16,7 +16,7 @@ public class ItemRenderTypeRegularBlock implements ItemRenderType {
 	private final BlockIconGenerator iconGenerator;
 	private final HashMap<Texture, Integer> guiImages = new HashMap<>();
 	
-	public ItemRenderTypeRegularBlock(ResourceListImpl renderResources) {
+	public ItemRenderTypeRegularBlock(ResourceListImpl<Object> renderResources) {
 		iconGenerator = renderResources.get(BlockIconGenerator.class);
 	}
 	

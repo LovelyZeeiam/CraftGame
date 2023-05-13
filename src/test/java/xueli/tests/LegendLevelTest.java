@@ -1,7 +1,6 @@
 package xueli.tests;
 
 import java.io.File;
-import java.io.IOException;
 
 import xueli.mcremake.level.LevelInfo;
 import xueli.mcremake.level.LevelReader;

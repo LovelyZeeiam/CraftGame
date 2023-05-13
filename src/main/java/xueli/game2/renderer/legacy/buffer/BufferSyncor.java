@@ -34,8 +34,12 @@ public class BufferSyncor {
         };
     }
 
+    public LotsOfByteBuffer getLatestBuffer() {
+        return toBeSyncBuffer == null ? currentBuffer : toBeSyncBuffer;
+    }
+
     public synchronized void updateBuffer(LotsOfByteBuffer buf) {
-        if(toBeSyncBuffer != null) {
+        if(toBeSyncBuffer != null && toBeSyncBuffer != buf) {
             toBeSyncBuffer.release();
         }
         toBeSyncBuffer = buf;
@@ -44,7 +48,7 @@ public class BufferSyncor {
 
     public synchronized void doingSyncIfNecessary(Consumer<LotsOfByteBuffer> c) {
         if(shouldSync) {
-            if(currentBuffer != null) {
+            if(currentBuffer != null && toBeSyncBuffer != currentBuffer) {
                 currentBuffer.release();
             }
             currentBuffer = toBeSyncBuffer;

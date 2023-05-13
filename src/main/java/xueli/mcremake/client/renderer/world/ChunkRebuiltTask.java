@@ -2,6 +2,7 @@ package xueli.mcremake.client.renderer.world;
 
 import com.flowpowered.nbt.CompoundMap;
 
+import xueli.mcremake.client.renderer.world.block.BlockVertexGatherer;
 import xueli.mcremake.core.block.BlockType;
 import xueli.mcremake.core.world.Chunk;
 

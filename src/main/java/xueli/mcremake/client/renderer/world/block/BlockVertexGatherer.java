@@ -1,7 +1,8 @@
-package xueli.mcremake.client.renderer.world;
+package xueli.mcremake.client.renderer.world.block;
 
 import com.flowpowered.nbt.CompoundMap;
 
+import xueli.mcremake.client.renderer.world.ChunkRenderBuildManager;
 import xueli.mcremake.core.world.WorldAccessible;
 
 public interface BlockVertexGatherer {

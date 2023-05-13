@@ -93,6 +93,8 @@ public class LotsOfByteBuffer {
 	}
 
 	public ByteBuffer getBuffer() {
+		if(this.buffer == null)
+			throw new IllegalStateException();
 		return buffer;
 	}
 
@@ -101,7 +103,6 @@ public class LotsOfByteBuffer {
 	}
 
 	public void release() {
-//		System.out.println("free");
 		MemoryUtil.memFree(this.buffer);
 		this.buffer = null;
 
