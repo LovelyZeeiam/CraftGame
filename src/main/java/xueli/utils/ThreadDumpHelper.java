@@ -3,7 +3,7 @@ package xueli.utils;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class Threads {
+public class ThreadDumpHelper {
 
 	private static final int DUMP_BEFORE_NUM = 5;
 

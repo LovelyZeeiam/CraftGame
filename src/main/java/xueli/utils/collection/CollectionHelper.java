@@ -1,8 +1,8 @@
-package xueli.utils.formatter;
+package xueli.utils.collection;
 
 import java.util.Collection;
 
-public class Collections {
+public class CollectionHelper {
 
 	public static String toString(Collection<?> c) {
 		return toString(c, 0);

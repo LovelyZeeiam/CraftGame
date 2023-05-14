@@ -9,6 +9,7 @@ import java.util.zip.DeflaterOutputStream;
 
 import io.netty.buffer.ByteBuf;
 
+@Deprecated
 public class ZLib {
 
 	public static void compress(ByteBuf input, ByteBuf output) throws IOException {

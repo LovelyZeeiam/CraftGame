@@ -1,6 +1,6 @@
 package xueli.utils;
 
-public class Times {
+public class TimeHelper {
 
 	public static String toString(long date) {
 		long current = System.currentTimeMillis() / 1000;

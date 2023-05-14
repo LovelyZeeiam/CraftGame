@@ -7,7 +7,7 @@ import java.io.RandomAccessFile;
 
 import org.fusesource.jansi.Ansi;
 
-import xueli.utils.Strings;
+import xueli.utils.StringTokens;
 
 public class FileInspector implements AutoCloseable {
     
@@ -61,7 +61,7 @@ public class FileInspector implements AutoCloseable {
 
             if(pointer >= start && pointer < end) {
                 String byteHex = Integer.toHexString(temp[bytePrintCounter]);
-                byteHex = Strings.padLeft(byteHex, 2, '0');
+                byteHex = StringTokens.padLeft(byteHex, 2, '0');
                 a.a(byteHex).a(" ");
                 
                 pointer++;

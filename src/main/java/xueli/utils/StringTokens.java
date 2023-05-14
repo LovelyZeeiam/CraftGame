@@ -2,7 +2,7 @@ package xueli.utils;
 
 import java.util.ArrayList;
 
-public class Strings {
+public class StringTokens {
 
 	public static String[] splitToken(String target, String... tokens) {
 		ArrayList<String> ts = new ArrayList<>();

@@ -1,4 +1,4 @@
-package xueli.utils.swings;
+package xueli.swingx;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;

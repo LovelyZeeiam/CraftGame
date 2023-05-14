@@ -23,14 +23,14 @@ public class LevelInfo implements AutoCloseable {
 
     public LevelInfo(File file) throws Exception {
         this.file = file;
-
-        DataInputStream in = new DataInputStream(new FileInputStream(file));
-        version = in.readInt();
-        in.readInt();
-        NBTInputStream nbtIn = new NBTInputStream(in, false, ByteOrder.LITTLE_ENDIAN);
-        CompoundTag tag = (CompoundTag) nbtIn.readTag();
-        this.map = tag.getValue();
-        in.close();
+        
+        try (DataInputStream in = new DataInputStream(new FileInputStream(file));
+        		NBTInputStream nbtIn = new NBTInputStream(in, false, ByteOrder.LITTLE_ENDIAN)) {
+        	version = in.readInt();
+            in.readInt();
+        	CompoundTag tag = (CompoundTag) nbtIn.readTag();
+			this.map = tag.getValue();
+		}
 
     }
 

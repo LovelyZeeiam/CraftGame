@@ -105,7 +105,7 @@ public class WorldRenderer implements ResourceHolder, AutoCloseable {
 						return renderTypes.get(clazz);
 					}
 				};
-				new ChunkRebuiltTask(v.x, v.y, chunk, manager).run();
+				new ChunkRebuiltTask(v.x, v.y, chunk, world, manager).run();
 				manager.flip();
 			}
 		}

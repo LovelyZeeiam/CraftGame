@@ -10,7 +10,7 @@ import com.flowpowered.nbt.CompoundMap;
 import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.client.events.NewChunkEvent;
 import xueli.mcremake.core.block.BlockType;
-import xueli.mcremake.registry.chunkgenerator.pocket.PocketEditionChunkProvider;
+import xueli.mcremake.level.worldgen.MyChunkProvider;
 
 public class WorldDimension implements WorldAccessible {
 
@@ -23,10 +23,9 @@ public class WorldDimension implements WorldAccessible {
 	}
 
 	public void init() { // Maybe it should be a startup component
-		PocketEditionChunkProvider chunkGenerator = new PocketEditionChunkProvider(666);
+		MyChunkProvider chunkGenerator = new MyChunkProvider(666, ctx);
 		for (int i = -8; i < 8; i++) {
 			for (int j = -8; j < 8; j++) {
-				Chunk chunk = new Chunk(this);
 //				for (int l = 0; l < Chunk.CHUNK_SIZE; l++) {
 //					for (int m = 0; m < Chunk.CHUNK_SIZE; m++) {
 //						chunk.setBlock(l, 7, m, GameRegistry.BLOCK_GRASS);
@@ -38,10 +37,10 @@ public class WorldDimension implements WorldAccessible {
 //						}
 //					}
 //				}
-				chunkGenerator.genChunk(j, i, chunk);
+//				chunkGenerator.getChunk(j, i);
 				
-				chunkMap.put(new Vector2i(i, j), chunk);
-				ctx.eventbus.post(new NewChunkEvent(i, j));
+//				chunkMap.put(new Vector2i(i, j), chunk);
+//				ctx.eventbus.post(new NewChunkEvent(i, j));
 			}
 		}
 
