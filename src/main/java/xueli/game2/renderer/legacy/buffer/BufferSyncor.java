@@ -46,17 +46,19 @@ public class BufferSyncor {
         shouldSync = true;
     }
 
-    public synchronized void doingSyncIfNecessary(Consumer<LotsOfByteBuffer> c) {
-        if(shouldSync) {
-            if(currentBuffer != null && toBeSyncBuffer != currentBuffer) {
-                currentBuffer.release();
+    public void doingSyncIfNecessary(Consumer<LotsOfByteBuffer> c) {
+        synchronized (this) {
+        	if(shouldSync) {
+                if(currentBuffer != null && toBeSyncBuffer != currentBuffer) {
+                    currentBuffer.release();
+                }
+                currentBuffer = toBeSyncBuffer;
+                toBeSyncBuffer = null;
+                c.accept(this.currentBuffer);
+                
+                shouldSync = false;
             }
-            currentBuffer = toBeSyncBuffer;
-            toBeSyncBuffer = null;
-            c.accept(this.currentBuffer);
-            
-            shouldSync = false;
-        }
+		}
     }
 
     public interface BackBuffer {

@@ -23,24 +23,15 @@ public class WorldDimension implements WorldAccessible {
 	}
 
 	public void init() { // Maybe it should be a startup component
-		MyChunkProvider chunkGenerator = new MyChunkProvider(666, ctx);
+		MyChunkProvider chunkGenerator = new MyChunkProvider(666);
 		for (int i = -8; i < 8; i++) {
 			for (int j = -8; j < 8; j++) {
-//				for (int l = 0; l < Chunk.CHUNK_SIZE; l++) {
-//					for (int m = 0; m < Chunk.CHUNK_SIZE; m++) {
-//						chunk.setBlock(l, 7, m, GameRegistry.BLOCK_GRASS);
-//						for (int k = 6; k > 3; k--) {
-//							chunk.setBlock(l, k, m, GameRegistry.BLOCK_DIRT);
-//						}
-//						for (int k = 3; k >= 0; k--) {
-//							chunk.setBlock(l, k, m, GameRegistry.BLOCK_STONE);
-//						}
-//					}
-//				}
-//				chunkGenerator.getChunk(j, i);
-				
-//				chunkMap.put(new Vector2i(i, j), chunk);
-//				ctx.eventbus.post(new NewChunkEvent(i, j));
+				final Vector2i chunkPos = new Vector2i(i, j);
+				chunkGenerator.getChunk(j, i, ctx.getAsyncExecutor())
+					.thenAcceptAsync(chunk -> {
+						chunkMap.put(chunkPos, chunk);
+						ctx.eventbus.post(new NewChunkEvent(chunkPos.x, chunkPos.y));
+					}, ctx.getMainThreadExecutor());
 			}
 		}
 

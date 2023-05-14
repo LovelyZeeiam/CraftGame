@@ -120,7 +120,9 @@ public class WorldRenderer implements ResourceHolder, AutoCloseable {
 	}
 
 	public void render() {
-		this.doTasks();
+//		for(int i = 0; i < 10; i++) {
+			this.doTasks();	
+//		}
 
 		Display display = ctx.getDisplay();
 
