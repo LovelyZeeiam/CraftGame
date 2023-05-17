@@ -2,7 +2,7 @@ package org.lwjgl.utils.vector;
 
 import java.util.Objects;
 
-public class Vector2i {
+public class Vector2i implements Comparable<Vector2i> {
 
 	public int x, y;
 
@@ -33,6 +33,12 @@ public class Vector2i {
 	@Override
 	public int hashCode() {
 		return Objects.hash(x, y);
+	}
+
+	@Override
+	public int compareTo(Vector2i o) {
+		if(o == null) return this.hashCode();
+		return this.hashCode() - o.hashCode();
 	}
 
 }

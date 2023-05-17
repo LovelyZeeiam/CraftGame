@@ -49,12 +49,15 @@ public class BufferSyncor {
     public void doingSyncIfNecessary(Consumer<LotsOfByteBuffer> c) {
         synchronized (this) {
         	if(shouldSync) {
-                if(currentBuffer != null && toBeSyncBuffer != currentBuffer) {
-                    currentBuffer.release();
-                }
+        		LotsOfByteBuffer lastBuffer = this.currentBuffer;
+        		
                 currentBuffer = toBeSyncBuffer;
                 toBeSyncBuffer = null;
                 c.accept(this.currentBuffer);
+                
+                if(lastBuffer != null && lastBuffer != currentBuffer) {
+                    currentBuffer.release();
+                }
                 
                 shouldSync = false;
             }

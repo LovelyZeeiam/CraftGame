@@ -55,17 +55,38 @@ public class Chunk implements WorldAccessible {
 		int yInSub = y % SUB_CHUNK_HEIGHT;
 		ChunkGrid grid = grids[ySub];
 		grid.grid[x][z][yInSub] = block;
-
+		
 		if(block == null) {
 			grid.tagGrid[x][z][yInSub] = null;
-			if(y == grid.heightMap[x][z])
-				for (int i = --grid.heightMap[x][z]; i >= 0 && grid.grid[x][z][i] == null; i--) {}
+			if(y == grid.heightMap[x][z]) {
+				int i = --grid.heightMap[x][z];
+				for (; i >= 0 && grid.grid[x][z][i] == null; i = --grid.heightMap[x][z]);
+			}
 		} else {
 			grid.heightMap[x][z] = Math.max(grid.heightMap[x][z], yInSub);
 		}
 
 	}
-
+	
+	public void setBlockImmediate(int x, int y, int z, BlockType block) {
+		int ySub = y / SUB_CHUNK_HEIGHT;
+		int yInSub = y % SUB_CHUNK_HEIGHT;
+		ChunkGrid grid = grids[ySub];
+		grid.grid[x][z][yInSub] = block;
+	}
+	
+	public void recalcHeightMap() {
+		for(int i = 0; i < SUB_CHUNK_LAYER_COUNT; i++) {
+			ChunkGrid grid = grids[i];
+			for(int x = 0; x < CHUNK_SIZE; x++) {
+				for(int z = 0; z < CHUNK_SIZE; z++) {
+					int h = grid.heightMap[x][z] = SUB_CHUNK_HEIGHT - 1;
+					for (; h >= 0 && grid.grid[x][z][h] == null; h = --grid.heightMap[x][z]);
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void modifyBlockTag(int x, int y, int z, Consumer<CompoundMap> c) {
 		if(y < 0 || y >= Chunk.CHUNK_HEIGHT) return;

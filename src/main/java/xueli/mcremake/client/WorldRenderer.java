@@ -1,6 +1,6 @@
 package xueli.mcremake.client;
 
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.TreeSet;
 
 import org.lwjgl.utils.vector.Matrix4f;
 import org.lwjgl.utils.vector.Vector2i;
@@ -31,8 +31,8 @@ public class WorldRenderer implements ResourceHolder, AutoCloseable {
 
 	private final WorldDimension world;
 
-	private final ConcurrentLinkedQueue<Vector2i> chunkRebuiltList = new ConcurrentLinkedQueue<>();
-	private final ConcurrentLinkedQueue<Vector2i> chunkRemoveList = new ConcurrentLinkedQueue<>();
+	private final TreeSet<Vector2i> chunkRebuiltList = new TreeSet<>();
+	private final TreeSet<Vector2i> chunkRemoveList = new TreeSet<>();
 
 	private final ResourceListGeneric<ChunkRenderType> renderTypes;
 
@@ -90,7 +90,7 @@ public class WorldRenderer implements ResourceHolder, AutoCloseable {
 
 	private void doTasks() {
 		Vector2i v;
-		v = chunkRebuiltList.poll();
+		v = chunkRebuiltList.pollFirst();
 		if(v != null) {
 			for (ChunkRenderType type : renderTypes.values()) {
 				RenderBuffer buf = type.getRenderBuffer(v);
@@ -99,18 +99,24 @@ public class WorldRenderer implements ResourceHolder, AutoCloseable {
 			
 			Chunk chunk = world.getChunk(v.x, v.y);
 			if(chunk != null) {
-				ChunkRenderBuildManager manager = new ChunkRenderBuildManager(v) {
-					@Override
-					public <T extends ChunkRenderType> T getRenderType(Class<T> clazz) {
-						return renderTypes.get(clazz);
-					}
-				};
-				new ChunkRebuiltTask(v.x, v.y, chunk, world, manager).run();
-				manager.flip();
+				final Vector2i fv = v;
+				// Will flash if async, why?
+// 				CompletableFuture.supplyAsync(() -> {
+					ChunkRenderBuildManager manager = new ChunkRenderBuildManager(fv) {
+						@Override
+						public <T extends ChunkRenderType> T getRenderType(Class<T> clazz) {
+							return renderTypes.get(clazz);
+						}
+					};
+					new ChunkRebuiltTask(fv.x, fv.y, chunk, world, manager).run();
+//					return manager;
+//				}, ctx.getAsyncExecutor()).thenAcceptAsync(manager -> {
+					manager.flip();
+//				}, ctx.getMainThreadExecutor());
 			}
 		}
 
-		v = chunkRemoveList.poll();
+		v = chunkRemoveList.pollFirst();
 		if(v != null) {
 			for (ChunkRenderType type : renderTypes.values()) {
 				type.releaseRenderBuffer(v);

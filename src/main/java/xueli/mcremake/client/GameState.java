@@ -6,6 +6,7 @@ import xueli.mcremake.core.item.ItemType;
 import xueli.mcremake.core.world.WorldDimension;
 import xueli.mcremake.registry.GameRegistry;
 
+// TODO: maybe each type of game state can also be a component! 
 public class GameState {
 
     public int tickCount = 0;

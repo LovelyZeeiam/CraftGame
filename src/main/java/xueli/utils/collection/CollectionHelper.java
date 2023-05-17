@@ -3,7 +3,18 @@ package xueli.utils.collection;
 import java.util.Collection;
 
 public class CollectionHelper {
-
+	
+	public static String toString(int[][] array) {
+		StringBuilder str = new StringBuilder();
+		for(int i = 0; i < array.length; i++) {
+			for(int j = 0; j < array[i].length; j++) {
+				str.append(array[i][j]).append(" ");
+			}
+			str.append(System.lineSeparator());
+		}
+		return str.toString();
+	}
+	
 	public static String toString(Collection<?> c) {
 		return toString(c, 0);
 	}

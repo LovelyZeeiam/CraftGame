@@ -97,7 +97,7 @@ public class BlockRendererSolid implements BlockVertexGatherer {
 
 	}
 
-    private boolean shouldRenderFaceOnThisBlock(BlockType block) {
+    public static boolean shouldRenderFaceOnThisBlock(BlockType block) {
         return block == null || !GameRegistry.BUILTIN_BLOCK_REGISTRY.getTags(block.namespace()).contains(GameRegistry.TAG_GENERIC_BLOCK);
     }
 
