@@ -20,7 +20,8 @@ public class FontTest extends GameDisplay {
 	@Override
 	protected void renderInit() {
 		this.font = new MojanglesFont(this);
-		this.resourceManager.addResourceHolder(this.font);
+		this.font.reload();
+//		this.resourceManager.addResourceHolder(this.font);
 		
 		this.overlayManager.setOverlay(new Overlay() {
 			

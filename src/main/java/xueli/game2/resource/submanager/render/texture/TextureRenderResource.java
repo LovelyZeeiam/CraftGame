@@ -17,7 +17,6 @@ public class TextureRenderResource extends RenderResource<ResourceIdentifier, Te
 	
 	@Override
 	protected Texture doRegister(ResourceIdentifier k, boolean must) {
-		
 		try {
 			return LEGACY_LOADER.registerTexture(k, getUpperResourceManager());
 		} catch (IOException | NullPointerException e) {

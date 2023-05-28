@@ -17,10 +17,13 @@ public class TerrainTextureAtlas implements ResourceHolder {
 
 	public TerrainTextureAtlas(CraftGameClient ctx) {
 		this.ctx = ctx;
+		this.reload();
 	}
 
 	@Override
 	public void reload() {
+		// NO MORE RELOAD!
+		// Just get from ReloadableResource!
 		textureId = ctx.textureResource.register(TERRAIN_TEXTURE_LOCATION, true).id();
 	}
 

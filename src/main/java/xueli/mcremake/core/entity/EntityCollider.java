@@ -25,7 +25,7 @@ public class EntityCollider {
 
 	}
 
-	public boolean collide(Vector3d original, Vector3d delta, Vector3d target) {
+	public CollideResult collide(Vector3d original, Vector3d delta, Vector3d target) {
 		ArrayList<AABB> aabbs = new ArrayList<>();
 		AABB entityBox = this.relativeBox.add(original);
 		addAllCollisionBox(this.world, entityBox.expand(delta), aabbs);
@@ -50,11 +50,15 @@ public class EntityCollider {
 			detZ = this.collideClipZ(entityBox, box, detZ);
 		}
 //		entityBox = entityBox.add(new Vector3d(0, 0, detZ));
-
+		
 		target.x = detX;
 		target.y = detY;
 		target.z = detZ;
-		return detX != delta.x || detY != delta.y || detZ != delta.z;
+		return new CollideResult(
+				CollideResult.calcCollide(detX, delta.x), // TODO: All returned 0? strange
+				CollideResult.calcCollide(detY, delta.y),
+				CollideResult.calcCollide(detZ, delta.z)
+			);
 	}
 
 	private double collideClipX(AABB movingBox, AABB toCollideBox, double movingDistance) {

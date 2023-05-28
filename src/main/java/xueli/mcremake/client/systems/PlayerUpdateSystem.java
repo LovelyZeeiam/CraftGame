@@ -12,6 +12,7 @@ import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.client.IGameSystem;
 import xueli.mcremake.client.player.AttackButtonHandler;
 import xueli.mcremake.client.player.UseButtonHandler;
+import xueli.mcremake.core.entity.CollideResult;
 import xueli.mcremake.core.entity.EntityCollider;
 import xueli.mcremake.core.entity.PickCollider;
 import xueli.mcremake.core.entity.VirtualKeyboard;
@@ -146,12 +147,23 @@ public class PlayerUpdateSystem implements IGameSystem {
 		velocity.y *= 0.6;
 
 		Vector3d delta = new Vector3d(velocity.x, velocity.y, velocity.z);
-		collider.collide(new Vector3d(position.x, position.y, position.z), delta, delta);
+		CollideResult result = collider.collide(new Vector3d(position.x, position.y, position.z), delta, delta);
 		position.x += delta.x;
 		position.y += delta.y;
 		position.z += delta.z;
 		// System.out.println(delta);
-
+		
+		if(result.xCollide() != CollideResult.NO_COLLIDE) {
+			velocity.x = 0;
+		}
+		if(result.yCollide() != CollideResult.NO_COLLIDE) {
+			velocity.y = 0;
+		}
+		if(result.zCollide() != CollideResult.NO_COLLIDE) {
+			velocity.z = 0;
+		}
+		System.out.println(result);
+		
         // keyboard.forward = keyboard.backward = keyboard.leftward = keyboard.rightward = keyboard.wantDash = keyboard.wantFly = keyboard.wantSneak = false;
 
 	}

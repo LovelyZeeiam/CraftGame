@@ -76,13 +76,13 @@ public class CraftGameClient extends GameDisplay {
 
 		state.worldDirect.init();
 
-		this.resourceManager.addResourceHolder(() -> {
-			this.renderResources.values().forEach(o -> {
-				if(o instanceof ResourceHolder holder) {
-					holder.reload();
-				}
-			});
-		});
+//		this.resourceManager.addResourceHolder(() -> {
+//			this.renderResources.values().forEach(o -> {
+//				if(o instanceof ResourceHolder holder) {
+//					holder.reload();
+//				}
+//			});
+//		});
 
 	}
 

@@ -18,17 +18,12 @@ The goal is to make a "Minecraft PE 0.10.5 Remake" programmed in Java 17 with LW
 
 ## How to Test the Game
 
+First install Java 17, and...
+
 #### Windows
-
-To build, just execute
-
-> gradlew.bat build
-
-then
 
 > gradlew.bat run
 
-There you go!
 
 #### Linux && MacOS
 
@@ -40,6 +35,10 @@ I'm convinced that it is able to run by typing the following 3 commands.
 > ./gradlew build
 > 
 > ./gradlew run
+
+#### GraalVM Native Image
+
+The programmer has tried build native image for the game but it failed.
 
 # Have fun!
 

@@ -1,5 +1,7 @@
 package xueli.clock.component;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -9,8 +11,6 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.JPanel;
 import javax.swing.event.SwingPropertyChangeSupport;
-import java.awt.BorderLayout;
-import java.awt.Color;
 
 public class BatteryInfoPanel extends JPanel {
 

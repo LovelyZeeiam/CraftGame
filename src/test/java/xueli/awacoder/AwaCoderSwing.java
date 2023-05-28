@@ -1,11 +1,18 @@
 package xueli.awacoder;
 
-import com.formdev.flatlaf.FlatDarculaLaf;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.EventQueue;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import com.formdev.flatlaf.FlatDarculaLaf;
 
 public class AwaCoderSwing {
 

@@ -12,17 +12,20 @@ plugins {
     // Apply the application plugin to add support for building a CLI application.
     id 'application'
 
+	// id 'org.lwjgl.plugin' version '0.0.34'
+	id 'com.google.osdetector' version '1.7.1'
+    id 'org.graalvm.buildtools.native' version '0.9.12'
+
 }
 
 application {
     // Define the main class for the application.
-    apply plugin: 'application'
-
     mainClassName = 'xueli.mcremake.client.CraftGameMain'
 
 }
 
-tasks.withType(JavaCompile) {
+compileJava {
+    options.release = 17
     options.encoding = "UTF-8"
 }
 
@@ -40,6 +43,12 @@ repositories {
     
 }
 
+ext {
+    currentPlatform = getCurrentPlatform()
+    lwjgl_version = '3.3.1'
+    nativeImageDirName = "native-image-$currentPlatform"
+}
+
 dependencies {
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
 	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
@@ -47,8 +56,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     
     implementation 'org.fusesource.jansi:jansi:2.3.4'
-
-    implementation group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true
+	
+	implementation group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true
     implementation group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-windows'
     implementation group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-linux'
     implementation group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-macos'
@@ -72,7 +81,7 @@ dependencies {
     implementation group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-windows'
     implementation group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-linux'
     implementation group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-macos'
-
+	
     // implementation group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true
     // implementation group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-windows'
     // implementation group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-linux'
@@ -89,16 +98,50 @@ dependencies {
 
 }
 
-static def releaseTime() {
-  return new Date().format("yyyyMMdd", TimeZone.getTimeZone("GMT+08:00"))
-}
-
 jar {
 	manifest {
         attributes 'Implementation-Title': 'CraftGame',
                 'Implementation-Version': "WorldAlpha-${releaseTime()}"
     }
 
+}
+
+graalvmNative {
+     binaries.all {
+        resources.autodetect()
+     	buildArgs.add('--initialize-at-build-time=org.slf4j.LoggerFactory')
+     	// buildArgs.add('--initialize-at-run-time=org.lwjgl')
+     	buildArgs.add('-H:+ReportExceptionStackTraces')
+     	buildArgs.add('--native-image-info')
+     	buildArgs.add('--verbose')
+     }
+     toolchainDetection = false
+ }
+ 
+// === Functions and Tasks ===
+
+def releaseTime() {
+  return new Date().format("yyyyMMdd", TimeZone.getTimeZone("GMT+08:00"))
+}
+
+def getCurrentPlatform() {
+    def os = osdetector.os
+    def lwjglOS = os == 'linux' ? 'linux' :
+                  os == 'osx' ? 'macos' :
+                  os == 'windows' ? 'windows' :
+                  'unknown'
+    if (lwjglOS == 'unknown')
+        throw new GradleException('Unsupported OS: ' + os)
+
+    def arch = osdetector.arch
+    //consider 64-bit architectures only
+    def lwjglArch = arch == 'x86_64' ? '' :
+                    arch == 'aarch_64' ? 'arm64' :
+                    'unknown'
+    if (lwjglArch == 'unknown')
+        throw new GradleException('Unsupported Architecture: ' + arch)
+
+    return (lwjglArch == '' ? lwjglOS : (lwjglOS + '-' + lwjglArch))
 }
 
 test {

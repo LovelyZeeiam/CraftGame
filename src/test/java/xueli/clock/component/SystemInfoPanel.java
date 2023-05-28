@@ -1,20 +1,20 @@
 package xueli.clock.component;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import xueli.clock.bean.SystemInfoBean;
 import xueli.clock.service.SystemInfoService;
 import xueli.swingx.layout.VerticalFilledLayout;
-import xueli.swingx.layout.VerticalFilledLayout.VerticalAlign;
 import xueli.swingx.layout.VerticalFilledLayout.HorizontalAlign;
-
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.Dimension;
-import javax.swing.JLabel;
-import javax.swing.border.EmptyBorder;
+import xueli.swingx.layout.VerticalFilledLayout.VerticalAlign;
 
 public class SystemInfoPanel extends JPanel {
 	

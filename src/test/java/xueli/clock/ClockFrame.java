@@ -1,7 +1,34 @@
 package xueli.clock;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayer;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import com.formdev.flatlaf.FlatDarkLaf;
-import xueli.animation.*;
+
+import xueli.animation.AnimationBinding;
+import xueli.animation.AnimationBindingBuilder;
+import xueli.animation.AnimationManager;
+import xueli.animation.Curves;
+import xueli.animation.IntValueAnimationBinding;
+import xueli.animation.TransitionBinding;
+import xueli.animation.TransitionManager;
 import xueli.clock.bean.ClockBean;
 import xueli.clock.component.UserInfoPanel;
 import xueli.clock.service.ClockService;
@@ -17,15 +44,6 @@ import xueli.swingx.layout.OffsetLayout;
 import xueli.swingx.responsive.PropertyAccessible;
 import xueli.swingx.responsive.TransitionBindings;
 import xueli.swingx.responsive.ValueProvider;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.IOException;
 
 // Swing搴撶湡鐨勫己澶� 涓�琛屼唬鐮佷袱琛宐ug 灏忓皬鐮佸啘鐑︽伡涓嶆�� LovelyZeeiam甯︽垜鍑哄彂~
 public class ClockFrame {

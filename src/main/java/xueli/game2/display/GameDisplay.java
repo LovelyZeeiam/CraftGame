@@ -11,7 +11,6 @@ import xueli.game2.display.event.WindowKeyEvent;
 import xueli.game2.display.event.WindowMouseButtonEvent;
 import xueli.game2.display.event.WindowSizedEvent;
 import xueli.game2.lifecycle.RunnableLifeCycle;
-import xueli.game2.renderer.ui.Gui;
 import xueli.game2.renderer.ui.OverlayManager;
 import xueli.game2.resource.manager.BackwardResourceManager;
 import xueli.game2.resource.provider.ClassLoaderResourceProvider;
@@ -19,7 +18,6 @@ import xueli.game2.resource.provider.ResourceProvider;
 import xueli.game2.resource.submanager.render.shader.ShaderRenderResource;
 import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
 import xueli.game2.resource.submanager.render.texture.atlas.AtlasTextureRenderResource;
-import xueli.game2.worker.GameWorker;
 import xueli.utils.events.EventBus;
 import xueli.utils.exception.CrashReport;
 import xueli.utils.logger.Logger;
@@ -29,7 +27,6 @@ public abstract class GameDisplay implements RunnableLifeCycle {
 	private static final Logger LOGGER = new Logger();
 	
 	protected Display display;
-	public final GameWorker worker = new GameWorker();
 	
 	public final Timer timer = new Timer();
 	public final FPSCalculator fps = new FPSCalculator();
@@ -45,8 +42,6 @@ public abstract class GameDisplay implements RunnableLifeCycle {
 	
 	public final EventBus eventbus = new EventBus();
 	
-	private final Gui gui;
-	
 	public GameDisplay(int initialWidth, int initialHeight, String mainTitle) {
 		this.display = new Display(initialWidth, initialHeight, mainTitle);
 
@@ -57,8 +52,7 @@ public abstract class GameDisplay implements RunnableLifeCycle {
 		this.atlasTextureResource = new AtlasTextureRenderResource(this.textureResource);
 		this.shaderResource = new ShaderRenderResource(resourceManager);
 //		this.fontResource = new FontRenderResource(gui, resourceManager);
-
-		this.gui = new Gui();
+		
 		this.overlayManager = new OverlayManager(this);
 		
 	}
@@ -70,11 +64,9 @@ public abstract class GameDisplay implements RunnableLifeCycle {
 		this.display.addWindowSizedListener((w, h) -> eventbus.post(new WindowSizedEvent(w, h)));
 		this.display.addMouseInputListener((btn, action, mods) -> eventbus.post(new WindowMouseButtonEvent(btn, action, mods)));
 		
-		this.resourceManager.addResourceHolder(this.gui);
-		this.resourceManager.addResourceHolder(this.overlayManager);
+//		this.resourceManager.addResourceHolder(this.overlayManager);
 
 		try {
-			this.gui.init();
 			this.overlayManager.init();
 			renderInit();
 		} catch (Exception e) {
@@ -103,13 +95,9 @@ public abstract class GameDisplay implements RunnableLifeCycle {
 		}
 		this.render();
 
-		this.gui.tick();
-
 		this.display.update();
 		
 		this.checkGLError("Post-Render");
-		
-		worker.tickMainThread();
 		
 	}
 
@@ -121,7 +109,6 @@ public abstract class GameDisplay implements RunnableLifeCycle {
 	@Override
 	public void release() {
 		this.display.hide();
-		this.gui.release();
 		this.overlayManager.release();
 		this.renderRelease();
 		
@@ -181,10 +168,6 @@ public abstract class GameDisplay implements RunnableLifeCycle {
 
 	public float getDisplayScale() {
 		return display.getDisplayScale();
-	}
-	
-	public Gui getGuiManager() {
-		return gui;
 	}
 
 }

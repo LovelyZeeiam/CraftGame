@@ -4,6 +4,10 @@ import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
+/**
+ * Is this serious?
+ * Can the buffer be borrowed or transfered just like Rust do?
+ */
 public class BufferUtils {
 	
 	private static ArrayList<Buffer> bufferStack = new ArrayList<>();

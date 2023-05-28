@@ -7,9 +7,12 @@ import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_LEFT;
 import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_MIDDLE;
 import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_RIGHT;
 import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_TOP;
+import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
 import static org.lwjgl.nanovg.NanoVG.nvgCircle;
+import static org.lwjgl.nanovg.NanoVG.nvgCreateFontMem;
+import static org.lwjgl.nanovg.NanoVG.nvgCreateImageMem;
 import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
 import static org.lwjgl.nanovg.NanoVG.nvgFill;
 import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
@@ -29,32 +32,27 @@ import static org.lwjgl.nanovg.NanoVGGL3.NVG_DEBUG;
 import static org.lwjgl.nanovg.NanoVGGL3.NVG_STENCIL_STROKES;
 import static org.lwjgl.nanovg.NanoVGGL3.nvgCreate;
 import static org.lwjgl.nanovg.NanoVGGL3.nvgDelete;
+import static org.lwjgl.nanovg.NanoVGGL3.nvglCreateImageFromHandle;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
 
-import xueli.game2.lifecycle.LifeCycle;
 import xueli.game2.resource.Resource;
 import xueli.game2.resource.ResourceHolder;
+import xueli.game2.resource.submanager.render.BufferUtils;
 import xueli.game2.resource.submanager.render.texture.Texture;
 
-public class Gui implements LifeCycle, ResourceHolder {
+public class Gui implements ResourceHolder {
 
 	long nvg = 0;
 	private final NVGColor colorBuf = NVGColor.create();
 	private final NVGPaint paintBuf = NVGPaint.create();
 	
-	private final ImageManager imageManager = new ImageManager(this);
-	private final FontManager fontManager = new FontManager(this);
-	
 	public Gui() {
-	}
-
-	@Override
-	public void init() {
 	}
 	
 	@Override
@@ -70,17 +68,42 @@ public class Gui implements LifeCycle, ResourceHolder {
 		
 	}
 	
+	public int registerImage(Resource res) throws IOException {
+		byte[] bytes = res.readAll();
+		
+		ByteBuffer buffer = BufferUtils.createByteBuffer(bytes.length);
+		buffer.put(bytes);
+		buffer.flip();
+		
+		int id = nvgCreateImageMem(nvg, NVG_IMAGE_NEAREST, buffer);
+		if(id <= 0) {
+			throw new IOException("Can't register image: " + res.toString());
+		}
+		return id;
+	}
+	
 	public int registerImage(Texture tex) {
-		return imageManager.createImage(tex);
+		return nvglCreateImageFromHandle(nvg, tex.id(), tex.width(), tex.height(), NVG_IMAGE_NEAREST);
 	}
 	
 	public int registerFont(String name, Resource res) throws IOException {
-		return fontManager.createFont(name, res);
+		byte[] bytes = res.readAll();
+		
+		ByteBuffer buffer = BufferUtils.createByteBuffer(bytes.length);
+		buffer.put(bytes);
+		buffer.flip();
+		
+		int id = nvgCreateFontMem(nvg, name, buffer, 0);
+		
+		if(id < 0) {
+			throw new IOException("Can't register font: " + name);
+		}
+		
+		return id;
 	}
 
 	public void begin(float width, float height) {
 		nvgBeginFrame(nvg, width, height, width / height);
-		
 	}
 
 	public void setTextLetterSpacing(float s) {
@@ -164,15 +187,10 @@ public class Gui implements LifeCycle, ResourceHolder {
 		nvgEndFrame(nvg);
 	}
 
-	@Override
-	public void tick() {
-	}
-
 	public long getContext() {
 		return nvg;
 	}
-
-	@Override
+	
 	public void release() {
 		nvgDelete(nvg);
 
