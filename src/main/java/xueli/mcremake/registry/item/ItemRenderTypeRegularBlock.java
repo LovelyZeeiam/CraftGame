@@ -6,6 +6,7 @@ import com.flowpowered.nbt.CompoundMap;
 
 import xueli.game2.ecs.ResourceListImpl;
 import xueli.game2.renderer.ui.Gui;
+import xueli.game2.resource.ResourceHolder;
 import xueli.game2.resource.submanager.render.texture.Texture;
 import xueli.mcremake.client.BlockIconGenerator;
 import xueli.mcremake.client.renderer.item.ItemRenderType;
@@ -16,7 +17,7 @@ public class ItemRenderTypeRegularBlock implements ItemRenderType {
 	private final BlockIconGenerator iconGenerator;
 	private final HashMap<Texture, Integer> guiImages = new HashMap<>();
 	
-	public ItemRenderTypeRegularBlock(ResourceListImpl<Object> renderResources) {
+	public ItemRenderTypeRegularBlock(ResourceListImpl<ResourceHolder> renderResources) {
 		iconGenerator = renderResources.get(BlockIconGenerator.class);
 	}
 	

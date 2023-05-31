@@ -44,7 +44,7 @@ public class CraftGameClient extends GameDisplay {
 	public static final ServerPlayerInfo PLAYER_INFO = new ServerPlayerInfo("LovelyZeeiam", UUID.fromString("a5538060-b314-4cb0-90cd-ead6c59f16a7"));
 	
 	public final GameState state = new GameState();
-	final ResourceListImpl<Object> renderResources = new ResourceListImpl<>();
+	final ResourceListImpl<ResourceHolder> renderResources = new ResourceListImpl<>();
 	final ResourceListImpl<IGameSystem> systems = new ResourceListImpl<>();
 	
 	private final ExecutorService asyncExecutor = Executors.newWorkStealingPool();
@@ -52,6 +52,7 @@ public class CraftGameClient extends GameDisplay {
 	
 	public CraftGameClient() {
 		super(1280, 720, "Minecraft Classic Forever");
+		
 		
 	}
 	
@@ -76,13 +77,9 @@ public class CraftGameClient extends GameDisplay {
 
 		state.worldDirect.init();
 
-//		this.resourceManager.addResourceHolder(() -> {
-//			this.renderResources.values().forEach(o -> {
-//				if(o instanceof ResourceHolder holder) {
-//					holder.reload();
-//				}
-//			});
-//		});
+		this.resourceManager.addResourceHolder(() -> {
+			this.renderResources.values().forEach(ResourceHolder::reload);
+		});
 
 	}
 
@@ -119,7 +116,7 @@ public class CraftGameClient extends GameDisplay {
 
 	}
 	
-	public <T> T getRenderResources(Class<T> clazz) {
+	public <T extends ResourceHolder> T getRenderResources(Class<T> clazz) {
 		return this.renderResources.get(clazz);
 	}
 	

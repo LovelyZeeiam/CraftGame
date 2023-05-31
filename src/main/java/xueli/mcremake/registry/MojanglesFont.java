@@ -9,8 +9,10 @@ import org.lwjgl.utils.vector.Vector3f;
 import xueli.game2.display.GameDisplay;
 import xueli.game2.renderer.legacy.BackRenderBuffer;
 import xueli.game2.renderer.legacy.RenderBuffer;
+import xueli.game2.resource.ReloadableResourceTicket;
 import xueli.game2.resource.ResourceHolder;
 import xueli.game2.resource.ResourceIdentifier;
+import xueli.game2.resource.submanager.render.texture.Texture;
 import xueli.mcremake.client.renderer.gui.MyRenderBuffer2D;
 import xueli.mcremake.client.renderer.gui.RenderTypeTexture2D;
 
@@ -44,17 +46,16 @@ public class MojanglesFont implements ResourceHolder {
 	private final GameDisplay ctx;
 
 	private RenderTypeTexture2D renderer = new RenderTypeTexture2D();
-	private int fontTexture;
+	private ReloadableResourceTicket<Texture> fontTexture;
 	
 	public MojanglesFont(GameDisplay ctx) {
 		this.ctx = ctx;
+		this.fontTexture = ctx.textureResource.register(FONT_TEXTURE_LOCATION, true);
 		
 	}
 	
 	@Override
 	public void reload() {
-		fontTexture = ctx.textureResource.register(FONT_TEXTURE_LOCATION, true).id();
-		
 		
 	}
 	
@@ -73,7 +74,7 @@ public class MojanglesFont implements ResourceHolder {
 	}
 	
 	public void drawFont(float x, float y, float size, float separateRatio, String str, Color color) {
-		RenderBuffer buffer = renderer.getRenderBuffer(fontTexture);
+		RenderBuffer buffer = renderer.getRenderBuffer(fontTexture.get().id());
 		BackRenderBuffer backBuffer = buffers.computeIfAbsent(buffer, RenderBuffer::createBackBuffer);
 
 		float colorR = color.getRed() / 255.0f;

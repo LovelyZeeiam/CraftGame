@@ -17,7 +17,6 @@ import xueli.game2.resource.provider.ClassLoaderResourceProvider;
 import xueli.game2.resource.provider.ResourceProvider;
 import xueli.game2.resource.submanager.render.shader.ShaderRenderResource;
 import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
-import xueli.game2.resource.submanager.render.texture.atlas.AtlasTextureRenderResource;
 import xueli.utils.events.EventBus;
 import xueli.utils.exception.CrashReport;
 import xueli.utils.logger.Logger;
@@ -35,7 +34,6 @@ public abstract class GameDisplay implements RunnableLifeCycle {
 
 	public final BackwardResourceManager resourceManager;
 	public final TextureRenderResource textureResource;
-	public final AtlasTextureRenderResource atlasTextureResource;
 	public final ShaderRenderResource shaderResource;
 	
 	public final OverlayManager overlayManager;
@@ -49,7 +47,6 @@ public abstract class GameDisplay implements RunnableLifeCycle {
 		this.resourceManager = new BackwardResourceManager(resourceProviders);
 
 		this.textureResource = new TextureRenderResource(resourceManager);
-		this.atlasTextureResource = new AtlasTextureRenderResource(this.textureResource);
 		this.shaderResource = new ShaderRenderResource(resourceManager);
 //		this.fontResource = new FontRenderResource(gui, resourceManager);
 		

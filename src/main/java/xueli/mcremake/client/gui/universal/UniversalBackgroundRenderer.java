@@ -5,8 +5,10 @@ import org.lwjgl.utils.vector.Vector3f;
 
 import xueli.game2.renderer.legacy.BackRenderBuffer;
 import xueli.game2.renderer.legacy.RenderBuffer;
+import xueli.game2.resource.ReloadableResourceTicket;
 import xueli.game2.resource.ResourceHolder;
 import xueli.game2.resource.ResourceIdentifier;
+import xueli.game2.resource.submanager.render.texture.Texture;
 import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.client.renderer.gui.MyRenderBuffer2D;
 import xueli.mcremake.client.renderer.gui.RenderTypeTexture2D;
@@ -21,7 +23,7 @@ public class UniversalBackgroundRenderer implements ResourceHolder {
 	public static final int BG_SIZE = 128;
 	public static final Vector3f BG_COLOR = new Vector3f(0.3f, 0.3f, 0.3f);
 
-	private int texUniversalBgId;
+	private ReloadableResourceTicket<Texture> texUniversalBgId;
 
 	private final CraftGameClient ctx;
 
@@ -36,6 +38,7 @@ public class UniversalBackgroundRenderer implements ResourceHolder {
 	private BackRenderBuffer backBuf;
 
 	public void init() {
+		this.texUniversalBgId = ctx.textureResource.register(UNIVERSAL_BACKGROUND_RESOURCE_LOCATION, false);
 		this.reload();
 
 	}
@@ -71,12 +74,10 @@ public class UniversalBackgroundRenderer implements ResourceHolder {
 
 	@Override
 	public void reload() {
-		this.texUniversalBgId = ctx.textureResource.register(UNIVERSAL_BACKGROUND_RESOURCE_LOCATION, false).id();
-
 		if(this.renderBuffer != null) {
 			this.renderBuffer.release();
 		}
-		renderBuffer = renderType.getRenderBuffer(this.texUniversalBgId);
+		renderBuffer = renderType.getRenderBuffer(this.texUniversalBgId.get().id());
 		backBuf = renderBuffer.createBackBuffer();
 
 	}

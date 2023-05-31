@@ -22,6 +22,10 @@ import xueli.game2.resource.submanager.render.texture.TextureLoaderLegacy;
 import xueli.game2.resource.submanager.render.texture.TextureMissing;
 import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
 
+/**
+ * Maybe you should implement it yourself
+ */
+@Deprecated
 public class AtlasTextureRenderResource extends SubResourceManager {
 	
 	private final ArrayList<RegisterData> registerData = new ArrayList<>();
