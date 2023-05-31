@@ -2,21 +2,24 @@ package xueli.game2.display;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
 import xueli.game2.Timer;
+import xueli.game2.display.event.CursorPositionEvent;
 import xueli.game2.display.event.WindowKeyEvent;
 import xueli.game2.display.event.WindowMouseButtonEvent;
 import xueli.game2.display.event.WindowSizedEvent;
 import xueli.game2.lifecycle.RunnableLifeCycle;
-import xueli.game2.renderer.ui.OverlayManager;
 import xueli.game2.resource.manager.BackwardResourceManager;
 import xueli.game2.resource.provider.ClassLoaderResourceProvider;
 import xueli.game2.resource.provider.ResourceProvider;
 import xueli.game2.resource.submanager.render.shader.ShaderRenderResource;
 import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
+import xueli.utils.concurrent.ControllerExecutorService;
 import xueli.utils.events.EventBus;
 import xueli.utils.exception.CrashReport;
 import xueli.utils.logger.Logger;
@@ -36,9 +39,12 @@ public abstract class GameDisplay implements RunnableLifeCycle {
 	public final TextureRenderResource textureResource;
 	public final ShaderRenderResource shaderResource;
 	
-	public final OverlayManager overlayManager;
+//	public final OverlayManager overlayManager;
 	
 	public final EventBus eventbus = new EventBus();
+	
+	private final ExecutorService asyncExecutor = Executors.newWorkStealingPool();
+	private final ControllerExecutorService mainThreadExecutor = new ControllerExecutorService();
 	
 	public GameDisplay(int initialWidth, int initialHeight, String mainTitle) {
 		this.display = new Display(initialWidth, initialHeight, mainTitle);
@@ -50,7 +56,7 @@ public abstract class GameDisplay implements RunnableLifeCycle {
 		this.shaderResource = new ShaderRenderResource(resourceManager);
 //		this.fontResource = new FontRenderResource(gui, resourceManager);
 		
-		this.overlayManager = new OverlayManager(this);
+//		this.overlayManager = new OverlayManager(this);
 		
 	}
 
@@ -60,11 +66,12 @@ public abstract class GameDisplay implements RunnableLifeCycle {
 		this.display.addKeyListener((key, scancode, action, mods) -> eventbus.post(new WindowKeyEvent(key, scancode, action, mods)));
 		this.display.addWindowSizedListener((w, h) -> eventbus.post(new WindowSizedEvent(w, h)));
 		this.display.addMouseInputListener((btn, action, mods) -> eventbus.post(new WindowMouseButtonEvent(btn, action, mods)));
+		this.display.addMousePositionListener((x, y) -> eventbus.post(new CursorPositionEvent(x, y)));
 		
 //		this.resourceManager.addResourceHolder(this.overlayManager);
 
 		try {
-			this.overlayManager.init();
+//			this.overlayManager.init();
 			renderInit();
 		} catch (Exception e) {
 			this.announceCrash("Init", e);
@@ -80,16 +87,18 @@ public abstract class GameDisplay implements RunnableLifeCycle {
 	public void tick() {
 		timer.tick();
 		fps.tick();
-
+		mainThreadExecutor.tick();
+		
 		GL30.glViewport(0, 0, display.getWidth(), display.getHeight());
 		GL30.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_STENCIL_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
 
-		if(this.overlayManager.hasOverlay()) {
-			getDisplay().setMouseGrabbed(false);
-			this.overlayManager.tick();
-		} else {
-			getDisplay().setMouseGrabbed(true);
-		}
+//		if(this.overlayManager.hasOverlay()) {
+//			getDisplay().setMouseGrabbed(false);
+//			this.overlayManager.tick();
+//		} else {
+//			getDisplay().setMouseGrabbed(true);
+//		}
+		
 		this.render();
 
 		this.display.update();
@@ -106,8 +115,11 @@ public abstract class GameDisplay implements RunnableLifeCycle {
 	@Override
 	public void release() {
 		this.display.hide();
-		this.overlayManager.release();
+//		this.overlayManager.release();
 		this.renderRelease();
+		
+		asyncExecutor.shutdownNow();
+		mainThreadExecutor.shutdownNow();
 		
 		try {
 			this.resourceManager.close();
@@ -149,6 +161,14 @@ public abstract class GameDisplay implements RunnableLifeCycle {
 		String glVersion = GL11.glGetString(GL11.GL_VERSION);
 		LOGGER.warning("[DeviceInfo] OpenGL: " + nameString + ", " + platform + ", " + glVersion);
 
+	}
+	
+	public ExecutorService getAsyncExecutor() {
+		return asyncExecutor;
+	}
+	
+	public ExecutorService getMainThreadExecutor() {
+		return mainThreadExecutor;
 	}
 
 	public Display getDisplay() {

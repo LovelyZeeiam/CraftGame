@@ -79,6 +79,7 @@ public class Display {
 		}
 	};
 
+	private final ArrayList<CursorPositionListener> cursorPosCallbacks = new ArrayList<>();
 	private final GLFWCursorPosCallback cursorPosCallback = new GLFWCursorPosCallback() {
 		@Override
 		public void invoke(long window, double xpos, double ypos) {
@@ -87,6 +88,8 @@ public class Display {
 
 			cursorX = (float) xpos;
 			cursorY = (float) ypos;
+			
+			cursorPosCallbacks.forEach(c -> c.onCursorPos(xpos, ypos));
 
 		}
 	};
@@ -205,6 +208,14 @@ public class Display {
 
 	public void removeMouseInputListener(MouseInputListener callback) {
 		mouseCallbacks.remove(callback);
+	}
+	
+	public void addMousePositionListener(CursorPositionListener callback) {
+		cursorPosCallbacks.add(callback);
+	}
+	
+	public void removeMousePositionListener(CursorPositionListener callback) {
+		cursorPosCallbacks.remove(callback);
 	}
 
 	public void show() {

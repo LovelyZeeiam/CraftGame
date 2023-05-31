@@ -1,8 +1,6 @@
 package xueli.mcremake.client;
 
 import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import org.lwjgl.glfw.GLFW;
 
@@ -20,7 +18,6 @@ import xueli.mcremake.network.ServerPlayerInfo;
 import xueli.mcremake.registry.GameRegistry;
 import xueli.mcremake.registry.TerrainTextureAtlas;
 import xueli.mcremake.registry.item.ItemRenderTypes;
-import xueli.utils.concurrent.ControllerExecutorService;
 
 /**
  * This is the main class of game client.<br/>
@@ -47,12 +44,8 @@ public class CraftGameClient extends GameDisplay {
 	final ResourceListImpl<ResourceHolder> renderResources = new ResourceListImpl<>();
 	final ResourceListImpl<IGameSystem> systems = new ResourceListImpl<>();
 	
-	private final ExecutorService asyncExecutor = Executors.newWorkStealingPool();
-	private final ControllerExecutorService mainThreadExecutor = new ControllerExecutorService();
-	
 	public CraftGameClient() {
 		super(1280, 720, "Minecraft Classic Forever");
-		
 		
 	}
 	
@@ -85,8 +78,6 @@ public class CraftGameClient extends GameDisplay {
 
 	@Override
 	protected void render() {
-		mainThreadExecutor.tick();
-		
 		for (int i = 0; i < this.timer.getNumShouldTick(); i++) {
 			this.systems.values().forEach(o -> o.tick(this));
 			this.state.tickCount++;
@@ -110,22 +101,11 @@ public class CraftGameClient extends GameDisplay {
 				system.release(this);
 			}
 		});
-		
-		asyncExecutor.shutdownNow();
-		mainThreadExecutor.shutdownNow();
 
 	}
 	
 	public <T extends ResourceHolder> T getRenderResources(Class<T> clazz) {
 		return this.renderResources.get(clazz);
-	}
-	
-	public ExecutorService getAsyncExecutor() {
-		return asyncExecutor;
-	}
-	
-	public ExecutorService getMainThreadExecutor() {
-		return mainThreadExecutor;
 	}
 	
 }
