@@ -7,14 +7,14 @@ import xueli.game2.resource.manager.ChainedResourceManager;
 import xueli.game2.resource.submanager.render.RenderResource;
 
 public class TextureRenderResource extends RenderResource<ResourceIdentifier, Texture> {
-	
+
 	private static final TextureLoaderLegacy LEGACY_LOADER = new TextureLoaderLegacy();
-	
+
 	public TextureRenderResource(ChainedResourceManager manager) {
 		super(manager);
 
 	}
-	
+
 	@Override
 	protected Texture doRegister(ResourceIdentifier k, boolean must) {
 		try {
@@ -26,10 +26,10 @@ public class TextureRenderResource extends RenderResource<ResourceIdentifier, Te
 				return TextureMissing.get(LEGACY_LOADER);
 		}
 	}
-	
+
 	@Override
 	protected void close(ResourceIdentifier k, Texture v) {
 		LEGACY_LOADER.releaseTexture(v);
 	}
-	
+
 }

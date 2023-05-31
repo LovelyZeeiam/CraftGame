@@ -17,8 +17,10 @@ public class Vector2d {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 		Vector2d vector2d = (Vector2d) o;
 		return Double.compare(vector2d.x, x) == 0 && Double.compare(vector2d.y, y) == 0;
 	}
@@ -30,10 +32,7 @@ public class Vector2d {
 
 	@Override
 	public String toString() {
-		return "Vector2d{" +
-				"x=" + x +
-				", y=" + y +
-				'}';
+		return "Vector2d{" + "x=" + x + ", y=" + y + '}';
 	}
 
 	public static Vector2d add(Vector2d v1, Vector2d v2) {

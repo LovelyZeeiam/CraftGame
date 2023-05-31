@@ -17,7 +17,7 @@ public class EventBus {
 
 	public <T> void unregister(Class<T> clazz, Consumer<T> listener) {
 		ArrayList<Consumer<?>> consumers = registers.get(clazz);
-		if(consumers == null || consumers.isEmpty())
+		if (consumers == null || consumers.isEmpty())
 			return;
 		consumers.remove(listener);
 	}
@@ -25,7 +25,7 @@ public class EventBus {
 	public void post(Object t) {
 		Class<?> clazz = t.getClass();
 		ArrayList<Consumer<?>> consumers = registers.get(clazz);
-		if(consumers == null || consumers.isEmpty())
+		if (consumers == null || consumers.isEmpty())
 			return;
 		consumers.forEach(c -> genericPost(t, c));
 	}

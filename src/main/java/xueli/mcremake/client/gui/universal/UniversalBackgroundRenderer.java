@@ -19,7 +19,8 @@ import xueli.mcremake.client.renderer.gui.RenderTypeTexture2D;
 @Deprecated
 public class UniversalBackgroundRenderer implements ResourceHolder {
 
-	public static final ResourceIdentifier UNIVERSAL_BACKGROUND_RESOURCE_LOCATION = new ResourceIdentifier("minecraft", "gui/background.png");
+	public static final ResourceIdentifier UNIVERSAL_BACKGROUND_RESOURCE_LOCATION = new ResourceIdentifier("minecraft",
+			"gui/background.png");
 	public static final int BG_SIZE = 128;
 	public static final Vector3f BG_COLOR = new Vector3f(0.3f, 0.3f, 0.3f);
 
@@ -52,11 +53,13 @@ public class UniversalBackgroundRenderer implements ResourceHolder {
 		Vector2f leftTop = new Vector2f(0, v1);
 		Vector2f rightTop = new Vector2f(u1, v1);
 
-		backBuf.applyToBuffer(MyRenderBuffer2D.ATTR_VERTEX, new Vector2f(x, y), new Vector2f(x + width, y), new Vector2f(x, y + height));
+		backBuf.applyToBuffer(MyRenderBuffer2D.ATTR_VERTEX, new Vector2f(x, y), new Vector2f(x + width, y),
+				new Vector2f(x, y + height));
 		backBuf.applyToBuffer(MyRenderBuffer2D.ATTR_UV, leftTop, rightTop, leftBottom);
 		backBuf.applyToBuffer(MyRenderBuffer2D.ATTR_COLOR, BG_COLOR, BG_COLOR, BG_COLOR);
 
-		backBuf.applyToBuffer(MyRenderBuffer2D.ATTR_VERTEX, new Vector2f(x + width, y + height), new Vector2f(x + width, y), new Vector2f(x, y + height));
+		backBuf.applyToBuffer(MyRenderBuffer2D.ATTR_VERTEX, new Vector2f(x + width, y + height),
+				new Vector2f(x + width, y), new Vector2f(x, y + height));
 		backBuf.applyToBuffer(MyRenderBuffer2D.ATTR_UV, rightBottom, rightTop, leftBottom);
 		backBuf.applyToBuffer(MyRenderBuffer2D.ATTR_COLOR, BG_COLOR, BG_COLOR, BG_COLOR);
 
@@ -74,7 +77,7 @@ public class UniversalBackgroundRenderer implements ResourceHolder {
 
 	@Override
 	public void reload() {
-		if(this.renderBuffer != null) {
+		if (this.renderBuffer != null) {
 			this.renderBuffer.release();
 		}
 		renderBuffer = renderType.getRenderBuffer(this.texUniversalBgId.get().id());

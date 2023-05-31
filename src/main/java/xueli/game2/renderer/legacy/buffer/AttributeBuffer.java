@@ -44,7 +44,7 @@ public class AttributeBuffer implements Bindable {
 
 	public void updateBuffer(LotsOfByteBuffer buf) {
 		bufferManager.updateBuffer(buf);
-    }
+	}
 
 	public BufferSyncor.BackBuffer createBackBuffer() {
 		return bufferManager.createBackBuffer();
@@ -52,7 +52,8 @@ public class AttributeBuffer implements Bindable {
 
 	public ByteBuffer getLatestBuffer() {
 		LotsOfByteBuffer latestBuffer = bufferManager.getLatestBuffer();
-		if(latestBuffer == null) return null;
+		if (latestBuffer == null)
+			return null;
 		return latestBuffer.getBuffer();
 	}
 

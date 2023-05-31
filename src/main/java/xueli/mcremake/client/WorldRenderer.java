@@ -61,7 +61,7 @@ public class WorldRenderer implements ResourceHolder, AutoCloseable {
 
 	private void onCreateNewChunk(NewChunkEvent event) {
 		chunkRebuiltList.add(new Vector2i(event.x(), event.z()));
-		
+
 	}
 
 	private void onModifyBlock(ModifyBlockEvent event) {
@@ -69,18 +69,17 @@ public class WorldRenderer implements ResourceHolder, AutoCloseable {
 		Vector2i chunkPos = Chunk.toChunkPos(event.x(), event.z(), inChunkPos);
 		chunkRebuiltList.add(chunkPos);
 
-		if(inChunkPos.x == 0) {
+		if (inChunkPos.x == 0) {
 			chunkRebuiltList.add(new Vector2i(chunkPos.x - 1, chunkPos.y));
-		} else if(inChunkPos.x == Chunk.CHUNK_SIZE - 1) {
+		} else if (inChunkPos.x == Chunk.CHUNK_SIZE - 1) {
 			chunkRebuiltList.add(new Vector2i(chunkPos.x + 1, chunkPos.y));
 		}
 
-		if(inChunkPos.y == 0) {
+		if (inChunkPos.y == 0) {
 			chunkRebuiltList.add(new Vector2i(chunkPos.x, chunkPos.y - 1));
-		} else if(inChunkPos.y == Chunk.CHUNK_SIZE - 1) {
+		} else if (inChunkPos.y == Chunk.CHUNK_SIZE - 1) {
 			chunkRebuiltList.add(new Vector2i(chunkPos.x, chunkPos.y + 1));
 		}
-
 
 	}
 
@@ -91,33 +90,33 @@ public class WorldRenderer implements ResourceHolder, AutoCloseable {
 	private void doTasks() {
 		Vector2i v;
 		v = chunkRebuiltList.pollFirst();
-		if(v != null) {
+		if (v != null) {
 			for (ChunkRenderType type : renderTypes.values()) {
 				RenderBuffer buf = type.getRenderBuffer(v);
 				buf.clear();
 			}
-			
+
 			Chunk chunk = world.getChunk(v.x, v.y);
-			if(chunk != null) {
+			if (chunk != null) {
 				final Vector2i fv = v;
 				// Will flash if async, why?
 // 				CompletableFuture.supplyAsync(() -> {
-					ChunkRenderBuildManager manager = new ChunkRenderBuildManager(fv) {
-						@Override
-						public <T extends ChunkRenderType> T getRenderType(Class<T> clazz) {
-							return renderTypes.get(clazz);
-						}
-					};
-					new ChunkRebuiltTask(fv.x, fv.y, chunk, world, manager).run();
+				ChunkRenderBuildManager manager = new ChunkRenderBuildManager(fv) {
+					@Override
+					public <T extends ChunkRenderType> T getRenderType(Class<T> clazz) {
+						return renderTypes.get(clazz);
+					}
+				};
+				new ChunkRebuiltTask(fv.x, fv.y, chunk, world, manager).run();
 //					return manager;
 //				}, ctx.getAsyncExecutor()).thenAcceptAsync(manager -> {
-					manager.flip();
+				manager.flip();
 //				}, ctx.getMainThreadExecutor());
 			}
 		}
 
 		v = chunkRemoveList.pollFirst();
-		if(v != null) {
+		if (v != null) {
 			for (ChunkRenderType type : renderTypes.values()) {
 				type.releaseRenderBuffer(v);
 			}
@@ -127,15 +126,29 @@ public class WorldRenderer implements ResourceHolder, AutoCloseable {
 
 	public void render() {
 //		for(int i = 0; i < 10; i++) {
-			this.doTasks();	
+		this.doTasks();
 //		}
 
 		Display display = ctx.getDisplay();
 
 		this.viewMatrix = camera.getCameraMatrix();
-		this.projMatrix = MatrixHelper.perspective(display.getWidth(), display.getHeight(), 110.0f, 0.01f, 99999.9f); // Really shouldn't make "99999" larger, or in frustum culling it will throw an NAN
-		Frustum frustum = new Frustum(projMatrix, viewMatrix); // New allocation seems like a much costing time, so we should make something like object pool
-		
+		this.projMatrix = MatrixHelper.perspective(display.getWidth(), display.getHeight(), 110.0f, 0.01f, 99999.9f); // Really
+																														// shouldn't
+																														// make
+																														// "99999"
+																														// larger,
+																														// or
+																														// in
+																														// frustum
+																														// culling
+																														// it
+																														// will
+																														// throw
+																														// an
+																														// NAN
+		Frustum frustum = new Frustum(projMatrix, viewMatrix); // New allocation seems like a much costing time, so we
+																// should make something like object pool
+
 		for (ChunkRenderType type : renderTypes.values()) {
 			type.applyMatrix("viewMatrix", viewMatrix);
 			type.applyMatrix("projMatrix", projMatrix);

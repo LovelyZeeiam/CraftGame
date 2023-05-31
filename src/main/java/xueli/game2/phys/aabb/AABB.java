@@ -6,7 +6,8 @@ public class AABB {
 
 	protected Vector3d v1 = new Vector3d(), v2 = new Vector3d();
 
-	private AABB() {}
+	private AABB() {
+	}
 
 	public AABB(Vector3d v1, Vector3d v2) {
 		this.v1.x = Math.min(v1.x, v2.x);
@@ -33,7 +34,7 @@ public class AABB {
 
 	public AABB expand(Vector3d v) {
 		AABB aabb = new AABB();
-		if(v.x < 0) {
+		if (v.x < 0) {
 			aabb.v1.x = this.v1.x + v.x;
 			aabb.v2.x = this.v2.x;
 		} else {
@@ -41,7 +42,7 @@ public class AABB {
 			aabb.v2.x = this.v2.x + v.x;
 		}
 
-		if(v.y < 0) {
+		if (v.y < 0) {
 			aabb.v1.y = this.v1.y + v.y;
 			aabb.v2.y = this.v2.y;
 		} else {
@@ -49,7 +50,7 @@ public class AABB {
 			aabb.v2.y = this.v2.y + v.y;
 		}
 
-		if(v.z < 0) {
+		if (v.z < 0) {
 			aabb.v1.z = this.v1.z + v.z;
 			aabb.v2.z = this.v2.z;
 		} else {
@@ -62,10 +63,7 @@ public class AABB {
 
 	@Override
 	public String toString() {
-		return "AABB{" +
-				"v1=" + v1 +
-				", v2=" + v2 +
-				'}';
+		return "AABB{" + "v1=" + v1 + ", v2=" + v2 + '}';
 	}
 
 }

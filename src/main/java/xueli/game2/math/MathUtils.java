@@ -4,7 +4,7 @@ public class MathUtils {
 
 	private MathUtils() {
 	}
-	
+
 	public static float floorMod(float x, float y) {
 		float multiple = x / y;
 		return (float) (x - Math.floor(multiple) * y);

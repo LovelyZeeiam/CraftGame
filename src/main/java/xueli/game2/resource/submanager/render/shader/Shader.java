@@ -18,9 +18,9 @@ import org.lwjgl.utils.vector.Vector3f;
 import xueli.game2.renderer.legacy.buffer.Bindable;
 
 public class Shader implements Bindable {
-	
+
 	public static final Shader EMPTY_SHADER = new Shader(0, 0, 0, 0);
-	
+
 	private int shaderID, vertID, fragID, geoID = -1;
 	private HashMap<String, Integer> uniforms = new HashMap<String, Integer>();
 	private FloatBuffer b = BufferUtils.createFloatBuffer(16);
@@ -111,7 +111,8 @@ public class Shader implements Bindable {
 
 	@Override
 	public void bind() {
-		if(this.bound) return;
+		if (this.bound)
+			return;
 		GL20.glUseProgram(this.shaderID);
 		this.bound = true;
 
@@ -159,7 +160,8 @@ public class Shader implements Bindable {
 
 	@Override
 	public void unbind() {
-		if(!this.bound) return;
+		if (!this.bound)
+			return;
 		this.bound = false;
 		GL20.glUseProgram(0);
 

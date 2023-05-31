@@ -7,7 +7,7 @@ public class CraftGameMain {
 	public static void main(String[] args) {
 		Library.initialize();
 		new CraftGameClient().run();
-		
+
 	}
 
 }

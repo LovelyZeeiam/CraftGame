@@ -14,8 +14,9 @@ public abstract class Packet {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	public abstract void read(Readable buf) throws IOException;
+
 	public abstract void write(Writable buf) throws IOException;
-	
+
 }

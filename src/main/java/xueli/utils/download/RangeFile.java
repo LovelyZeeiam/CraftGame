@@ -17,11 +17,7 @@ class RangeFile extends Range {
 
 	@Override
 	public String toString() {
-		return "RangeFile{" +
-				"from=" + getFrom() +
-				", to=" + getTo() +
-				", file=" + file +
-				'}';
+		return "RangeFile{" + "from=" + getFrom() + ", to=" + getTo() + ", file=" + file + '}';
 	}
 
 }

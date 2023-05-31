@@ -3,14 +3,14 @@ package xueli.game2.math;
 import org.lwjgl.utils.vector.Matrix4f;
 
 public class Frustum {
-	
+
 	private final float[][] frustumPlane = new float[6][4];
-	
+
 	public Frustum(Matrix4f projMatrix, Matrix4f viewMatrix) {
 		this.calcFrustumPlane(Matrix4f.mul(projMatrix, viewMatrix, null));
-		
+
 	}
-	
+
 	private void calcFrustumPlane(Matrix4f matrix) {
 		double temp;
 		frustumPlane[0][0] = matrix.m03 - matrix.m00;
@@ -78,9 +78,9 @@ public class Frustum {
 		frustumPlane[5][1] /= temp;
 		frustumPlane[5][2] /= temp;
 		frustumPlane[5][3] /= temp;
-		
+
 	}
-	
+
 	public boolean isPointInFrustum(float x, float y, float z) {
 		for (int p = 0; p < 6; p++) {
 			if (frustumPlane[p][0] * x + frustumPlane[p][1] * y + frustumPlane[p][2] * z + frustumPlane[p][3] <= 0)
@@ -142,5 +142,5 @@ public class Frustum {
 //		}
 //		return true;
 //	}
-	
+
 }

@@ -30,5 +30,5 @@ public class TextureMissing {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 }

@@ -1,7 +1,7 @@
 package xueli.game2.display;
 
 public class FPSCalculator {
-	
+
 	private long thisTime;
 	private long lastTimeCountFPS = 0;
 

@@ -23,36 +23,40 @@ import xueli.mcremake.registry.item.ItemRenderTypes;
  * This is the main class of game client.<br/>
  * <br/>
  * SOME PRINCIPLES:<br/>
- * 1. The render resources should be added to "renderResources" so that it can be reloaded.<br/>
- * 2. Item system and block system follow the same rules: a render type which you can have access
- * to every resource, initialize everything that render needs; a "vertex gatherer" separated by
- * each type of blocks or items so that every item can choose its render type.<br/>
+ * 1. The render resources should be added to "renderResources" so that it can
+ * be reloaded.<br/>
+ * 2. Item system and block system follow the same rules: a render type which
+ * you can have access to every resource, initialize everything that render
+ * needs; a "vertex gatherer" separated by each type of blocks or items so that
+ * every item can choose its render type.<br/>
  * 
  * TODOs: <br/>
- * 1. When it comes to infinity world we just use ticket-like mechanism (each time we iterate the chunks
- * and spread the ticket and load it until it got under zero) but at first I should have the chunk generator
- * done.
- * 2. Also set 2 state of a chunk, "LOADING", "DONE", determining whether the chunk is ready to go
- * 3. Separate BlockInfo and BlockRenderer, and in WorldRenderer class, we just attach the certain block renderer to the BlockInfo 
+ * 1. When it comes to infinity world we just use ticket-like mechanism (each
+ * time we iterate the chunks and spread the ticket and load it until it got
+ * under zero) but at first I should have the chunk generator done. 2. Also set
+ * 2 state of a chunk, "LOADING", "DONE", determining whether the chunk is ready
+ * to go 3. Separate BlockInfo and BlockRenderer, and in WorldRenderer class, we
+ * just attach the certain block renderer to the BlockInfo
  * 
  */
 public class CraftGameClient extends GameDisplay {
 
-	public static final ServerPlayerInfo PLAYER_INFO = new ServerPlayerInfo("LovelyZeeiam", UUID.fromString("a5538060-b314-4cb0-90cd-ead6c59f16a7"));
-	
+	public static final ServerPlayerInfo PLAYER_INFO = new ServerPlayerInfo("LovelyZeeiam",
+			UUID.fromString("a5538060-b314-4cb0-90cd-ead6c59f16a7"));
+
 	public final GameState state = new GameState();
 	final ResourceListImpl<ResourceHolder> renderResources = new ResourceListImpl<>();
 	final ResourceListImpl<IGameSystem> systems = new ResourceListImpl<>();
-	
+
 	public CraftGameClient() {
 		super(1280, 720, "Minecraft Classic Forever");
-		
+
 	}
-	
+
 	@Override
 	protected void renderInit() {
 		GameRegistry.callForClazzLoad();
-		
+
 		state.worldDirect = new WorldDimension(this);
 		state.world = new ListenableBufferedWorldAccessible(state.worldDirect, eventbus);
 
@@ -60,12 +64,12 @@ public class CraftGameClient extends GameDisplay {
 		this.renderResources.add(new BlockIconGenerator(this));
 		this.renderResources.add(new WorldRenderer(new BlockRenderTypes(this), this));
 		this.renderResources.add(new ItemRenderMaster(new ItemRenderTypes(renderResources), this));
-		
+
 		this.systems.add(new KeyBindingUpdateSystem());
 		this.systems.add(new PlayerUpdateSystem());
 		this.systems.add(new ItemTypeSelectSystem());
 		this.systems.add(new GameRenderSystem());
-		
+
 		this.systems.values().forEach(o -> o.start(this));
 
 		state.worldDirect.init();
@@ -88,24 +92,24 @@ public class CraftGameClient extends GameDisplay {
 
 		this.systems.values().forEach(o -> o.update(this));
 
-		if(this.state.keyBindings.isPressed(GLFW.GLFW_KEY_ESCAPE)) {
+		if (this.state.keyBindings.isPressed(GLFW.GLFW_KEY_ESCAPE)) {
 			this.announceClose();
 		}
-		
+
 	}
 
 	@Override
 	protected void renderRelease() {
 		this.renderResources.values().forEach(o -> {
-			if(o instanceof IGameSystem system) {
+			if (o instanceof IGameSystem system) {
 				system.release(this);
 			}
 		});
 
 	}
-	
+
 	public <T extends ResourceHolder> T getRenderResources(Class<T> clazz) {
 		return this.renderResources.get(clazz);
 	}
-	
+
 }

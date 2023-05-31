@@ -185,7 +185,8 @@ public interface PrimitiveCodec<T> {
 
 				w.writeByte(thisByte);
 
-				if (!flag) break;
+				if (!flag)
+					break;
 				i = nextI;
 
 			}
@@ -232,7 +233,8 @@ public interface PrimitiveCodec<T> {
 
 				w.writeByte(thisByte);
 
-				if (!flag) break;
+				if (!flag)
+					break;
 				i = nextI;
 
 			}
@@ -309,9 +311,9 @@ public interface PrimitiveCodec<T> {
 
 		}
 	};
-	
+
 	PrimitiveCodec<Vector3i> BLOCK_POS = new PrimitiveCodec<>() {
-		
+
 		@Override
 		public Vector3i read(Readable r) throws IOException {
 			long longVal = LONG.read(r);
@@ -320,16 +322,16 @@ public interface PrimitiveCodec<T> {
 			int y = (int) ((longVal << 26) >> 38);
 			return new Vector3i(x, y, z);
 		}
-		
+
 		public void write(Vector3i t, Writable w) throws IOException {
 			long val = 0L;
 			val |= ((long) (t.getX() & 0x3FFFFFF) << 38);
 			val |= ((long) (t.getZ() & 0x3FFFFFF) << 12);
 			val |= (t.getY() & 0xFFF);
 			LONG.write(val, w);
-			
+
 		};
-		
+
 	};
 
 }

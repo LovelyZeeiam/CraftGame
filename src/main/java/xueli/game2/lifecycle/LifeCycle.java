@@ -1,7 +1,7 @@
 package xueli.game2.lifecycle;
 
 public interface LifeCycle {
-	
+
 	public void init();
 
 	/**
@@ -10,5 +10,5 @@ public interface LifeCycle {
 	public void tick();
 
 	public void release();
-	
+
 }

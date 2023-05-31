@@ -1,9 +1,10 @@
 package xueli.utils.download;
 
 /**
- * The <code>Range</code> class indicates the range of the file. What is worth noticing is that the
- * range is closed at the both sides, enabling it to apply to the HTTP request directly but supposed to
- * be processed when it comes to file seek like <code>RandomAccessFile</code>.
+ * The <code>Range</code> class indicates the range of the file. What is worth
+ * noticing is that the range is closed at the both sides, enabling it to apply
+ * to the HTTP request directly but supposed to be processed when it comes to
+ * file seek like <code>RandomAccessFile</code>.
  */
 public class Range {
 
@@ -24,10 +25,7 @@ public class Range {
 
 	@Override
 	public String toString() {
-		return "Range{" +
-				"from=" + from +
-				", to=" + to +
-				'}';
+		return "Range{" + "from=" + from + ", to=" + to + '}';
 	}
 
 }

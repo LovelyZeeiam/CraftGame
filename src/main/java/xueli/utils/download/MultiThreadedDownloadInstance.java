@@ -10,7 +10,8 @@ class MultiThreadedDownloadInstance extends RangeDownloadInstance {
 
 	private final DynamicChunkSize chunkSize;
 
-	MultiThreadedDownloadInstance(URL url, File output, Map<String, String> headers, long initialChunkSize, ExecutorService executor) {
+	MultiThreadedDownloadInstance(URL url, File output, Map<String, String> headers, long initialChunkSize,
+			ExecutorService executor) {
 		super(url, output, headers, executor);
 		this.chunkSize = new DynamicChunkSize(initialChunkSize);
 	}

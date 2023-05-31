@@ -19,7 +19,8 @@ public class ClassLoaderResourceProvider extends URLResourceProvider {
 
 	public static final String ROOT_FOLDER = "/assets/";
 
-	private static URL currentBinPath = ClassLoaderResourceProvider.class.getProtectionDomain().getCodeSource().getLocation();
+	private static URL currentBinPath = ClassLoaderResourceProvider.class.getProtectionDomain().getCodeSource()
+			.getLocation();
 	private static JarFile currentBinJarFile = null;
 	static {
 		if (currentBinPath.getProtocol().equalsIgnoreCase("jar")) {
@@ -58,8 +59,9 @@ public class ClassLoaderResourceProvider extends URLResourceProvider {
 
 	@Override
 	protected List<URL> findResources(String virtualPath) throws IOException {
-		// When it comes to ClassLoader, a "/" is unnecessary; but it's not in Class.getResource
-		while(virtualPath.startsWith("/")) {
+		// When it comes to ClassLoader, a "/" is unnecessary; but it's not in
+		// Class.getResource
+		while (virtualPath.startsWith("/")) {
 			virtualPath = virtualPath.substring(1);
 		}
 		// Final to get access in lambda

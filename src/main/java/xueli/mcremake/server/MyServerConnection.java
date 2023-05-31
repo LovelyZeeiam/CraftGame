@@ -7,20 +7,20 @@ import xueli.game2.network.processor.PacketProcessor;
 
 @SuppressWarnings("unused")
 public class MyServerConnection extends ServerClientConnection {
-	
+
 	private final CraftGameServer ctx;
-	
+
 	private final PacketProcessor packetProcessor = new PacketProcessor();
 
 	private ConnectionStageListener<MyServerConnection> listener = new ServerStageHelloListener(this);
-	
+
 	public MyServerConnection(CraftGameServer ctx) {
 		this.ctx = ctx;
 	}
 
 	@Override
 	protected void packetRead(Packet msg) {
-		if(listener != null) {
+		if (listener != null) {
 			listener.doProcess(msg);
 		} else {
 			System.err.println("Bugs? No Packet Listener for: " + msg);
@@ -31,5 +31,5 @@ public class MyServerConnection extends ServerClientConnection {
 	public void setListener(ConnectionStageListener<MyServerConnection> listener) {
 		this.listener = listener;
 	}
-	
+
 }

@@ -11,9 +11,9 @@ import java.util.Properties;
 import xueli.utils.logger.Logger;
 
 public class PropertiesReflection {
-	
+
 	private static final Logger LOGGER = new Logger();
-	
+
 	private static HashMap<Class<?>, Parsable<?>> parsers = new HashMap<>();
 
 	public static <T> void registerParser(Parsable<T> parsable, Class<T> clazz) {
@@ -76,8 +76,8 @@ public class PropertiesReflection {
 					Parsable<?> parser = parsers.get(fieldClazz);
 					field.set(modifyTarget, parser.parse(value));
 				} else {
-					LOGGER.warning("Not supported field type \"" + fieldClazz.getName()
-							+ "\" when setting key \"" + key + "\" in field \"" + field.getName() + "\"");
+					LOGGER.warning("Not supported field type \"" + fieldClazz.getName() + "\" when setting key \"" + key
+							+ "\" in field \"" + field.getName() + "\"");
 				}
 
 			}

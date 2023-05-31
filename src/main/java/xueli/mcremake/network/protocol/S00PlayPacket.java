@@ -19,7 +19,7 @@ public class S00PlayPacket extends Packet {
 	public S00PlayPacket(Readable buf) {
 		super(buf);
 	}
-	
+
 	@Override
 	public void read(Readable buf) throws IOException {
 		this.x = buf.readFloat();

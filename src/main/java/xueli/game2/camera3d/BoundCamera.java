@@ -12,7 +12,7 @@ public class BoundCamera implements ICamera {
 
 	@Override
 	public Matrix4f getCameraMatrix() {
-		if(camera == null) {
+		if (camera == null) {
 			Matrix4f matrix = new Matrix4f();
 			matrix.setIdentity();
 			return matrix;

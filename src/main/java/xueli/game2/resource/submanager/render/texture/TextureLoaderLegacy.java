@@ -20,7 +20,7 @@ import static org.lwjgl.opengl.GL13.GL_CLAMP_TO_BORDER;
 import java.awt.image.BufferedImage;
 
 public class TextureLoaderLegacy extends AbstractTextureLoader {
-	
+
 	public static final TextureLoaderLegacy INSTANCE = new TextureLoaderLegacy();
 
 	@Override
@@ -34,7 +34,7 @@ public class TextureLoaderLegacy extends AbstractTextureLoader {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 4);
 		glBindTexture(GL_TEXTURE_2D, 0);
-		
+
 		int width = image.getWidth();
 		int height = image.getHeight();
 		int[] data = TextureLoaderUtils.imageToLegacyData(image);

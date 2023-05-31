@@ -31,19 +31,19 @@ public class VertexAttributeRenderBuffer implements RenderBuffer {
 	public void setVertexCount(int count) {
 		this.vertCount = count;
 	}
-	
+
 	@Override
 	public void clear() {
 		this.vertCount = 0;
 	}
 
 	protected static class VertexBuffer {
-        public int submitCount = 0;
+		public int submitCount = 0;
 		public BufferSyncor.BackBuffer buf;
 
 		public VertexBuffer(BufferSyncor.BackBuffer buf) {
 			this.buf = buf;
-        }
+		}
 
 	};
 

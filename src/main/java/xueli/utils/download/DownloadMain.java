@@ -20,7 +20,8 @@ public class DownloadMain {
 		}
 
 		ExecutorService executor = Executors.newWorkStealingPool();
-		DownloadInstance downloadInstance = DownloadInstance.create(new URL(url), new File(filePath), null, chunkSize, executor);
+		DownloadInstance downloadInstance = DownloadInstance.create(new URL(url), new File(filePath), null, chunkSize,
+				executor);
 		downloadInstance.run();
 		executor.shutdownNow();
 

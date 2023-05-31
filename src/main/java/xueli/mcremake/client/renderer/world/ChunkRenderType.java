@@ -18,12 +18,12 @@ public abstract class ChunkRenderType extends RenderType<Vector2i> {
 	public ChunkRenderType(Function<Vector2i, RenderBuffer> bufferSupplier) {
 		super(bufferSupplier);
 	}
-	
+
 	public void cullRender(Frustum frustum) {
 		this.render(v -> {
 			return frustum.isCubeInFrustum(v.x * 16, 0, v.y * 16, (v.x + 1) * 16, Chunk.CHUNK_HEIGHT, (v.y + 1) * 16);
 		});
-		
+
 	}
-	
+
 }

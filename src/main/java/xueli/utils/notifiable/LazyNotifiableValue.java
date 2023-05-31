@@ -17,7 +17,7 @@ public class LazyNotifiableValue<T> extends NotifiableValue<T> {
 	}
 
 	public void flush() {
-		if(this.lazyValue != null && !this.lazyValue.equals(this.getValue())) {
+		if (this.lazyValue != null && !this.lazyValue.equals(this.getValue())) {
 			super.set(this.lazyValue);
 			this.lazyValue = null;
 		}

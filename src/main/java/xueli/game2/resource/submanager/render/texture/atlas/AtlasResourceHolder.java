@@ -40,11 +40,12 @@ public final class AtlasResourceHolder {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == this) return true;
-		if (obj == null || obj.getClass() != this.getClass()) return false;
+		if (obj == this)
+			return true;
+		if (obj == null || obj.getClass() != this.getClass())
+			return false;
 		var that = (AtlasResourceHolder) obj;
-		return Objects.equals(this.leftTop, that.leftTop) &&
-				Objects.equals(this.rightBottom, that.rightBottom);
+		return Objects.equals(this.leftTop, that.leftTop) && Objects.equals(this.rightBottom, that.rightBottom);
 	}
 
 	@Override
@@ -54,9 +55,7 @@ public final class AtlasResourceHolder {
 
 	@Override
 	public String toString() {
-		return "AtlasResourceHolder[" +
-				"leftTop=" + leftTop + ", " +
-				"rightBottom=" + rightBottom + ']';
+		return "AtlasResourceHolder[" + "leftTop=" + leftTop + ", " + "rightBottom=" + rightBottom + ']';
 	}
 
 }

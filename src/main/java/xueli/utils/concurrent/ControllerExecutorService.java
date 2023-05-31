@@ -16,23 +16,22 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ControllerExecutorService extends AbstractExecutorService implements ScheduledExecutorService {
-	
+
 	private TreeMap<Long, ArrayList<Runnable>> queue = new TreeMap<>(); // 可以改成二叉树
-	
+
 	public void tick() {
 		Long thisTime = System.nanoTime();
 		synchronized (queue) {
 			Entry<Long, ArrayList<Runnable>> entry;
-			while((entry = queue.floorEntry(thisTime)) != null) {
+			while ((entry = queue.floorEntry(thisTime)) != null) {
 //				System.out.println(entry);
 				queue.remove(entry.getKey());
 				entry.getValue().forEach(Runnable::run);
 			}
 		}
-	
-		
+
 	}
-	
+
 	@Override
 	public void shutdown() {
 	}
@@ -50,13 +49,14 @@ public class ControllerExecutorService extends AbstractExecutorService implement
 			queue.computeIfAbsent(System.nanoTime(), t -> new ArrayList<>()).add(command);
 		}
 	}
-	
+
 	private final AtomicInteger sequenceCounter = new AtomicInteger();
 
 	@Override
 	public ScheduledFuture<?> schedule(Runnable command, long delay, TimeUnit unit) {
 		long runTime = unit.toNanos(delay) + System.nanoTime();
-		MyScheduledFuture<Void> future = new MyScheduledFuture<>(runTime, command, null, sequenceCounter.getAndIncrement());
+		MyScheduledFuture<Void> future = new MyScheduledFuture<>(runTime, command, null,
+				sequenceCounter.getAndIncrement());
 		synchronized (queue) {
 			queue.computeIfAbsent(runTime, t -> new ArrayList<>()).add(future);
 		}
@@ -76,7 +76,8 @@ public class ControllerExecutorService extends AbstractExecutorService implement
 	@Override
 	public ScheduledFuture<?> scheduleAtFixedRate(Runnable command, long initialDelay, long period, TimeUnit unit) {
 		long runTime = unit.toNanos(initialDelay) + System.nanoTime();
-		MyScheduledFuture<Void> future = new MyScheduledFuture<>(runTime, unit.toNanos(period), command, null, sequenceCounter.getAndIncrement());
+		MyScheduledFuture<Void> future = new MyScheduledFuture<>(runTime, unit.toNanos(period), command, null,
+				sequenceCounter.getAndIncrement());
 		synchronized (queue) {
 			queue.computeIfAbsent(runTime, t -> new ArrayList<>()).add(future);
 		}
@@ -85,9 +86,10 @@ public class ControllerExecutorService extends AbstractExecutorService implement
 
 	@Override
 	public ScheduledFuture<?> scheduleWithFixedDelay(Runnable command, long initialDelay, long delay, TimeUnit unit) {
-		throw new UnsupportedOperationException("Actually the programmer can't figure out what the difference is between this and the method above :{");
+		throw new UnsupportedOperationException(
+				"Actually the programmer can't figure out what the difference is between this and the method above :{");
 	}
-	
+
 	@Override
 	public boolean isShutdown() {
 		return false;
@@ -102,12 +104,12 @@ public class ControllerExecutorService extends AbstractExecutorService implement
 	public boolean awaitTermination(long timeout, TimeUnit unit) throws InterruptedException {
 		return true;
 	}
-	
+
 	class MyScheduledFuture<V> extends FutureTask<V> implements ScheduledFuture<V> {
-		
+
 		private long time, period = 0;
 		private final int sequenceNum;
-		
+
 		public MyScheduledFuture(long time, Callable<V> callable, int sequenceNum) {
 			super(callable);
 			this.time = time;
@@ -119,7 +121,7 @@ public class ControllerExecutorService extends AbstractExecutorService implement
 			this.time = time;
 			this.sequenceNum = sequenceNum;
 		}
-		
+
 		public MyScheduledFuture(long time, long period, Runnable runnable, V result, int sequenceNum) {
 			super(runnable, result);
 			this.time = time;
@@ -135,36 +137,36 @@ public class ControllerExecutorService extends AbstractExecutorService implement
 		@Override
 		public int compareTo(Delayed other) {
 			if (other == this)
-                return 0;
+				return 0;
 			if (other instanceof MyScheduledFuture x) {
-                long diff = time - x.time;
-                if (diff < 0)
-                    return -1;
-                else if (diff > 0)
-                    return 1;
-                else if (sequenceNum < x.sequenceNum)
-                    return -1;
-                else
-                    return 1;
-            }
+				long diff = time - x.time;
+				if (diff < 0)
+					return -1;
+				else if (diff > 0)
+					return 1;
+				else if (sequenceNum < x.sequenceNum)
+					return -1;
+				else
+					return 1;
+			}
 			long diff = getDelay(NANOSECONDS) - other.getDelay(NANOSECONDS);
-            return (diff < 0) ? -1 : (diff > 0) ? 1 : 0;
+			return (diff < 0) ? -1 : (diff > 0) ? 1 : 0;
 		}
-		
+
 		@Override
 		public void run() {
-			if(period == 0) {
+			if (period == 0) {
 				super.run();
-			} else if(!this.isCancelled()) {
+			} else if (!this.isCancelled()) {
 				super.runAndReset();
 				this.time += this.period;
 				synchronized (queue) {
 					queue.computeIfAbsent(this.time, t -> new ArrayList<>()).add(this);
 				}
-				
+
 			}
 		}
-		
+
 	}
 
 }

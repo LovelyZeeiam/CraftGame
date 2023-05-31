@@ -7,7 +7,7 @@ import org.lwjgl.utils.vector.Vector2i;
 import xueli.game2.renderer.legacy.BackRenderBuffer;
 
 public abstract class ChunkRenderBuildManager {
-	
+
 	private final Vector2i chunkPos;
 	private final HashMap<Class<? extends ChunkRenderType>, BackRenderBuffer> backBuffers = new HashMap<>();
 

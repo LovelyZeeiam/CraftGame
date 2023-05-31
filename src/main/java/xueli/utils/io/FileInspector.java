@@ -10,76 +10,78 @@ import org.fusesource.jansi.Ansi;
 import xueli.utils.StringTokens;
 
 public class FileInspector implements AutoCloseable {
-    
-    public static final int COLUME_BYTE_COUNT = 64;
 
-    private final RandomAccessFile file;
+	public static final int COLUME_BYTE_COUNT = 64;
 
-    public FileInspector(File file) throws FileNotFoundException {
-        this.file = new RandomAccessFile(file, "r");
-    }
+	private final RandomAccessFile file;
 
-    public long getLength() throws IOException {
-        return file.length();
-    }
+	public FileInspector(File file) throws FileNotFoundException {
+		this.file = new RandomAccessFile(file, "r");
+	}
 
-    public void inspect(long start, long end) throws IOException {
-        long length = getLength();
-        if(start > length) throw new IOException("Can't seek above file length: " + start);
-        if(end < start) throw new IOException("end < start: " + end + " < " + start);
-        start = Math.max(start, 0);
-        end = Math.min(end, length);
+	public long getLength() throws IOException {
+		return file.length();
+	}
 
-        file.seek(start);
+	public void inspect(long start, long end) throws IOException {
+		long length = getLength();
+		if (start > length)
+			throw new IOException("Can't seek above file length: " + start);
+		if (end < start)
+			throw new IOException("end < start: " + end + " < " + start);
+		start = Math.max(start, 0);
+		end = Math.min(end, length);
 
-        Ansi a = Ansi.ansi();
-        long pointer = (start / COLUME_BYTE_COUNT) * COLUME_BYTE_COUNT;
-        file.seek(pointer);
+		file.seek(start);
 
-        int bytePrintCounter = COLUME_BYTE_COUNT; // initial value
-        byte[] temp = new byte[COLUME_BYTE_COUNT];
+		Ansi a = Ansi.ansi();
+		long pointer = (start / COLUME_BYTE_COUNT) * COLUME_BYTE_COUNT;
+		file.seek(pointer);
 
-        while(pointer < end) {
-            if(bytePrintCounter == COLUME_BYTE_COUNT) {
-                a.a(" | ");
-                for(int i = 0; i < COLUME_BYTE_COUNT; i++) {
-                    if(Character.isISOControl(temp[i])) {
-                        a.a(' ');
-                    } else {
-                        a.a((char) temp[i]);
-                    }
-                }
+		int bytePrintCounter = COLUME_BYTE_COUNT; // initial value
+		byte[] temp = new byte[COLUME_BYTE_COUNT];
 
-                String startHex = Long.toHexString(pointer);
-                a.newline();
-                a.a(String.format("%8s | ", startHex));
-                
-                bytePrintCounter = 0;
-                file.read(temp);
+		while (pointer < end) {
+			if (bytePrintCounter == COLUME_BYTE_COUNT) {
+				a.a(" | ");
+				for (int i = 0; i < COLUME_BYTE_COUNT; i++) {
+					if (Character.isISOControl(temp[i])) {
+						a.a(' ');
+					} else {
+						a.a((char) temp[i]);
+					}
+				}
 
-            }
+				String startHex = Long.toHexString(pointer);
+				a.newline();
+				a.a(String.format("%8s | ", startHex));
 
-            if(pointer >= start && pointer < end) {
-                String byteHex = Integer.toHexString(temp[bytePrintCounter]);
-                byteHex = StringTokens.padLeft(byteHex, 2, '0');
-                a.a(byteHex).a(" ");
-                
-                pointer++;
-                bytePrintCounter++;
+				bytePrintCounter = 0;
+				file.read(temp);
 
-            }
+			}
 
-            bytePrintCounter++;
+			if (pointer >= start && pointer < end) {
+				String byteHex = Integer.toHexString(temp[bytePrintCounter]);
+				byteHex = StringTokens.padLeft(byteHex, 2, '0');
+				a.a(byteHex).a(" ");
 
-        }
+				pointer++;
+				bytePrintCounter++;
 
-        System.out.println(a.toString());
+			}
 
-    }
-    
-    @Override
-    public void close() throws Exception {
-        file.close();
-    }
+			bytePrintCounter++;
+
+		}
+
+		System.out.println(a.toString());
+
+	}
+
+	@Override
+	public void close() throws Exception {
+		file.close();
+	}
 
 }

@@ -8,14 +8,14 @@ import xueli.game2.resource.Resource;
 import xueli.game2.resource.ResourceIdentifier;
 
 public class SubResourceManager extends ChainedResourceManager {
-	
+
 	private ChainedResourceManager upperResourceManager;
-	
+
 	public SubResourceManager(ChainedResourceManager superiorManager) {
 		this.upperResourceManager = superiorManager;
 		superiorManager.addSubManager(this);
 	}
-	
+
 	public ChainedResourceManager getUpperResourceManager() {
 		return upperResourceManager;
 	}
@@ -30,5 +30,5 @@ public class SubResourceManager extends ChainedResourceManager {
 			throws IOException {
 		return upperResourceManager.findResources(location, fileNamePredicate);
 	}
-	
+
 }

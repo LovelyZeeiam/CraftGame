@@ -28,77 +28,97 @@ public class BlockRendererSolid implements BlockVertexGatherer {
 		TerrainTextureAtlas texture = manager.getRenderType(RenderTypeSolid.class).getTexture();
 		AtlasResourceHolder uvVertex = texture.getUVVertex(this.x, this.y);
 
-		if(world == null || shouldRenderFaceOnThisBlock(world.getBlock(x, y - 1, z))) {
+		if (world == null || shouldRenderFaceOnThisBlock(world.getBlock(x, y - 1, z))) {
 			buffer.applyToBuffer(0, new Vector3f(x, y, z), new Vector3f(x + 1, y, z), new Vector3f(x, y, z + 1));
 			buffer.applyToBuffer(1, uvVertex.leftBottom(), uvVertex.rightBottom(), uvVertex.leftTop());
-			buffer.applyToBuffer(2, new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(0.5f, 0.5f, 0.5f));
+			buffer.applyToBuffer(2, new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(0.5f, 0.5f, 0.5f),
+					new Vector3f(0.5f, 0.5f, 0.5f));
 
 			// Indicate which plane faces the player by figure out its wrap order
-			buffer.applyToBuffer(0, new Vector3f(x + 1, y, z), new Vector3f(x + 1, y, z + 1), new Vector3f(x, y, z + 1));
+			buffer.applyToBuffer(0, new Vector3f(x + 1, y, z), new Vector3f(x + 1, y, z + 1),
+					new Vector3f(x, y, z + 1));
 			buffer.applyToBuffer(1, uvVertex.rightBottom(), uvVertex.rightTop(), uvVertex.leftTop());
-			buffer.applyToBuffer(2, new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(0.5f, 0.5f, 0.5f));
+			buffer.applyToBuffer(2, new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(0.5f, 0.5f, 0.5f),
+					new Vector3f(0.5f, 0.5f, 0.5f));
 
 		}
 
-		if(world == null || shouldRenderFaceOnThisBlock(world.getBlock(x, y + 1, z))) {
-			buffer.applyToBuffer(0, new Vector3f(x + 1, y + 1, z), new Vector3f(x, y + 1, z), new Vector3f(x, y + 1, z + 1));
+		if (world == null || shouldRenderFaceOnThisBlock(world.getBlock(x, y + 1, z))) {
+			buffer.applyToBuffer(0, new Vector3f(x + 1, y + 1, z), new Vector3f(x, y + 1, z),
+					new Vector3f(x, y + 1, z + 1));
 			buffer.applyToBuffer(1, uvVertex.rightBottom(), uvVertex.leftBottom(), uvVertex.leftTop());
 			buffer.applyToBuffer(2, new Vector3f(1, 1, 1), new Vector3f(1, 1, 1), new Vector3f(1, 1, 1));
 
-			buffer.applyToBuffer(0, new Vector3f(x + 1, y + 1, z + 1), new Vector3f(x + 1, y + 1, z), new Vector3f(x, y + 1, z + 1));
+			buffer.applyToBuffer(0, new Vector3f(x + 1, y + 1, z + 1), new Vector3f(x + 1, y + 1, z),
+					new Vector3f(x, y + 1, z + 1));
 			buffer.applyToBuffer(1, uvVertex.rightTop(), uvVertex.rightBottom(), uvVertex.leftTop());
 			buffer.applyToBuffer(2, new Vector3f(1, 1, 1), new Vector3f(1, 1, 1), new Vector3f(1, 1, 1));
 
 		}
 
-		if(world == null || shouldRenderFaceOnThisBlock(world.getBlock(x - 1, y, z))) {
+		if (world == null || shouldRenderFaceOnThisBlock(world.getBlock(x - 1, y, z))) {
 			buffer.applyToBuffer(0, new Vector3f(x, y, z), new Vector3f(x, y, z + 1), new Vector3f(x, y + 1, z));
 			buffer.applyToBuffer(1, uvVertex.leftBottom(), uvVertex.rightBottom(), uvVertex.leftTop());
-			buffer.applyToBuffer(2, new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(0.7f, 0.7f, 0.7f));
+			buffer.applyToBuffer(2, new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(0.7f, 0.7f, 0.7f),
+					new Vector3f(0.7f, 0.7f, 0.7f));
 
-			buffer.applyToBuffer(0, new Vector3f(x, y, z + 1), new Vector3f(x, y + 1, z + 1), new Vector3f(x, y + 1, z));
+			buffer.applyToBuffer(0, new Vector3f(x, y, z + 1), new Vector3f(x, y + 1, z + 1),
+					new Vector3f(x, y + 1, z));
 			buffer.applyToBuffer(1, uvVertex.rightBottom(), uvVertex.rightTop(), uvVertex.leftTop());
-			buffer.applyToBuffer(2, new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(0.7f, 0.7f, 0.7f));
+			buffer.applyToBuffer(2, new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(0.7f, 0.7f, 0.7f),
+					new Vector3f(0.7f, 0.7f, 0.7f));
 
 		}
 
-		if(world == null || shouldRenderFaceOnThisBlock(world.getBlock(x + 1, y, z))) {
-			buffer.applyToBuffer(0, new Vector3f(x + 1, y, z), new Vector3f(x + 1, y + 1, z), new Vector3f(x + 1, y, z + 1));
+		if (world == null || shouldRenderFaceOnThisBlock(world.getBlock(x + 1, y, z))) {
+			buffer.applyToBuffer(0, new Vector3f(x + 1, y, z), new Vector3f(x + 1, y + 1, z),
+					new Vector3f(x + 1, y, z + 1));
 			buffer.applyToBuffer(1, uvVertex.rightBottom(), uvVertex.rightTop(), uvVertex.leftBottom());
-			buffer.applyToBuffer(2, new Vector3f(0.8f, 0.8f, 0.8f), new Vector3f(0.8f, 0.8f, 0.8f), new Vector3f(0.8f, 0.8f, 0.8f));
+			buffer.applyToBuffer(2, new Vector3f(0.8f, 0.8f, 0.8f), new Vector3f(0.8f, 0.8f, 0.8f),
+					new Vector3f(0.8f, 0.8f, 0.8f));
 
-			buffer.applyToBuffer(0, new Vector3f(x + 1, y, z + 1), new Vector3f(x + 1, y + 1, z), new Vector3f(x + 1, y + 1, z + 1));
+			buffer.applyToBuffer(0, new Vector3f(x + 1, y, z + 1), new Vector3f(x + 1, y + 1, z),
+					new Vector3f(x + 1, y + 1, z + 1));
 			buffer.applyToBuffer(1, uvVertex.leftBottom(), uvVertex.rightTop(), uvVertex.leftTop());
-			buffer.applyToBuffer(2, new Vector3f(0.8f, 0.8f, 0.8f), new Vector3f(0.8f, 0.8f, 0.8f), new Vector3f(0.8f, 0.8f, 0.8f));
+			buffer.applyToBuffer(2, new Vector3f(0.8f, 0.8f, 0.8f), new Vector3f(0.8f, 0.8f, 0.8f),
+					new Vector3f(0.8f, 0.8f, 0.8f));
 
 		}
 
-		if(world == null || shouldRenderFaceOnThisBlock(world.getBlock(x, y, z - 1))) {
+		if (world == null || shouldRenderFaceOnThisBlock(world.getBlock(x, y, z - 1))) {
 			buffer.applyToBuffer(0, new Vector3f(x, y, z), new Vector3f(x, y + 1, z), new Vector3f(x + 1, y, z));
 			buffer.applyToBuffer(1, uvVertex.rightBottom(), uvVertex.rightTop(), uvVertex.leftBottom());
-			buffer.applyToBuffer(2, new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(0.7f, 0.7f, 0.7f));
+			buffer.applyToBuffer(2, new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(0.7f, 0.7f, 0.7f),
+					new Vector3f(0.7f, 0.7f, 0.7f));
 
-			buffer.applyToBuffer(0, new Vector3f(x, y + 1, z), new Vector3f(x + 1, y + 1, z), new Vector3f(x + 1, y, z));
+			buffer.applyToBuffer(0, new Vector3f(x, y + 1, z), new Vector3f(x + 1, y + 1, z),
+					new Vector3f(x + 1, y, z));
 			buffer.applyToBuffer(1, uvVertex.rightTop(), uvVertex.leftTop(), uvVertex.leftBottom());
-			buffer.applyToBuffer(2, new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(0.7f, 0.7f, 0.7f));
+			buffer.applyToBuffer(2, new Vector3f(0.7f, 0.7f, 0.7f), new Vector3f(0.7f, 0.7f, 0.7f),
+					new Vector3f(0.7f, 0.7f, 0.7f));
 
 		}
 
-		if(world == null || shouldRenderFaceOnThisBlock(world.getBlock(x, y, z + 1))) {
-			buffer.applyToBuffer(0, new Vector3f(x, y, z + 1), new Vector3f(x + 1, y, z + 1), new Vector3f(x, y + 1, z + 1));
+		if (world == null || shouldRenderFaceOnThisBlock(world.getBlock(x, y, z + 1))) {
+			buffer.applyToBuffer(0, new Vector3f(x, y, z + 1), new Vector3f(x + 1, y, z + 1),
+					new Vector3f(x, y + 1, z + 1));
 			buffer.applyToBuffer(1, uvVertex.leftBottom(), uvVertex.rightBottom(), uvVertex.leftTop());
-			buffer.applyToBuffer(2, new Vector3f(0.8f, 0.8f, 0.8f), new Vector3f(0.8f, 0.8f, 0.8f), new Vector3f(0.8f, 0.8f, 0.8f));
+			buffer.applyToBuffer(2, new Vector3f(0.8f, 0.8f, 0.8f), new Vector3f(0.8f, 0.8f, 0.8f),
+					new Vector3f(0.8f, 0.8f, 0.8f));
 
-			buffer.applyToBuffer(0, new Vector3f(x, y + 1, z + 1), new Vector3f(x + 1, y, z + 1), new Vector3f(x + 1, y + 1, z + 1));
+			buffer.applyToBuffer(0, new Vector3f(x, y + 1, z + 1), new Vector3f(x + 1, y, z + 1),
+					new Vector3f(x + 1, y + 1, z + 1));
 			buffer.applyToBuffer(1, uvVertex.leftTop(), uvVertex.rightBottom(), uvVertex.rightTop());
-			buffer.applyToBuffer(2, new Vector3f(0.8f, 0.8f, 0.8f), new Vector3f(0.8f, 0.8f, 0.8f), new Vector3f(0.8f, 0.8f, 0.8f));
+			buffer.applyToBuffer(2, new Vector3f(0.8f, 0.8f, 0.8f), new Vector3f(0.8f, 0.8f, 0.8f),
+					new Vector3f(0.8f, 0.8f, 0.8f));
 
 		}
 
 	}
 
-    public static boolean shouldRenderFaceOnThisBlock(BlockType block) {
-        return block == null || !GameRegistry.BUILTIN_BLOCK_REGISTRY.getTags(block.namespace()).contains(GameRegistry.TAG_GENERIC_BLOCK);
-    }
+	public static boolean shouldRenderFaceOnThisBlock(BlockType block) {
+		return block == null || !GameRegistry.BUILTIN_BLOCK_REGISTRY.getTags(block.namespace())
+				.contains(GameRegistry.TAG_GENERIC_BLOCK);
+	}
 
 }

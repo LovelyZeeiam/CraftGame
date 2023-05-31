@@ -31,11 +31,14 @@ public class ChunkRebuiltTask {
 					for (int l = 0; l <= maxHeight; l++) {
 						int realHeight = k * Chunk.SUB_CHUNK_HEIGHT + l;
 						BlockType block = chunk.getBlock(i, realHeight, j);
-						if(block == null) continue;
+						if (block == null)
+							continue;
 						CompoundMap tag = chunk.getBlockTag(i, realHeight, j);
 						BlockVertexGatherer renderer = block.renderer();
-						if(renderer == null) continue;
-						renderer.render(this.x * Chunk.CHUNK_SIZE + i, realHeight, this.z * Chunk.CHUNK_SIZE + j, tag, world, manager);
+						if (renderer == null)
+							continue;
+						renderer.render(this.x * Chunk.CHUNK_SIZE + i, realHeight, this.z * Chunk.CHUNK_SIZE + j, tag,
+								world, manager);
 					}
 				}
 			}

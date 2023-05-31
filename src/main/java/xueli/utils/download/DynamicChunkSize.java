@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 /**
- * Dynamically calculate the chunk size according to the previous downloading size
+ * Dynamically calculate the chunk size according to the previous downloading
+ * size
  */
 public class DynamicChunkSize implements DownloadStateListener {
 
@@ -33,7 +34,8 @@ public class DynamicChunkSize implements DownloadStateListener {
 
 	@Override
 	public void processDownloadFail(Range range, File file, long downloadedSize, Exception e) {
-		if (downloadedSize <= 0) return;
+		if (downloadedSize <= 0)
+			return;
 		downloadSizes.add(downloadedSize);
 	}
 

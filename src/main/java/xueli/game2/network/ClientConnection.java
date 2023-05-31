@@ -28,7 +28,7 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 	private int port;
 
 	private boolean connected = true;
-	
+
 	ClientConnection() {
 	}
 
@@ -54,33 +54,33 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 		super.exceptionCaught(ctx, cause);
 
 	}
-	
+
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 		super.channelInactive(ctx);
 		this.connected = false;
-		
+
 	}
 
 	public void writeAndFlush(Object p) {
 		this.writeAndFlush(p, true);
 	}
-	
+
 	public void writeAndFlush(Object p, PacketListener listener) {
 		ChannelFuture future = this.channel.writeAndFlush(p);
 		future.addListener(f -> {
-			if(f.isDone()) {
+			if (f.isDone()) {
 				listener.onPacketSentSuccessfully();
 			} else {
 				Packet failurePacket = listener.onPacketSendFailure();
-				if(failurePacket != null) {
+				if (failurePacket != null) {
 					this.channel.writeAndFlush(failurePacket)
-						.addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
+							.addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
 				}
 			}
-			
+
 		});
-		
+
 	}
 
 	public void writeAndFlush(Object p, boolean async) {
@@ -113,31 +113,26 @@ public class ClientConnection extends SimpleChannelInboundHandler<Packet> {
 		}
 
 	}
-	
+
 	public boolean isConnected() {
 		return connected;
 	}
 
-	public static ClientConnection connectToServer(Protocol clientboundProtocol, Protocol serverboundProtocol, InetSocketAddress addr) throws IOException {
+	public static ClientConnection connectToServer(Protocol clientboundProtocol, Protocol serverboundProtocol,
+			InetSocketAddress addr) throws IOException {
 		ClientConnection c = new ClientConnection();
 		c.hostname = addr.getHostName();
 		c.port = addr.getPort();
 
-		new Bootstrap()
-				.group(workerGroup)
-				.channel(NioSocketChannel.class)
-				.handler(new ChannelInitializer<>() {
-					@Override
-					protected void initChannel(Channel ch) throws Exception {
-						ch.pipeline()
-								.addLast(new PacketSizePrefixer())
-								.addLast(new PacketEncoder(serverboundProtocol))
+		new Bootstrap().group(workerGroup).channel(NioSocketChannel.class).handler(new ChannelInitializer<>() {
+			@Override
+			protected void initChannel(Channel ch) throws Exception {
+				ch.pipeline().addLast(new PacketSizePrefixer()).addLast(new PacketEncoder(serverboundProtocol))
 
-								.addLast(new PacketSizeDecodeHandler())
-								.addLast(new PacketDecoder(clientboundProtocol))
-								.addLast(c);
-					}
-				}).connect(addr).syncUninterruptibly();
+						.addLast(new PacketSizeDecodeHandler()).addLast(new PacketDecoder(clientboundProtocol))
+						.addLast(c);
+			}
+		}).connect(addr).syncUninterruptibly();
 		return c;
 	}
 

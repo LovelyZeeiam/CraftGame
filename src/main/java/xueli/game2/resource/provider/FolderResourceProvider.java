@@ -39,7 +39,7 @@ public class FolderResourceProvider extends URLResourceProvider {
 			urls.add(file.toURI().toURL());
 		} else if (file.isDirectory()) {
 			File[] files = file.listFiles();
-			if(files == null)
+			if (files == null)
 				return urls;
 			List<URL> filesToUrls = Stream.of(files).map(f -> {
 				try {

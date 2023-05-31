@@ -30,22 +30,22 @@ public abstract class RenderType<T> {
 	public final void render() {
 		this.render(t -> true);
 	}
-	
+
 	public void render(Predicate<T> selector) {
 		buffers.forEach((t, b) -> {
-			if(selector.test(t)) {
+			if (selector.test(t)) {
 				b.render();
 			}
 		});
-		
+
 	}
 
 	public abstract void applyMatrix(String name, Matrix4f matrix);
-	
+
 	public void clear() {
 		buffers.values().forEach(RenderBuffer::clear);
 	}
-	
+
 	public void release() {
 		buffers.values().forEach(RenderBuffer::release);
 		this.doRelease();

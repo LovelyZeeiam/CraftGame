@@ -39,7 +39,7 @@ public class EntityCollider {
 
 		double detX = delta.x;
 		for (int i = 0; i < aabbs.size(); i++) {
- 			AABB box = aabbs.get(i);
+			AABB box = aabbs.get(i);
 			detX = this.collideClipX(entityBox, box, detX);
 		}
 		entityBox = entityBox.add(new Vector3d(detX, 0, 0));
@@ -50,15 +50,12 @@ public class EntityCollider {
 			detZ = this.collideClipZ(entityBox, box, detZ);
 		}
 //		entityBox = entityBox.add(new Vector3d(0, 0, detZ));
-		
+
 		target.x = detX;
 		target.y = detY;
 		target.z = detZ;
-		return new CollideResult(
-				CollideResult.calcCollide(detX, delta.x), // TODO: All returned 0? strange
-				CollideResult.calcCollide(detY, delta.y),
-				CollideResult.calcCollide(detZ, delta.z)
-			);
+		return new CollideResult(CollideResult.calcCollide(detX, delta.x), // TODO: All returned 0? strange
+				CollideResult.calcCollide(detY, delta.y), CollideResult.calcCollide(detZ, delta.z));
 	}
 
 	private double collideClipX(AABB movingBox, AABB toCollideBox, double movingDistance) {
@@ -67,9 +64,9 @@ public class EntityCollider {
 		Vector3d c0 = toCollideBox.getVmin();
 		Vector3d c1 = toCollideBox.getVmax();
 
-		if(m1.y <= c0.y || m0.y >= c1.y)
+		if (m1.y <= c0.y || m0.y >= c1.y)
 			return movingDistance;
-		if(m1.z <= c0.z || m0.z >= c1.z)
+		if (m1.z <= c0.z || m0.z >= c1.z)
 			return movingDistance;
 
 		if (movingDistance > 0.0F && m1.x <= c0.x) {
@@ -89,9 +86,9 @@ public class EntityCollider {
 		Vector3d c0 = toCollideBox.getVmin();
 		Vector3d c1 = toCollideBox.getVmax();
 
-		if(m1.x <= c0.x || m0.x >= c1.x)
+		if (m1.x <= c0.x || m0.x >= c1.x)
 			return movingDistance;
-		if(m1.z <= c0.z || m0.z >= c1.z)
+		if (m1.z <= c0.z || m0.z >= c1.z)
 			return movingDistance;
 
 		if (movingDistance > 0.0F && m1.y <= c0.y) {
@@ -111,9 +108,9 @@ public class EntityCollider {
 		Vector3d c0 = toCollideBox.getVmin();
 		Vector3d c1 = toCollideBox.getVmax();
 
-		if(m1.x <= c0.x || m0.x >= c1.x)
+		if (m1.x <= c0.x || m0.x >= c1.x)
 			return movingDistance;
-		if(m1.y <= c0.y || m0.y >= c1.y)
+		if (m1.y <= c0.y || m0.y >= c1.y)
 			return movingDistance;
 
 		if (movingDistance > 0.0F && m1.z <= c0.z) {
@@ -134,10 +131,12 @@ public class EntityCollider {
 			for (int y = blockPosLittle.y; y <= blockPosBig.y; y++) {
 				for (int z = blockPosLittle.z; z <= blockPosBig.z; z++) {
 					BlockType block = world.getBlock(x, y, z);
-					if(block == null) continue;
+					if (block == null)
+						continue;
 					BlockCollidable collidable = block.collidable();
-					if(collidable == null) continue;
-					collidable.getCollisionAABBs(x, y ,z, world, list);
+					if (collidable == null)
+						continue;
+					collidable.getCollisionAABBs(x, y, z, world, list);
 				}
 			}
 		}

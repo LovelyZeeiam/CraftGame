@@ -25,10 +25,13 @@ public class Vector3d {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 		Vector3d vector3d = (Vector3d) o;
-		return Double.compare(vector3d.x, x) == 0 && Double.compare(vector3d.y, y) == 0 && Double.compare(vector3d.z, z) == 0;
+		return Double.compare(vector3d.x, x) == 0 && Double.compare(vector3d.y, y) == 0
+				&& Double.compare(vector3d.z, z) == 0;
 	}
 
 	@Override
@@ -38,11 +41,7 @@ public class Vector3d {
 
 	@Override
 	public String toString() {
-		return "Vector3d{" +
-				"x=" + x +
-				", y=" + y +
-				", z=" + z +
-				'}';
+		return "Vector3d{" + "x=" + x + ", y=" + y + ", z=" + z + '}';
 	}
 
 	public static Vector3d add(Vector3d v1, Vector3d v2) {

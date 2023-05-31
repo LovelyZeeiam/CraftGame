@@ -15,7 +15,7 @@ public class Timer {
 	private float remainProgress = 0;
 
 	public void tick() {
-		if(lastTime == 0) {
+		if (lastTime == 0) {
 			lastTime = System.currentTimeMillis();
 			return;
 		}
@@ -29,7 +29,7 @@ public class Timer {
 		this.remainProgress = (float) (this.remain / DUE_SECOND_PER_TICK);
 
 		int numExceed = this.numShouldTick - MAX_TICK_PER_INVOKE;
-		if(numExceed > 0) {
+		if (numExceed > 0) {
 			System.out.printf("Can't keep up! Drop %d ticks%n", numExceed);
 			this.numShouldTick = MAX_TICK_PER_INVOKE;
 		}
@@ -53,7 +53,7 @@ public class Timer {
 	public int getNumHasTick() {
 		return numHasTick;
 	}
-	
+
 	public int getNumShouldTick() {
 		return numShouldTick;
 	}

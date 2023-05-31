@@ -23,7 +23,7 @@ public class PacketProcessor {
 	public <T extends Packet> void doProcess(T packet) {
 		Class<? extends Packet> clazz = packet.getClass();
 		ArrayList<Consumer<? extends Packet>> list = packetProcessors.get(clazz);
-		if(list == null) {
+		if (list == null) {
 			System.err.println("Bugs? No Packet Processor for " + packet);
 			return;
 		}

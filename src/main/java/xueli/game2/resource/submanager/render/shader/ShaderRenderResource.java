@@ -6,7 +6,7 @@ import xueli.game2.resource.manager.ResourceManager;
 import xueli.game2.resource.submanager.render.RenderResource;
 
 public class ShaderRenderResource extends RenderResource<ShaderResourceLocation, Shader> {
-	
+
 	public ShaderRenderResource(ChainedResourceManager superiorManager) {
 		super(superiorManager);
 	}
@@ -17,10 +17,10 @@ public class ShaderRenderResource extends RenderResource<ShaderResourceLocation,
 		try {
 			Resource vertResource = manager.getResource(k.vert());
 			String vertCode = vertResource.readAllString();
-			
+
 			Resource fragResource = manager.getResource(k.frag());
 			String fragCode = fragResource.readAllString();
-			
+
 			return Shader.compile(vertCode, fragCode);
 		} catch (Exception e) {
 			if (must)

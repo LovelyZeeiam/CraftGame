@@ -18,31 +18,31 @@ public class MojanglesFontWidthGenerator {
 		InputStream in = resource.openInputStream();
 		BufferedImage image = ImageIO.read(in);
 		in.close();
-		
+
 		int[] widths = new int[256];
-		for(int i = 0; i < 16; i++) {
-			for(int j = 0; j < 16; j++) {
-				one_image_search: for(int k = 7; k >= 0; k--) {
+		for (int i = 0; i < 16; i++) {
+			for (int j = 0; j < 16; j++) {
+				one_image_search: for (int k = 7; k >= 0; k--) {
 					widths[i * 16 + j] = k;
-					for(int l = 0; l < 8; l++) {
+					for (int l = 0; l < 8; l++) {
 						int x = j * 8 + k;
 						int y = i * 8 + l;
 //						System.out.println(x + ", " + y);
-						if(image.getRGB(x, y) != 0) {
+						if (image.getRGB(x, y) != 0) {
 							break one_image_search;
 						}
 					}
 				}
 			}
 		}
-		
-		for(int i = 0; i < 16; i++) {
-			for(int j = 0; j < 16; j++) {
+
+		for (int i = 0; i < 16; i++) {
+			for (int j = 0; j < 16; j++) {
 				System.out.print((widths[i * 16 + j] + 1) + ", ");
 			}
 			System.out.println();
 		}
-		
+
 	}
 
 }

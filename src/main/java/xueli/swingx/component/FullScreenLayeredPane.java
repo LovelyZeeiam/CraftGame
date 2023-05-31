@@ -10,17 +10,16 @@ public class FullScreenLayeredPane extends JLayeredPane {
 
 	public FullScreenLayeredPane() {
 	}
-	
+
 	@Override
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
-		
+
 		Component[] cs = getComponents();
-		for(int i = 0; i < cs.length; i++) {
+		for (int i = 0; i < cs.length; i++) {
 			cs[i].setBounds(0, 0, width, height);
 		}
-		
+
 	}
-	
-	
+
 }

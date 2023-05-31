@@ -13,7 +13,7 @@ public class UseButtonHandler extends FunctionalKeyHandler {
 	public UseButtonHandler(CraftGameClient ctx) {
 		super(ctx, ctx.state.keyBindings.getKeyBinding(GLFW.GLFW_MOUSE_BUTTON_RIGHT));
 	}
-	
+
 	private int blockPlaceCooldown = 0;
 
 	@Override
@@ -24,29 +24,31 @@ public class UseButtonHandler extends FunctionalKeyHandler {
 	@Override
 	protected void functionContinue(CraftGameClient ctx) {
 		blockPlaceCooldown += ctx.timer.getNumShouldTick();
-		if(blockPlaceCooldown > 6) {
+		if (blockPlaceCooldown > 6) {
 			blockPlaceCooldown = 0;
 			this.doUse(ctx);
 		}
-		
+
 	}
-	
+
 	private void doUse(CraftGameClient ctx) {
 		PickResult pick = ctx.state.player.pickResult;
-		if(pick != null) {
+		if (pick != null) {
 			Vector3i pickBlock = pick.placePos();
-			ResourceIdentifier itemBlock = GameRegistry.BUILTIN_ITEM_BLOCK_MAP_REGISTRY.getByName(ctx.state.selectedItemType.namespace());
-			if(itemBlock != null) {
-				ctx.state.world.setBlock(pickBlock.x, pickBlock.y, pickBlock.z, GameRegistry.BUILTIN_BLOCK_REGISTRY.getByName(itemBlock));
+			ResourceIdentifier itemBlock = GameRegistry.BUILTIN_ITEM_BLOCK_MAP_REGISTRY
+					.getByName(ctx.state.selectedItemType.namespace());
+			if (itemBlock != null) {
+				ctx.state.world.setBlock(pickBlock.x, pickBlock.y, pickBlock.z,
+						GameRegistry.BUILTIN_BLOCK_REGISTRY.getByName(itemBlock));
 			}
 		}
-		
+
 	}
 
 	@Override
 	protected void functionEnd(CraftGameClient ctx) {
 		blockPlaceCooldown = 0;
-		
+
 	}
-	
+
 }

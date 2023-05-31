@@ -56,13 +56,13 @@ public class BufferPool {
 	}
 
 	public LotsOfByteBuffer newBuffer() {
-		if(bufferPool.size() > this.maxCount) {
+		if (bufferPool.size() > this.maxCount) {
 			LotsOfByteBuffer buf = bufferPool.pop();
 			buf.release();
 		}
 
 		LotsOfByteBuffer buf;
-		if(allocateSizeAccordingToBefore > 0) {
+		if (allocateSizeAccordingToBefore > 0) {
 			int accordCount = Math.min(bufferPool.size(), this.allocateSizeAccordingToBefore);
 			int sizeSum = 0;
 
@@ -71,7 +71,7 @@ public class BufferPool {
 				sizeSum += lastBuf.getSize();
 			}
 
-			if(sizeSum > 0) {
+			if (sizeSum > 0) {
 				buf = new LotsOfByteBuffer(sizeSum / accordCount);
 			} else {
 				buf = new LotsOfByteBuffer();

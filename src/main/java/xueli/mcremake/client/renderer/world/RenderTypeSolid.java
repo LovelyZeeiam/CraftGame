@@ -15,46 +15,46 @@ import xueli.mcremake.registry.TerrainTextureAtlas;
 public class RenderTypeSolid extends ChunkRenderType {
 
 	private static final String VERT_SHADER_CODE = """
-#version 330
+			#version 330
 
-layout (location = 0) in vec3 pos;
-layout (location = 1) in vec2 texPos;
-layout (location = 2) in vec3 color;
+			layout (location = 0) in vec3 pos;
+			layout (location = 1) in vec2 texPos;
+			layout (location = 2) in vec3 color;
 
-uniform mat4 projMatrix;
-uniform mat4 viewMatrix;
+			uniform mat4 projMatrix;
+			uniform mat4 viewMatrix;
 
-out vec2 otexPos;
-out vec3 ocolor;
+			out vec2 otexPos;
+			out vec3 ocolor;
 
-void main(){
-	vec4 posCam = viewMatrix * vec4(pos, 1.0);
-	gl_Position = projMatrix * posCam;
-	otexPos = texPos;
-	ocolor = color;
-	
-}
-""";
+			void main(){
+				vec4 posCam = viewMatrix * vec4(pos, 1.0);
+				gl_Position = projMatrix * posCam;
+				otexPos = texPos;
+				ocolor = color;
+
+			}
+			""";
 
 	private static final String FRAG_SHADER_CODE = """
-#version 330
+			#version 330
 
-in vec2 otexPos;
-in vec3 ocolor;
+			in vec2 otexPos;
+			in vec3 ocolor;
 
-uniform sampler2D texSampler;
+			uniform sampler2D texSampler;
 
-out vec4 out_color;
+			out vec4 out_color;
 
-void main(){
-	vec4 ambient = texture(texSampler, otexPos);
-	if(ambient.w == 0) discard;
-	
-	out_color = ambient * vec4(ocolor, 1.0);
-	
-}
+			void main(){
+				vec4 ambient = texture(texSampler, otexPos);
+				if(ambient.w == 0) discard;
 
-""";
+				out_color = ambient * vec4(ocolor, 1.0);
+
+			}
+
+			""";
 
 	protected final CraftGameClient ctx;
 	protected final Shader shader;
@@ -71,7 +71,7 @@ void main(){
 		this.texture = ctx.getRenderResources(TerrainTextureAtlas.class);
 
 	}
-	
+
 	@Override
 	public void render(Predicate<Vector2i> selector) {
 		GL30.glEnable(GL30.GL_DEPTH_TEST);
@@ -83,12 +83,12 @@ void main(){
 		this.shader.unbind();
 		GL30.glDisable(GL30.GL_DEPTH_TEST);
 		GL30.glDisable(GL30.GL_CULL_FACE);
-		
+
 	}
 
 	@Override
 	public void applyMatrix(String name, Matrix4f matrix) {
-		if(this.shader.isBound()) {
+		if (this.shader.isBound()) {
 			shader.setUniformMatrix(shader.getUnifromLocation(name), matrix);
 		} else {
 			shader.bind();
@@ -103,9 +103,9 @@ void main(){
 		this.shader.release();
 
 	}
-	
+
 	public TerrainTextureAtlas getTexture() {
 		return texture;
 	}
-	
+
 }

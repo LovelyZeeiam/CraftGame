@@ -12,11 +12,11 @@ public interface Registry<T> {
 	public T getById(int id);
 
 	public int getId(T t);
-	
+
 	public Set<ResourceIdentifier> getAllContainTag(ResourceIdentifier tag);
-	
+
 	public Set<ResourceIdentifier> getTags(ResourceIdentifier name);
-	
+
 	public void forEach(BiConsumer<ResourceIdentifier, T> c);
 
 	public WritableRegistry<T> cloneToWritable();

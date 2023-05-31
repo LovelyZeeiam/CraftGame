@@ -15,53 +15,53 @@ import com.flowpowered.nbt.stream.NBTInputStream;
 import com.flowpowered.nbt.stream.NBTOutputStream;
 
 public class LevelInfo implements AutoCloseable {
-    
-    private final File file;
 
-    private final int version;
-    private final CompoundMap map;
+	private final File file;
 
-    public LevelInfo(File file) throws Exception {
-        this.file = file;
-        
-        try (DataInputStream in = new DataInputStream(new FileInputStream(file));
-        		NBTInputStream nbtIn = new NBTInputStream(in, false, ByteOrder.LITTLE_ENDIAN)) {
-        	version = in.readInt();
-            in.readInt();
-        	CompoundTag tag = (CompoundTag) nbtIn.readTag();
+	private final int version;
+	private final CompoundMap map;
+
+	public LevelInfo(File file) throws Exception {
+		this.file = file;
+
+		try (DataInputStream in = new DataInputStream(new FileInputStream(file));
+				NBTInputStream nbtIn = new NBTInputStream(in, false, ByteOrder.LITTLE_ENDIAN)) {
+			version = in.readInt();
+			in.readInt();
+			CompoundTag tag = (CompoundTag) nbtIn.readTag();
 			this.map = tag.getValue();
 		}
 
-    }
+	}
 
-    public Tag<?> get(String tag) {
-        return map.get(tag);
-    }
+	public Tag<?> get(String tag) {
+		return map.get(tag);
+	}
 
-    public void write(Tag<?> tag) {
-        map.put(tag);
-    }
+	public void write(Tag<?> tag) {
+		map.put(tag);
+	}
 
-    @Override
-    public void close() throws Exception {
-        DataOutputStream out = new DataOutputStream(new FileOutputStream(file));
-        out.writeInt(version);
+	@Override
+	public void close() throws Exception {
+		DataOutputStream out = new DataOutputStream(new FileOutputStream(file));
+		out.writeInt(version);
 
-        ByteArrayOutputStream nbtSectionOut = new ByteArrayOutputStream();
-        NBTOutputStream nbtOut = new NBTOutputStream(nbtSectionOut, false, ByteOrder.LITTLE_ENDIAN);
-        nbtOut.writeTag(new CompoundTag("", map));
-        nbtOut.close();
+		ByteArrayOutputStream nbtSectionOut = new ByteArrayOutputStream();
+		NBTOutputStream nbtOut = new NBTOutputStream(nbtSectionOut, false, ByteOrder.LITTLE_ENDIAN);
+		nbtOut.writeTag(new CompoundTag("", map));
+		nbtOut.close();
 
-        out.writeInt(nbtSectionOut.size());
-        out.write(nbtSectionOut.toByteArray());
+		out.writeInt(nbtSectionOut.size());
+		out.write(nbtSectionOut.toByteArray());
 
-        out.close();
+		out.close();
 
-    }
+	}
 
-    @Override
-    public String toString() {
-        return new CompoundTag("", map).toString();
-    }
+	@Override
+	public String toString() {
+		return new CompoundTag("", map).toString();
+	}
 
 }

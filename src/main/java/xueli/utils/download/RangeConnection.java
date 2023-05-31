@@ -14,7 +14,8 @@ class RangeConnection extends Range {
 		this.connection = connection;
 	}
 
-	public static RangeConnection makeConnection(long start, long to, URL url, Map<String, String> headers) throws IOException {
+	public static RangeConnection makeConnection(long start, long to, URL url, Map<String, String> headers)
+			throws IOException {
 		URLConnection con = DownloadInstance.createConnection(url, headers);
 		con.setRequestProperty("Range", String.format("bytes=%d-%d", start, to));
 		return new RangeConnection(start, to, con);
@@ -26,11 +27,7 @@ class RangeConnection extends Range {
 
 	@Override
 	public String toString() {
-		return "RangeConnection{" +
-				"connection=" + connection +
-				", start=" + getFrom() +
-				", to=" + getTo() +
-				'}';
+		return "RangeConnection{" + "connection=" + connection + ", start=" + getFrom() + ", to=" + getTo() + '}';
 	}
 
 }

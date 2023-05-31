@@ -9,7 +9,7 @@ public class Vector2i implements Comparable<Vector2i> {
 	public Vector2i() {
 		this.x = this.y = 0;
 	}
-	
+
 	public Vector2i(int x, int y) {
 		this.x = x;
 		this.y = y;
@@ -37,7 +37,8 @@ public class Vector2i implements Comparable<Vector2i> {
 
 	@Override
 	public int compareTo(Vector2i o) {
-		if(o == null) return this.hashCode();
+		if (o == null)
+			return this.hashCode();
 		return this.hashCode() - o.hashCode();
 	}
 

@@ -17,7 +17,7 @@ public class ResourceURL implements Resource {
 
 	private void compileName() {
 		String path = url.getPath();
-		if(path.endsWith("/")) {
+		if (path.endsWith("/")) {
 			path = path.substring(0, path.length() - 1);
 		}
 		int index = path.lastIndexOf('/');

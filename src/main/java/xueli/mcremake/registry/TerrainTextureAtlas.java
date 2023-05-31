@@ -20,12 +20,12 @@ public class TerrainTextureAtlas implements ResourceHolder {
 	public TerrainTextureAtlas(CraftGameClient ctx) {
 //		this.ctx = ctx;
 		this.textureId = ctx.textureResource.register(TERRAIN_TEXTURE_LOCATION, true);
-		
+
 	}
 
 	@Override
 	public void reload() {
-		
+
 	}
 
 	public void bind() {
@@ -37,7 +37,8 @@ public class TerrainTextureAtlas implements ResourceHolder {
 	}
 
 	public AtlasResourceHolder getUVVertex(int x, int y) {
-		return new AtlasResourceHolder(new Vector2f(x / 16.0f, y / 16.0f), new Vector2f((x + 1) / 16.0f, (y + 1) / 16.0f));
+		return new AtlasResourceHolder(new Vector2f(x / 16.0f, y / 16.0f),
+				new Vector2f((x + 1) / 16.0f, (y + 1) / 16.0f));
 	}
 
 	public int getTextureId() {

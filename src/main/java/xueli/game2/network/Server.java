@@ -43,21 +43,16 @@ public class Server<T extends ServerClientConnection> implements RunnableLifeCyc
 
 	@Override
 	public void init() {
-		this.serverFuture = new ServerBootstrap()
-				.group(workerGroup)
-				.channel(NioServerSocketChannel.class)
+		this.serverFuture = new ServerBootstrap().group(workerGroup).channel(NioServerSocketChannel.class)
 				.childHandler(new ChannelInitializer<>() {
 					@Override
 					protected void initChannel(Channel ch) throws Exception {
 						T conn = connFunc.get();
 						connections.add(conn);
 
-						ch.pipeline()
-								.addLast(new PacketSizePrefixer())
-								.addLast(new PacketEncoder(clientboundProtocol))
+						ch.pipeline().addLast(new PacketSizePrefixer()).addLast(new PacketEncoder(clientboundProtocol))
 
-								.addLast(new PacketSizeDecodeHandler())
-								.addLast(new PacketDecoder(serverboundProtocol))
+								.addLast(new PacketSizeDecodeHandler()).addLast(new PacketDecoder(serverboundProtocol))
 								.addLast(conn);
 
 					}
@@ -65,30 +60,31 @@ public class Server<T extends ServerClientConnection> implements RunnableLifeCyc
 		this.isRunning = true;
 
 	}
-	
+
 	@Override
 	public void tick() {
-		// we can get an iterator of the list and we can remove it immediately, learnt from source code of Minecraft
+		// we can get an iterator of the list and we can remove it immediately, learnt
+		// from source code of Minecraft
 		Iterator<T> iterable = connections.iterator();
-		while(iterable.hasNext()) {
+		while (iterable.hasNext()) {
 			T t = iterable.next();
 			t.tick();
-			if(!t.isConnected()) {
+			if (!t.isConnected()) {
 				iterable.remove();
 			}
 		}
-		
+
 	}
-	
+
 	public void broadcast(Object obj) {
 		this.connections.forEach(l -> l.writeAndFlush(obj));
-		
+
 	}
 
 	@Override
 	public void release() {
 		this.isRunning = false;
-		if(serverFuture != null) {
+		if (serverFuture != null) {
 			try {
 				serverFuture.channel().close().sync();
 			} catch (InterruptedException e) {

@@ -29,8 +29,10 @@ public record ResourceIdentifier(String namespace, String location) {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 		ResourceIdentifier that = (ResourceIdentifier) o;
 		return namespace.equals(that.namespace) && location.equals(that.location);
 	}

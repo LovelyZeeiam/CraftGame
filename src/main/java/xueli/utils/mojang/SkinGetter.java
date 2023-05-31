@@ -14,7 +14,7 @@ import xueli.utils.io.Files;
 import xueli.utils.logger.Logger;
 
 public class SkinGetter {
-	
+
 	private static final Logger LOGGER = new Logger();
 
 	public static boolean saveSkin(String playerName, String path) {

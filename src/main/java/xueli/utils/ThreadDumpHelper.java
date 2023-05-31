@@ -35,7 +35,7 @@ public class ThreadDumpHelper {
 //			table.put(1, count, t.getState().toString());
 //			table.put(2, count, traces);
 			System.out.println(t.getName() + ": " + t.getState());
-			if(!traces.isBlank())
+			if (!traces.isBlank())
 				System.out.println(traces);
 
 //			count++;

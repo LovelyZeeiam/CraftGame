@@ -6,7 +6,7 @@ import org.lwjgl.utils.vector.Vector3f;
 import xueli.game2.Vector;
 
 public class MovableCamera extends Vector implements ICamera {
-	
+
 	private static final long serialVersionUID = 5715380559084534935L;
 
 	public MovableCamera() {

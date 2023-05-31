@@ -12,10 +12,10 @@ public class RegistryImplement<T> implements WritableRegistry<T> {
 
 	private ArrayList<T> list = new ArrayList<>();
 	private HashMap<ResourceIdentifier, T> map = new HashMap<>();
-	
+
 	private HashMap<ResourceIdentifier, HashSet<ResourceIdentifier>> tagToRegistryMap = new HashMap<>();
 	private HashMap<ResourceIdentifier, HashSet<ResourceIdentifier>> registryToTagMap = new HashMap<>();
-	
+
 	private boolean frozen = false;
 
 	@Override
@@ -40,19 +40,19 @@ public class RegistryImplement<T> implements WritableRegistry<T> {
 		list.add(t);
 		map.put(name, t);
 	}
-	
+
 	@Override
 	public void addTag(ResourceIdentifier name, ResourceIdentifier... tags) {
 		HashSet<ResourceIdentifier> thisRegistryTagSet = registryToTagMap.computeIfAbsent(name, n -> new HashSet<>());
-		
+
 		for (int i = 0; i < tags.length; i++) {
 			ResourceIdentifier tag = tags[i];
 			thisRegistryTagSet.add(tag);
 			tagToRegistryMap.computeIfAbsent(tag, t -> new HashSet<>()).add(name);
 		}
-		
+
 	}
-	
+
 	@Override
 	public Set<ResourceIdentifier> getAllContainTag(ResourceIdentifier tag) {
 		return tagToRegistryMap.get(tag);

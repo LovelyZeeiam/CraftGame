@@ -46,7 +46,6 @@ public class PacketDecoder extends ByteToMessageDecoder {
 			e.printStackTrace();
 		}
 
-
 	}
 
 }

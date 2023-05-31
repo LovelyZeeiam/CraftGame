@@ -17,11 +17,7 @@ public class NameableAABB extends AABB {
 
 	@Override
 	public String toString() {
-		return "NameableAABB{" +
-				"name='" + name + '\'' +
-				", v1=" + v1 +
-				", v2=" + v2 +
-				'}';
+		return "NameableAABB{" + "name='" + name + '\'' + ", v1=" + v1 + ", v2=" + v2 + '}';
 	}
 
 }

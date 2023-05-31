@@ -31,12 +31,12 @@ public class CoverAllLayout implements LayoutManager {
 			int parentWidth = parent.getWidth();
 			int parentHeight = parent.getHeight();
 			Component[] cs = parent.getComponents();
-			for(int i = 0; i < cs.length; i++) {
+			for (int i = 0; i < cs.length; i++) {
 				Component c = cs[i];
 				c.setBounds(0, 0, parentWidth, parentHeight);
 			}
 		}
-		
+
 	}
 
 }

@@ -88,7 +88,7 @@ public class Display {
 
 			cursorX = (float) xpos;
 			cursorY = (float) ypos;
-			
+
 			cursorPosCallbacks.forEach(c -> c.onCursorPos(xpos, ypos));
 
 		}
@@ -179,7 +179,7 @@ public class Display {
 		glfwSetMouseButtonCallback(window, mouseButtonCallback);
 		glfwSetKeyCallback(window, keyCallback);
 		glfwSetScrollCallback(window, scrollCallback);
-		
+
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 
 		this.running = true;
@@ -209,11 +209,11 @@ public class Display {
 	public void removeMouseInputListener(MouseInputListener callback) {
 		mouseCallbacks.remove(callback);
 	}
-	
+
 	public void addMousePositionListener(CursorPositionListener callback) {
 		cursorPosCallbacks.add(callback);
 	}
-	
+
 	public void removeMousePositionListener(CursorPositionListener callback) {
 		cursorPosCallbacks.remove(callback);
 	}
@@ -254,7 +254,7 @@ public class Display {
 	}
 
 	public void setMouseGrabbed(boolean mouseGrabbed) {
-		if(this.mouseGrabbed == mouseGrabbed)
+		if (this.mouseGrabbed == mouseGrabbed)
 			return;
 
 		glfwSetInputMode(window, GLFW_CURSOR, mouseGrabbed ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
@@ -330,7 +330,7 @@ public class Display {
 	public boolean isMouseGrabbed() {
 		return mouseGrabbed;
 	}
-	
+
 	public List<Integer> getPressedKeyList() {
 		return last_press_keys;
 	}

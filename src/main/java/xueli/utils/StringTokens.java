@@ -61,19 +61,21 @@ public class StringTokens {
 
 		return strings.toArray(new String[0]);
 	}
-	
+
 	public static String padLeft(String origin, int length, char ch) {
 		int origin_length = origin.length();
 		int need_pad_length = length - origin_length;
-		if(need_pad_length <= 0) return origin.substring(0, length);
+		if (need_pad_length <= 0)
+			return origin.substring(0, length);
 		return Character.toString(ch).repeat(need_pad_length) + origin;
 	}
-	
+
 	public static String padRight(String origin, int length, char ch) {
 		int origin_length = origin.length();
 		int need_pad_length = length - origin_length;
-		if(need_pad_length <= 0) return origin.substring(0, length);
+		if (need_pad_length <= 0)
+			return origin.substring(0, length);
 		return origin + Character.toString(ch).repeat(need_pad_length);
 	}
-	
+
 }

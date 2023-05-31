@@ -12,13 +12,12 @@ public class DefaultMouseListener extends DefaultInputListener implements MouseI
 
 	@Override
 	public void onMouseButton(int button, int action, int mods) {
-		if(action == GLFW.GLFW_PRESS) {
+		if (action == GLFW.GLFW_PRESS) {
 			this.onInput(button, true);
-		} else if(action == GLFW.GLFW_RELEASE) {
+		} else if (action == GLFW.GLFW_RELEASE) {
 			this.onInput(button, false);
 		}
-		
-		
+
 	}
 
 }

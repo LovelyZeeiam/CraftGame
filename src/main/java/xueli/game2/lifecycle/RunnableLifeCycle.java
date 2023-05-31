@@ -1,7 +1,7 @@
 package xueli.game2.lifecycle;
 
 public interface RunnableLifeCycle extends LifeCycle, Runnable {
-	
+
 	public boolean isRunning();
 
 	@Override

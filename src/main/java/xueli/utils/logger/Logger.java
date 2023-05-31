@@ -13,12 +13,12 @@ import org.fusesource.jansi.AnsiConsole;
 public class Logger {
 
 //	private static final Ansi.Color STATE_COLOR = Ansi.Color.BLUE;
-	
+
 	private static final HashMap<Level, Ansi.Color> textColor = new HashMap<>();
 
 	static {
 //		AnsiConsole.systemInstall();
-		
+
 		textColor.put(Level.INFO, Ansi.Color.GREEN);
 		textColor.put(Level.SEVERE, Ansi.Color.RED);
 		textColor.put(Level.WARNING, Ansi.Color.YELLOW);
@@ -65,9 +65,9 @@ public class Logger {
 
 		Ansi a = Ansi.ansi();
 		int consoleWidth = AnsiConsole.getTerminalWidth();
-		if(consoleWidth == 0)
+		if (consoleWidth == 0)
 			consoleWidth = 100;
-		
+
 		String timeStr = DATE_FORMATTER.format(new Date());
 		String pathStr = String.format("%s:%d", ste.getFileName(), ste.getLineNumber());
 		int contentLeftStart = timeStr.length() + 1;
@@ -75,45 +75,45 @@ public class Logger {
 		int contentPerLine = contentRightEnd - contentLeftStart;
 		String contentStr = Objects.toString(s);
 		int oneLineLogSpace = contentPerLine - contentStr.length();
-		
+
 		a.reset();
-		if(contentPerLine <= 0) {
+		if (contentPerLine <= 0) {
 			a.a(timeStr).newline();
 			a.a(Attribute.ITALIC).a(pathStr).a(Attribute.ITALIC_OFF).newline();
 			a.fg(color).render(contentStr).fgDefault().newline();
 		} else {
 			a.a(timeStr).a(" ");
-			
-			if(oneLineLogSpace < 0) {
+
+			if (oneLineLogSpace < 0) {
 				int lineStartInStr = 0, lineEndInStr = contentPerLine;
 				a.fg(color).render(contentStr.substring(lineStartInStr, lineEndInStr)).fgDefault();
 				lineStartInStr += contentPerLine;
 				lineEndInStr += contentPerLine;
-				
+
 				a.a(" ").a(Attribute.ITALIC).a(pathStr).a(Attribute.ITALIC_OFF).newline();
-				
-				while(true) {
-					if(lineStartInStr >= contentStr.length())
+
+				while (true) {
+					if (lineStartInStr >= contentStr.length())
 						break;
 					lineEndInStr = Math.min(contentStr.length(), lineEndInStr);
-					
+
 					a.a(" ".repeat(contentLeftStart));
 					a.fg(color).render(contentStr.substring(lineStartInStr, lineEndInStr)).fgDefault();
 					a.newline();
-					
+
 					lineStartInStr += contentPerLine;
 					lineEndInStr += contentPerLine;
-					
+
 				}
-				
+
 			} else {
-				a.fg(color).render(contentStr).fgDefault().a(" ".repeat(oneLineLogSpace)).a(" ").a(Attribute.ITALIC).a(pathStr).newline();
-				
+				a.fg(color).render(contentStr).fgDefault().a(" ".repeat(oneLineLogSpace)).a(" ").a(Attribute.ITALIC)
+						.a(pathStr).newline();
+
 			}
-			
-			
+
 		}
-		
+
 		a.reset();
 		System.out.print(a);
 

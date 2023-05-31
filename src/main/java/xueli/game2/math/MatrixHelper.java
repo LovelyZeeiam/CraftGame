@@ -22,7 +22,7 @@ public class MatrixHelper {
 		projectionMatrix.m23 = -1;
 		projectionMatrix.m32 = -((2 * far * near) / frustum_length);
 		projectionMatrix.m33 = 0;
-		
+
 		return projectionMatrix;
 	}
 
@@ -36,7 +36,7 @@ public class MatrixHelper {
 		matrix.m30 = -(right + left) / (right - left);
 		matrix.m31 = -(top + bottom) / (top - bottom);
 		matrix.m32 = -(far + near) / (far - near);
-		
+
 		return matrix;
 	}
 
@@ -57,7 +57,7 @@ public class MatrixHelper {
 		Matrix4f.rotate((float) Math.toRadians(camera.rotZ), new Vector3f(0, 0, 1), viewMatrix, viewMatrix);
 		Vector3f negativeCamPos = new Vector3f((float) -camera.x, (float) -camera.y, (float) -camera.z);
 		Matrix4f.translate(negativeCamPos, viewMatrix, viewMatrix);
-		
+
 		return viewMatrix;
 	}
 
@@ -88,7 +88,7 @@ public class MatrixHelper {
 		mat.m30 = -Vector3f.dot(s, eye);
 		mat.m31 = -Vector3f.dot(u, eye);
 		mat.m32 = Vector3f.dot(f, eye);
-		
+
 		return mat;
 	}
 

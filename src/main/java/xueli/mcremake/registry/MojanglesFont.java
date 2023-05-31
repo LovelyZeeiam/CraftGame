@@ -17,50 +17,41 @@ import xueli.mcremake.client.renderer.gui.MyRenderBuffer2D;
 import xueli.mcremake.client.renderer.gui.RenderTypeTexture2D;
 
 /**
- * A easy font renderer
- * TODO: Later we should support custom font separator and try rendering a middle aligned text in one step
+ * A easy font renderer TODO: Later we should support custom font separator and
+ * try rendering a middle aligned text in one step
  */
 public class MojanglesFont implements ResourceHolder {
 
-	private static final ResourceIdentifier FONT_TEXTURE_LOCATION = new ResourceIdentifier("minecraft", "font/default.png");
-	
-	private static final int[] CHAR_SIZES = {
-		3, 8, 8, 7, 7, 7, 7, 8, 8, 8, 8, 8, 7, 8, 8, 8, 
-		7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 7, 7, 7, 8, 8, 8, 
-		1, 1, 4, 5, 5, 5, 5, 2, 4, 4, 4, 5, 1, 5, 1, 5, 
-		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 4, 5, 4, 5, 
-		6, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5, 5, 5, 5, 5, 5, 
-		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5, 3, 5, 5, 
-		2, 5, 5, 5, 5, 5, 4, 5, 5, 1, 5, 4, 2, 5, 5, 5, 
-		5, 5, 5, 5, 3, 5, 5, 5, 5, 5, 5, 4, 1, 4, 6, 5, 
-		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5, 2, 5, 5, 
-		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5, 
-		5, 2, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 1, 5, 5, 
-		7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 
-		8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 
-		8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 
-		7, 6, 6, 7, 6, 7, 7, 7, 6, 7, 7, 6, 8, 8, 5, 6, 
-		6, 6, 6, 6, 8, 5, 6, 7, 7, 8, 8, 8, 7, 6, 8, 1, 
-	};
+	private static final ResourceIdentifier FONT_TEXTURE_LOCATION = new ResourceIdentifier("minecraft",
+			"font/default.png");
+
+	private static final int[] CHAR_SIZES = { 3, 8, 8, 7, 7, 7, 7, 8, 8, 8, 8, 8, 7, 8, 8, 8, 7, 7, 8, 8, 8, 8, 8, 8, 8,
+			8, 7, 7, 7, 8, 8, 8, 1, 1, 4, 5, 5, 5, 5, 2, 4, 4, 4, 5, 1, 5, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 4,
+			5, 4, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5, 3, 5, 5, 2,
+			5, 5, 5, 5, 5, 4, 5, 5, 1, 5, 4, 2, 5, 5, 5, 5, 5, 5, 5, 3, 5, 5, 5, 5, 5, 5, 4, 1, 4, 6, 5, 5, 5, 5, 5, 5,
+			5, 5, 5, 5, 5, 5, 3, 5, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5, 5, 2, 5, 5, 5, 5, 5, 5, 5,
+			6, 5, 5, 5, 1, 5, 5, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+			8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 7, 6, 6, 7, 6, 7, 7, 7, 6, 7, 7, 6, 8, 8, 5, 6, 6,
+			6, 6, 6, 8, 5, 6, 7, 7, 8, 8, 8, 7, 6, 8, 1, };
 
 	private final GameDisplay ctx;
 
 	private RenderTypeTexture2D renderer = new RenderTypeTexture2D();
 	private ReloadableResourceTicket<Texture> fontTexture;
-	
+
 	public MojanglesFont(GameDisplay ctx) {
 		this.ctx = ctx;
 		this.fontTexture = ctx.textureResource.register(FONT_TEXTURE_LOCATION, true);
-		
+
 	}
-	
+
 	@Override
 	public void reload() {
-		
+
 	}
-	
+
 	private HashMap<RenderBuffer, BackRenderBuffer> buffers = new HashMap<>();
-	
+
 	public float measureWidth(float x, float y, float size, float separateRatio, String str) {
 		float width = 0;
 		for (int i = 0; i < str.length(); i++) {
@@ -72,7 +63,7 @@ public class MojanglesFont implements ResourceHolder {
 		}
 		return width;
 	}
-	
+
 	public void drawFont(float x, float y, float size, float separateRatio, String str, Color color) {
 		RenderBuffer buffer = renderer.getRenderBuffer(fontTexture.get().id());
 		BackRenderBuffer backBuffer = buffers.computeIfAbsent(buffer, RenderBuffer::createBackBuffer);
@@ -91,17 +82,23 @@ public class MojanglesFont implements ResourceHolder {
 			int xInTex = c % 16;
 			int yInTex = c / 16;
 
-			backBuffer.applyToBuffer(MyRenderBuffer2D.ATTR_VERTEX, new Vector2f(charXPointer, y), new Vector2f(charXPointer + size, y), new Vector2f(charXPointer, y + size));
-			backBuffer.applyToBuffer(MyRenderBuffer2D.ATTR_UV, new Vector2f(xInTex / 16.0f, yInTex / 16.0f), new Vector2f((xInTex + 1) / 16.0f, yInTex / 16.0f), new Vector2f(xInTex / 16.0f, (yInTex + 1)/ 16.0f));
+			backBuffer.applyToBuffer(MyRenderBuffer2D.ATTR_VERTEX, new Vector2f(charXPointer, y),
+					new Vector2f(charXPointer + size, y), new Vector2f(charXPointer, y + size));
+			backBuffer.applyToBuffer(MyRenderBuffer2D.ATTR_UV, new Vector2f(xInTex / 16.0f, yInTex / 16.0f),
+					new Vector2f((xInTex + 1) / 16.0f, yInTex / 16.0f),
+					new Vector2f(xInTex / 16.0f, (yInTex + 1) / 16.0f));
 			backBuffer.applyToBuffer(MyRenderBuffer2D.ATTR_COLOR, colorVector, colorVector, colorVector);
 
-			backBuffer.applyToBuffer(MyRenderBuffer2D.ATTR_VERTEX, new Vector2f(charXPointer + size, y + size), new Vector2f(charXPointer + size, y), new Vector2f(charXPointer, y + size));
-			backBuffer.applyToBuffer(MyRenderBuffer2D.ATTR_UV, new Vector2f((xInTex + 1) / 16.0f, (yInTex + 1) / 16.0f), new Vector2f((xInTex + 1) / 16.0f, yInTex / 16.0f), new Vector2f(xInTex / 16.0f, (yInTex + 1)/ 16.0f));
+			backBuffer.applyToBuffer(MyRenderBuffer2D.ATTR_VERTEX, new Vector2f(charXPointer + size, y + size),
+					new Vector2f(charXPointer + size, y), new Vector2f(charXPointer, y + size));
+			backBuffer.applyToBuffer(MyRenderBuffer2D.ATTR_UV, new Vector2f((xInTex + 1) / 16.0f, (yInTex + 1) / 16.0f),
+					new Vector2f((xInTex + 1) / 16.0f, yInTex / 16.0f),
+					new Vector2f(xInTex / 16.0f, (yInTex + 1) / 16.0f));
 			backBuffer.applyToBuffer(MyRenderBuffer2D.ATTR_COLOR, colorVector, colorVector, colorVector);
-			
+
 			charXPointer += size * CHAR_SIZES[c] / 8.0f;
 			charXPointer += size * separateRatio;
-			
+
 		}
 
 	}

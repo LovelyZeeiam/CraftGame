@@ -11,9 +11,9 @@ public interface RenderBuffer {
 	public BackRenderBuffer createBackBuffer();
 
 	public void render();
-	
+
 	public void clear();
-	
+
 	public void release();
 
 }

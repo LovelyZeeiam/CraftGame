@@ -4,5 +4,5 @@ public class ServerClientConnection extends ClientConnection {
 
 	public ServerClientConnection() {
 	}
-	
+
 }

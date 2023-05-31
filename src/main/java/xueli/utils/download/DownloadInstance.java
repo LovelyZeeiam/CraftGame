@@ -28,25 +28,28 @@ public abstract class DownloadInstance extends DeterminedListWorker<RangeConnect
 
 	}
 
-	public static DownloadInstance create(URL url, File output, Map<String, String> headers, ExecutorService executor) throws IOException {
+	public static DownloadInstance create(URL url, File output, Map<String, String> headers, ExecutorService executor)
+			throws IOException {
 		return create(url, output, headers, Integer.MAX_VALUE, executor);
 	}
 
 	/**
-	 * Create a <code>DownloadInstance</code> instance that is ready to run. It will check whether the
-	 * link support <code>Range</code> parameter, get the length of content and make relative decisions,
-	 * which is called initializing.
+	 * Create a <code>DownloadInstance</code> instance that is ready to run. It will
+	 * check whether the link support <code>Range</code> parameter, get the length
+	 * of content and make relative decisions, which is called initializing.
 	 *
 	 * @param url       The downloading link
 	 * @param output    The output file
 	 * @param headers   The headers that is necessary to make the connection
-	 * @param chunkSize The chunk size of multithreaded downloading. When the value is not bigger than
-	 *                  zero, the method won't consider the multithreaded downloading but returns to
-	 *                  the RangeDownloadInstance.
+	 * @param chunkSize The chunk size of multithreaded downloading. When the value
+	 *                  is not bigger than zero, the method won't consider the
+	 *                  multithreaded downloading but returns to the
+	 *                  RangeDownloadInstance.
 	 * @param executor  The executor that runs multithreaded downloading task
 	 * @throws IOException throw when an exception on initializing is thrown
 	 */
-	public static DownloadInstance create(URL url, File output, Map<String, String> headers, long chunkSize, ExecutorService executor) throws IOException {
+	public static DownloadInstance create(URL url, File output, Map<String, String> headers, long chunkSize,
+			ExecutorService executor) throws IOException {
 		output.createNewFile();
 
 		String proto = url.getProtocol().toLowerCase();
@@ -60,28 +63,30 @@ public abstract class DownloadInstance extends DeterminedListWorker<RangeConnect
 			int responseCode = httpCon.getResponseCode();
 
 			switch (responseCode) {
-				case HttpURLConnection.HTTP_OK:
-					break;
-				case HttpURLConnection.HTTP_PARTIAL:
-					supportRange = true;
-					break;
-				case HttpURLConnection.HTTP_MOVED_TEMP:
-				case HttpURLConnection.HTTP_MOVED_PERM:
-				case HttpURLConnection.HTTP_SEE_OTHER:
-					String newLocation = httpCon.getHeaderField("Location");
-					URL newUrl = new URL(newLocation);
-					return create(newUrl, output, headers, chunkSize, executor);
-				default:
-					throw new IOException(String.format("Get %d when fetch url: %s%n", responseCode, url));
+			case HttpURLConnection.HTTP_OK:
+				break;
+			case HttpURLConnection.HTTP_PARTIAL:
+				supportRange = true;
+				break;
+			case HttpURLConnection.HTTP_MOVED_TEMP:
+			case HttpURLConnection.HTTP_MOVED_PERM:
+			case HttpURLConnection.HTTP_SEE_OTHER:
+				String newLocation = httpCon.getHeaderField("Location");
+				URL newUrl = new URL(newLocation);
+				return create(newUrl, output, headers, chunkSize, executor);
+			default:
+				throw new IOException(String.format("Get %d when fetch url: %s%n", responseCode, url));
 			}
 		}
 		long fileSize = con.getContentLengthLong();
 
 		DownloadInstance instance;
-		// To support some occasions when a negative file size is sent back. Often this will happen when trying to access a remote website.
+		// To support some occasions when a negative file size is sent back. Often this
+		// will happen when trying to access a remote website.
 		if (fileSize > 0) {
-			instance = supportRange ?
-					(chunkSize > 0 ? new MultiThreadedDownloadInstance(url, output, headers, chunkSize, executor) : new RangeDownloadInstance(url, output, headers, executor))
+			instance = supportRange
+					? (chunkSize > 0 ? new MultiThreadedDownloadInstance(url, output, headers, chunkSize, executor)
+							: new RangeDownloadInstance(url, output, headers, executor))
 					: new SingleThreadDownloadInstance(url, output, headers, executor);
 		} else {
 			instance = new SingleThreadDownloadInstance(url, output, headers, executor);

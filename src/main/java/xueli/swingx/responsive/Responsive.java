@@ -9,22 +9,21 @@ import xueli.swingx.layout.LayoutListener;
 
 @Deprecated
 public class Responsive {
-	
+
 	private static final HashMap<Container, Responsive> responsives = new HashMap<>();
-	
+
 	public static void addResponsive(Component child, ValueProvider<Dimension, Dimension> provider) {
 		Container father = child.getParent();
-		if(father == null) {
+		if (father == null) {
 			System.err.println("No Father? " + child.toString());
 			return;
 		}
-		responsives.computeIfAbsent(father, Responsive::new)
-			.addResponsiveChild(child, provider);
-		
+		responsives.computeIfAbsent(father, Responsive::new).addResponsiveChild(child, provider);
+
 	}
-	
+
 	private final HashMap<Component, ValueProvider<Dimension, Dimension>> responsiveData = new HashMap<>();
-	
+
 	Responsive(Container father) {
 		father.setLayout(new LayoutListener(father.getLayout()) {
 			@Override
@@ -36,10 +35,10 @@ public class Responsive {
 			}
 		});
 	}
-	
+
 	public Responsive addResponsiveChild(Component child, ValueProvider<Dimension, Dimension> provider) {
 		responsiveData.put(child, provider);
 		return this;
 	}
-	
+
 }

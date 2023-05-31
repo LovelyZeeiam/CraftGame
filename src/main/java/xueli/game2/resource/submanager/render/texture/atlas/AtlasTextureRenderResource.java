@@ -27,7 +27,7 @@ import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
  */
 @Deprecated
 public class AtlasTextureRenderResource extends SubResourceManager {
-	
+
 	private final ArrayList<RegisterData> registerData = new ArrayList<>();
 	private final ArrayList<Integer> registeredTexture = new ArrayList<>();
 	private final HashMap<ResourceIdentifier, HashMap<String, AtlasResourceHolder>> atlasHolders = new HashMap<>();
@@ -36,7 +36,8 @@ public class AtlasTextureRenderResource extends SubResourceManager {
 		super(superiorManager);
 	}
 
-	private record RegisterData(ResourceIdentifier path, Predicate<String> selector) {}
+	private record RegisterData(ResourceIdentifier path, Predicate<String> selector) {
+	}
 
 	public void findAndRegister(ResourceIdentifier path, Predicate<String> selector) {
 		registerData.add(new RegisterData(path, selector));
@@ -49,31 +50,28 @@ public class AtlasTextureRenderResource extends SubResourceManager {
 			return;
 		}
 
-		if(resources.size() == 0) {
+		if (resources.size() == 0) {
 			System.err.println("Can't find atlas in: " + path);
 			return;
 		}
 
-		int[] maxWidth = {0}, maxHeight = {0};
+		int[] maxWidth = { 0 }, maxHeight = { 0 };
 		int count = 0;
 
-		List<BufferedImage> images = resources.stream()
-				.filter(res -> selector.test(res.getName()))
-				.map(res -> {
-					try {
-						InputStream in = res.openInputStream();
-						BufferedImage image = ImageIO.read(in);
+		List<BufferedImage> images = resources.stream().filter(res -> selector.test(res.getName())).map(res -> {
+			try {
+				InputStream in = res.openInputStream();
+				BufferedImage image = ImageIO.read(in);
 
-						maxWidth[0] = Math.max(maxWidth[0], image.getWidth());
-						maxHeight[0] = Math.max(maxHeight[0], image.getHeight());
+				maxWidth[0] = Math.max(maxWidth[0], image.getWidth());
+				maxHeight[0] = Math.max(maxHeight[0], image.getHeight());
 
-						return image;
-					} catch (IOException e) {
-						e.printStackTrace();
-						return TextureMissing.image;
-					}
-				})
-				.toList();
+				return image;
+			} catch (IOException e) {
+				e.printStackTrace();
+				return TextureMissing.image;
+			}
+		}).toList();
 		count = images.size();
 
 		int atlasSize = (int) Math.ceil(Math.sqrt(count));
@@ -90,7 +88,8 @@ public class AtlasTextureRenderResource extends SubResourceManager {
 			int y = i / atlasSize;
 
 			Vector2f leftTop = new Vector2f((float) x / atlasSize, (float) y / atlasSize);
-			Vector2f rightBottom = new Vector2f((float) (x * maxWidth[0] + image.getWidth()) / atlasImageWidth, (float) (y * maxHeight[0] + image.getHeight()) / atlasImageHeight);
+			Vector2f rightBottom = new Vector2f((float) (x * maxWidth[0] + image.getWidth()) / atlasImageWidth,
+					(float) (y * maxHeight[0] + image.getHeight()) / atlasImageHeight);
 			list.put(resources.get(i).getName(), new AtlasResourceHolder(leftTop, rightBottom));
 
 			g2d.drawImage(image, x * maxWidth[0], y * maxHeight[0], null);
@@ -98,7 +97,7 @@ public class AtlasTextureRenderResource extends SubResourceManager {
 		}
 
 		g2d.dispose();
-		
+
 		registeredTexture.add(TextureLoaderLegacy.INSTANCE.registerTexture(atlasImage).id());
 
 	}
@@ -110,10 +109,10 @@ public class AtlasTextureRenderResource extends SubResourceManager {
 
 	public AtlasResourceHolder getHolder(ResourceIdentifier path, String name) {
 		HashMap<String, AtlasResourceHolder> map = atlasHolders.get(path);
-		if(map == null)
+		if (map == null)
 			return null;
 		AtlasResourceHolder holder = map.get(name);
-		if(holder == null)
+		if (holder == null)
 			return null;
 		return holder;
 	}

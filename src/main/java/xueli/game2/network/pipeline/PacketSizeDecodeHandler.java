@@ -17,7 +17,7 @@ public class PacketSizeDecodeHandler extends ByteToMessageDecoder {
 		ByteBufReadable readable = new ByteBufReadable(in);
 		int read = PrimitiveCodec.VAR_INT.read(readable);
 
-		if(read <= in.readableBytes()) {
+		if (read <= in.readableBytes()) {
 			out.add(in.readBytes(read));
 		} else {
 			in.resetReaderIndex();

@@ -8,7 +8,7 @@ public abstract class TransitionBinding implements AnimationBinding {
 	@Override
 	public void animStart() {
 		this.animProgress(0.0);
-		
+
 	}
 
 	@Override
