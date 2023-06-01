@@ -25,6 +25,7 @@ public class Widget {
 	private float width = 0.0f, height = 0.0f;
 
 	private WidgetSkin skin;
+	private boolean useImmediateMode = false;
 
 	private final PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 	private final SimpleAttributeSet attributes = new SimpleAttributeSet();
@@ -88,7 +89,7 @@ public class Widget {
 		// Maybe should be processed inside every widget
 		// if(x > this.width || y > this.height) return;
 
-		var painter = ctx.getPaintMaster().getPaintManager(this);
+		var painter = ctx.getPaintMaster().getPaintManager(this, useImmediateMode);
 		painter.announceRepaint(x, y, width, height);
 
 	}
@@ -155,6 +156,14 @@ public class Widget {
 
 	public final WidgetSkin getSkin() {
 		return skin;
+	}
+	
+	public void setUseImmediateMode(boolean useImmediateMode) {
+		this.useImmediateMode = useImmediateMode;
+	}
+	
+	public boolean isUseImmediateMode() {
+		return useImmediateMode;
 	}
 
 }

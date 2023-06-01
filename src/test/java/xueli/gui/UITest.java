@@ -1,7 +1,5 @@
 package xueli.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import xueli.game2.display.GameDisplay;
 import xueli.game2.renderer.ui.NanoGui;
 

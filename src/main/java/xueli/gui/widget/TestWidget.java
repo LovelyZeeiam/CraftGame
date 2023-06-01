@@ -11,6 +11,7 @@ public class TestWidget extends Widget {
 	public TestWidget(UIContext ctx) {
 		super(ctx);
 
+		setUseImmediateMode(true);
 		setBounds(100, 100, 100, 100);
 		setSkin(new WidgetSkin() {
 
@@ -21,7 +22,7 @@ public class TestWidget extends Widget {
 
 			@Override
 			public void paint(Widget widget, float x, float y, float width, float height, GraphicDriver graphics) {
-				graphics.setColor(Color.white);
+				graphics.setColor(Color.lightGray);
 				graphics.drawFilledRect(0, 0, width, height, FillType.COLOR);
 			}
 

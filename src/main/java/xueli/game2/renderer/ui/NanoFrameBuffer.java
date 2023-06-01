@@ -24,10 +24,16 @@ public class NanoFrameBuffer implements FrameBuffer {
 
 	@Override
 	public void resize(int width, int height) {
+//		long time1 = System.currentTimeMillis();
+		
+		// This can take too much time for a smooth size change animation!
 		nvgluDeleteFramebuffer(gui.nvg, rawFramebuffer);
 		this.rawFramebuffer = nvgluCreateFramebuffer(gui.nvg, width, height, NVG_IMAGE_NEAREST);
 		this.width = width;
 		this.height = height;
+		
+//		long time2 = System.currentTimeMillis();
+//		System.out.println(time2 - time1);
 		
 	}
 

@@ -8,7 +8,6 @@ import xueli.game2.display.event.WindowKeyEvent;
 import xueli.game2.display.event.WindowMouseButtonEvent;
 import xueli.game2.display.event.WindowSizedEvent;
 import xueli.game2.math.TriFuncMap;
-import xueli.gui.paint.FrameBuffer;
 import xueli.gui.paint.GraphicDriver;
 import xueli.gui.paint.PaintMaster;
 import xueli.gui.widget.TestWidget;
@@ -20,46 +19,49 @@ public class UIContext {
 	private final GameDisplay display;
 	private final GraphicDriver driver;
 	private final PaintMaster paintManager;
-	private final LinkedList<UIEvent> eventQueue = new LinkedList<UIEvent>();
+	private final LinkedList<UIEvent> eventQueue = new LinkedList<UIEvent>(); // Not thread safe
 
 	private final TestWidget root;
-	private final FrameBuffer rootFrameBuffer;
 
 	public UIContext(GraphicDriver driver, GameDisplay display) {
 		this.display = display;
 		this.driver = driver;
-		this.paintManager = new PaintMaster(driver);
+		this.paintManager = new PaintMaster(this);
 		this.registerEventListener();
 
 		this.root = new TestWidget(this);
-		this.rootFrameBuffer = driver.createFrameBuffer(display.getWidth(), display.getHeight());
-
+		
 	}
-
+	
 	public void postEvent(UIEvent event) {
-		eventQueue.add(event);
+		this.tryMergeWithLastEvent(event);
 	}
 	
-	
-	private void drawRoot() {
-		long time = System.currentTimeMillis();
-		root.setBounds(10, (float)(200 + 100 * TriFuncMap.sin((time % 1500) * 360.0 / 1500.0)), 100, 100);
+	private void tryMergeWithLastEvent(UIEvent next) {
+		UIEvent last = eventQueue.peek();
+		if(last == null) {
+			eventQueue.add(next);
+			return;
+		}
 		
-		this.driver.pushFrameBuffer(rootFrameBuffer);
-		this.paintManager.getPaintManager(root).doPaint();
-		this.driver.popFrameBuffer();
-		
-		this.driver.begin(display.getWidth(), display.getHeight());
-//		this.driver.setColor(Color.blue);
-//		this.driver.drawFilledRect(50, 50, 600, 500, FillType.COLOR);
-		this.driver.drawImage(0, 0, display.getWidth(), display.getHeight(), 1.0f, this.rootFrameBuffer.getImageId());
-		this.driver.finish();
-		
+		if((last.type() == UIEvent.EVENT_WINDOW_SIZED && next.type() == UIEvent.EVENT_WINDOW_SIZED)
+				|| (last.type() == UIEvent.EVENT_CURSOR_POSITION && next.type() == UIEvent.EVENT_CURSOR_POSITION)) {
+			eventQueue.poll();
+			eventQueue.add(next);
+		} else {
+			eventQueue.add(next);
+		}
 	}
 
 	public void tick() {
+		long time = System.currentTimeMillis();
+		root.setBounds(10,
+				(float)(200 + 100 * TriFuncMap.sin((time % 1500) * 360.0 / 1500.0)),
+				(float)(500 + 100 * TriFuncMap.sin((time % 2000) * 360.0 / 2000.0)),
+				(float)(300 + 100 * TriFuncMap.sin((time % 2500) * 360.0 / 2500.0)));
+		
 		this.processEvent();
-		this.drawRoot();
+		this.paintManager.tick();
 		
 	}
 
@@ -90,7 +92,7 @@ public class UIContext {
 
 	private void onEventbusSizedEvent(WindowSizedEvent e) {
 		this.postEvent(new UIEvent(UIEvent.EVENT_WINDOW_SIZED, e));
-		this.rootFrameBuffer.resize(e.width(), e.height());
+		this.paintManager.onScreenSize(e);
 	}
 
 	private void onEventbusMouseButtonEvent(WindowMouseButtonEvent e) {
@@ -104,12 +106,29 @@ public class UIContext {
 	private void processEvent() {
 		UIEvent e;
 		while ((e = this.eventQueue.poll()) != null) {
+//			LOGGER.info("[UIEvent] " + e.toString());
 			root.dispatchEvent(e);
 		}
 	}
 
 	public PaintMaster getPaintMaster() {
 		return paintManager;
+	}
+	
+	public TestWidget getRootWidget() {
+		return root;
+	}
+	
+	public int getDisplayWidth() {
+		return this.display.getWidth();
+	}
+	
+	public int getDisplayHeight() {
+		return this.display.getHeight();
+	}
+	
+	public GraphicDriver getDriver() {
+		return driver;
 	}
 
 }

@@ -8,6 +8,7 @@ public interface WidgetSkin {
 
 	public void install(Widget widget);
 
+	// Paint an area of this widget
 	public void paint(Widget widget, float x, float y, float width, float height, GraphicDriver graphics);
 
 	public void uninstall(Widget widget);
