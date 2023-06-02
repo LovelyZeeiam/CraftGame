@@ -12,18 +12,21 @@ import xueli.gui.paint.GraphicDriver;
 import xueli.gui.paint.PaintMaster;
 import xueli.gui.widget.TestWidget;
 
-public class UIContext {
+public class GameUIContext {
 
 //	private static final Logger LOGGER = new Logger();
 
+	// TODO: re-design Graphic Driver or create a new interface to adapt to different display
+	// Maybe next time Windows API is used directly (never
 	private final GameDisplay display;
 	private final GraphicDriver driver;
+	
 	private final PaintMaster paintManager;
 	private final LinkedList<UIEvent> eventQueue = new LinkedList<UIEvent>(); // Not thread safe
 
 	private final TestWidget root;
 
-	public UIContext(GraphicDriver driver, GameDisplay display) {
+	public GameUIContext(GraphicDriver driver, GameDisplay display) {
 		this.display = display;
 		this.driver = driver;
 		this.paintManager = new PaintMaster(this);
@@ -71,6 +74,8 @@ public class UIContext {
 	}
 
 	private void registerEventListener() {
+		// TODO: no more register here
+		// maybe the driver is responsible for this
 		display.eventbus.register(WindowKeyEvent.class, this::onEventbusKeyEvent);
 		display.eventbus.register(WindowSizedEvent.class, this::onEventbusSizedEvent);
 		display.eventbus.register(WindowMouseButtonEvent.class, this::onEventbusMouseButtonEvent);

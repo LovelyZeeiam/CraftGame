@@ -3,20 +3,20 @@ package xueli.gui.paint;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 import xueli.game2.display.event.WindowSizedEvent;
-import xueli.gui.UIContext;
+import xueli.gui.GameUIContext;
 import xueli.gui.widget.Widget;
 import xueli.utils.MyWeakHashMap;
 
 public class PaintMaster {
 
-	private final UIContext ctx;
+	private final GameUIContext ctx;
 	private final GraphicDriver driver;
 	private final FrameBuffer rootFrameBuffer;
 
 	private final ReferenceQueue<Object> referenceQueue = new ReferenceQueue<>();
 	private final MyWeakHashMap<Widget, PaintManager> painters = new MyWeakHashMap<>(referenceQueue, PaintManager::release);
 
-	public PaintMaster(UIContext ctx) {
+	public PaintMaster(GameUIContext ctx) {
 		this.ctx = ctx;
 		this.driver = ctx.getDriver();
 		this.rootFrameBuffer = driver.createFrameBuffer(ctx.getDisplayWidth(), ctx.getDisplayHeight());

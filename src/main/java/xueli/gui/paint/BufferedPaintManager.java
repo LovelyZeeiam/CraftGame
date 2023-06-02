@@ -69,13 +69,7 @@ public class BufferedPaintManager extends PaintManager {
 			announcement = this.announcements.pop();
 //			LOGGER.info("[UIPaint] " + announcement.toString() + " at " + w.toString());
 			
-			// Find which announcement takes more time
-//			long time = System.currentTimeMillis();
 			announcement.run();
-//			long time2 = System.currentTimeMillis();
-//			if(time2 - time > 50) {
-//				System.out.println(announcement.toString());
-//			}
 			
 		}
 

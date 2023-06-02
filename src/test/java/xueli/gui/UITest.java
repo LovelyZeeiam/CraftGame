@@ -6,7 +6,7 @@ import xueli.game2.renderer.ui.NanoGui;
 public class UITest extends GameDisplay {
 	
 	private NanoGui uiDriver;
-	private UIContext context;
+	private GameUIContext context;
 	
 	public UITest() {
 		super(800, 600, "UITest");
@@ -17,7 +17,7 @@ public class UITest extends GameDisplay {
 		this.uiDriver = new NanoGui();
 		this.uiDriver.reload();
 		
-		this.context = new UIContext(uiDriver, this);
+		this.context = new GameUIContext(uiDriver, this);
 		
 		this.display.setMouseGrabbed(false);
 		

@@ -2,13 +2,13 @@ package xueli.gui.widget;
 
 import java.awt.Color;
 
-import xueli.gui.UIContext;
+import xueli.gui.GameUIContext;
 import xueli.gui.paint.GraphicDriver;
 import xueli.gui.paint.GraphicDriver.FillType;
 
 public class TestWidget extends Widget {
 
-	public TestWidget(UIContext ctx) {
+	public TestWidget(GameUIContext ctx) {
 		super(ctx);
 
 		setUseImmediateMode(true);
