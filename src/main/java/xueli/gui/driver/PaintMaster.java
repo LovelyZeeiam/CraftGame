@@ -1,10 +1,10 @@
-package xueli.gui.paint;
+package xueli.gui.driver;
 
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 import xueli.game2.display.event.WindowSizedEvent;
 import xueli.gui.GameUIContext;
-import xueli.gui.widget.Widget;
+import xueli.gui.Widget;
 import xueli.utils.MyWeakHashMap;
 
 public class PaintMaster {

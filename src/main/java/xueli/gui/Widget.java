@@ -1,13 +1,10 @@
-package xueli.gui.widget;
+package xueli.gui;
 
 import java.beans.PropertyChangeEvent;
 import java.lang.ref.WeakReference;
 
 import org.lwjgl.utils.vector.Vector2d;
 import org.lwjgl.utils.vector.Vector2f;
-
-import xueli.gui.GameUIContext;
-import xueli.gui.UIEvent;
 
 public class Widget extends WidgetBean {
 

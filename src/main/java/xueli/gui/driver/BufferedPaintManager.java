@@ -1,11 +1,11 @@
-package xueli.gui.paint;
+package xueli.gui.driver;
 
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.Objects;
 
-import xueli.gui.widget.Widget;
-import xueli.gui.widget.WidgetSkin;
+import xueli.gui.Widget;
+import xueli.gui.WidgetSkin;
 
 // This paint manager only draw the widget itself, but widget's "x" and "y" is relative to its parent
 // It uses frame buffer, but the painting can lag if size change is too frequent

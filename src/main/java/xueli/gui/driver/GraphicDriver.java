@@ -1,4 +1,4 @@
-package xueli.gui.paint;
+package xueli.gui.driver;
 
 import java.awt.Color;
 import java.io.IOException;

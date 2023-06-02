@@ -1,6 +1,6 @@
-package xueli.gui.widget;
+package xueli.gui;
 
-import xueli.gui.paint.GraphicDriver;
+import xueli.gui.driver.GraphicDriver;
 
 // So I admit that I glance at the source of JavaFX :}
 // The skin only affects the widget itself, so it shouldn't be considered when laying out parent widget

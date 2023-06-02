@@ -3,8 +3,10 @@ package xueli.gui.widget;
 import java.awt.Color;
 
 import xueli.gui.GameUIContext;
-import xueli.gui.paint.GraphicDriver;
-import xueli.gui.paint.GraphicDriver.FillType;
+import xueli.gui.Widget;
+import xueli.gui.WidgetSkin;
+import xueli.gui.driver.GraphicDriver;
+import xueli.gui.driver.GraphicDriver.FillType;
 
 public class TestWidget extends Widget {
 

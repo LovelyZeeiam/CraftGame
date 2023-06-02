@@ -1,9 +1,9 @@
-package xueli.gui.paint;
+package xueli.gui.driver;
 
 import java.lang.ref.WeakReference;
 
-import xueli.gui.widget.Widget;
-import xueli.gui.widget.WidgetSkin;
+import xueli.gui.Widget;
+import xueli.gui.WidgetSkin;
 
 // Every frame it just draws all
 public class ImmediatePaintManager extends PaintManager {

@@ -1,12 +1,10 @@
-package xueli.gui.widget;
+package xueli.gui;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Objects;
 
 import javax.swing.text.SimpleAttributeSet;
-
-import xueli.gui.GameUIContext;
 
 public class WidgetBean {
 	
@@ -67,6 +65,7 @@ public class WidgetBean {
 	
 	// So please use objects that have difference "toString" result!
 	public static final String getAttributePropertyName(Object name) {
+		// Actually this start prefix can be change to anything :}
 		return "P:" + name.toString();
 	}
 

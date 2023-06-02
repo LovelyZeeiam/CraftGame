@@ -45,8 +45,8 @@ import xueli.game2.resource.Resource;
 import xueli.game2.resource.ResourceHolder;
 import xueli.game2.resource.submanager.render.BufferUtils;
 import xueli.game2.resource.submanager.render.texture.Texture;
-import xueli.gui.paint.FrameBuffer;
-import xueli.gui.paint.GraphicDriver;
+import xueli.gui.driver.FrameBuffer;
+import xueli.gui.driver.GraphicDriver;
 
 public class NanoGui implements ResourceHolder, GraphicDriver {
 

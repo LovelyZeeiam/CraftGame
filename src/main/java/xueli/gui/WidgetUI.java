@@ -1,9 +1,7 @@
-package xueli.gui.widget;
+package xueli.gui;
 
 import java.beans.PropertyChangeEvent;
 import java.lang.ref.WeakReference;
-
-import xueli.gui.GameUIContext;
 
 class WidgetUI {
 	

@@ -8,8 +8,8 @@ import xueli.game2.display.event.WindowKeyEvent;
 import xueli.game2.display.event.WindowMouseButtonEvent;
 import xueli.game2.display.event.WindowSizedEvent;
 import xueli.game2.math.TriFuncMap;
-import xueli.gui.paint.GraphicDriver;
-import xueli.gui.paint.PaintMaster;
+import xueli.gui.driver.GraphicDriver;
+import xueli.gui.driver.PaintMaster;
 import xueli.gui.widget.TestWidget;
 
 public class GameUIContext {

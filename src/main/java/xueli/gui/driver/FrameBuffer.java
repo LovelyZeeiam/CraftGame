@@ -1,4 +1,4 @@
-package xueli.gui.paint;
+package xueli.gui.driver;
 
 public interface FrameBuffer {
 

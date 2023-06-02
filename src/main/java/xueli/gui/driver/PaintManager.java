@@ -1,8 +1,8 @@
-package xueli.gui.paint;
+package xueli.gui.driver;
 
 import java.lang.ref.WeakReference;
 
-import xueli.gui.widget.Widget;
+import xueli.gui.Widget;
 
 public abstract class PaintManager {
 	

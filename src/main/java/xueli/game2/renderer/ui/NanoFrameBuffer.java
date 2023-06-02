@@ -6,8 +6,8 @@ import static org.lwjgl.nanovg.NanoVGGL3.nvgluDeleteFramebuffer;
 
 import org.lwjgl.nanovg.NVGLUFramebuffer;
 
-import xueli.gui.paint.FrameBuffer;
-import xueli.gui.paint.GraphicDriver;
+import xueli.gui.driver.FrameBuffer;
+import xueli.gui.driver.GraphicDriver;
 
 public class NanoFrameBuffer implements FrameBuffer {
 
