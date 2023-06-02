@@ -1,9 +1,9 @@
-package xueli.gui.driver;
+package xueli.gui;
 
 import java.lang.ref.WeakReference;
 
-import xueli.gui.Widget;
-import xueli.gui.WidgetSkin;
+import xueli.gui.driver.GraphicDriver;
+import xueli.gui.driver.OffsetGraphicDriver;
 
 // Every frame it just draws all
 public class ImmediatePaintManager extends PaintManager {
@@ -40,7 +40,11 @@ public class ImmediatePaintManager extends PaintManager {
 		
 		WidgetSkin skin = w.getSkin();
 		this.offsetGraphicDriver.setOffset(w.getX(), w.getY());
-		skin.paint(w, 0, 0, w.getWidth(), w.getHeight(), offsetGraphicDriver);
+		
+		float width = w.getWidth();
+		float height = w.getHeight();
+		if(width == 0 || height == 0) return;
+		skin.paint(w, 0, 0, width, height, offsetGraphicDriver);
 		
 	}
 

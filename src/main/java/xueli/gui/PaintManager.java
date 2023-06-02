@@ -1,8 +1,8 @@
-package xueli.gui.driver;
+package xueli.gui;
 
 import java.lang.ref.WeakReference;
 
-import xueli.gui.Widget;
+import xueli.gui.driver.GraphicDriver;
 
 public abstract class PaintManager {
 	
@@ -23,6 +23,11 @@ public abstract class PaintManager {
 	public abstract void doPaint();
 	
 	public abstract void release();
+	
+	public SizeHint measure() {
+		var widget = getWidget();
+		return widget.getSkin().measure(widget, driver);
+	}
 	
 	public Widget getWidget() {
 		return widget.get();

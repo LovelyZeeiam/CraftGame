@@ -9,12 +9,12 @@ class WidgetUI {
 	
 	// Using Weak Reference here to help GC
 	private final WeakReference<Widget> controller;
-	private final GameUIContext context;
+	private final UIContext context;
 	
 	private WidgetSkin skin;
 	private boolean useImmediateMode = false;
 	
-	public WidgetUI(WeakReference<Widget> controller, GameUIContext context) {
+	public WidgetUI(WeakReference<Widget> controller, UIContext context) {
 		this.controller = controller;
 		this.context = context;
 		this.registerChangeListener();
@@ -35,7 +35,7 @@ class WidgetUI {
 		
 		Widget controller = getController();
 		
-		WidgetSkin oldSkin = this.skin;
+		var oldSkin = this.skin;
 		if (oldSkin != null) {
 			oldSkin.uninstall(controller);
 		}
@@ -61,6 +61,16 @@ class WidgetUI {
 		var painter = this.context.getPaintMaster().getPaintManager(getController(), useImmediateMode);
 		painter.announceRepaint(x, y, width, height);
 		
+	}
+	
+	public SizeHint measure() {
+		var painter = this.context.getPaintMaster().getPaintManager(getController(), useImmediateMode);
+		return painter.measure();
+	}
+	
+	public void doPaint() {
+		var painter = this.context.getPaintMaster().getPaintManager(getController(), useImmediateMode);
+		painter.doPaint();
 	}
 	
 	// Shouldn't be null because UI and Widget have the same lifetime

@@ -8,12 +8,12 @@ import javax.swing.text.SimpleAttributeSet;
 
 public class WidgetBean {
 	
-	protected final GameUIContext ctx;
+	protected final UIContext ctx;
 	
 	private final PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 	private final SimpleAttributeSet attributes = new SimpleAttributeSet();
 	
-	public WidgetBean(GameUIContext ctx) {
+	public WidgetBean(UIContext ctx) {
 		this.ctx = ctx;
 	}
 	

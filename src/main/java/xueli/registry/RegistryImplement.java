@@ -1,4 +1,4 @@
-package xueli.game2.registry;
+package xueli.registry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,20 +6,18 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
-import xueli.game2.resource.ResourceIdentifier;
-
 public class RegistryImplement<T> implements WritableRegistry<T> {
 
 	private ArrayList<T> list = new ArrayList<>();
-	private HashMap<ResourceIdentifier, T> map = new HashMap<>();
+	private HashMap<Identifier, T> map = new HashMap<>();
 
-	private HashMap<ResourceIdentifier, HashSet<ResourceIdentifier>> tagToRegistryMap = new HashMap<>();
-	private HashMap<ResourceIdentifier, HashSet<ResourceIdentifier>> registryToTagMap = new HashMap<>();
+	private HashMap<Identifier, HashSet<Identifier>> tagToRegistryMap = new HashMap<>();
+	private HashMap<Identifier, HashSet<Identifier>> registryToTagMap = new HashMap<>();
 
 	private boolean frozen = false;
 
 	@Override
-	public T getByName(ResourceIdentifier name) {
+	public T getByName(Identifier name) {
 		return map.get(name);
 	}
 
@@ -34,7 +32,7 @@ public class RegistryImplement<T> implements WritableRegistry<T> {
 	}
 
 	@Override
-	public void register(ResourceIdentifier name, T t) {
+	public void register(Identifier name, T t) {
 		if (frozen)
 			throw new IllegalStateException("Please call \"cloneToWritable\" to write to another clone object!");
 		list.add(t);
@@ -42,11 +40,11 @@ public class RegistryImplement<T> implements WritableRegistry<T> {
 	}
 
 	@Override
-	public void addTag(ResourceIdentifier name, ResourceIdentifier... tags) {
-		HashSet<ResourceIdentifier> thisRegistryTagSet = registryToTagMap.computeIfAbsent(name, n -> new HashSet<>());
+	public void addTag(Identifier name, Identifier... tags) {
+		HashSet<Identifier> thisRegistryTagSet = registryToTagMap.computeIfAbsent(name, n -> new HashSet<>());
 
 		for (int i = 0; i < tags.length; i++) {
-			ResourceIdentifier tag = tags[i];
+			Identifier tag = tags[i];
 			thisRegistryTagSet.add(tag);
 			tagToRegistryMap.computeIfAbsent(tag, t -> new HashSet<>()).add(name);
 		}
@@ -54,17 +52,17 @@ public class RegistryImplement<T> implements WritableRegistry<T> {
 	}
 
 	@Override
-	public Set<ResourceIdentifier> getAllContainTag(ResourceIdentifier tag) {
+	public Set<Identifier> getAllContainTag(Identifier tag) {
 		return tagToRegistryMap.get(tag);
 	}
 
 	@Override
-	public Set<ResourceIdentifier> getTags(ResourceIdentifier name) {
+	public Set<Identifier> getTags(Identifier name) {
 		return registryToTagMap.get(name);
 	}
 
 	@Override
-	public void forEach(BiConsumer<ResourceIdentifier, T> c) {
+	public void forEach(BiConsumer<Identifier, T> c) {
 		map.forEach(c);
 	}
 

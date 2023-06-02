@@ -1,6 +1,6 @@
 package xueli.game2.resource.submanager.render.texture.atlas;
 
-import xueli.game2.resource.ResourceIdentifier;
+import xueli.registry.Identifier;
 
-public record AtlasResourceLocation(ResourceIdentifier path, String name) {
+public record AtlasResourceLocation(Identifier path, String name) {
 }

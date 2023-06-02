@@ -16,11 +16,11 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.utils.vector.Vector2f;
 
 import xueli.game2.resource.Resource;
-import xueli.game2.resource.ResourceIdentifier;
 import xueli.game2.resource.manager.SubResourceManager;
 import xueli.game2.resource.submanager.render.texture.TextureLoaderLegacy;
 import xueli.game2.resource.submanager.render.texture.TextureMissing;
 import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
+import xueli.registry.Identifier;
 
 /**
  * Maybe you should implement it yourself
@@ -30,16 +30,16 @@ public class AtlasTextureRenderResource extends SubResourceManager {
 
 	private final ArrayList<RegisterData> registerData = new ArrayList<>();
 	private final ArrayList<Integer> registeredTexture = new ArrayList<>();
-	private final HashMap<ResourceIdentifier, HashMap<String, AtlasResourceHolder>> atlasHolders = new HashMap<>();
+	private final HashMap<Identifier, HashMap<String, AtlasResourceHolder>> atlasHolders = new HashMap<>();
 
 	public AtlasTextureRenderResource(TextureRenderResource superiorManager) {
 		super(superiorManager);
 	}
 
-	private record RegisterData(ResourceIdentifier path, Predicate<String> selector) {
+	private record RegisterData(Identifier path, Predicate<String> selector) {
 	}
 
-	public void findAndRegister(ResourceIdentifier path, Predicate<String> selector) {
+	public void findAndRegister(Identifier path, Predicate<String> selector) {
 		registerData.add(new RegisterData(path, selector));
 
 		List<Resource> resources = null;
@@ -102,12 +102,12 @@ public class AtlasTextureRenderResource extends SubResourceManager {
 
 	}
 
-	public Map<String, AtlasResourceHolder> getAllHolders(ResourceIdentifier path) {
+	public Map<String, AtlasResourceHolder> getAllHolders(Identifier path) {
 		HashMap<String, AtlasResourceHolder> map = atlasHolders.get(path);
 		return map;
 	}
 
-	public AtlasResourceHolder getHolder(ResourceIdentifier path, String name) {
+	public AtlasResourceHolder getHolder(Identifier path, String name) {
 		HashMap<String, AtlasResourceHolder> map = atlasHolders.get(path);
 		if (map == null)
 			return null;

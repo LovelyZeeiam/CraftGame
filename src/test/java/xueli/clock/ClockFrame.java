@@ -32,8 +32,8 @@ import xueli.animation.TransitionManager;
 import xueli.clock.bean.ClockBean;
 import xueli.clock.component.UserInfoPanel;
 import xueli.clock.service.ClockService;
-import xueli.game2.resource.ResourceIdentifier;
 import xueli.game2.resource.provider.ClassLoaderResourceProvider;
+import xueli.registry.Identifier;
 import xueli.swingx.component.ImageView;
 import xueli.swingx.component.SimpleLayerUI;
 import xueli.swingx.layout.CoverAllLayout;
@@ -140,7 +140,7 @@ public class ClockFrame {
 		
 			ImageView backgroundImage;
 			try {
-				backgroundImage = new ImageView(ImageIO.read(RESOURCE_PROVIDER.getResource(new ResourceIdentifier("clock", "images/background.png")).openInputStream()));
+				backgroundImage = new ImageView(ImageIO.read(RESOURCE_PROVIDER.getResource(new Identifier("clock", "images/background.png")).openInputStream()));
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}

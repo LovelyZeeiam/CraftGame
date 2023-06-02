@@ -10,8 +10,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import xueli.game2.resource.Resource;
-import xueli.game2.resource.ResourceIdentifier;
 import xueli.game2.resource.ResourceZipEntry;
+import xueli.registry.Identifier;
 
 public class ZipFileResourceProvider extends AbstractResourceProvider {
 
@@ -28,7 +28,7 @@ public class ZipFileResourceProvider extends AbstractResourceProvider {
 	}
 
 	@Override
-	protected String toVirtualPath(ResourceIdentifier location) {
+	protected String toVirtualPath(Identifier location) {
 		return ROOT_FOLDER + location.namespace() + "/" + location.location();
 	}
 

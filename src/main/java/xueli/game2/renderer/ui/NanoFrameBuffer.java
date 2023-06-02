@@ -19,7 +19,11 @@ public class NanoFrameBuffer implements FrameBuffer {
 		this.gui = gui;
 		this.width = width;
 		this.height = height;
+		
 		this.rawFramebuffer = nvgluCreateFramebuffer(gui.nvg, width, height, NVG_IMAGE_NEAREST);
+		if(this.rawFramebuffer == null)
+			throw new RuntimeException("Can't create frame buffer!");
+		
 	}
 
 	@Override
@@ -28,7 +32,12 @@ public class NanoFrameBuffer implements FrameBuffer {
 		
 		// This can take too much time for a smooth size change animation!
 		nvgluDeleteFramebuffer(gui.nvg, rawFramebuffer);
+		
 		this.rawFramebuffer = nvgluCreateFramebuffer(gui.nvg, width, height, NVG_IMAGE_NEAREST);
+		if(this.rawFramebuffer == null)
+			throw new RuntimeException("Can't create frame buffer!");
+		
+		
 		this.width = width;
 		this.height = height;
 		

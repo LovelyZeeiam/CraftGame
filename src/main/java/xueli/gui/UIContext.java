@@ -7,13 +7,10 @@ import xueli.game2.display.event.CursorPositionEvent;
 import xueli.game2.display.event.WindowKeyEvent;
 import xueli.game2.display.event.WindowMouseButtonEvent;
 import xueli.game2.display.event.WindowSizedEvent;
-import xueli.game2.math.TriFuncMap;
 import xueli.gui.driver.GraphicDriver;
-import xueli.gui.driver.PaintMaster;
-import xueli.gui.widget.TestWidget;
 
-public class GameUIContext {
-
+public class UIContext {
+	
 //	private static final Logger LOGGER = new Logger();
 
 	// TODO: re-design Graphic Driver or create a new interface to adapt to different display
@@ -24,15 +21,16 @@ public class GameUIContext {
 	private final PaintMaster paintManager;
 	private final LinkedList<UIEvent> eventQueue = new LinkedList<UIEvent>(); // Not thread safe
 
-	private final TestWidget root;
+	private final WidgetGroup root;
 
-	public GameUIContext(GraphicDriver driver, GameDisplay display) {
+	public UIContext(GraphicDriver driver, GameDisplay display) {
 		this.display = display;
 		this.driver = driver;
 		this.paintManager = new PaintMaster(this);
 		this.registerEventListener();
 
-		this.root = new TestWidget(this);
+		this.root = new WidgetGroup(this);
+		this.onEventbusSizedEvent(new WindowSizedEvent(getDisplayWidth(), getDisplayHeight()));
 		
 	}
 	
@@ -57,12 +55,6 @@ public class GameUIContext {
 	}
 
 	public void tick() {
-		long time = System.currentTimeMillis();
-		root.setBounds(10,
-				(float)(200 + 100 * TriFuncMap.sin((time % 1500) * 360.0 / 1500.0)),
-				(float)(500 + 100 * TriFuncMap.sin((time % 2000) * 360.0 / 2000.0)),
-				(float)(300 + 100 * TriFuncMap.sin((time % 2500) * 360.0 / 2500.0)));
-		
 		this.processEvent();
 		this.paintManager.tick();
 		
@@ -77,7 +69,7 @@ public class GameUIContext {
 		// TODO: no more register here
 		// maybe the driver is responsible for this
 		display.eventbus.register(WindowKeyEvent.class, this::onEventbusKeyEvent);
-		display.eventbus.register(WindowSizedEvent.class, this::onEventbusSizedEvent);
+		display.eventbus.register(WindowSizedEvent.class, this::onEventbusSizedEvent); // TODO: Merge Size Event
 		display.eventbus.register(WindowMouseButtonEvent.class, this::onEventbusMouseButtonEvent);
 		display.eventbus.register(CursorPositionEvent.class, this::onEventbusCursorPositionEvent);
 
@@ -97,7 +89,10 @@ public class GameUIContext {
 
 	private void onEventbusSizedEvent(WindowSizedEvent e) {
 		this.postEvent(new UIEvent(UIEvent.EVENT_WINDOW_SIZED, e));
+		
+		this.root.setBounds(0, 0, e.width(), e.height());
 		this.paintManager.onScreenSize(e);
+		
 	}
 
 	private void onEventbusMouseButtonEvent(WindowMouseButtonEvent e) {
@@ -120,7 +115,7 @@ public class GameUIContext {
 		return paintManager;
 	}
 	
-	public TestWidget getRootWidget() {
+	public WidgetGroup getRootWidget() {
 		return root;
 	}
 	

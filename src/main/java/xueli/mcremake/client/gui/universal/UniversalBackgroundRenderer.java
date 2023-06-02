@@ -7,11 +7,11 @@ import xueli.game2.renderer.legacy.BackRenderBuffer;
 import xueli.game2.renderer.legacy.RenderBuffer;
 import xueli.game2.resource.ReloadableResourceTicket;
 import xueli.game2.resource.ResourceHolder;
-import xueli.game2.resource.ResourceIdentifier;
 import xueli.game2.resource.submanager.render.texture.Texture;
 import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.client.renderer.gui.MyRenderBuffer2D;
 import xueli.mcremake.client.renderer.gui.RenderTypeTexture2D;
+import xueli.registry.Identifier;
 
 /**
  * Sorry but we have to give up this for some time
@@ -19,7 +19,7 @@ import xueli.mcremake.client.renderer.gui.RenderTypeTexture2D;
 @Deprecated
 public class UniversalBackgroundRenderer implements ResourceHolder {
 
-	public static final ResourceIdentifier UNIVERSAL_BACKGROUND_RESOURCE_LOCATION = new ResourceIdentifier("minecraft",
+	public static final Identifier UNIVERSAL_BACKGROUND_RESOURCE_LOCATION = new Identifier("minecraft",
 			"gui/background.png");
 	public static final int BG_SIZE = 128;
 	public static final Vector3f BG_COLOR = new Vector3f(0.3f, 0.3f, 0.3f);

@@ -3,10 +3,10 @@ package xueli.mcremake.client.player;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.utils.vector.Vector3i;
 
-import xueli.game2.resource.ResourceIdentifier;
 import xueli.mcremake.client.CraftGameClient;
 import xueli.mcremake.core.entity.PickResult;
 import xueli.mcremake.registry.GameRegistry;
+import xueli.registry.Identifier;
 
 public class UseButtonHandler extends FunctionalKeyHandler {
 
@@ -35,7 +35,7 @@ public class UseButtonHandler extends FunctionalKeyHandler {
 		PickResult pick = ctx.state.player.pickResult;
 		if (pick != null) {
 			Vector3i pickBlock = pick.placePos();
-			ResourceIdentifier itemBlock = GameRegistry.BUILTIN_ITEM_BLOCK_MAP_REGISTRY
+			Identifier itemBlock = GameRegistry.BUILTIN_ITEM_BLOCK_MAP_REGISTRY
 					.getByName(ctx.state.selectedItemType.namespace());
 			if (itemBlock != null) {
 				ctx.state.world.setBlock(pickBlock.x, pickBlock.y, pickBlock.z,

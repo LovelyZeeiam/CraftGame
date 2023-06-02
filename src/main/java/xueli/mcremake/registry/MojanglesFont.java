@@ -11,10 +11,10 @@ import xueli.game2.renderer.legacy.BackRenderBuffer;
 import xueli.game2.renderer.legacy.RenderBuffer;
 import xueli.game2.resource.ReloadableResourceTicket;
 import xueli.game2.resource.ResourceHolder;
-import xueli.game2.resource.ResourceIdentifier;
 import xueli.game2.resource.submanager.render.texture.Texture;
 import xueli.mcremake.client.renderer.gui.MyRenderBuffer2D;
 import xueli.mcremake.client.renderer.gui.RenderTypeTexture2D;
+import xueli.registry.Identifier;
 
 /**
  * A easy font renderer TODO: Later we should support custom font separator and
@@ -22,7 +22,7 @@ import xueli.mcremake.client.renderer.gui.RenderTypeTexture2D;
  */
 public class MojanglesFont implements ResourceHolder {
 
-	private static final ResourceIdentifier FONT_TEXTURE_LOCATION = new ResourceIdentifier("minecraft",
+	private static final Identifier FONT_TEXTURE_LOCATION = new Identifier("minecraft",
 			"font/default.png");
 
 	private static final int[] CHAR_SIZES = { 3, 8, 8, 7, 7, 7, 7, 8, 8, 8, 8, 8, 7, 8, 8, 8, 7, 7, 8, 8, 8, 8, 8, 8, 8,

@@ -6,7 +6,9 @@ import java.io.IOException;
 import xueli.game2.resource.Resource;
 
 public interface GraphicDriver {
-
+	
+	public void clearColor(float r, float g, float b, float a);
+	
 	public int registerImage(Resource res) throws IOException;
 
 	public int registerFont(String name, Resource res) throws IOException;

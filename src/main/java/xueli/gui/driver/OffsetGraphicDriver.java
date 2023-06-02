@@ -24,7 +24,12 @@ public class OffsetGraphicDriver implements GraphicDriver {
 
 	@Override
 	public int registerFont(String name, Resource res) throws IOException {
-		return registerFont(name, res);
+		return father.registerFont(name, res);
+	}
+	
+	@Override
+	public void clearColor(float r, float g, float b, float a) {
+		father.clearColor(r, g, b, a);
 	}
 
 	@Override

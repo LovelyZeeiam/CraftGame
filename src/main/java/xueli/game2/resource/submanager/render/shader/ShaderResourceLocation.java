@@ -1,6 +1,6 @@
 package xueli.game2.resource.submanager.render.shader;
 
-import xueli.game2.resource.ResourceIdentifier;
+import xueli.registry.Identifier;
 
-public record ShaderResourceLocation(ResourceIdentifier vert, ResourceIdentifier frag) {
+public record ShaderResourceLocation(Identifier vert, Identifier frag) {
 }

@@ -1,24 +1,24 @@
-package xueli.game2.resource;
+package xueli.registry;
 
 import java.util.Objects;
 
-public record ResourceIdentifier(String namespace, String location) {
+public record Identifier(String namespace, String location) {
 
-	public ResourceIdentifier(String location) {
+	public Identifier(String location) {
 		this("default", location);
 	}
 
-	public static ResourceIdentifier serialize(String str) {
+	public static Identifier serialize(String str) {
 		str = str.trim();
 		int separatorIndex = str.indexOf(':');
 		if (separatorIndex < 0) {
-			return new ResourceIdentifier(str);
+			return new Identifier(str);
 		} else {
 			String namespace = str.substring(0, separatorIndex);
 			String location = str.substring(separatorIndex);
 			if (namespace.isBlank())
-				return new ResourceIdentifier(location);
-			return new ResourceIdentifier(namespace, location);
+				return new Identifier(location);
+			return new Identifier(namespace, location);
 		}
 	}
 
@@ -33,7 +33,7 @@ public record ResourceIdentifier(String namespace, String location) {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		ResourceIdentifier that = (ResourceIdentifier) o;
+		Identifier that = (Identifier) o;
 		return namespace.equals(that.namespace) && location.equals(that.location);
 	}
 

@@ -7,8 +7,8 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 import xueli.game2.resource.Resource;
-import xueli.game2.resource.ResourceIdentifier;
 import xueli.game2.resource.provider.ResourceProvider;
+import xueli.registry.Identifier;
 
 public class BackwardResourceManager extends ChainedResourceManager {
 
@@ -29,7 +29,7 @@ public class BackwardResourceManager extends ChainedResourceManager {
 	}
 
 	@Override
-	public Resource getResource(ResourceIdentifier location) throws IOException {
+	public Resource getResource(Identifier location) throws IOException {
 		for (ResourceProvider provider : providers) {
 			try {
 				return provider.getResource(location);
@@ -40,7 +40,7 @@ public class BackwardResourceManager extends ChainedResourceManager {
 	}
 
 	@Override
-	public List<Resource> findResources(ResourceIdentifier location, Predicate<String> fileNamePredicate)
+	public List<Resource> findResources(Identifier location, Predicate<String> fileNamePredicate)
 			throws IOException {
 		ArrayList<Resource> resources = new ArrayList<>();
 		for (ResourceProvider provider : providers) {

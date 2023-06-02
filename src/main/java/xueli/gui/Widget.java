@@ -7,21 +7,25 @@ import org.lwjgl.utils.vector.Vector2d;
 import org.lwjgl.utils.vector.Vector2f;
 
 public class Widget extends WidgetBean {
+	
+//	private static final Logger LOGGER = new Logger();
 
 	public static final String PROPERTY_POSITION = "pos";
 	public static final String PROPERTY_SIZE = "size";
 
-	private Widget parent = null;
+	protected Widget parent = null;
 
 	private float x = 0.0f, y = 0.0f;
 	private float width = 0.0f, height = 0.0f;
 	
 	private final WidgetUI ui;
 	
-	public Widget(GameUIContext ctx) {
+	public Widget(UIContext ctx) {
 		super(ctx);
 		this.registerPropertyChange();
 		this.ui = new WidgetUI(new WeakReference<Widget>(this), ctx);
+		
+		setSkin(SkinTheme.DEFAULT_THEME.getSkin(getClass()));
 		
 	}
 
@@ -46,40 +50,57 @@ public class Widget extends WidgetBean {
 	// Set the bounds. If this is a view group, then the layout code can be added to
 	// property change listener.
 	public void setBounds(float x, float y, float width, float height) {
+		this.setPosition(x, y);
+		this.setDimention(width, height);
+
+	}
+	
+	public void setPosition(float x, float y) {
 		boolean moved = this.x != x || this.y != y;
 		Vector2f oldPos = new Vector2f(this.x, this.y);
 		this.x = x;
 		this.y = y;
-
-		boolean resized = this.width != width || this.height != height;
-		Vector2f oldSize = new Vector2f(this.width, this.height);
-		this.width = width;
-		this.height = height;
-
+		
 		if (moved) {
 			this.firePropertyChange(PROPERTY_POSITION, oldPos, new Vector2d(x, y));
 
 		}
+		
+	}
+	
+	public void setDimention(float width, float height) {
+		boolean resized = this.width != width || this.height != height;
+		Vector2f oldSize = new Vector2f(this.width, this.height);
+		this.width = width;
+		this.height = height;
+		
 		if (resized) {
 			this.firePropertyChange(PROPERTY_SIZE, oldSize, new Vector2d(width, height));
-
 		}
-
+		
 	}
-
+	
 	// "Repaint" should happen when an area of widget should be updated
 	// So if only the position of the widget is changed, the parent should be
 	// updated
-	public void announceRepaint(float x, float y, float width, float height) {
+	protected void announceRepaint(float x, float y, float width, float height) {
 		this.ui.announceRepaint(x, y, width, height);
 
 	}
 	
-	public void announceRepaint() {
+	protected void announceRepaint() {
 		this.ui.announceRepaint();
 	}
+	
+	public SizeHint measure() {
+		return this.ui.measure();
+	}
+	
+	public void doPaint() {
+		this.ui.doPaint();
+	}
 
-	public void dispatchEvent(UIEvent event) {
+	protected void dispatchEvent(UIEvent event) {
 //		switch(event.type()) {
 //		case UIEvent.EVENT_KEY -> {
 //			
@@ -99,7 +120,7 @@ public class Widget extends WidgetBean {
 //		}
 	}
 	
-	public final void setSkin(WidgetSkin skin) {
+	public void setSkin(WidgetSkin skin) {
 		this.ui.setSkin(skin);
 	}
 

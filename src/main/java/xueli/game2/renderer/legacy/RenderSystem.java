@@ -2,16 +2,16 @@ package xueli.game2.renderer.legacy;
 
 import java.util.HashMap;
 
-import xueli.game2.resource.ResourceIdentifier;
+import xueli.registry.Identifier;
 
 public class RenderSystem<T extends RenderType<?>> {
 
-	private final HashMap<ResourceIdentifier, T> renderTypes = new HashMap<>();
+	private final HashMap<Identifier, T> renderTypes = new HashMap<>();
 
 	public RenderSystem() {
 	}
 
-	public void registerRenderType(ResourceIdentifier namespace, T renderType) {
+	public void registerRenderType(Identifier namespace, T renderType) {
 		this.renderTypes.put(namespace, renderType);
 	}
 

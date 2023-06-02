@@ -1,7 +1,7 @@
 package xueli.mcremake.core.item;
 
-import xueli.game2.resource.ResourceIdentifier;
 import xueli.mcremake.client.renderer.item.ItemVertexGatherer;
+import xueli.registry.Identifier;
 
-public record ItemType(ResourceIdentifier namespace, String name, ItemVertexGatherer renderer) {
+public record ItemType(Identifier namespace, String name, ItemVertexGatherer renderer) {
 }

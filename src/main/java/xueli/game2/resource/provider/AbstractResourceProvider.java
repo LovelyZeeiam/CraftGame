@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import xueli.game2.resource.Resource;
-import xueli.game2.resource.ResourceIdentifier;
+import xueli.registry.Identifier;
 
 public abstract class AbstractResourceProvider implements ResourceProvider {
 
-	protected abstract String toVirtualPath(ResourceIdentifier location);
+	protected abstract String toVirtualPath(Identifier location);
 
 	@Override
-	public Resource getResource(ResourceIdentifier location) throws IOException {
+	public Resource getResource(Identifier location) throws IOException {
 		String virtualPath = toVirtualPath(location);
 		return this.getResource(virtualPath);
 	}
@@ -20,7 +20,7 @@ public abstract class AbstractResourceProvider implements ResourceProvider {
 	protected abstract Resource getResource(String virtualPath) throws IOException;
 
 	@Override
-	public List<Resource> findResources(ResourceIdentifier location, Predicate<String> fileNamePredicate)
+	public List<Resource> findResources(Identifier location, Predicate<String> fileNamePredicate)
 			throws IOException {
 		String virtualPath = toVirtualPath(location);
 		return findResources(virtualPath, fileNamePredicate);

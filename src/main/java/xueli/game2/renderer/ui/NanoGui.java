@@ -40,6 +40,7 @@ import java.nio.ByteBuffer;
 
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
+import org.lwjgl.opengl.GL11;
 
 import xueli.game2.resource.Resource;
 import xueli.game2.resource.ResourceHolder;
@@ -47,9 +48,12 @@ import xueli.game2.resource.submanager.render.BufferUtils;
 import xueli.game2.resource.submanager.render.texture.Texture;
 import xueli.gui.driver.FrameBuffer;
 import xueli.gui.driver.GraphicDriver;
+import xueli.utils.logger.InvokeDaemon;
 
 public class NanoGui implements ResourceHolder, GraphicDriver {
-
+	
+	private final InvokeDaemon daemon = new InvokeDaemon(getClass());
+	
 	long nvg = 0;
 	FrameBufferStack frameBufferStack = new FrameBufferStack(this);
 
@@ -61,6 +65,8 @@ public class NanoGui implements ResourceHolder, GraphicDriver {
 
 	@Override
 	public void reload() {
+		daemon.announce();
+		
 		if (this.nvg != 0) {
 			nvgDelete(nvg);
 		}
@@ -74,6 +80,8 @@ public class NanoGui implements ResourceHolder, GraphicDriver {
 
 	@Override
 	public int registerImage(Resource res) throws IOException {
+		daemon.announce();
+		
 		byte[] bytes = res.readAll();
 
 		ByteBuffer buffer = BufferUtils.createByteBuffer(bytes.length);
@@ -88,11 +96,14 @@ public class NanoGui implements ResourceHolder, GraphicDriver {
 	}
 
 	public int registerImage(Texture tex) {
+		daemon.announce();
 		return nvglCreateImageFromHandle(nvg, tex.id(), tex.width(), tex.height(), NVG_IMAGE_NEAREST);
 	}
 
 	@Override
 	public int registerFont(String name, Resource res) throws IOException {
+		daemon.announce();
+		
 		byte[] bytes = res.readAll();
 
 		ByteBuffer buffer = BufferUtils.createByteBuffer(bytes.length);
@@ -107,18 +118,30 @@ public class NanoGui implements ResourceHolder, GraphicDriver {
 
 		return id;
 	}
+	
+	@Override
+	public void clearColor(float r, float g, float b, float a) {
+		daemon.announce();
+		
+		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
+		GL11.glClearColor(r, g, b, a);
+		
+	}
 
 	@Override
 	public void begin(int width, int height) {
+		daemon.announce();
 		nvgBeginFrame(nvg, width, height, (float) width / height);
 	}
 
 	@Override
 	public void setTextLetterSpacing(float s) {
+		daemon.announce();
 		nvgTextLetterSpacing(nvg, s);
 	}
 
 	private int getFontAlignNvgValue(FontAlign align) {
+		daemon.announce();
 		return switch (align) {
 		case LEFT -> NVG_ALIGN_LEFT;
 		case CENTER -> NVG_ALIGN_CENTER;
@@ -132,6 +155,8 @@ public class NanoGui implements ResourceHolder, GraphicDriver {
 
 	@Override
 	public float drawFont(float x, float y, float size, String str, int fontId, FontAlign... aligns) {
+		daemon.announce();
+		
 		int align = 0;
 		for (int i = 0; i < aligns.length; i++) {
 			align |= getFontAlignNvgValue(aligns[i]);
@@ -145,6 +170,8 @@ public class NanoGui implements ResourceHolder, GraphicDriver {
 
 	@Override
 	public void drawFilledRect(float x, float y, float width, float height, FillType type) {
+		daemon.announce();
+		
 		nvgBeginPath(nvg);
 		nvgRect(nvg, x, y, width, height);
 		this.fill(type);
@@ -153,6 +180,8 @@ public class NanoGui implements ResourceHolder, GraphicDriver {
 
 	@Override
 	public void drawFilledCircle(float x, float y, float radius, FillType type) {
+		daemon.announce();
+		
 		nvgBeginPath(nvg);
 		nvgCircle(nvg, x, y, radius);
 		this.fill(type);
@@ -161,12 +190,16 @@ public class NanoGui implements ResourceHolder, GraphicDriver {
 
 	@Override
 	public void setTexturedPaint(float x, float y, float width, float height, float angle, float alpha, int imageId) {
+		daemon.announce();
+		
 		nvgImagePattern(nvg, x, y, width, height, angle, imageId, alpha, paintBuf);
 
 	}
 
 	@Override
 	public void drawImage(float x, float y, float width, float height, float alpha, int imageId) {
+		daemon.announce();
+		
 		this.setTexturedPaint(x, y, width, height, 0, alpha, imageId);
 		this.drawFilledRect(x, y, width, height, FillType.PAINT);
 
@@ -174,6 +207,8 @@ public class NanoGui implements ResourceHolder, GraphicDriver {
 
 	@Override
 	public void drawImageCircle(float x, float y, float radius, int imageId, float angle, float alpha) {
+		daemon.announce();
+		
 		this.setTexturedPaint(x - radius, y - radius, radius * 2, radius * 2, angle, alpha, imageId);
 		this.drawFilledCircle(x, y, radius, FillType.PAINT);
 
@@ -181,6 +216,8 @@ public class NanoGui implements ResourceHolder, GraphicDriver {
 
 	@Override
 	public void setColor(Color color) {
+		daemon.announce();
+		
 		int c = color.getRGB();
 		nvgRGBA((byte) ((c >> 16) & 0xFF), (byte) ((c >> 8) & 0xFF), (byte) (c & 0xFF), (byte) ((c >> 24) & 0xFF),
 				this.colorBuf);
@@ -190,6 +227,8 @@ public class NanoGui implements ResourceHolder, GraphicDriver {
 
 	@Override
 	public void fill(FillType type) {
+		daemon.announce();
+		
 		switch (type) {
 		case COLOR -> nvgFillColor(nvg, colorBuf);
 		case PAINT -> nvgFillPaint(nvg, paintBuf);
@@ -199,16 +238,20 @@ public class NanoGui implements ResourceHolder, GraphicDriver {
 
 	@Override
 	public void scissor(float x, float y, float width, float height) {
+		daemon.announce();
 		nvgScissor(nvg, x, y, width, height);
 	}
 
 	@Override
 	public void scissorReset() {
+		daemon.announce();
 		nvgResetScissor(nvg);
 	}
 
 	@Override
 	public float measureTextWidth(float size, String text, int fontId) {
+		daemon.announce();
+		
 		nvgFontSize(nvg, size);
 		nvgTextAlign(nvg, NVG_ALIGN_LEFT);
 		nvgFontFaceId(nvg, fontId);
@@ -217,21 +260,25 @@ public class NanoGui implements ResourceHolder, GraphicDriver {
 
 	@Override
 	public FrameBuffer createFrameBuffer(int width, int height) {
+		daemon.announce();
 		return new NanoFrameBuffer(width, height, this);
 	}
 
 	@Override
 	public void pushFrameBuffer(FrameBuffer buffer) {
+		daemon.announce();
 		frameBufferStack.push(((NanoFrameBuffer) buffer));
 	}
 
 	@Override
 	public void popFrameBuffer() {
+		daemon.announce();
 		frameBufferStack.pop();
 	}
 
 	@Override
 	public void finish() {
+		daemon.announce();
 		nvgEndFrame(nvg);
 	}
 

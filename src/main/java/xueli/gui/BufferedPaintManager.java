@@ -1,11 +1,11 @@
-package xueli.gui.driver;
+package xueli.gui;
 
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.Objects;
 
-import xueli.gui.Widget;
-import xueli.gui.WidgetSkin;
+import xueli.gui.driver.FrameBuffer;
+import xueli.gui.driver.GraphicDriver;
 
 // This paint manager only draw the widget itself, but widget's "x" and "y" is relative to its parent
 // It uses frame buffer, but the painting can lag if size change is too frequent
@@ -37,7 +37,9 @@ public class BufferedPaintManager extends PaintManager {
 
 	@Override
 	public void announceRepaint(float x, float y, float width, float height) {
+		if(width == 0 || height == 0) return;
 		this.tryMergeAnnouncement(new RepaintAnnouncement(x, y, width, height));
+		
 	}
 	
 	private void tryMergeAnnouncement(Announcement next) {
@@ -49,8 +51,18 @@ public class BufferedPaintManager extends PaintManager {
 		
 		if(last instanceof SizeChangeAnnouncement && next instanceof SizeChangeAnnouncement)
 			return;
-		if(last instanceof RepaintAnnouncement && next instanceof RepaintAnnouncement) {
-			if(last.equals(next))
+		if(last instanceof RepaintAnnouncement lr && next instanceof RepaintAnnouncement nr) {
+			// Merge to a bigger area
+//			float minX = Math.min(lr.x, nr.x);
+//			float minY = Math.min(lr.y, nr.y);
+//			float maxX = Math.max(lr.x + lr.width, nr.x + nr.width);
+//			float maxY = Math.max(lr.y + lr.height, nr.y + nr.height);
+//			
+//			lr.x = minX;
+//			lr.y = minY;
+//			lr.width = maxX - minX;
+//			lr.height = maxY - minY;
+			if(last.equals(nr))
 				return;
 		}
 		
@@ -67,7 +79,7 @@ public class BufferedPaintManager extends PaintManager {
 		Runnable announcement;
 		while (!this.announcements.isEmpty()) {
 			announcement = this.announcements.pop();
-//			LOGGER.info("[UIPaint] " + announcement.toString() + " at " + w.toString());
+//			System.out.println("[UIPaint] " + announcement.toString() + " at " + w.toString());
 			
 			announcement.run();
 			
@@ -136,9 +148,13 @@ public class BufferedPaintManager extends PaintManager {
 			GraphicDriver driver = getDriver();
 			
 			driver.pushFrameBuffer(frameBuffer);
-			// this function clears the screen? When repainting we just want to repaint that exact area!
 			driver.begin(frameBuffer.getWidth(), frameBuffer.getHeight());
+			
+			driver.scissor(x, y, width, height);
+			driver.clearColor(0, 0, 0, 0);
 			skin.paint(w, x, y, width, height, driver);
+			driver.scissorReset();
+			
 			driver.finish();
 			driver.popFrameBuffer();
 
