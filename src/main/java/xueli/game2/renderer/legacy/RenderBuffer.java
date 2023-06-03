@@ -1,6 +1,6 @@
 package xueli.game2.renderer.legacy;
 
-import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
+import xueli.utils.buffer.LotsOfByteBuffer;
 
 public interface RenderBuffer {
 

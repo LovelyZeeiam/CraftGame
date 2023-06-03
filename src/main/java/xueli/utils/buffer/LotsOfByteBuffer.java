@@ -1,4 +1,4 @@
-package xueli.game2.renderer.legacy.buffer;
+package xueli.utils.buffer;
 
 import java.nio.ByteBuffer;
 
@@ -7,6 +7,12 @@ import org.lwjgl.utils.vector.Vector2f;
 import org.lwjgl.utils.vector.Vector3f;
 import org.lwjgl.utils.vector.Vector4f;
 
+/**
+ * <p>A object managing memory, but the buffer won't be freed by GC!</p>
+ * 
+ * <p>Actually the class is named arbitrary :}</p>
+ * 
+ */
 public class LotsOfByteBuffer {
 
 	private static final int DEFAULT_CAPACITY = 32768;

@@ -31,7 +31,7 @@
  */
 package org.lwjgl.utils.vector;
 
-import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
+import xueli.utils.buffer.LotsOfByteBuffer;
 
 /**
  * @author foo

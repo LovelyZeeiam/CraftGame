@@ -1,5 +1,7 @@
 package xueli.gui;
 
+import org.lwjgl.openal.AL11;
+
 import xueli.game2.display.GameDisplay;
 import xueli.game2.math.TriFuncMap;
 import xueli.game2.renderer.ui.NanoGui;
@@ -47,6 +49,8 @@ public class UITest extends GameDisplay {
 //		System.out.println("=== render start ===");
 		this.context.tick();
 //		System.out.println("*** render end ***");
+		
+		
 		
 	}
 

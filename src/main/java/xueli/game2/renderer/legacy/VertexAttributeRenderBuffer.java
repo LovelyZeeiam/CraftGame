@@ -5,10 +5,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import xueli.game2.renderer.legacy.buffer.AttributeBuffer;
 import xueli.game2.renderer.legacy.buffer.BufferStorable;
-import xueli.game2.renderer.legacy.buffer.BufferSyncor;
-import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
 import xueli.game2.renderer.legacy.buffer.VertexAttribute;
 import xueli.game2.renderer.legacy.shape.ShapeType;
+import xueli.utils.buffer.BufferSyncor;
+import xueli.utils.buffer.LotsOfByteBuffer;
 
 public class VertexAttributeRenderBuffer implements RenderBuffer {
 

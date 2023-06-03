@@ -6,6 +6,8 @@ import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL30;
 
 import xueli.game2.renderer.legacy.VertexType;
+import xueli.utils.buffer.BufferSyncor;
+import xueli.utils.buffer.LotsOfByteBuffer;
 
 public class AttributeBuffer implements Bindable {
 
@@ -29,7 +31,7 @@ public class AttributeBuffer implements Bindable {
 
 		GL30.glVertexAttribPointer(id, attributeSize, type.getGlValue(), false, 0, 0);
 		GL30.glEnableVertexAttribArray(id);
-
+		
 		GL30.glBindBuffer(GL30.GL_ARRAY_BUFFER, 0);
 
 	}
@@ -50,12 +52,12 @@ public class AttributeBuffer implements Bindable {
 		return bufferManager.createBackBuffer();
 	}
 
-	public ByteBuffer getLatestBuffer() {
-		LotsOfByteBuffer latestBuffer = bufferManager.getLatestBuffer();
-		if (latestBuffer == null)
-			return null;
-		return latestBuffer.getBuffer();
-	}
+//	public ByteBuffer getLatestBuffer() {
+//		LotsOfByteBuffer latestBuffer = bufferManager.getLatestBuffer();
+//		if (latestBuffer == null)
+//			return null;
+//		return latestBuffer.getBuffer();
+//	}
 
 	@Override
 	public void bind() {

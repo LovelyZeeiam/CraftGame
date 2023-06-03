@@ -3,6 +3,9 @@ package xueli.game2.renderer.legacy.buffer;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL30;
 
+import xueli.utils.buffer.BufferSyncor;
+import xueli.utils.buffer.LotsOfByteBuffer;
+
 public class ElementBuffer implements Bindable {
 
 	private int ebo;

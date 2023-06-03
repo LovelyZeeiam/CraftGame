@@ -6,7 +6,7 @@ import java.util.List;
 
 import xueli.game2.Vector;
 import xueli.game2.renderer.legacy.buffer.ElementBuffer;
-import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
+import xueli.utils.buffer.LotsOfByteBuffer;
 
 public class MyRenderBufferSortedDistance extends MyRenderBuffer {
 

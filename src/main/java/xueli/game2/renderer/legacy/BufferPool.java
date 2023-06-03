@@ -2,8 +2,9 @@ package xueli.game2.renderer.legacy;
 
 import java.util.LinkedList;
 
-import xueli.game2.renderer.legacy.buffer.LotsOfByteBuffer;
+import xueli.utils.buffer.LotsOfByteBuffer;
 
+// Won't be deleted before figuring out why?   —— Xueli
 /*
   Some Exceptions natively will be thrown:
   <code>

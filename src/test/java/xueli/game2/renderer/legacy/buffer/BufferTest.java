@@ -2,6 +2,8 @@ package xueli.game2.renderer.legacy.buffer;
 
 import org.junit.jupiter.api.Test;
 
+import xueli.utils.buffer.LotsOfByteBuffer;
+
 public class BufferTest {
 	
 	@Test

@@ -22,6 +22,7 @@ public class VertexAttribute implements Bindable {
 
 	}
 
+	// TODO: change to VertexFormatSpec and pass it from constructor
 	public void addAttributeBuffer(int id, int attrSize, VertexType type) {
 		AttributeBuffer buf = new AttributeBuffer(id, attrSize, type);
 		this.buffers.put(id, buf);
