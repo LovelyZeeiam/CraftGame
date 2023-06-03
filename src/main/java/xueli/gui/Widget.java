@@ -6,6 +6,16 @@ import java.lang.ref.WeakReference;
 import org.lwjgl.utils.vector.Vector2d;
 import org.lwjgl.utils.vector.Vector2f;
 
+/**
+ * The controller of widget, containing position, size and other components. It stores and manages its model and view, receives all outside invokes and events and publish all necessary interface. 
+ * 
+ * <br/>
+ * 
+ * // When it comes to view model, the controller should receive the property change event from the view model and notify UI to repaint.   
+ * A more deep research should be conducted when it comes to model and view model.
+ * 
+ * @author Xueli
+ */
 public class Widget extends WidgetBean {
 	
 //	private static final Logger LOGGER = new Logger();

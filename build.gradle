@@ -14,13 +14,19 @@ plugins {
 
 	// id 'org.lwjgl.plugin' version '0.0.34'
 	id 'com.google.osdetector' version '1.7.1'
-    id 'org.graalvm.buildtools.native' version '0.9.12'
+    // id 'org.graalvm.buildtools.native' version '0.9.12'
 
 }
 
 application {
     // Define the main class for the application.
     mainClassName = 'xueli.mcremake.client.CraftGameMain'
+    
+    // For building Swing application
+    // mainClassName = 'xueli.clock.ClockFrame'
+    // applicationDefaultJvmArgs = [
+    //	'-agentlib:native-image-agent=config-merge-dir=build/agent-info/'
+    // ]
 
 }
 
@@ -106,17 +112,26 @@ jar {
 
 }
 
-graalvmNative {
-     binaries.all {
-        resources.autodetect()
-     	buildArgs.add('--initialize-at-build-time=org.slf4j.LoggerFactory')
+// graalvmNative {
+//      binaries.all {
+//         resources.autodetect()
+//      	buildArgs.add('--initialize-at-build-time=org.slf4j.LoggerFactory')
      	// buildArgs.add('--initialize-at-run-time=org.lwjgl')
-     	buildArgs.add('-H:+ReportExceptionStackTraces')
-     	buildArgs.add('--native-image-info')
-     	buildArgs.add('--verbose')
-     }
-     toolchainDetection = false
- }
+     	// buildArgs.add('--initialize-at-build-time=sun.awt.Toolkit')
+     	// buildArgs.add('--initialize-at-build-time=java.awt.Toolkit')
+     	
+     	// buildArgs.add('--no-fallback')
+     	// buildArgs.add('--allow-incomplete-classpath')
+     	// buildArgs.add('-H:+AddAllCharsets')
+     	// buildArgs.add('-H:+ReportExceptionStackTraces')
+     	// buildArgs.add('-H:ConfigurationFileDirectories=build/agent-info')
+     	
+     	// buildArgs.add('--native-image-info')
+     	// buildArgs.add('--verbose')
+     	
+//      }
+//      toolchainDetection = false
+// }
  
 // === Functions and Tasks ===
 

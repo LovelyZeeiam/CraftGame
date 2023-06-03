@@ -3,6 +3,11 @@ package xueli.gui;
 import java.beans.PropertyChangeEvent;
 import java.lang.ref.WeakReference;
 
+/**
+ * The view of widget, only managing things concerning painting, publishing interfaces that have something to do with UI, for example, deciding which item is chosen when user clicking somewhere in a list widget.
+ * 
+ * @author LoveliZeeiam
+ */
 class WidgetUI {
 	
 	public static final String PROPERTY_SKIN = "skin";

@@ -82,6 +82,8 @@ public class CraftGameClient extends GameDisplay {
 
 	@Override
 	protected void render() {
+		this.display.setMouseGrabbed(true);
+		
 		for (int i = 0; i < this.timer.getNumShouldTick(); i++) {
 			this.systems.values().forEach(o -> o.tick(this));
 			this.state.tickCount++;
