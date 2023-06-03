@@ -11,7 +11,13 @@ output
 log
 
 .idea
+
+.vscode
+.VSCodeCounter
+
 .settings
+.classpath
+.project
 
 # Ignore my temporary directory and game working directory
 .craftgame

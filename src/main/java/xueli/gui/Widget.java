@@ -6,13 +6,12 @@ import java.lang.ref.WeakReference;
 import org.lwjgl.utils.vector.Vector2d;
 import org.lwjgl.utils.vector.Vector2f;
 
+import xueli.gui.skin.DefaultSkin;
+
 /**
- * The controller of widget, containing position, size and other components. It stores and manages its model and view, receives all outside invokes and events and publish all necessary interface. 
+ * <p>The controller of widget, containing position, size and other components. It stores and manages its model and view, receives all outside invokes and events and publish all necessary interface.</p> 
  * 
- * <br/>
- * 
- * // When it comes to view model, the controller should receive the property change event from the view model and notify UI to repaint.   
- * A more deep research should be conducted when it comes to model and view model.
+ * <p>Designed for MVC mode: https://baijiahao.baidu.com/s?id=1705333225423245283</p>
  * 
  * @author Xueli
  */
@@ -25,7 +24,7 @@ public class Widget extends WidgetBean {
 
 	protected Widget parent = null;
 
-	private float x = 0.0f, y = 0.0f;
+	private float x = 0.0f, y = 0.0f; // Relative to the parent
 	private float width = 0.0f, height = 0.0f;
 	
 	private final WidgetUI ui;
@@ -35,7 +34,7 @@ public class Widget extends WidgetBean {
 		this.registerPropertyChange();
 		this.ui = new WidgetUI(new WeakReference<Widget>(this), ctx);
 		
-		setSkin(SkinTheme.DEFAULT_THEME.getSkin(getClass()));
+		setSkin(DefaultSkin.SHARED_INSTANCE.getSkin(getClass()));
 		
 	}
 
@@ -102,10 +101,12 @@ public class Widget extends WidgetBean {
 		this.ui.announceRepaint();
 	}
 	
+	// Should only be called from Skin or test!
 	public SizeHint measure() {
 		return this.ui.measure();
 	}
 	
+	// Should only be called from Skin or test!
 	public void doPaint() {
 		this.ui.doPaint();
 	}

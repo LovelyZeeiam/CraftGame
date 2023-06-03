@@ -45,8 +45,7 @@ public class UIContext {
 			return;
 		}
 		
-		if((last.type() == UIEvent.EVENT_WINDOW_SIZED && next.type() == UIEvent.EVENT_WINDOW_SIZED)
-				|| (last.type() == UIEvent.EVENT_CURSOR_POSITION && next.type() == UIEvent.EVENT_CURSOR_POSITION)) {
+		if(last.type() == UIEvent.EVENT_CURSOR_POSITION && next.type() == UIEvent.EVENT_CURSOR_POSITION) {
 			eventQueue.poll();
 			eventQueue.add(next);
 		} else {
@@ -88,7 +87,7 @@ public class UIContext {
 	}
 
 	private void onEventbusSizedEvent(WindowSizedEvent e) {
-		this.postEvent(new UIEvent(UIEvent.EVENT_WINDOW_SIZED, e));
+//		this.postEvent(new UIEvent(UIEvent.EVENT_WINDOW_SIZED, e));
 		
 		this.root.setBounds(0, 0, e.width(), e.height());
 		this.paintManager.onScreenSize(e);
