@@ -3,5 +3,8 @@
  * 
  * <p>Each channel has a chain. The beginning item in the chain received MIDI signal, acting as the beginning generator, and the last one should yield sound signal, which is actually byte buffer managed in the context.</p>
  * 
+ * This is a failed test.
+ * 
  */
+@java.lang.Deprecated
 package xueli.daw;
