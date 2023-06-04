@@ -3,6 +3,7 @@ package xueli.utils.collection;
 import java.util.Arrays;
 import java.util.Objects;
 
+// Who put it here? —— XueLi
 public class SegmentTree {
 
 	private TreeNode[] nodes;

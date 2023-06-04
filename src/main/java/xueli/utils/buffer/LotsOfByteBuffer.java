@@ -43,31 +43,78 @@ public class LotsOfByteBuffer {
 			this.buffer = newBuffer;
 		}
 	}
-
-	public void put(float v) {
+	
+	public void position(int newPos) {
+		this.buffer.position(newPos);
+	}
+	
+	public int position() {
+		return this.buffer.position();
+	}
+	
+	public void putByte(byte v) {
+		predictAndExpand(Byte.BYTES);
+		buffer.put(v);
+		
+	}
+	
+	public byte readByte() {
+		return buffer.get();
+	}
+	
+	public byte readByte(int position) {
+		return buffer.get(position);
+	}
+	
+	public void putFloat(float v) {
 		predictAndExpand(Float.BYTES);
 		buffer.putFloat(v);
 //		System.out.println(buffer.position());
 	}
+	
+	public float readFloat() {
+		return buffer.getFloat();
+	}
 
-	public void put(int v) {
+	public float readFloat(int position) {
+		return buffer.getFloat(position);
+	}
+	
+	public void putInt(int v) {
 		predictAndExpand(Integer.BYTES);
 		buffer.putInt(v);
 	}
+	
+	public int readInt() {
+		return buffer.getInt();
+	}
+	
+	public int readInt(int position) {
+		return buffer.getInt(position);
+	}
 
-	public void put(short v) {
+	public void putShort(short v) {
 		predictAndExpand(Short.BYTES);
 		buffer.putShort(v);
 	}
+	
+	public short readShort() {
+		return buffer.getShort();
+	}
+	
+	public short readShort(int position) {
+		return buffer.getShort(position);
+	}
 
-	public void put(Vector3f v) {
+	// TODO: read the following data structures
+	public void putVector3f(Vector3f v) {
 		predictAndExpand(3 * Float.BYTES);
 		buffer.putFloat(v.x);
 		buffer.putFloat(v.y);
 		buffer.putFloat(v.z);
 	}
 
-	public void put(Vector4f v) {
+	public void putVector4f(Vector4f v) {
 		predictAndExpand(4 * Float.BYTES);
 		buffer.putFloat(v.x);
 		buffer.putFloat(v.y);
@@ -75,7 +122,7 @@ public class LotsOfByteBuffer {
 		buffer.putFloat(v.w);
 	}
 
-	public void put(Vector2f v) {
+	public void putVector2f(Vector2f v) {
 		predictAndExpand(2 * Float.BYTES);
 		buffer.putFloat(v.x);
 		buffer.putFloat(v.y);

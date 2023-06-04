@@ -222,8 +222,8 @@ public class Vector2f extends Vector implements ReadableVector2f, WritableVector
 	 * @param buf The buffer to store it in, at the current position
 	 */
 	public void store(LotsOfByteBuffer buf) {
-		buf.put(x);
-		buf.put(y);
+		buf.putFloat(x);
+		buf.putFloat(y);
 	}
 
 	/**

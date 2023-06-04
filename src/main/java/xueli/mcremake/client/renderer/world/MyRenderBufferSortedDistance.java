@@ -60,7 +60,7 @@ class SortTask {
 		int triangleCount = vertCount / 3;
 
 		for (int i = 0; i < vertCount; i++) {
-			elementBuffer.put(i);
+			elementBuffer.putInt(i);
 		}
 		ArrayList<Integer> selectedList = new ArrayList<>();
 		for (int i = 0; i < triangleCount; i++) {
@@ -111,9 +111,9 @@ class SortTask {
 	}
 
 	private static void writeElementBuffer(int i, LotsOfByteBuffer buf) {
-		buf.put(i * 3);
-		buf.put(i * 3 + 1);
-		buf.put(i * 3 + 2);
+		buf.putInt(i * 3);
+		buf.putInt(i * 3 + 1);
+		buf.putInt(i * 3 + 2);
 
 	}
 

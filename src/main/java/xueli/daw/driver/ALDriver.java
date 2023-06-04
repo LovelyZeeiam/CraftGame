@@ -8,8 +8,14 @@ import org.lwjgl.openal.AL11;
 import org.lwjgl.openal.ALC;
 import org.lwjgl.openal.ALC11;
 import org.lwjgl.openal.ALCCapabilities;
+import xueli.utils.logger.Logger;
 
+// The driver is designed for DAW so it doesn't provide functions like "effects" or "positions".
+// But this group of classes can provide.
+// Not used!
 public class ALDriver {
+	
+	private static final Logger LOGGER = new Logger();
 	
 	private final long context;
 	
@@ -26,8 +32,19 @@ public class ALDriver {
         }
         ALC11.alcMakeContextCurrent(context);
         AL.createCapabilities(deviceCaps);
-		
         
+		this.printDeviceInfo(device);
+        
+	}
+	
+	private void printDeviceInfo(long device) {
+		// Keep the same code structure as OpenGL :}
+		String nameString = AL11.alGetString(AL11.AL_VENDOR);
+		String platform = AL11.alGetString(AL11.AL_RENDERER);
+		String version = AL11.alGetString(AL11.AL_VERSION);
+		LOGGER.warning("[DeviceInfo] OpenAL: " + nameString + ", " + platform + ", " + version);
+
+		
 	}
 	
 	public ALSpeaker createSpeaker() {

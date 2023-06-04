@@ -10,7 +10,7 @@ public class SparseSetTest {
 		set.debugPrint();
 		set.add(5);
 		set.debugPrint();
-		
+
 		set.remove(3);
 		set.debugPrint();
 		set.add(80);
@@ -21,16 +21,16 @@ public class SparseSetTest {
 		set.debugPrint();
 		set.remove(80);
 		set.debugPrint();
-		
+
 		set.remove(1);
 		set.debugPrint();
-		
+
 		set.remove(3);
 		set.debugPrint();
-		
+
 		set.remove(5);
 		set.debugPrint();
-		
+
 	}
 
 }

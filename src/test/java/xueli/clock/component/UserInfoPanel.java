@@ -13,30 +13,32 @@ import xueli.registry.Identifier;
 import xueli.swingx.component.ImageView;
 
 public class UserInfoPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = -2141828020915382762L;
 
 	/**
 	 * Create the panel.
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	public UserInfoPanel() {
 //		setBackground(Color.BLACK);
 		setOpaque(false);
-		
+
 		ImageView lblUserIcon = null;
 		try {
-			lblUserIcon = new ImageView(ImageIO.read(ClockFrame.RESOURCE_PROVIDER.getResource(new Identifier("clock", "images/user_icon.jpg")).openInputStream()), true);
+			lblUserIcon = new ImageView(ImageIO.read(ClockFrame.RESOURCE_PROVIDER
+					.getResource(new Identifier("clock", "images/user_icon.jpg")).openInputStream()), true);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 		setLayout(new FlowLayout(FlowLayout.CENTER, 10, 5));
 		lblUserIcon.setPreferredSize(new Dimension(30, 30));
 		add(lblUserIcon);
-		
+
 		JLabel label = new JLabel("LovelyZeeiam");
 		add(label);
-		
+
 	}
 
 }

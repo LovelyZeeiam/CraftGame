@@ -11,12 +11,12 @@ import xueli.mcremake.network.protocol.C00HelloPacket;
 public class ClientTest {
 
 	public static void main(String[] args) throws IOException {
-		ClientConnection conn = ClientConnection.connectToServer(PacketSourceSide.FROM_SERVER.getProtocol(), PacketSourceSide.FROM_CLIENT.getProtocol(), new InetSocketAddress(8000));
+		ClientConnection conn = ClientConnection.connectToServer(PacketSourceSide.FROM_SERVER.getProtocol(),
+				PacketSourceSide.FROM_CLIENT.getProtocol(), new InetSocketAddress(8000));
 		conn.writeAndFlush(new C00HelloPacket("lovelizeeiam", UUID.randomUUID()), () -> {
 			conn.close();
 		});
-		
-		
+
 	}
 
 }

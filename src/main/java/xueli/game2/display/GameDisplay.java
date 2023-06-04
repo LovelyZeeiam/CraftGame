@@ -168,8 +168,8 @@ public abstract class GameDisplay implements RunnableLifeCycle {
 	private void printDeviceInfo() {
 		String nameString = GL11.glGetString(GL11.GL_VENDOR);
 		String platform = GL11.glGetString(GL11.GL_RENDERER);
-		String glVersion = GL11.glGetString(GL11.GL_VERSION);
-		LOGGER.warning("[DeviceInfo] OpenGL: " + nameString + ", " + platform + ", " + glVersion);
+		String version = GL11.glGetString(GL11.GL_VERSION);
+		LOGGER.warning("[DeviceInfo] OpenGL: " + nameString + ", " + platform + ", " + version);
 
 	}
 

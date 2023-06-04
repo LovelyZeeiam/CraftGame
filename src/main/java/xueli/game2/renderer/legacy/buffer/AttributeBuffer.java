@@ -1,7 +1,5 @@
 package xueli.game2.renderer.legacy.buffer;
 
-import java.nio.ByteBuffer;
-
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL30;
 

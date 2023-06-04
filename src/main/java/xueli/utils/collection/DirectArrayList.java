@@ -1,13 +1,18 @@
-package xueli.game2.memory;
+package xueli.utils.collection;
 
 import io.netty.util.internal.shaded.org.jctools.util.UnsafeAccess;
 import sun.misc.Unsafe;
 
 /**
- * This is a Java port of "std::vector" in C++ actually, so "Unsafe" is used to
- * allocate memory directly.
+ * This class provides direct memory access to store a list, so "Unsafe" is used to allocate memory directly,
+ * which means that you should invoke "release" method explicitly to free the memory.
+ * 
+ * Maybe in the future this class will implement all methods in official "List" interface.
+ * 
  */
-public class CVector {
+// Wait, someone writes this but doesn't put into use? —— XueLi
+// I don't know. —— LovelyZeeiam
+public class DirectArrayList {
 
 	static final Unsafe unsafe = UnsafeAccess.UNSAFE;
 	static final int DEFAULT_EXPAND_STEP = 512;
@@ -15,15 +20,15 @@ public class CVector {
 	private int expandStep;
 	private long startPtr, currentPtr, endPtr;
 
-	public CVector() {
+	public DirectArrayList() {
 		this(DEFAULT_EXPAND_STEP);
 	}
 
-	public CVector(int expandStep) {
+	public DirectArrayList(int expandStep) {
 		this(expandStep, expandStep);
 	}
 
-	public CVector(int initialSize, int expandStep) {
+	public DirectArrayList(int initialSize, int expandStep) {
 		// The max size of primitive type is 8. To prevent duplicate calculation and
 		// allocation, we just set the value max than 8.
 		this.expandStep = Math.min(expandStep, 8);

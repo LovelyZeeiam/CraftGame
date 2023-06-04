@@ -31,6 +31,7 @@ public class ALBuffer {
 		return this.bufferManager.createBackBuffer();
 	}
 	
+	// Maybe here we have to do this ourselves
 	public void doingSyncIfNecessary() {
 		this.bufferManager.doingSyncIfNecessary(b -> AL11.alBufferData(this.id, BufferFormat.getALFormat(this.format), b.getBuffer(), this.frequency));
 	}

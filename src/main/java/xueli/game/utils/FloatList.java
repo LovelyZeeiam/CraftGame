@@ -10,7 +10,9 @@ import org.lwjgl.utils.vector.Vector4f;
 
 /**
  * 经过测试，性能没有直接的floatBuffer高， 但是还是挺好用的 因为floatBuffer大小已经限制死了
+ * Please use LotsOfByteBuffer instead!
  */
+@Deprecated
 public class FloatList {
 
 	private float[] data;

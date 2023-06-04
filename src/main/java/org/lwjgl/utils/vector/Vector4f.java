@@ -288,10 +288,10 @@ public class Vector4f extends Vector implements ReadableVector4f, WritableVector
 	 * @see org.lwjgl.vector.Vector#store(FloatBuffer)
 	 */
 	public void store(LotsOfByteBuffer buf) {
-		buf.put(x);
-		buf.put(y);
-		buf.put(z);
-		buf.put(w);
+		buf.putFloat(x);
+		buf.putFloat(y);
+		buf.putFloat(z);
+		buf.putFloat(w);
 
 	}
 
