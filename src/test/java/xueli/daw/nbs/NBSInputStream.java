@@ -55,6 +55,7 @@ public class NBSInputStream extends DataInputStream {
 
 	}
 
+	@SuppressWarnings("unused")
 	public List<NoteBlock> readNoteBlocks() throws IOException {
 		ArrayList<NoteBlock> blocks = new ArrayList<>();
 
@@ -75,8 +76,8 @@ public class NBSInputStream extends DataInputStream {
 				byte inst = readByte();
 				byte key = readByte();
 				byte velocity = readByte();
-//				byte panning = readByte();
-//				short pitch = Short.reverseBytes(readShort());
+				byte panning = readByte();
+				short pitch = Short.reverseBytes(readShort());
 
 				if (layer > maxlayer)
 					maxlayer = layer;
@@ -104,6 +105,7 @@ public class NBSInputStream extends DataInputStream {
 
 	private String readString() throws IOException {
 		int length = Integer.reverseBytes(readInt());
+		System.out.println(length);
 		byte[] strBytes = new byte[length];
 		read(strBytes, 0, length);
 		String str = new String(strBytes);
