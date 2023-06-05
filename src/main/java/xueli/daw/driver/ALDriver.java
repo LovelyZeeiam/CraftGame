@@ -2,6 +2,7 @@ package xueli.daw.driver;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.util.HashMap;
 
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL11;
@@ -18,6 +19,7 @@ public class ALDriver {
 	private static final Logger LOGGER = new Logger();
 	
 	private final long context;
+	private HashMap<Integer, ALBuffer> bufferPool = new HashMap<>();
 	
 	public ALDriver(ByteBuffer deviceSpecifier) {
 		long device = ALC11.alcOpenDevice(deviceSpecifier);
@@ -49,7 +51,7 @@ public class ALDriver {
 	
 	public ALSpeaker createSpeaker() {
 		int speaker = AL11.alGenSources();
-		return new ALSpeaker(speaker);
+		return new ALSpeaker(speaker, this);
 	}
 	
 	public void releaseSpeaker(ALSpeaker speaker) {
@@ -58,12 +60,19 @@ public class ALDriver {
 	}
 	
 	public ALBuffer createBuffer() {
-		int buffer = AL11.alGenBuffers();
-		return new ALBuffer(buffer);
+		int name = AL11.alGenBuffers();
+		var bufferObj = new ALBuffer(name);
+		this.bufferPool.put(name, bufferObj);
+		return bufferObj;
+	}
+	
+	public ALBuffer getBufferFromId(int id) {
+		return bufferPool.get(id);
 	}
 	
 	public void releaseBuffer(ALBuffer buffer) {
 		AL11.alDeleteBuffers(buffer.id);
+		this.bufferPool.remove(buffer.id);
 		
 	}
 	

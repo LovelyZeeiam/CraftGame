@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
+// TODO: Add start time!
+// Maybe this object can be constructed from a NBS object!
+// May be an Sequencer interface!
 public class NBSSequencer {
-	
-	private final long startTime;
 	
 	private final double tickPerSecond;
 	private final TreeMap<Long, ArrayList<NoteBlock>> timeline = new TreeMap<>();
@@ -14,7 +15,6 @@ public class NBSSequencer {
 	public NBSSequencer(double tickPerSecond, List<NoteBlock> src) {
 		this.tickPerSecond = tickPerSecond;
 		this.buildTimeline(src);
-		this.startTime = System.currentTimeMillis();
 		
 	}
 	
@@ -31,10 +31,8 @@ public class NBSSequencer {
 	private long lastTime = 0;
 	
 	// The return value indicated whether the music reaches the end.
-	public boolean read(List<NoteBlock> dest) {
-		long currentTime = System.currentTimeMillis() - this.startTime;
-		
-		Long lowerKey = currentTime;
+	public boolean progress(long currentTimeMills, List<NoteBlock> dest) {
+		Long lowerKey = currentTimeMills;
 		boolean exists = false;
 		while((lowerKey = this.timeline.lowerKey(lowerKey)) != null) {
 			if(lowerKey.longValue() < lastTime) break;
@@ -42,8 +40,12 @@ public class NBSSequencer {
 			dest.addAll(timeline.get(lowerKey));
 		}
 		
-		lastTime = currentTime;
+		lastTime = currentTimeMills;
 		return exists;
+	}
+	
+	public long getCurrentTime() {
+		return this.lastTime;
 	}
 
 }

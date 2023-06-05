@@ -162,4 +162,9 @@ public class LotsOfByteBuffer {
 
 	}
 
+	@Override
+	public String toString() {
+		return "LotsOfByteBuffer [buffer=" + buffer + "]";
+	}
+	
 }

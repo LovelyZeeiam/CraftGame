@@ -32,8 +32,10 @@ public class ALDriverTest {
 
 		// Create Speaker
 		var speaker = driver.createSpeaker();
-		speaker.setBuffer(buffer);
+		speaker.queueBuffer(buffer);
+//		System.out.println(speaker.queryProcessedBufferCount());
 		speaker.play();
+//		System.out.println(speaker.queryProcessedBufferCount());
 
 		synchronized (Thread.currentThread()) {
 			try {

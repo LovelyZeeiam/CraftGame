@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+// I don't know why someone uses "extends" here!
 public class NBSInputStream extends DataInputStream {
 
 	private final short songLength;
@@ -105,7 +106,7 @@ public class NBSInputStream extends DataInputStream {
 
 	private String readString() throws IOException {
 		int length = Integer.reverseBytes(readInt());
-		System.out.println(length);
+//		System.out.println(length);
 		byte[] strBytes = new byte[length];
 		read(strBytes, 0, length);
 		String str = new String(strBytes);

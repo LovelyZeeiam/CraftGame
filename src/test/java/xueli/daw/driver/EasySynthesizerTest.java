@@ -22,7 +22,7 @@ import xueli.daw.synthesizer.SynthesizerUtils;
 //@SuppressWarnings("unused")
 public class EasySynthesizerTest {
 
-	public static float SAMPLE_RATE = 44100;
+	public static final float SAMPLE_RATE = 44100;
 
 	public static void main(String[] args) throws InvalidMidiDataException, IOException, LineUnavailableException {
 //		// Create Context
