@@ -1,8 +1,6 @@
 package xueli.daw.driver;
 
 import java.nio.IntBuffer;
-import java.util.Arrays;
-
 import org.lwjgl.openal.AL11;
 import org.lwjgl.system.MemoryUtil;
 
