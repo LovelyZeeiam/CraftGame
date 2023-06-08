@@ -25,11 +25,11 @@ public class ALSynthTest {
 	public static final double PER_SAMPLE_LENGTH = 1.0 / SAMPLE_RATE;
 	public static final int BUFFER_SAMPLE_COUNT = 8192;
 	
-	public static final int LIMITER_CACHE_SAMPLE_COUNT = 2000;
+//	public static final int LIMITER_CACHE_SAMPLE_COUNT = 2000;
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		// Read Note File
-		var nbsIn = new NBSInputStream(new FileInputStream("res/music/nali_doushini_duizhang.nbs"));
+		var nbsIn = new NBSInputStream(new FileInputStream("res/music/lucky_star.nbs"));
 		List<NoteBlock> notes = nbsIn.readNoteBlocks();
 		double tickPerSecond = nbsIn.getTempo() / 100.0;
 		double musicLength = nbsIn.getSongLength() / tickPerSecond;
@@ -63,9 +63,9 @@ public class ALSynthTest {
 		HashMap<ALBuffer, MemoryHandler> bufferHandlerMap = new HashMap<>();
 		
 		// Synthesizer Variables
-		double[] limiter_temp = new double[LIMITER_CACHE_SAMPLE_COUNT];
-		int limiter_index = 0;
-		double limiter_volumeScale = 1.0;
+//		double[] limiter_temp = new double[LIMITER_CACHE_SAMPLE_COUNT];
+//		int limiter_index = 0;
+//		double limiter_volumeScale = 1.0;
 		
 		// Create Sequencer
 		record PlayingNote(double startTime, NoteBlock block) {}
@@ -145,35 +145,37 @@ public class ALSynthTest {
 							
 							double frequency = (440.0 / 32.0) * Math.pow(2, (note.block.getKey() + 24 - 9.0) / 12.0);
 //							System.out.println(frequency);
-							double originValue = 0.4 * SynthesizerUtils.triangle(frequency, sustain) * (1.0 - sustain);
+							double gain = sustain < 0.05 ? (sustain * 20) : (1 - (sustain - 0.05) / 0.95);
+							
+							double originValue = 0.2 * gain * SynthesizerUtils.triangle(frequency, sustain) * (1.0 - sustain);
 							thisValue += originValue;
 							
 							// write to limiter
-							{
-								limiter_index++;
-								limiter_index %= LIMITER_CACHE_SAMPLE_COUNT;
-								limiter_temp[limiter_index] = thisValue;
-								
-							}
+//							{
+//								limiter_index++;
+//								limiter_index %= LIMITER_CACHE_SAMPLE_COUNT;
+//								limiter_temp[limiter_index] = thisValue;
+//								
+//							}
 							
 						}
 						
 						// do limiter
-						{
-							double max = 0;
-							for(int j = 0; j < LIMITER_CACHE_SAMPLE_COUNT; j++) {
-								max = Math.max(max, Math.abs(limiter_temp[j]));
-							}
-							
-							if(max > 1.0) {
-								limiter_volumeScale = 1.0 / max;
-							}
-							
-						}
+//						{
+//							double max = 0;
+//							for(int j = 0; j < LIMITER_CACHE_SAMPLE_COUNT; j++) {
+//								max = Math.max(max, Math.abs(limiter_temp[j]));
+//							}
+//							
+//							if(max > 1.0) {
+//								limiter_volumeScale = 1.0 / max;
+//							}
+//							
+//						}
 						
 //						if(thisValue > 1.0) thisValue = 1.0;
 //						if(thisValue < -1.0) thisValue = -1.0;
-						thisValue *= limiter_volumeScale;
+//						thisValue *= limiter_volumeScale;
 						memory.putShort((short) (thisValue * 32767.0));
 					}
 					

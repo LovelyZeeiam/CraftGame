@@ -1,26 +1,22 @@
 package xueli.gui;
 
-import java.lang.ref.WeakReference;
-
+import org.lwjgl.utils.vector.Matrix3f;
+import org.lwjgl.utils.vector.Matrix4f;
+import org.lwjgl.utils.vector.Vector2f;
 import xueli.gui.driver.GraphicDriver;
-import xueli.gui.driver.OffsetGraphicDriver;
 
 // Every frame it just draws all
 public class ImmediatePaintManager extends PaintManager {
 	
-	private final OffsetGraphicDriver offsetGraphicDriver;
+	private final GraphicDriver driver;
 	
-	public ImmediatePaintManager(WeakReference<Widget> widget, GraphicDriver driver) {
+	public ImmediatePaintManager(WidgetAccess widget, GraphicDriver driver) {
 		super(widget, driver);
-		this.offsetGraphicDriver = new OffsetGraphicDriver(0, 0, driver);
+		this.driver = driver;
 		
 		// Can't put in parent class initialization because "announcements" can be null there!
 		this.announceSizeChange();
-
-		Widget w = widget.get();
-		if (w == null)
-			throw new NullPointerException();
-		this.announceRepaint(0, 0, w.getWidth(), w.getHeight());
+		this.announceRepaint(0, 0, getWidgetWidth(), getWidgetHeight());
 		
 	}
 
@@ -34,17 +30,11 @@ public class ImmediatePaintManager extends PaintManager {
 
 	@Override
 	public void doPaint() {
-		Widget w = getWidget();
-		if (w == null)
-			return;
-		
-		WidgetSkin skin = w.getSkin();
-		this.offsetGraphicDriver.setOffset(w.getX(), w.getY());
-		
-		float width = w.getWidth();
-		float height = w.getHeight();
-		if(width == 0 || height == 0) return;
-		skin.paint(w, 0, 0, width, height, offsetGraphicDriver);
+		this.driver.pushMatrix(Matrix3f.translate(new Vector2f(getWidgetX(), getWidgetY()), new Matrix3f(), null));
+		this.driver.scissorPush(0, 0, getWidgetWidth(), getWidgetHeight());
+		this.widgetRealPaint(0, 0, getWidgetWidth(), getWidgetHeight());
+		this.driver.scissorPop();
+		this.driver.popMatrix();
 		
 	}
 

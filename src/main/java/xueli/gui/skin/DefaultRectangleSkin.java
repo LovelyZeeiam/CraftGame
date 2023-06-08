@@ -1,5 +1,6 @@
 package xueli.gui.skin;
 
+import xueli.gui.PaintMaster;
 import xueli.gui.SizeHint;
 import xueli.gui.Widget;
 import xueli.gui.WidgetSkin;
@@ -22,10 +23,12 @@ public class DefaultRectangleSkin implements WidgetSkin {
 	}
 
 	@Override
-	public void paint(Widget widget, float x, float y, float width, float height, GraphicDriver graphics) {
+	public void paint(Widget widget, float x, float y, float width, float height, PaintMaster paintMaster) {
+		var driver = paintMaster.getDriver();
+
 		Rectangle w = (Rectangle) widget;
-		graphics.setColor(w.getColor());
-		graphics.drawFilledRect(x, y, width, height, FillType.COLOR);
+		driver.setColor(w.getColor());
+		driver.drawFilledRect(x, y, width, height, FillType.COLOR);
 		
 	}
 

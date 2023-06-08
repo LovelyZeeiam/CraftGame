@@ -1,9 +1,6 @@
 package xueli.gui.skin;
 
-import xueli.gui.SizeHint;
-import xueli.gui.Widget;
-import xueli.gui.WidgetGroup;
-import xueli.gui.WidgetSkin;
+import xueli.gui.*;
 import xueli.gui.driver.GraphicDriver;
 
 public class DefaultWidgetGroupSkin implements WidgetSkin {
@@ -22,13 +19,13 @@ public class DefaultWidgetGroupSkin implements WidgetSkin {
 	}
 	
 	@Override
-	public void paint(Widget widget, float x, float y, float width, float height, GraphicDriver graphics) {
+	public void paint(Widget widget, float x, float y, float width, float height, PaintMaster paintMaster) {
 		WidgetGroup controller = (WidgetGroup) widget;
 		
 		int count = controller.getWidgetCount();
 		for(int i = 0; i < count; i++) {
 			Widget child = controller.getWidgetFromIndex(i);
-			child.doPaint();
+			paintMaster.drawWidget(child);
 		}
 		
 	}

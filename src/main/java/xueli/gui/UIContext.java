@@ -19,17 +19,18 @@ public class UIContext {
 	private final GraphicDriver driver;
 	
 	private final PaintMaster paintManager;
-	private final LinkedList<UIEvent> eventQueue = new LinkedList<UIEvent>(); // Not thread safe
+	private final LinkedList<UIEvent> eventQueue = new LinkedList<>(); // Not thread safe
 
 	private final WidgetGroup root;
 
 	public UIContext(GraphicDriver driver, GameDisplay display) {
 		this.display = display;
 		this.driver = driver;
-		this.paintManager = new PaintMaster(this);
+		this.paintManager = new PaintMaster(driver);
 		this.registerEventListener();
 
 		this.root = new WidgetGroup(this);
+//		this.root.setUseImmediateMode(true);
 		this.onEventbusSizedEvent(new WindowSizedEvent(getDisplayWidth(), getDisplayHeight()));
 		
 	}
@@ -56,6 +57,10 @@ public class UIContext {
 	public void tick() {
 		this.processEvent();
 		this.paintManager.tick();
+
+		this.driver.begin(getDisplayWidth(), getDisplayHeight());
+		this.paintManager.drawWidget(this.root);
+		this.driver.finish();
 		
 	}
 
@@ -90,7 +95,6 @@ public class UIContext {
 //		this.postEvent(new UIEvent(UIEvent.EVENT_WINDOW_SIZED, e));
 		
 		this.root.setBounds(0, 0, e.width(), e.height());
-		this.paintManager.onScreenSize(e);
 		
 	}
 
@@ -108,6 +112,10 @@ public class UIContext {
 //			LOGGER.info("[UIEvent] " + e.toString());
 			root.dispatchEvent(e);
 		}
+	}
+
+	public void setUseImmediateMode(Widget widget, boolean use) {
+		// TODO
 	}
 
 	public PaintMaster getPaintMaster() {

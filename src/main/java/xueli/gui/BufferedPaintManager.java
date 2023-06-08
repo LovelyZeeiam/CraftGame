@@ -1,11 +1,10 @@
 package xueli.gui;
 
-import java.lang.ref.WeakReference;
-import java.util.LinkedList;
-import java.util.Objects;
-
 import xueli.gui.driver.FrameBuffer;
 import xueli.gui.driver.GraphicDriver;
+
+import java.util.LinkedList;
+import java.util.Objects;
 
 // This paint manager only draw the widget itself, but widget's "x" and "y" is relative to its parent
 // It uses frame buffer, but the painting can lag if size change is too frequent
@@ -17,16 +16,12 @@ public class BufferedPaintManager extends PaintManager {
 
 	private LinkedList<Announcement> announcements = new LinkedList<>(); // Not thread safe
 
-	public BufferedPaintManager(WeakReference<Widget> widget, GraphicDriver driver) {
+	public BufferedPaintManager(WidgetAccess widget, GraphicDriver driver) {
 		super(widget, driver);
 		
 		// Can't put in parent class initialization because "announcements" can be null there!
 		this.announceSizeChange();
-
-		Widget w = widget.get();
-		if (w == null)
-			throw new NullPointerException();
-		this.announceRepaint(0, 0, w.getWidth(), w.getHeight());
+		this.announceRepaint(0, 0, getWidgetWidth(), getWidgetHeight());
 		
 	}
 
@@ -51,17 +46,7 @@ public class BufferedPaintManager extends PaintManager {
 		
 		if(last instanceof SizeChangeAnnouncement && next instanceof SizeChangeAnnouncement)
 			return;
-		if(last instanceof RepaintAnnouncement lr && next instanceof RepaintAnnouncement nr) {
-			// Merge to a bigger area
-//			float minX = Math.min(lr.x, nr.x);
-//			float minY = Math.min(lr.y, nr.y);
-//			float maxX = Math.max(lr.x + lr.width, nr.x + nr.width);
-//			float maxY = Math.max(lr.y + lr.height, nr.y + nr.height);
-//			
-//			lr.x = minX;
-//			lr.y = minY;
-//			lr.width = maxX - minX;
-//			lr.height = maxY - minY;
+		if(last instanceof RepaintAnnouncement && next instanceof RepaintAnnouncement nr) {
 			if(last.equals(nr))
 				return;
 		}
@@ -72,10 +57,6 @@ public class BufferedPaintManager extends PaintManager {
 
 	@Override
 	public void doPaint() {
-		Widget w = getWidget();
-		if (w == null)
-			return;
-		
 		Runnable announcement;
 		while (!this.announcements.isEmpty()) {
 			announcement = this.announcements.pop();
@@ -86,7 +67,7 @@ public class BufferedPaintManager extends PaintManager {
 		}
 
 		int imageId = frameBuffer.getImageId();
-		getDriver().drawImage(w.getX(), w.getY(), w.getWidth(), w.getHeight(), 1.0f, imageId);
+		getDriver().drawImage(getWidgetX(), getWidgetY(), getWidgetWidth(), getWidgetHeight(), 1.0f, imageId);
 		
 	}
 
@@ -105,14 +86,10 @@ public class BufferedPaintManager extends PaintManager {
 	private class SizeChangeAnnouncement implements Announcement {
 		@Override
 		public void run() {
-			Widget w = getWidget();
-			if (w == null)
-				return;
-
 			// Make a bigger box to include the widget. To support float size and position
 			// of widget!
-			int realWidth = (int) Math.ceil(w.getWidth());
-			int realHeight = (int) Math.ceil(w.getHeight());
+			int realWidth = (int) Math.ceil(getWidgetWidth());
+			int realHeight = (int) Math.ceil(getWidgetHeight());
 			if (frameBuffer == null)
 				frameBuffer = getDriver().createFrameBuffer(realWidth, realHeight);
 			else
@@ -140,21 +117,16 @@ public class BufferedPaintManager extends PaintManager {
 
 		@Override
 		public void run() {
-			Widget w = getWidget();
-			if (w == null)
-				return;
-
-			WidgetSkin skin = w.getSkin();
 			GraphicDriver driver = getDriver();
 			
 			driver.pushFrameBuffer(frameBuffer);
 			driver.begin(frameBuffer.getWidth(), frameBuffer.getHeight());
-			
-			driver.scissor(x, y, width, height);
+
+			driver.scissorPush(x, y, width, height);
 			driver.clearColor(0, 0, 0, 0);
-			skin.paint(w, x, y, width, height, driver);
+			widgetRealPaint(x, y, width, height);
 			driver.scissorReset();
-			
+
 			driver.finish();
 			driver.popFrameBuffer();
 

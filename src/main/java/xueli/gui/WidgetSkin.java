@@ -11,7 +11,7 @@ public interface WidgetSkin {
 	public SizeHint measure(Widget widget, GraphicDriver graphics);
 	
 	// Paint an area of this widget
-	public void paint(Widget widget, float x, float y, float width, float height, GraphicDriver graphics);
+	public void paint(Widget widget, float x, float y, float width, float height, PaintMaster paintMaster);
 	
 	public void uninstall(Widget widget);
 

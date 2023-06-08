@@ -3,6 +3,8 @@ package xueli.gui.driver;
 import java.awt.Color;
 import java.io.IOException;
 
+import org.lwjgl.utils.vector.Matrix2f;
+import org.lwjgl.utils.vector.Matrix3f;
 import xueli.game2.resource.Resource;
 
 public interface GraphicDriver {
@@ -27,7 +29,9 @@ public interface GraphicDriver {
 
 	public void fill(FillType type);
 
-	public void scissor(float x, float y, float width, float height);
+	public void scissorPush(float x, float y, float width, float height);
+
+	public void scissorPop();
 
 	public void scissorReset();
 
@@ -38,6 +42,10 @@ public interface GraphicDriver {
 	public void pushFrameBuffer(FrameBuffer buffer);
 
 	public void popFrameBuffer();
+
+	public void pushMatrix(Matrix3f matrix);
+
+	public void popMatrix();
 	
 	public void begin(int width, int height);
 	

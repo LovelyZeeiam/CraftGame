@@ -6,11 +6,11 @@ import xueli.gui.driver.GraphicDriver;
 
 public abstract class PaintManager {
 	
-	private final WeakReference<Widget> widget;
+	private final WidgetAccess widget;
 
 	private final GraphicDriver driver;
 
-	public PaintManager(WeakReference<Widget> widget, GraphicDriver driver) {
+	public PaintManager(WidgetAccess widget, GraphicDriver driver) {
 		this.widget = widget;
 		this.driver = driver;
 		
@@ -20,21 +20,47 @@ public abstract class PaintManager {
 	
 	public abstract void announceRepaint(float x, float y, float width, float height);
 	
-	public abstract void doPaint();
-	
-	public abstract void release();
+	protected abstract void doPaint();
+
+	protected abstract void release();
 	
 	public SizeHint measure() {
-		var widget = getWidget();
-		return widget.getSkin().measure(widget, driver);
+		return this.widget.measure();
 	}
-	
-	public Widget getWidget() {
-		return widget.get();
+
+	protected void widgetRealPaint(float x, float y, float width, float height) {
+		this.widget.doPaint(x, y, width, height);
 	}
-	
+
+	protected float getWidgetWidth() {
+		return this.widget.getWidth();
+	}
+
+	protected float getWidgetHeight() {
+		return this.widget.getHeight();
+	}
+
+	protected float getWidgetX() {
+		return this.widget.getX();
+	}
+
+	protected float getWidgetY() {
+		return this.widget.getY();
+	}
+
 	public GraphicDriver getDriver() {
 		return driver;
 	}
-	
+
+	public static interface WidgetAccess {
+
+		public SizeHint measure();
+		public void doPaint(float x, float y, float width, float height);
+		public float getX();
+		public float getY();
+		public float getWidth();
+		public float getHeight();
+
+	}
+
 }

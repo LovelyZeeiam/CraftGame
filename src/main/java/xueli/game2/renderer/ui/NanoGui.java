@@ -1,47 +1,10 @@
 package xueli.game2.renderer.ui;
 
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_BASELINE;
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_BOTTOM;
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_CENTER;
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_LEFT;
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_MIDDLE;
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_RIGHT;
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_TOP;
-import static org.lwjgl.nanovg.NanoVG.NVG_IMAGE_NEAREST;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgCircle;
-import static org.lwjgl.nanovg.NanoVG.nvgCreateFontMem;
-import static org.lwjgl.nanovg.NanoVG.nvgCreateImageMem;
-import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
-import static org.lwjgl.nanovg.NanoVG.nvgFill;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
-import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
-import static org.lwjgl.nanovg.NanoVG.nvgFontFaceId;
-import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
-import static org.lwjgl.nanovg.NanoVG.nvgImagePattern;
-import static org.lwjgl.nanovg.NanoVG.nvgRGBA;
-import static org.lwjgl.nanovg.NanoVG.nvgRect;
-import static org.lwjgl.nanovg.NanoVG.nvgResetScissor;
-import static org.lwjgl.nanovg.NanoVG.nvgScissor;
-import static org.lwjgl.nanovg.NanoVG.nvgText;
-import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
-import static org.lwjgl.nanovg.NanoVG.nvgTextLetterSpacing;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_ANTIALIAS;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_DEBUG;
-import static org.lwjgl.nanovg.NanoVGGL3.NVG_STENCIL_STROKES;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgCreate;
-import static org.lwjgl.nanovg.NanoVGGL3.nvgDelete;
-import static org.lwjgl.nanovg.NanoVGGL3.nvglCreateImageFromHandle;
-
-import java.awt.Color;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.opengl.GL11;
-
+import org.lwjgl.utils.vector.Matrix3f;
+import org.lwjgl.utils.vector.Vector2f;
 import xueli.game2.resource.Resource;
 import xueli.game2.resource.ResourceHolder;
 import xueli.game2.resource.submanager.render.BufferUtils;
@@ -50,12 +13,21 @@ import xueli.gui.driver.FrameBuffer;
 import xueli.gui.driver.GraphicDriver;
 import xueli.utils.logger.InvokeDaemon;
 
+import java.awt.*;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+
+import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.nanovg.NanoVGGL3.*;
+
 public class NanoGui implements ResourceHolder, GraphicDriver {
 	
 	private final InvokeDaemon daemon = new InvokeDaemon(getClass());
 	
 	long nvg = 0;
-	FrameBufferStack frameBufferStack = new FrameBufferStack(this);
+	final FrameBufferStack frameBufferStack = new FrameBufferStack(this);
+	final MatrixStack matrixStack = new MatrixStack();
+	final ScissorStack scissorStack = new ScissorStack(matrixStack);
 
 	private final NVGColor colorBuf = NVGColor.create();
 	private final NVGPaint paintBuf = NVGPaint.create();
@@ -156,7 +128,9 @@ public class NanoGui implements ResourceHolder, GraphicDriver {
 	@Override
 	public float drawFont(float x, float y, float size, String str, int fontId, FontAlign... aligns) {
 		daemon.announce();
-		
+		Vector2f transformedPosition = this.matrixStack.transform(new Vector2f(x, y));
+//		Vector2f transformedSize = this.matrixStack.delta(new Vector2f());
+
 		int align = 0;
 		for (int i = 0; i < aligns.length; i++) {
 			align |= getFontAlignNvgValue(aligns[i]);
@@ -165,15 +139,17 @@ public class NanoGui implements ResourceHolder, GraphicDriver {
 		nvgFontSize(nvg, size);
 		nvgFontFaceId(nvg, fontId);
 		nvgTextAlign(nvg, align);
-		return nvgText(nvg, x, y, str);
+		return nvgText(nvg, transformedPosition.x, transformedPosition.y, str);
 	}
 
 	@Override
 	public void drawFilledRect(float x, float y, float width, float height, FillType type) {
 		daemon.announce();
+		Vector2f transformedPosition = this.matrixStack.transform(new Vector2f(x, y));
+		Vector2f transformedSize = this.matrixStack.delta(new Vector2f(width, height));
 		
 		nvgBeginPath(nvg);
-		nvgRect(nvg, x, y, width, height);
+		nvgRect(nvg, transformedPosition.x, transformedPosition.y, transformedSize.x, transformedSize.y);
 		this.fill(type);
 
 	}
@@ -181,9 +157,11 @@ public class NanoGui implements ResourceHolder, GraphicDriver {
 	@Override
 	public void drawFilledCircle(float x, float y, float radius, FillType type) {
 		daemon.announce();
+		Vector2f transformedPosition = this.matrixStack.transform(new Vector2f(x, y));
+//		Vector2f transformedSize = this.matrixStack.delta(new Vector2f());
 		
 		nvgBeginPath(nvg);
-		nvgCircle(nvg, x, y, radius);
+		nvgCircle(nvg, transformedPosition.x, transformedPosition.y, radius);
 		this.fill(type);
 
 	}
@@ -191,24 +169,29 @@ public class NanoGui implements ResourceHolder, GraphicDriver {
 	@Override
 	public void setTexturedPaint(float x, float y, float width, float height, float angle, float alpha, int imageId) {
 		daemon.announce();
+		Vector2f transformedPosition = this.matrixStack.transform(new Vector2f(x, y));
+		Vector2f transformedSize = this.matrixStack.delta(new Vector2f(width, height));
 		
-		nvgImagePattern(nvg, x, y, width, height, angle, imageId, alpha, paintBuf);
+		nvgImagePattern(nvg, transformedPosition.x, transformedPosition.y, transformedSize.x, transformedSize.y, angle, imageId, alpha, paintBuf);
 
 	}
 
 	@Override
 	public void drawImage(float x, float y, float width, float height, float alpha, int imageId) {
 		daemon.announce();
-		
-		this.setTexturedPaint(x, y, width, height, 0, alpha, imageId);
-		this.drawFilledRect(x, y, width, height, FillType.PAINT);
+		Vector2f transformedPosition = this.matrixStack.transform(new Vector2f(x, y));
+		Vector2f transformedSize = this.matrixStack.delta(new Vector2f(width, height));
+
+		this.setTexturedPaint(transformedPosition.x, transformedPosition.y, transformedSize.x, transformedSize.y, 0, alpha, imageId);
+		this.drawFilledRect(transformedPosition.x, transformedPosition.y, transformedSize.x, transformedSize.y, FillType.PAINT);
 
 	}
 
 	@Override
 	public void drawImageCircle(float x, float y, float radius, int imageId, float angle, float alpha) {
 		daemon.announce();
-		
+
+		// No need to calculate from matrix!
 		this.setTexturedPaint(x - radius, y - radius, radius * 2, radius * 2, angle, alpha, imageId);
 		this.drawFilledCircle(x, y, radius, FillType.PAINT);
 
@@ -236,16 +219,34 @@ public class NanoGui implements ResourceHolder, GraphicDriver {
 		nvgFill(nvg);
 	}
 
+	// The scissor rectangle is transformed by the current transform.
 	@Override
-	public void scissor(float x, float y, float width, float height) {
+	public void scissorPush(float x, float y, float width, float height) {
 		daemon.announce();
-		nvgScissor(nvg, x, y, width, height);
+
+		var scissorResult = scissorStack.push(x, y, width, height);
+		nvgResetScissor(nvg);
+		nvgScissor(nvg, scissorResult.x(), scissorResult.y(), scissorResult.width(), scissorResult.height());
+
+	}
+
+	@Override
+	public void scissorPop() {
+		daemon.announce();
+		nvgResetScissor(nvg);
+
+		var scissorResult = scissorStack.pop();
+		if(scissorResult == null) return;
+		nvgScissor(nvg, scissorResult.x(), scissorResult.y(), scissorResult.width(), scissorResult.height());
+
 	}
 
 	@Override
 	public void scissorReset() {
 		daemon.announce();
 		nvgResetScissor(nvg);
+		scissorStack.reset();
+
 	}
 
 	@Override
@@ -268,12 +269,26 @@ public class NanoGui implements ResourceHolder, GraphicDriver {
 	public void pushFrameBuffer(FrameBuffer buffer) {
 		daemon.announce();
 		frameBufferStack.push(((NanoFrameBuffer) buffer));
+		// TODO: change the state of this state manager!
 	}
 
 	@Override
 	public void popFrameBuffer() {
 		daemon.announce();
 		frameBufferStack.pop();
+
+	}
+
+	@Override
+	public void pushMatrix(Matrix3f matrix) {
+		daemon.announce();
+		matrixStack.pushMatrix(matrix);
+	}
+
+	@Override
+	public void popMatrix() {
+		daemon.announce();
+		matrixStack.popMatrix();
 	}
 
 	@Override

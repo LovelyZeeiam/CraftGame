@@ -100,7 +100,13 @@ dependencies {
     implementation 'io.netty:netty-all:4.1.82.Final'
     
     implementation 'com.formdev:flatlaf:1.5'
-    implementation group: 'com.github.oshi', name: 'oshi-core', version: '6.4.0'
+    // implementation group: 'com.github.oshi', name: 'oshi-core', version: '6.4.0'
+    
+    // implementation 'org.jsoup:jsoup:1.16.1'
+
+//	implementation group: 'net.java.dev.jna', name: 'jna', version: '5.13.0'
+//	implementation group: 'net.java.dev.jna', name: 'jna-platform', version: '5.13.0'
+	
 
 }
 

@@ -1,26 +1,24 @@
 package xueli.gui;
 
-import java.lang.ref.ReferenceQueue;
-import java.lang.ref.WeakReference;
-
-import xueli.game2.display.event.WindowSizedEvent;
 import xueli.gui.driver.GraphicDriver;
 import xueli.utils.MyWeakHashMap;
 
+import java.lang.ref.ReferenceQueue;
+import java.lang.ref.WeakReference;
+import java.util.WeakHashMap;
+
 public class PaintMaster {
 
-	private final UIContext ctx;
 	private final GraphicDriver driver;
-//	private final FrameBuffer rootFrameBuffer;
 
 	private final ReferenceQueue<Object> referenceQueue = new ReferenceQueue<>();
 	private final MyWeakHashMap<Widget, PaintManager> painters = new MyWeakHashMap<>(referenceQueue, PaintManager::release);
 
-	public PaintMaster(UIContext ctx) {
-		this.ctx = ctx;
-		this.driver = ctx.getDriver();
-//		this.rootFrameBuffer = driver.createFrameBuffer(ctx.getDisplayWidth(), ctx.getDisplayHeight());
-		
+	private final WeakHashMap<Widget, Boolean> immediateModeMap = new WeakHashMap<>();
+
+	public PaintMaster(GraphicDriver driver) {
+		this.driver = driver;
+
 	}
 	
 	public PaintManager getPaintManager(Widget widget) {
@@ -44,32 +42,76 @@ public class PaintMaster {
 	
 	private PaintManager createAndStorePaintManager(Widget widget, boolean immediate) {
 		PaintManager newManager = immediate ?
-				new ImmediatePaintManager(new WeakReference<Widget>(widget), driver)
-				: new BufferedPaintManager(new WeakReference<Widget>(widget), driver);
+				new ImmediatePaintManager(new MyWidgetAccess(new WeakReference<>(widget)), driver)
+				: new BufferedPaintManager(new MyWidgetAccess(new WeakReference<>(widget)), driver);
 		newManager.announceRepaint(0, 0, widget.getWidth(), widget.getHeight());
 		this.painters.put(widget, newManager);
 		return newManager;
 	}
-	
-	private void drawRoot() {
-//		this.driver.pushFrameBuffer(rootFrameBuffer);
-//		this.driver.popFrameBuffer();
-		
-		this.driver.begin(ctx.getDisplayWidth(), ctx.getDisplayHeight());
-		ctx.getRootWidget().doPaint();
-//		this.driver.setColor(Color.blue);
-//		this.driver.drawFilledRect(50, 50, 600, 500, FillType.COLOR);
-		this.driver.finish();
-		
+
+	public void drawWidget(Widget widget) {
+		this.getPaintManager(widget, this.isUseImmediateMode(widget)).doPaint();
 	}
-	
+
+	public void drawWidget(Widget widget, GraphicDriver newDriver) {
+		this.getPaintManager(widget, this.isUseImmediateMode(widget)).doPaint();
+	}
+
+	public void setUseImmediateMode(Widget widget, boolean use) {
+		immediateModeMap.put(widget, use);
+	}
+
+	public boolean isUseImmediateMode(Widget widget) {
+		Boolean objVal = immediateModeMap.get(widget);
+		return objVal == null ? false : objVal.booleanValue();
+	}
+
 	public void tick() {
-		this.drawRoot();
-		
 	}
-	
-	public void onScreenSize(WindowSizedEvent e) {
-//		this.rootFrameBuffer.resize(e.width(), e.height());
+
+	public GraphicDriver getDriver() {
+		return driver;
+	}
+
+	private class MyWidgetAccess implements PaintManager.WidgetAccess {
+
+		private final WeakReference<Widget> widget;
+
+		public MyWidgetAccess(WeakReference<Widget> widget) {
+			this.widget = widget;
+		}
+
+		@Override
+		public SizeHint measure() {
+			var widget = this.widget.get();
+			return widget.getSkin().measure(widget, driver);
+		}
+
+		@Override
+		public void doPaint(float x, float y, float width, float height) {
+			var widget = this.widget.get();
+			widget.getSkin().paint(widget, x, y, width, height, PaintMaster.this);
+		}
+
+		@Override
+		public float getX() {
+			return this.widget.get().getX();
+		}
+
+		@Override
+		public float getY() {
+			return this.widget.get().getY();
+		}
+
+		@Override
+		public float getWidth() {
+			return this.widget.get().getWidth();
+		}
+
+		@Override
+		public float getHeight() {
+			return this.widget.get().getHeight();
+		}
 	}
 
 }

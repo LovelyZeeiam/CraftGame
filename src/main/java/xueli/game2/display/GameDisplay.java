@@ -19,12 +19,13 @@ import xueli.game2.resource.provider.ClassLoaderResourceProvider;
 import xueli.game2.resource.provider.ResourceProvider;
 import xueli.game2.resource.submanager.render.shader.ShaderRenderResource;
 import xueli.game2.resource.submanager.render.texture.TextureRenderResource;
+import xueli.gui.WindowSizeProvider;
 import xueli.utils.concurrent.ControllerExecutorService;
 import xueli.utils.events.EventBus;
 import xueli.utils.exception.CrashReport;
 import xueli.utils.logger.Logger;
 
-public abstract class GameDisplay implements RunnableLifeCycle {
+public abstract class GameDisplay implements RunnableLifeCycle, WindowSizeProvider {
 
 	private static final Logger LOGGER = new Logger();
 
@@ -185,10 +186,12 @@ public abstract class GameDisplay implements RunnableLifeCycle {
 		return display;
 	}
 
+	@Override
 	public int getWidth() {
 		return display.getWidth();
 	}
 
+	@Override
 	public int getHeight() {
 		return display.getHeight();
 	}

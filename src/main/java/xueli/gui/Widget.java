@@ -32,7 +32,7 @@ public class Widget extends WidgetBean {
 	public Widget(UIContext ctx) {
 		super(ctx);
 		this.registerPropertyChange();
-		this.ui = new WidgetUI(new WeakReference<Widget>(this), ctx);
+		this.ui = new WidgetUI(new WeakReference<>(this), ctx);
 		
 		setSkin(DefaultSkin.SHARED_INSTANCE.getSkin(getClass()));
 		
@@ -60,7 +60,7 @@ public class Widget extends WidgetBean {
 	// property change listener.
 	public void setBounds(float x, float y, float width, float height) {
 		this.setPosition(x, y);
-		this.setDimention(width, height);
+		this.setDimension(width, height);
 
 	}
 	
@@ -77,7 +77,7 @@ public class Widget extends WidgetBean {
 		
 	}
 	
-	public void setDimention(float width, float height) {
+	public void setDimension(float width, float height) {
 		boolean resized = this.width != width || this.height != height;
 		Vector2f oldSize = new Vector2f(this.width, this.height);
 		this.width = width;
@@ -102,14 +102,14 @@ public class Widget extends WidgetBean {
 	}
 	
 	// Should only be called from Skin or test!
-	public SizeHint measure() {
-		return this.ui.measure();
-	}
+//	public SizeHint measure() {
+//		return this.ui.measure();
+//	}
 	
 	// Should only be called from Skin or test!
-	public void doPaint() {
-		this.ui.doPaint();
-	}
+//	public void doPaint() {
+//		this.ui.doPaint();
+//	}
 
 	protected void dispatchEvent(UIEvent event) {
 //		switch(event.type()) {
